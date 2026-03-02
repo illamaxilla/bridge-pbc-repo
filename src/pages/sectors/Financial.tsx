@@ -914,7 +914,7 @@ const IconArrowDown = () => (
   </svg>
 );
 
-const IconCheck = () => (
+const IconCheck = ({ style }: { style?: React.CSSProperties }) => (
   <svg
     width="16"
     height="16"
