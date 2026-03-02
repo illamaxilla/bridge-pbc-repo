@@ -2097,8 +2097,8 @@ const OpportunitySection = () => {
           onScroll={
             isMobile
               ? (e) => {
-                  const scrollLeft = e.target.scrollLeft;
-                  const cardWidth = e.target.scrollWidth / opportunitySectionData.length;
+                  const scrollLeft = (e.target as HTMLDivElement).scrollLeft;
+                  const cardWidth = (e.target as HTMLDivElement).scrollWidth / opportunitySectionData.length;
                   setOppActiveIndex(Math.round(scrollLeft / cardWidth));
                 }
               : undefined
@@ -4528,8 +4528,8 @@ const GovernancePolicySection = () => {
           onScroll={
             isMobile
               ? (e) => {
-                  const scrollLeft = e.target.scrollLeft;
-                  const cardWidth = e.target.scrollWidth / filtered.length;
+                  const scrollLeft = (e.target as HTMLDivElement).scrollLeft;
+                  const cardWidth = (e.target as HTMLDivElement).scrollWidth / filtered.length;
                   setGovActiveIndex(Math.round(scrollLeft / cardWidth));
                 }
               : undefined

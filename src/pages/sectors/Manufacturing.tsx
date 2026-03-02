@@ -4148,7 +4148,7 @@ const ImpactSection = () => {
             }}
           >
             {impactMetrics[activeCategory].items.map((item, i) => (
-              <MetricRow key={`${activeCategory}-${i}`} item={item} index={i} animate={animate} isMobile={isMobile} />
+              <MetricRow key={`${activeCategory}-${i}`} item={item} index={i} animate={animate} isMobile={isMobile} darkMode={false} />
             ))}
           </div>
         ) : (

@@ -860,7 +860,7 @@ const FloatingSectorCard = ({ sector, icon }) => {
 // ============================================
 // ICON CIRCLE - For pathway visualization
 // ============================================
-const IconCircle = ({ icon, isFirst }) => (
+const IconCircle = ({ icon, isFirst = false }) => (
   <div
     style={{
       width: "48px",

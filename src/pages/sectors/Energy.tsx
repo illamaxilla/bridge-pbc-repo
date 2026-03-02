@@ -311,8 +311,8 @@ const StageIcon = ({ type, size = 20, color = "currentColor" }) => {
     fill: "none",
     stroke: color,
     strokeWidth: "2",
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
   };
   switch (type) {
     case "sun":
