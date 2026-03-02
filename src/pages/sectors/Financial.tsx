@@ -916,11 +916,12 @@ const IconArrowDown = () => (
 
 const IconCheck = ({ style }: { style?: React.CSSProperties }) => (
   <svg
-    width="16"
-    height="16"
+    width={style?.width ?? 16}
+    height={style?.height ?? 16}
     viewBox="0 0 24 24"
     fill="none"
-    stroke="currentColor"
+    stroke={style?.color ?? "currentColor"}
+    style={style}
     strokeWidth="2.5"
     strokeLinecap="round"
     strokeLinejoin="round"

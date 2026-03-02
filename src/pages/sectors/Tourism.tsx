@@ -2812,7 +2812,6 @@ const ValueChainSectionPremium = () => {
                     width: "52px",
                     height: "52px",
                     borderRadius: "14px",
-                    border: "none",
                     cursor: "pointer",
                     backgroundColor: activeStage === i ? colors.accentLight : colors.background,
                     border: activeStage === i ? `2px solid ${colors.accent}` : `1px solid ${colors.line}`,

@@ -2821,7 +2821,7 @@ const SolutionsSection = ({ sector }) => {
             {tiers.map((tier) => (
               <button
                 key={String(tier.id)}
-                onClick={() => setActiveTier(tier.id)}
+                onClick={() => setActiveTier(String(tier.id))}
                 style={{
                   padding: isMobile ? "5px 12px" : "6px 16px",
                   borderRadius: "50px",

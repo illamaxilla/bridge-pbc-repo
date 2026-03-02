@@ -2848,7 +2848,7 @@ const SolutionsSection = ({ sector }) => {
                 return (
                   <button
                     key={f.key}
-                    onClick={() => setActiveTier(f.key)}
+                    onClick={() => setActiveTier(String(f.key))}
                     style={{
                       backgroundColor: isActive ? "rgba(255,255,255,0.12)" : "transparent",
                       color: isActive ? colors.accent : "rgba(255,255,255,0.5)",
