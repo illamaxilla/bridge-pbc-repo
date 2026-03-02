@@ -3501,11 +3501,11 @@ export default function BRIDGEHomePage() {
             style={{ overflow: "hidden", cursor: "grab" }}
             onMouseEnter={(e) => {
               const track = e.currentTarget.querySelector(".insight-track");
-              if (track) track.style.animationPlayState = "paused";
+              if (track) (track as HTMLElement).style.animationPlayState = "paused";
             }}
             onMouseLeave={(e) => {
               const track = e.currentTarget.querySelector(".insight-track");
-              if (track) track.style.animationPlayState = "running";
+              if (track) (track as HTMLElement).style.animationPlayState = "running";
             }}
           >
             <div
