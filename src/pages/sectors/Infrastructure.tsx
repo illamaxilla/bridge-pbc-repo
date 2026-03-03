@@ -1196,12 +1196,6 @@ const Header = () => {
   }, []);
 
   const navItems = ["Home", "Services", "Sectors", "Insight", "Contact"];
-  const sectorRoutes: Record<string, string> = {
-    infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
-    tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
-    creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
-    energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
-  };
   const navHref = (item: string) => item === "Home" ? "/" : (item === "Services" || item === "Sectors") ? "/services" : "#";
 
   return (
@@ -1246,10 +1240,10 @@ const Header = () => {
               const isActive = item === "Sectors";
               return (
                 <a
-                  key={item}
-                  href="#"
-                  onMouseEnter={() => setHoveredNav(i)}
-                  onMouseLeave={() => setHoveredNav(null)}
+                   key={item}
+                   href={navHref(item)}
+                   onMouseEnter={() => setHoveredNav(i)}
+                   onMouseLeave={() => setHoveredNav(null)}
                   style={{
                     color: isActive ? colors.primary : hoveredNav === i ? colors.primary : "#191919",
                     textDecoration: "none",
@@ -1391,9 +1385,9 @@ const Header = () => {
               const isActive = item === "Sectors";
               return (
                 <a
-                  key={item}
-                  href="#"
-                  onClick={() => setMobileMenuOpen(false)}
+                   key={item}
+                   href={navHref(item)}
+                   onClick={() => setMobileMenuOpen(false)}
                   style={{
                     color: isActive ? colors.accent : "rgba(255,255,255,0.85)",
                     textDecoration: "none",
@@ -7049,6 +7043,13 @@ const socialIcons = [
   </svg>,
 ];
 
+const sectorRoutes: Record<string, string> = {
+  infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
+  tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
+  creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
+  energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
+};
+
 const SectorGrid = () => {
   const [hovered, setHovered] = useState(null);
   return (
@@ -7075,7 +7076,7 @@ const SectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href="#"
+              href={sectorRoutes[sector.key] ?? "#"}
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}

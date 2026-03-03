@@ -1213,6 +1213,13 @@ const socialIcons = [
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
   </svg>,
 ];
+const sectorRoutes: Record<string, string> = {
+  infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
+  tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
+  creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
+  energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
+};
+const navHref = (item: string) => item === "Home" || item === "About" ? "/" : (item === "Services" || item === "Sectors") ? "/services" : "#";
 
 export default function ServicesSectorsPageV2() {
   const [activeService, setActiveService] = useState("research");
@@ -1581,7 +1588,7 @@ export default function ServicesSectorsPageV2() {
             {["About", "Sectors", "Services", "Insights", "Contact"].map((item, i) => (
               <a
                 key={item}
-                href="#"
+                href={navHref(item)}
                 onMouseEnter={() => setHoveredNav(i)}
                 onMouseLeave={() => setHoveredNav(null)}
                 style={{
@@ -1941,8 +1948,9 @@ export default function ServicesSectorsPageV2() {
                   {footerSectorIcons.map((sector, i) => {
                     const isHovered = heroSectorHovered === i;
                     return (
-                      <div
+                      <a
                         key={sector.key}
+                        href={sectorRoutes[sector.key] ?? "#"}
                         onMouseEnter={() => setHeroSectorHovered(i)}
                         onMouseLeave={() => setHeroSectorHovered(null)}
                         style={{
@@ -1958,6 +1966,7 @@ export default function ServicesSectorsPageV2() {
                           transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
                           transform: isHovered ? "translateY(-2px)" : "none",
                           boxShadow: isHovered ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
+                          textDecoration: "none",
                         }}
                       >
                         <div
@@ -1972,7 +1981,7 @@ export default function ServicesSectorsPageV2() {
                         >
                           {sector.icon(isHovered ? colors.accent : "rgba(255,255,255,0.9)")}
                         </div>
-                      </div>
+                      </a>
                     );
                   })}
                 </div>
@@ -5115,7 +5124,7 @@ export default function ServicesSectorsPageV2() {
                       return (
                         <a
                           key={sector.key}
-                          href="#"
+                          href={sectorRoutes[sector.key] ?? "#"}
                           title={sector.label}
                           onMouseEnter={() => setFooterSectorHovered(i)}
                           onMouseLeave={() => setFooterSectorHovered(null)}

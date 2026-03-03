@@ -517,7 +517,7 @@ const SectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href="#"
+              href={sectorRoutes[sector.key] ?? "#"}
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
@@ -733,6 +733,15 @@ function BridgeLogoWhite() {
 // ═══════════════════════════════════════════════
 // Main Component
 // ═══════════════════════════════════════════════
+
+const sectorRoutes: Record<string, string> = {
+  infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
+  tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
+  creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
+  energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
+};
+const navHref = (item: string) => item === "Home" || item === "About" ? "/" : (item === "Services" || item === "Sectors") ? "/services" : "#";
+
 export default function BRIDGEHomePage() {
   const isMobile = useIsMobile();
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -1045,7 +1054,7 @@ export default function BRIDGEHomePage() {
             {["About", "Sectors", "Services", "Insights", "Contact"].map((item, i) => (
               <a
                 key={item}
-                href="#"
+                href={navHref(item)}
                 onMouseEnter={() => setHoveredNav(i)}
                 onMouseLeave={() => setHoveredNav(null)}
                 style={{

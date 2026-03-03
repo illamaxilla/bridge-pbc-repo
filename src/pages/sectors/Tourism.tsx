@@ -1279,7 +1279,7 @@ const SectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href="#"
+              href={sectorRoutes[sector.key] ?? "#"}
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
@@ -1401,10 +1401,10 @@ const Header = () => {
               const isActive = item === "Sectors";
               return (
                 <a
-                  key={item}
-                  href="#"
-                  onMouseEnter={() => setHoveredNav(i)}
-                  onMouseLeave={() => setHoveredNav(null)}
+                   key={item}
+                   href={navHref(item)}
+                   onMouseEnter={() => setHoveredNav(i)}
+                   onMouseLeave={() => setHoveredNav(null)}
                   style={{
                     color: isActive ? colors.primary : hoveredNav === i ? colors.primary : "#191919",
                     textDecoration: "none",
@@ -1546,9 +1546,9 @@ const Header = () => {
               const isActive = item === "Sectors";
               return (
                 <a
-                  key={item}
-                  href="#"
-                  onClick={() => setMobileMenuOpen(false)}
+                   key={item}
+                   href={navHref(item)}
+                   onClick={() => setMobileMenuOpen(false)}
                   style={{
                     color: isActive ? colors.accent : "rgba(255,255,255,0.85)",
                     textDecoration: "none",
