@@ -1588,7 +1588,7 @@ export default function ServicesSectorsPageV2() {
             {["About", "Sectors", "Services", "Insights", "Contact"].map((item, i) => (
               <a
                 key={item}
-                href="#"
+                href={navHref(item)}
                 onMouseEnter={() => setHoveredNav(i)}
                 onMouseLeave={() => setHoveredNav(null)}
                 style={{
