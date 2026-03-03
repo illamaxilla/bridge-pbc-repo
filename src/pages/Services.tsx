@@ -5122,7 +5122,7 @@ export default function ServicesSectorsPageV2() {
                       return (
                         <a
                           key={sector.key}
-                          href="#"
+                          href={sectorRoutes[sector.key] ?? "#"}
                           title={sector.label}
                           onMouseEnter={() => setFooterSectorHovered(i)}
                           onMouseLeave={() => setFooterSectorHovered(null)}
