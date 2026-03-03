@@ -883,10 +883,10 @@ const Header = () => {
               const isActive = item === "Sectors";
               return (
                 <a
-                  key={item}
-                  href="#"
-                  onMouseEnter={() => setHoveredNav(i)}
-                  onMouseLeave={() => setHoveredNav(null)}
+                   key={item}
+                   href={navHref(item)}
+                   onMouseEnter={() => setHoveredNav(i)}
+                   onMouseLeave={() => setHoveredNav(null)}
                   style={{
                     color: isActive ? colors.primary : hoveredNav === i ? colors.primary : "#191919",
                     textDecoration: "none",
