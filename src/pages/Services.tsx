@@ -1226,6 +1226,7 @@ export default function ServicesSectorsPageV2() {
   const [selectedSector, setSelectedSector] = useState(null);
   const [filterCategory, setFilterCategory] = useState("all");
   const [hoveredNav, setHoveredNav] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
   const [footerSectorHovered, setFooterSectorHovered] = useState(null);
   const [heroSectorHovered, setHeroSectorHovered] = useState(null);
