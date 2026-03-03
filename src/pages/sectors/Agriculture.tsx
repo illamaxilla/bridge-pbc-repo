@@ -1086,7 +1086,7 @@ const Header = () => {
               return (
                 <a
                   key={item}
-                  href="#"
+                  href={navHref(item)}
                   onClick={() => setMobileMenuOpen(false)}
                   style={{
                     color: isActive ? colors.accent : "rgba(255,255,255,0.85)",

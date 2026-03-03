@@ -764,6 +764,7 @@ export default function BRIDGEHomePage() {
   const [insightIndex, setInsightIndex] = useState(0);
   const [hoveredInsight, setHoveredInsight] = useState(null);
   const [hoveredNav, setHoveredNav] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [valueIndex, setValueIndex] = useState(0);
@@ -1127,8 +1128,8 @@ export default function BRIDGEHomePage() {
               <circle cx="12" cy="7" r="4" />
             </svg>
           </a>
-          <a
-            href="#"
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="header-icon"
             style={{
               width: "40px",
@@ -1137,25 +1138,84 @@ export default function BRIDGEHomePage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              textDecoration: "none",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: 0,
             }}
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={colors.dark}
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          </a>
+            {mobileMenuOpen ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={colors.dark} strokeWidth="2" strokeLinecap="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={colors.dark} strokeWidth="2" strokeLinecap="round">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            )}
+          </button>
         </div>
       </header>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 998,
+            backgroundColor: colors.primary,
+            padding: "88px 32px 40px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              position: "absolute",
+              top: "20px",
+              right: "20px",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: "8px",
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          <nav style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            {["About", "Sectors", "Services", "Insights", "Contact"].map((item) => (
+              <a
+                key={item}
+                href={navHref(item)}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  color: "rgba(255,255,255,0.85)",
+                  textDecoration: "none",
+                  fontSize: "24px",
+                  fontWeight: "400",
+                  fontFamily: "Inter, sans-serif",
+                  padding: "20px 0",
+                  borderBottom: "1px solid rgba(255,255,255,0.08)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  letterSpacing: "-0.3px",
+                }}
+              >
+                {item}
+              </a>
+            ))}
+          </nav>
+        </div>
+      )}
 
       {/* HERO */}
       <section style={{ backgroundColor: colors.white, padding: isMobile ? "36px 20px 24px" : "60px 48px 40px 48px" }}>
