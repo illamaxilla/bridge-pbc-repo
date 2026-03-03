@@ -942,7 +942,7 @@ const Header = () => {
               return (
                 <a
                   key={item}
-                  href="#"
+                  href={navHref(item)}
                   style={{
                     color: isActive ? colors.primary : "#191919",
                     textDecoration: "none",
