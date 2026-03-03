@@ -1981,7 +1981,7 @@ export default function ServicesSectorsPageV2() {
                         >
                           {sector.icon(isHovered ? colors.accent : "rgba(255,255,255,0.9)")}
                         </div>
-                      </div>
+                      </a>
                     );
                   })}
                 </div>
