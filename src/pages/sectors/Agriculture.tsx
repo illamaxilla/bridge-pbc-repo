@@ -879,6 +879,14 @@ const BridgeLogo = ({ height = 40 }) => (
 // HEADER COMPONENT
 // ============================================================================
 
+const sectorRoutes: Record<string, string> = {
+  infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
+  tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
+  creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
+  energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
+};
+const navHref = (item: string) => item === "Home" ? "/" : (item === "Services" || item === "Sectors") ? "/services" : "#";
+
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -891,13 +899,6 @@ const Header = () => {
   }, []);
 
   const navItems = ["Home", "Services", "Sectors", "Insight", "Contact"];
-  const sectorRoutes: Record<string, string> = {
-    infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
-    tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
-    creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
-    energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
-  };
-  const navHref = (item: string) => item === "Home" ? "/" : (item === "Services" || item === "Sectors") ? "/services" : "#";
 
   return (
     <>
