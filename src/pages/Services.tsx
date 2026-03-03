@@ -1948,8 +1948,9 @@ export default function ServicesSectorsPageV2() {
                   {footerSectorIcons.map((sector, i) => {
                     const isHovered = heroSectorHovered === i;
                     return (
-                      <div
+                      <a
                         key={sector.key}
+                        href={sectorRoutes[sector.key] ?? "#"}
                         onMouseEnter={() => setHeroSectorHovered(i)}
                         onMouseLeave={() => setHeroSectorHovered(null)}
                         style={{
@@ -1965,6 +1966,7 @@ export default function ServicesSectorsPageV2() {
                           transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
                           transform: isHovered ? "translateY(-2px)" : "none",
                           boxShadow: isHovered ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
+                          textDecoration: "none",
                         }}
                       >
                         <div

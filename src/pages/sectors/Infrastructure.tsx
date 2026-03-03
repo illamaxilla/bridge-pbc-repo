@@ -1385,9 +1385,9 @@ const Header = () => {
               const isActive = item === "Sectors";
               return (
                 <a
-                  key={item}
-                  href="#"
-                  onClick={() => setMobileMenuOpen(false)}
+                   key={item}
+                   href={navHref(item)}
+                   onClick={() => setMobileMenuOpen(false)}
                   style={{
                     color: isActive ? colors.accent : "rgba(255,255,255,0.85)",
                     textDecoration: "none",
