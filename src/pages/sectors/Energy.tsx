@@ -6728,9 +6728,9 @@ const Header = () => {
             {navItems.map((item, i) => {
               const isActive = item === "Sectors";
               return (
-                <a
+            <a
                   key={item}
-                  href="#"
+                  href={navHref(item)}
                   onMouseEnter={() => setHoveredNav(i)}
                   onMouseLeave={() => setHoveredNav(null)}
                   style={{
