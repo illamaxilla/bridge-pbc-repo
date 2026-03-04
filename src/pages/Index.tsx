@@ -735,12 +735,21 @@ function BridgeLogoWhite() {
 // ═══════════════════════════════════════════════
 
 const sectorRoutes: Record<string, string> = {
-  infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
-  tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
-  creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
-  energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  creative: "/sectors/sports",
+  housing: "/sectors/housing",
+  tourism: "/sectors/tourism",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  transport: "/sectors/transport",
 };
-const navHref = (item: string) => item === "Home" ? "/" : item === "About" ? "/about" : (item === "Services" || item === "Sectors") ? "/services" : "#";
+const navHref = (item: string) =>
+  item === "Home" ? "/" : item === "About" ? "/about" : item === "Services" || item === "Sectors" ? "/services" : "#";
 
 export default function BRIDGEHomePage() {
   const isMobile = useIsMobile();
@@ -1145,12 +1154,28 @@ export default function BRIDGEHomePage() {
             }}
           >
             {mobileMenuOpen ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={colors.dark} strokeWidth="2" strokeLinecap="round">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={colors.dark}
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={colors.dark} strokeWidth="2" strokeLinecap="round">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={colors.dark}
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <line x1="3" y1="12" x2="21" y2="12" />
                 <line x1="3" y1="18" x2="21" y2="18" />
@@ -1185,7 +1210,15 @@ export default function BRIDGEHomePage() {
               padding: "8px",
             }}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
