@@ -740,7 +740,7 @@ const sectorRoutes: Record<string, string> = {
   creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
   energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
 };
-const navHref = (item: string) => item === "Home" || item === "About" ? "/" : (item === "Services" || item === "Sectors") ? "/services" : "#";
+const navHref = (item: string) => item === "Home" ? "/" : item === "About" ? "/about" : (item === "Services" || item === "Sectors") ? "/services" : "#";
 
 export default function BRIDGEHomePage() {
   const isMobile = useIsMobile();
