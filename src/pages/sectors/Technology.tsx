@@ -994,7 +994,7 @@ const Header = () => {
   }, []);
 
   const navItems = ["Home", "Services", "Sectors", "Insight", "Contact"];
-  const navHref = (item: string) => item === "Home" ? "/" : (item === "Services" || item === "Sectors") ? "/services" : "#";
+  const navHref = (item: string) => item === "Home" ? "/" : item === "About" ? "/about" : (item === "Services" || item === "Sectors") ? "/services" : "#";
 
   return (
     <>
