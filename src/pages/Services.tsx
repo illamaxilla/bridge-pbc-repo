@@ -1345,7 +1345,7 @@ const Arr = ({ s = 12, c = "currentColor" }) => (
   </svg>
 );
 
-const Pill = ({ children, dark }) => (
+const Pill = ({ children, dark = false }) => (
   <div
     style={{
       display: "inline-flex",
