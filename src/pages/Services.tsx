@@ -1200,7 +1200,7 @@ const CrossSector = () => {
                         className="cs-scroll"
                         ref={isOpen ? scrollRef : null}
                         onScroll={(e) => {
-                          const el = e.target;
+                          const el = e.target as HTMLElement;
                           const cardsVis = mb ? 1 : 3;
                           const cw = el.scrollWidth / ring.items.length;
                           setScrollPage(Math.round(el.scrollLeft / (cw * cardsVis)));
