@@ -1378,6 +1378,26 @@ const Pill = ({ children, dark = false }) => (
 
 // ── HEADER ──
 
+const navHref = (item: string) =>
+  item === "Home" ? "/" :
+  item === "About" ? "/about" :
+  (item === "Services" || item === "Sectors") ? "/services" : "#";
+
+const sectorRoutes: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  tourism: "/sectors/tourism",
+  housing: "/sectors/housing",
+  transport: "/sectors/transport",
+  sports: "/sectors/sports",
+};
+
 const Header = () => {
   const [hoveredNav, setHoveredNav] = useState(null);
   const [logoHovered, setLogoHovered] = useState(false);
@@ -1513,7 +1533,7 @@ const Header = () => {
           {["About", "Sectors", "Services", "Insights", "Contact"].map((item, i) => (
             <a
               key={item}
-              href="#"
+              href={navHref(item)}
               onMouseEnter={() => setHoveredNav(i)}
               onMouseLeave={() => setHoveredNav(null)}
               style={{
@@ -2304,7 +2324,7 @@ const FooterSectorGrid = () => {
           return (
             <a
               key={k}
-              href="#"
+              href={sectorRoutes[k] || "#"}
               title={fLabels[i]}
               onMouseEnter={() => setH(i)}
               onMouseLeave={() => setH(null)}

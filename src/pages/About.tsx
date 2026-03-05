@@ -31,6 +31,26 @@ function useIsMobile() {
   return isMobile;
 }
 
+const navHref = (item: string) =>
+  item === "Home" ? "/" :
+  item === "About" ? "/about" :
+  (item === "Services" || item === "Sectors") ? "/services" : "#";
+
+const sectorRoutes: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  tourism: "/sectors/tourism",
+  housing: "/sectors/housing",
+  transport: "/sectors/transport",
+  sports: "/sectors/sports",
+};
+
 // ============================================================================
 // HEADER — Exact spec from BRIDGE_Header_Handoff.md
 // ============================================================================
@@ -168,7 +188,7 @@ const Header = () => {
           {["About", "Sectors", "Services", "Insights", "Contact"].map((item, i) => (
             <a
               key={item}
-              href="#"
+              href={navHref(item)}
               onMouseEnter={() => setHoveredNav(i)}
               onMouseLeave={() => setHoveredNav(null)}
               style={{
@@ -2857,7 +2877,7 @@ const SectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href="#"
+              href={sectorRoutes[sector.key] || "#"}
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
