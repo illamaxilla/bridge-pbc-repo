@@ -31,26 +31,6 @@ function useIsMobile() {
   return isMobile;
 }
 
-const navHref = (item: string) =>
-  item === "Home" ? "/" :
-  item === "About" ? "/about" :
-  (item === "Services" || item === "Sectors") ? "/services" : "#";
-
-const sectorRoutes: Record<string, string> = {
-  infra: "/sectors/infrastructure",
-  fin: "/sectors/financial",
-  health: "/sectors/health",
-  tech: "/sectors/technology",
-  edu: "/sectors/education",
-  agri: "/sectors/agriculture",
-  energy: "/sectors/energy",
-  mfg: "/sectors/manufacturing",
-  tourism: "/sectors/tourism",
-  housing: "/sectors/housing",
-  transport: "/sectors/transport",
-  sports: "/sectors/sports",
-};
-
 // ============================================================================
 // HEADER — Exact spec from BRIDGE_Header_Handoff.md
 // ============================================================================
@@ -188,7 +168,7 @@ const Header = () => {
           {["About", "Sectors", "Services", "Insights", "Contact"].map((item, i) => (
             <a
               key={item}
-              href={navHref(item)}
+              href="#"
               onMouseEnter={() => setHoveredNav(i)}
               onMouseLeave={() => setHoveredNav(null)}
               style={{
@@ -300,60 +280,74 @@ const Header = () => {
 // SECTION 1: Hero — KEPT
 // ============================================================================
 function HeroSection({ isMobile }) {
-  const stats = [
-    { label: "SMEs Powering Ghana", value: "2.5M", highlight: true },
-    { label: "GDP From Small Business", value: "70%", highlight: false },
-    { label: "Annual SME Credit Gap", value: "$4–6B", highlight: false },
-    { label: "Citizens Building Futures", value: "34M", highlight: false },
-  ];
-
   return (
     <section
       style={{
-        backgroundColor: colors.primary,
+        backgroundColor: colors.white,
         padding: isMobile ? "48px 20px 60px" : "80px 80px 120px",
-        position: "relative",
-        overflow: "hidden",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          width: "40%",
-          opacity: 0.04,
-          background: `repeating-linear-gradient(45deg, transparent, transparent 40px, ${colors.accent} 40px, ${colors.accent} 42px)`,
-        }}
-      />
-
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto", position: "relative", zIndex: 1 }}>
+      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
         <div
           style={{
             display: isMobile ? "block" : "flex",
             justifyContent: "space-between",
-            alignItems: "flex-start",
+            alignItems: "center",
             gap: "60px",
           }}
         >
+          {/* Left — text content */}
           <div style={{ flex: "1 1 55%", maxWidth: isMobile ? "100%" : "580px" }}>
+            {/* Pill */}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                border: `1px solid ${colors.line}`,
+                borderRadius: "50px",
+                padding: "8px 20px",
+                marginBottom: isMobile ? "24px" : "32px",
+              }}
+            >
+              <div
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  backgroundColor: colors.accent,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "11px",
+                  fontWeight: "700",
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  color: colors.primary,
+                }}
+              >
+                BRIDGE
+              </span>
+            </div>
+
             <h1
               style={{
                 fontFamily: "DM Sans, sans-serif",
-                fontSize: isMobile ? "34px" : "56px",
+                fontSize: isMobile ? "34px" : "52px",
                 fontWeight: "300",
                 lineHeight: "1.1",
-                color: colors.white,
+                color: colors.primary,
                 margin: isMobile ? "0 0 20px 0" : "0 0 32px 0",
                 letterSpacing: "-1px",
               }}
             >
-              The potential <span style={{ fontWeight: "700" }}>exists</span>
+              The gap between <span style={{ fontWeight: "700" }}>opportunity</span>
               <br />
-              We help you{" "}
+              and{" "}
               <span style={{ fontWeight: "700", color: colors.accent, position: "relative" }}>
-                realize
+                impact
                 <svg
                   style={{ position: "absolute", bottom: "-6px", left: 0, width: "100%" }}
                   height="8"
@@ -368,8 +362,7 @@ function HeroSection({ isMobile }) {
                     strokeLinecap="round"
                   />
                 </svg>
-              </span>{" "}
-              it
+              </span>
             </h1>
 
             <p
@@ -378,7 +371,7 @@ function HeroSection({ isMobile }) {
                 fontSize: isMobile ? "15px" : "17px",
                 fontWeight: "400",
                 lineHeight: "1.7",
-                color: "rgba(255,255,255,0.65)",
+                color: "#666",
                 margin: 0,
                 maxWidth: "480px",
               }}
@@ -389,57 +382,93 @@ function HeroSection({ isMobile }) {
             </p>
           </div>
 
-          <div
-            style={{
-              flex: "0 0 auto",
-              display: "grid",
-              gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "1fr",
-              gap: isMobile ? "8px" : "12px",
-              marginTop: isMobile ? "28px" : "0",
-              width: isMobile ? "100%" : "320px",
-            }}
-          >
-            {stats.map((stat, i) => (
+          {/* Right — image placeholder */}
+          {!isMobile && (
+            <div
+              style={{
+                flex: "0 0 420px",
+                height: "380px",
+                borderRadius: "20px",
+                backgroundColor: colors.background,
+                border: `1px solid ${colors.line}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
               <div
-                key={i}
                 style={{
-                  background: stat.highlight ? colors.accent : "rgba(255,255,255,0.08)",
-                  borderRadius: isMobile ? "10px" : "14px",
-                  padding: isMobile ? "10px 12px" : "18px 24px",
                   display: "flex",
-                  flexDirection: isMobile ? "column" : "row",
-                  justifyContent: isMobile ? "center" : "space-between",
-                  alignItems: isMobile ? "flex-start" : "center",
-                  gap: isMobile ? "2px" : "0",
-                  backdropFilter: stat.highlight ? "none" : "blur(10px)",
-                  border: stat.highlight ? "none" : "1px solid rgba(255,255,255,0.08)",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "12px",
+                  color: "#ccc",
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: isMobile ? "10px" : "14px",
-                    fontWeight: "500",
-                    color: stat.highlight ? colors.primary : "rgba(255,255,255,0.7)",
-                    ...(isMobile && { order: 2 }),
-                  }}
+                <svg
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ccc"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  {stat.label}
-                </span>
-                <span
-                  style={{
-                    fontFamily: "DM Sans, sans-serif",
-                    fontSize: isMobile ? "20px" : "22px",
-                    fontWeight: "700",
-                    color: stat.highlight ? colors.primary : colors.white,
-                    ...(isMobile && { order: 1 }),
-                  }}
-                >
-                  {stat.value}
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <path d="M21 15l-5-5L5 21" />
+                </svg>
+                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", fontWeight: "500", color: "#bbb" }}>
+                  Hero Image
                 </span>
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+
+          {/* Mobile image placeholder */}
+          {isMobile && (
+            <div
+              style={{
+                marginTop: "32px",
+                height: "200px",
+                borderRadius: "16px",
+                backgroundColor: colors.background,
+                border: `1px solid ${colors.line}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <svg
+                  width="36"
+                  height="36"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ccc"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <path d="M21 15l-5-5L5 21" />
+                </svg>
+                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", fontWeight: "500", color: "#bbb" }}>
+                  Hero Image
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -453,7 +482,7 @@ function VisionSection({ isMobile }) {
   return (
     <section
       style={{
-        backgroundColor: colors.white,
+        backgroundColor: colors.background,
         padding: isMobile ? "60px 20px" : "120px 80px",
       }}
     >
@@ -631,7 +660,7 @@ function WhatWeDoSection({ isMobile }) {
   return (
     <section
       style={{
-        backgroundColor: colors.background,
+        backgroundColor: colors.primary,
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
@@ -645,7 +674,7 @@ function WhatWeDoSection({ isMobile }) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                border: `1px solid ${colors.line}`,
+                border: "1px solid rgba(255,255,255,0.2)",
                 borderRadius: "50px",
                 padding: "8px 20px",
                 marginBottom: "24px",
@@ -666,7 +695,7 @@ function WhatWeDoSection({ isMobile }) {
                   fontWeight: "700",
                   letterSpacing: "2px",
                   textTransform: "uppercase",
-                  color: colors.primary,
+                  color: colors.white,
                 }}
               >
                 OUR MISSION
@@ -679,12 +708,12 @@ function WhatWeDoSection({ isMobile }) {
                 fontSize: "15px",
                 fontWeight: "400",
                 lineHeight: "1.6",
-                color: "#555",
+                color: "rgba(255,255,255,0.6)",
                 margin: "0 0 20px 0",
               }}
             >
               To deliver the intelligence, resources, and strategies that{" "}
-              <span style={{ fontWeight: "600", color: colors.primary }}>bridge the gap</span> between opportunity and
+              <span style={{ fontWeight: "600", color: colors.accent }}>bridge the gap</span> between opportunity and
               outcome.
             </p>
 
@@ -694,13 +723,14 @@ function WhatWeDoSection({ isMobile }) {
                 fontSize: "32px",
                 fontWeight: "300",
                 lineHeight: "1.15",
-                color: colors.primary,
+                color: colors.white,
                 margin: "0 0 24px 0",
                 letterSpacing: "-0.5px",
               }}
             >
-              A <span style={{ fontWeight: "700" }}>tool</span>, a <span style={{ fontWeight: "700" }}>resource</span>,{" "}
-              and a <span style={{ fontWeight: "700", color: colors.accent }}>solution</span>
+              <span style={{ fontWeight: "700" }}>BRIDGE</span> is a <span style={{ fontWeight: "700" }}>tool</span>, a{" "}
+              <span style={{ fontWeight: "700" }}>resource</span>, and a{" "}
+              <span style={{ fontWeight: "700", color: colors.accent }}>solution</span>
             </h2>
 
             {/* Tab bar — mobile first */}
@@ -882,7 +912,7 @@ function WhatWeDoSection({ isMobile }) {
                 fontSize: "15px",
                 fontWeight: "400",
                 lineHeight: "1.7",
-                color: "#666",
+                color: "rgba(255,255,255,0.6)",
                 margin: "0 0 24px 0",
               }}
             >
@@ -901,7 +931,7 @@ function WhatWeDoSection({ isMobile }) {
                   fontSize: "14px",
                   fontWeight: "500",
                   fontStyle: "italic",
-                  color: colors.primary,
+                  color: "rgba(255,255,255,0.75)",
                   margin: 0,
                   lineHeight: "1.6",
                 }}
@@ -926,7 +956,7 @@ function WhatWeDoSection({ isMobile }) {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "8px",
-                  border: `1px solid ${colors.line}`,
+                  border: "1px solid rgba(255,255,255,0.2)",
                   borderRadius: "50px",
                   padding: "8px 20px",
                   marginBottom: "32px",
@@ -947,7 +977,7 @@ function WhatWeDoSection({ isMobile }) {
                     fontWeight: "700",
                     letterSpacing: "2px",
                     textTransform: "uppercase",
-                    color: colors.primary,
+                    color: colors.white,
                   }}
                 >
                   OUR MISSION
@@ -960,13 +990,13 @@ function WhatWeDoSection({ isMobile }) {
                   fontSize: "17px",
                   fontWeight: "400",
                   lineHeight: "1.6",
-                  color: "#555",
+                  color: "rgba(255,255,255,0.6)",
                   margin: "0 0 20px 0",
                   maxWidth: "500px",
                 }}
               >
                 To deliver the intelligence, resources, and strategies that{" "}
-                <span style={{ fontWeight: "600", color: colors.primary }}>bridge the gap</span> between opportunity and
+                <span style={{ fontWeight: "600", color: colors.accent }}>bridge the gap</span> between opportunity and
                 outcome.
               </p>
 
@@ -976,14 +1006,15 @@ function WhatWeDoSection({ isMobile }) {
                   fontSize: "42px",
                   fontWeight: "300",
                   lineHeight: "1.15",
-                  color: colors.primary,
+                  color: colors.white,
                   margin: "0 0 24px 0",
                   letterSpacing: "-0.5px",
                   maxWidth: "500px",
                 }}
               >
-                A <span style={{ fontWeight: "700" }}>tool</span>, a <span style={{ fontWeight: "700" }}>resource</span>
-                , and a <span style={{ fontWeight: "700", color: colors.accent }}>solution</span>
+                <span style={{ fontWeight: "700" }}>BRIDGE</span> is a <span style={{ fontWeight: "700" }}>tool</span>,
+                a <span style={{ fontWeight: "700" }}>resource</span>, and a{" "}
+                <span style={{ fontWeight: "700", color: colors.accent }}>solution</span>
               </h2>
 
               <p
@@ -992,7 +1023,7 @@ function WhatWeDoSection({ isMobile }) {
                   fontSize: "16px",
                   fontWeight: "400",
                   lineHeight: "1.7",
-                  color: "#666",
+                  color: "rgba(255,255,255,0.6)",
                   margin: "0 0 32px 0",
                 }}
               >
@@ -1011,7 +1042,7 @@ function WhatWeDoSection({ isMobile }) {
                     fontSize: "14px",
                     fontWeight: "500",
                     fontStyle: "italic",
-                    color: colors.primary,
+                    color: "rgba(255,255,255,0.75)",
                     margin: 0,
                   }}
                 >
@@ -1935,109 +1966,198 @@ function BridgeToImpactSection({ isMobile }) {
       }}
     >
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        {/* Header */}
-        <div style={{ maxWidth: "600px", marginBottom: isMobile ? "32px" : "48px" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
-              padding: "8px 20px",
-              marginBottom: isMobile ? "24px" : "32px",
-            }}
-          >
-            <div
-              style={{
-                width: "8px",
-                height: "8px",
-                borderRadius: "50%",
-                backgroundColor: colors.accent,
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "11px",
-                fontWeight: "700",
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                color: colors.primary,
-              }}
-            >
-              YOUR BRIDGE TO IMPACT
-            </span>
-          </div>
-
-          <h2
-            style={{
-              fontFamily: "DM Sans, sans-serif",
-              fontSize: isMobile ? "30px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.15",
-              color: colors.primary,
-              margin: "0 0 16px 0",
-              letterSpacing: "-0.5px",
-            }}
-          >
-            <span style={{ fontWeight: "700" }}>Impact</span> — defined on{" "}
-            <span style={{ fontWeight: "700", color: colors.accent }}>your</span> terms
-          </h2>
-
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "14px" : "16px",
-              fontWeight: "400",
-              lineHeight: "1.7",
-              color: "#666",
-              margin: 0,
-            }}
-          >
-            A market trader measures impact as reliable income. An investor measures it as returns and reach. A ministry
-            measures it as outcomes delivered.
-          </p>
-        </div>
-
-        {/* Stakeholder tabs — 2x2 grid on mobile, inline on desktop */}
+        {/* Header row — text left, stakeholder icons right */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : `repeat(${journeys.length}, auto)`,
-            gap: "4px",
-            marginBottom: isMobile ? "20px" : "32px",
-            background: colors.white,
-            borderRadius: "14px",
-            padding: "4px",
-            border: `1px solid ${colors.line}`,
-            width: isMobile ? "100%" : "fit-content",
+            display: isMobile ? "block" : "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: isMobile ? "32px" : "48px",
           }}
         >
-          {journeys.map((j, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                setActiveJourney(i);
-                setActivePhase(0);
-              }}
+          {/* Left — pill, headline, description */}
+          <div style={{ maxWidth: isMobile ? "100%" : "600px" }}>
+            <div
               style={{
-                padding: isMobile ? "10px 12px" : "12px 28px",
-                borderRadius: "10px",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "12px" : "13px",
-                fontWeight: i === activeJourney ? "700" : "500",
-                backgroundColor: i === activeJourney ? colors.primary : "transparent",
-                color: i === activeJourney ? colors.white : "#666",
-                transition: "all 0.3s ease",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                border: `1px solid ${colors.line}`,
+                borderRadius: "50px",
+                padding: "8px 20px",
+                marginBottom: isMobile ? "24px" : "32px",
+              }}
+            >
+              <div
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  backgroundColor: colors.accent,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "11px",
+                  fontWeight: "700",
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  color: colors.primary,
+                }}
+              >
+                YOUR BRIDGE TO IMPACT
+              </span>
+            </div>
+
+            <h2
+              style={{
+                fontFamily: "DM Sans, sans-serif",
+                fontSize: isMobile ? "28px" : "42px",
+                fontWeight: "300",
+                lineHeight: "1.15",
+                color: colors.primary,
+                margin: "0 0 16px 0",
+                letterSpacing: "-0.5px",
                 whiteSpace: "nowrap",
               }}
             >
-              {j.stakeholder}
-            </button>
-          ))}
+              <span style={{ fontWeight: "700" }}>Targeted</span> &{" "}
+              <span style={{ fontWeight: "700", color: colors.accent }}>Customized</span> Solutions
+            </h2>
+
+            <p
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: isMobile ? "14px" : "16px",
+                fontWeight: "400",
+                lineHeight: "1.7",
+                color: "#666",
+                margin: 0,
+              }}
+            >
+              A market trader measures impact as reliable income. An investor measures it as returns and reach. A
+              ministry measures it as outcomes delivered.
+            </p>
+          </div>
+
+          {/* Right — stakeholder icon buttons, bottom-aligned */}
+          <div
+            style={{
+              display: "flex",
+              gap: "8px",
+              marginTop: isMobile ? "24px" : "0",
+              justifyContent: isMobile ? "center" : "flex-end",
+            }}
+          >
+            {journeys.map((j, i) => {
+              const isActive = i === activeJourney;
+              const icons = [
+                /* Entrepreneur — storefront */
+                <svg
+                  key="e"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M2 7l1.5-4h17L22 7" />
+                  <path d="M2 7h20v4c0 0-1.5 2-5 2s-5-2-5-2-1.5 2-5 2-5-2-5-2V7z" />
+                  <path d="M4 13v8h16v-8" />
+                  <path d="M10 21v-6h4v6" />
+                </svg>,
+                /* Business / SME — office building */
+                <svg
+                  key="b"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+                  <path d="M9 22v-4h6v4" />
+                  <line x1="8" y1="6" x2="8" y2="6.01" />
+                  <line x1="12" y1="6" x2="12" y2="6.01" />
+                  <line x1="16" y1="6" x2="16" y2="6.01" />
+                  <line x1="8" y1="10" x2="8" y2="10.01" />
+                  <line x1="12" y1="10" x2="12" y2="10.01" />
+                  <line x1="16" y1="10" x2="16" y2="10.01" />
+                  <line x1="8" y1="14" x2="8" y2="14.01" />
+                  <line x1="12" y1="14" x2="12" y2="14.01" />
+                  <line x1="16" y1="14" x2="16" y2="14.01" />
+                </svg>,
+                /* Investor — trending up */
+                <svg
+                  key="i"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                  <polyline points="16 7 22 7 22 13" />
+                </svg>,
+                /* Government — landmark */
+                <svg
+                  key="g"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="3" y1="22" x2="21" y2="22" />
+                  <line x1="6" y1="18" x2="6" y2="11" />
+                  <line x1="10" y1="18" x2="10" y2="11" />
+                  <line x1="14" y1="18" x2="14" y2="11" />
+                  <line x1="18" y1="18" x2="18" y2="11" />
+                  <polygon points="12 2 20 8 4 8" />
+                  <line x1="2" y1="18" x2="22" y2="18" />
+                </svg>,
+              ];
+              return (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setActiveJourney(i);
+                    setActivePhase(0);
+                  }}
+                  title={j.stakeholder}
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "14px",
+                    border: isActive ? "none" : `1px solid ${colors.line}`,
+                    backgroundColor: isActive ? colors.primary : colors.white,
+                    color: isActive ? colors.white : "#999",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "all 0.3s ease",
+                    flexShrink: 0,
+                  }}
+                >
+                  {icons[i]}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Context line */}
@@ -2551,7 +2671,7 @@ function CTASection({ isMobile }) {
               onMouseLeave={() => setHoveredBtn(null)}
               style={{
                 padding: "16px 36px",
-                borderRadius: "14px",
+                borderRadius: "50px",
                 border: "none",
                 cursor: "pointer",
                 fontFamily: "DM Sans, sans-serif",
@@ -2570,7 +2690,7 @@ function CTASection({ isMobile }) {
               onMouseLeave={() => setHoveredBtn(null)}
               style={{
                 padding: "16px 36px",
-                borderRadius: "14px",
+                borderRadius: "50px",
                 border: "1px solid rgba(255,255,255,0.2)",
                 cursor: "pointer",
                 fontFamily: "DM Sans, sans-serif",
@@ -2877,7 +2997,7 @@ const SectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href={sectorRoutes[sector.key] || "#"}
+              href="#"
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
