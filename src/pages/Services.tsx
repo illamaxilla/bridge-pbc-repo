@@ -2324,7 +2324,7 @@ const FooterSectorGrid = () => {
           return (
             <a
               key={k}
-              href="#"
+              href={sectorRoutes[k] || "#"}
               title={fLabels[i]}
               onMouseEnter={() => setH(i)}
               onMouseLeave={() => setH(null)}
