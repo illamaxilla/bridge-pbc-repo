@@ -23,6 +23,7 @@ import Infrastructure from "./pages/sectors/Infrastructure";
 import Tourism from "./pages/sectors/Tourism";
 import Education from "./pages/sectors/Education";
 import Agriculture from "./pages/sectors/Agriculture";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/sectors/tourism" element={<Tourism />} />
           <Route path="/sectors/education" element={<Education />} />
           <Route path="/sectors/agriculture" element={<Agriculture />} />
+          <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
