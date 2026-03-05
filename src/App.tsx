@@ -7,6 +7,10 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Services from "./pages/Services";
 import About from "./pages/About";
+import Resources from "./pages/Resources";
+import Insights from "./pages/Insights";
+import Methodology from "./pages/Methodology";
+import Dashboard from "./pages/Dashboard";
 import Energy from "./pages/sectors/Energy";
 import Technology from "./pages/sectors/Technology";
 import Sports from "./pages/sectors/Sports";
@@ -32,6 +36,10 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/insights" element={<Insights />} />
+          <Route path="/methodology" element={<Methodology />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sectors/energy" element={<Energy />} />
           <Route path="/sectors/technology" element={<Technology />} />
           <Route path="/sectors/sports" element={<Sports />} />
