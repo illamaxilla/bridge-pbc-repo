@@ -31,6 +31,26 @@ function useIsMobile() {
   return isMobile;
 }
 
+const navHref = (item: string) =>
+  item === "Home" ? "/" :
+  item === "About" ? "/about" :
+  (item === "Services" || item === "Sectors") ? "/services" : "#";
+
+const sectorRoutes: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  tourism: "/sectors/tourism",
+  housing: "/sectors/housing",
+  transport: "/sectors/transport",
+  sports: "/sectors/sports",
+};
+
 // ============================================================================
 // HEADER — Exact spec from BRIDGE_Header_Handoff.md
 // ============================================================================
