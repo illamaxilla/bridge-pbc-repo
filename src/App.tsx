@@ -23,6 +23,7 @@ import Infrastructure from "./pages/sectors/Infrastructure";
 import Tourism from "./pages/sectors/Tourism";
 import Education from "./pages/sectors/Education";
 import Agriculture from "./pages/sectors/Agriculture";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
