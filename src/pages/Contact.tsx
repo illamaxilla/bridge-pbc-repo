@@ -1871,7 +1871,7 @@ const StepDetails = ({ values, onChange }) => {
     boxSizing: "border-box",
     transition: "border-color 0.2s ease",
   };
-  const lbl = {
+  const lbl: React.CSSProperties = {
     fontFamily: "Inter, sans-serif",
     fontSize: "11px",
     fontWeight: "700",
