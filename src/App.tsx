@@ -24,6 +24,7 @@ import Tourism from "./pages/sectors/Tourism";
 import Education from "./pages/sectors/Education";
 import Agriculture from "./pages/sectors/Agriculture";
 import Contact from "./pages/Contact";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
