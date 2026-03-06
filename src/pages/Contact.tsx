@@ -1858,7 +1858,7 @@ const StepGoal = ({ whoId, value, onChange, freeText, onFreeText }) => {
 
 const StepDetails = ({ values, onChange }) => {
   const isMobile = useIsMobile();
-  const inp = {
+  const inp: React.CSSProperties = {
     width: "100%",
     padding: "13px 15px",
     borderRadius: "12px",
