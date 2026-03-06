@@ -988,12 +988,12 @@ function BridgeTab({ mobile, filter, setFilter }) {
           }}
         >
           {[
-            { label: "", align: "left" },
-            { label: "Sector", align: "left", flush: true },
-            { label: "Impact Score", align: "left" },
-            { label: "Capital", align: "left" },
-            { label: "Ventures", align: "center" },
-            { label: "Access", align: "right" },
+            { label: "", align: "left" as const },
+            { label: "Sector", align: "left" as const, flush: true },
+            { label: "Impact Score", align: "left" as const },
+            { label: "Capital", align: "left" as const },
+            { label: "Ventures", align: "center" as const },
+            { label: "Access", align: "right" as const },
           ].map((h, i) => (
             <div
               key={i}

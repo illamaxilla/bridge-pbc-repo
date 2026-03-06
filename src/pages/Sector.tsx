@@ -1200,7 +1200,7 @@ const CrossSector = () => {
                         className="cs-scroll"
                         ref={isOpen ? scrollRef : null}
                         onScroll={(e) => {
-                          const el = e.target;
+                          const el = e.target as HTMLElement;
                           const cardsVis = mb ? 1 : 3;
                           const cw = el.scrollWidth / ring.items.length;
                           setScrollPage(Math.round(el.scrollLeft / (cw * cardsVis)));
@@ -1631,7 +1631,7 @@ const HeroSection = () => {
   return (
     <section style={{ backgroundColor: colors.white, padding: mb ? "60px 20px 48px" : "80px 80px 60px" }}>
       <div style={{ maxWidth: MAX_W, margin: "0 auto" }}>
-        <Pill>Analysis</Pill>
+        <Pill dark={false}>Analysis</Pill>
         <h1
           style={{
             fontFamily: "Inter, sans-serif",
@@ -1941,7 +1941,7 @@ const SectorGrid = () => {
     <section style={{ backgroundColor: colors.background, padding: mb ? "60px 20px 80px" : "100px 80px" }}>
       <div style={{ maxWidth: MAX_W, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <Pill>12 Integrated Sectors</Pill>
+          <Pill dark={false}>12 Integrated Sectors</Pill>
           <h2
             style={{
               fontFamily: "Inter, sans-serif",
