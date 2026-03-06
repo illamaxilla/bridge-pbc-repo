@@ -1631,7 +1631,7 @@ const HeroSection = () => {
   return (
     <section style={{ backgroundColor: colors.white, padding: mb ? "60px 20px 48px" : "80px 80px 60px" }}>
       <div style={{ maxWidth: MAX_W, margin: "0 auto" }}>
-        <Pill>Analysis</Pill>
+        <Pill dark={false}>Analysis</Pill>
         <h1
           style={{
             fontFamily: "Inter, sans-serif",
