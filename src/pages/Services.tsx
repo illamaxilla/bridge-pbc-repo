@@ -1524,9 +1524,6 @@ export default function ServicesSectorsPageV2() {
       {/* ============================================ */}
       {/* SECTION 1: Audience-Focused Hero */}
       {/* ============================================ */}
-      <section
-        style={{
-                <path fill={colors.accent} d="M2070.26,927.95c-.2.2-.5.4-.7.5h-.3l1-.5Z" />
                 <path fill="#0fea68" d="M2070.26,927.95c-.2.2-.5.4-.7.5h-.3l1-.5Z" />
                 <path
                   fill={c}
