@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import SiteHeader from "@/components/SiteHeader";
 
 const colors = {
   primary: "#1B4D3E",

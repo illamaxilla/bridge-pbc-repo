@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import SiteHeader from "@/components/SiteHeader";
 import {
   Lightbulb,
   Building2,
