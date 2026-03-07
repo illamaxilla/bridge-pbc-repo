@@ -4488,7 +4488,7 @@ export default function ServicesSectorsPageV2() {
                 {["Company", "Services", "Resources", "Insights"].map((label) => (
                   <a
                     key={label}
-                    href="#"
+                    href={label === "Company" ? "/about" : label === "Services" ? "/services" : label === "Resources" ? "/resources" : "/insights"}
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: "12px",
