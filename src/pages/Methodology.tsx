@@ -3455,7 +3455,7 @@ export default function HowWeWorkPage() {
     <>
       <style>{GLOBAL_CSS}</style>
       <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', sans-serif" }}>
-        <Header />
+        <SiteHeader />
         <Hero activeIdx={activeIdx} setActive={handleSetActive} />
         <ProcessTrack key={animKey} seg={seg} animKey={animKey} />
         <ToolkitSection seg={seg} />
