@@ -6327,7 +6327,7 @@ const InvestmentCTASection = ({ sector }) => {
                   Full financial model available
                 </span>
                 <a
-                  href="#"
+                  href="/resources"
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
