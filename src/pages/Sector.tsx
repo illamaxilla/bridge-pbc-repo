@@ -2478,7 +2478,7 @@ export default function BRIDGESectorsLanding() {
         }
         input::placeholder { color: rgba(255,255,255,0.3); }
       `}</style>
-      <Header />
+      <SiteHeader />
       <HeroSection />
       <SectorGrid />
       <CrossSector />
