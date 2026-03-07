@@ -7335,7 +7335,7 @@ export default function InfrastructureSectorPage() {
         }
       `}</style>
 
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection sector={sectorData} />
       <ValueChainSectionPremium />

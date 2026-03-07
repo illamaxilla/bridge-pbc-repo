@@ -7283,7 +7283,7 @@ export default function EducationSkillsSectorPage() {
         }
       `}</style>
 
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection />
 
