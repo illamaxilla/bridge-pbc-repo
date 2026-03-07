@@ -1527,11 +1527,11 @@ export default function ServicesSectorsPageV2() {
       <section
         style={{
           backgroundColor: colors.background,
-          padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
-                />
-                <rect fill={c} x="2812.75" y="339.47" width="216.75" height="572.62" rx="9.6" ry="9.6" />
-                <rect fill={colors.accent} x="3083.41" y="339.47" width="175.12" height="257.67" />
-                <rect fill={colors.accent} x="3083.41" y="654.42" width="175.12" height="257.67" />
+        }}
+      >
+        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+          {/* Pill Badge */}
+          <div
                 <circle
                   fill="none"
                   stroke={colors.dark}
