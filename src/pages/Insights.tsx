@@ -1836,7 +1836,7 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
