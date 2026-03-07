@@ -773,6 +773,10 @@ export default function BRIDGEHomePage() {
   const [openSector, setOpenSector] = useState(null);
   const [insightIndex, setInsightIndex] = useState(0);
   const [hoveredInsight, setHoveredInsight] = useState(null);
+  const [hoveredNav, setHoveredNav] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [logoHovered, setLogoHovered] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
 
