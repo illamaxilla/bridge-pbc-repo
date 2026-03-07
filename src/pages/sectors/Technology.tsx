@@ -7337,7 +7337,7 @@ const Footer = () => {
                     {col.links.map((link) => (
                       <a
                         key={link}
-                        href="#"
+                        href={footerLinkHref(link)}
                         style={{
                           display: "block",
                           fontSize: "14px",
