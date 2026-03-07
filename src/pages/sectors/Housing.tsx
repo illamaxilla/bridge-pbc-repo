@@ -6596,7 +6596,7 @@ export default function HousingRealEstateSectorPage() {
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
         rel="stylesheet"
       />
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection sector={sectorData} />
       <ValueChainSectionPremium />

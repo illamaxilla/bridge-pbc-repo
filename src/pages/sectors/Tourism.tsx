@@ -7251,7 +7251,7 @@ export default function TourismHospitalitySectorPage() {
         rel="stylesheet"
       />
 
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection />
       <ValueChainSectionPremium />

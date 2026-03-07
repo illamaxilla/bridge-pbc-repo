@@ -6692,7 +6692,7 @@ export default function EnergySectorPage() {
           __html: `@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }`,
         }}
       />
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <OpportunitySection sector={sectorData} />
       <ValueChainSection sector={sectorData} />

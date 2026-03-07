@@ -7926,7 +7926,7 @@ export default function AgricultureSectorPageIntegrated() {
         }
       `}</style>
 
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <OpportunitySection />
 
