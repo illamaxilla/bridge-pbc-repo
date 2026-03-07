@@ -6276,7 +6276,7 @@ const Footer = () => {
               {["Company", "Services", "Resources", "Insights"].map((label) => (
                 <a
                   key={label}
-                  href="#"
+                  href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "12px",
@@ -6443,22 +6443,22 @@ const Footer = () => {
                     >
                       {col.title}
                     </h4>
-                    {col.links.map((link) => (
-                      <a
-                        key={link}
-                        href="#"
-                        style={{
-                          display: "block",
-                          fontSize: "14px",
-                          color: "rgba(255,255,255,0.6)",
-                          fontFamily: "'DM Sans', sans-serif",
-                          textDecoration: "none",
-                          marginBottom: "14px",
-                        }}
-                      >
-                        {link}
-                      </a>
-                    ))}
+                     {col.links.map((link) => (
+                       <a
+                         key={link}
+                         href={footerLinkHref(link)}
+                         style={{
+                           display: "block",
+                           fontSize: "14px",
+                           color: "rgba(255,255,255,0.6)",
+                           fontFamily: "'DM Sans', sans-serif",
+                           textDecoration: "none",
+                           marginBottom: "14px",
+                         }}
+                       >
+                         {link}
+                       </a>
+                     ))}
                   </div>
                 ))}
               </div>

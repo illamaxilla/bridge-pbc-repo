@@ -14,7 +14,7 @@ const clr = {
 const ALL_NAV = [
   { label: "Home",      to: "/" },
   { label: "About",     to: "/about" },
-  { label: "Sectors",   to: "/services" },
+  { label: "Sectors",   to: "/sectors" },
   { label: "Insight",   to: "/insights" },
   { label: "Resources", to: "/resources" },
   { label: "Contact",   to: "/contact" },
@@ -60,7 +60,7 @@ export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  
   const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
