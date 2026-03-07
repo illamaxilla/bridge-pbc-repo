@@ -2970,6 +2970,8 @@ const Footer = () => {
                 <a
                   key={i}
                   href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     width: "28px",
                     height: "28px",
