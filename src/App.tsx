@@ -31,6 +31,7 @@ import Education from "./pages/sectors/Education";
 import Agriculture from "./pages/sectors/Agriculture";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
+import Sectors from "./pages/Sectors";
 
 const queryClient = new QueryClient();
 

@@ -60,7 +60,7 @@ export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  
   const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
