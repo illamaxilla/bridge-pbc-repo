@@ -1241,12 +1241,9 @@ export default function ServicesSectorsPageV2() {
   const [activeService, setActiveService] = useState("research");
   const [selectedSector, setSelectedSector] = useState(null);
   const [filterCategory, setFilterCategory] = useState("all");
-  const [hoveredNav, setHoveredNav] = useState(null);
-  const [logoHovered, setLogoHovered] = useState(false);
   const [footerSectorHovered, setFooterSectorHovered] = useState(null);
   const [heroSectorHovered, setHeroSectorHovered] = useState(null);
   const [activeAudience, setActiveAudience] = useState("entrepreneurs");
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showFeatures, setShowFeatures] = useState(false);
   const [sectorScrollIndex, setSectorScrollIndex] = useState(0);
