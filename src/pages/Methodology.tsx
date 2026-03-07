@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Lightbulb,
   Building2,
@@ -557,7 +557,7 @@ const BridgeLogo = ({ height = 40 }) => (
 );
 
 /* ─── BRIDGE LOGO WHITE (for footer) ────────────────────────────── */
-const colors = { primary: "#1B4D3E", accent: "#B8D935", white: "#FFFFFF" };
+const colors = { primary: "#1B4D3E", accent: "#B8D935", white: "#FFFFFF", line: "#DEDEDE" };
 const BridgeLogoWhite = () => (
   <div style={{ display: "flex", alignItems: "center", height: "40px" }}>
     <svg viewBox="0 0 4113.8 932.3" height="36" style={{ display: "block" }}>
