@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import SiteHeader from "@/components/SiteHeader";
 
 // BRIDGE Design System - Consistent with Homepage
 const colors = {

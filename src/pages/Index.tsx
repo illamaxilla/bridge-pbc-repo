@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SiteHeader from "@/components/SiteHeader";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
 
 // ═══════════════════════════════════════════════

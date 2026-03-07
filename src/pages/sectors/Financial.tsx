@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import SiteHeader from "@/components/SiteHeader";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Financial Inclusion & Economic Security
