@@ -4314,58 +4314,62 @@ export default function ServicesSectorsPageV2() {
               alignItems: "center",
             }}
           >
-            <button
-              style={{
-                backgroundColor: colors.accent,
-                color: colors.primary,
-                border: "none",
-                padding: "16px 28px",
-                fontSize: "14px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                width: isMobile ? "100%" : "auto",
-              }}
-            >
-              Start a Conversation
-              <span
+            <a href="/contact" style={{ textDecoration: "none" }}>
+              <button
                 style={{
-                  width: "28px",
-                  height: "28px",
-                  backgroundColor: "rgba(27,77,62,0.15)",
-                  borderRadius: "50%",
+                  backgroundColor: colors.accent,
+                  color: colors.primary,
+                  border: "none",
+                  padding: "16px 28px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  fontFamily: "Inter, sans-serif",
+                  cursor: "pointer",
+                  borderRadius: "50px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  gap: "10px",
+                  width: isMobile ? "100%" : "auto",
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </span>
-            </button>
-            <button
-              style={{
-                backgroundColor: "transparent",
-                color: colors.white,
-                border: `1.5px solid rgba(255,255,255,0.3)`,
-                padding: "16px 28px",
-                fontSize: "14px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-                width: isMobile ? "100%" : "auto",
-                textAlign: "center",
-              }}
-            >
-              Explore Sectors
-            </button>
+                Start a Conversation
+                <span
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    backgroundColor: "rgba(27,77,62,0.15)",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </span>
+              </button>
+            </a>
+            <a href="/services" style={{ textDecoration: "none" }}>
+              <button
+                style={{
+                  backgroundColor: "transparent",
+                  color: colors.white,
+                  border: `1.5px solid rgba(255,255,255,0.3)`,
+                  padding: "16px 28px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  fontFamily: "Inter, sans-serif",
+                  cursor: "pointer",
+                  borderRadius: "50px",
+                  width: isMobile ? "100%" : "auto",
+                  textAlign: "center",
+                }}
+              >
+                Explore Sectors
+              </button>
+            </a>
            </div>
          </div>
         </div>

@@ -3547,21 +3547,23 @@ export default function BRIDGEHomePage() {
             ))}
           </div>
           <div style={{ textAlign: "center", marginTop: "48px" }}>
-            <button
-              style={{
-                backgroundColor: colors.accent,
-                color: colors.primary,
-                border: "none",
-                padding: isMobile ? "12px 24px" : "16px 32px",
-                fontSize: isMobile ? "13px" : "15px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-              }}
-            >
-              More Insights
-            </button>
+            <a href="/insights" style={{ textDecoration: "none" }}>
+              <button
+                style={{
+                  backgroundColor: colors.accent,
+                  color: colors.primary,
+                  border: "none",
+                  padding: isMobile ? "12px 24px" : "16px 32px",
+                  fontSize: isMobile ? "13px" : "15px",
+                  fontWeight: "600",
+                  fontFamily: "Inter, sans-serif",
+                  cursor: "pointer",
+                  borderRadius: "50px",
+                }}
+              >
+                More Insights
+              </button>
+            </a>
           </div>
         </div>
       </section>
