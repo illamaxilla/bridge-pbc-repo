@@ -7455,7 +7455,7 @@ export default function FinancialInclusionSectorPage() {
       {/* Fade-in animation for mobile menu */}
       <style>{`@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } .hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }`}</style>
 
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection sector={sectorData} />
       <ValueChainSectionPremium />

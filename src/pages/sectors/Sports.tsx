@@ -7293,7 +7293,7 @@ export default function SportsEntertainmentSectorPage() {
           to { opacity: 1; }
         }
       `}</style>
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection />
       <ValueChainSection />
