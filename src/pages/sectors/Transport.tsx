@@ -1093,10 +1093,8 @@ const footerLinkHref = (link: string): string => {
   };
   return map[link] || "#";
 };
-  const [hoveredNav, setHoveredNav] = useState(null);
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
+
+
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);

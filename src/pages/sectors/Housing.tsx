@@ -1035,14 +1035,8 @@ const footerLinkHref = (link: string): string => {
   };
   return map[link] || "#";
 };
-  infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
-  tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
-  creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
-  energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
-};
-const navHref = (item: string) => item === "Home" ? "/" : item === "About" ? "/about" : (item === "Services" || item === "Sectors") ? "/services" : "#";
 
-const Header = () => {
+
   const [hoveredNav, setHoveredNav] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
