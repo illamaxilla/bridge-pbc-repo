@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import SiteHeader from "@/components/SiteHeader";
 
 // ============================================================================
 // BRIDGE PBC — Contact Page (Integrated with Guided Widget)
