@@ -6846,6 +6846,13 @@ const footerSectorIcons = [
   },
 ];
 
+const sectorRoutes: Record<string, string> = {
+  infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
+  tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
+  creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
+  energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
+};
+
 const SectorGrid = () => {
   const [hovered, setHovered] = useState(null);
   return (
