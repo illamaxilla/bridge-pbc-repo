@@ -2716,7 +2716,7 @@ export default function ResourcesPage() {
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "DM Sans,sans-serif" }}>
-      <SiteHeader activePage="Resources" />
+      <SiteHeader />
 
       {/* ── HERO ── */}
       <section style={{ background: C.primary, padding: mobile ? "52px 20px 40px" : `72px ${PAD} 52px` }}>

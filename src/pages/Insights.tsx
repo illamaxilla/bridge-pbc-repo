@@ -1560,7 +1560,7 @@ export default function InsightsPage() {
 
   return (
     <div style={{ background: C.bg, fontFamily: "DM Sans,sans-serif" }}>
-      <SiteHeader activePage="Insight" />
+      <SiteHeader />
 
       {/* ── HERO ──────────────────────────────────────────── */}
       <section style={{ background: C.primary, padding: mobile ? "80px 20px 64px" : `80px ${PAD} 80px` }}>
