@@ -889,7 +889,6 @@ const footerLinkHref = (link: string): string => {
 };
 
 
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
 
