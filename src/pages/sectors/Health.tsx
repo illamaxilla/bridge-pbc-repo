@@ -824,11 +824,17 @@ const BridgeLogo = ({ height = 40 }) => (
   </svg>
 );
 
-// ============================================================================
-// HEADER — Responsive with Hamburger Menu
-// ============================================================================
-
-const sectorRoutes: Record<string, string> = {
+const footerLinkHref = (link: string): string => {
+  const map: Record<string, string> = {
+    "About BRIDGE": "/about", "Our Approach": "/methodology", "Sectors": "/services",
+    "Contact Us": "/contact", "Research & Guidance": "/services", "Venture Development": "/services",
+    "Direct Investment": "/services", "Strategic Partnerships": "/services",
+    "White Paper": "/resources", "Case Studies": "/resources", "Research Library": "/resources",
+    "Data & Reports": "/resources", "Insights & Analysis": "/insights", "Sector Briefs": "/insights",
+    "Policy Updates": "/insights", "Annual Review": "/insights",
+  };
+  return map[link] || "#";
+};
   infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
   tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
   creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
