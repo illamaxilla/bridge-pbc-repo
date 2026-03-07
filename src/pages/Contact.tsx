@@ -3396,7 +3396,7 @@ export default function ContactPage() {
       <SiteHeader />
       <HeroSection />
       <WidgetSection />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

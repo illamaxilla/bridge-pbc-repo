@@ -2275,7 +2275,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
