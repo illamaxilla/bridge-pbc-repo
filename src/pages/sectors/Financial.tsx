@@ -4071,7 +4071,7 @@ const PolicyAlignmentSection = () => {
             </p>
           </div>
           <a
-            href="#"
+            href="/methodology"
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
