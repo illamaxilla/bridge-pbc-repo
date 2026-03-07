@@ -541,7 +541,7 @@ export default function EnergySectorPage() {
       <InvestmentCTASection sector={sectorData} />
       <ImpactSection sector={sectorData} />
       <FinalCTASection />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

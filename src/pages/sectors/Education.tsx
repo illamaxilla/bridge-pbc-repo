@@ -865,7 +865,7 @@ export default function EducationSkillsSectorPage() {
       <div style={{ backgroundColor: colors.primary, padding: "0 80px" }}>
         <div style={{ height: "0.5px", backgroundColor: "rgba(255,255,255,0.08)" }} />
       </div>
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

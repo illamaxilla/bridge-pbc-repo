@@ -6724,7 +6724,7 @@ export default function TransportationLogisticsSectorPage() {
       <ImpactSection />
       <FinalCTASection />
       <CTAFooterSeparator />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
