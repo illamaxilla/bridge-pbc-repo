@@ -1034,27 +1034,29 @@ export default function BRIDGEHomePage() {
                   </svg>
                 </span>
               </button>
-              <button
-                className="cta-secondary"
-                style={{
-                  backgroundColor: "transparent",
-                  color: colors.dark,
-                  border: `1.5px solid ${colors.line}`,
-                  padding: isMobile ? "12px 22px" : "16px 28px",
-                  fontSize: isMobile ? "13px" : "14px",
-                  fontWeight: "500",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: isMobile ? "auto" : "60px",
-                  boxSizing: "border-box",
-                }}
-              >
-                Request Access
-              </button>
+              <a href="/login" style={{ textDecoration: "none" }}>
+                <button
+                  className="cta-secondary"
+                  style={{
+                    backgroundColor: "transparent",
+                    color: colors.dark,
+                    border: `1.5px solid ${colors.line}`,
+                    padding: isMobile ? "12px 22px" : "16px 28px",
+                    fontSize: isMobile ? "13px" : "14px",
+                    fontWeight: "500",
+                    fontFamily: "Inter, sans-serif",
+                    cursor: "pointer",
+                    borderRadius: "50px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: isMobile ? "auto" : "60px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  Request Access
+                </button>
+              </a>
             </div>
           </div>
         </div>
