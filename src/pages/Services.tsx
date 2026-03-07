@@ -1525,8 +1525,6 @@ export default function ServicesSectorsPageV2() {
       {/* ============================================ */}
       {/* SECTION 1: Audience-Focused Hero */}
       {/* ============================================ */}
-              onMouseEnter={() => setLogoHovered(true)}
-              onMouseLeave={() => setLogoHovered(false)}
             >
               <svg viewBox="0 0 3434.33 932.3" height="36" style={{ display: "block" }}>
                 <path fill={colors.accent} d="M2070.26,927.95c-.2.2-.5.4-.7.5h-.3l1-.5Z" />
