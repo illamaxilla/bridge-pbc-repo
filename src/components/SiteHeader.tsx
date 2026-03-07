@@ -14,7 +14,7 @@ const clr = {
 const ALL_NAV = [
   { label: "Home",      to: "/" },
   { label: "About",     to: "/about" },
-  { label: "Sectors",   to: "/services" },
+  { label: "Sectors",   to: "/sectors" },
   { label: "Insight",   to: "/insights" },
   { label: "Resources", to: "/resources" },
   { label: "Contact",   to: "/contact" },
