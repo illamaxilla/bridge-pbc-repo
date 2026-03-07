@@ -4064,7 +4064,7 @@ export default function ContactPage() {
         }
       `}</style>
 
-      <Header />
+      <SiteHeader />
       <HeroSection />
       <WidgetSection />
       <Footer />
