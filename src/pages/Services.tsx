@@ -1520,10 +1520,7 @@ export default function ServicesSectorsPageV2() {
         .cta-lime:hover { background-color: #1B4D3E !important; color: #FFFFFF !important; }
       `}</style>
 
-      {/* Header — Exact match to BRIDGE_Header_Code_Reference.md */}
-      <header
-        style={{
-          backgroundColor: isScrolled ? "rgba(255,255,255,0.85)" : colors.white,
+      <SiteHeader />
           backdropFilter: isScrolled ? "blur(12px)" : "none",
           WebkitBackdropFilter: isScrolled ? "blur(12px)" : "none",
           padding: isMobile ? "0 20px" : "0 80px",

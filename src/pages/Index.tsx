@@ -943,10 +943,7 @@ export default function BRIDGEHomePage() {
         .header-icon:hover svg { stroke: #1B4D3E !important; }
       `}</style>
 
-      {/* NAVIGATION */}
-      <header
-        style={{
-          backgroundColor: isScrolled ? "rgba(255,255,255,0.85)" : colors.white,
+      <SiteHeader />
           backdropFilter: isScrolled ? "blur(12px)" : "none",
           WebkitBackdropFilter: isScrolled ? "blur(12px)" : "none",
           padding: isMobile ? "0 20px" : "0 80px",
