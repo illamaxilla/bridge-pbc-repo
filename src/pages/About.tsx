@@ -2500,7 +2500,7 @@ export default function BRIDGEAboutPage() {
       <ThreeGapsSection isMobile={isMobile} />
       <BridgeToImpactSection isMobile={isMobile} />
       <CTASection isMobile={isMobile} />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
