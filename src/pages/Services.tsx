@@ -1257,13 +1257,10 @@ export default function ServicesSectorsPageV2() {
 
   // Scroll detection + responsive detection
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
-    window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
   }, []);

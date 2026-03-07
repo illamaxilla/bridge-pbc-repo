@@ -799,9 +799,7 @@ export default function BRIDGEHomePage() {
   const [contactStep, setContactStep] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.scrollTo(0, 0);
   }, []);
 
   const insights = [
