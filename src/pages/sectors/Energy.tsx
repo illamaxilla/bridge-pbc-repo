@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SiteHeader from "@/components/SiteHeader";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Energy & Renewable Resources
