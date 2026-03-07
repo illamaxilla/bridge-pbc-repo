@@ -1007,21 +1007,8 @@ const footerLinkHref = (link: string): string => {
 // ============================================================================
 // HERO SECTION
 // ============================================================================
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-          padding: isMobile ? "0 20px" : "0 80px",
-          height: "72px",
-          boxSizing: "border-box",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          position: "sticky",
-          top: 0,
-          zIndex: 1000,
-          transition: "background-color 0.3s ease, box-shadow 0.3s ease",
-          boxShadow: scrolled ? "0 1px 12px rgba(0,0,0,0.06)" : "none",
-        }}
-      >
+
+
         <div style={{ display: "flex", alignItems: "center" }}>
           <BridgeLogo height={isMobile ? 32 : 40} />
         </div>
