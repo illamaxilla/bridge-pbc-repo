@@ -1528,14 +1528,6 @@ export default function ServicesSectorsPageV2() {
         style={{
           backgroundColor: colors.background,
           padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
-        }}
-      >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-          {/* Pill Badge */}
-          <div
-                <path
-                  fill={c}
-                  d="M2757.31,19.09h491.3c5.42,0,9.82,4.4,9.82,9.82v218.7c0,5.42-4.4,9.82-9.82,9.82h-507.36c-56.98,0-108.53,23.02-145.87,60.35-37.34,37.23-60.45,88.79-60.45,145.66,0,113.75,92.37,206.01,206.32,206.01h12.89c2.86,0,5.11,2.25,5.11,5.11v236.7c0,1.13-.92,1.94-1.94,1.94h0c-242.22,0-438.52-195.99-438.52-437.8v-18.51c0-241.81,196.29-437.8,438.52-437.8h0Z"
                 />
                 <rect fill={c} x="2812.75" y="339.47" width="216.75" height="572.62" rx="9.6" ry="9.6" />
                 <rect fill={colors.accent} x="3083.41" y="339.47" width="175.12" height="257.67" />
