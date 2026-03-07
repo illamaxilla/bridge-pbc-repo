@@ -4806,7 +4806,7 @@ export default function ServicesSectorsPageV2() {
                     {["About BRIDGE", "Our Approach", "Sectors", "Contact Us"].map((link) => (
                       <a
                         key={link}
-                        href="#"
+                        href={footerLinkHref(link)}
                         style={{
                           display: "block",
                           fontSize: "14px",
@@ -4838,7 +4838,7 @@ export default function ServicesSectorsPageV2() {
                       (link) => (
                         <a
                           key={link}
-                          href="#"
+                          href={footerLinkHref(link)}
                           style={{
                             display: "block",
                             fontSize: "14px",
@@ -4870,7 +4870,7 @@ export default function ServicesSectorsPageV2() {
                     {["White Paper", "Case Studies", "Research Library", "Data & Reports"].map((link) => (
                       <a
                         key={link}
-                        href="#"
+                        href={footerLinkHref(link)}
                         style={{
                           display: "block",
                           fontSize: "14px",
@@ -4901,7 +4901,7 @@ export default function ServicesSectorsPageV2() {
                     {["Insights & Analysis", "Sector Briefs", "Policy Updates", "Annual Review"].map((link) => (
                       <a
                         key={link}
-                        href="#"
+                        href={footerLinkHref(link)}
                         style={{
                           display: "block",
                           fontSize: "14px",
