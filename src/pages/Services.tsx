@@ -1527,9 +1527,7 @@ export default function ServicesSectorsPageV2() {
       <section
         style={{
           backgroundColor: colors.background,
-                <path
-                  fill={c}
-                  d="M1853.06,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9h0ZM1894.56,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1v.1Z"
+          padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
                 />
                 <path
                   fill={c}
