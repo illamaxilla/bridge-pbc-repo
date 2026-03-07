@@ -1526,20 +1526,14 @@ export default function ServicesSectorsPageV2() {
       {/* ============================================ */}
       <section
         style={{
-          backgroundColor: colors.background,
+          padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
         }}
       >
         <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
           {/* Pill Badge */}
           <div
-                <circle
-                  fill="none"
-                  stroke={colors.dark}
-                  strokeWidth="5"
-                  strokeMiterlimit="10"
-                  cx="3385.56"
-                  cy="866.94"
-                  r="46.27"
+            style={{
+              display: "inline-flex",
                 />
                 <path
                   fill={colors.dark}
