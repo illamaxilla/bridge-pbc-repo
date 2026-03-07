@@ -982,20 +982,31 @@ const BridgeLogo = ({ height = 40 }) => (
   </svg>
 );
 
-const Header = () => {
-  const [hoveredNav, setHoveredNav] = useState(null);
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
+const footerLinkHref = (link: string): string => {
+  const map: Record<string, string> = {
+    "About BRIDGE": "/about",
+    "Our Approach": "/methodology",
+    "Sectors": "/services",
+    "Contact Us": "/contact",
+    "Research & Guidance": "/services",
+    "Venture Development": "/services",
+    "Direct Investment": "/services",
+    "Strategic Partnerships": "/services",
+    "White Paper": "/resources",
+    "Case Studies": "/resources",
+    "Research Library": "/resources",
+    "Data & Reports": "/resources",
+    "Insights & Analysis": "/insights",
+    "Sector Briefs": "/insights",
+    "Policy Updates": "/insights",
+    "Annual Review": "/insights",
+  };
+  return map[link] || "#";
+};
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navItems = ["Home", "Services", "Sectors", "Insight", "Contact"];
-  const navHref = (item: string) => item === "Home" ? "/" : item === "About" ? "/about" : (item === "Services" || item === "Sectors") ? "/services" : "#";
+// ============================================================================
+// HERO SECTION
+// ============================================================================
 
   return (
     <>
