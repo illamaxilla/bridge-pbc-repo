@@ -6675,10 +6675,6 @@ const footerLinkHref = (link: string): string => {
 };
 
 
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const navItems = ["Home", "Services", "Sectors", "Insight", "Contact"];
 
