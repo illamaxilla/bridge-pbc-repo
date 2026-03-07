@@ -4446,7 +4446,9 @@ export default function ServicesSectorsPageV2() {
             backgroundImage: `radial-gradient(${colors.accent} 1px, transparent 1px)`,
             backgroundSize: "30px 30px",
           }}
-        />
+        }}
+      >
+        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
 
         <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center", position: "relative" }}>
           <h2
