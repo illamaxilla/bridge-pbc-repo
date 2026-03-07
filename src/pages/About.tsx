@@ -3154,6 +3154,8 @@ const Footer = () => {
                   <a
                     key={i}
                     href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     style={{
                       width: "34px",
                       height: "34px",
