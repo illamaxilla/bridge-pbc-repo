@@ -4103,7 +4103,8 @@ const PolicyCardSection = () => {
               Every venture aligns with at least one active government policy or initiative.
             </div>
           </div>
-          <button
+          <a
+            href="/methodology"
             style={{
               fontFamily: "DM Sans, sans-serif",
               fontSize: "13px",
@@ -4112,15 +4113,16 @@ const PolicyCardSection = () => {
               backgroundColor: colors.accent,
               padding: "12px 24px",
               borderRadius: "50px",
-              border: "none",
+              textDecoration: "none",
               whiteSpace: "nowrap",
               textAlign: "center",
               cursor: "pointer",
               alignSelf: isMobile ? "center" : "auto",
+              display: "inline-flex",
             }}
           >
             View Partnership Strategy
-          </button>
+          </a>
         </div>
       </div>
     </section>
