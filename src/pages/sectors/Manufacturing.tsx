@@ -814,19 +814,19 @@ const BridgeLogo = ({ height = 40 }) => (
   </svg>
 );
 
-// ============================================================================
-// HEADER COMPONENT — Exact Production Code
-// ============================================================================
-
-const sectorRoutes: Record<string, string> = {
-  infra: "/sectors/infrastructure", fin: "/sectors/financial", health: "/sectors/health",
-  tech: "/sectors/technology", edu: "/sectors/education", agri: "/sectors/agriculture",
-  creative: "/sectors/sports", housing: "/sectors/housing", tourism: "/sectors/tourism",
-  energy: "/sectors/energy", mfg: "/sectors/manufacturing", transport: "/sectors/transport",
+const footerLinkHref = (link: string): string => {
+  const map: Record<string, string> = {
+    "About BRIDGE": "/about", "Our Approach": "/methodology", "Sectors": "/services",
+    "Contact Us": "/contact", "Research & Guidance": "/services", "Venture Development": "/services",
+    "Direct Investment": "/services", "Strategic Partnerships": "/services",
+    "White Paper": "/resources", "Case Studies": "/resources", "Research Library": "/resources",
+    "Data & Reports": "/resources", "Insights & Analysis": "/insights", "Sector Briefs": "/insights",
+    "Policy Updates": "/insights", "Annual Review": "/insights",
+  };
+  return map[link] || "#";
 };
-const navHref = (item: string) => item === "Home" ? "/" : item === "About" ? "/about" : (item === "Services" || item === "Sectors") ? "/services" : "#";
 
-const Header = () => {
+
   const [hoveredNav, setHoveredNav] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

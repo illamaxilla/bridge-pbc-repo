@@ -752,6 +752,28 @@ const sectorRoutes: Record<string, string> = {
 const navHref = (item: string) =>
   item === "Home" ? "/" : item === "About" ? "/about" : item === "Services" || item === "Sectors" ? "/services" : "#";
 
+const footerLinkHref = (link: string): string => {
+  const map: Record<string, string> = {
+    "About BRIDGE": "/about",
+    "Our Approach": "/methodology",
+    "Sectors": "/services",
+    "Contact Us": "/contact",
+    "Research & Guidance": "/services",
+    "Venture Development": "/services",
+    "Direct Investment": "/services",
+    "Strategic Partnerships": "/services",
+    "White Paper": "/resources",
+    "Case Studies": "/resources",
+    "Research Library": "/resources",
+    "Data & Reports": "/resources",
+    "Insights & Analysis": "/insights",
+    "Sector Briefs": "/insights",
+    "Policy Updates": "/insights",
+    "Annual Review": "/insights",
+  };
+  return map[link] || "#";
+};
+
 export default function BRIDGEHomePage() {
   const isMobile = useIsMobile();
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -773,17 +795,11 @@ export default function BRIDGEHomePage() {
   const [openSector, setOpenSector] = useState(null);
   const [insightIndex, setInsightIndex] = useState(0);
   const [hoveredInsight, setHoveredInsight] = useState(null);
-  const [hoveredNav, setHoveredNav] = useState(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [logoHovered, setLogoHovered] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.scrollTo(0, 0);
   }, []);
 
   const insights = [
@@ -1034,27 +1050,29 @@ export default function BRIDGEHomePage() {
                   </svg>
                 </span>
               </button>
-              <button
-                className="cta-secondary"
-                style={{
-                  backgroundColor: "transparent",
-                  color: colors.dark,
-                  border: `1.5px solid ${colors.line}`,
-                  padding: isMobile ? "12px 22px" : "16px 28px",
-                  fontSize: isMobile ? "13px" : "14px",
-                  fontWeight: "500",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: isMobile ? "auto" : "60px",
-                  boxSizing: "border-box",
-                }}
-              >
-                Request Access
-              </button>
+              <a href="/login" style={{ textDecoration: "none" }}>
+                <button
+                  className="cta-secondary"
+                  style={{
+                    backgroundColor: "transparent",
+                    color: colors.dark,
+                    border: `1.5px solid ${colors.line}`,
+                    padding: isMobile ? "12px 22px" : "16px 28px",
+                    fontSize: isMobile ? "13px" : "14px",
+                    fontWeight: "500",
+                    fontFamily: "Inter, sans-serif",
+                    cursor: "pointer",
+                    borderRadius: "50px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: isMobile ? "auto" : "60px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  Request Access
+                </button>
+              </a>
             </div>
           </div>
         </div>
@@ -3523,21 +3541,23 @@ export default function BRIDGEHomePage() {
             ))}
           </div>
           <div style={{ textAlign: "center", marginTop: "48px" }}>
-            <button
-              style={{
-                backgroundColor: colors.accent,
-                color: colors.primary,
-                border: "none",
-                padding: isMobile ? "12px 24px" : "16px 32px",
-                fontSize: isMobile ? "13px" : "15px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-              }}
-            >
-              More Insights
-            </button>
+            <a href="/insights" style={{ textDecoration: "none" }}>
+              <button
+                style={{
+                  backgroundColor: colors.accent,
+                  color: colors.primary,
+                  border: "none",
+                  padding: isMobile ? "12px 24px" : "16px 32px",
+                  fontSize: isMobile ? "13px" : "15px",
+                  fontWeight: "600",
+                  fontFamily: "Inter, sans-serif",
+                  cursor: "pointer",
+                  borderRadius: "50px",
+                }}
+              >
+                More Insights
+              </button>
+            </a>
           </div>
         </div>
       </section>
@@ -3936,7 +3956,7 @@ export default function BRIDGEHomePage() {
                       {["Company", "Services", "Resources", "Insights"].map((label) => (
                         <a
                           key={label}
-                          href="#"
+                          href={label === "Company" ? "/about" : label === "Services" ? "/services" : label === "Resources" ? "/resources" : "/insights"}
                           style={{
                             fontFamily: "'DM Sans', sans-serif",
                             fontSize: "12px",
@@ -4122,7 +4142,7 @@ export default function BRIDGEHomePage() {
                             {col.links.map((link) => (
                               <a
                                 key={link}
-                                href="#"
+                                href={footerLinkHref(link)}
                                 style={{
                                   display: "block",
                                   fontSize: "14px",

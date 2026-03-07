@@ -4290,7 +4290,8 @@ const PolicyAlignmentSection = () => {
               Every venture aligns with at least one active government policy or initiative.
             </div>
           </div>
-          <div
+          <a
+            href="/methodology"
             style={{
               padding: "12px 28px",
               borderRadius: "50px",
@@ -4302,10 +4303,11 @@ const PolicyAlignmentSection = () => {
               cursor: "pointer",
               display: isMobile ? "inline-block" : "block",
               flexShrink: 0,
+              textDecoration: "none",
             }}
           >
             View Partnership Strategy
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -4868,7 +4870,7 @@ const CrossSectorSection = () => {
                       ))}
                     </div>
                     <a
-                      href="#"
+                      href="/services"
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
@@ -6327,7 +6329,7 @@ const InvestmentCTASection = ({ sector }) => {
                   Full financial model available
                 </span>
                 <a
-                  href="#"
+                  href="/resources"
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",

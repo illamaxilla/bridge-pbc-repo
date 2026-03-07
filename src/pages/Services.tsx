@@ -1215,16 +1215,35 @@ const socialIcons = [
   </svg>,
 ];
 
+const footerLinkHref = (link: string): string => {
+  const map: Record<string, string> = {
+    "About BRIDGE": "/about",
+    "Our Approach": "/methodology",
+    "Sectors": "/services",
+    "Contact Us": "/contact",
+    "Research & Guidance": "/services",
+    "Venture Development": "/services",
+    "Direct Investment": "/services",
+    "Strategic Partnerships": "/services",
+    "White Paper": "/resources",
+    "Case Studies": "/resources",
+    "Research Library": "/resources",
+    "Data & Reports": "/resources",
+    "Insights & Analysis": "/insights",
+    "Sector Briefs": "/insights",
+    "Policy Updates": "/insights",
+    "Annual Review": "/insights",
+  };
+  return map[link] || "#";
+};
+
 export default function ServicesSectorsPageV2() {
   const [activeService, setActiveService] = useState("research");
   const [selectedSector, setSelectedSector] = useState(null);
   const [filterCategory, setFilterCategory] = useState("all");
-  const [hoveredNav, setHoveredNav] = useState(null);
-  const [logoHovered, setLogoHovered] = useState(false);
   const [footerSectorHovered, setFooterSectorHovered] = useState(null);
   const [heroSectorHovered, setHeroSectorHovered] = useState(null);
   const [activeAudience, setActiveAudience] = useState("entrepreneurs");
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showFeatures, setShowFeatures] = useState(false);
   const [sectorScrollIndex, setSectorScrollIndex] = useState(0);
@@ -1238,13 +1257,10 @@ export default function ServicesSectorsPageV2() {
 
   // Scroll detection + responsive detection
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
-    window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -1521,175 +1537,6 @@ export default function ServicesSectorsPageV2() {
       `}</style>
 
       <SiteHeader />
-      {/* ============================================ */}
-      {/* SECTION 1: Audience-Focused Hero */}
-      {/* ============================================ */}
-      <section
-        style={{
-          backgroundColor: colors.background,
-          padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
-        }}
-      >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-          {/* Pill Badge */}
-          <div
-            style={{
-              display: "inline-flex",
-                />
-                <rect
-                  fill="none"
-                  stroke={c}
-                  strokeWidth="80"
-                  strokeMiterlimit="10"
-                  x="40"
-                  y="40"
-                  width="843.91"
-                  height="852.3"
-                  rx="36.55"
-                  ry="36.55"
-                />
-                <polygon
-                  fill={colors.accent}
-                  stroke={c}
-                  strokeMiterlimit="10"
-                  points="722.6 322.13 462.28 452.8 201.97 322.75 461.21 192.52 722.6 322.13"
-                />
-                <path
-                  fill={c}
-                  d="M197.84,426.78c3.86-.53,7.04.85,10.74,1.41l252.53,125.67c84.54-40,167.66-83.83,251.89-124.84,33.14-11.49,50.09,34.15,18.55,49.11l-259.23,129.08c-10.18,3.72-14.14,2.57-23.85-1.31l-264.23-132.98c-17.04-14.4-7.96-43.2,13.61-46.14h0Z"
-                />
-                <path
-                  fill={colors.accent}
-                  d="M195.25,558c3.65-.63,7.4-.4,11.08-.22,86.11,40.47,170.4,85.05,255.95,126.78l252.92-126c29.53-7.22,45.44,28.67,22.29,46.49l-270.42,134.42-8.62.31c-91.6-42.21-181.07-89.86-271.7-134.42-18.72-12.06-13.3-43.58,8.5-47.37h0Z"
-                />
-              </svg>
-            </div>
-          );
-        })()}
-
-        {/* Navigation - Only in default state, hidden on mobile */}
-        {!isScrolled && !isMobile && (
-          <nav
-            style={{
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
-              display: "flex",
-              gap: "32px",
-              alignItems: "center",
-            }}
-          >
-            {["About", "Sectors", "Services", "Insights", "Contact"].map((item, i) => (
-              <a
-                key={item}
-                href="#"
-                onMouseEnter={() => setHoveredNav(i)}
-                onMouseLeave={() => setHoveredNav(null)}
-                style={{
-                  color: hoveredNav === i ? colors.primary : colors.dark,
-                  textDecoration: "none",
-                  fontSize: "15px",
-                  fontWeight: "500",
-                  fontFamily: "Inter, sans-serif",
-                  letterSpacing: "0.3px",
-                  transition: "color 0.2s ease",
-                }}
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
-        )}
-
-        {/* Right — Icons */}
-        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "6px" : "8px" }}>
-          {/* Search */}
-          <a
-            href="#"
-            className="header-icon"
-            style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textDecoration: "none",
-            }}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={colors.dark}
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="M21 21l-4.35-4.35" />
-            </svg>
-          </a>
-          {/* User — hidden on mobile */}
-          {!isMobile && (
-            <a
-              href="#"
-              className="header-icon"
-              style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-              }}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.dark}
-                strokeWidth="2"
-                strokeLinecap="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </a>
-          )}
-          {/* Menu */}
-          <a
-            href="#"
-            className="header-icon"
-            style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textDecoration: "none",
-            }}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={colors.dark}
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          </a>
-        </div>
-      </header>
-
       {/* ============================================ */}
       {/* SECTION 1: Audience-Focused Hero */}
       {/* ============================================ */}
@@ -4417,8 +4264,7 @@ export default function ServicesSectorsPageV2() {
             backgroundImage: `radial-gradient(${colors.accent} 1px, transparent 1px)`,
             backgroundSize: "30px 30px",
           }}
-        }}
-      >
+        />
         <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
 
         <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center", position: "relative" }}>
@@ -4462,59 +4308,64 @@ export default function ServicesSectorsPageV2() {
               alignItems: "center",
             }}
           >
-            <button
-              style={{
-                backgroundColor: colors.accent,
-                color: colors.primary,
-                border: "none",
-                padding: "16px 28px",
-                fontSize: "14px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                width: isMobile ? "100%" : "auto",
-              }}
-            >
-              Start a Conversation
-              <span
+            <a href="/contact" style={{ textDecoration: "none" }}>
+              <button
                 style={{
-                  width: "28px",
-                  height: "28px",
-                  backgroundColor: "rgba(27,77,62,0.15)",
-                  borderRadius: "50%",
+                  backgroundColor: colors.accent,
+                  color: colors.primary,
+                  border: "none",
+                  padding: "16px 28px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  fontFamily: "Inter, sans-serif",
+                  cursor: "pointer",
+                  borderRadius: "50px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  gap: "10px",
+                  width: isMobile ? "100%" : "auto",
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </span>
-            </button>
-            <button
-              style={{
-                backgroundColor: "transparent",
-                color: colors.white,
-                border: `1.5px solid rgba(255,255,255,0.3)`,
-                padding: "16px 28px",
-                fontSize: "14px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-                width: isMobile ? "100%" : "auto",
-                textAlign: "center",
-              }}
-            >
-              Explore Sectors
-            </button>
-          </div>
+                Start a Conversation
+                <span
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    backgroundColor: "rgba(27,77,62,0.15)",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </span>
+              </button>
+            </a>
+            <a href="/services" style={{ textDecoration: "none" }}>
+              <button
+                style={{
+                  backgroundColor: "transparent",
+                  color: colors.white,
+                  border: `1.5px solid rgba(255,255,255,0.3)`,
+                  padding: "16px 28px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  fontFamily: "Inter, sans-serif",
+                  cursor: "pointer",
+                  borderRadius: "50px",
+                  width: isMobile ? "100%" : "auto",
+                  textAlign: "center",
+                }}
+              >
+                Explore Sectors
+              </button>
+            </a>
+           </div>
+         </div>
         </div>
       </section>
 
@@ -4631,7 +4482,7 @@ export default function ServicesSectorsPageV2() {
                 {["Company", "Services", "Resources", "Insights"].map((label) => (
                   <a
                     key={label}
-                    href="#"
+                    href={label === "Company" ? "/about" : label === "Services" ? "/services" : label === "Resources" ? "/resources" : "/insights"}
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: "12px",
@@ -4949,7 +4800,7 @@ export default function ServicesSectorsPageV2() {
                     {["About BRIDGE", "Our Approach", "Sectors", "Contact Us"].map((link) => (
                       <a
                         key={link}
-                        href="#"
+                        href={footerLinkHref(link)}
                         style={{
                           display: "block",
                           fontSize: "14px",
@@ -4981,7 +4832,7 @@ export default function ServicesSectorsPageV2() {
                       (link) => (
                         <a
                           key={link}
-                          href="#"
+                          href={footerLinkHref(link)}
                           style={{
                             display: "block",
                             fontSize: "14px",
@@ -5013,7 +4864,7 @@ export default function ServicesSectorsPageV2() {
                     {["White Paper", "Case Studies", "Research Library", "Data & Reports"].map((link) => (
                       <a
                         key={link}
-                        href="#"
+                        href={footerLinkHref(link)}
                         style={{
                           display: "block",
                           fontSize: "14px",
@@ -5044,7 +4895,7 @@ export default function ServicesSectorsPageV2() {
                     {["Insights & Analysis", "Sector Briefs", "Policy Updates", "Annual Review"].map((link) => (
                       <a
                         key={link}
-                        href="#"
+                        href={footerLinkHref(link)}
                         style={{
                           display: "block",
                           fontSize: "14px",
