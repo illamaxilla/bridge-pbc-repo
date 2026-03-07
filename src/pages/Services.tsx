@@ -1526,6 +1526,7 @@ export default function ServicesSectorsPageV2() {
       {/* ============================================ */}
       <section
         style={{
+          backgroundColor: colors.background,
           padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
         }}
       >
@@ -1534,10 +1535,6 @@ export default function ServicesSectorsPageV2() {
           <div
             style={{
               display: "inline-flex",
-                />
-                <path
-                  fill={colors.dark}
-                  d="M3404.8,889.32l-10.31-14.71c.25,0,.38-.13.63-.25,2.89-1.26,5.03-3.02,6.54-5.41s2.26-5.15,2.26-8.55c0-5.03-1.76-8.93-5.16-11.82s-8.05-4.27-14.08-4.27h-18.36v44.89h8.3v-13.08h11.94l9.18,13.08h8.93l.13.13h0ZM3392.85,853.74c1.89,1.51,2.77,3.77,2.77,6.66s-.88,5.03-2.77,6.66-4.65,2.39-8.3,2.39h-9.81v-17.85h9.81c3.65,0,6.41.75,8.3,2.26h0v-.13h0Z"
                 />
                 <rect
                   fill="none"
