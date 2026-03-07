@@ -1,25 +1,46 @@
 
-## Root Cause
+## Status: Build is Broken — 3 Files Still Corrupted
 
-The three files are fundamentally broken — not just missing footer code. The previous AI pass deleted **thousands of lines** of section component definitions:
+**No, not everything is good.** The build has 38 TypeScript errors across `Energy.tsx`, `Education.tsx`, and `Tourism.tsx`. These files were corrupted in the earlier SiteFooter pass — their section components (`HeroSection`, `OpportunitySection`, `ValueChainSection`, `SolutionsSection`, etc.) were deleted and **still have not been restored**.
 
-- `Energy.tsx`: 547 lines (should be ~6500+ lines like other sector pages). Missing: `HeroSection`, `OpportunitySection`, `ValueChainSection`, `SolutionsSection`, `LandscapeSection`, `GovernancePolicySection`, `RippleEffectSection`, `InvestmentCTASection`, `ImpactSection`, `FinalCTASection`, and `sectorData`.
-- `Education.tsx`: 871 lines (missing: `HeroSection`, `ProblemSection`, `ValueChainSectionPremium`, `SolutionsSection`, `CompetitiveLandscapeSection`, `PolicyAlignmentSection`, `CrossSectorSection`, `InvestmentCTASection`, `ImpactSection`, `FinalCTASection`)
-- `Tourism.tsx`: 1350 lines (missing: `sectorRoutes`, `HeroSection`, `ProblemSection`, `ValueChainSectionPremium`, `SolutionsSection`, `CompetitiveLandscapeSection`, `PolicyAlignmentSection`, `ImpactSection`, `CrossSectorSection`, `InvestmentCTASection`, `FinalCTASection`)
+### Current State of Broken Files
 
-These thousands of lines of JSX component code **cannot be reconstructed by the AI** — they were unique, detailed components with specific data, styling, and layout.
+```text
+Energy.tsx    —  547 lines  (should be ~6500+ lines)
+                 Has: icons, data, logo SVGs
+                 Missing: HeroSection, OpportunitySection, ValueChainSection,
+                          SolutionsSection, LandscapeSection,
+                          GovernancePolicySection, RippleEffectSection,
+                          InvestmentCTASection, ImpactSection, FinalCTASection
 
-## The Only Correct Fix: Version History Revert
+Education.tsx —  871 lines  (should be ~6000+ lines)
+                 Has: data, sectorData, some icons
+                 Missing: HeroSection, ProblemSection, ValueChainSectionPremium,
+                          SolutionsSection, CompetitiveLandscapeSection,
+                          PolicyAlignmentSection, CrossSectorSection,
+                          InvestmentCTASection, ImpactSection, FinalCTASection
 
-These files must be reverted to a known-good version from History. After reverting, I can **surgically add just 2 lines** to each file:
-1. Add `import SiteFooter from "@/components/SiteFooter";` at the top
-2. Replace the local `<Footer />` (or `{Footer()}` etc.) call with `<SiteFooter />`
-3. Remove the local `footerLinkHref` function and local `Footer` component body
+Tourism.tsx   — 1350 lines  (should be ~6000+ lines)
+                 Has: data, sectorData, SectorGrid icons
+                 Missing: sectorRoutes, HeroSection, ProblemSection,
+                          ValueChainSectionPremium, SolutionsSection,
+                          CompetitiveLandscapeSection, PolicyAlignmentSection,
+                          ImpactSection, CrossSectorSection,
+                          InvestmentCTASection, FinalCTASection
+```
 
-This is a 2-minute surgical edit per file — not a rebuild.
+### What Needs to Happen
 
-## How to Revert
+These thousands of lines of JSX **cannot be regenerated** — they were unique, handcrafted components. The only fix is a **History revert**.
 
-Use the **History tab** (top of chat) to find a version before the last two AI edit passes (the "SiteFooter" pass). Look for a version where all three files still had their full content. Revert to that point.
+### Steps to Fix
 
-After reverting, I will immediately make the surgical 3-step swap in all 3 files without touching anything else.
+1. Click **"View History"** below
+2. Find the version **before** the "SiteFooter integration" pass (look for the edit titled something like "Create SiteFooter shared component")
+3. Revert **only** `Energy.tsx`, `Education.tsx`, and `Tourism.tsx` to that version — or use the full project revert if individual file revert is easier
+4. Once reverted, I will do a **surgical 3-line edit** to each file:
+   - Add `import SiteFooter from "@/components/SiteFooter";`
+   - Remove the local `footerLinkHref` + `Footer` definitions  
+   - Replace `<Footer />` with `<SiteFooter />`
+
+All 17 other pages are working correctly with the shared `SiteFooter`. Only these 3 need the revert + surgical swap.
