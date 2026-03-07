@@ -1007,12 +1007,6 @@ const footerLinkHref = (link: string): string => {
 // ============================================================================
 // HERO SECTION
 // ============================================================================
-
-  return (
-    <>
-      <header
-        style={{
-          backgroundColor: scrolled ? "rgba(255,255,255,0.85)" : colors.white,
           backdropFilter: scrolled ? "blur(12px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
           padding: isMobile ? "0 20px" : "0 80px",

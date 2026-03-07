@@ -1163,9 +1163,6 @@ const footerLinkHref = (link: string): string => {
 // ============================================================================
 // SECTION 1: HERO
 // ============================================================================
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
