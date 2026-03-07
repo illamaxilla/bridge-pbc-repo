@@ -1224,6 +1224,16 @@ const BridgeLogoWhite = () => (
   </div>
 );
 
+const footerLinkHref = (link: string): string => {
+  const map: Record<string, string> = {
+    "About BRIDGE": "/about", "Our Approach": "/methodology", "Sectors": "/sectors", "Contact Us": "/contact",
+    "Research & Guidance": "/services", "Venture Development": "/services", "Direct Investment": "/services", "Strategic Partnerships": "/services",
+    "White Paper": "/resources", "Case Studies": "/resources", "Research Library": "/resources", "Data & Reports": "/resources",
+    "Insights & Analysis": "/insights", "Sector Briefs": "/insights", "Policy Updates": "/insights", "Annual Review": "/insights",
+  };
+  return map[link] || "#";
+};
+
 const Footer = () => {
   const isMobile = useIsMobile();
   return (
