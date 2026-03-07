@@ -1524,15 +1524,7 @@ export default function ServicesSectorsPageV2() {
 
       {/* ============================================ */}
       {/* SECTION 1: Audience-Focused Hero */}
-          return (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                height: "40px",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-              }}
+      {/* ============================================ */}
               onMouseEnter={() => setLogoHovered(true)}
               onMouseLeave={() => setLogoHovered(false)}
             >
