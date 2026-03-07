@@ -10,7 +10,13 @@ import About from "./pages/About";
 import Resources from "./pages/Resources";
 import Insights from "./pages/Insights";
 import Methodology from "./pages/Methodology";
-import Dashboard from "./pages/Dashboard";
+import Intelligence from "./pages/intelligence/Intelligence";
+import IntelDashboard from "./pages/intelligence/Dashboard";
+import MarketOverview from "./pages/intelligence/MarketOverview";
+import Reports from "./pages/intelligence/Reports";
+import Watchlist from "./pages/intelligence/Watchlist";
+import Analytics from "./pages/intelligence/Analytics";
+import IntelResources from "./pages/intelligence/Resources";
 import Energy from "./pages/sectors/Energy";
 import Technology from "./pages/sectors/Technology";
 import Sports from "./pages/sectors/Sports";
@@ -41,7 +47,14 @@ const App = () => (
           <Route path="/resources" element={<Resources />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/methodology" element={<Methodology />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/intelligence/*" element={<Intelligence />}>
+            <Route path="dashboard" element={<IntelDashboard />} />
+            <Route path="market" element={<MarketOverview />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="watchlist" element={<Watchlist />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="resources" element={<IntelResources />} />
+          </Route>
           <Route path="/sectors/energy" element={<Energy />} />
           <Route path="/sectors/technology" element={<Technology />} />
           <Route path="/sectors/sports" element={<Sports />} />
