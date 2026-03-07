@@ -7159,7 +7159,7 @@ export default function TechnologyInnovationSectorPage() {
       <ImpactSection />
       <FinalCTASection />
       <CTAFooterSeparator />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
