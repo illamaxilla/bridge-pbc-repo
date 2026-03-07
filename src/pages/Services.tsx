@@ -1522,10 +1522,8 @@ export default function ServicesSectorsPageV2() {
 
       <SiteHeader />
 
-
-        {/* Logo with hover: dark → primary */}
-        {(() => {
-          const c = logoHovered ? colors.primary : colors.dark;
+      {/* ============================================ */}
+      {/* SECTION 1: Audience-Focused Hero */}
           return (
             <div
               style={{
