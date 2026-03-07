@@ -3221,7 +3221,7 @@ export default function BRIDGEAboutPage() {
         .hide-scrollbar::-webkit-scrollbar { display: none; }
       `}</style>
 
-      <Header />
+      <SiteHeader />
       <HeroSection isMobile={isMobile} />
       <VisionSection isMobile={isMobile} />
       <WhatWeDoSection isMobile={isMobile} />
