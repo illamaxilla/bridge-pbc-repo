@@ -944,20 +944,8 @@ export default function BRIDGEHomePage() {
       `}</style>
 
       <SiteHeader />
-          backdropFilter: isScrolled ? "blur(12px)" : "none",
-          WebkitBackdropFilter: isScrolled ? "blur(12px)" : "none",
-          padding: isMobile ? "0 20px" : "0 80px",
-          height: "72px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          zIndex: 1000,
-          boxShadow: isScrolled ? "0 2px 20px rgba(0,0,0,0.04)" : "0 2px 20px rgba(0,0,0,0.06)",
-          transition: "all 0.3s ease",
-        }}
-      >
+
+
         {/* Logo with hover: dark → primary */}
         {(() => {
           const c = logoHovered ? colors.primary : colors.dark;
