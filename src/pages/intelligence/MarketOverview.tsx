@@ -814,7 +814,7 @@ function Card({ children, style: ex = {} }) {
     </div>
   );
 }
-function Pill({ children, active, onClick, col }) {
+function Pill({ children, active, onClick, col = "#1B4D3E" }: { children: any; active: any; onClick: any; col?: any }) {
   return (
     <button
       onClick={onClick}
