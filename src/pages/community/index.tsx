@@ -2261,6 +2261,15 @@ function CommunityDashboard({ memberType, onLogout }) {
                   </div>
                 ))}
               </div>
+              </>)}
+              {forumSection === "Questions" && <Questions C={C} font={font} />}
+              {forumSection === "Most Answered" && <MostAnswered C={C} font={font} />}
+              {forumSection === "Polls" && <Polls C={C} font={font} />}
+              {forumSection === "Groups" && <Groups C={C} font={font} />}
+              {forumSection === "Tags" && <Tags C={C} font={font} />}
+              {forumSection === "Sectors" && <ForumSectors C={C} font={font} />}
+              {forumSection === "Badges" && <Badges C={C} font={font} />}
+              {forumSection === "Members" && <ForumMembers C={C} font={font} />}
             </div>
 
             {/* Right Sidebar */}
