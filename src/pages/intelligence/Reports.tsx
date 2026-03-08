@@ -3475,7 +3475,7 @@ function MobileDashboard({ s, setS }) {
             <DSectionHead
               id="subsectors"
               label="Sub-sector Breakdown"
-              icon={<PieChart size={13} color={D.lime} />}
+              icon={<PieLucide size={13} color={D.lime} />}
               count={s.subSectors?.length}
             />
             {openD.subsectors && (
