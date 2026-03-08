@@ -3015,7 +3015,7 @@ function MSectorDrawer({ s, setS, open, onClose }) {
                     background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
                   }}
                 >
-                  {sec.svgIcon(act ? "#B8D935" : "rgba(255,255,255,0.35)", 16)}
+                  {(sec as any).svgIcon(act ? "#B8D935" : "rgba(255,255,255,0.35)", 16)}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div
