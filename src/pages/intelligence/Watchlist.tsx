@@ -915,7 +915,7 @@ function Card({ children, style: ex = {} }) {
   );
 }
 
-const Tip = ({ active, payload, label }) => {
+const Tip = ({ active, payload, label }: { active?: any; payload?: any; label?: any }) => {
   if (!active || !payload?.length) return null;
   return (
     <div style={{ background: "#111827", color: "#fff", borderRadius: 8, padding: "8px 12px", fontSize: 11 }}>
