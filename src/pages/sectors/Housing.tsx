@@ -953,25 +953,45 @@ export default function HousingRealEstateSectorPage() {
   return (
     <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
       <style>{`@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`}</style>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
-        rel="stylesheet"
-      />
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
       <SiteHeader />
-      <HeroSection sector={sectorData} />
-      <ProblemSection sector={sectorData} />
-      <ValueChainSectionPremium />
-      <SolutionsSection sector={sectorData} />
-      <MarketEcosystemSection sector={sectorData} />
-      <PolicyAlignmentSection />
-      <CrossSectorSection />
-      <InvestmentCTASection sector={sectorData} />
-      <ImpactSection />
-      <FinalCTASection />
-      {/* Pre-footer separator — NOT part of the Footer component itself */}
-      <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
-      </div>
+      <section style={{ backgroundColor: colors.primary, padding: isMobile ? "100px 20px 80px" : "140px 80px 100px", minHeight: "60vh", display: "flex", alignItems: "center" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(184,217,53,0.12)", border: "1px solid rgba(184,217,53,0.3)", borderRadius: 50, padding: "8px 18px", marginBottom: 28 }}>
+            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: colors.accent }}>{sectorData.category}</span>
+          </div>
+          <h1 style={{ fontFamily: "'Poppins',sans-serif", fontSize: isMobile ? 36 : 64, fontWeight: 700, color: colors.white, margin: "0 0 24px", lineHeight: 1.1, maxWidth: 800 }}>{sectorData.name}</h1>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: isMobile ? 16 : 20, color: "rgba(255,255,255,0.75)", maxWidth: 640, lineHeight: 1.7, margin: "0 0 40px" }}>{sectorData.problemSubheadline}</p>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            {sectorData.keyStats?.map((stat, i) => (
+              <div key={i} style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "20px 24px", minWidth: 160 }}>
+                <div style={{ fontFamily: "'Poppins',sans-serif", fontSize: 28, fontWeight: 700, color: colors.accent }}>{stat.value}</div>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: "rgba(255,255,255,0.6)", marginTop: 4 }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "80px 80px" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "'Poppins',sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 700, color: colors.primary, marginBottom: 40 }}>Key Challenges</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 24 }}>
+            {sectorData.painPoints?.map((p, i) => (
+              <div key={i} style={{ background: colors.background, borderRadius: 16, padding: 28, border: `1px solid ${colors.line}` }}>
+                <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 18, fontWeight: 700, color: colors.primary, margin: "0 0 12px" }}>{p.title}</h3>
+                <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 15, color: "#4B5563", lineHeight: 1.65, margin: 0 }}>{p.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "80px 80px" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "'Poppins',sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 700, color: colors.white, marginBottom: 16 }}>Ready to Build in {sectorData.shortName}?</h2>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 18, color: "rgba(255,255,255,0.7)", marginBottom: 36 }}>Capital range: {sectorData.capitalRange} · {sectorData.ventures} venture opportunities identified</p>
+          <a href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: colors.accent, color: colors.primary, textDecoration: "none", padding: "16px 36px", borderRadius: 50, fontSize: 16, fontWeight: 700, fontFamily: "'DM Sans',sans-serif" }}>Start a Conversation</a>
+        </div>
+      </section>
       <SiteFooter />
     </div>
   );
