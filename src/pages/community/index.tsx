@@ -1456,8 +1456,9 @@ function CommunityDashboard({ memberType, onLogout }) {
 }
 
 // ─── FORUM PAGE ────────────────────────────────────────────────
-function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPage }) {
-  const [forumView, setForumView] = useState("Questions");
+function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPage, initialForumView = "Home" }) {
+  const navigate = useNavigate();
+  const [forumView, setForumView] = useState(initialForumView);
   const [forumFilter, setForumFilter] = useState("Recent");
   const [searchQuery, setSearchQuery] = useState("");
 
