@@ -2924,7 +2924,7 @@ function MobileDashboard({ s, setS }) {
   const [activeNav, setActiveNav] = useState("resources");
   const [resourcesView, setResourcesView] = useState("reports");
   const [resourcesMenu, setResourcesMenu] = useState(false);
-  const [openSections, setOpenSections] = useState({ signals: true, score: true });
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({ signals: true, score: true });
   const [sectorDrawer, setSectorDrawer] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
