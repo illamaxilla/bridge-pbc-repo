@@ -4865,7 +4865,7 @@ function MobileDashboard({ s, setS }) {
 /* ═══════════════════════════════════════════════
    MOBILE RESOURCES PAGE — mobile adaptation of desktop Reports
 ═══════════════════════════════════════════════ */
-function MobileResourcesPage({ s, view = "sector-performance" }) {
+function MobileResourcesPage({ s, setS, view = "sector-performance" }: { s: any; setS?: any; view?: string }) {
   const D = {
     bg: "#090F0B",
     card: "#0F1A12",
