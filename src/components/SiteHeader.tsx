@@ -156,9 +156,18 @@ export default function SiteHeader() {
                   letterSpacing: "0.3px",
                   transition: "color 0.2s ease",
                   position: "relative" as const,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
                 }}
               >
                 {item.label}
+                {BADGE_ITEMS.has(item.to) && (
+                  <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
+                    <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
+                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
+                  </span>
+                )}
               </a>
             ))}
           </nav>
@@ -250,7 +259,7 @@ export default function SiteHeader() {
             overflowY: "auto" as const,
           }}
         >
-          <style>{`@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}`}</style>
+          <style>{`@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}@keyframes pulseBadge{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(2.2);opacity:0}}`}</style>
           <nav style={{ display: "flex", flexDirection: "column" as const, flex: 1 }}>
             {visibleNav.map((item) => (
               <a
@@ -273,7 +282,15 @@ export default function SiteHeader() {
                   boxSizing: "border-box" as const,
                 }}
               >
-                {item.label}
+                <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  {item.label}
+                  {BADGE_ITEMS.has(item.to) && (
+                    <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
+                      <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
+                    </span>
+                  )}
+                </span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round">
                   <path d="M7 17L17 7M17 7H7M17 7V17" />
                 </svg>
