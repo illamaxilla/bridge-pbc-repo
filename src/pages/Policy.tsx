@@ -182,11 +182,132 @@ const BRIEFS: PolicyBrief[] = [
   },
 ];
 
+// ── Legislative Calendar Data ────────────────────────────────────────
+
+type CalendarEvent = {
+  id: number;
+  date: string;
+  month: string;
+  day: string;
+  title: string;
+  type: "reading" | "consultation" | "deadline" | "review" | "implementation";
+  sector: string;
+  description: string;
+  urgency: "high" | "medium" | "low";
+};
+
+const CALENDAR_EVENTS: CalendarEvent[] = [
+  {
+    id: 1,
+    date: "2025-04-15",
+    month: "APR",
+    day: "15",
+    title: "Land Title Digitalisation Bill — Second Reading",
+    type: "reading",
+    sector: "Housing",
+    description: "Parliamentary second reading. Public submissions close 10 days prior.",
+    urgency: "high",
+  },
+  {
+    id: 2,
+    date: "2025-04-22",
+    month: "APR",
+    day: "22",
+    title: "Digital Financial Services Interoperability — Implementation Deadline",
+    type: "implementation",
+    sector: "Financial",
+    description: "Bank of Ghana mandated compliance date for all licensed mobile money operators.",
+    urgency: "high",
+  },
+  {
+    id: 3,
+    date: "2025-05-08",
+    month: "MAY",
+    day: "08",
+    title: "NHIS Capitation Reform — Stakeholder Consultation",
+    type: "consultation",
+    sector: "Health",
+    description: "Ministry of Health open forum for private healthcare providers and HealthTech companies.",
+    urgency: "medium",
+  },
+  {
+    id: 4,
+    date: "2025-05-20",
+    month: "MAY",
+    day: "20",
+    title: "Agribusiness Investment Zone Applications — Deadline",
+    type: "deadline",
+    sector: "Agriculture",
+    description: "Final date for Q3 2025 cohort applications under the new incentive package framework.",
+    urgency: "high",
+  },
+  {
+    id: 5,
+    date: "2025-06-01",
+    month: "JUN",
+    day: "01",
+    title: "Ghana Startup Act — Sandbox Cohort 2 Opens",
+    type: "implementation",
+    sector: "Technology",
+    description: "Second regulatory sandbox cohort opens under Ghana Startup Act implementation regulations.",
+    urgency: "medium",
+  },
+  {
+    id: 6,
+    date: "2025-06-15",
+    month: "JUN",
+    day: "15",
+    title: "Road Transport Formalisation Policy — Phase 1 Review",
+    type: "review",
+    sector: "Transport",
+    description: "Six-month review milestone for the fleet operator licensing pilot in Greater Accra Region.",
+    urgency: "medium",
+  },
+  {
+    id: 7,
+    date: "2025-07-01",
+    month: "JUL",
+    day: "01",
+    title: "Skills Levy Framework — Parliamentary Debate",
+    type: "reading",
+    sector: "Education",
+    description: "National Assembly debate on the Technical and Vocational Skills Levy Bill.",
+    urgency: "medium",
+  },
+  {
+    id: 8,
+    date: "2025-07-30",
+    month: "JUL",
+    day: "30",
+    title: "Renewable Energy Feed-in Tariff Rate Review",
+    type: "review",
+    sector: "Energy",
+    description: "Annual PURC review of feed-in tariff rates under the 2024 Amendment Framework.",
+    urgency: "low",
+  },
+];
+
 const STATUS_CONFIG = {
   enacted: { label: "Enacted", color: "#16A34A", bg: "#DCFCE7" },
   pending: { label: "Pending", color: "#D97706", bg: "#FEF3C7" },
   "under-review": { label: "Under Review", color: "#2563EB", bg: "#DBEAFE" },
 };
+
+const EVENT_TYPE_CONFIG = {
+  reading: { label: "Reading", color: "#7C3AED", bg: "#EDE9FE" },
+  consultation: { label: "Consultation", color: "#0891B2", bg: "#CFFAFE" },
+  deadline: { label: "Deadline", color: "#DC2626", bg: "#FEE2E2" },
+  review: { label: "Review", color: "#D97706", bg: "#FEF3C7" },
+  implementation: { label: "Implementation", color: "#16A34A", bg: "#DCFCE7" },
+};
+
+const URGENCY_CONFIG = {
+  high: { color: "#DC2626" },
+  medium: { color: "#D97706" },
+  low: { color: "#6B7280" },
+};
+
+const BRIEFS_PER_PAGE = 6;
 
 // ── Components ───────────────────────────────────────────────────────
 
@@ -246,76 +367,34 @@ function BriefCard({ brief }: { brief: PolicyBrief }) {
       }}
       onClick={() => setExpanded((v) => !v)}
     >
-      {/* Header row */}
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "12px", marginBottom: "12px" }}>
         <div style={{ flex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", flexWrap: "wrap" as const }}>
-            <span
-              style={{
-                fontSize: "11px",
-                fontWeight: "600",
-                color: C.muted,
-                textTransform: "uppercase" as const,
-                letterSpacing: "1px",
-              }}
-            >
+            <span style={{ fontSize: "11px", fontWeight: "600", color: C.muted, textTransform: "uppercase" as const, letterSpacing: "1px" }}>
               {brief.category}
             </span>
             <span style={{ color: C.line }}>·</span>
             <span style={{ fontSize: "11px", color: C.muted }}>{brief.date}</span>
           </div>
-          <h3
-            style={{
-              fontSize: "15px",
-              fontWeight: "600",
-              color: C.primary,
-              margin: 0,
-              lineHeight: "1.45",
-              fontFamily: "Inter, sans-serif",
-            }}
-          >
+          <h3 style={{ fontSize: "15px", fontWeight: "600", color: C.primary, margin: 0, lineHeight: "1.45", fontFamily: "Inter, sans-serif" }}>
             {brief.title}
           </h3>
         </div>
         <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "flex-end", gap: "8px", flexShrink: 0 }}>
           <StatusBadge status={brief.status} />
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke={C.muted}
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}
-          >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            style={{ transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </div>
       </div>
 
-      {/* Expanded content */}
       {expanded && (
         <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: `1px solid ${C.line}` }}>
-          <p style={{ fontSize: "14px", color: C.text, lineHeight: "1.7", margin: "0 0 14px" }}>
-            {brief.summary}
-          </p>
+          <p style={{ fontSize: "14px", color: C.text, lineHeight: "1.7", margin: "0 0 14px" }}>{brief.summary}</p>
           <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" as const }}>
             {brief.tags.map((tag) => (
-              <span
-                key={tag}
-                style={{
-                  fontSize: "11px",
-                  fontWeight: "500",
-                  padding: "3px 10px",
-                  borderRadius: "20px",
-                  background: C.background,
-                  border: `1px solid ${C.line}`,
-                  color: C.text,
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
+              <span key={tag} style={{ fontSize: "11px", fontWeight: "500", padding: "3px 10px", borderRadius: "20px", background: C.background, border: `1px solid ${C.line}`, color: C.text }}>
                 {tag}
               </span>
             ))}
@@ -323,6 +402,29 @@ function BriefCard({ brief }: { brief: PolicyBrief }) {
         </div>
       )}
     </div>
+  );
+}
+
+function BriefTableRow({ brief }: { brief: PolicyBrief }) {
+  return (
+    <tr style={{ borderBottom: `1px solid ${C.line}`, transition: "background 0.15s" }}
+      onMouseEnter={(e) => (e.currentTarget.style.background = C.background)}
+      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+    >
+      <td style={{ padding: "14px 16px", verticalAlign: "top" }}>
+        <div style={{ fontSize: "13px", fontWeight: "600", color: C.primary, lineHeight: "1.4", marginBottom: "4px" }}>{brief.title}</div>
+        <div style={{ fontSize: "11px", color: C.muted }}>{brief.category}</div>
+      </td>
+      <td style={{ padding: "14px 16px", verticalAlign: "middle", whiteSpace: "nowrap" as const }}>
+        <span style={{ fontSize: "12px", fontWeight: "500", color: C.text, background: C.background, padding: "4px 10px", borderRadius: "20px", border: `1px solid ${C.line}`, textTransform: "capitalize" as const }}>
+          {brief.sector.replace("-", " ")}
+        </span>
+      </td>
+      <td style={{ padding: "14px 16px", verticalAlign: "middle" }}>
+        <StatusBadge status={brief.status} />
+      </td>
+      <td style={{ padding: "14px 16px", verticalAlign: "middle", fontSize: "12px", color: C.muted, whiteSpace: "nowrap" as const }}>{brief.date}</td>
+    </tr>
   );
 }
 
@@ -335,6 +437,8 @@ export default function PolicyPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [viewMode, setViewMode] = useState<"card" | "table">("card");
+  const [visibleCount, setVisibleCount] = useState(BRIEFS_PER_PAGE);
 
   const filtered = BRIEFS.filter((b) => {
     const matchSector = activeSector === "all" || b.sector === activeSector;
@@ -346,6 +450,9 @@ export default function PolicyPage() {
       b.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchSector && matchCat && matchSearch;
   });
+
+  const visibleBriefs = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   const stats = {
     enacted: BRIEFS.filter((b) => b.status === "enacted").length,
@@ -382,76 +489,153 @@ export default function PolicyPage() {
           </p>
 
           {/* Stats row */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "16px",
-              maxWidth: "560px",
-              margin: "0 auto",
-            }}
-          >
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", maxWidth: "560px", margin: "0 auto" }}>
             {[
               { val: stats.enacted, label: "Enacted", color: "#16A34A" },
               { val: stats.pending, label: "Pending", color: "#D97706" },
               { val: stats.underReview, label: "Under Review", color: "#60A5FA" },
             ].map((s) => (
-              <div
-                key={s.label}
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.07)",
-                  borderRadius: "12px",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  padding: "20px 16px",
-                }}
-              >
+              <div key={s.label} style={{ backgroundColor: "rgba(255,255,255,0.07)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.12)", padding: "20px 16px" }}>
                 <div style={{ fontSize: "28px", fontWeight: "700", color: C.white, marginBottom: "4px" }}>{s.val}</div>
-                <div style={{ fontSize: "11px", fontWeight: "600", color: s.color, textTransform: "uppercase" as const, letterSpacing: "1px" }}>
-                  {s.label}
-                </div>
+                <div style={{ fontSize: "11px", fontWeight: "600", color: s.color, textTransform: "uppercase" as const, letterSpacing: "1px" }}>{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Filters */}
+      {/* ── LEGISLATIVE CALENDAR ──────────────────────────────── */}
+      <section style={{ backgroundColor: C.white, padding: "72px 48px" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "40px", flexWrap: "wrap" as const, gap: "16px" }}>
+            <div>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", background: C.accentBg, borderRadius: "50px", fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px", color: C.primary, marginBottom: "12px", textTransform: "uppercase" as const }}>
+                📅 Upcoming
+              </div>
+              <h2 style={{ fontSize: "clamp(24px, 3.5vw, 36px)", fontWeight: "300", color: C.primary, margin: 0, lineHeight: "1.2", fontFamily: "Inter, sans-serif" }}>
+                Legislative <strong style={{ fontWeight: "700" }}>Calendar</strong>
+              </h2>
+              <p style={{ fontSize: "14px", color: C.muted, margin: "8px 0 0", lineHeight: "1.6" }}>
+                Key dates for readings, consultations, deadlines and policy reviews.
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" as const }}>
+              {Object.entries(EVENT_TYPE_CONFIG).map(([key, cfg]) => (
+                <span key={key} style={{ display: "inline-flex", alignItems: "center", gap: "5px", padding: "4px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: "600", color: cfg.color, background: cfg.bg }}>
+                  {cfg.label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "16px" }}>
+            {CALENDAR_EVENTS.map((ev) => {
+              const typeCfg = EVENT_TYPE_CONFIG[ev.type];
+              const urgencyCfg = URGENCY_CONFIG[ev.urgency];
+              return (
+                <div
+                  key={ev.id}
+                  style={{
+                    backgroundColor: C.background,
+                    borderRadius: "14px",
+                    border: `1px solid ${C.line}`,
+                    borderLeft: `4px solid ${urgencyCfg.color}`,
+                    padding: "20px",
+                    display: "flex",
+                    gap: "16px",
+                  }}
+                >
+                  {/* Date badge */}
+                  <div style={{ textAlign: "center", flexShrink: 0, width: "48px" }}>
+                    <div style={{ fontSize: "10px", fontWeight: "700", color: C.muted, letterSpacing: "1px", textTransform: "uppercase" as const }}>{ev.month}</div>
+                    <div style={{ fontSize: "26px", fontWeight: "700", color: C.primary, lineHeight: "1", fontFamily: "Inter, sans-serif" }}>{ev.day}</div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "6px", flexWrap: "wrap" as const }}>
+                      <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "20px", color: typeCfg.color, background: typeCfg.bg }}>
+                        {typeCfg.label}
+                      </span>
+                      <span style={{ fontSize: "11px", color: C.muted }}>{ev.sector}</span>
+                    </div>
+                    <h4 style={{ fontSize: "13px", fontWeight: "600", color: C.primary, margin: "0 0 6px", lineHeight: "1.4", fontFamily: "Inter, sans-serif" }}>
+                      {ev.title}
+                    </h4>
+                    <p style={{ fontSize: "12px", color: C.text, lineHeight: "1.55", margin: 0 }}>
+                      {ev.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FILTERS + VIEW TOGGLE ──────────────────────────────── */}
       <section style={{ backgroundColor: C.background, padding: "40px 48px 0", borderBottom: `1px solid ${C.line}` }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          {/* Search */}
-          <div style={{ position: "relative" as const, marginBottom: "24px", maxWidth: "440px" }}>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={C.muted}
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ position: "absolute" as const, left: "14px", top: "50%", transform: "translateY(-50%)" }}
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Search policy briefs, tags, topics…"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "11px 16px 11px 40px",
-                borderRadius: "50px",
-                border: `1px solid ${C.line}`,
-                backgroundColor: C.white,
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                color: C.dark,
-                outline: "none",
-                boxSizing: "border-box" as const,
-              }}
-            />
+          {/* Top row: search + view toggle */}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px", flexWrap: "wrap" as const }}>
+            {/* Search */}
+            <div style={{ position: "relative" as const, flex: "1 1 280px", maxWidth: "440px" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                style={{ position: "absolute" as const, left: "14px", top: "50%", transform: "translateY(-50%)" }}>
+                <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search policy briefs, tags, topics…"
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); setVisibleCount(BRIEFS_PER_PAGE); }}
+                style={{
+                  width: "100%",
+                  padding: "11px 16px 11px 40px",
+                  borderRadius: "50px",
+                  border: `1px solid ${C.line}`,
+                  backgroundColor: C.white,
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "14px",
+                  color: C.dark,
+                  outline: "none",
+                  boxSizing: "border-box" as const,
+                }}
+              />
+            </div>
+
+            {/* View toggle */}
+            <div style={{ display: "flex", gap: "0", borderRadius: "10px", border: `1px solid ${C.line}`, overflow: "hidden", flexShrink: 0 }}>
+              {(["card", "table"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  style={{
+                    padding: "9px 16px",
+                    border: "none",
+                    backgroundColor: viewMode === mode ? C.primary : C.white,
+                    color: viewMode === mode ? C.white : C.muted,
+                    fontSize: "12px",
+                    fontWeight: "600",
+                    fontFamily: "Inter, sans-serif",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    transition: "all 0.15s ease",
+                    letterSpacing: "0.3px",
+                    textTransform: "capitalize" as const,
+                  }}
+                >
+                  {mode === "card" ? (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                  ) : (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                  )}
+                  {mode === "card" ? "Cards" : "Table"}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Category filters */}
@@ -459,7 +643,7 @@ export default function PolicyPage() {
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => { setActiveCategory(cat); setVisibleCount(BRIEFS_PER_PAGE); }}
                 style={{
                   padding: "8px 16px",
                   borderRadius: "50px",
@@ -479,20 +663,11 @@ export default function PolicyPage() {
           </div>
 
           {/* Sector scroll tabs */}
-          <div
-            style={{
-              display: "flex",
-              gap: "0",
-              overflowX: "auto" as const,
-              msOverflowStyle: "none" as const,
-              scrollbarWidth: "none" as const,
-              borderBottom: `1px solid ${C.line}`,
-            }}
-          >
+          <div style={{ display: "flex", gap: "0", overflowX: "auto" as const, msOverflowStyle: "none" as const, scrollbarWidth: "none" as const, borderBottom: `1px solid ${C.line}` }}>
             {SECTORS.map((s) => (
               <button
                 key={s.key}
-                onClick={() => setActiveSector(s.key)}
+                onClick={() => { setActiveSector(s.key); setVisibleCount(BRIEFS_PER_PAGE); }}
                 style={{
                   padding: "12px 18px",
                   border: "none",
@@ -515,44 +690,103 @@ export default function PolicyPage() {
         </div>
       </section>
 
-      {/* Briefs list */}
+      {/* ── BRIEFS LIST / TABLE ─────────────────────────────────── */}
       <section style={{ backgroundColor: C.background, padding: "40px 48px 80px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           {/* Result count */}
-          <div
-            style={{
-              fontSize: "13px",
-              color: C.muted,
-              marginBottom: "20px",
-              fontFamily: "Inter, sans-serif",
-            }}
-          >
-            Showing <strong style={{ color: C.primary }}>{filtered.length}</strong> of {BRIEFS.length} policy briefs
+          <div style={{ fontSize: "13px", color: C.muted, marginBottom: "20px", fontFamily: "Inter, sans-serif", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" as const, gap: "8px" }}>
+            <span>Showing <strong style={{ color: C.primary }}>{Math.min(visibleCount, filtered.length)}</strong> of <strong style={{ color: C.primary }}>{filtered.length}</strong> policy briefs</span>
           </div>
 
           {filtered.length === 0 ? (
-            <div
-              style={{
-                textAlign: "center",
-                padding: "80px 24px",
-                backgroundColor: C.white,
-                borderRadius: "16px",
-                border: `1px solid ${C.line}`,
-              }}
-            >
+            <div style={{ textAlign: "center", padding: "80px 24px", backgroundColor: C.white, borderRadius: "16px", border: `1px solid ${C.line}` }}>
               <div style={{ fontSize: "32px", marginBottom: "12px" }}>📋</div>
-              <h3 style={{ fontSize: "18px", fontWeight: "600", color: C.primary, margin: "0 0 8px" }}>
-                No briefs match your filters
-              </h3>
-              <p style={{ fontSize: "14px", color: C.muted, margin: 0 }}>
-                Try adjusting your sector filter or search query.
-              </p>
+              <h3 style={{ fontSize: "18px", fontWeight: "600", color: C.primary, margin: "0 0 8px" }}>No briefs match your filters</h3>
+              <p style={{ fontSize: "14px", color: C.muted, margin: 0 }}>Try adjusting your sector filter or search query.</p>
             </div>
+          ) : viewMode === "card" ? (
+            <>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: "12px" }}>
+                {visibleBriefs.map((brief) => (
+                  <BriefCard key={brief.id} brief={brief} />
+                ))}
+              </div>
+
+              {/* Load more */}
+              {hasMore && (
+                <div style={{ textAlign: "center", marginTop: "32px" }}>
+                  <button
+                    onClick={() => setVisibleCount((c) => c + BRIEFS_PER_PAGE)}
+                    style={{
+                      padding: "14px 36px",
+                      borderRadius: "50px",
+                      border: `1px solid ${C.line}`,
+                      backgroundColor: C.white,
+                      color: C.primary,
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      transition: "all 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.primary; (e.currentTarget as HTMLButtonElement).style.color = C.white; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.white; (e.currentTarget as HTMLButtonElement).style.color = C.primary; }}
+                  >
+                    Load more briefs
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </button>
+                  <p style={{ fontSize: "12px", color: C.muted, marginTop: "10px" }}>
+                    {filtered.length - Math.min(visibleCount, filtered.length)} more brief{filtered.length - Math.min(visibleCount, filtered.length) !== 1 ? "s" : ""} available
+                  </p>
+                </div>
+              )}
+            </>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: "12px" }}>
-              {filtered.map((brief) => (
-                <BriefCard key={brief.id} brief={brief} />
-              ))}
+            /* Table view */
+            <div style={{ backgroundColor: C.white, borderRadius: "14px", border: `1px solid ${C.line}`, overflow: "hidden" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" as const, fontFamily: "Inter, sans-serif" }}>
+                <thead>
+                  <tr style={{ backgroundColor: C.background, borderBottom: `2px solid ${C.line}` }}>
+                    {["Brief / Category", "Sector", "Status", "Date"].map((h) => (
+                      <th key={h} style={{ padding: "12px 16px", textAlign: "left" as const, fontSize: "11px", fontWeight: "700", color: C.muted, textTransform: "uppercase" as const, letterSpacing: "1px", whiteSpace: "nowrap" as const }}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {visibleBriefs.map((brief) => (
+                    <BriefTableRow key={brief.id} brief={brief} />
+                  ))}
+                </tbody>
+              </table>
+
+              {/* Load more for table */}
+              {hasMore && (
+                <div style={{ padding: "20px", borderTop: `1px solid ${C.line}`, textAlign: "center" }}>
+                  <button
+                    onClick={() => setVisibleCount((c) => c + BRIEFS_PER_PAGE)}
+                    style={{
+                      padding: "10px 28px",
+                      borderRadius: "50px",
+                      border: `1px solid ${C.line}`,
+                      backgroundColor: "transparent",
+                      color: C.primary,
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "13px",
+                      fontWeight: "600",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Load {Math.min(BRIEFS_PER_PAGE, filtered.length - visibleCount)} more →
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -562,33 +796,10 @@ export default function PolicyPage() {
       <section style={{ backgroundColor: C.white, padding: "80px 48px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "48px" }}>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "8px 18px",
-                border: `1px solid ${C.line}`,
-                borderRadius: "50px",
-                fontSize: "11px",
-                fontWeight: "600",
-                letterSpacing: "1.5px",
-                color: C.primary,
-                marginBottom: "20px",
-                textTransform: "uppercase" as const,
-              }}
-            >
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 18px", border: `1px solid ${C.line}`, borderRadius: "50px", fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px", color: C.primary, marginBottom: "20px", textTransform: "uppercase" as const }}>
               Intelligence Categories
             </div>
-            <h2
-              style={{
-                fontSize: "32px",
-                fontWeight: "300",
-                color: C.primary,
-                margin: "0 0 12px",
-                fontFamily: "Inter, sans-serif",
-              }}
-            >
+            <h2 style={{ fontSize: "32px", fontWeight: "300", color: C.primary, margin: "0 0 12px", fontFamily: "Inter, sans-serif" }}>
               Four pillars of <strong style={{ fontWeight: "700" }}>policy intelligence</strong>
             </h2>
             <p style={{ fontSize: "15px", color: C.text, lineHeight: "1.6", maxWidth: "520px", margin: "0 auto" }}>
@@ -596,82 +807,19 @@ export default function PolicyPage() {
             </p>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              gap: "20px",
-            }}
-          >
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "20px" }}>
             {[
-              {
-                label: "Regulatory Frameworks",
-                desc: "National and sector-level regulatory landscape — licensing, compliance, and operating environment analysis.",
-                count: BRIEFS.filter((b) => b.category === "Regulatory Framework").length,
-              },
-              {
-                label: "Legislative Tracker",
-                desc: "Pending and enacted legislation affecting the investment climate across Ghana's 12 BRIDGE sectors.",
-                count: BRIEFS.filter((b) => b.category === "Legislation").length,
-              },
-              {
-                label: "Policy Briefs",
-                desc: "Concise analyses of policy shifts and their economic implications for entrepreneurs, investors, and institutions.",
-                count: BRIEFS.filter((b) => b.category === "Policy Brief").length,
-              },
-              {
-                label: "Stakeholder Positions",
-                desc: "Government ministries, private sector bodies, and civil society perspectives on key policy developments.",
-                count: BRIEFS.filter((b) => b.category === "Stakeholder Position").length,
-              },
+              { label: "Regulatory Frameworks", desc: "National and sector-level regulatory landscape — licensing, compliance, and operating environment analysis.", count: BRIEFS.filter((b) => b.category === "Regulatory Framework").length },
+              { label: "Legislative Tracker", desc: "Pending and enacted legislation affecting the investment climate across Ghana's 12 BRIDGE sectors.", count: BRIEFS.filter((b) => b.category === "Legislation").length },
+              { label: "Policy Briefs", desc: "Concise analyses of policy shifts and their economic implications for entrepreneurs, investors, and institutions.", count: BRIEFS.filter((b) => b.category === "Policy Brief").length },
+              { label: "Stakeholder Positions", desc: "Government ministries, private sector bodies, and civil society perspectives on key policy developments.", count: BRIEFS.filter((b) => b.category === "Stakeholder Position").length },
             ].map((card) => (
-              <div
-                key={card.label}
-                style={{
-                  backgroundColor: C.background,
-                  borderRadius: "14px",
-                  padding: "28px",
-                  border: `1px solid ${C.line}`,
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: "14px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "50%",
-                      backgroundColor: C.accent,
-                    }}
-                  />
-                  <span
-                    style={{
-                      fontSize: "22px",
-                      fontWeight: "700",
-                      color: C.primary,
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
-                    {card.count}
-                  </span>
+              <div key={card.label} style={{ backgroundColor: C.background, borderRadius: "14px", padding: "28px", border: `1px solid ${C.line}` }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
+                  <div style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: C.accent }} />
+                  <span style={{ fontSize: "22px", fontWeight: "700", color: C.primary, fontFamily: "Inter, sans-serif" }}>{card.count}</span>
                 </div>
-                <h3
-                  style={{
-                    fontSize: "15px",
-                    fontWeight: "600",
-                    color: C.primary,
-                    margin: "0 0 8px",
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
-                  {card.label}
-                </h3>
+                <h3 style={{ fontSize: "15px", fontWeight: "600", color: C.primary, margin: "0 0 8px", fontFamily: "Inter, sans-serif" }}>{card.label}</h3>
                 <p style={{ fontSize: "13px", color: C.text, lineHeight: "1.6", margin: 0 }}>{card.desc}</p>
               </div>
             ))}
@@ -685,92 +833,33 @@ export default function PolicyPage() {
           <div style={{ marginBottom: "20px" }}>
             <Pill label="Stay Informed" />
           </div>
-          <h2
-            style={{
-              fontSize: "clamp(26px, 4vw, 38px)",
-              fontWeight: "300",
-              color: C.white,
-              margin: "0 0 16px",
-              lineHeight: "1.2",
-              fontFamily: "Inter, sans-serif",
-            }}
-          >
+          <h2 style={{ fontSize: "clamp(26px, 4vw, 38px)", fontWeight: "300", color: C.white, margin: "0 0 16px", lineHeight: "1.2", fontFamily: "Inter, sans-serif" }}>
             Get policy updates{" "}
             <span style={{ fontWeight: "700", color: C.accent }}>delivered to you</span>
           </h2>
-          <p
-            style={{
-              fontSize: "16px",
-              color: "rgba(255,255,255,0.65)",
-              lineHeight: "1.65",
-              margin: "0 0 36px",
-            }}
-          >
-            Receive concise briefings whenever a significant regulatory change, new legislation, or policy shift
-            affects Ghana's 12 BRIDGE sectors. No noise — only what matters to your work.
+          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.65)", lineHeight: "1.65", margin: "0 0 36px" }}>
+            Receive concise briefings whenever a significant regulatory change, new legislation, or policy shift affects Ghana's 12 BRIDGE sectors. No noise — only what matters to your work.
           </p>
 
           {subscribed ? (
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "12px",
-                backgroundColor: "rgba(184,217,53,0.15)",
-                border: "1px solid rgba(184,217,53,0.35)",
-                borderRadius: "50px",
-                padding: "16px 32px",
-              }}
-            >
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", backgroundColor: "rgba(184,217,53,0.15)", border: "1px solid rgba(184,217,53,0.35)", borderRadius: "50px", padding: "16px 32px" }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span style={{ fontSize: "15px", fontWeight: "600", color: C.accent }}>
-                You're subscribed — we'll be in touch.
-              </span>
+              <span style={{ fontSize: "15px", fontWeight: "600", color: C.accent }}>You're subscribed — we'll be in touch.</span>
             </div>
           ) : (
-            <div
-              style={{
-                display: "flex",
-                gap: "12px",
-                maxWidth: "480px",
-                margin: "0 auto",
-                flexWrap: "wrap" as const,
-              }}
-            >
+            <div style={{ display: "flex", gap: "12px", maxWidth: "480px", margin: "0 auto", flexWrap: "wrap" as const }}>
               <input
                 type="email"
                 placeholder="Your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  flex: "1 1 240px",
-                  padding: "14px 20px",
-                  borderRadius: "50px",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  backgroundColor: "rgba(255,255,255,0.08)",
-                  color: C.white,
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  outline: "none",
-                }}
+                style={{ flex: "1 1 240px", padding: "14px 20px", borderRadius: "50px", border: "1px solid rgba(255,255,255,0.2)", backgroundColor: "rgba(255,255,255,0.08)", color: C.white, fontFamily: "Inter, sans-serif", fontSize: "14px", outline: "none" }}
               />
               <button
                 onClick={() => { if (email.includes("@")) setSubscribed(true); }}
-                style={{
-                  padding: "14px 28px",
-                  borderRadius: "50px",
-                  border: "none",
-                  backgroundColor: C.accent,
-                  color: C.primary,
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                  flexShrink: 0,
-                  transition: "opacity 0.2s",
-                }}
+                style={{ padding: "14px 28px", borderRadius: "50px", border: "none", backgroundColor: C.accent, color: C.primary, fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: "700", cursor: "pointer", flexShrink: 0 }}
               >
                 Subscribe
               </button>
@@ -795,33 +884,13 @@ export default function PolicyPage() {
           <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" as const }}>
             <button
               onClick={() => navigate("/sectors")}
-              style={{
-                padding: "14px 32px",
-                borderRadius: "50px",
-                border: "none",
-                backgroundColor: C.primary,
-                color: C.white,
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "600",
-                cursor: "pointer",
-              }}
+              style={{ padding: "14px 32px", borderRadius: "50px", border: "none", backgroundColor: C.primary, color: C.white, fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}
             >
               View All 12 Sectors →
             </button>
             <button
               onClick={() => navigate("/resources")}
-              style={{
-                padding: "14px 32px",
-                borderRadius: "50px",
-                border: `1px solid ${C.line}`,
-                backgroundColor: C.white,
-                color: C.primary,
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "600",
-                cursor: "pointer",
-              }}
+              style={{ padding: "14px 32px", borderRadius: "50px", border: `1px solid ${C.line}`, backgroundColor: C.white, color: C.primary, fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}
             >
               Annual Review & Reports
             </button>
