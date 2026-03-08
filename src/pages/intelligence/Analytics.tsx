@@ -37,8 +37,6 @@ import {
   FileBarChart,
   Book,
   LogOut,
-  Target,
-  TrendingUp,
   Zap,
   Building2,
   Globe,
