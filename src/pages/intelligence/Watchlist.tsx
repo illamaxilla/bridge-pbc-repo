@@ -1509,7 +1509,7 @@ function OverviewTab({ item }) {
   const gv = (i, j) => Math.round(15 + Math.sin(i * 1.2 + j * 0.7) * 10 + j * 2);
   const gc = (i, j) => {
     const v = (Math.sin(i * 0.8 + j * 1.1) * 3).toFixed(2);
-    return v > 0 ? `+${v}` : `${v}`;
+    return Number(v) > 0 ? `+${v}` : `${v}`;
   };
   return (
     <div>
