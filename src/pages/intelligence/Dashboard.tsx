@@ -5066,10 +5066,12 @@ function DesktopDashboard() {
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7 }}>
                       <div style={{ display: "flex", gap: 2, background: "#F3F4F6", borderRadius: 7, padding: 3 }}>
-                        {[
-                          ["Bar", "bar", BarChart3],
-                          ["Line", "line", LineChart],
-                        ].map(([l, v, Icon]) => (
+                        {(
+                          [
+                            ["Bar", "bar", BarChart3],
+                            ["Line", "line", LineChart],
+                          ] as [string, string, React.ElementType][]
+                        ).map(([l, v, Icon]) => (
                           <button
                             key={v}
                             onClick={() => setChart(v)}
