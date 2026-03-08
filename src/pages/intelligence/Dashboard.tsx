@@ -5784,7 +5784,7 @@ function DesktopDashboard() {
                   Quick Actions
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
-                  {[
+                  {([
                     [FileText, "View Report"],
                     [Download, "Export Data"],
                     [BarChart2, "Compare"],
