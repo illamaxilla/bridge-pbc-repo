@@ -2731,8 +2731,24 @@ const footerSectorIcons = [
   },
 ];
 
+const SECTOR_ROUTES: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  creative: "/sectors/sports",
+  housing: "/sectors/housing",
+  tourism: "/sectors/tourism",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  transport: "/sectors/transport",
+};
+
 const SectorGrid = () => {
   const [hovered, setHovered] = useState(null);
+  const navigate = useNavigate();
   return (
     <div>
       <div
@@ -2757,8 +2773,9 @@ const SectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href="#"
+              href={SECTOR_ROUTES[sector.key] || "/sectors"}
               title={sector.label}
+              onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[sector.key] || "/sectors"); }}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
               style={{
