@@ -1082,6 +1082,24 @@ function CommunityDashboard({ memberType, onLogout }) {
     navigate(routeMap[key] ?? "/community");
   };
 
+  const [contributions, setContributions] = useState([
+    { label: "Discussions participated in this week", done: true },
+    { label: "Sector insight submitted", done: false },
+    { label: "Question answered in your sector", done: true },
+    { label: "Peer review completed", done: false },
+  ]);
+
+  const isMobile = useWindowWidth() < 768;
+  const user = { name: "Joseph", initials: "JA", sector: "Infrastructure", journey: 2 };
+  const mType = MEMBER_TYPES[memberType];
+
+  const NAV_ITEMS = [
+    { key: "home", label: "Home", icon: <Home size={20} /> },
+    { key: "forum", label: "Forum", icon: <MessageSquare size={20} /> },
+    { key: "members", label: "Members", icon: <Users size={20} /> },
+    { key: "resources", label: "Resources", icon: <BookOpen size={20} /> },
+  ];
+
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: font.body }}>
       {/* ── HEADER ── */}
