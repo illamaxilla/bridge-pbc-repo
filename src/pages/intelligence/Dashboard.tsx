@@ -5145,14 +5145,16 @@ function DesktopDashboard() {
                   Quick Actions
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
-                  {[
-                    [FileText, "View Report"],
-                    [Download, "Export Data"],
-                    [BarChart2, "Compare"],
-                    [Clock, "History"],
-                    [Share2, "Share"],
-                    [MoreHorizontal, "More"],
-                  ].map(([Icon, label]) => (
+                  {(
+                    [
+                      [FileText, "View Report"],
+                      [Download, "Export Data"],
+                      [BarChart2, "Compare"],
+                      [Clock, "History"],
+                      [Share2, "Share"],
+                      [MoreHorizontal, "More"],
+                    ] as [React.ComponentType<{ size?: number }>, string][]
+                  ).map(([ActionIcon, label]) => (
                     <button
                       key={label}
                       style={{

@@ -2580,7 +2580,7 @@ function MCardHeader({ icon: Icon, iconColor = M.accent, title, badge, badgeStyl
   );
 }
 
-function MSection({ icon, iconColor, title, badge, badgeStyle, defaultOpen = false, children }) {
+function MSection({ icon, iconColor = M.accent, title, badge = undefined, badgeStyle = {}, defaultOpen = false, children }: { icon?: any; iconColor?: any; title?: any; badge?: any; badgeStyle?: any; defaultOpen?: boolean; children?: any }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <MCard style={{ marginBottom: 10 }}>
