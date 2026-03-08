@@ -1548,7 +1548,26 @@ function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPa
             return (
               <button
                 key={item.label}
-                onClick={() => (goesToMembers ? setCurrentPage("members") : setForumView(item.label))}
+                onClick={() => {
+                  const forumRouteMap: Record<string, string> = {
+                    "Home": "/community/forum",
+                    "Questions": "/community/forum/questions",
+                    "Most Answered": "/community/forum/most-answered",
+                    "Polls": "/community/forum/polls",
+                    "Groups": "/community/forum/groups",
+                    "Tags": "/community/forum/tags",
+                    "Sectors": "/community/forum/sectors",
+                    "Badges": "/community/forum/badges",
+                    "Members": "/community/members",
+                  };
+                  if (goesToMembers) {
+                    setCurrentPage("members");
+                    navigate("/community/members");
+                  } else {
+                    setForumView(item.label);
+                    navigate(forumRouteMap[item.label] ?? "/community/forum");
+                  }
+                }}
                 style={{
                   display: "flex",
                   alignItems: "center",
