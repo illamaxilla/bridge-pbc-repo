@@ -7948,7 +7948,7 @@ export default function AgricultureSectorPageIntegrated() {
       <InvestmentThesisSection />
       <FinalCTASection />
 
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

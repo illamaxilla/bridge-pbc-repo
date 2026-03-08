@@ -6983,7 +6983,7 @@ export default function HealthSystemsSectorPage() {
       <div style={{ backgroundColor: colors.primary, padding: "0 80px" }}>
         <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
       </div>
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

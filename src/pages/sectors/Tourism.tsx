@@ -7269,7 +7269,7 @@ export default function TourismHospitalitySectorPage() {
       <CrossSectorSection />
       <InvestmentCTASection />
       <FinalCTASection />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
