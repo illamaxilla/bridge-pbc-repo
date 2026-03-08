@@ -4105,13 +4105,17 @@ function DesktopDashboard() {
   const [collapsed, setCollapsed] = useState(false);
   const [chart, setChart] = useState("bar");
   const [notif, setNotif] = useState(false);
+  const [fadeKey, setFadeKey] = useState(0);
 
   // Sync when URL param changes (e.g. sidebar sector click)
   useEffect(() => {
     const id = searchParams.get("sector");
     if (id) {
       const found = SECTORS.find(sec => sec.id === id);
-      if (found) setS(found);
+      if (found) {
+        setFadeKey(k => k + 1);
+        setS(found);
+      }
     }
   }, [searchParams]);
 
