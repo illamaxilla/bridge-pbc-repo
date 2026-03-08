@@ -1,4 +1,4 @@
-import { Outlet, NavLink, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, Navigate, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   LayoutDashboard, TrendingUp, FileText, Bookmark, BarChart2, FolderOpen,
   Menu, X, ChevronLeft, ChevronRight, ArrowUpRight, Check,
