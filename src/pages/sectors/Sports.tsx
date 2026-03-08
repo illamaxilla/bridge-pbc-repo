@@ -7257,10 +7257,14 @@ const Footer = () => {
           {"\u00A9"} 2026 BRIDGE PBC
         </span>
         <div style={{ display: "flex", gap: isMobile ? "12px" : "20px" }}>
-          {["Terms", "Privacy", "Accessibility"].map((link) => (
+          {[
+            { label: "Terms", href: "/policy" },
+            { label: "Privacy", href: "/policy" },
+            { label: "Accessibility", href: "/about" },
+          ].map((item) => (
             <a
-              key={link}
-              href="#"
+              key={item.label}
+              href={item.href}
               style={{
                 fontSize: "11px",
                 color: "rgba(255,255,255,0.25)",
@@ -7268,7 +7272,7 @@ const Footer = () => {
                 textDecoration: "none",
               }}
             >
-              {link}
+              {item.label}
             </a>
           ))}
         </div>
