@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -3992,6 +3993,19 @@ const RippleEffectSection = ({ sector }) => {
   const isMobile = useIsMobile();
   const [activeNode, setActiveNode] = useState(null);
   const [showMoreRipple, setShowMoreRipple] = useState(false);
+  const navigate = useNavigate();
+  const SECTOR_ROUTES: Record<string, string> = {
+    "Financial Inclusion": "/sectors/financial",
+    "Health Systems": "/sectors/health",
+    "Agriculture & Value Chains": "/sectors/agriculture",
+    "Agriculture": "/sectors/agriculture",
+    "Energy": "/sectors/energy",
+    "Manufacturing": "/sectors/manufacturing",
+    "Transportation": "/sectors/transport",
+    "Infrastructure": "/sectors/infrastructure",
+    "Technology & Innovation": "/sectors/technology",
+    "Education & Skills": "/sectors/education",
+  };
 
   const crossSectorIcons = {
     1: footerSectorIcons[0].icon("currentColor"),
@@ -4462,7 +4476,8 @@ const RippleEffectSection = ({ sector }) => {
                       </div>
                     ))}
                     <a
-                      href="#"
+                      href={SECTOR_ROUTES[pathways[activeNode].name] || "/sectors"}
+                      onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[pathways[activeNode].name] || "/sectors"); }}
                       style={{
                         display: "inline-flex",
                         alignItems: "center",

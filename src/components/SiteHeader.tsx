@@ -22,6 +22,8 @@ const ALL_NAV = [
   { label: "Resources",          to: "/resources" },
   { label: "Contact",            to: "/contact" },
 ];
+// Policy pages that show a badge dot
+const BADGE_ITEMS = new Set(["/policy"]);
 
 // ── BRIDGE logo (dark, header variant) ────────────────────────────────────────
 const BridgeLogo = ({ height = 40 }: { height?: number }) => (

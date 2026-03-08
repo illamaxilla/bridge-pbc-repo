@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -3535,6 +3536,7 @@ const catLabels = { funding: "Funding & Incentives", infrastructure: "Infrastruc
 
 const PolicyAlignmentSection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("all");
   const [expandedCard, setExpandedCard] = useState(null);
 
@@ -3957,7 +3959,8 @@ const PolicyAlignmentSection = () => {
             </div>
           </div>
           <a
-            href="#"
+            href="/contact"
+            onClick={(e) => { e.preventDefault(); navigate("/contact"); }}
             style={{
               fontFamily: "DM Sans, sans-serif",
               fontSize: "13px",
@@ -4072,6 +4075,19 @@ const CrossSectorSection = () => {
   const isMobile = useIsMobile();
   const [activeNode, setActiveNode] = useState(null);
   const [showMoreRipple, setShowMoreRipple] = useState(false);
+  const navigate = useNavigate();
+  const SECTOR_ROUTES: Record<string, string> = {
+    "Financial Inclusion": "/sectors/financial",
+    "Health Systems": "/sectors/health",
+    "Agriculture & Value Chains": "/sectors/agriculture",
+    "Agriculture": "/sectors/agriculture",
+    "Energy": "/sectors/energy",
+    "Manufacturing": "/sectors/manufacturing",
+    "Transportation": "/sectors/transport",
+    "Infrastructure": "/sectors/infrastructure",
+    "Technology & Innovation": "/sectors/technology",
+    "Education & Skills": "/sectors/education",
+  };
   const pathway = activeNode !== null ? crossSectorData[activeNode] : null;
 
   return (
@@ -4598,7 +4614,8 @@ const CrossSectorSection = () => {
                       ))}
                     </div>
                     <a
-                      href="#"
+                      href={SECTOR_ROUTES[pathway.name] || "/sectors"}
+                      onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[pathway.name] || "/sectors"); }}
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
@@ -4670,6 +4687,7 @@ const CONTENT_MAX_WIDTH = "1200px";
 
 const InvestmentCTASection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("returns");
   const [activeAudience, setActiveAudience] = useState(0);
   const [showInvestmentDetails, setShowInvestmentDetails] = useState(false);
@@ -5291,7 +5309,8 @@ const InvestmentCTASection = () => {
                   Full financial model available
                 </span>
                 <a
-                  href="#"
+                  href="/resources"
+                  onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",

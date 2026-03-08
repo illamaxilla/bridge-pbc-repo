@@ -3263,6 +3263,7 @@ export default function BRIDGEHomePage() {
               Insights
             </div>
             <h2
+              onClick={() => navigate("/resources")}
               style={{
                 fontFamily: "Georgia, serif",
                 fontSize: isMobile ? "32px" : "48px",
@@ -3271,6 +3272,7 @@ export default function BRIDGEHomePage() {
                 color: colors.primary,
                 margin: "0 0 16px 0",
                 fontStyle: "italic",
+                cursor: "pointer",
               }}
             >
               Our Latest Insights
@@ -3304,6 +3306,7 @@ export default function BRIDGEHomePage() {
               {insights.map((insight, index) => (
                 <div
                   key={index}
+                  onClick={() => navigate("/resources")}
                   style={{
                     flex: isMobile ? "0 0 100%" : "0 0 calc(50% - 12px)",
                     backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
@@ -3440,23 +3443,22 @@ export default function BRIDGEHomePage() {
             ))}
           </div>
           <div style={{ textAlign: "center", marginTop: "48px" }}>
-            <a href="/insights" style={{ textDecoration: "none" }}>
-              <button
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  border: "none",
-                  padding: isMobile ? "12px 24px" : "16px 32px",
-                  fontSize: isMobile ? "13px" : "15px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
-                }}
-              >
-                More Insights
-              </button>
-            </a>
+            <button
+              onClick={() => navigate("/resources")}
+              style={{
+                backgroundColor: colors.accent,
+                color: colors.primary,
+                border: "none",
+                padding: isMobile ? "12px 24px" : "16px 32px",
+                fontSize: isMobile ? "13px" : "15px",
+                fontWeight: "600",
+                fontFamily: "Inter, sans-serif",
+                cursor: "pointer",
+                borderRadius: "50px",
+              }}
+            >
+              More Insights
+            </button>
           </div>
         </div>
       </section>
