@@ -41,6 +41,11 @@ import {
   LogOut,
   LineChart,
   FileBarChart,
+  Rss,
+  Building2,
+  Award,
+  Wifi,
+  PieChart,
 } from "lucide-react";
 import {
   Bar,
@@ -295,7 +300,7 @@ const SVG_MAP = {
   creative: sectorSvgIcons[6],
 };
 
-const SECTORS: any[] = [
+const SECTORS = [
   {
     id: "agriculture",
     icon: Sprout,
@@ -815,7 +820,7 @@ const SECTORS: any[] = [
   },
 ];
 // Attach svgIcon to each sector
-(SECTORS as any[]).forEach((s) => {
+SECTORS.forEach((s) => {
   s.svgIcon = SVG_MAP[s.id];
 });
 
@@ -910,7 +915,7 @@ function Card({ children, style: ex = {} }) {
   );
 }
 
-const Tip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
+const Tip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
     <div style={{ background: "#111827", color: "#fff", borderRadius: 8, padding: "8px 12px", fontSize: 11 }}>
@@ -1502,8 +1507,8 @@ function OverviewTab({ item }) {
           ? ["Jan", "Feb", "Mar"]
           : ["2021", "2022", "2023", "2024", "2025"];
   const gv = (i, j) => Math.round(15 + Math.sin(i * 1.2 + j * 0.7) * 10 + j * 2);
-  const gc = (i: number, j: number) => {
-    const v = parseFloat((Math.sin(i * 0.8 + j * 1.1) * 3).toFixed(2));
+  const gc = (i, j) => {
+    const v = (Math.sin(i * 0.8 + j * 1.1) * 3).toFixed(2);
     return v > 0 ? `+${v}` : `${v}`;
   };
   return (
@@ -1682,7 +1687,7 @@ function OverviewTab({ item }) {
                                   gap: 5,
                                 }}
                               >
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: 2, flexShrink: 0 }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <MapPin size={10} color={C.muted} style={{ marginTop: 2, flexShrink: 0 }} />
                                 Accra Business District, Ring Road Central, Accra, Ghana
                               </div>
                             </div>
@@ -2799,12 +2804,12 @@ const mCard = (extra = {}) => ({
   overflow: "hidden",
   ...extra,
 });
-const mLabel: React.CSSProperties = {
+const mLabel = {
   fontSize: 9,
   fontWeight: 700,
   color: MB.faint,
   letterSpacing: "1.2px",
-  textTransform: "uppercase" as const,
+  textTransform: "uppercase",
   fontFamily: "Inter,sans-serif",
 };
 
@@ -3457,8 +3462,6 @@ function MNotifDropdown({ open, onClose, s }) {
 // ─── Mobile Header (new spec) ──────────────────────────────────────────
 function MobileHeader({ sector, setSector }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
       <div
@@ -3466,68 +3469,16 @@ function MobileHeader({ sector, setSector }) {
           position: "sticky",
           top: 0,
           zIndex: 50,
-          height: 62,
+          height: 48,
           background: `${MB.card}EE`,
           borderBottom: `1px solid rgba(255,255,255,0.08)`,
           backdropFilter: "blur(16px)",
           display: "flex",
           alignItems: "center",
           padding: "0 14px",
-          gap: 8,
           flexShrink: 0,
         }}
       >
-        {/* Logo */}
-        <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "stretch", width: 90 }}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 3434.33 932.3"
-            style={{ width: 90, height: 24, display: "block" }}
-          >
-            <defs>
-              <style>{`.ml1{stroke:#fff;stroke-width:80px;}.ml1,.ml3{fill:none;stroke-miterlimit:10;}.ml2{fill:#B8D935;stroke:#1b4d3e;stroke-miterlimit:10;}.ml3{stroke:#231f20;stroke-width:5px;}.ml4,.ml5{fill:#fff;}.ml5{stroke:#000;stroke-width:.5px;}.ml8{fill:#fff;}`}</style>
-            </defs>
-            <path
-              className="ml4"
-              d="M1853.06,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.56,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1v.1Z"
-            />
-            <path
-              className="ml5"
-              d="M1431.68,224.45h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.05c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5l.1.1Z"
-            />
-            <rect className="ml2" x="1427.38" y="17.35" width="205.2" height="145" />
-            <rect className="ml4" x="1427.48" y="221.75" width="205.2" height="693.2" rx="9.6" ry="9.6" />
-            <rect className="ml1" x="40" y="40" width="843.91" height="852.3" rx="36.55" ry="36.55" />
-            <polygon className="ml2" points="722.6 322.13 462.28 452.8 201.97 322.75 461.21 192.52 722.6 322.13" />
-            <path
-              style={{ fill: "#74914a" }}
-              d="M197.84,426.78c3.86-.53,7.04.85,10.74,1.41l252.53,125.67c84.54-40,167.66-83.83,251.89-124.84,33.14-11.49,50.09,34.15,18.55,49.11l-259.23,129.08c-10.18,3.72-14.14,2.57-23.85-1.31l-264.23-132.98c-17.04-14.4-7.96-43.2,13.61-46.14Z"
-            />
-            <path
-              className="ml2"
-              d="M195.25,558c3.65-.63,7.4-.4,11.08-.22,86.11,40.47,170.4,85.05,255.95,126.78l252.92-126c29.53-7.22,45.44,28.67,22.29,46.49l-270.42,134.42-8.62.31c-91.6-42.21-181.07-89.86-271.7-134.42-18.72-12.06-13.3-43.58,8.5-47.37Z"
-            />
-          </svg>
-          <div style={{ width: 90, overflow: "hidden" }}>
-            <span
-              style={{
-                display: "block",
-                fontSize: 6.5,
-                fontWeight: 700,
-                color: MB.accent,
-                textTransform: "uppercase",
-                fontFamily: "Inter,sans-serif",
-                letterSpacing: "0.32em",
-                textAlign: "justify",
-                textAlignLast: "justify",
-                width: "100%",
-                lineHeight: 1.6,
-              }}
-            >
-              Intelligence
-            </span>
-          </div>
-        </div>
         {/* Sector selector pill */}
         <div
           onClick={() => setDrawerOpen(true)}
@@ -3541,7 +3492,6 @@ function MobileHeader({ sector, setSector }) {
             background: "rgba(255,255,255,0.06)",
             borderRadius: 10,
             padding: "6px 10px 6px 8px",
-            marginLeft: 8,
           }}
         >
           <div
@@ -3589,103 +3539,7 @@ function MobileHeader({ sector, setSector }) {
             </svg>
           </div>
         </div>
-        {/* Bell */}
-        <button
-          onClick={() => {
-            setNotifOpen((o) => !o);
-            setMenuOpen(false);
-          }}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            position: "relative",
-            flexShrink: 0,
-          }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="2">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
-          <div
-            style={{
-              position: "absolute",
-              top: 6,
-              right: 6,
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "#EF4444",
-              border: "1.5px solid #070D09",
-            }}
-          />
-        </button>
-        {/* Hamburger */}
-        <button
-          onClick={() => {
-            setMenuOpen((o) => !o);
-            setNotifOpen(false);
-          }}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: menuOpen ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.06)",
-            border: `1px solid ${menuOpen ? "rgba(184,217,53,0.25)" : "rgba(255,255,255,0.08)"}`,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 4,
-            cursor: "pointer",
-            flexShrink: 0,
-            padding: 0,
-          }}
-        >
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 9,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-              alignSelf: "flex-start",
-              marginLeft: 10,
-            }}
-          />
-        </button>
       </div>
-      {/* Overlays */}
-      {notifOpen && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 340 }} onClick={() => setNotifOpen(false)}>
-          <MNotifDropdown open={notifOpen} onClose={() => setNotifOpen(false)} s={sector} />
-        </div>
-      )}
-      <MMenuDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
       <MSectorDrawer s={sector} setS={setSector} open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </>
   );
@@ -3696,11 +3550,11 @@ function MobileHeader({ sector, setSector }) {
 // ═══════════════════════════════════════════════════════════════════════
 function MobileBottomNav({ page, setPage }) {
   const items = [
-    { id: "dashboard", label: "Dashboard", Icon: LayoutGrid },
-    { id: "overview", label: "Overview", Icon: Activity },
-    { id: "analytics", label: "Analytics", Icon: BarChart3 },
-    { id: "watch", label: "Watch", Icon: Eye },
-    { id: "resources", label: "Resources", Icon: Book },
+    { id: "feed", label: "Feed", Icon: Rss },
+    { id: "companies", label: "Companies", Icon: Building2 },
+    { id: "scores", label: "Scores", Icon: Award },
+    { id: "signals", label: "Signals", Icon: Wifi },
+    { id: "portfolio", label: "Portfolio", Icon: PieChart },
   ];
   return (
     <div
@@ -3763,57 +3617,8 @@ function MobileBottomNav({ page, setPage }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════
-// WATCH PAGE — sub-tabs: Feed / Players / Scores / Signals
-// ═══════════════════════════════════════════════════════════════════════
-function WatchSubNav({ sub, setSub }) {
-  const tabs = ["Feed", "Players", "Scores", "Signals"];
-  return (
-    <div
-      className="hs"
-      style={{
-        display: "flex",
-        gap: 0,
-        padding: "10px 14px 0",
-        overflowX: "auto",
-        scrollbarWidth: "none",
-        flexShrink: 0,
-        borderBottom: `1px solid ${MB.borderSub}`,
-      }}
-    >
-      {tabs.map((t) => {
-        const act = sub === t;
-        return (
-          <div
-            key={t}
-            onClick={() => setSub(t)}
-            style={{
-              padding: "6px 14px",
-              cursor: "pointer",
-              borderBottom: `2px solid ${act ? MB.accent : "transparent"}`,
-              marginBottom: "-1px",
-              whiteSpace: "nowrap",
-            }}
-          >
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: act ? 700 : 400,
-                color: act ? MB.accent : MB.muted,
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              {t}
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-// Feed sub-tab
-function WatchFeed({ sector, setSelId }) {
+// ─── Feed Page ───
+function FeedPage({ sector, setSelId }) {
   const [expanded, setExpanded] = useState(null);
   const bullish = sector.activity.filter((a) => a.sig === "Bullish").length;
   const watches = sector.activity.filter((a) => a.sig === "Watch").length;
@@ -4311,7 +4116,7 @@ function WatchFeed({ sector, setSelId }) {
 }
 
 // Players sub-tab
-function WatchPlayers({ sector, setSelId }) {
+function PlayersPage({ sector, setSelId }) {
   const sigC = (s) => (s === "Bullish" ? MB.green : s === "Watch" ? MB.yellow : MB.red);
   const [selPlayer, setSelPlayer] = useState(null);
   const roles = ["Market Leader", "Growth Stage", "Emerging Player", "Institutional", "Early Stage"];
@@ -4673,7 +4478,7 @@ function WatchPlayers({ sector, setSelId }) {
 }
 
 // Scores sub-tab
-function WatchScores({ sector }) {
+function ScoresPage({ sector }) {
   const pillars = [
     { l: "Peace & Prosperity", v: Math.min(100, Math.round(sector.score * 0.97)) },
     { l: "Strategic Fit", v: Math.min(100, Math.round(sector.score * 1.02)) },
@@ -5101,12 +4906,12 @@ function WatchScores({ sector }) {
 }
 
 // Signals sub-tab
-function WatchSignals({ sector }) {
+function SignalsPage({ sector }) {
   const sigC = (s) => (s === "Bullish" ? MB.green : s === "Watch" ? MB.yellow : MB.red);
   const sigBG = (s) => (s === "Bullish" ? MB.greenDim : s === "Watch" ? MB.yellowDim : MB.redDim);
   const bullish = sector.activity.filter((a) => a.sig === "Bullish");
   const watches = sector.activity.filter((a) => a.sig === "Watch");
-  const cats: string[] = [...new Set<string>(sector.activity.map((a: any) => a.cat as string))];
+  const cats = [...new Set(sector.activity.map((a) => a.cat))];
 
   // Signal strength: ratio of bullish to total
   const strength = Math.round((bullish.length / sector.activity.length) * 100);
@@ -5403,767 +5208,361 @@ function WatchSignals({ sector }) {
   );
 }
 
-// WATCH PAGE
-function WatchPage({ sector, setSelId }) {
-  const [sub, setSub] = useState("Feed");
-  return (
-    <>
-      <WatchSubNav sub={sub} setSub={setSub} />
-      <div className="hs" style={{ flex: 1, overflowY: "auto" }}>
-        {sub === "Feed" && <WatchFeed sector={sector} setSelId={setSelId} />}
-        {sub === "Players" && <WatchPlayers sector={sector} setSelId={setSelId} />}
-        {sub === "Scores" && <WatchScores sector={sector} />}
-        {sub === "Signals" && <WatchSignals sector={sector} />}
-      </div>
-    </>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// ANALYTICS PAGE  (sector-specific, collapsible widget cards)
-// ═══════════════════════════════════════════════════════════════════════
-function AnalyticsPage({ sector }) {
-  const [open, setOpen] = useState({ kpi: true, breakdown: true, volatility: false, engagement: false });
-  const tog = (k) => setOpen((o) => ({ ...o, [k]: !o[k] }));
-
-  // Derived data
-  const subShare = [40, 25, 18, 12, 5];
-  const subNames = sector.subSectors.map((s) => s.name).concat(["Other"]);
-  const capMid = ((sector.capLow + sector.capHigh) / 2).toFixed(1);
-  const irr = Math.round(sector.score * 0.27);
-
-  const engData = Array.from({ length: 24 }, (_, i) => ({ x: i, y: Math.round(30 + Math.random() * 70) }));
-
-  return (
-    <div
-      className="hs"
-      style={{
-        flex: 1,
-        overflowY: "auto",
-        padding: "14px 14px 24px",
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-      }}
-    >
-      {/* Sector hero */}
-      <div style={{ ...mCard(), padding: "16px" }}>
-        <div style={{ fontSize: 8, ...mLabel, marginBottom: 8 }}>ANALYTICS · {sector.short.toUpperCase()}</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <MRing score={sector.score} size={72} stroke={6} />
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 16, fontWeight: 800, color: MB.text, lineHeight: 1.15, letterSpacing: "-.3px" }}>
-              {sector.full}
-            </div>
-            <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
-              {[
-                { l: "Cap", v: `$${sector.capLow}–${sector.capHigh}M` },
-                { l: "IRR", v: `${irr}%` },
-                { l: "Score", v: `${sector.score}` },
-              ].map((c, i) => (
-                <div
-                  key={i}
-                  style={{
-                    padding: "3px 10px",
-                    borderRadius: 8,
-                    background: "rgba(184,217,53,0.08)",
-                    border: `1px solid ${MB.border}`,
-                  }}
-                >
-                  <span style={{ fontSize: 9, color: MB.muted, fontFamily: "Inter,sans-serif" }}>{c.l} </span>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: MB.accent, fontFamily: "Inter,sans-serif" }}>
-                    {c.v}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* KPI Cards — 2×2 grid */}
-      <div style={mCard()}>
-        <MCardHeader
-          icon={<BarChart3 size={15} color={MB.accent} />}
-          title="KPIs"
-          badge="Live"
-          open={open.kpi}
-          toggle={() => tog("kpi")}
-        />
-        {open.kpi && (
-          <div
-            style={{
-              borderTop: `1px solid ${MB.borderSub}`,
-              padding: "12px",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 8,
-            }}
-          >
-            {[
-              { l: "Market Cap", v: `$${(sector.capHigh * 1.8).toFixed(1)}B`, sub: "Sector aggregate", delta: "+5.1%" },
-              { l: "IRR Ceiling", v: `${irr}%`, sub: "Target return", delta: "+2.4%" },
-              { l: "Sub-sector Rev", v: `$${(sector.capLow * 1.4).toFixed(1)}B`, sub: "Lead segment", delta: "+3.8%" },
-              { l: "BRIDGE Score", v: `${sector.score}`, sub: "/ 100 composite", delta: "+1.2%" },
-            ].map((m, i) => (
-              <div
-                key={i}
-                style={{
-                  background: "rgba(255,255,255,0.03)",
-                  borderRadius: 12,
-                  padding: "14px 12px",
-                  border: `1px solid ${MB.borderSub}`,
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 9,
-                    color: MB.green,
-                    fontWeight: 700,
-                    fontFamily: "Inter,sans-serif",
-                    textAlign: "right",
-                    marginBottom: 6,
-                  }}
-                >
-                  {m.delta}
-                </div>
-                <div
-                  style={{
-                    fontSize: 24,
-                    fontWeight: 800,
-                    color: MB.text,
-                    letterSpacing: "-.5px",
-                    lineHeight: 1,
-                    fontFamily: "Inter,sans-serif",
-                  }}
-                >
-                  {m.v}
-                </div>
-                <div style={{ fontSize: 10, color: MB.muted, marginTop: 5, lineHeight: 1.3 }}>{m.l}</div>
-                <div style={{ fontSize: 9, color: MB.faint, fontFamily: "Inter,sans-serif", marginTop: 2 }}>
-                  {m.sub}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Sub-sector Breakdown */}
-      <div style={mCard()}>
-        <MCardHeader
-          icon={<Activity size={15} color={MB.accent} />}
-          title="Sub-sector Breakdown"
-          badge={`${subNames.length} segments`}
-          open={open.breakdown}
-          toggle={() => tog("breakdown")}
-        />
-        {open.breakdown && (
-          <div
-            style={{
-              borderTop: `1px solid ${MB.borderSub}`,
-              padding: "14px 16px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-            }}
-          >
-            {/* Stacked bar */}
-            <div style={{ display: "flex", borderRadius: 8, overflow: "hidden", height: 6, gap: 1 }}>
-              {subShare.map((pct, i) => {
-                const cols = [
-                  MB.accent,
-                  MB.green,
-                  "rgba(184,217,53,0.5)",
-                  "rgba(76,175,122,0.5)",
-                  "rgba(255,255,255,0.15)",
-                ];
-                return (
-                  <div
-                    key={i}
-                    style={{
-                      width: `${pct}%`,
-                      background: cols[i],
-                      borderRadius: i === 0 ? "4px 0 0 4px" : i === subShare.length - 1 ? "0 4px 4px 0" : "0",
-                    }}
-                  />
-                );
-              })}
-            </div>
-            {subNames.map((name, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div
-                  style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: [
-                      MB.accent,
-                      MB.green,
-                      "rgba(184,217,53,0.5)",
-                      "rgba(76,175,122,0.5)",
-                      "rgba(255,255,255,0.15)",
-                    ][i],
-                    flexShrink: 0,
-                  }}
-                />
-                <span style={{ fontSize: 12, fontWeight: 500, color: MB.text, flex: 1 }}>{name}</span>
-                <span style={{ fontSize: 12, fontWeight: 700, color: MB.accent, fontFamily: "Inter,sans-serif" }}>
-                  {subShare[i]}%
-                </span>
-              </div>
-            ))}
-            {subNames
-              .map((name, i) => (
-                <div key={i} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                  <div style={{ width: "100%", height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
-                    <div
-                      style={{
-                        width: `${subShare[i]}%`,
-                        height: "100%",
-                        background: [
-                          MB.accent,
-                          MB.green,
-                          "rgba(184,217,53,0.5)",
-                          "rgba(76,175,122,0.5)",
-                          "rgba(255,255,255,0.12)",
-                        ][i],
-                        borderRadius: 2,
-                      }}
-                    />
-                  </div>
-                </div>
-              ))
-              .filter((_, i) => false)}
-          </div>
-        )}
-      </div>
-
-      {/* Volatility vs Growth */}
-      <div style={mCard()}>
-        <MCardHeader
-          icon={<span style={{ fontSize: 14 }}>⊕</span>}
-          title="Volatility vs Growth"
-          badge="Sub-sectors"
-          open={open.volatility}
-          toggle={() => tog("volatility")}
-        />
-        {open.volatility && (
-          <div
-            style={{
-              borderTop: `1px solid ${MB.borderSub}`,
-              padding: "14px 16px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 0,
-            }}
-          >
-            <div style={{ fontSize: 10, color: MB.faint, fontFamily: "Inter,sans-serif", marginBottom: 12 }}>
-              Risk-return profile · bubble size = market share
-            </div>
-            {subNames.slice(0, 5).map((name, i) => {
-              const initials = name
-                .split(" ")
-                .map((w) => w[0])
-                .join("")
-                .slice(0, 2)
-                .toUpperCase();
-              const growth = Math.round(74 - i * 12);
-              const risk = Math.round(15 + i * 18);
-              const share = subShare[i];
-              return (
-                <div
-                  key={i}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    padding: "11px 0",
-                    borderBottom: i < 4 ? `1px solid ${MB.borderSub}` : "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 42,
-                      height: 42,
-                      borderRadius: "50%",
-                      background: "rgba(255,255,255,0.06)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      border: `1px solid ${MB.borderSub}`,
-                    }}
-                  >
-                    <span style={{ fontSize: 11, fontWeight: 700, color: MB.muted, fontFamily: "Inter,sans-serif" }}>
-                      {initials}
-                    </span>
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div
-                      style={{
-                        fontSize: 12,
-                        fontWeight: 600,
-                        color: MB.text,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {name}
-                    </div>
-                    <div style={{ fontSize: 10, color: MB.muted, marginTop: 2, fontFamily: "Inter,sans-serif" }}>
-                      Growth <span style={{ color: MB.green, fontWeight: 700 }}>{growth}%</span> · Risk{" "}
-                      <span style={{ color: MB.yellow, fontWeight: 700 }}>{risk}%</span>
-                    </div>
-                  </div>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: MB.accent, fontFamily: "Inter,sans-serif" }}>
-                    {share}%
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* 30-Day Engagement */}
-      <div style={mCard()}>
-        <MCardHeader
-          icon={<Zap size={15} color={MB.accent} />}
-          title="30-Day Engagement"
-          badge="Live"
-          open={open.engagement}
-          toggle={() => tog("engagement")}
-        />
-        {open.engagement && (
-          <div style={{ borderTop: `1px solid ${MB.borderSub}`, padding: "14px 16px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 16 }}>
-              {[
-                { l: "Active Signals", v: "1,692", d: "+56%" },
-                { l: "Conversion", v: "1,423", d: "+43%" },
-                { l: "Avg Duration", v: "11,992", d: "+28%" },
-              ].map((m, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    borderRadius: 10,
-                    padding: "12px 10px",
-                    border: `1px solid ${MB.borderSub}`,
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 800,
-                      color: MB.text,
-                      fontFamily: "Inter,sans-serif",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {m.v}
-                  </div>
-                  <div style={{ fontSize: 8, color: MB.muted, fontFamily: "Inter,sans-serif", marginTop: 4 }}>
-                    {m.l}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: MB.green,
-                      fontFamily: "Inter,sans-serif",
-                      marginTop: 6,
-                    }}
-                  >
-                    {m.d}
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Mini bar chart */}
-            <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 64, overflow: "hidden" }}>
-              {engData.map((d, i) => (
-                <div
-                  key={i}
-                  style={{
-                    flex: 1,
-                    background: i === engData.length - 4 ? MB.accent : `rgba(76,175,122,${0.15 + d.y / 200})`,
-                    borderRadius: "2px 2px 0 0",
-                    height: `${d.y}%`,
-                    minWidth: 3,
-                  }}
-                />
-              ))}
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
-              {["Feb 5", "Feb 15", "Feb 25", "Mar 1"].map((l) => (
-                <span key={l} style={{ fontSize: 8, color: MB.faint, fontFamily: "Inter,sans-serif" }}>
-                  {l}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// DASHBOARD PAGE  (all-sectors at a glance)
-// ═══════════════════════════════════════════════════════════════════════
-function DashboardPage({ sector, setSector }) {
+// ─── Portfolio Page (5th tab) ─────────────────────────────────────────────────
+function PortfolioPage({ sector }) {
+  const [activeFilter, setActiveFilter] = useState("All");
   const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
-  const topScore = sorted[0];
-  return (
-    <div
-      className="hs"
-      style={{
-        flex: 1,
-        overflowY: "auto",
-        padding: "14px 14px 24px",
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-      }}
-    >
-      <div style={{ ...mCard(), padding: "16px" }}>
-        <div style={{ ...mLabel, marginBottom: 10 }}>Platform Summary</div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
-          {[
-            { l: "Sectors", v: "12" },
-            { l: "Ventures", v: "174" },
-            { l: "Top Score", v: `${topScore.score}` },
-          ].map((m, i) => (
-            <div
-              key={i}
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                borderRadius: 10,
-                padding: "12px",
-                border: `1px solid ${MB.borderSub}`,
-                textAlign: "center",
-              }}
-            >
-              <div style={{ fontSize: 22, fontWeight: 800, color: MB.accent, fontFamily: "Inter,sans-serif" }}>
-                {m.v}
-              </div>
-              <div style={{ fontSize: 9, color: MB.muted, marginTop: 4, fontFamily: "Inter,sans-serif" }}>{m.l}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div style={{ ...mLabel }}>All Sectors · Score Ranked</div>
-      <div style={mCard()}>
-        {sorted.map((s, i) => {
-          const act = s.id === sector.id;
-          return (
-            <div
-              key={s.id}
-              onClick={() => setSector(s)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                padding: "12px 16px",
-                borderBottom: i < sorted.length - 1 ? `1px solid ${MB.borderSub}` : "none",
-                cursor: "pointer",
-                background: act ? "rgba(184,217,53,0.04)" : "transparent",
-              }}
-            >
-              <div
-                style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: 7,
-                  background: act ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                  border: `1px solid ${act ? MB.border : MB.borderSub}`,
-                }}
-              >
-                {s.svgIcon(act ? MB.accent : MB.faint, 14)}
-              </div>
-              <span
-                style={{
-                  flex: 1,
-                  fontSize: 12,
-                  fontWeight: act ? 600 : 400,
-                  color: act ? MB.text : "rgba(255,255,255,0.65)",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {s.short}
-              </span>
-              <div
-                style={{ width: 60, height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, flexShrink: 0 }}
-              >
-                <div
-                  style={{
-                    width: `${s.score}%`,
-                    height: "100%",
-                    background: act ? MB.accent : MB.accentDim,
-                    borderRadius: 2,
-                  }}
-                />
-              </div>
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: act ? MB.accent : s.score >= 88 ? MB.accentDim : "rgba(255,255,255,0.25)",
-                  fontFamily: "Inter,sans-serif",
-                  width: 22,
-                  textAlign: "right",
-                  flexShrink: 0,
-                }}
-              >
-                {s.score}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
 
-// ═══════════════════════════════════════════════════════════════════════
-// OVERVIEW PAGE
-// ═══════════════════════════════════════════════════════════════════════
-function OverviewPage({ sector }) {
-  return (
-    <div
-      className="hs"
-      style={{
-        flex: 1,
-        overflowY: "auto",
-        padding: "14px 14px 24px",
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-      }}
-    >
-      <div style={{ ...mCard(), padding: "20px" }}>
-        <div style={{ ...mLabel, marginBottom: 12 }}>Sector Overview</div>
-        <div style={{ display: "flex", gap: 16, alignItems: "center", marginBottom: 16 }}>
-          <MRing score={sector.score} size={88} stroke={8} />
-          <div>
-            <div style={{ fontSize: 18, fontWeight: 800, color: MB.text, letterSpacing: "-.4px", lineHeight: 1.15 }}>
-              {sector.short}
-            </div>
-            <div style={{ fontSize: 11, color: MB.muted, marginTop: 4, lineHeight: 1.4 }}>{sector.full}</div>
-            <div style={{ display: "flex", gap: 5, marginTop: 8 }}>
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  padding: "2px 8px",
-                  borderRadius: 20,
-                  background: MB.greenDim,
-                  color: MB.green,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                Bullish
-              </span>
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  padding: "2px 8px",
-                  borderRadius: 20,
-                  background: "rgba(184,217,53,0.1)",
-                  color: MB.accent,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                Active
-              </span>
-            </div>
-          </div>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-          {[
-            { l: "Cap Range", v: `$${sector.capLow}–${sector.capHigh}M` },
-            { l: "Sub-sectors", v: `${sector.subSectors.length} segments` },
-            { l: "Key Players", v: `${sector.keyPlayers.length} tracked` },
-            { l: "Activities", v: `${sector.activity.length} events` },
-          ].map((m, i) => (
-            <div
-              key={i}
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                borderRadius: 11,
-                padding: "12px",
-                border: `1px solid ${MB.borderSub}`,
-              }}
-            >
-              <div style={{ ...mLabel, fontSize: 8, marginBottom: 5 }}>{m.l}</div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: MB.text }}>{m.v}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div style={{ ...mLabel }}>Sub-sectors</div>
-      <div style={mCard()}>
-        {sector.subSectors.map((s, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              padding: "12px 16px",
-              borderBottom: i < sector.subSectors.length - 1 ? `1px solid ${MB.borderSub}` : "none",
-            }}
-          >
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: MB.accent, flexShrink: 0 }} />
-            <span style={{ fontSize: 12, fontWeight: 500, color: MB.text, flex: 1 }}>{s.name}</span>
-            <ChevronRight size={13} color={MB.faint} />
-          </div>
-        ))}
-      </div>
-      <div style={{ ...mLabel }}>Highlights</div>
-      {sector.activity.slice(0, 2).map((a, i) => (
-        <div key={i} style={{ ...mCard(), padding: "14px 16px" }}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: MB.text, lineHeight: 1.35, marginBottom: 6 }}>{a.h}</div>
-          <div style={{ display: "flex", gap: 7, alignItems: "center" }}>
-            <span
-              style={{
-                fontSize: 9,
-                padding: "2px 8px",
-                borderRadius: 10,
-                background: a.sig === "Bullish" ? MB.greenDim : MB.yellowDim,
-                color: a.sig === "Bullish" ? MB.green : MB.yellow,
-                fontWeight: 700,
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              {a.sig}
-            </span>
-            <span style={{ fontSize: 9, color: MB.faint, fontFamily: "Inter,sans-serif" }}>{a.date}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// RESOURCES PAGE
-// ═══════════════════════════════════════════════════════════════════════
-function ResourcesPage({ sector }) {
-  const reports = [
-    { title: `${sector.short} Sector Analysis 2026`, type: "Report", pages: 42, updated: "Mar 2026" },
-    { title: `${sector.short} Investment Brief`, type: "Brief", pages: 12, updated: "Feb 2026" },
-    { title: "BRIDGE Integrated Assessment Framework", type: "Framework", pages: 88, updated: "Jan 2026" },
-    { title: `${sector.short} Market Intelligence`, type: "Intelligence", pages: 24, updated: "Mar 2026" },
+  // Allocation data across watched sectors
+  const allocations = [
+    { sector: SECTORS[0], pct: 28, deployed: 14.2, target: 20, status: "Overweight" },
+    { sector: SECTORS[1], pct: 22, deployed: 11.0, target: 15, status: "On Track" },
+    { sector: SECTORS[2], pct: 18, deployed: 8.6, target: 18, status: "On Track" },
+    { sector: SECTORS[3], pct: 14, deployed: 5.4, target: 12, status: "Underweight" },
+    { sector: SECTORS[4], pct: 10, deployed: 3.8, target: 10, status: "On Track" },
+    { sector: SECTORS[5], pct: 8, deployed: 2.1, target: 8, status: "On Track" },
   ];
+  const totalDeployed = allocations.reduce((s, a) => s + a.deployed, 0).toFixed(1);
+  const totalTarget = allocations.reduce((s, a) => s + a.target, 0);
+  const overallPct = Math.round((totalDeployed / totalTarget) * 100);
+
+  const statusCol = { Overweight: MB.yellow, "On Track": MB.green, Underweight: MB.red };
+  const statusBG = { Overweight: MB.yellowDim, "On Track": MB.greenDim, Underweight: MB.redDim };
+
+  const filters = ["All", "On Track", "Overweight", "Underweight"];
+  const filtered = activeFilter === "All" ? allocations : allocations.filter((a) => a.status === activeFilter);
+
+  // Performance metrics
+  const irr = Math.round(sector.score * 0.27);
+  const moic = (1 + irr / 100).toFixed(2);
+
   return (
-    <div
-      className="hs"
-      style={{
-        flex: 1,
-        overflowY: "auto",
-        padding: "14px 14px 24px",
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-      }}
-    >
-      <div style={{ ...mCard(), padding: "14px 16px", display: "flex", alignItems: "center", gap: 12 }}>
-        <div
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 12,
-            background: "rgba(184,217,53,0.08)",
-            border: `1px solid ${MB.border}`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          <BookOpen size={18} color={MB.accent} />
-        </div>
-        <div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: MB.text }}>Resources & Reports</div>
-          <div style={{ fontSize: 10, color: MB.muted, marginTop: 2, fontFamily: "Inter,sans-serif" }}>
-            {sector.short} · {reports.length} documents
-          </div>
-        </div>
-      </div>
-      <div style={{ ...mLabel }}>Documents</div>
-      {reports.map((r, i) => (
-        <div
-          key={i}
-          style={{
-            ...mCard(),
-            padding: "14px 16px",
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            cursor: "pointer",
-          }}
-        >
+    <div style={{ padding: "14px 14px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
+      {/* Portfolio summary */}
+      <div style={{ ...mCard(), padding: "16px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
           <div
             style={{
-              width: 38,
-              height: 46,
-              borderRadius: 8,
-              background: "rgba(255,255,255,0.04)",
-              border: `1px solid ${MB.borderSub}`,
+              width: 44,
+              height: 44,
+              borderRadius: 13,
+              background: "rgba(184,217,53,0.08)",
+              border: `1px solid ${MB.border}`,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
             }}
           >
-            <FileText size={16} color={MB.faint} />
+            <PieChart size={20} color={MB.accent} />
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: MB.text }}>Portfolio Allocation</div>
+            <div style={{ fontSize: 11, color: MB.muted, marginTop: 2, fontFamily: "Inter,sans-serif" }}>
+              {allocations.length} sectors watched · Mar 2026
+            </div>
+          </div>
+          <MRing score={overallPct} size={44} stroke={4} />
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
+          {[
+            { l: "Deployed ($M)", v: `$${totalDeployed}`, c: MB.accent },
+            { l: "Target ($M)", v: `$${totalTarget}`, c: MB.text },
+            { l: "Est. IRR", v: `${irr}%`, c: MB.green },
+          ].map((m, i) => (
             <div
+              key={i}
               style={{
-                fontSize: 12,
-                fontWeight: 600,
-                color: MB.text,
-                lineHeight: 1.3,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
+                background: "rgba(255,255,255,0.03)",
+                borderRadius: 10,
+                padding: "10px",
+                border: `1px solid ${MB.borderSub}`,
+                textAlign: "center",
               }}
             >
-              {r.title}
+              <div style={{ fontSize: 16, fontWeight: 800, color: m.c, fontFamily: "Inter,sans-serif", lineHeight: 1 }}>
+                {m.v}
+              </div>
+              <div style={{ fontSize: 8, color: MB.muted, marginTop: 4, fontFamily: "Inter,sans-serif" }}>{m.l}</div>
             </div>
-            <div style={{ display: "flex", gap: 7, marginTop: 5, alignItems: "center" }}>
+          ))}
+        </div>
+      </div>
+
+      {/* Allocation bar */}
+      <div style={mCard()}>
+        <div
+          style={{
+            padding: "13px 16px",
+            borderBottom: `1px solid ${MB.borderSub}`,
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <div
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 8,
+              background: "rgba(184,217,53,0.08)",
+              border: `1px solid ${MB.border}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <BarChart3 size={13} color={MB.accent} />
+          </div>
+          <span style={{ fontSize: 13, fontWeight: 700, color: MB.text }}>Sector Allocation</span>
+        </div>
+        <div style={{ padding: "14px 16px" }}>
+          {/* Stacked bar */}
+          <div style={{ display: "flex", height: 14, borderRadius: 7, overflow: "hidden", gap: 1, marginBottom: 14 }}>
+            {allocations.map((a, i) => (
+              <div
+                key={i}
+                title={a.sector.short}
+                style={{
+                  flex: a.pct,
+                  background: `rgba(184,217,53,${0.95 - i * 0.13})`,
+                  borderRadius: i === 0 ? "5px 0 0 5px" : i === allocations.length - 1 ? "0 5px 5px 0" : "0",
+                }}
+              />
+            ))}
+          </div>
+          {/* Legend */}
+          {allocations.map((a, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+              <div
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 3,
+                  background: `rgba(184,217,53,${0.95 - i * 0.13})`,
+                  flexShrink: 0,
+                }}
+              />
               <span
                 style={{
-                  fontSize: 9,
-                  padding: "2px 8px",
-                  borderRadius: 10,
-                  background: "rgba(184,217,53,0.08)",
-                  color: MB.accentDim,
-                  fontWeight: 700,
+                  fontSize: 11,
+                  color: "rgba(255,255,255,0.7)",
+                  flex: 1,
                   fontFamily: "Inter,sans-serif",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
                 }}
               >
-                {r.type}
+                {a.sector.short}
               </span>
-              <span style={{ fontSize: 9, color: MB.faint, fontFamily: "Inter,sans-serif" }}>
-                {r.pages}p · {r.updated}
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: MB.accent,
+                  fontFamily: "Inter,sans-serif",
+                  width: 28,
+                  textAlign: "right",
+                }}
+              >
+                {a.pct}%
               </span>
             </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Performance snapshot */}
+      <div style={mCard()}>
+        <div
+          style={{
+            padding: "13px 16px",
+            borderBottom: `1px solid ${MB.borderSub}`,
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <div
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 8,
+              background: "rgba(184,217,53,0.08)",
+              border: `1px solid ${MB.border}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TrendingUp size={13} color={MB.accent} />
           </div>
-          <ChevronRight size={13} color={MB.faint} />
+          <span style={{ fontSize: 13, fontWeight: 700, color: MB.text }}>Performance</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+          {[
+            { l: "MOIC", v: `${moic}x`, c: MB.accent },
+            { l: "Deployment", v: `${overallPct}%`, c: MB.green },
+            { l: "Avg Score", v: Math.round(sorted.slice(0, 6).reduce((s, x) => s + x.score, 0) / 6), c: MB.text },
+            { l: "Active Signals", v: sector.activity.filter((a) => a.sig === "Bullish").length, c: MB.green },
+          ].map((m, i) => (
+            <div
+              key={i}
+              style={{
+                padding: "14px",
+                borderRight: i % 2 === 0 ? `1px solid ${MB.borderSub}` : "none",
+                borderBottom: i < 2 ? `1px solid ${MB.borderSub}` : "none",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: 20, fontWeight: 800, color: m.c, fontFamily: "Inter,sans-serif", lineHeight: 1 }}>
+                {m.v}
+              </div>
+              <div style={{ fontSize: 9, color: MB.muted, marginTop: 5, fontFamily: "Inter,sans-serif" }}>{m.l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Filter chips */}
+      <div
+        className="hs"
+        style={{ display: "flex", gap: 6, overflowX: "auto", scrollbarWidth: "none", paddingBottom: 2 }}
+      >
+        {filters.map((f, i) => {
+          const act = f === activeFilter;
+          return (
+            <div
+              key={i}
+              onClick={() => setActiveFilter(f)}
+              style={{
+                padding: "5px 12px",
+                borderRadius: 20,
+                background: act ? MB.accent : "rgba(255,255,255,0.05)",
+                border: `1px solid ${act ? MB.accent : MB.borderSub}`,
+                cursor: "pointer",
+                flexShrink: 0,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  color: act ? "#0A1A0C" : MB.muted,
+                  fontFamily: "Inter,sans-serif",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {f}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Sector cards */}
+      {filtered.map((a, i) => (
+        <div key={i} style={{ ...mCard(), padding: "14px 16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+            <div
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 9,
+                background: "rgba(184,217,53,0.08)",
+                border: `1px solid ${MB.border}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              {a.sector.svgIcon(MB.accent, 14)}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div
+                style={{
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: MB.text,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {a.sector.short}
+              </div>
+              <div style={{ fontSize: 10, color: MB.muted, marginTop: 1, fontFamily: "Inter,sans-serif" }}>
+                ${a.deployed}M deployed · target ${a.target}M
+              </div>
+            </div>
+            <span
+              style={{
+                fontSize: 9,
+                fontWeight: 700,
+                padding: "3px 9px",
+                borderRadius: 20,
+                background: statusBG[a.status],
+                color: statusCol[a.status],
+                fontFamily: "Inter,sans-serif",
+                flexShrink: 0,
+              }}
+            >
+              {a.status}
+            </span>
+          </div>
+          {/* Progress bar */}
+          <div
+            style={{
+              height: 6,
+              background: "rgba(255,255,255,0.06)",
+              borderRadius: 4,
+              overflow: "hidden",
+              marginBottom: 6,
+            }}
+          >
+            <div
+              style={{
+                width: `${Math.min(100, Math.round((a.deployed / a.target) * 100))}%`,
+                height: "100%",
+                background: statusCol[a.status],
+                borderRadius: 4,
+                transition: "width 0.5s ease",
+              }}
+            />
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, color: MB.faint, fontFamily: "Inter,sans-serif" }}>
+              {Math.round((a.deployed / a.target) * 100)}% of target
+            </span>
+            <span style={{ fontSize: 9, fontWeight: 700, color: MB.accent, fontFamily: "Inter,sans-serif" }}>
+              {a.pct}% allocation
+            </span>
+          </div>
         </div>
       ))}
+
+      {/* Add to watchlist CTA */}
+      <button
+        style={{
+          width: "100%",
+          padding: "13px",
+          background: "rgba(184,217,53,0.07)",
+          border: `1px solid ${MB.border}`,
+          borderRadius: 14,
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+        }}
+      >
+        <Plus size={14} color={MB.accent} />
+        <span style={{ fontSize: 13, fontWeight: 700, color: MB.accent, fontFamily: "DM Sans,sans-serif" }}>
+          Add Sector to Watchlist
+        </span>
+      </button>
     </div>
   );
 }
@@ -6347,7 +5746,7 @@ function MobileDetailSheet({ item, onClose }) {
 // ═══════════════════════════════════════════════════════════════════════
 function MobileApp() {
   const [sector, setSector] = useState(SECTORS[0]);
-  const [page, setPage] = useState("watch");
+  const [page, setPage] = useState("feed");
   const [selId, setSelId] = useState(null);
   const handleSetSector = (s) => {
     setSector(s);
@@ -6376,11 +5775,31 @@ function MobileApp() {
     `}</style>
       <MobileHeader sector={sector} setSector={handleSetSector} />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minHeight: 0 }}>
-        {page === "dashboard" && <DashboardPage sector={sector} setSector={handleSetSector} />}
-        {page === "overview" && <OverviewPage sector={sector} />}
-        {page === "analytics" && <AnalyticsPage sector={sector} />}
-        {page === "watch" && <WatchPage sector={sector} setSelId={setSelId} />}
-        {page === "resources" && <ResourcesPage sector={sector} />}
+        {page === "feed" && (
+          <div className="hs" style={{ flex: 1, overflowY: "auto" }}>
+            <FeedPage sector={sector} setSelId={setSelId} />
+          </div>
+        )}
+        {page === "companies" && (
+          <div className="hs" style={{ flex: 1, overflowY: "auto" }}>
+            <PlayersPage sector={sector} setSelId={setSelId} />
+          </div>
+        )}
+        {page === "scores" && (
+          <div className="hs" style={{ flex: 1, overflowY: "auto" }}>
+            <ScoresPage sector={sector} />
+          </div>
+        )}
+        {page === "signals" && (
+          <div className="hs" style={{ flex: 1, overflowY: "auto" }}>
+            <SignalsPage sector={sector} />
+          </div>
+        )}
+        {page === "portfolio" && (
+          <div className="hs" style={{ flex: 1, overflowY: "auto" }}>
+            <PortfolioPage sector={sector} />
+          </div>
+        )}
       </div>
       <MobileBottomNav page={page} setPage={setPage} />
       {selectedItem && <MobileDetailSheet item={selectedItem} onClose={() => setSelId(null)} />}
