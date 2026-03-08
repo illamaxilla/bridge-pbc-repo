@@ -2265,6 +2265,42 @@ function CommunityDashboard({ memberType, onLogout }) {
             </div>
           </div>
         </section>
+        )}
+
+        {/* ══ MEMBERS PAGE ══ */}
+        {activePage === "Members" && (
+          <div style={{ background: C.white, borderRadius: 20, padding: 48, boxShadow: C.cardShadow, textAlign: "center" }}>
+            <SectionLabel>Members</SectionLabel>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>👥</div>
+            <h2 style={{ fontFamily: font.display, fontSize: 26, fontWeight: 700, color: C.primary, margin: "0 0 12px" }}>
+              Member Directory
+            </h2>
+            <p style={{ fontSize: 15, color: C.muted, maxWidth: 420, margin: "0 auto 28px", lineHeight: 1.6 }}>
+              Browse profiles, connect with fellow builders, and discover expertise across Ghana's key sectors. Coming soon.
+            </p>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 20, background: C.accent + "22", border: `1.5px solid ${C.accent}`, color: C.primary, fontWeight: 700, fontSize: 13, fontFamily: font.body }}>
+              <Users size={14} /> Coming Soon
+            </div>
+          </div>
+        )}
+
+        {/* ══ RESOURCES PAGE ══ */}
+        {activePage === "Resources" && (
+          <div style={{ background: C.white, borderRadius: 20, padding: 48, boxShadow: C.cardShadow, textAlign: "center" }}>
+            <SectionLabel>Resources</SectionLabel>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
+            <h2 style={{ fontFamily: font.display, fontSize: 26, fontWeight: 700, color: C.primary, margin: "0 0 12px" }}>
+              Community Resources
+            </h2>
+            <p style={{ fontSize: 15, color: C.muted, maxWidth: 420, margin: "0 auto 28px", lineHeight: 1.6 }}>
+              Guides, sector briefs, toolkits, and knowledge assets curated for BRIDGE community members. Coming soon.
+            </p>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 20, background: C.accent + "22", border: `1.5px solid ${C.accent}`, color: C.primary, fontWeight: 700, fontSize: 13, fontFamily: font.body }}>
+              <BookOpen size={14} /> Coming Soon
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* ── CREATE GOAL MODAL ── */}
