@@ -45,6 +45,7 @@ import {
   Eye,
   LogOut,
   Briefcase,
+  Bell,
 } from "lucide-react";
 import {
   BarChart,
