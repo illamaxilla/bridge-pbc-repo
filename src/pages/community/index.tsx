@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Bell,
   MessageCircle,
@@ -971,6 +972,30 @@ function LoginPage({ onLogin }) {
 
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const getInitialPage = () => {
+    if (pathname.startsWith("/community/forum")) return "forum";
+    if (pathname === "/community/members") return "members";
+    if (pathname === "/community/resources") return "resources";
+    return "home";
+  };
+
+  const getInitialForumView = () => {
+    const map: Record<string, string> = {
+      "/community/forum/questions": "Questions",
+      "/community/forum/most-answered": "Most Answered",
+      "/community/forum/polls": "Polls",
+      "/community/forum/groups": "Groups",
+      "/community/forum/tags": "Tags",
+      "/community/forum/sectors": "Sectors",
+      "/community/forum/badges": "Badges",
+      "/community/forum/members": "Members",
+    };
+    return map[pathname] ?? "Home";
+  };
+
   const [activeTab, setActiveTab] = useState("active");
   const [feedFilter, setFeedFilter] = useState("Recent");
   const [forumFilter, setForumFilter] = useState("Recent");
@@ -982,7 +1007,8 @@ function CommunityDashboard({ memberType, onLogout }) {
   const [expandedGoal, setExpandedGoal] = useState(null);
   const [navOpen, setNavOpen] = useState(false);
   const [savedInsight, setSavedInsight] = useState(false);
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState(getInitialPage);
+  const [initialForumView] = useState(getInitialForumView);
   const [contributions, setContributions] = useState([
     { label: "Discussions participated in this week", done: true },
     { label: "Sector insight submitted", done: false },
@@ -1044,7 +1070,11 @@ function CommunityDashboard({ memberType, onLogout }) {
               return (
                 <button
                   key={item}
-                  onClick={() => setCurrentPage(key)}
+                  onClick={() => {
+                    const routeMap: Record<string, string> = { home: "/community", forum: "/community/forum", members: "/community/members", resources: "/community/resources" };
+                    setCurrentPage(key);
+                    navigate(routeMap[key]);
+                  }}
                   style={{
                     padding: "6px 14px",
                     borderRadius: 8,
@@ -1052,7 +1082,6 @@ function CommunityDashboard({ memberType, onLogout }) {
                     cursor: "pointer",
                     fontFamily: font.body,
                     fontSize: 13,
-                    fontWeight: 500,
                     background: currentPage === key ? `rgba(27,77,62,0.08)` : "transparent",
                     color: currentPage === key ? C.primary : C.text,
                     fontWeight: currentPage === key ? 700 : 500,
@@ -1154,7 +1183,8 @@ function CommunityDashboard({ memberType, onLogout }) {
             questions={questions}
             setQuestions={setQuestions}
             setShowQuestionModal={setShowQuestionModal}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={(page: string) => { setCurrentPage(page); navigate(page === "members" ? "/community/members" : "/community"); }}
+            initialForumView={initialForumView}
           />
         )}
         {currentPage === "members" && <MembersPage />}
@@ -1426,8 +1456,9 @@ function CommunityDashboard({ memberType, onLogout }) {
 }
 
 // ─── FORUM PAGE ────────────────────────────────────────────────
-function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPage }) {
-  const [forumView, setForumView] = useState("Questions");
+function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPage, initialForumView = "Home" }) {
+  const navigate = useNavigate();
+  const [forumView, setForumView] = useState(initialForumView);
   const [forumFilter, setForumFilter] = useState("Recent");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -1517,7 +1548,26 @@ function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPa
             return (
               <button
                 key={item.label}
-                onClick={() => (goesToMembers ? setCurrentPage("members") : setForumView(item.label))}
+                onClick={() => {
+                  const forumRouteMap: Record<string, string> = {
+                    "Home": "/community/forum",
+                    "Questions": "/community/forum/questions",
+                    "Most Answered": "/community/forum/most-answered",
+                    "Polls": "/community/forum/polls",
+                    "Groups": "/community/forum/groups",
+                    "Tags": "/community/forum/tags",
+                    "Sectors": "/community/forum/sectors",
+                    "Badges": "/community/forum/badges",
+                    "Members": "/community/members",
+                  };
+                  if (goesToMembers) {
+                    setCurrentPage("members");
+                    navigate("/community/members");
+                  } else {
+                    setForumView(item.label);
+                    navigate(forumRouteMap[item.label] ?? "/community/forum");
+                  }
+                }}
                 style={{
                   display: "flex",
                   alignItems: "center",
