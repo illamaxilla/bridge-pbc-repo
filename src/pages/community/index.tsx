@@ -971,6 +971,7 @@ function LoginPage({ onLogin }) {
 
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
+  const [activePage, setActivePage] = useState("Home");
   const [activeTab, setActiveTab] = useState("active");
   const [feedFilter, setFeedFilter] = useState("Recent");
   const [forumFilter, setForumFilter] = useState("Recent");
