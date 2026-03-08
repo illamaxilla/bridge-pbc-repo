@@ -77,6 +77,11 @@ function BridgeLogo() {
 }
 
 function UpgradeModal({ onClose }: { onClose: () => void }) {
+  const navigate = useNavigate();
+  const handleRequestAccess = () => {
+    onClose();
+    navigate("/contact");
+  };
   return (
     <div
       style={{
