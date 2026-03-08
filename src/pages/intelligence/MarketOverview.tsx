@@ -2504,7 +2504,7 @@ const msigCol = (sig) => (sig === "Bullish" ? M.green : sig === "Bearish" ? M.re
 const msigDim = (sig) => (sig === "Bullish" ? M.greenDim : sig === "Bearish" ? M.redDim : M.amberDim);
 
 /* ── Shared mobile primitives ── */
-function MCard({ children, style = {} }) {
+function MCard({ children, style = {}, onClick }: { children?: any; style?: any; onClick?: () => void }) {
   return (
     <div
       style={{ borderRadius: 16, background: M.card, border: `1px solid ${M.borderG}`, overflow: "hidden", ...style }}
