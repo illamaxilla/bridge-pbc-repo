@@ -2930,7 +2930,7 @@ export default function BridgeReportsPage() {
 ═══════════════════════════════════════════════ */
 function MobileDashboard({ s, setS }) {
   const [activeTab, setActiveTab] = useState("overview");
-  const [openSections, setOpenSections] = useState({ signals: true, score: true });
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({ signals: true, score: true });
   const [sectorDrawer, setSectorDrawer] = useState(false);
   const rank = [...SECTORS].sort((a, b) => b.score - a.score).findIndex((x) => x.id === s.id) + 1;
   const bullish = s.activity.filter((a) => a.sig === "Bullish").length;
