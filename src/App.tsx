@@ -70,9 +70,10 @@ const App = () => (
           <Route path="/sectors/tourism" element={<Tourism />} />
           <Route path="/sectors/education" element={<Education />} />
           <Route path="/sectors/agriculture" element={<Agriculture />} />
-          <Route path="/community/*" element={<Community />}>
-            <Route index element={<CommunityHome />} />
-          </Route>
+          <Route path="/community" element={<CommunityHome />} />
+          <Route path="/community/forum" element={<CommunityHome />} />
+          <Route path="/community/members" element={<CommunityHome />} />
+          <Route path="/community/resources" element={<CommunityHome />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/sectors" element={<Sectors />} />
