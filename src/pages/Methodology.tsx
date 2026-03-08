@@ -2563,6 +2563,7 @@ function MethodologySection() {
 /* ─── CTA SECTION ────────────────────────────────────────────────── */
 function CTASection({ seg }) {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const ctaText = {
     Entrepreneurs: "Submit your idea today. Our team reviews every submission and responds within 14 days.",
     "Business Institutions":
