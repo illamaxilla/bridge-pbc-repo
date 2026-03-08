@@ -821,7 +821,7 @@ function Card({ children, style: ex = {} }) {
     </div>
   );
 }
-function Pill({ children, active, onClick, col }) {
+function Pill({ children, active, onClick, col = undefined }: { children?: any; active?: any; onClick?: any; col?: any }) {
   return (
     <button
       onClick={onClick}
