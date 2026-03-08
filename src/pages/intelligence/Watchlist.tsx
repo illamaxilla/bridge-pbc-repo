@@ -815,7 +815,7 @@ const SECTORS = [
   },
 ];
 // Attach svgIcon to each sector
-SECTORS.forEach((s) => {
+(SECTORS as any[]).forEach((s) => {
   s.svgIcon = SVG_MAP[s.id];
 });
 
