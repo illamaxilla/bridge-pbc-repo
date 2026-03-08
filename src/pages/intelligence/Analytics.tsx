@@ -37,8 +37,6 @@ import {
   FileBarChart,
   Book,
   LogOut,
-  Target,
-  TrendingUp,
   Zap,
   Building2,
   Globe,
@@ -1595,7 +1593,7 @@ function BubbleChart({ s }) {
       </g>
     );
   };
-  const CustomTip = ({ active, payload }) => {
+  const CustomTip = ({ active, payload }: { active?: any; payload?: any }) => {
     if (!active || !payload?.length) return null;
     const d = payload[0]?.payload;
     return (
