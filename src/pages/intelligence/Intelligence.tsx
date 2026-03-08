@@ -231,7 +231,7 @@ export default function Intelligence() {
             </button>
           )}
           {!isMobile && (
-            <button onClick={() => setCollapsed(v => !v)}
+            <button onClick={handleToggleCollapsed}
               style={{ color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center" }}
               aria-label="Toggle sidebar">
               {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
