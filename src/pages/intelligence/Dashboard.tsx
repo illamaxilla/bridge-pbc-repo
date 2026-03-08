@@ -2140,7 +2140,7 @@ function MobileDashboard({ s, setS }) {
       </div>
 
       {/* ═══ SCROLLABLE CONTENT ═══ */}
-      <div className="mscroll" style={{ flex: 1, overflowY: "auto", padding: "10px 12px 0" }}>
+      <div className="mscroll" style={{ flex: 1, overflowY: "auto", padding: "10px 12px 80px" }}>
         {/* ─ DASHBOARD / OVERVIEW ─ */}
         {dashSub === "overview" && (
           <>
@@ -3682,14 +3682,17 @@ function MobileDashboard({ s, setS }) {
       {/* ═══ BOTTOM NAV — 5 sections ═══ */}
       <div
         style={{
-          flexShrink: 0,
-          height: 56,
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
           background: "#080E09",
           borderTop: `1px solid ${M.divider}`,
           display: "flex",
           alignItems: "stretch",
-          position: "relative",
-          zIndex: 50,
+          zIndex: 100,
+          paddingBottom: "env(safe-area-inset-bottom)",
+          height: "calc(56px + env(safe-area-inset-bottom))",
         }}
       >
         {[
