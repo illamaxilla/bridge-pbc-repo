@@ -2014,6 +2014,7 @@ function SubTabs({ tabs, active, onChange }) {
 function MobileDashboard({ s, setS }) {
   const [dashSub, setDashSub] = useState("overview");
   const [notif, setNotif] = useState(false);
+  const [pressedTab, setPressedTab] = useState<string | null>(null);
   const Icon = s.icon;
   const companies = COMPANIES[s.id] || COMPANIES.financial;
   const DASH_SUBS = [

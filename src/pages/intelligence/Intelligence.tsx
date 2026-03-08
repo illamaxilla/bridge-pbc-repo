@@ -256,6 +256,17 @@ export default function Intelligence() {
           }}>
             BETA
           </span>
+          {isMobile && activeSectorId && (() => {
+            const sector = SIDEBAR_SECTORS.find(s => s.id === activeSectorId);
+            return sector ? (
+              <span style={{
+                fontSize: 10, color: "rgba(255,255,255,0.42)", fontFamily: "Inter,sans-serif",
+                letterSpacing: "0.03em", fontWeight: 400,
+              }}>
+                · {sector.short}
+              </span>
+            ) : null;
+          })()}
         </div>
       </header>
 
