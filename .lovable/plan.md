@@ -1,121 +1,85 @@
 
-## What the user changed
+## Audit Summary: What's Working vs. What Needs Fixing
 
-The user pasted a freshly updated `src/pages/community/index.tsx` (now 5,010 lines). Key changes vs the previous version:
+### ✅ Working correctly
+- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
+- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
+- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
+- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
 
-1. **New `useWindowWidth()` hook** — replaces the old `useIsMobile` with a continuous width tracker that drives `isMobile` checks throughout all components.
-2. **Fully responsive LoginPage** — splits into a compact mobile brand header + form on mobile, full side-by-side panel on desktop.
-3. **`CommunityDashboard` is now responsive** — mobile bottom tab bar, slide-down hamburger menu, adaptive header sizes.
-4. **`ForumPage` is responsive** — mobile pill-strip horizontal nav replaces the left sidebar, compact header/buttons.
-5. **The export is now `export default function App()`** — the root export manages a `screen` state (`"login"` / `"community"`) and renders `<LoginPage>` or `<CommunityDashboard>`. The old code exported `CommunityDashboard` directly wrapped with URL sync logic.
+### ❌ Issues to fix
 
-## The problem
+**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
+- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
+- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
 
-The previous round added `useNavigate`, `useLocation`, and URL sync into `index.tsx`. The user's new paste **wiped all of that** — the file no longer imports from `react-router-dom` at all. It also **changed the default export name** from the previous `CommunityHome` (which `App.tsx` imports as `CommunityHome`) to `App`.
+**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
+- Line 6934 has `href="#"` instead of the object-lookup pattern
+- Fix: same object-lookup pattern as other pages
 
-This causes two issues:
-1. **The named export still works** — `App.tsx` does `import CommunityHome from "./pages/community/index"` and `export default function App()` in the community file means the import still resolves. No build break here.
-2. **URL routing is broken again** — navigating directly to `/community/members`, `/community/forum/polls`, etc. won't initialise the correct tab because `useLocation` was removed. The component ignores the URL entirely.
-3. **The Login screen always shows first** — because the root export's `screen` state starts at `"login"`, every URL under `/community/*` always shows the login page first. Previous version skipped straight to the dashboard.
+**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
+- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
+- Fix: apply the object-lookup href pattern
 
-## Plan
+**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
+- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
+- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
+- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
 
-### Change 1 — Re-add URL sync to `CommunityDashboard` (line 1033)
+**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
+- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
+- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
 
-Add `useNavigate` + `useLocation` imports at the top (line 1), then inside `CommunityDashboard`:
+**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
+- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
+- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
+- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
 
-```tsx
-const navigate = useNavigate();
-const { pathname } = useLocation();
+**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
+- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
+- Minor cleanup
 
-// Derive initial currentPage from URL
-const getInitialPage = () => {
-  if (pathname.startsWith("/community/forum")) return "forum";
-  if (pathname === "/community/members") return "members";
-  if (pathname === "/community/resources") return "resources";
-  return "home";
-};
+### Implementation Plan
 
-// Replace: const [currentPage, setCurrentPage] = useState("home");
-// With:
-const [currentPage, setCurrentPage] = useState(getInitialPage);
-```
+**Files to fix: 4 real fixes + 1 cleanup**
 
-Update `handleNavChange` to also call `navigate()`:
-```tsx
-const routeMap = { home: "/community", forum: "/community/forum", members: "/community/members", resources: "/community/resources" };
-const handleNavChange = (key) => {
-  setCurrentPage(key);
-  setMobileMenuOpen(false);
-  navigate(routeMap[key] ?? "/community");
-};
-```
+1. **`Tourism.tsx`** (2 fixes):
+   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
+   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
 
-Also update the **desktop nav buttons** (line ~1109) to use `handleNavChange` instead of `setCurrentPage` directly.
+2. **`Infrastructure.tsx`** (1 fix):
+   - Line 6952: `href="#"` → object-lookup href
 
-### Change 2 — Re-add URL sync to `ForumPage` (line 1675)
+3. **`Education.tsx`** (1 fix):
+   - Line 6947: `href="#"` → object-lookup href
 
-Pass `initialForumView` from `CommunityDashboard` into `ForumPage` based on pathname:
+4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
+   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
+   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
 
-```tsx
-const getInitialForumView = () => {
-  const map = {
-    "/community/forum/questions": "Questions",
-    "/community/forum/most-answered": "Most Answered",
-    "/community/forum/polls": "Polls",
-    "/community/forum/groups": "Groups",
-    "/community/forum/tags": "Tags",
-    "/community/forum/sectors": "Sectors",
-    "/community/forum/badges": "Badges",
-    "/community/forum/members": "Members",
-  };
-  return map[pathname] ?? "Questions";
-};
-```
+5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
+   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
+   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
 
-Pass as prop: `<ForumPage initialForumView={getInitialForumView()} ...>`
+6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
 
-In `ForumPage`, change:
-```tsx
-const [forumView, setForumView] = useState("Questions");
-// →
-const [forumView, setForumView] = useState(initialForumView ?? "Questions");
-```
-
-Update forum nav buttons to also call `navigate()` when changing view:
-```tsx
-const forumRouteMap = {
-  "Home": "/community/forum",
-  "Questions": "/community/forum/questions",
-  "Most Answered": "/community/forum/most-answered",
-  "Polls": "/community/forum/polls",
-  "Groups": "/community/forum/groups",
-  "Tags": "/community/forum/tags",
-  "Sectors": "/community/forum/sectors",
-  "Badges": "/community/forum/badges",
-  "Members": "/community/members",
-};
-```
-
-### Change 3 — Fix the root export to bypass login when navigating from the site
-
-The new `export default function App()` starts at `screen = "login"` every time. The login is internal to the Community — but users navigating from the main site nav shouldn't be forced through a login gate immediately.
-
-Two options:
-- **Option A (simplest)**: Keep the login but just rename the export so `App.tsx` can import it correctly — the current export name `App` conflicts conceptually with the main `src/App.tsx` but works because it's a default export. No actual bug here.
-- **Option B**: Have the root component check if the URL is `/community` (no sub-path) → show login; if URL is a deep sub-path → also show login (expected gated behavior). This is actually correct behavior for a gated community.
-
-We go with **Option A** — the current behavior (login gate) is intentional. We just need to make sure after login, the URL-derived state kicks in. So after `onLogin`, we also navigate to the correct route.
-
-### Files changed
-
+### Files to edit
 | File | Change |
 |---|---|
-| `src/pages/community/index.tsx` | Add `useNavigate`/`useLocation` imports + URL sync in `CommunityDashboard` + `ForumPage` props |
-| `src/App.tsx` | No changes needed — routes are already correct |
-
-### What stays untouched
-- All responsive/mobile code the user added
-- All visual layout, data, and component logic
-- The login flow and `screen` state pattern
-- `App.tsx` routes
+| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
+| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
+| `Education.tsx` | Fix mobile labels `href="#"` |
+| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
+| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |

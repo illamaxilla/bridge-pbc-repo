@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Bell,
   MessageCircle,
@@ -1031,6 +1032,30 @@ function LoginPage({ onLogin }) {
 
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const getInitialPage = () => {
+    if (pathname.startsWith("/community/forum")) return "forum";
+    if (pathname === "/community/members") return "members";
+    if (pathname === "/community/resources") return "resources";
+    return "home";
+  };
+
+  const getInitialForumView = () => {
+    const map: Record<string, string> = {
+      "/community/forum/questions": "Questions",
+      "/community/forum/most-answered": "Most Answered",
+      "/community/forum/polls": "Polls",
+      "/community/forum/groups": "Groups",
+      "/community/forum/tags": "Tags",
+      "/community/forum/sectors": "Sectors",
+      "/community/forum/badges": "Badges",
+      "/community/forum/members": "Members",
+    };
+    return map[pathname] ?? "Questions";
+  };
+
   const [activeTab, setActiveTab] = useState("active");
   const [feedFilter, setFeedFilter] = useState("Recent");
   const [forumFilter, setForumFilter] = useState("Recent");
@@ -1042,7 +1067,21 @@ function CommunityDashboard({ memberType, onLogout }) {
   const [expandedGoal, setExpandedGoal] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [savedInsight, setSavedInsight] = useState(false);
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState(getInitialPage);
+
+  const routeMap: Record<string, string> = {
+    home: "/community",
+    forum: "/community/forum",
+    members: "/community/members",
+    resources: "/community/resources",
+  };
+
+  const handleNavChange = (key: string) => {
+    setCurrentPage(key);
+    setMobileMenuOpen(false);
+    navigate(routeMap[key] ?? "/community");
+  };
+
   const [contributions, setContributions] = useState([
     { label: "Discussions participated in this week", done: true },
     { label: "Sector insight submitted", done: false },
@@ -1060,11 +1099,6 @@ function CommunityDashboard({ memberType, onLogout }) {
     { key: "members", label: "Members", icon: <Users size={20} /> },
     { key: "resources", label: "Resources", icon: <BookOpen size={20} /> },
   ];
-
-  const handleNavChange = (key) => {
-    setCurrentPage(key);
-    setMobileMenuOpen(false);
-  };
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: font.body }}>
@@ -1106,7 +1140,7 @@ function CommunityDashboard({ memberType, onLogout }) {
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.key}
-                  onClick={() => setCurrentPage(item.key)}
+                  onClick={() => handleNavChange(item.key)}
                   style={{
                     padding: "6px 14px",
                     borderRadius: 8,
@@ -1321,7 +1355,8 @@ function CommunityDashboard({ memberType, onLogout }) {
             questions={questions}
             setQuestions={setQuestions}
             setShowQuestionModal={setShowQuestionModal}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleNavChange}
+            initialForumView={getInitialForumView()}
           />
         )}
         {currentPage === "members" && <MembersPage isMobile={isMobile} />}
@@ -1672,8 +1707,28 @@ function CommunityDashboard({ memberType, onLogout }) {
 }
 
 // ─── FORUM PAGE ────────────────────────────────────────────────
-function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, setCurrentPage }) {
-  const [forumView, setForumView] = useState("Questions");
+function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, setCurrentPage, initialForumView }) {
+  const navigate = useNavigate();
+  const forumRouteMap: Record<string, string> = {
+    "Home": "/community/forum",
+    "Questions": "/community/forum/questions",
+    "Most Answered": "/community/forum/most-answered",
+    "Polls": "/community/forum/polls",
+    "Groups": "/community/forum/groups",
+    "Tags": "/community/forum/tags",
+    "Sectors": "/community/forum/sectors",
+    "Badges": "/community/forum/badges",
+    "Members": "/community/members",
+  };
+  const handleForumNav = (label: string) => {
+    if (label === "Members") {
+      setCurrentPage("members");
+    } else {
+      setForumView(label);
+    }
+    navigate(forumRouteMap[label] ?? "/community/forum");
+  };
+  const [forumView, setForumView] = useState(initialForumView ?? "Questions");
   const [forumFilter, setForumFilter] = useState("Recent");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -1776,7 +1831,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
             return (
               <button
                 key={item.label}
-                onClick={() => setForumView(item.label)}
+                onClick={() => handleForumNav(item.label)}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -1812,7 +1867,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               return (
                 <button
                   key={item.label}
-                  onClick={() => (goesToMembers ? setCurrentPage("members") : setForumView(item.label))}
+                  onClick={() => handleForumNav(item.label)}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -4996,15 +5051,17 @@ function HomePageContent({
 export default function App() {
   const [screen, setScreen] = useState("login");
   const [memberType, setMemberType] = useState("premium");
+  const navigate = useNavigate();
 
   return screen === "login" ? (
     <LoginPage
       onLogin={(type) => {
         setMemberType(type);
         setScreen("community");
+        navigate("/community");
       }}
     />
   ) : (
-    <CommunityDashboard memberType={memberType} onLogout={() => setScreen("login")} />
+    <CommunityDashboard memberType={memberType} onLogout={() => { setScreen("login"); navigate("/community"); }} />
   );
 }
