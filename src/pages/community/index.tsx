@@ -1032,6 +1032,30 @@ function LoginPage({ onLogin }) {
 
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const getInitialPage = () => {
+    if (pathname.startsWith("/community/forum")) return "forum";
+    if (pathname === "/community/members") return "members";
+    if (pathname === "/community/resources") return "resources";
+    return "home";
+  };
+
+  const getInitialForumView = () => {
+    const map: Record<string, string> = {
+      "/community/forum/questions": "Questions",
+      "/community/forum/most-answered": "Most Answered",
+      "/community/forum/polls": "Polls",
+      "/community/forum/groups": "Groups",
+      "/community/forum/tags": "Tags",
+      "/community/forum/sectors": "Sectors",
+      "/community/forum/badges": "Badges",
+      "/community/forum/members": "Members",
+    };
+    return map[pathname] ?? "Questions";
+  };
+
   const [activeTab, setActiveTab] = useState("active");
   const [feedFilter, setFeedFilter] = useState("Recent");
   const [forumFilter, setForumFilter] = useState("Recent");
@@ -1043,28 +1067,19 @@ function CommunityDashboard({ memberType, onLogout }) {
   const [expandedGoal, setExpandedGoal] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [savedInsight, setSavedInsight] = useState(false);
-  const [currentPage, setCurrentPage] = useState("home");
-  const [contributions, setContributions] = useState([
-    { label: "Discussions participated in this week", done: true },
-    { label: "Sector insight submitted", done: false },
-    { label: "Question answered in your sector", done: true },
-    { label: "Peer review completed", done: false },
-  ]);
+  const [currentPage, setCurrentPage] = useState(getInitialPage);
 
-  const isMobile = useWindowWidth() < 768;
-  const user = { name: "Joseph", initials: "JA", sector: "Infrastructure", journey: 2 };
-  const mType = MEMBER_TYPES[memberType];
+  const routeMap: Record<string, string> = {
+    home: "/community",
+    forum: "/community/forum",
+    members: "/community/members",
+    resources: "/community/resources",
+  };
 
-  const NAV_ITEMS = [
-    { key: "home", label: "Home", icon: <Home size={20} /> },
-    { key: "forum", label: "Forum", icon: <MessageSquare size={20} /> },
-    { key: "members", label: "Members", icon: <Users size={20} /> },
-    { key: "resources", label: "Resources", icon: <BookOpen size={20} /> },
-  ];
-
-  const handleNavChange = (key) => {
+  const handleNavChange = (key: string) => {
     setCurrentPage(key);
     setMobileMenuOpen(false);
+    navigate(routeMap[key] ?? "/community");
   };
 
   return (
