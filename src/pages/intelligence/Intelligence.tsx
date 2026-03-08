@@ -203,7 +203,7 @@ export default function Intelligence() {
     return <Navigate to="/intelligence/dashboard" replace />;
   }
 
-  const sidebarWidth = isMobile ? (sidebarOpen ? 220 : 0) : collapsed ? 56 : 220;
+  const sidebarWidth = isMobile ? 220 : collapsed ? 56 : 220;
 
   const handleSectorClick = (sectorId: string) => {
     navigate(`/intelligence/dashboard?sector=${sectorId}`);
@@ -277,18 +277,24 @@ export default function Intelligence() {
 
         {/* ── Sidebar ── */}
         <aside style={{
-          width: sidebarWidth,
+          width: isMobile ? 220 : sidebarWidth,
           flexShrink: 0,
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
-          transition: "width 0.22s ease",
+          transition: isMobile
+            ? "transform 0.28s cubic-bezier(0.4,0,0.2,1)"
+            : "width 0.22s ease",
+          transform: isMobile
+            ? (sidebarOpen ? "translateX(0)" : "translateX(-100%)")
+            : "none",
           backgroundColor: C.sidebar,
           borderRight: "1px solid rgba(255,255,255,0.06)",
-          position: isMobile ? "absolute" : "relative",
-          zIndex: isMobile ? 40 : "auto",
+          position: isMobile ? "fixed" : "relative",
+          zIndex: isMobile ? 45 : "auto",
           top: isMobile ? 56 : "auto",
           bottom: isMobile ? 0 : "auto",
+          left: isMobile ? 0 : "auto",
           height: isMobile ? "calc(100vh - 56px)" : "auto",
         }}>
 
@@ -429,10 +435,19 @@ export default function Intelligence() {
           </div>
         </aside>
 
-        {/* Mobile overlay */}
-        {isMobile && sidebarOpen && (
-          <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 30, top: 56 }}
-            onClick={() => setSidebarOpen(false)} />
+        {/* Mobile overlay — sits above sidebar so tapping it dismisses */}
+        {isMobile && (
+          <div
+            onClick={() => setSidebarOpen(false)}
+            style={{
+              position: "fixed", inset: 0, top: 56,
+              background: "rgba(0,0,0,0.45)",
+              zIndex: 44,
+              opacity: sidebarOpen ? 1 : 0,
+              pointerEvents: sidebarOpen ? "auto" : "none",
+              transition: "opacity 0.28s cubic-bezier(0.4,0,0.2,1)",
+            }}
+          />
         )}
 
         {/* ── Main Content ── */}
