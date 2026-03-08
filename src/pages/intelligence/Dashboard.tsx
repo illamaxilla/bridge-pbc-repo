@@ -1,49 +1,61 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import {
+  Blocks,
+  Wallet,
+  Cross,
+  Cpu,
+  GraduationCap,
+  Sprout,
+  Camera,
+  Home,
+  Luggage,
+  BatteryCharging,
+  Factory,
+  Truck,
   Bell,
   Search,
+  PlusCircle,
   User,
   ChevronDown,
   ChevronRight,
   ChevronLeft,
   BarChart3,
+  LineChart,
   TrendingUp,
   TrendingDown,
+  ArrowUpRight,
   Download,
+  Share2,
+  Clock,
   RefreshCw,
+  Star,
+  Target,
   Activity,
+  MoreHorizontal,
+  SlidersHorizontal,
   FileText,
+  BarChart2,
+  FolderOpen,
+  Globe,
+  LayoutDashboard,
   LayoutGrid,
   BookOpen,
   Bookmark,
   Settings,
-  ArrowUpRight,
-  Printer,
-  Plus,
-  Calendar,
-  SlidersHorizontal,
-  ChevronUp,
   Eye,
-  FileBarChart,
-  Book,
   LogOut,
 } from "lucide-react";
 import {
-  BarChart as RBarChart,
+  BarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  ComposedChart,
+  LineChart as LC,
   Line,
-  ReferenceLine,
 } from "recharts";
-
 const C = {
   primary: "#1B4D3E",
   teal: "#2E5A4D",
@@ -56,18 +68,18 @@ const C = {
   muted: "#6B7280",
   line: "#E5E7EB",
   sidebar: "#0F1A12",
-  sideAct: "#1E3327",
+  sideL: "#1A2E22",
   sideHov: "#1A2E1F",
+  sideAct: "#1E3327",
   green: "#16A34A",
   red: "#DC2626",
   yellow: "#CA8A04",
 };
-
 const sectorSvgIcons = [
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -79,10 +91,10 @@ const sectorSvgIcons = [
       <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -95,10 +107,10 @@ const sectorSvgIcons = [
       <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -109,10 +121,10 @@ const sectorSvgIcons = [
       <path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -125,10 +137,10 @@ const sectorSvgIcons = [
       <path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -141,10 +153,10 @@ const sectorSvgIcons = [
       <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -158,10 +170,10 @@ const sectorSvgIcons = [
       <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -173,10 +185,10 @@ const sectorSvgIcons = [
       <circle cx="12" cy="13" r="3" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -188,10 +200,10 @@ const sectorSvgIcons = [
       <polyline points="9 22 9 12 15 12 15 22" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -206,10 +218,10 @@ const sectorSvgIcons = [
       <circle cx="8" cy="20" r="2" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -223,10 +235,10 @@ const sectorSvgIcons = [
       <line x1="22" x2="22" y1="11" y2="13" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -238,10 +250,10 @@ const sectorSvgIcons = [
       <path d="M17 18h1M12 18h1M7 18h1" />
     </svg>
   ),
-  (c, s = 16) => (
+  (c, sz = 16) => (
     <svg
-      width={s}
-      height={s}
+      width={sz}
+      height={sz}
       viewBox="0 0 24 24"
       fill="none"
       stroke={c}
@@ -257,181 +269,286 @@ const sectorSvgIcons = [
     </svg>
   ),
 ];
-
 const SECTORS = [
   {
     id: "agriculture",
-    svgIcon: sectorSvgIcons[5],
+    icon: Sprout,
     short: "Agriculture",
     full: "Agriculture & Value Chains",
+    tag: "Economic Engine",
     score: 90,
     capLow: 12,
     capHigh: 22,
     irrLow: 10,
     irrHigh: 25,
     totalV: 18,
+    headline: "$1.9B lost to post-harvest failures annually \u2014 before a single crop reaches market.",
+    insight:
+      "Cold chain and aggregation infrastructure are the two highest-ROI entry points. Tier I ventures show 15\u201325% IRR. Government's Feed Ghana Programme creates rare policy alignment.",
     subSectors: [
-      { name: "Processing", pct: 35, color: "#B8D935" },
-      { name: "Cold Chain", pct: 25, color: "#2E5A4D" },
-      { name: "Aggregation", pct: 20, color: "#1B4D3E" },
-      { name: "AgTech", pct: 12, color: "#4ADE80" },
+      { name: "Processing Facilities", pct: 35, color: "#B8D935" },
+      { name: "Cold Chain & Storage", pct: 25, color: "#2E5A4D" },
+      { name: "Aggregation Platforms", pct: 20, color: "#1B4D3E" },
+      { name: "AgTech Investment", pct: 12, color: "#4ADE80" },
       { name: "Other", pct: 8, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Tomato Processing Facility", cap: "$2-4M", irr: "15-20%", risk: "MEDIUM" },
-      { name: "Solar Cold Storage Network", cap: "$1.5-3M", irr: "12-15%", risk: "MEDIUM" },
-      { name: "Cooperative Capital Fund", cap: "$1-2M", irr: "10-14%", risk: "MEDIUM" },
-      { name: "AgTech Portfolio", cap: "$1-2M", irr: "20-25%", risk: "HIGH" },
-      { name: "Market Aggregation Centers", cap: "$0.5-1M", irr: "8-12%", risk: "LOW" },
+      { name: "Tomato Processing Facility", cap: "$2\u20134M", irr: "15\u201320%", risk: "MEDIUM" },
+      { name: "Solar Cold Storage Network", cap: "$1.5\u20133M", irr: "12\u201315%", risk: "MEDIUM" },
+      { name: "Cooperative Capital Fund", cap: "$1\u20132M", irr: "10\u201314%", risk: "MEDIUM" },
+      { name: "AgTech Investment Portfolio", cap: "$1\u20132M", irr: "20\u201325%", risk: "HIGH" },
+      { name: "Market Aggregation Centers", cap: "$0.5\u20131M", irr: "8\u201312%", risk: "LOW" },
+      { name: "Agricultural Insurance Co.", cap: "$0.3\u20130.6M", irr: "Commission", risk: "LOW" },
     ],
     t2: [
-      { name: "Fruit Processing Facility", cap: "$2-4M", irr: "14-18%", risk: "MEDIUM" },
-      { name: "Cashew/Shea Processing", cap: "$1.5-3M", irr: "15-20%", risk: "MEDIUM" },
+      { name: "Fruit Processing Facility", cap: "$2\u20134M", irr: "14\u201318%", risk: "MEDIUM" },
+      { name: "Cashew/Shea Processing", cap: "$1.5\u20133M", irr: "15\u201320%", risk: "MEDIUM" },
+      { name: "Warehouse Receipt Financing", cap: "$1\u20132M", irr: "12\u201316%", risk: "MEDIUM" },
     ],
-    t3: [{ name: "Cocoa Processing Facility", cap: "$3-6M", irr: "15-22%", risk: "HIGH" }],
+    t3: [
+      { name: "Cocoa Processing Facility", cap: "$3\u20136M", irr: "15\u201322%", risk: "HIGH" },
+      { name: "Integrated Agriculture Hub", cap: "$2\u20134M", irr: "12\u201318%", risk: "HIGH" },
+    ],
+    pipeline: [
+      { label: "Cold Chain North", pct: 68, target: "$5.5M", current: "$3.7M", months: 8 },
+      { label: "Aggregation Platform", pct: 45, target: "$3.0M", current: "$1.35M", months: 12 },
+      { label: "Cooperative Fund", pct: 80, target: "$2.0M", current: "$1.6M", months: 4 },
+      { label: "AgTech Portfolio", pct: 30, target: "$2.0M", current: "$0.6M", months: 18 },
+    ],
     activity: [
       { h: "Post-Harvest Loss Crisis Brief Published", amt: "+$2M", sig: "Bullish", date: "Feb 2026" },
-      { h: "GH 4.5B PFJ Phase 3 Budget Confirmed", amt: "+Policy", sig: "Bullish", date: "Mar 2026" },
-      { h: "2024 Drought - 436k Farmers Affected", amt: "Risk", sig: "Watch", date: "Jan 2026" },
-      { h: "Cocoa Exports Hit $372.6M", amt: "+$372M", sig: "Bullish", date: "Jan 2026" },
+      { h: "GH\u20b54.5B PFJ Phase 3 Budget Confirmed", amt: "+Policy", sig: "Bullish", date: "Mar 2026" },
+      { h: "2024 Drought \u2014 436k Farmers Affected", amt: "Risk", sig: "Watch", date: "Jan 2026" },
+      { h: "Cocoa Exports Hit $372.6M (Dec 2024)", amt: "+$372M", sig: "Bullish", date: "Jan 2026" },
     ],
+    cross: ["financial", "technology", "infrastructure", "education"],
   },
   {
     id: "financial",
-    svgIcon: sectorSvgIcons[1],
+    icon: Wallet,
     short: "Financial Inclusion",
     full: "Financial Inclusion & Economic Security",
+    tag: "Foundation",
     score: 91,
     capLow: 10,
     capHigh: 20,
     irrLow: 8,
     irrHigh: 25,
     totalV: 18,
+    headline: "70% of Ghanaians outside formal finance \u2014 yet GH\u20b53.019T flows through mobile money annually.",
+    insight:
+      "Ghana is ranked #1 globally on the GSMA Mobile Money Regulatory Index (95.06%). The MSME credit gap alone is $2.2B. Tier I ventures target Kejetia market traders directly.",
     subSectors: [
-      { name: "Lending", pct: 40, color: "#B8D935" },
+      { name: "Lending & Credit", pct: 40, color: "#B8D935" },
       { name: "Mobile Money", pct: 25, color: "#2E5A4D" },
       { name: "Insurance", pct: 18, color: "#1B4D3E" },
-      { name: "Susu", pct: 12, color: "#60A5FA" },
+      { name: "Savings & Susu", pct: 12, color: "#60A5FA" },
       { name: "Other", pct: 5, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Market Financial Services Platform", cap: "$1-3M", irr: "15-22%", risk: "MEDIUM" },
-      { name: "Trader Working Capital Facility", cap: "$0.5-2M", irr: "18-25%", risk: "MEDIUM" },
-      { name: "Digital Susu Integration", cap: "$0.2-0.5M", irr: "12-18%", risk: "LOW" },
+      { name: "Market Financial Services Platform", cap: "$1\u20133M", irr: "15\u201322%", risk: "MEDIUM" },
+      { name: "Trader Working Capital Facility", cap: "$0.5\u20132M", irr: "18\u201325%", risk: "MEDIUM" },
+      { name: "Digital Susu Integration", cap: "$0.2\u20130.5M", irr: "12\u201318%", risk: "LOW" },
+      { name: "Market Microinsurance Bundle", cap: "$0.15\u20130.4M", irr: "Commission", risk: "LOW" },
+      { name: "Financial Health Hub", cap: "$0.1\u20130.25M", irr: "Break-even", risk: "LOW" },
     ],
-    t2: [{ name: "MSME Credit Guarantee Facility", cap: "$2-5M", irr: "8-12%", risk: "MEDIUM" }],
-    t3: [{ name: "BRIDGE Microfinance Institution", cap: "$5-15M", irr: "Variable", risk: "HIGH" }],
+    t2: [
+      { name: "MSME Credit Guarantee Facility", cap: "$2\u20135M", irr: "8\u201312%", risk: "MEDIUM" },
+      { name: "Women's Economic Empowerment Fund", cap: "$0.5\u20131.5M", irr: "12\u201318%", risk: "MEDIUM" },
+      { name: "Alternative Credit Scoring", cap: "$0.3\u20130.7M", irr: "15\u201320%", risk: "HIGH" },
+    ],
+    t3: [
+      { name: "BRIDGE Microfinance Institution", cap: "$5\u201315M", irr: "Variable", risk: "HIGH" },
+      { name: "Fintech Equity Portfolio", cap: "$1\u20135M", irr: "Variable", risk: "HIGH" },
+    ],
+    pipeline: [
+      { label: "Market Services Platform", pct: 72, target: "$3.0M", current: "$2.16M", months: 5 },
+      { label: "Working Capital Facility", pct: 55, target: "$2.0M", current: "$1.1M", months: 9 },
+      { label: "Susu Digitization", pct: 40, target: "$0.5M", current: "$0.2M", months: 10 },
+      { label: "MSME Credit Guarantee", pct: 20, target: "$5.0M", current: "$1.0M", months: 20 },
+    ],
     activity: [
-      { h: "Bank of Ghana Digital Credit Directive", amt: "+Policy", sig: "Bullish", date: "Mar 2026" },
-      { h: "MoMo Interoperability Live", amt: "+Access", sig: "Bullish", date: "Jan 2026" },
+      { h: "Bank of Ghana Digital Credit Directive Expands", amt: "+Policy", sig: "Bullish", date: "Mar 2026" },
+      { h: "MoMo Interoperability Live \u2014 All Networks", amt: "+Access", sig: "Bullish", date: "Jan 2026" },
       { h: "SME Financing Gap Widens to $2.2B", amt: "$2.2B", sig: "Watch", date: "Feb 2026" },
-      { h: "Ghana Ranked #1 GSMA MoMo Index", amt: "95.06", sig: "Bullish", date: "Nov 2025" },
+      { h: "Ghana Ranked #1 on GSMA MoMo Index", amt: "95.06", sig: "Bullish", date: "Nov 2025" },
     ],
+    cross: ["technology", "agriculture", "health", "infrastructure"],
   },
   {
     id: "technology",
-    svgIcon: sectorSvgIcons[3],
+    icon: Cpu,
     short: "Technology",
     full: "Technology & Innovation",
+    tag: "Growth Engine",
     score: 89,
     capLow: 8,
     capHigh: 15,
     irrLow: 15,
     irrHigh: 30,
     totalV: 15,
+    headline: "Kejetia \u2014 10,000+ vendors, West Africa's largest market \u2014 is BRIDGE's flagship tech platform.",
+    insight:
+      "Ghana has 400+ active startups but virtually no Series A capital in-country. BRIDGE fills the missing middle with Kejetia as the proof-of-concept anchor and a $5\u201310M growth fund.",
     subSectors: [
-      { name: "Platform", pct: 35, color: "#B8D935" },
-      { name: "VC/Fund", pct: 28, color: "#8B5CF6" },
-      { name: "Talent", pct: 18, color: "#2E5A4D" },
+      { name: "Platform / SaaS", pct: 35, color: "#B8D935" },
+      { name: "Investment / VC", pct: 28, color: "#8B5CF6" },
+      { name: "Talent & Training", pct: 18, color: "#2E5A4D" },
       { name: "FinTech", pct: 12, color: "#1B4D3E" },
       { name: "Other", pct: 7, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Kejetia Digital Platform", cap: "$3-5M", irr: "18-25%", risk: "MEDIUM" },
-      { name: "BRIDGE Growth Fund", cap: "$5-10M", irr: "20-30%", risk: "HIGH" },
-      { name: "Tech Talent Bridge Program", cap: "$0.3-0.6M", irr: "Break-even", risk: "LOW" },
+      { name: "Kejetia Digital Platform", cap: "$3\u20135M", irr: "18\u201325%", risk: "MEDIUM" },
+      { name: "BRIDGE Growth Fund \u2014 Tech", cap: "$5\u201310M", irr: "20\u201330%", risk: "HIGH" },
+      { name: "Tech Talent Bridge Program", cap: "$0.3\u20130.6M", irr: "Break-even", risk: "LOW" },
+      { name: "Fintech Portfolio", cap: "$2\u20134M", irr: "15\u201325%", risk: "HIGH" },
+      { name: "Digital Apprenticeship", cap: "$0.2\u20130.4M", irr: "Social", risk: "LOW" },
     ],
-    t2: [{ name: "Market Platform Replication", cap: "$2-4M", irr: "15-22%", risk: "MEDIUM" }],
-    t3: [{ name: "AI/ML Center of Excellence", cap: "$2-5M", irr: "Variable", risk: "HIGH" }],
+    t2: [
+      { name: "Market Platform Replication", cap: "$2\u20134M", irr: "15\u201322%", risk: "MEDIUM" },
+      { name: "AgTech Investment Portfolio", cap: "$1.5\u20133M", irr: "20\u201328%", risk: "HIGH" },
+      { name: "Rural Digital Access", cap: "$1\u20132M", irr: "Social", risk: "MEDIUM" },
+    ],
+    t3: [
+      { name: "AI/ML Center of Excellence", cap: "$2\u20135M", irr: "Variable", risk: "HIGH" },
+      { name: "Data Center Co-Investment", cap: "$3\u20138M", irr: "Variable", risk: "HIGH" },
+    ],
+    pipeline: [
+      { label: "Kejetia Platform", pct: 85, target: "$5.0M", current: "$4.25M", months: 2 },
+      { label: "BRIDGE Growth Fund", pct: 50, target: "$10M", current: "$5.0M", months: 10 },
+      { label: "Fintech Portfolio", pct: 35, target: "$4.0M", current: "$1.4M", months: 14 },
+      { label: "Market Replication", pct: 15, target: "$4.0M", current: "$0.6M", months: 22 },
+    ],
     activity: [
-      { h: "Kejetia Phase 2 - 3,000 New Vendors", amt: "+3k", sig: "Bullish", date: "Mar 2026" },
+      { h: "Kejetia Phase 2 \u2014 3,000 New Vendors Onboarded", amt: "+3k", sig: "Bullish", date: "Mar 2026" },
       { h: "Ghana Joins Smart Africa Alliance", amt: "+Policy", sig: "Bullish", date: "Feb 2026" },
-      { h: "Series A Desert - Only 2 Deals", amt: "-", sig: "Watch", date: "Jan 2026" },
-      { h: "Ghana Leads West Africa Funding", amt: "+28%", sig: "Bullish", date: "Dec 2025" },
+      { h: "Series A Desert \u2014 Only 2 Deals in 2025", amt: "-", sig: "Watch", date: "Jan 2026" },
+      { h: "Disrupt Africa: Ghana Leads West Africa Funding", amt: "+28%", sig: "Bullish", date: "Dec 2025" },
     ],
+    cross: ["agriculture", "financial", "health", "education"],
   },
   {
     id: "energy",
-    svgIcon: sectorSvgIcons[9],
+    icon: BatteryCharging,
     short: "Energy",
     full: "Energy & Renewable Resources",
+    tag: "Foundation",
     score: 88,
     capLow: 12,
     capHigh: 22,
     irrLow: 12,
     irrHigh: 22,
     totalV: 14,
+    headline: "Power outages cost Ghana $924M/yr \u2014 solar irradiance 4.5\u20136 kWh/m\u00b2 is Africa-class.",
+    insight:
+      "$200M Clean Cooking Outcome Bond and 1GW Solar Park expansion signal unprecedented government commitment. Distributed solar shows 15\u201322% IRR on a structurally falling cost curve.",
     subSectors: [
-      { name: "Solar", pct: 40, color: "#B8D935" },
+      { name: "Solar Solutions", pct: 40, color: "#B8D935" },
       { name: "Clean Cooking", pct: 22, color: "#F59E0B" },
-      { name: "Mini-Grid", pct: 18, color: "#2E5A4D" },
+      { name: "Mini-Grid Dev.", pct: 18, color: "#2E5A4D" },
       { name: "Training", pct: 12, color: "#1B4D3E" },
       { name: "Other", pct: 8, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Ghana Solar Solutions Company", cap: "$3-6M", irr: "15-22%", risk: "MEDIUM" },
-      { name: "Clean Cooking Distribution", cap: "$2-4M", irr: "12-18%", risk: "MEDIUM" },
+      { name: "Ghana Solar Solutions Company", cap: "$3\u20136M", irr: "15\u201322%", risk: "MEDIUM" },
+      { name: "Clean Cooking Distribution Network", cap: "$2\u20134M", irr: "12\u201318%", risk: "MEDIUM" },
+      { name: "Solar Technician Training Academy", cap: "$0.5\u20131M", irr: "Social", risk: "LOW" },
+      { name: "Solar-Powered Cold Storage Network", cap: "$1.5\u20133M", irr: "12\u201316%", risk: "MEDIUM" },
+      { name: "Energy Efficiency Services Company", cap: "$0.5\u20131M", irr: "14\u201318%", risk: "LOW" },
     ],
-    t2: [{ name: "Community Mini-Grid Development", cap: "$2-5M", irr: "14-20%", risk: "MEDIUM" }],
-    t3: [{ name: "EV Charging Infrastructure", cap: "$2-4M", irr: "12-18%", risk: "HIGH" }],
+    t2: [
+      { name: "Community Mini-Grid Development", cap: "$2\u20135M", irr: "14\u201320%", risk: "MEDIUM" },
+      { name: "Solar Equipment Import & Dist.", cap: "$1\u20132M", irr: "15\u201320%", risk: "MEDIUM" },
+      { name: "Residential Solar Financing", cap: "$1\u20132M", irr: "12\u201318%", risk: "MEDIUM" },
+    ],
+    t3: [
+      { name: "EV Charging Infrastructure", cap: "$2\u20134M", irr: "12\u201318%", risk: "HIGH" },
+      { name: "Battery Storage Systems", cap: "$2\u20135M", irr: "15\u201322%", risk: "HIGH" },
+    ],
+    pipeline: [
+      { label: "Ghana Solar Solutions", pct: 65, target: "$6.0M", current: "$3.9M", months: 7 },
+      { label: "Clean Cooking Network", pct: 48, target: "$4.0M", current: "$1.92M", months: 11 },
+      { label: "Mini-Grid Dev. Co.", pct: 25, target: "$5.0M", current: "$1.25M", months: 18 },
+      { label: "Solar Equipment Dist.", pct: 35, target: "$2.0M", current: "$0.7M", months: 14 },
+    ],
     activity: [
-      { h: "Solar Park: 200MW to 1GW Expansion", amt: "+800MW", sig: "Bullish", date: "Mar 2026" },
-      { h: "$200M Clean Cooking Outcome Bond", amt: "$200M", sig: "Bullish", date: "Feb 2026" },
-      { h: "Dumsor Returns - Business Losses", amt: "-$900M", sig: "Watch", date: "Jan 2026" },
-      { h: "Solar Costs Down 89% Since 2010", amt: "-89%", sig: "Bullish", date: "Dec 2025" },
+      { h: "Solar Park: 200MW to 1GW Expansion Confirmed", amt: "+800MW", sig: "Bullish", date: "Mar 2026" },
+      { h: "$200M Clean Cooking Outcome Bond Now Open", amt: "$200M", sig: "Bullish", date: "Feb 2026" },
+      { h: "Dumsor Returns \u2014 Business Losses Mount", amt: "-$900M", sig: "Watch", date: "Jan 2026" },
+      { h: "IRENA: Solar Costs Down 89% Since 2010", amt: "-89%", sig: "Bullish", date: "Dec 2025" },
     ],
+    cross: ["agriculture", "manufacturing", "transportation", "infrastructure"],
   },
   {
     id: "infrastructure",
-    svgIcon: sectorSvgIcons[0],
+    icon: Blocks,
     short: "Infrastructure",
     full: "Infrastructure & Basic Services",
+    tag: "Foundation",
     score: 87,
     capLow: 8,
     capHigh: 15,
     irrLow: 8,
     irrHigh: 20,
     totalV: 15,
+    headline: "$40B+ infrastructure gap \u2014 2026 Budget allocates GH\u20b518B to infrastructure alone.",
+    insight:
+      "Infrastructure underpins every other BRIDGE sector. Rural connectivity is the multiplier. Build24 pillar creates direct co-investment pathways across roads, water, and digital.",
     subSectors: [
-      { name: "Water", pct: 30, color: "#B8D935" },
+      { name: "Water Systems", pct: 30, color: "#B8D935" },
       { name: "Connectivity", pct: 28, color: "#2E5A4D" },
-      { name: "Roads", pct: 22, color: "#1B4D3E" },
-      { name: "Digital", pct: 12, color: "#60A5FA" },
+      { name: "Roads & Logistics", pct: 22, color: "#1B4D3E" },
+      { name: "Digital Infra.", pct: 12, color: "#60A5FA" },
       { name: "Sanitation", pct: 8, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Rural Connectivity Platform", cap: "$2-4M", irr: "12-18%", risk: "MEDIUM" },
-      { name: "Water Systems Management Co.", cap: "$2-4M", irr: "10-15%", risk: "LOW" },
+      { name: "Rural Connectivity Platform", cap: "$2\u20134M", irr: "12\u201318%", risk: "MEDIUM" },
+      { name: "Water Systems Management Co.", cap: "$2\u20134M", irr: "10\u201315%", risk: "LOW" },
+      { name: "Last-Mile Logistics Network", cap: "$1.5\u20133M", irr: "14\u201320%", risk: "MEDIUM" },
+      { name: "Community Sanitation Services", cap: "$0.5\u20131.5M", irr: "8\u201312%", risk: "LOW" },
+      { name: "Digital Infrastructure Co.", cap: "$2\u20134M", irr: "15\u201320%", risk: "MEDIUM" },
     ],
-    t2: [{ name: "Urban Infrastructure Fund", cap: "$3-6M", irr: "10-15%", risk: "MEDIUM" }],
-    t3: [{ name: "Smart City Infrastructure", cap: "$3-7M", irr: "Variable", risk: "HIGH" }],
+    t2: [
+      { name: "Urban Infrastructure Fund", cap: "$3\u20136M", irr: "10\u201315%", risk: "MEDIUM" },
+      { name: "Telecoms Tower Fund", cap: "$2\u20134M", irr: "14\u201318%", risk: "MEDIUM" },
+    ],
+    t3: [
+      { name: "Waste Management Company", cap: "$2\u20135M", irr: "12\u201318%", risk: "HIGH" },
+      { name: "Smart City Infrastructure", cap: "$3\u20137M", irr: "Variable", risk: "HIGH" },
+    ],
+    pipeline: [
+      { label: "Rural Connectivity", pct: 55, target: "$4.0M", current: "$2.2M", months: 10 },
+      { label: "Water Systems Co.", pct: 70, target: "$4.0M", current: "$2.8M", months: 6 },
+      { label: "Last-Mile Logistics", pct: 40, target: "$3.0M", current: "$1.2M", months: 13 },
+      { label: "Urban Infra. Fund", pct: 20, target: "$6.0M", current: "$1.2M", months: 22 },
+    ],
     activity: [
-      { h: "GH 18B+ Infra Allocation Locked", amt: "+Policy", sig: "Bullish", date: "Mar 2026" },
-      { h: "Roads Authority Fast-Track Program", amt: "+Ops", sig: "Bullish", date: "Feb 2026" },
+      {
+        h: "GH\u20b518B+ Infra Allocation Locked \u2014 2026 Budget",
+        amt: "+Policy",
+        sig: "Bullish",
+        date: "Mar 2026",
+      },
+      { h: "Roads Authority Fast-Track Program Launched", amt: "+Ops", sig: "Bullish", date: "Feb 2026" },
       { h: "Water & Sanitation: Only 27% Coverage", amt: "-73%", sig: "Watch", date: "Jan 2026" },
     ],
+    cross: ["transportation", "energy", "agriculture", "technology"],
   },
   {
     id: "health",
-    svgIcon: sectorSvgIcons[2],
+    icon: Cross,
     short: "Health Systems",
     full: "Health Systems & Wellbeing",
+    tag: "Human Capital",
     score: 83,
     capLow: 8,
     capHigh: 16,
     irrLow: 8,
     irrHigh: 22,
     totalV: 15,
+    headline: "0.1 doctors per 1,000 vs WHO benchmark of 1.0 \u2014 supply chain leakage at 30\u201340%.",
+    insight:
+      "Community health worker platforms are the fastest path to measurable impact. NHIA digital claims expansion creates direct reimbursement pathways for BRIDGE-backed primary care ventures.",
     subSectors: [
       { name: "Primary Care", pct: 32, color: "#B8D935" },
       { name: "Supply Chain", pct: 28, color: "#EF4444" },
@@ -440,471 +557,411 @@ const SECTORS = [
       { name: "Health Finance", pct: 8, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Community Health Worker Platform", cap: "$1.5-3M", irr: "Social", risk: "LOW" },
-      { name: "Medical Supply Chain Co.", cap: "$2-4M", irr: "14-20%", risk: "MEDIUM" },
+      { name: "Community Health Worker Platform", cap: "$1.5\u20133M", irr: "Social", risk: "LOW" },
+      { name: "Medical Supply Chain Co.", cap: "$2\u20134M", irr: "14\u201320%", risk: "MEDIUM" },
+      { name: "Diagnostic Services Company", cap: "$1.5\u20133M", irr: "18\u201322%", risk: "MEDIUM" },
+      { name: "NHIS Claims Processing Platform", cap: "$0.5\u20131M", irr: "12\u201316%", risk: "MEDIUM" },
     ],
-    t2: [{ name: "Telemedicine Network", cap: "$1-2.5M", irr: "12-18%", risk: "MEDIUM" }],
-    t3: [{ name: "HealthTech Investment Portfolio", cap: "$1-3M", irr: "18-25%", risk: "HIGH" }],
+    t2: [
+      { name: "Telemedicine Network", cap: "$1\u20132.5M", irr: "12\u201318%", risk: "MEDIUM" },
+      { name: "Health Finance Platform", cap: "$0.5\u20131.5M", irr: "10\u201315%", risk: "MEDIUM" },
+      { name: "Pharmaceutical Distribution", cap: "$1.5\u20133M", irr: "14\u201320%", risk: "MEDIUM" },
+    ],
+    t3: [
+      { name: "Medical Training Institute", cap: "$2\u20134M", irr: "Social", risk: "MEDIUM" },
+      { name: "HealthTech Investment Portfolio", cap: "$1\u20133M", irr: "18\u201325%", risk: "HIGH" },
+    ],
+    pipeline: [
+      { label: "Supply Chain Co.", pct: 60, target: "$4.0M", current: "$2.4M", months: 8 },
+      { label: "Community HW Platform", pct: 75, target: "$3.0M", current: "$2.25M", months: 5 },
+      { label: "Telemedicine Network", pct: 30, target: "$2.5M", current: "$0.75M", months: 16 },
+      { label: "Diagnostic Services", pct: 45, target: "$3.0M", current: "$1.35M", months: 12 },
+    ],
     activity: [
       { h: "NHIA Expands Digital Claims Processing", amt: "+Access", sig: "Bullish", date: "Feb 2026" },
-      { h: "GH 8.2B Health Allocation +12% YoY", amt: "+12%", sig: "Bullish", date: "Mar 2026" },
-      { h: "Workforce Gap: 40k Workers Needed", amt: "-40k", sig: "Watch", date: "Jan 2026" },
+      { h: "GH\u20b58.2B Health Allocation \u2014 12% YoY Increase", amt: "+12%", sig: "Bullish", date: "Mar 2026" },
+      { h: "Workforce Gap: 40k More Health Workers Needed", amt: "-40k", sig: "Watch", date: "Jan 2026" },
     ],
+    cross: ["technology", "financial", "manufacturing", "education"],
   },
   {
     id: "education",
-    svgIcon: sectorSvgIcons[4],
+    icon: GraduationCap,
     short: "Education",
     full: "Education & Skills",
+    tag: "Human Capital",
     score: 85,
     capLow: 16.5,
     capHigh: 33.5,
     irrLow: 10,
     irrHigh: 25,
     totalV: 15,
+    headline: "60% of graduates underemployed within 2 years \u2014 400% tertiary growth, zero market alignment.",
+    insight:
+      "TVET transformation is the highest-leverage education investment. Government's GH\u20b52B commitment creates direct co-investment pathways. Diaspora mentorship shows exceptional social return at near-zero cost.",
     subSectors: [
-      { name: "TVET", pct: 38, color: "#B8D935" },
+      { name: "TVET & Vocational", pct: 38, color: "#B8D935" },
       { name: "Scholarships", pct: 22, color: "#0EA5E9" },
-      { name: "Bootcamps", pct: 18, color: "#2E5A4D" },
-      { name: "EdTech", pct: 14, color: "#1B4D3E" },
+      { name: "Skills Bootcamps", pct: 18, color: "#2E5A4D" },
+      { name: "EdTech Investment", pct: 14, color: "#1B4D3E" },
       { name: "Other", pct: 8, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "TVET Partnership Program", cap: "$3-6M", irr: "Social+", risk: "MEDIUM" },
-      { name: "Diaspora Scholarship Fund", cap: "$2-3M", irr: "Social+", risk: "LOW" },
+      { name: "TVET Partnership Program", cap: "$3\u20136M", irr: "Social+", risk: "MEDIUM" },
+      { name: "Diaspora Scholarship Fund", cap: "$2\u20133M", irr: "Social+", risk: "LOW" },
+      { name: "Skills Bootcamp Network", cap: "$1.5\u20133M", irr: "10\u201315%", risk: "LOW" },
+      { name: "Diaspora Mentorship Platform", cap: "$0.5\u20131M", irr: "Social", risk: "LOW" },
+      { name: "EdTech Investment Portfolio", cap: "$1.5\u20133M", irr: "20\u201328%", risk: "HIGH" },
     ],
-    t2: [{ name: "TVET Regional Expansion", cap: "$2-4M", irr: "Social+", risk: "MEDIUM" }],
-    t3: [{ name: "BRIDGE Training Center Kumasi", cap: "$2-4M", irr: "12-18%", risk: "MEDIUM" }],
+    t2: [
+      { name: "TVET Regional Expansion", cap: "$2\u20134M", irr: "Social+", risk: "MEDIUM" },
+      { name: "Professional Dev. Academy", cap: "$1\u20132M", irr: "12\u201318%", risk: "MEDIUM" },
+    ],
+    t3: [
+      { name: "BRIDGE Training Center Kumasi", cap: "$2\u20134M", irr: "12\u201318%", risk: "MEDIUM" },
+      { name: "Research Partnership", cap: "$0.5\u20131M", irr: "Social", risk: "LOW" },
+    ],
+    pipeline: [
+      { label: "TVET Partnership", pct: 58, target: "$6.0M", current: "$3.48M", months: 9 },
+      { label: "Scholarship Fund", pct: 80, target: "$3.0M", current: "$2.4M", months: 4 },
+      { label: "Skills Bootcamp Net.", pct: 45, target: "$3.0M", current: "$1.35M", months: 12 },
+      { label: "EdTech Portfolio", pct: 20, target: "$3.0M", current: "$0.6M", months: 20 },
+    ],
     activity: [
-      { h: "MoE TVET Overhaul - GH 2B Committed", amt: "+Policy", sig: "Bullish", date: "Jan 2026" },
-      { h: "Ghana Youth Unemployment 13.4%", amt: "-", sig: "Watch", date: "Feb 2026" },
-      { h: "Diaspora Fellowship: 120 Placements", amt: "+120", sig: "Bullish", date: "Mar 2026" },
+      { h: "MoE TVET Overhaul \u2014 GH\u20b52B Committed", amt: "+Policy", sig: "Bullish", date: "Jan 2026" },
+      { h: "Ghana Youth Unemployment Hits 13.4%", amt: "-", sig: "Watch", date: "Feb 2026" },
+      { h: "Diaspora Fellowship: 120 Placements Confirmed", amt: "+120", sig: "Bullish", date: "Mar 2026" },
     ],
+    cross: ["technology", "manufacturing", "agriculture", "health"],
   },
   {
     id: "housing",
-    svgIcon: sectorSvgIcons[7],
+    icon: Home,
     short: "Housing",
     full: "Housing & Real Estate",
+    tag: "Foundation",
     score: 82,
     capLow: 15,
     capHigh: 25,
     irrLow: 10,
     irrHigh: 20,
     totalV: 11,
+    headline: "2 million unit deficit growing 200k/yr \u2014 mortgage penetration below 2% of GDP.",
+    insight:
+      "The $6.65B remittance flow already includes significant informal housing spend. NHA PPP framework opens private entry at scale. Diaspora housing products meet proven, demonstrated demand.",
     subSectors: [
       { name: "Affordable Dev.", pct: 38, color: "#B8D935" },
       { name: "Construction Finance", pct: 28, color: "#14B8A6" },
       { name: "Diaspora Products", pct: 18, color: "#2E5A4D" },
-      { name: "Rental Mgmt", pct: 10, color: "#1B4D3E" },
+      { name: "Rental Management", pct: 10, color: "#1B4D3E" },
       { name: "Materials", pct: 6, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Affordable Housing Developer", cap: "$8-15M", irr: "14-20%", risk: "MEDIUM" },
-      { name: "Construction Finance Platform", cap: "$4-8M", irr: "12-18%", risk: "MEDIUM" },
+      { name: "Affordable Housing Developer", cap: "$8\u201315M", irr: "14\u201320%", risk: "MEDIUM" },
+      { name: "Construction Finance Platform", cap: "$4\u20138M", irr: "12\u201318%", risk: "MEDIUM" },
     ],
-    t2: [{ name: "Diaspora Housing Product", cap: "$2-4M", irr: "10-15%", risk: "LOW" }],
-    t3: [{ name: "Building Materials Supply Co.", cap: "$2-4M", irr: "14-18%", risk: "MEDIUM" }],
+    t2: [
+      { name: "Diaspora Housing Product", cap: "$2\u20134M", irr: "10\u201315%", risk: "LOW" },
+      { name: "Rental Management Platform", cap: "$1\u20132M", irr: "12\u201318%", risk: "LOW" },
+    ],
+    t3: [{ name: "Building Materials Supply Co.", cap: "$2\u20134M", irr: "14\u201318%", risk: "MEDIUM" }],
+    pipeline: [
+      { label: "Affordable Housing", pct: 40, target: "$15M", current: "$6.0M", months: 18 },
+      { label: "Construction Finance", pct: 55, target: "$8.0M", current: "$4.4M", months: 10 },
+      { label: "Diaspora Housing Prod.", pct: 70, target: "$4.0M", current: "$2.8M", months: 6 },
+      { label: "Rental Management", pct: 30, target: "$2.0M", current: "$0.6M", months: 16 },
+    ],
     activity: [
       { h: "NHA PPP Framework Opens Private Entry", amt: "+Policy", sig: "Bullish", date: "Feb 2026" },
-      { h: "Mortgage Penetration Below 2%", amt: "<2%", sig: "Watch", date: "Jan 2026" },
+      { h: "Mortgage Penetration Still Below 2%", amt: "<2%", sig: "Watch", date: "Jan 2026" },
       { h: "Diaspora Housing Survey: 78% Interested", amt: "+Demand", sig: "Bullish", date: "Dec 2025" },
     ],
+    cross: ["financial", "manufacturing", "infrastructure", "transportation"],
   },
   {
     id: "manufacturing",
-    svgIcon: sectorSvgIcons[10],
+    icon: Factory,
     short: "Manufacturing",
     full: "Manufacturing & Light Industry",
+    tag: "Economic Engine",
     score: 81,
     capLow: 15,
     capHigh: 30,
     irrLow: 12,
     irrHigh: 22,
     totalV: 14,
+    headline: "Ghana imports $8B+ of goods it has every raw input to produce domestically.",
+    insight:
+      "GH\u20b55B manufacturing incentive package plus 5-year tax holiday for domestic manufacturers in 2026 Budget. Agro-processing is lowest-risk entry point \u2014 feeds directly into Agriculture cold chain.",
     subSectors: [
       { name: "Agro-Processing", pct: 35, color: "#B8D935" },
       { name: "Packaging", pct: 22, color: "#6366F1" },
       { name: "Consumer Goods", pct: 20, color: "#2E5A4D" },
-      { name: "Training", pct: 14, color: "#1B4D3E" },
-      { name: "Export", pct: 9, color: "#E5E7EB" },
+      { name: "Industrial Training", pct: 14, color: "#1B4D3E" },
+      { name: "Export Processing", pct: 9, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Agro-Processing Facility", cap: "$5-10M", irr: "15-20%", risk: "MEDIUM" },
-      { name: "Packaging Solutions Company", cap: "$3-6M", irr: "14-18%", risk: "MEDIUM" },
+      { name: "Agro-Processing Facility", cap: "$5\u201310M", irr: "15\u201320%", risk: "MEDIUM" },
+      { name: "Packaging Solutions Company", cap: "$3\u20136M", irr: "14\u201318%", risk: "MEDIUM" },
+      { name: "Industrial Training Centre", cap: "$1\u20132M", irr: "Social+", risk: "LOW" },
     ],
-    t2: [{ name: "Consumer Goods Manufacturer", cap: "$4-8M", irr: "14-20%", risk: "MEDIUM" }],
-    t3: [{ name: "Export Processing Facility", cap: "$5-10M", irr: "15-22%", risk: "HIGH" }],
+    t2: [
+      { name: "Consumer Goods Manufacturer", cap: "$4\u20138M", irr: "14\u201320%", risk: "MEDIUM" },
+      { name: "Pharmaceutical Manufacturing", cap: "$3\u20136M", irr: "15\u201322%", risk: "HIGH" },
+      { name: "Textile & Garments Factory", cap: "$2\u20134M", irr: "12\u201318%", risk: "MEDIUM" },
+    ],
+    t3: [
+      { name: "Export Processing Facility", cap: "$5\u201310M", irr: "15\u201322%", risk: "HIGH" },
+      { name: "Industrial Park Co-Investment", cap: "$5\u201310M", irr: "12\u201318%", risk: "HIGH" },
+    ],
+    pipeline: [
+      { label: "Agro-Processing Fac.", pct: 45, target: "$10M", current: "$4.5M", months: 14 },
+      { label: "Packaging Solutions", pct: 60, target: "$6.0M", current: "$3.6M", months: 9 },
+      { label: "Consumer Goods Mfg.", pct: 20, target: "$8.0M", current: "$1.6M", months: 22 },
+      { label: "Pharma Manufacturing", pct: 10, target: "$6.0M", current: "$0.6M", months: 30 },
+    ],
     activity: [
-      { h: "GH 5B Manufacturing Incentive Package", amt: "+Policy", sig: "Bullish", date: "Mar 2026" },
-      { h: "5-Year Tax Holiday for Manufacturers", amt: "+Tax", sig: "Bullish", date: "Mar 2026" },
-      { h: "Import Bill Grows to $8.2B", amt: "$8.2B", sig: "Watch", date: "Feb 2026" },
+      { h: "GH\u20b55B Manufacturing Incentive Package Confirmed", amt: "+Policy", sig: "Bullish", date: "Mar 2026" },
+      { h: "5-Year Tax Holiday for Domestic Manufacturers", amt: "+Tax", sig: "Bullish", date: "Mar 2026" },
+      { h: "Import Bill Grows to $8.2B \u2014 Opportunity Widens", amt: "$8.2B", sig: "Watch", date: "Feb 2026" },
     ],
+    cross: ["agriculture", "energy", "transportation", "education"],
   },
   {
     id: "transportation",
-    svgIcon: sectorSvgIcons[11],
+    icon: Truck,
     short: "Transportation",
     full: "Transportation & Logistics",
+    tag: "Foundation",
     score: 79,
     capLow: 10,
     capHigh: 22,
     irrLow: 10,
     irrHigh: 22,
     totalV: 14,
+    headline: "Logistics costs 2-3x global average \u2014 cold chain alone is a $900M annual opportunity.",
+    insight:
+      "Every sector's growth multiplier. Tema Port Phase 2 ($1.5B) and Boankra Inland Port ($308M) create infrastructure tailwinds. Cold Chain Ghana directly addresses the $1.9B post-harvest loss problem.",
     subSectors: [
       { name: "Cold Chain", pct: 32, color: "#B8D935" },
-      { name: "Last-Mile", pct: 28, color: "#64748B" },
-      { name: "Fleet", pct: 20, color: "#2E5A4D" },
-      { name: "Port & Warehouse", pct: 13, color: "#1B4D3E" },
+      { name: "Last-Mile Delivery", pct: 28, color: "#64748B" },
+      { name: "Fleet & Freight", pct: 20, color: "#2E5A4D" },
+      { name: "Port & Warehousing", pct: 13, color: "#1B4D3E" },
       { name: "Other", pct: 7, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Cold Chain Ghana", cap: "$3-6M", irr: "16-22%", risk: "MEDIUM" },
-      { name: "Ghana Last Mile Delivery", cap: "$2-4M", irr: "14-20%", risk: "MEDIUM" },
+      { name: "Cold Chain Ghana", cap: "$3\u20136M", irr: "16\u201322%", risk: "MEDIUM" },
+      { name: "Ghana Last Mile Delivery Co.", cap: "$2\u20134M", irr: "14\u201320%", risk: "MEDIUM" },
+      { name: "Fleet Management Services", cap: "$1.5\u20133M", irr: "14\u201318%", risk: "LOW" },
+      { name: "Logistics Technology Platform", cap: "$1\u20132M", irr: "20\u201325%", risk: "MEDIUM" },
+      { name: "Logistics Training Academy", cap: "$0.5\u20131M", irr: "Social+", risk: "LOW" },
     ],
-    t2: [{ name: "Pharma Cold Chain Services", cap: "$1.5-3M", irr: "16-22%", risk: "MEDIUM" }],
-    t3: [{ name: "Rail Logistics Integration", cap: "$2-5M", irr: "12-16%", risk: "HIGH" }],
+    t2: [
+      { name: "Pharma Cold Chain Services", cap: "$1.5\u20133M", irr: "16\u201322%", risk: "MEDIUM" },
+      { name: "Agricultural Aggregation Transport", cap: "$2\u20134M", irr: "14\u201318%", risk: "MEDIUM" },
+      { name: "Warehousing & Distribution", cap: "$2\u20134M", irr: "12\u201316%", risk: "MEDIUM" },
+    ],
+    t3: [
+      { name: "Inland Port Services", cap: "$3\u20136M", irr: "12\u201318%", risk: "HIGH" },
+      { name: "Rail Logistics Integration", cap: "$2\u20135M", irr: "12\u201316%", risk: "HIGH" },
+    ],
+    pipeline: [
+      { label: "Cold Chain Ghana", pct: 50, target: "$6.0M", current: "$3.0M", months: 12 },
+      { label: "Last Mile Delivery", pct: 40, target: "$4.0M", current: "$1.6M", months: 14 },
+      { label: "Logistics Tech Platform", pct: 65, target: "$2.0M", current: "$1.3M", months: 7 },
+      { label: "Fleet Management", pct: 35, target: "$3.0M", current: "$1.05M", months: 15 },
+    ],
     activity: [
-      { h: "Tema Port Phase 2 - $1.5B Investment", amt: "$1.5B", sig: "Bullish", date: "Feb 2026" },
-      { h: "Connect24: 18% Logistics Cost Reduction", amt: "-18%", sig: "Bullish", date: "Jan 2026" },
-      { h: "Cold Chain Revenue: $900M/yr Potential", amt: "$900M", sig: "Bullish", date: "Dec 2025" },
+      { h: "Tema Port Phase 2 \u2014 $1.5B Investment Confirmed", amt: "$1.5B", sig: "Bullish", date: "Feb 2026" },
+      { h: "Connect24: 18% Logistics Cost Reduction Target", amt: "-18%", sig: "Bullish", date: "Jan 2026" },
+      { h: "Cold Chain Revenue Potential: $900M/yr", amt: "$900M", sig: "Bullish", date: "Dec 2025" },
     ],
+    cross: ["agriculture", "energy", "manufacturing", "infrastructure"],
   },
   {
     id: "tourism",
-    svgIcon: sectorSvgIcons[8],
+    icon: Luggage,
     short: "Tourism",
     full: "Tourism & Hospitality",
+    tag: "Growth Engine",
     score: 76,
     capLow: 10,
     capHigh: 18,
     irrLow: 10,
     irrHigh: 22,
     totalV: 13,
+    headline: "Year of Return generated $3.3B in 2019 \u2014 the infrastructure to sustain it was never built.",
+    insight:
+      "Cultural tourism carries diaspora demand that cannot be manufactured. Heritage circuits and hospitality training are structurally underbuilt. YoR proved the demand exists at scale.",
     subSectors: [
-      { name: "Heritage", pct: 32, color: "#B8D935" },
-      { name: "Hospitality", pct: 25, color: "#EC4899" },
+      { name: "Heritage Tourism", pct: 32, color: "#B8D935" },
+      { name: "Hospitality Training", pct: 25, color: "#EC4899" },
       { name: "Eco-Tourism", pct: 22, color: "#2E5A4D" },
-      { name: "Cultural", pct: 14, color: "#1B4D3E" },
+      { name: "Cultural Platforms", pct: 14, color: "#1B4D3E" },
       { name: "Other", pct: 7, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Heritage Tourism Network", cap: "$3-6M", irr: "14-20%", risk: "MEDIUM" },
-      { name: "Hospitality Training Academy", cap: "$1.5-3M", irr: "Social+", risk: "LOW" },
+      { name: "Heritage Tourism Network", cap: "$3\u20136M", irr: "14\u201320%", risk: "MEDIUM" },
+      { name: "Hospitality Training Academy", cap: "$1.5\u20133M", irr: "Social+", risk: "LOW" },
     ],
-    t2: [{ name: "Eco-Tourism Development Fund", cap: "$2-4M", irr: "12-18%", risk: "MEDIUM" }],
-    t3: [{ name: "Destination Development Company", cap: "$3-6M", irr: "12-18%", risk: "HIGH" }],
+    t2: [
+      { name: "Eco-Tourism Development Fund", cap: "$2\u20134M", irr: "12\u201318%", risk: "MEDIUM" },
+      { name: "Cultural Experience Platform", cap: "$1\u20132M", irr: "15\u201322%", risk: "MEDIUM" },
+    ],
+    t3: [{ name: "Destination Development Company", cap: "$3\u20136M", irr: "12\u201318%", risk: "HIGH" }],
+    pipeline: [
+      { label: "Heritage Tourism Net.", pct: 50, target: "$6.0M", current: "$3.0M", months: 11 },
+      { label: "Hospitality Academy", pct: 65, target: "$3.0M", current: "$1.95M", months: 7 },
+      { label: "Eco-Tourism Fund", pct: 25, target: "$4.0M", current: "$1.0M", months: 18 },
+      { label: "Cultural Platform", pct: 35, target: "$2.0M", current: "$0.7M", months: 15 },
+    ],
     activity: [
-      { h: "Ghana Tourism Authority New Brand", amt: "+Brand", sig: "Bullish", date: "Jan 2026" },
-      { h: "Accra MICE Tourism Up 35%", amt: "+35%", sig: "Bullish", date: "Feb 2026" },
-      { h: "Hotel Occupancy 58% National Average", amt: "58%", sig: "Watch", date: "Dec 2025" },
+      { h: "Ghana Tourism Authority New Destination Brand", amt: "+Brand", sig: "Bullish", date: "Jan 2026" },
+      { h: "Accra MICE Tourism Up 35% \u2014 Conference Demand", amt: "+35%", sig: "Bullish", date: "Feb 2026" },
+      { h: "Hotel Occupancy Still 58% National Average", amt: "58%", sig: "Watch", date: "Dec 2025" },
     ],
+    cross: ["creative", "housing", "transportation", "infrastructure"],
   },
   {
     id: "creative",
-    svgIcon: sectorSvgIcons[6],
+    icon: Camera,
     short: "Creative Industries",
     full: "Sports, Entertainment & Creative",
+    tag: "Growth Engine",
     score: 78,
     capLow: 10,
     capHigh: 20.5,
     irrLow: 10,
     irrHigh: 28,
     totalV: 14,
+    headline: "Afrobeats is global. Ghana captures less than 15% of its own IP value.",
+    insight:
+      "Content production infrastructure, talent pipelines, and digital distribution are structurally absent. First movers build durable IP advantages. Sports infrastructure doubles as community assets.",
     subSectors: [
-      { name: "Content", pct: 30, color: "#B8D935" },
-      { name: "Talent Dev.", pct: 25, color: "#F97316" },
+      { name: "Content Production", pct: 30, color: "#B8D935" },
+      { name: "Talent Development", pct: 25, color: "#F97316" },
       { name: "IP Monetisation", pct: 22, color: "#2E5A4D" },
-      { name: "Sports", pct: 15, color: "#1B4D3E" },
+      { name: "Sports Infrastructure", pct: 15, color: "#1B4D3E" },
       { name: "Other", pct: 8, color: "#E5E7EB" },
     ],
     t1: [
-      { name: "Content Production Studio", cap: "$2-4M", irr: "15-22%", risk: "MEDIUM" },
-      { name: "Talent Development Platform", cap: "$1.5-3M", irr: "Social+", risk: "LOW" },
+      { name: "Content Production Studio", cap: "$2\u20134M", irr: "15\u201322%", risk: "MEDIUM" },
+      { name: "Talent Development Platform", cap: "$1.5\u20133M", irr: "Social+", risk: "LOW" },
     ],
-    t2: [{ name: "IP Monetisation Platform", cap: "$1.5-3M", irr: "20-28%", risk: "HIGH" }],
-    t3: [{ name: "Creative Hub Network", cap: "$2-5M", irr: "12-18%", risk: "MEDIUM" }],
+    t2: [
+      { name: "IP Monetisation Platform", cap: "$1.5\u20133M", irr: "20\u201328%", risk: "HIGH" },
+      { name: "Sports Infrastructure Fund", cap: "$3\u20136M", irr: "10\u201315%", risk: "MEDIUM" },
+    ],
+    t3: [{ name: "Creative Hub Network", cap: "$2\u20135M", irr: "12\u201318%", risk: "MEDIUM" }],
+    pipeline: [
+      { label: "Content Studio", pct: 55, target: "$4.0M", current: "$2.2M", months: 10 },
+      { label: "Talent Platform", pct: 40, target: "$3.0M", current: "$1.2M", months: 13 },
+      { label: "IP Monetisation", pct: 20, target: "$3.0M", current: "$0.6M", months: 20 },
+      { label: "Sports Infra. Fund", pct: 15, target: "$6.0M", current: "$0.9M", months: 26 },
+    ],
     activity: [
-      { h: "Ghana Music Awards - 40% Viewership Growth", amt: "+40%", sig: "Bullish", date: "Jan 2026" },
-      { h: "Afrobeats Streams 45M Monthly Listeners", amt: "45M", sig: "Bullish", date: "Feb 2026" },
-      { h: "IP Piracy Costs Creative Sector $400M+", amt: "-$400M", sig: "Watch", date: "Dec 2025" },
+      { h: "Ghana Music Awards \u2014 40% Viewership Growth", amt: "+40%", sig: "Bullish", date: "Jan 2026" },
+      { h: "Afrobeats Streams Exceed 45M Monthly Listeners", amt: "45M", sig: "Bullish", date: "Feb 2026" },
+      { h: "IP Piracy Costs Creative Sector $400M+ Annually", amt: "-$400M", sig: "Watch", date: "Dec 2025" },
     ],
+    cross: ["technology", "tourism", "education", "infrastructure"],
   },
 ];
-
-const TABS = [
-  { id: "sector-performance", label: "Sector Performance" },
-  { id: "market-analysis", label: "Market Analysis" },
-  { id: "sub-sector-breakdown", label: "Sub-sector" },
-  { id: "financials", label: "Financials" },
-  { id: "growth-tracking", label: "Growth" },
-  { id: "comparative-analysis", label: "Comparative" },
-  { id: "monthly-summary", label: "Monthly" },
-  { id: "signal-tracker", label: "Signals" },
-];
-
-const sigCol = (s) => (s === "Bullish" ? C.green : s === "Bearish" ? C.red : C.yellow);
+const sigCol = (s) => (s === "Bullish" ? "#16A34A" : s === "Bearish" ? "#DC2626" : "#CA8A04");
 const sigBg = (s) => (s === "Bullish" ? "#DCFCE7" : s === "Bearish" ? "#FEE2E2" : "#FEF9C3");
-
-function genBarData(s, tab, filter) {
-  const days =
-    filter === "7D"
-      ? ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-      : filter === "30D"
-        ? ["Wk1", "Wk2", "Wk3", "Wk4"]
-        : ["Jan", "Feb", "Mar"];
-  return days.map((day, i) => ({
-    day,
-    primary: Math.round(s.score * (0.75 + Math.sin(i * 1.3 + s.score * 0.04) * 0.15 + i * 0.025)),
-    secondary: Math.round(s.score * (0.45 + Math.sin(i * 0.9) * 0.1 + i * 0.015)),
-  }));
-}
-function genMonthlyData(s) {
-  return ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"].map((month, i) => {
-    const base = ((s.capLow + s.capHigh) / 2) * 100;
-    const growth = Math.round(base * (1.0 + Math.sin(i * 0.8) * 0.2 + i * 0.1));
-    const expenses = Math.round(growth * (0.28 + Math.sin(i * 0.5) * 0.06));
-    return { month, growth, expenses, net: growth - expenses };
-  });
-}
-function genTableRows(s) {
-  const cats = ["Earnings", "Revenue", "CapEx", "M&A", "Policy", "Signal", "Supply Chain", "Investment"];
-  const stats = ["-", "Active", "Monitoring", "Closed"];
-  const rows = [];
-  s.activity.forEach((a, i) =>
-    rows.push({
-      id: `${s.id}-${i}`,
-      sector: s.short,
-      sectorId: s.id,
-      date: a.date,
-      status: stats[i % stats.length],
-      source: a.h.length > 32 ? a.h.substring(0, 32) + "..." : a.h,
-      category: cats[i % cats.length],
-      tags: s.subSectors.slice(0, i % 3 === 0 ? 2 : 1).map((ss) => ss.name.split(" ")[0]),
-      signal: a.sig,
-      value: a.amt,
-    }),
-  );
-  SECTORS.filter((sec) => sec.id !== s.id)
-    .slice(0, 9)
-    .forEach((sec, i) => {
-      const act = sec.activity[i % sec.activity.length];
-      if (act)
-        rows.push({
-          id: `x-${sec.id}-${i}`,
-          sector: sec.short,
-          sectorId: sec.id,
-          date: act.date,
-          status: stats[(i + 1) % stats.length],
-          source: act.h.length > 32 ? act.h.substring(0, 32) + "..." : act.h,
-          category: cats[(i + 3) % cats.length],
-          tags: [sec.subSectors[0]?.name.split(" ")[0] || "General"],
-          signal: act.sig,
-          value: act.amt,
-        });
-    });
-  return rows;
-}
-function getTabMetrics(s, tab) {
-  const b = s.activity.filter((a) => a.sig === "Bullish").length;
-  const rank = [...SECTORS].sort((a, b) => b.score - a.score).findIndex((x) => x.id === s.id) + 1;
-  const m = {
-    "sector-performance": {
-      p: { l: "Avg. Growth Rate", v: `${Math.round(s.score * 0.92)}%`, t: "+24%", up: true },
-      s: { l: "Avg. Volatility", v: `${Math.round(s.score * 0.42)}%`, t: "-10%", up: false },
-    },
-    "market-analysis": {
-      p: { l: "Bullish Signals", v: `${b * 21}`, t: "+18%", up: true },
-      s: { l: "Bear Signals", v: `${(s.activity.length - b) * 9}`, t: "-5%", up: false },
-    },
-    "sub-sector-breakdown": {
-      p: { l: s.subSectors[0]?.name, v: `${s.subSectors[0]?.pct}%`, t: "+8%", up: true },
-      s: { l: s.subSectors[1]?.name, v: `${s.subSectors[1]?.pct}%`, t: "+3%", up: true },
-    },
-    financials: {
-      p: { l: "Total Revenue", v: `$${s.capHigh}M`, t: "+15%", up: true },
-      s: { l: "Operating Costs", v: `$${Math.round(s.capLow * 0.4)}M`, t: "+2%", up: false },
-    },
-    "growth-tracking": {
-      p: { l: "Goal Completion", v: `${Math.round(s.score * 0.88)}%`, t: "+12%", up: true },
-      s: { l: "Target Gap", v: `${100 - Math.round(s.score * 0.88)}%`, t: "-4%", up: false },
-    },
-    "comparative-analysis": {
-      p: { l: "Sector Rank", v: `#${rank}`, t: "of 12", up: true },
-      s: { l: "vs Benchmark", v: `+${Math.round(s.score - 80)}pts`, t: "+5%", up: true },
-    },
-    "monthly-summary": {
-      p: { l: "Month High", v: `${Math.round(s.score * 1.08)}`, t: "+11%", up: true },
-      s: { l: "Month Low", v: `${Math.round(s.score * 0.82)}`, t: "-6%", up: false },
-    },
-    "signal-tracker": {
-      p: { l: "Total Signals", v: `${s.activity.length * 18}`, t: "+14%", up: true },
-      s: { l: "Active Alerts", v: `${b * 7}`, t: "+9%", up: true },
-    },
-  };
-  return m[tab] || m["sector-performance"];
-}
-function getTabStats(s, tab) {
-  const b = s.activity.filter((a) => a.sig === "Bullish").length;
-  const rank = [...SECTORS].sort((a, bv) => bv.score - a.score).findIndex((x) => x.id === s.id) + 1;
-  const m = {
-    "sector-performance": [
-      { v: `${s.activity.length * 18}`, l: "Signals Sent" },
-      { v: `${Math.round(s.score * 0.42)}%`, l: "Volatility Rate" },
-      { v: `${Math.round(s.score * 0.08)}%`, l: "Correction Rate" },
-      { v: `${Math.round(s.score * 0.9)}%`, l: "Health Score" },
-    ],
-    "market-analysis": [
-      { v: `${b * 21}`, l: "Bull Signals" },
-      { v: `${(s.activity.length - b) * 9}`, l: "Bear Signals" },
-      { v: `${(s.activity.length - b) * 5}`, l: "Neutral" },
-      { v: `${s.score}%`, l: "Confidence" },
-    ],
-    "sub-sector-breakdown": s.subSectors.slice(0, 4).map((ss) => ({ v: `${ss.pct}%`, l: ss.name })),
-    financials: [
-      { v: `$${s.capHigh}M`, l: "Total Revenue" },
-      { v: `$${Math.round(s.capLow * 0.4)}M`, l: "Expenses" },
-      { v: `$${s.capHigh - Math.round(s.capLow * 0.4)}M`, l: "Net Income" },
-      { v: `${s.irrLow}-${s.irrHigh}%`, l: "IRR Range" },
-    ],
-    "growth-tracking": [
-      { v: `${Math.round(s.score * 0.88)}%`, l: "Goal Completion" },
-      { v: `$${s.capLow}M`, l: "Capital Raised" },
-      { v: `${s.irrHigh}%`, l: "Peak IRR" },
-      { v: `${s.totalV}`, l: "Active Ventures" },
-    ],
-    "comparative-analysis": [
-      { v: `#${rank}`, l: "Sector Rank" },
-      { v: `${s.score}`, l: "BRIDGE Score" },
-      { v: `+${Math.round(s.score - 80)}pts`, l: "vs Benchmark" },
-      { v: `${s.totalV}`, l: "Total Ventures" },
-    ],
-    "monthly-summary": [
-      { v: `${Math.round(s.score * 1.08)}`, l: "Month High" },
-      { v: `${Math.round(s.score * 0.82)}`, l: "Month Low" },
-      { v: `${s.score}`, l: "Current Score" },
-      { v: `+${Math.round((s.score * 1.08 - s.score * 0.82) / 2)}`, l: "Avg Change" },
-    ],
-    "signal-tracker": [
-      { v: `${s.activity.length * 18}`, l: "Total Signals" },
-      { v: `${b * 7}`, l: "Active Alerts" },
-      { v: `${(s.activity.length - b) * 4}`, l: "Monitoring" },
-      { v: `${Math.round((b / s.activity.length) * 100)}%`, l: "Bullish Rate" },
-    ],
-  };
-  return m[tab] || m["sector-performance"];
-}
-
-function Card({ children, style: ex = {} }) {
-  const [h, sH] = useState(false);
-  return (
-    <div
-      onMouseEnter={() => sH(true)}
-      onMouseLeave={() => sH(false)}
-      style={{
-        background: "#fff",
-        borderRadius: 16,
-        border: "1px solid #E5E7EB",
-        boxShadow: h ? "0 4px 16px rgba(0,0,0,0.09)" : "0 1px 4px rgba(0,0,0,0.05)",
-        transform: h ? "translateY(-1px)" : "none",
-        transition: "all .2s ease",
-        overflow: "hidden",
-        ...ex,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-const ChartTip = ({ active, payload, label }) => {
-  if (!active || !payload?.length) return null;
-  return (
-    <div
-      style={{
-        background: "#111827",
-        color: "#fff",
-        borderRadius: 8,
-        padding: "8px 12px",
-        fontSize: 11,
-        fontFamily: "Inter,sans-serif",
-      }}
-    >
-      <div style={{ color: "rgba(255,255,255,0.5)", marginBottom: 4 }}>{label}</div>
-      {payload.map((p, i) => (
-        <div key={i} style={{ display: "flex", alignItems: "center", gap: 5 }}>
-          <div style={{ width: 7, height: 7, borderRadius: 2, background: p.stroke || p.fill }} />
-          <span>
-            {p.name}: <strong>{p.value}</strong>
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
 function BridgeLogo() {
   return (
     <div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 3434.33 932.3"
-        style={{ width: 104, height: 28, display: "block", marginBottom: 4 }}
+        style={{ width: 104, height: 28, display: "block" }}
       >
-        <defs>
-          <style>{`.cls-1{stroke:#fff;stroke-width:80px;}.cls-1,.cls-2,.cls-3,.cls-4{stroke-miterlimit:10;}.cls-1,.cls-3{fill:none;}.cls-2{stroke:#1b4d3e;}.cls-2,.cls-5{fill:#B8D935;}.cls-3{stroke:#231f20;stroke-width:5px;}.cls-6,.cls-4{fill:#fff;}.cls-4{stroke:#000;stroke-width:.5px;}.cls-8{fill:#fff;}`}</style>
-        </defs>
         <path
-          className="cls-6"
+          style={{ fill: "#fff" }}
           d="M1853.06,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.56,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1v.1Z"
         />
         <path
-          className="cls-4"
+          style={{ fill: "#fff", stroke: "#000", strokeWidth: ".5px", strokeMiterlimit: 10 }}
           d="M1431.68,224.45h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.05c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5l.1.1Z"
         />
         <path
-          className="cls-4"
+          style={{ fill: "#fff", stroke: "#000", strokeWidth: ".5px", strokeMiterlimit: 10 }}
           d="M1488.08,578.65v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"
         />
-        <rect className="cls-5" x="1427.38" y="17.35" width="205.2" height="145" />
-        <rect className="cls-6" x="1427.48" y="221.75" width="205.2" height="693.2" rx="9.6" ry="9.6" />
+        <rect
+          style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+          x="1427.38"
+          y="17.35"
+          width="205.2"
+          height="145"
+        />
+        <rect style={{ fill: "#fff" }} x="1427.48" y="221.75" width="205.2" height="693.2" rx="9.6" ry="9.6" />
         <path
-          className="cls-6"
+          style={{ fill: "#fff" }}
           d="M2757.31,19.09h491.3c5.42,0,9.82,4.4,9.82,9.82v218.7c0,5.42-4.4,9.82-9.82,9.82h-507.36c-56.98,0-108.53,23.02-145.87,60.35-37.34,37.23-60.45,88.79-60.45,145.66,0,113.75,92.37,206.01,206.32,206.01h12.89c2.86,0,5.11,2.25,5.11,5.11v236.7c0,1.13-.92,1.94-1.94,1.94h0c-242.22,0-438.52-195.99-438.52-437.8v-18.51c0-241.81,196.29-437.8,438.52-437.8h0Z"
         />
-        <rect className="cls-6" x="2812.75" y="339.47" width="216.75" height="572.62" rx="9.6" ry="9.6" />
-        <rect className="cls-5" x="3083.41" y="339.47" width="175.12" height="257.67" />
-        <rect className="cls-5" x="3083.41" y="654.42" width="175.12" height="257.67" />
-        <circle className="cls-3" cx="3385.56" cy="866.94" r="46.27" />
+        <rect style={{ fill: "#fff" }} x="2812.75" y="339.47" width="216.75" height="572.62" rx="9.6" ry="9.6" />
+        <rect
+          style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+          x="3083.41"
+          y="339.47"
+          width="175.12"
+          height="257.67"
+        />
+        <rect
+          style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+          x="3083.41"
+          y="654.42"
+          width="175.12"
+          height="257.67"
+        />
+        <circle
+          style={{ fill: "none", stroke: "#231f20", strokeWidth: "5px", strokeMiterlimit: 10 }}
+          cx="3385.56"
+          cy="866.94"
+          r="46.27"
+        />
         <path
-          className="cls-8"
+          style={{ fill: "#fff" }}
           d="M3404.8,889.32l-10.31-14.71c.25,0,.38-.13.63-.25,2.89-1.26,5.03-3.02,6.54-5.41s2.26-5.15,2.26-8.55c0-5.03-1.76-8.93-5.16-11.82s-8.05-4.27-14.08-4.27h-18.36v44.89h8.3v-13.08h11.94l9.18,13.08h8.93l.13.13ZM3392.85,853.74c1.89,1.51,2.77,3.77,2.77,6.66s-.88,5.03-2.77,6.66-4.65,2.39-8.3,2.39h-9.81v-17.85h9.81c3.65,0,6.41.75,8.3,2.26h0v-.13Z"
         />
-        <rect className="cls-1" x="40" y="40" width="843.91" height="852.3" rx="36.55" ry="36.55" />
-        <polygon className="cls-2" points="722.6 322.13 462.28 452.8 201.97 322.75 461.21 192.52 722.6 322.13" />
+        <rect
+          style={{ fill: "none", stroke: "#fff", strokeWidth: "80px", strokeMiterlimit: 10 }}
+          x="40"
+          y="40"
+          width="843.91"
+          height="852.3"
+          rx="36.55"
+          ry="36.55"
+        />
+        <polygon
+          style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+          points="722.6 322.13 462.28 452.8 201.97 322.75 461.21 192.52 722.6 322.13"
+        />
         <path
           style={{ fill: "#74914a" }}
           d="M197.84,426.78c3.86-.53,7.04.85,10.74,1.41l252.53,125.67c84.54-40,167.66-83.83,251.89-124.84,33.14-11.49,50.09,34.15,18.55,49.11l-259.23,129.08c-10.18,3.72-14.14,2.57-23.85-1.31l-264.23-132.98c-17.04-14.4-7.96-43.2,13.61-46.14Z"
         />
         <path
-          className="cls-5"
+          style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
           d="M195.25,558c3.65-.63,7.4-.4,11.08-.22,86.11,40.47,170.4,85.05,255.95,126.78l252.92-126c29.53-7.22,45.44,28.67,22.29,46.49l-270.42,134.42-8.62.31c-91.6-42.21-181.07-89.86-271.7-134.42-18.72-12.06-13.3-43.58,8.5-47.37Z"
         />
       </svg>
     </div>
   );
 }
-
 function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
   const NAV = [
     { id: "dashboard", label: "Dashboard", icon: (c) => <LayoutGrid size={16} color={c} /> },
     { id: "overview", label: "Market Overview", icon: (c) => <Activity size={16} color={c} /> },
     { id: "analytics", label: "Analytics", icon: (c) => <BarChart3 size={16} color={c} /> },
     { id: "watchlist", label: "Watchlist", icon: (c) => <Eye size={16} color={c} /> },
-    { id: "reports", label: "Reports", icon: (c) => <FileBarChart size={16} color={c} />, active: true },
-    { id: "resources", label: "Resources", icon: (c) => <Book size={16} color={c} /> },
+    { id: "reports", label: "Reports", icon: (c) => <FileText size={16} color={c} /> },
+    { id: "resources", label: "Resources", icon: (c) => <BookOpen size={16} color={c} /> },
     { id: "settings", label: "Settings", icon: (c) => <Settings size={16} color={c} /> },
   ];
+  const [activePage, setActivePage] = useState("dashboard");
   const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
   return (
     <div
@@ -986,10 +1043,11 @@ function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
       {/* ── Nav zone ── */}
       <div style={{ padding: "10px 8px", flexShrink: 0 }}>
         {NAV.map((n) => {
-          const act = n.active || false;
+          const act = n.id === activePage;
           return (
             <div
               key={n.id}
+              onClick={() => setActivePage(n.id)}
               title={collapsed ? n.label : undefined}
               style={{
                 display: "flex",
@@ -1003,12 +1061,6 @@ function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 transition: "background 0.1s",
-              }}
-              onMouseEnter={(e) => {
-                if (!act) e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-              }}
-              onMouseLeave={(e) => {
-                if (!act) e.currentTarget.style.background = "transparent";
               }}
             >
               {n.icon(act ? C.accent : "rgba(255,255,255,0.4)")}
@@ -1048,13 +1100,14 @@ function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
             Sectors
           </div>
         )}
-        {sorted.map((sec) => {
-          const act = activeSector?.id === sec.id;
+        {sorted.map((s) => {
+          const act = activeSector && s.id === activeSector.id;
+          const SI = s.icon;
           return (
             <div
-              key={sec.id}
-              onClick={() => setActiveSector(act ? null : sec)}
-              title={collapsed ? sec.short : undefined}
+              key={s.id}
+              onClick={() => setActiveSector(s)}
+              title={collapsed ? s.short : undefined}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -1065,12 +1118,6 @@ function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
                 background: act ? C.sideAct : "transparent",
                 marginBottom: 1,
                 transition: "background 0.1s",
-              }}
-              onMouseEnter={(e) => {
-                if (!act) e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = act ? C.sideAct : "transparent";
               }}
             >
               {collapsed ? (
@@ -1085,12 +1132,12 @@ function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
                     background: act ? "rgba(184,217,53,0.2)" : "rgba(255,255,255,0.05)",
                   }}
                 >
-                  {sec.svgIcon(act ? C.accent : "rgba(255,255,255,0.35)", 14)}
+                  <SI size={14} color={act ? C.accent : "rgba(255,255,255,0.35)"} />
                 </div>
               ) : (
                 <>
                   <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    {sec.svgIcon(act ? C.accent : "rgba(255,255,255,0.3)", 12)}
+                    <SI size={12} color={act ? C.accent : "rgba(255,255,255,0.3)"} />
                     <span
                       style={{
                         fontSize: 11.5,
@@ -1100,7 +1147,7 @@ function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {sec.short}
+                      {s.short}
                     </span>
                   </div>
                   <span
@@ -1108,10 +1155,10 @@ function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
                       fontSize: 10,
                       fontWeight: 700,
                       fontFamily: "Inter,sans-serif",
-                      color: act ? C.accent : sec.score >= 88 ? "rgba(184,217,53,0.6)" : "rgba(255,255,255,0.25)",
+                      color: act ? C.accent : s.score >= 88 ? "rgba(184,217,53,0.6)" : "rgba(255,255,255,0.25)",
                     }}
                   >
-                    {sec.score}
+                    {s.score}
                   </span>
                 </>
               )}
@@ -1225,2736 +1272,771 @@ function Sidebar({ collapsed, setCollapsed, activeSector, setActiveSector }) {
   );
 }
 
-function MetricsChartCard({ s, tab, chartFilter, setChartFilter }) {
-  const data = genBarData(s, tab, chartFilter);
-  const metrics = getTabMetrics(s, tab);
-  const stats = getTabStats(s, tab);
-  return (
-    <Card style={{ padding: 0, height: "100%", display: "flex", flexDirection: "column" }}>
-      <div style={{ padding: "14px 16px 10px", borderBottom: "1px solid #F3F4F6" }}>
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: C.dark }}>
-            {tab
-              .split("-")
-              .map((w) => w[0].toUpperCase() + w.slice(1))
-              .join(" ")}
-          </div>
-          <div style={{ display: "flex", gap: 2, background: "#F3F4F6", borderRadius: 7, padding: 2 }}>
-            {["7D", "30D", "90D"].map((v) => (
-              <button
-                key={v}
-                onClick={() => setChartFilter(v)}
-                style={{
-                  padding: "3px 8px",
-                  borderRadius: 5,
-                  border: "none",
-                  background: chartFilter === v ? "#fff" : "transparent",
-                  fontSize: 10,
-                  fontWeight: 600,
-                  color: chartFilter === v ? C.primary : C.muted,
-                  cursor: "pointer",
-                  boxShadow: chartFilter === v ? "0 1px 3px rgba(0,0,0,0.07)" : "none",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                {v}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
-          {[metrics.p, metrics.s].map((m, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 16 }}>
-              {i > 0 && <div style={{ width: 1, height: 36, background: "#E5E7EB" }} />}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 2 }}>
-                  <div
-                    style={{ width: 8, height: 8, borderRadius: "50%", background: i === 0 ? C.accent : `${C.teal}88` }}
-                  />
-                  <span style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif" }}>{m.l}</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                  <span style={{ fontSize: 24, fontWeight: 800, color: C.dark, letterSpacing: "-1px" }}>{m.v}</span>
-                  <div style={{ display: "flex", alignItems: "center", gap: 2, padding: "2px 4px", borderRadius: 5 }}>
-                    {m.up ? <TrendingUp size={9} color={C.green} /> : <TrendingDown size={9} color={C.red} />}
-                    <span
-                      style={{
-                        fontSize: 9,
-                        fontWeight: 700,
-                        color: m.up ? C.green : C.red,
-                        fontFamily: "Inter,sans-serif",
-                      }}
-                    >
-                      {m.t}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div style={{ height: 190, padding: "10px 8px 0", flex: 1 }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <RBarChart
-            data={data}
-            barSize={26}
-            barCategoryGap="30%"
-            barGap={3}
-            margin={{ top: 4, right: 4, left: -24, bottom: 0 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" vertical={false} />
-            <XAxis
-              dataKey="day"
-              tick={{ fontSize: 9, fill: C.muted, fontFamily: "Inter,sans-serif" }}
-              axisLine={false}
-              tickLine={false}
-            />
-            <YAxis tick={{ fontSize: 9, fill: C.muted }} axisLine={false} tickLine={false} />
-            <Tooltip content={<ChartTip />} />
-            <Bar dataKey="primary" fill={C.accent} radius={[4, 4, 0, 0]} name="Primary" />
-            <Bar dataKey="secondary" fill={`${C.teal}66`} radius={[4, 4, 0, 0]} name="Secondary" />
-          </RBarChart>
-        </ResponsiveContainer>
-      </div>
-      <div
-        style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", borderTop: "1px solid #F3F4F6", flexShrink: 0 }}
-      >
-        {stats.map((stat, i) => (
-          <div key={i} style={{ padding: "12px 16px", borderRight: i < 3 ? "1px solid #F3F4F6" : "none" }}>
-            <div style={{ fontSize: 17, fontWeight: 800, color: C.dark, letterSpacing: "-.5px", lineHeight: 1 }}>
-              {stat.v}
-            </div>
-            <div
-              style={{
-                fontSize: 9,
-                color: C.muted,
-                fontFamily: "Inter,sans-serif",
-                marginTop: 3,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                letterSpacing: "0.3px",
-              }}
-            >
-              {stat.l}
-            </div>
-          </div>
-        ))}
-      </div>
-    </Card>
-  );
+function ventureIcon(name) {
+  const n = name.toLowerCase();
+  if (
+    n.includes("cold") ||
+    n.includes("storage") ||
+    n.includes("solar") ||
+    n.includes("energy") ||
+    n.includes("clean cook") ||
+    n.includes("battery") ||
+    n.includes("mini-grid") ||
+    n.includes("biogas") ||
+    n.includes("ev charging")
+  )
+    return BatteryCharging;
+  if (
+    n.includes("platform") ||
+    n.includes("digital") ||
+    n.includes("tech") ||
+    n.includes("data") ||
+    n.includes("ai") ||
+    n.includes("fintech") ||
+    n.includes("edtech") ||
+    n.includes("healthtech") ||
+    n.includes("kejetia")
+  )
+    return Cpu;
+  if (
+    n.includes("training") ||
+    n.includes("academy") ||
+    n.includes("skill") ||
+    n.includes("tvet") ||
+    n.includes("fellowship") ||
+    n.includes("scholar") ||
+    n.includes("mentor") ||
+    n.includes("apprentice") ||
+    n.includes("teacher")
+  )
+    return GraduationCap;
+  if (
+    n.includes("health") ||
+    n.includes("medical") ||
+    n.includes("clinic") ||
+    n.includes("nhis") ||
+    n.includes("diagnostic") ||
+    n.includes("telemedicine") ||
+    n.includes("community health") ||
+    n.includes("pharma")
+  )
+    return Cross;
+  if (
+    n.includes("farm") ||
+    n.includes("agri") ||
+    n.includes("cocoa") ||
+    n.includes("fruit") ||
+    n.includes("tomato") ||
+    n.includes("crop") ||
+    n.includes("cashew") ||
+    n.includes("shea") ||
+    n.includes("cooperative") ||
+    n.includes("aggregation") ||
+    n.includes("warehouse receipt")
+  )
+    return Sprout;
+  if (
+    n.includes("financ") ||
+    n.includes("credit") ||
+    n.includes("loan") ||
+    n.includes("capital fund") ||
+    n.includes("susu") ||
+    n.includes("insurance") ||
+    n.includes("working capital") ||
+    n.includes("microfinance") ||
+    n.includes("remittance") ||
+    n.includes("investment gateway")
+  )
+    return Wallet;
+  if (
+    n.includes("housing") ||
+    n.includes("real estate") ||
+    n.includes("construction") ||
+    n.includes("building") ||
+    n.includes("rental") ||
+    n.includes("affordable")
+  )
+    return Home;
+  if (
+    n.includes("transport") ||
+    n.includes("logistics") ||
+    n.includes("fleet") ||
+    n.includes("delivery") ||
+    n.includes("cold chain") ||
+    n.includes("freight") ||
+    n.includes("rail") ||
+    n.includes("port") ||
+    n.includes("warehousing")
+  )
+    return Truck;
+  if (
+    n.includes("manufactur") ||
+    n.includes("packag") ||
+    n.includes("process") ||
+    n.includes("factory") ||
+    n.includes("industrial") ||
+    n.includes("textile") ||
+    n.includes("garment") ||
+    n.includes("consumer goods")
+  )
+    return Factory;
+  if (
+    n.includes("tourism") ||
+    n.includes("hospitality") ||
+    n.includes("heritage") ||
+    n.includes("eco-tour") ||
+    n.includes("destination")
+  )
+    return Luggage;
+  if (
+    n.includes("content") ||
+    n.includes("studio") ||
+    n.includes("creative") ||
+    n.includes("talent") ||
+    n.includes("sport") ||
+    n.includes("ip monetis") ||
+    n.includes("hub network")
+  )
+    return Camera;
+  if (
+    n.includes("infrastructure") ||
+    n.includes("water") ||
+    n.includes("sanitation") ||
+    n.includes("connectivity") ||
+    n.includes("road") ||
+    n.includes("smart city") ||
+    n.includes("waste") ||
+    n.includes("telecoms")
+  )
+    return Blocks;
+  return Activity;
 }
-
-function DonutGoalCard({ s }) {
-  const totalCap = Math.round(((s.capLow + s.capHigh) / 2) * 10) / 10;
-  const donutData = [
-    { name: "Market Cap", value: s.subSectors[0]?.pct || 35, color: C.primary },
-    { name: "Growth", value: s.subSectors[1]?.pct || 25, color: C.accent },
-    { name: "Volatility", value: 100 - (s.subSectors[0]?.pct || 35) - (s.subSectors[1]?.pct || 25), color: "#E5E7EB" },
-  ];
-  const bullish = s.activity.filter((a) => a.sig === "Bullish").length;
-  const goals = [
-    { count: s.totalV, label: "Ventures Tracked", pct: Math.round((s.totalV / 20) * 100), color: C.primary },
-    {
-      count: s.activity.length * 18,
-      label: "Active Signals",
-      pct: Math.round((bullish / s.activity.length) * 100),
-      color: C.accent,
-    },
-    { count: 12, label: "Sectors Covered", pct: 100, color: "#F59E0B" },
-  ];
-  return (
-    <Card style={{ padding: 0, height: "100%", display: "flex", flexDirection: "column" }}>
-      <div
-        style={{
-          padding: "12px 14px",
-          borderBottom: "1px solid #F3F4F6",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ fontSize: 13, fontWeight: 700, color: C.dark }}>Sector Value</div>
-        <div style={{ display: "flex", gap: 2, background: "#F3F4F6", borderRadius: 7, padding: 2 }}>
-          {["7D", "30D"].map((v, i) => (
-            <button
-              key={v}
-              style={{
-                padding: "2px 7px",
-                borderRadius: 5,
-                border: "none",
-                background: i === 0 ? "#fff" : "transparent",
-                fontSize: 9,
-                fontWeight: 600,
-                color: i === 0 ? C.primary : C.muted,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              {v}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div style={{ padding: "12px 14px", display: "flex", gap: 14, alignItems: "center" }}>
-        <div style={{ position: "relative", width: 110, height: 110, flexShrink: 0 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={donutData}
-                cx="50%"
-                cy="50%"
-                innerRadius={30}
-                outerRadius={50}
-                dataKey="value"
-                stroke="none"
-                startAngle={90}
-                endAngle={-270}
-              >
-                {donutData.map((e, i) => (
-                  <Cell key={i} fill={e.color} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%,-50%)",
-              textAlign: "center",
-              pointerEvents: "none",
-            }}
-          >
-            <div style={{ fontSize: 12, fontWeight: 800, color: C.dark, lineHeight: 1 }}>${totalCap}M</div>
-            <div style={{ fontSize: 8, color: C.muted, fontFamily: "Inter,sans-serif", marginTop: 1 }}>Cap</div>
-          </div>
-        </div>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 19, fontWeight: 800, color: C.dark, letterSpacing: "-1px", marginBottom: 8 }}>
-            ${totalCap}M
-          </div>
-          {donutData.map((d, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: i < 2 ? 5 : 0,
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                <div style={{ width: 7, height: 7, borderRadius: "50%", background: d.color }} />
-                <span style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif" }}>{d.name}</span>
-              </div>
-              <span style={{ fontSize: 10, fontWeight: 700, color: C.dark, fontFamily: "Inter,sans-serif" }}>
-                {d.value}%
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div style={{ flex: 1, padding: "0 14px 14px", display: "flex", flexDirection: "column", gap: 10 }}>
-        <div style={{ height: 1, background: "#F3F4F6", marginBottom: 2 }} />
-        {goals.map((g, i) => (
-          <div key={i}>
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 4 }}>
-              <div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: C.dark, letterSpacing: "-.5px", lineHeight: 1 }}>
-                  {g.count}
-                </div>
-                <div style={{ fontSize: 9, color: C.muted, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
-                  {g.label}
-                </div>
-              </div>
-              <span style={{ fontSize: 9, fontWeight: 700, color: g.color, fontFamily: "Inter,sans-serif" }}>
-                {g.pct}% goal
-              </span>
-            </div>
-            <div style={{ height: 5, background: "#F3F4F6", borderRadius: 3, overflow: "hidden" }}>
-              <div style={{ width: `${g.pct}%`, height: "100%", background: g.color, borderRadius: 3 }} />
-            </div>
-          </div>
-        ))}
-      </div>
-    </Card>
-  );
-}
-
-function ComposedChartRow({ s, overtimeView, setOvertimeView }) {
-  const data = genMonthlyData(s);
-  const total = data.reduce((a, d) => a + d.growth, 0);
-  const last = data[data.length - 1];
-  return (
-    <Card style={{ padding: 0 }}>
-      <div style={{ display: "flex", height: 320 }}>
-        <div style={{ flex: 1, padding: "16px 8px 16px 16px", display: "flex", flexDirection: "column", minWidth: 0 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: C.dark }}>Capital Flow Analysis</div>
-              <div style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
-                Growth revenue · Operating costs · Net income · 6 months
-              </div>
-            </div>
-            <button
-              onClick={() => setOvertimeView((o) => !o)}
-              style={{
-                padding: "4px 10px",
-                borderRadius: 7,
-                border: `1px solid ${overtimeView ? C.accent : "#E5E7EB"}`,
-                background: overtimeView ? C.accentBg : "#fff",
-                fontSize: 10,
-                fontWeight: 600,
-                color: overtimeView ? C.primary : C.muted,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              Overtime
-            </button>
-          </div>
-          <div style={{ flex: 1 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={data} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" vertical={false} />
-                <XAxis
-                  dataKey="month"
-                  tick={{ fontSize: 9, fill: C.muted, fontFamily: "Inter,sans-serif" }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  tick={{ fontSize: 9, fill: C.muted }}
-                  axisLine={false}
-                  tickLine={false}
-                  tickFormatter={(v) => (overtimeView ? `${Math.round(v / 10)}%` : `$${v}`)}
-                />
-                <Tooltip content={<ChartTip />} />
-                <ReferenceLine y={0} stroke="#E5E7EB" strokeDasharray="3 3" />
-                <Bar
-                  dataKey="growth"
-                  fill={C.accent}
-                  fillOpacity={0.9}
-                  radius={[4, 4, 0, 0]}
-                  name="Growth"
-                  barSize={22}
-                />
-                <Bar
-                  dataKey="expenses"
-                  fill={C.teal}
-                  fillOpacity={0.55}
-                  radius={[4, 4, 0, 0]}
-                  name="Expenses"
-                  barSize={22}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="net"
-                  stroke="#F59E0B"
-                  strokeWidth={2.5}
-                  strokeDasharray="5 5"
-                  dot={{ r: 3.5, fill: "#F59E0B", strokeWidth: 0 }}
-                  name="Net Income"
-                />
-              </ComposedChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-        <div
-          style={{
-            width: 190,
-            flexShrink: 0,
-            borderLeft: "1px solid #F3F4F6",
-            padding: "16px 16px",
-            display: "flex",
-            flexDirection: "column",
-            gap: 0,
-          }}
-        >
-          <div style={{ marginBottom: 14 }}>
-            <div
-              style={{
-                fontSize: 9,
-                fontWeight: 700,
-                color: C.muted,
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                fontFamily: "Inter,sans-serif",
-                marginBottom: 5,
-              }}
-            >
-              Total Capital
-            </div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: C.dark, letterSpacing: "-1.5px", lineHeight: 1 }}>
-              ${total.toLocaleString()}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
-                marginTop: 4,
-                fontSize: 9,
-                color: C.muted,
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              <Calendar size={9} color={C.muted} /> Aug 01 – Jan 31
-            </div>
-          </div>
-          <div style={{ height: 1, background: "#F3F4F6", marginBottom: 14 }} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
-            {[
-              { color: C.accent, label: "Growth Revenue", v: `$${last.growth}` },
-              { color: C.teal, label: "Operating Costs", v: `$${last.expenses}` },
-              { color: "#F59E0B", label: "Net Income", v: `$${last.net}` },
-            ].map((row, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: row.color, flexShrink: 0 }} />
-                  <span style={{ fontSize: 11, color: C.mid, fontFamily: "Inter,sans-serif" }}>{row.label}</span>
-                </div>
-                <span style={{ fontSize: 12, fontWeight: 700, color: C.dark, fontFamily: "Inter,sans-serif" }}>
-                  {row.v}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div
-            style={{
-              marginTop: 14,
-              padding: "12px 14px",
-              background: "#F9FAFB",
-              borderRadius: 10,
-              border: "1px solid #F3F4F6",
-            }}
-          >
-            <div
-              style={{
-                fontSize: 9,
-                fontWeight: 700,
-                color: C.muted,
-                fontFamily: "Inter,sans-serif",
-                textTransform: "uppercase",
-                letterSpacing: "0.8px",
-                marginBottom: 4,
-              }}
-            >
-              Net Margin
-            </div>
-            <div style={{ fontSize: 28, fontWeight: 800, color: C.green, letterSpacing: "-1px", lineHeight: 1 }}>
-              {Math.round((last.net / last.growth) * 100)}%
-            </div>
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-function TabPanel({ s, tab }) {
-  if (["sector-performance", "market-analysis", "growth-tracking", "signal-tracker"].includes(tab)) return null;
-  if (tab === "sub-sector-breakdown")
-    return (
-      <Card style={{ padding: "14px 16px", marginBottom: 12 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: C.dark, marginBottom: 12 }}>Sub-sector Distribution</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 10 }}>
-          {s.subSectors.map((ss, i) => (
-            <div
-              key={i}
-              style={{
-                padding: "16px 14px 14px",
-                background: "#FAFAFA",
-                borderRadius: 12,
-                border: "1px solid #EFEFEF",
-                textAlign: "center",
-                cursor: "pointer",
-                transition: "box-shadow 0.15s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.06)")}
-              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
-            >
-              <div style={{ width: "100%", height: 4, borderRadius: 2, background: ss.color, marginBottom: 12 }} />
-              <div style={{ fontSize: 22, fontWeight: 800, color: C.dark, letterSpacing: "-0.5px", lineHeight: 1 }}>
-                {ss.pct}%
-              </div>
-              <div
-                style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif", marginTop: 5, marginBottom: 8 }}
-              >
-                {ss.name}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 3 }}>
-                <TrendingUp size={9} color={C.green} />
-                <span style={{ fontSize: 9, fontWeight: 700, color: C.green, fontFamily: "Inter,sans-serif" }}>
-                  +{Math.round(ss.pct * 0.12)}%
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
-    );
-  if (tab === "financials")
-    return (
-      <Card style={{ padding: 0, marginBottom: 12 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)" }}>
-          {[
-            { l: "Total Revenue", v: `$${s.capHigh}M`, chg: "+15.2%", col: C.green },
-            { l: "Total Expenses", v: `$${Math.round(s.capLow * 0.4)}M`, chg: "+2.1%", col: "#F59E0B" },
-            { l: "Net Income", v: `$${s.capHigh - Math.round(s.capLow * 0.4)}M`, chg: "+18.4%", col: C.green },
-          ].map((item, i) => (
-            <div key={i} style={{ padding: "22px 24px", borderRight: i < 2 ? "1px solid #F3F4F6" : "none" }}>
-              <div
-                style={{
-                  fontSize: 10,
-                  color: C.muted,
-                  fontFamily: "Inter,sans-serif",
-                  marginBottom: 8,
-                  letterSpacing: "0.3px",
-                }}
-              >
-                {item.l}
-              </div>
-              <div
-                style={{
-                  fontSize: 28,
-                  fontWeight: 800,
-                  color: C.dark,
-                  letterSpacing: "-1.5px",
-                  lineHeight: 1,
-                  marginBottom: 10,
-                }}
-              >
-                {item.v}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                <TrendingUp size={12} color={item.col} />
-                <span style={{ fontSize: 11, fontWeight: 700, color: item.col, fontFamily: "Inter,sans-serif" }}>
-                  {item.chg} MoM
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
-    );
-  if (tab === "comparative-analysis") {
-    const ranked = [...SECTORS].sort((a, b) => b.score - a.score);
-    return (
-      <Card style={{ padding: "14px 16px", marginBottom: 12 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: C.dark, marginBottom: 12 }}>
-          All Sectors - BRIDGE Score Ranking
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {ranked.map((sec, i) => {
-            const act = sec.id === s.id;
-            return (
-              <div key={sec.id} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    color: act ? C.accent : C.muted,
-                    fontFamily: "Inter,sans-serif",
-                    width: 16,
-                    textAlign: "right",
-                  }}
-                >
-                  {i + 1}
-                </span>
-                {sec.svgIcon(act ? C.primary : C.muted, 11)}
-                <span
-                  style={{
-                    fontSize: 11,
-                    fontWeight: act ? 700 : 400,
-                    color: act ? C.dark : C.mid,
-                    fontFamily: "Inter,sans-serif",
-                    width: 130,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {sec.short}
-                </span>
-                <div style={{ flex: 1, height: 6, background: "#F3F4F6", borderRadius: 3, overflow: "hidden" }}>
-                  <div
-                    style={{
-                      width: `${sec.score}%`,
-                      height: "100%",
-                      background: act ? C.accent : C.line,
-                      borderRadius: 3,
-                    }}
-                  />
-                </div>
-                <span
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    color: act ? C.accent : C.muted,
-                    fontFamily: "Inter,sans-serif",
-                    width: 28,
-                    textAlign: "right",
-                  }}
-                >
-                  {sec.score}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </Card>
-    );
-  }
-  if (tab === "monthly-summary") {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return (
-      <Card style={{ padding: "14px 16px", marginBottom: 12 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: C.dark, marginBottom: 12 }}>
-          Monthly Performance Grid 2025/2026
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 8 }}>
-          {months.map((m, i) => {
-            const val = Math.round(s.score * (0.85 + Math.sin(i * 0.9 + s.score * 0.03) * 0.12 + i * 0.01));
-            const up = val >= s.score,
-              cur = m === "Jan";
-            return (
-              <div
-                key={m}
-                style={{
-                  padding: "12px 14px",
-                  background: cur ? "#EBF5B0" : "#F9FAFB",
-                  borderRadius: 10,
-                  border: `1px solid ${cur ? C.accent + "55" : "#EDEDED"}`,
-                  cursor: "pointer",
-                  transition: "box-shadow 0.15s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 3px 12px rgba(0,0,0,0.06)")}
-                onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
-              >
-                <div
-                  style={{
-                    fontSize: 9,
-                    fontWeight: 700,
-                    color: cur ? C.primary : "#9CA3AF",
-                    fontFamily: "Inter,sans-serif",
-                    marginBottom: 5,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
-                >
-                  {m}
-                </div>
-                <div style={{ fontSize: 20, fontWeight: 800, color: C.dark, lineHeight: 1, letterSpacing: "-0.5px" }}>
-                  {val}
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 2, marginTop: 5 }}>
-                  {up ? <TrendingUp size={9} color={C.green} /> : <TrendingDown size={9} color={C.red} />}
-                  <span
-                    style={{
-                      fontSize: 9,
-                      fontWeight: 600,
-                      color: up ? C.green : C.red,
-                      fontFamily: "Inter,sans-serif",
-                    }}
-                  >
-                    {up ? `+${val - s.score}` : `${val - s.score}`}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </Card>
-    );
-  }
-  return null;
-}
-
-function ActivityTable({
-  s,
-  tableSearch,
-  setTableSearch,
-  tableSort,
-  setTableSort,
-  tablePage,
-  setTablePage,
-  selectedRows,
-  setSelectedRows,
-}) {
-  const PAGE_SIZE = 8;
-  const allRows = genTableRows(s);
-  const filtered = allRows.filter(
-    (r) =>
-      !tableSearch ||
-      [r.source, r.category, r.signal, r.sector].some((f) => f.toLowerCase().includes(tableSearch.toLowerCase())),
-  );
-  const sorted = [...filtered].sort((a, b) => {
-    if (tableSort.dir === "asc") return a[tableSort.col] > b[tableSort.col] ? 1 : -1;
-    return a[tableSort.col] < b[tableSort.col] ? 1 : -1;
-  });
-  const pageRows = sorted.slice((tablePage - 1) * PAGE_SIZE, tablePage * PAGE_SIZE);
-  const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
-  const sortBy = (col) => setTableSort((p) => ({ col, dir: p.col === col && p.dir === "desc" ? "asc" : "desc" }));
-  const toggleRow = (id) => setSelectedRows((p) => (p.includes(id) ? p.filter((r) => r !== id) : [...p, id]));
-  const toggleAll = () => setSelectedRows((p) => (p.length === pageRows.length ? [] : pageRows.map((r) => r.id)));
-  const cols = [
-    ["sector", "Sector", true],
-    ["date", "Date", true],
-    ["status", "Status", false],
-    ["source", "Source", false],
-    ["category", "Category", true],
-    ["tags", "Tags", false],
-    ["signal", "Signal", true],
-    ["value", "Value", false],
-  ];
-  return (
-    <Card style={{ padding: 0 }}>
-      <div style={{ padding: "12px 14px", borderBottom: "1px solid #F3F4F6" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-          <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: C.dark }}>Sector Activity Log</div>
-            <div style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
-              Showing {(tablePage - 1) * PAGE_SIZE + 1}-{Math.min(tablePage * PAGE_SIZE, filtered.length)} of{" "}
-              {filtered.length} activities
-            </div>
-          </div>
-          <div style={{ display: "flex", gap: 6 }}>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
-                padding: "5px 10px",
-                borderRadius: 7,
-                border: "1px solid #E5E7EB",
-                background: "#fff",
-                fontSize: 10,
-                color: C.muted,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              <Download size={11} />
-              Export
-            </button>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
-                padding: "5px 10px",
-                borderRadius: 7,
-                border: `1px solid ${C.accent}`,
-                background: C.accentBg,
-                fontSize: 10,
-                color: C.primary,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-                fontWeight: 600,
-              }}
-            >
-              <Plus size={11} />
-              Add
-            </button>
-          </div>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div
-            style={{
-              flex: 1,
-              maxWidth: 300,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              background: "#F9FAFB",
-              border: "1px solid #E5E7EB",
-              borderRadius: 7,
-              padding: "5px 10px",
-            }}
-          >
-            <Search size={11} color={C.muted} />
-            <input
-              value={tableSearch}
-              onChange={(e) => {
-                setTableSearch(e.target.value);
-                setTablePage(1);
-              }}
-              placeholder="Search activities..."
-              style={{
-                background: "none",
-                border: "none",
-                outline: "none",
-                fontSize: 11,
-                color: C.mid,
-                fontFamily: "Inter,sans-serif",
-                width: "100%",
-              }}
-            />
-          </div>
-          <button
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 4,
-              padding: "5px 10px",
-              borderRadius: 7,
-              border: "1px solid #E5E7EB",
-              background: "#fff",
-              fontSize: 10,
-              color: C.muted,
-              cursor: "pointer",
-              fontFamily: "Inter,sans-serif",
-            }}
-          >
-            <SlidersHorizontal size={11} />
-            Filter
-          </button>
-          <div style={{ display: "flex", gap: 5, marginLeft: "auto" }}>
-            {["Bullish", "Watch"].map((v) => (
-              <div
-                key={v}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 4,
-                  padding: "3px 8px",
-                  borderRadius: 5,
-                  background: sigBg(v),
-                }}
-              >
-                <div style={{ width: 5, height: 5, borderRadius: "50%", background: sigCol(v) }} />
-                <span style={{ fontSize: 9, fontWeight: 600, color: sigCol(v), fontFamily: "Inter,sans-serif" }}>
-                  {v}: {filtered.filter((r) => r.signal === v).length}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {selectedRows.length > 0 && (
-        <div
-          style={{
-            padding: "7px 14px",
-            background: C.accentBg,
-            borderBottom: `1px solid ${C.accent}44`,
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-          }}
-        >
-          <span style={{ fontSize: 11, fontWeight: 700, color: C.primary, fontFamily: "Inter,sans-serif" }}>
-            {selectedRows.length} selected
-          </span>
-          {["Export", "Tag", "Delete"].map((a) => (
-            <button
-              key={a}
-              style={{
-                padding: "3px 10px",
-                borderRadius: 6,
-                border: "1px solid #E5E7EB",
-                background: "#fff",
-                fontSize: 10,
-                color: C.mid,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              {a}
-            </button>
-          ))}
-          <button
-            onClick={() => setSelectedRows([])}
-            style={{ marginLeft: "auto", background: "none", border: "none", cursor: "pointer", color: C.muted }}
-          >
-            <ChevronUp size={13} />
-          </button>
-        </div>
-      )}
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 700 }}>
-          <thead>
-            <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #F3F4F6" }}>
-              <th style={{ padding: "8px 10px", width: 32 }}>
-                <input
-                  type="checkbox"
-                  checked={selectedRows.length === pageRows.length && pageRows.length > 0}
-                  onChange={toggleAll}
-                  style={{ cursor: "pointer", accentColor: C.primary }}
-                />
-              </th>
-              {cols.map(([key, label, sortable]) => (
-                <th
-                  key={key}
-                  onClick={sortable ? () => sortBy(key) : undefined}
-                  style={{
-                    padding: "8px 10px",
-                    fontSize: 10,
-                    fontWeight: 700,
-                    color: C.muted,
-                    fontFamily: "Inter,sans-serif",
-                    textAlign: "left",
-                    cursor: sortable ? "pointer" : "default",
-                    whiteSpace: "nowrap",
-                    userSelect: "none",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
-                    {label}
-                    {sortable && tableSort.col === key && (
-                      <span style={{ color: C.accent }}>{tableSort.dir === "asc" ? "up" : "down"}</span>
-                    )}
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {pageRows.map((row) => {
-              const sec = SECTORS.find((x) => x.id === row.sectorId);
-              const Icon = sec?.icon || FileText;
-              const sel = selectedRows.includes(row.id);
-              const isPrimary = row.sectorId === s.id;
-              return (
-                <tr
-                  key={row.id}
-                  style={{
-                    borderBottom: "1px solid #F9FAFB",
-                    background: sel ? `${C.accent}09` : isPrimary ? `${C.primary}04` : "transparent",
-                    transition: "background .1s",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!sel) e.currentTarget.style.background = "#F9FAFB";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = sel
-                      ? `${C.accent}09`
-                      : isPrimary
-                        ? `${C.primary}04`
-                        : "transparent";
-                  }}
-                >
-                  <td style={{ padding: "9px 10px" }}>
-                    <input
-                      type="checkbox"
-                      checked={sel}
-                      onChange={() => toggleRow(row.id)}
-                      style={{ cursor: "pointer", accentColor: C.primary }}
-                    />
-                  </td>
-                  <td style={{ padding: "9px 10px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <div
-                        style={{
-                          width: 22,
-                          height: 22,
-                          borderRadius: 5,
-                          background: isPrimary ? C.accentBg : "#F3F5F2",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
-                      >
-                        <Icon size={10} color={isPrimary ? C.primary : C.teal} />
-                      </div>
-                      <span
-                        style={{
-                          fontSize: 11,
-                          fontWeight: isPrimary ? 700 : 400,
-                          color: C.dark,
-                          fontFamily: "Inter,sans-serif",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {row.sector}
-                      </span>
-                    </div>
-                  </td>
-                  <td style={{ padding: "9px 10px" }}>
-                    <span style={{ fontSize: 11, color: C.mid, fontFamily: "Inter,sans-serif", whiteSpace: "nowrap" }}>
-                      {row.date}
-                    </span>
-                  </td>
-                  <td style={{ padding: "9px 10px" }}>
-                    <span
-                      style={{
-                        fontSize: 10,
-                        padding: "2px 0",
-                        borderRadius: 4,
-                        background: "transparent",
-                        color: row.status === "Active" ? C.green : row.status === "Monitoring" ? C.yellow : C.muted,
-                        fontFamily: "Inter,sans-serif",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {row.status}
-                    </span>
-                  </td>
-                  <td style={{ padding: "9px 10px" }}>
-                    <span
-                      style={{
-                        fontSize: 11,
-                        color: C.dark,
-                        fontFamily: "Inter,sans-serif",
-                        maxWidth: 200,
-                        display: "block",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {row.source}
-                    </span>
-                  </td>
-                  <td style={{ padding: "9px 10px" }}>
-                    <span style={{ fontSize: 10, color: C.mid, fontFamily: "Inter,sans-serif" }}>{row.category}</span>
-                  </td>
-                  <td style={{ padding: "9px 10px" }}>
-                    <div style={{ display: "flex", gap: 3 }}>
-                      {row.tags.map((t, j) => (
-                        <span
-                          key={j}
-                          style={{
-                            fontSize: 9,
-                            padding: "1px 5px",
-                            borderRadius: 3,
-                            background: C.accentBg,
-                            color: C.primary,
-                            fontFamily: "Inter,sans-serif",
-                            fontWeight: 700,
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td style={{ padding: "9px 10px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: sigCol(row.signal) }} />
-                      <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: sigCol(row.signal),
-                          fontFamily: "Inter,sans-serif",
-                        }}
-                      >
-                        {row.signal}
-                      </span>
-                    </div>
-                  </td>
-                  <td style={{ padding: "9px 10px" }}>
-                    <span
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: row.value.startsWith("+") ? C.green : row.value.startsWith("-") ? C.red : C.dark,
-                        fontFamily: "Inter,sans-serif",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {row.value}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div
-        style={{
-          padding: "10px 14px",
-          borderTop: "1px solid #F3F4F6",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <span style={{ fontSize: 11, color: C.muted, fontFamily: "Inter,sans-serif" }}>
-          Page {tablePage} of {totalPages}
-        </span>
-        <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
-          <button
-            onClick={() => setTablePage((p) => Math.max(1, p - 1))}
-            disabled={tablePage === 1}
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 6,
-              border: "1px solid #E5E7EB",
-              background: "#fff",
-              cursor: tablePage === 1 ? "not-allowed" : "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              opacity: tablePage === 1 ? 0.4 : 1,
-            }}
-          >
-            <ChevronLeft size={12} color={C.mid} />
-          </button>
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-            const page = tablePage <= 3 ? i + 1 : tablePage >= totalPages - 2 ? totalPages - 4 + i : tablePage - 2 + i;
-            if (page < 1 || page > totalPages) return null;
-            return (
-              <button
-                key={page}
-                onClick={() => setTablePage(page)}
-                style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: 6,
-                  border: `1px solid ${page === tablePage ? C.accent : "#E5E7EB"}`,
-                  background: page === tablePage ? C.accentBg : "#fff",
-                  fontSize: 10,
-                  fontWeight: page === tablePage ? 700 : 400,
-                  color: page === tablePage ? C.primary : C.mid,
-                  cursor: "pointer",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                {page}
-              </button>
-            );
-          })}
-          <button
-            onClick={() => setTablePage((p) => Math.min(totalPages, p + 1))}
-            disabled={tablePage === totalPages}
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 6,
-              border: "1px solid #E5E7EB",
-              background: "#fff",
-              cursor: tablePage === totalPages ? "not-allowed" : "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              opacity: tablePage === totalPages ? 0.4 : 1,
-            }}
-          >
-            <ChevronRight size={12} color={C.mid} />
-          </button>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-export default function BridgeReportsPage() {
-  const [s, setS] = useState(SECTORS[0]);
-  const [collapsed, setCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState("sector-performance");
-  const [chartFilter, setChartFilter] = useState("7D");
-  const [syncing, setSyncing] = useState(false);
-  const [overtimeView, setOvertimeView] = useState(false);
-  const [tableSearch, setTableSearch] = useState("");
-  const [tableSort, setTableSort] = useState({ col: "date", dir: "desc" });
-  const [tablePage, setTablePage] = useState(1);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [notif, setNotif] = useState(false);
-  const [exportOpen, setExportOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
-  useEffect(() => {
-    const fn = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", fn);
-    return () => window.removeEventListener("resize", fn);
-  }, []);
-  const handleSync = () => {
-    setSyncing(true);
-    setTimeout(() => setSyncing(false), 1400);
-  };
-  useEffect(() => {
-    setTablePage(1);
-    setSelectedRows([]);
-    setTableSearch("");
-  }, [s.id, activeTab]);
-
-  if (isMobile) return <MobileDashboard s={s} setS={setS} />;
-
+const T = ({ bg, col, children }) => (
+  <span
+    style={{
+      fontSize: 9,
+      fontWeight: 700,
+      padding: "2px 7px",
+      borderRadius: 4,
+      background: bg,
+      color: col,
+      fontFamily: "Inter,sans-serif",
+      letterSpacing: ".5px",
+    }}
+  >
+    {children}
+  </span>
+);
+const TierB = ({ t }) => (
+  <T
+    bg={t === 1 ? "#EBF5B0" : t === 2 ? "rgba(46,90,77,0.12)" : "rgba(107,114,128,0.12)"}
+    col={t === 1 ? "#1B4D3E" : t === 2 ? "#2E5A4D" : "#6B7280"}
+  >
+    TIER {t === 1 ? "I" : t === 2 ? "II" : "III"}
+  </T>
+);
+function Card({ children, style: ex = {} }) {
+  const [h, sH] = useState(false);
   return (
     <div
+      onMouseEnter={() => sH(true)}
+      onMouseLeave={() => sH(false)}
       style={{
-        display: "flex",
-        height: "100vh",
+        background: "#FFFFFF",
+        borderRadius: 16,
+        border: "1px solid #E5E7EB",
+        boxShadow: h ? "0 4px 16px rgba(0,0,0,0.10)" : "0 1px 4px rgba(0,0,0,0.06)",
+        transform: h ? "translateY(-1px)" : "none",
+        transition: "all .2s ease",
         overflow: "hidden",
-        background: C.bg,
-        fontFamily: "'DM Sans',sans-serif",
+        ...ex,
       }}
     >
-      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.spin{animation:spin 1s linear infinite}`}</style>
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} activeSector={s} setActiveSector={setS} />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
-        {/* Top Nav */}
-        <div
-          style={{
-            background: "#fff",
-            borderBottom: "1px solid #E5E7EB",
-            padding: "0 20px",
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            height: 56,
-            flexShrink: 0,
-            boxShadow: "0 1px 0 rgba(0,0,0,0.04)",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: C.dark }}>Reports</div>
-              <div style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif" }}>
-                {new Date().toLocaleString("default", { month: "long", year: "numeric" })}
-              </div>
-            </div>
-            <div style={{ width: 1, height: 28, background: C.line }} />
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "3px 10px",
-                borderRadius: 7,
-                background: C.accentBg,
-                border: `1px solid ${C.accent}44`,
-              }}
-            >
-              {s.svgIcon(C.primary, 11)}
-              <span style={{ fontSize: 10, fontWeight: 700, color: C.primary, fontFamily: "Inter,sans-serif" }}>
-                {s.short}
-              </span>
-            </div>
-          </div>
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 7 }}>
-            <div
-              style={{
-                width: 380,
-                display: "flex",
-                alignItems: "center",
-                gap: 7,
-                background: "#F9FAFB",
-                border: "1px solid #E5E7EB",
-                borderRadius: 9,
-                padding: "7px 11px",
-              }}
-            >
-              <Search size={13} color={C.muted} />
-              <input
-                placeholder="Search reports, signals..."
-                style={{
-                  background: "none",
-                  border: "none",
-                  outline: "none",
-                  fontSize: 12,
-                  color: C.mid,
-                  fontFamily: "Inter,sans-serif",
-                  width: "100%",
-                }}
-              />
-            </div>
-            <div style={{ position: "relative" }}>
-              <button
-                onClick={() => setNotif((o) => !o)}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 9,
-                  border: "1px solid #E5E7EB",
-                  background: "#fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  position: "relative",
-                }}
-              >
-                <Bell size={15} color={C.mid} />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 7,
-                    right: 7,
-                    width: 7,
-                    height: 7,
-                    borderRadius: "50%",
-                    background: C.red,
-                    border: "2px solid #fff",
-                  }}
-                />
-              </button>
-              {notif && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 44,
-                    right: 0,
-                    width: 280,
-                    background: "#fff",
-                    border: "1px solid #E5E7EB",
-                    borderRadius: 12,
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
-                    zIndex: 99,
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    style={{
-                      padding: "11px 14px",
-                      borderBottom: "1px solid #E5E7EB",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span style={{ fontSize: 13, fontWeight: 700, color: C.dark }}>Alerts</span>
-                    <span
-                      style={{ fontSize: 11, color: C.accent, cursor: "pointer", fontWeight: 600 }}
-                      onClick={() => setNotif(false)}
-                    >
-                      Mark all read
-                    </span>
-                  </div>
-                  {s.activity.slice(0, 3).map((a, i) => (
-                    <div
-                      key={i}
-                      style={{ display: "flex", gap: 9, padding: "10px 14px", borderBottom: "1px solid #F3F4F6" }}
-                    >
-                      <div
-                        style={{
-                          width: 7,
-                          height: 7,
-                          borderRadius: "50%",
-                          background: sigCol(a.sig),
-                          marginTop: 4,
-                          flexShrink: 0,
-                        }}
-                      />
-                      <div>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: C.dark, lineHeight: 1.3 }}>{a.h}</div>
-                        <div style={{ fontSize: 10, color: C.muted, marginTop: 2, fontFamily: "Inter,sans-serif" }}>
-                          {a.date}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <button
-              onClick={handleSync}
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 9,
-                border: "1px solid #E5E7EB",
-                background: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-            >
-              <RefreshCw size={14} color={C.mid} className={syncing ? "spin" : ""} />
-            </button>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "5px 11px",
-                border: "1px solid #E5E7EB",
-                borderRadius: 9,
-                cursor: "pointer",
-                background: "#fff",
-              }}
-            >
-              <div
-                style={{
-                  width: 27,
-                  height: 27,
-                  borderRadius: "50%",
-                  background: "rgba(184,217,53,0.2)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <User size={13} color={C.primary} />
-              </div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.dark, lineHeight: 1 }}>Joseph A.</div>
-                <div style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif" }}>Full Access</div>
-              </div>
-              <ChevronDown size={11} color={C.muted} />
-            </div>
-          </div>
-        </div>
-
-        {/* Page Header Bar */}
-        <div
-          style={{
-            background: "#fff",
-            borderBottom: "1px solid #E5E7EB",
-            padding: "10px 20px",
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                background: C.accentBg,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <FileText size={15} color={C.primary} />
-            </div>
-            <div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>Sector Reports</div>
-              <div style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif" }}>
-                Comprehensive analysis & intelligence
-              </div>
-            </div>
-          </div>
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 7 }}>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 12px",
-                border: "1px solid #E5E7EB",
-                borderRadius: 8,
-                background: "#fff",
-                fontSize: 11,
-                color: C.mid,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              <Calendar size={12} color={C.muted} />
-              This Month
-              <ChevronDown size={10} color={C.muted} />
-            </button>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 12px",
-                border: "1px solid #E5E7EB",
-                borderRadius: 8,
-                background: "#fff",
-                fontSize: 11,
-                color: C.mid,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              <SlidersHorizontal size={12} />
-              Filters
-            </button>
-            <div style={{ position: "relative" }}>
-              <button
-                onClick={() => setExportOpen((o) => !o)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                  padding: "6px 12px",
-                  border: "1px solid #E5E7EB",
-                  borderRadius: 8,
-                  background: "#fff",
-                  fontSize: 11,
-                  color: C.mid,
-                  cursor: "pointer",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                <Download size={12} />
-                Export
-              </button>
-              {exportOpen && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 38,
-                    right: 0,
-                    background: "#fff",
-                    border: "1px solid #E5E7EB",
-                    borderRadius: 10,
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-                    zIndex: 50,
-                    overflow: "hidden",
-                    minWidth: 130,
-                  }}
-                >
-                  {["CSV", "Excel", "PDF", "PNG"].map((f) => (
-                    <div
-                      key={f}
-                      style={{
-                        padding: "9px 14px",
-                        fontSize: 11,
-                        color: C.mid,
-                        cursor: "pointer",
-                        fontFamily: "Inter,sans-serif",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 8,
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = "#F9FAFB")}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                    >
-                      <Download size={10} />
-                      {f}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 12px",
-                border: "1px solid #E5E7EB",
-                borderRadius: 8,
-                background: "#fff",
-                fontSize: 11,
-                color: C.mid,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              <Printer size={12} />
-              Print
-            </button>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 14px",
-                border: `1px solid ${C.accent}`,
-                borderRadius: 8,
-                background: C.accentBg,
-                fontSize: 11,
-                color: C.primary,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-                fontWeight: 700,
-              }}
-            >
-              <Plus size={12} />
-              New Report
-            </button>
-          </div>
-        </div>
-
-        {/* Tab Bar */}
-        <div
-          style={{
-            background: "#fff",
-            borderBottom: "1px solid #E5E7EB",
-            padding: "0 20px",
-            flexShrink: 0,
-            display: "flex",
-            gap: 0,
-            overflowX: "auto",
-          }}
-        >
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              style={{
-                padding: "11px 16px",
-                border: "none",
-                borderBottom: `2px solid ${activeTab === tab.id ? C.accent : "transparent"}`,
-                background: "transparent",
-                fontSize: 12,
-                fontWeight: activeTab === tab.id ? 700 : 500,
-                color: activeTab === tab.id ? C.primary : C.muted,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                transition: "all .15s",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Scrollable Content */}
-        <div style={{ flex: 1, overflowY: "auto", padding: 16 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.8fr 1fr", gap: 12, marginBottom: 12, height: 355 }}>
-            <MetricsChartCard s={s} tab={activeTab} chartFilter={chartFilter} setChartFilter={setChartFilter} />
-            <DonutGoalCard s={s} />
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <ComposedChartRow s={s} overtimeView={overtimeView} setOvertimeView={setOvertimeView} />
-          </div>
-          <TabPanel s={s} tab={activeTab} />
-          <ActivityTable
-            s={s}
-            tableSearch={tableSearch}
-            setTableSearch={setTableSearch}
-            tableSort={tableSort}
-            setTableSort={setTableSort}
-            tablePage={tablePage}
-            setTablePage={setTablePage}
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-          />
-        </div>
-
-        {/* ── Status Bar ── */}
-        <div
-          style={{
-            height: 36,
-            flexShrink: 0,
-            background: "#111E17",
-            borderTop: "1px solid #1A2E22",
-            display: "flex",
-            alignItems: "center",
-            padding: "0 22px",
-            gap: 0,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginRight: 20 }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935" }} />
-            <span
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                color: "rgba(255,255,255,0.7)",
-                letterSpacing: ".5px",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              BRIDGE Intelligence
-            </span>
-          </div>
-          {["12 Sectors", "174 Ventures", `Active: ${s.full}`, "Data: Mar 2026"].map((label, i) => (
-            <React.Fragment key={i}>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.18)",
-                  marginRight: 14,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                ·
-              </span>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.35)",
-                  marginRight: 14,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                {label}
-              </span>
-            </React.Fragment>
-          ))}
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", fontFamily: "Inter,sans-serif" }}>
-              © 2026 BRIDGE PBC
-            </span>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "3px 8px",
-                borderRadius: 4,
-                background: "rgba(184,217,53,0.08)",
-                border: "1px solid rgba(184,217,53,0.15)",
-              }}
-            >
-              <div
-                style={{
-                  width: 5,
-                  height: 5,
-                  borderRadius: "50%",
-                  background: "#B8D935",
-                  boxShadow: "0 0 5px #B8D935",
-                }}
-              />
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  color: "#B8D935",
-                  letterSpacing: ".8px",
-                  textTransform: "uppercase",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                Live
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      {children}
     </div>
   );
 }
-
-/* ═══════════════════════════════════════════════
-   MOBILE DASHBOARD
-═══════════════════════════════════════════════ */
-function MobileDashboard({ s, setS }) {
-  const [activeNav, setActiveNav] = useState("resources");
-  const [resourcesView, setResourcesView] = useState("reports");
-  const [resourcesMenu, setResourcesMenu] = useState(false);
-  const [openSections, setOpenSections] = useState({ signals: true, score: true });
-  const [sectorDrawer, setSectorDrawer] = useState(false);
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const rank = [...SECTORS].sort((a, b) => b.score - a.score).findIndex((x) => x.id === s.id) + 1;
-  const bullish = s.activity.filter((a) => a.sig === "Bullish").length;
-
-  const toggleSection = (k) => setOpenSections((o) => ({ ...o, [k]: !o[k] }));
-
-  const riskColor = (r) => (r === "LOW" ? "#16A34A" : r === "HIGH" ? "#DC2626" : "#CA8A04");
-  const riskBg = (r) => (r === "LOW" ? "#DCFCE7" : r === "HIGH" ? "#FEE2E2" : "#FEF9C3");
-
-  /* Score arc SVG */
-  const ScoreArc = ({ score }) => {
-    const r = 52,
-      cx = 64,
-      cy = 64,
-      startDeg = -220,
-      sweepDeg = 260;
-    const toRad = (d) => (d * Math.PI) / 180;
-    const arcPt = (deg) => [cx + r * Math.cos(toRad(deg)), cy + r * Math.sin(toRad(deg))];
-    const arcPath = (from, to, rad) => {
-      const [sx, sy] = arcPt(from);
-      const [ex, ey] = arcPt(to);
-      const large = Math.abs(to - from) > 180 ? 1 : 0;
-      return `M${sx},${sy} A${rad},${rad} 0 ${large},1 ${ex},${ey}`;
-    };
-    const fillDeg = startDeg + sweepDeg * (score / 100);
-    return (
-      <svg width={128} height={128} style={{ display: "block" }}>
+function Gauge({ score }) {
+  const W = 160,
+    H = 90,
+    cx = W / 2,
+    cy = H,
+    r = 70;
+  const ci = 2 * Math.PI * r,
+    half = ci / 2,
+    fill = half * (score / 100);
+  const col = score >= 88 ? "#16A34A" : score >= 80 ? "#CA8A04" : "#DC2626";
+  return (
+    <div style={{ textAlign: "center", margin: "4px auto 0", width: W }}>
+      <svg width={W} height={H + 10} style={{ overflow: "visible" }}>
         <path
-          d={arcPath(startDeg, startDeg + sweepDeg, r)}
+          d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
           fill="none"
-          stroke="rgba(255,255,255,0.1)"
-          strokeWidth={10}
+          stroke="#F3F4F6"
+          strokeWidth={11}
           strokeLinecap="round"
         />
-        <path d={arcPath(startDeg, fillDeg, r)} fill="none" stroke={C.accent} strokeWidth={10} strokeLinecap="round" />
+        <path
+          d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
+          fill="none"
+          stroke={col}
+          strokeWidth={11}
+          strokeLinecap="round"
+          strokeDasharray={`${fill} ${half}`}
+          style={{ transition: "stroke-dasharray .8s ease" }}
+        />
         <text
           x={cx}
           y={cy - 4}
           textAnchor="middle"
-          fill="#fff"
           fontSize={28}
-          fontWeight={800}
+          fontWeight={700}
+          fill="#111827"
           fontFamily="Inter,sans-serif"
         >
           {score}
         </text>
-        <text
-          x={cx}
-          y={cy + 14}
-          textAnchor="middle"
-          fill="rgba(255,255,255,0.5)"
-          fontSize={9}
-          fontFamily="Inter,sans-serif"
-          letterSpacing="1"
-        >
-          BRIDGE SCORE
-        </text>
       </svg>
-    );
-  };
-
-  /* Collapsible section header */
-  const SectionHead = ({ id, label, icon, count, defaultOpen }) => {
-    const open = openSections[id] ?? defaultOpen ?? false;
-    return (
-      <button
-        onClick={() => toggleSection(id)}
+    </div>
+  );
+}
+const Tip = ({ active, payload, label }) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div
+      style={{
+        background: "#111827",
+        color: "#fff",
+        borderRadius: 8,
+        padding: "8px 12px",
+        fontSize: 11,
+        fontFamily: "Inter,sans-serif",
+      }}
+    >
+      <div style={{ color: "rgba(255,255,255,0.5)", marginBottom: 4 }}>{label}</div>
+      {payload.map((p, i) => (
+        <div key={i} style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 2 }}>
+          <div style={{ width: 7, height: 7, borderRadius: 2, background: p.fill }} />
+          <span>
+            {p.name}: <strong>{p.value}</strong>
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+function SectorHeader({ s }) {
+  const Icon = s.icon;
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 10 }}>
+      <div
         style={{
-          width: "100%",
+          width: 36,
+          height: 36,
+          borderRadius: 9,
+          background: "rgba(255,255,255,0.1)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Icon size={17} color="#B8D935" />
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div
+          style={{
+            fontSize: 13,
+            fontWeight: 700,
+            color: "#fff",
+            lineHeight: 1.2,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {s.short}
+        </div>
+        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.42)", fontFamily: "Inter,sans-serif" }}>{s.tag}</div>
+      </div>
+      <div style={{ textAlign: "right", flexShrink: 0 }}>
+        <div style={{ fontSize: 20, fontWeight: 700, color: "#B8D935", lineHeight: 1 }}>{s.score}</div>
+        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", fontFamily: "Inter,sans-serif" }}>Score</div>
+      </div>
+    </div>
+  );
+}
+/* ─────────── MOBILE GAUGE ─────────── */
+function MiniGauge({ score }) {
+  const W = 96,
+    H = 52,
+    cx = W / 2,
+    cy = H,
+    r = 42;
+  const ci = 2 * Math.PI * r,
+    half = ci / 2,
+    fill = half * (score / 100);
+  const col = score >= 88 ? "#4ADE80" : score >= 80 ? "#FCD34D" : "#F87171";
+  return (
+    <svg width={W} height={H + 6} style={{ overflow: "visible" }}>
+      <path
+        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
+        fill="none"
+        stroke="rgba(255,255,255,0.08)"
+        strokeWidth={8}
+        strokeLinecap="round"
+      />
+      <path
+        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
+        fill="none"
+        stroke={col}
+        strokeWidth={8}
+        strokeLinecap="round"
+        strokeDasharray={`${fill} ${half}`}
+        style={{ transition: "stroke-dasharray .8s ease" }}
+      />
+      <text
+        x={cx}
+        y={cy - 2}
+        textAnchor="middle"
+        fontSize={18}
+        fontWeight={700}
+        fill="#fff"
+        fontFamily="Inter,sans-serif"
+      >
+        {score}
+      </text>
+    </svg>
+  );
+}
+/* ─────────── COLLAPSIBLE SECTION ─────────── */
+function MSection({ title, subtitle, icon: Icon, accent = false, defaultOpen = false, children, badge }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div style={{ marginBottom: 8 }}>
+      <div
+        onClick={() => setOpen((o) => !o)}
+        style={{
           display: "flex",
           alignItems: "center",
           gap: 10,
-          padding: "13px 16px",
-          background: "none",
-          border: "none",
+          padding: "12px 16px",
+          background: accent ? "#1E3327" : "#fff",
+          borderRadius: open ? "12px 12px 0 0" : "12px",
+          border: `1px solid ${accent ? "rgba(184,217,53,0.12)" : "#E5E7EB"}`,
+          borderBottom: open ? `1px solid ${accent ? "rgba(184,217,53,0.06)" : "#F3F4F6"}` : undefined,
           cursor: "pointer",
-          textAlign: "left",
+          userSelect: "none",
         }}
       >
-        <div
-          style={{
-            width: 28,
-            height: 28,
-            borderRadius: 7,
-            background: "#F3F4F6",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          {icon}
-        </div>
-        <span style={{ flex: 1, fontSize: 13, fontWeight: 700, color: C.dark, fontFamily: "DM Sans,sans-serif" }}>
-          {label}
-        </span>
-        {count != null && (
-          <span
+        {Icon && (
+          <div
             style={{
-              fontSize: 10,
-              fontWeight: 700,
-              color: C.primary,
-              background: C.accentBg,
-              borderRadius: 10,
-              padding: "2px 7px",
-              fontFamily: "Inter,sans-serif",
+              width: 28,
+              height: 28,
+              borderRadius: 7,
+              background: accent ? "rgba(184,217,53,0.12)" : "rgba(27,77,62,0.06)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
             }}
           >
-            {count}
-          </span>
+            <Icon size={13} color={accent ? "#B8D935" : "#2E5A4D"} />
+          </div>
+        )}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: accent ? "#fff" : "#111827", lineHeight: 1.1 }}>
+            {title}
+          </div>
+          {subtitle && (
+            <div
+              style={{
+                fontSize: 10,
+                color: accent ? "rgba(255,255,255,0.45)" : "#6B7280",
+                fontFamily: "Inter,sans-serif",
+                marginTop: 1,
+              }}
+            >
+              {subtitle}
+            </div>
+          )}
+        </div>
+        {badge && (
+          <div
+            style={{
+              fontSize: 9,
+              fontWeight: 700,
+              padding: "2px 7px",
+              borderRadius: 4,
+              background: "#EBF5B0",
+              color: "#1B4D3E",
+              fontFamily: "Inter,sans-serif",
+              flexShrink: 0,
+            }}
+          >
+            {badge}
+          </div>
         )}
         <div
           style={{
             width: 20,
             height: 20,
-            borderRadius: 5,
-            background: "#F3F4F6",
+            borderRadius: "50%",
+            background: accent ? "rgba(255,255,255,0.07)" : "#F3F4F6",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0,
             transition: "transform .2s",
-            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            transform: open ? "rotate(180deg)" : "none",
           }}
         >
-          <ChevronDown size={12} color={C.muted} />
+          <ChevronDown size={11} color={accent ? "rgba(255,255,255,0.5)" : "#6B7280"} />
         </div>
-      </button>
-    );
-  };
-
-  /* Nav pages */
-  const renderPage = () => {
-    if (activeNav === "resources") {
-      if (resourcesView === "sector-performance")
-        return <MobileResourcesPage s={s} setS={setS} view="sector-performance" />;
-      if (resourcesView === "activity-log") return <MobileResourcesPage s={s} setS={setS} view="activity-log" />;
-      if (resourcesView === "library")
-        return (
-          <div style={{ background: "#090F0B", minHeight: "100%", paddingBottom: 90 }}>
-            <div style={{ padding: "8px 16px 0" }}>
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: "#6B7280",
-                  fontFamily: "Inter,sans-serif",
-                  letterSpacing: "0.8px",
-                  textTransform: "uppercase",
-                }}
-              >
-                RESOURCE LIBRARY
-              </span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                paddingTop: 80,
-                gap: 14,
-              }}
-            >
-              <div
-                style={{
-                  width: 56,
-                  height: 56,
-                  borderRadius: 16,
-                  background: "rgba(184,217,53,0.08)",
-                  border: "1px solid rgba(184,217,53,0.15)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <svg
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#B8D935"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
-                </svg>
-              </div>
-              <div
-                style={{
-                  fontSize: 16,
-                  fontWeight: 700,
-                  color: "rgba(255,255,255,0.7)",
-                  fontFamily: "DM Sans,sans-serif",
-                }}
-              >
-                Resource Library
-              </div>
-              <div
-                style={{
-                  fontSize: 12,
-                  color: "rgba(255,255,255,0.28)",
-                  textAlign: "center",
-                  maxWidth: 220,
-                  lineHeight: 1.6,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                Docs, guides & reference materials coming in the next build.
-              </div>
-            </div>
-          </div>
-        );
-      /* "reports" default */
-    }
-    if (activeNav === "overview")
-      return (
+      </div>
+      {open && (
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100%",
-            gap: 12,
-            paddingBottom: 80,
+            background: accent ? "#172B1F" : "#fff",
+            border: `1px solid ${accent ? "rgba(184,217,53,0.08)" : "#E5E7EB"}`,
+            borderTop: "none",
+            borderRadius: "0 0 12px 12px",
+            overflow: "hidden",
           }}
         >
-          <div
-            style={{
-              width: 52,
-              height: 52,
-              borderRadius: 16,
-              background: "#F3F4F6",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <svg
-              width={22}
-              height={22}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={C.muted}
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 8v4l3 3" />
-            </svg>
-          </div>
-          <div style={{ fontSize: 14, fontWeight: 600, color: C.mid }}>Overview</div>
-          <div style={{ fontSize: 12, color: C.muted, textAlign: "center", maxWidth: 220, lineHeight: 1.5 }}>
-            Coming soon in the full platform.
-          </div>
+          {children}
         </div>
-      );
-    if (activeNav === "dashboard" || activeNav === "analytics" || activeNav === "watch")
-      return (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100%",
-            gap: 12,
-            paddingBottom: 80,
-          }}
-        >
+      )}
+    </div>
+  );
+}
+/* ─────────── MOBILE DASHBOARD ─────────── */
+/* Color palette from control panel screenshots */
+const M = {
+  bg: "#080E09",
+  card: "#0F1A11",
+  cardBorder: "rgba(255,255,255,0.07)",
+  accent: "#B8D935",
+  accentDim: "rgba(184,217,53,0.15)",
+  accentBorder: "rgba(184,217,53,0.2)",
+  green: "#4ADE80",
+  orange: "#F59E0B",
+  red: "#F87171",
+  white: "#FFFFFF",
+  muted: "rgba(255,255,255,0.38)",
+  dim: "rgba(255,255,255,0.18)",
+  divider: "rgba(255,255,255,0.06)",
+  teal: "#2E5A4D",
+  tealBright: "#3D7A66",
+};
+const COMPANIES = {
+  agriculture: [
+    { r: 1, name: "Cocobod Ghana", tk: "#COC", chg: "+4.2%", val: "$2.1B", sc: 88 },
+    { r: 2, name: "Yedent Agro", tk: "#YED", chg: "+2.8%", val: "$340M", sc: 81 },
+    { r: 3, name: "MOFA GH", tk: "#MFA", chg: "+1.1%", val: "$180M", sc: 76 },
+    { r: 4, name: "Pineapple Industries", tk: "#PIN", chg: "-0.6%", val: "$95M", sc: 68 },
+    { r: 5, name: "Akate Farms", tk: "#AKF", chg: "+3.3%", val: "$72M", sc: 64 },
+  ],
+  financial: [
+    { r: 1, name: "Fidelity Bank Ghana", tk: "#FBG", chg: "+6.1%", val: "$1.4B", sc: 91 },
+    { r: 2, name: "MTN MoMo", tk: "#MTN", chg: "+3.5%", val: "$3.2B", sc: 88 },
+    { r: 3, name: "Zeepay", tk: "#ZPY", chg: "+2.2%", val: "$280M", sc: 83 },
+    { r: 4, name: "Stanbic IBTC", tk: "#SIB", chg: "+0.9%", val: "$620M", sc: 76 },
+    { r: 5, name: "CalBank Ghana", tk: "#CAL", chg: "-0.4%", val: "$310M", sc: 71 },
+  ],
+  technology: [
+    { r: 1, name: "Hubtel Ghana", tk: "#HBT", chg: "+8.4%", val: "$420M", sc: 91 },
+    { r: 2, name: "Rancard Solutions", tk: "#RNC", chg: "+5.1%", val: "$95M", sc: 84 },
+    { r: 3, name: "mPharma", tk: "#MPH", chg: "+3.7%", val: "$240M", sc: 79 },
+    { r: 4, name: "ExpressPay GH", tk: "#EXP", chg: "+2.0%", val: "$68M", sc: 74 },
+    { r: 5, name: "Leti Arts", tk: "#LTA", chg: "-1.2%", val: "$22M", sc: 65 },
+  ],
+  energy: [
+    { r: 1, name: "BXC Energia", tk: "#BXC", chg: "+5.8%", val: "$890M", sc: 90 },
+    { r: 2, name: "Amandi Energy", tk: "#AMD", chg: "+3.2%", val: "$560M", sc: 85 },
+    { r: 3, name: "Volta River Auth.", tk: "#VRA", chg: "+1.4%", val: "$1.1B", sc: 80 },
+    { r: 4, name: "BOST Ghana", tk: "#BST", chg: "-0.8%", val: "$310M", sc: 71 },
+    { r: 5, name: "SolarKal GH", tk: "#SKL", chg: "+4.1%", val: "$48M", sc: 68 },
+  ],
+  infrastructure: [
+    { r: 1, name: "Ghana Highway Auth.", tk: "#GHA", chg: "+2.9%", val: "$420M", sc: 85 },
+    { r: 2, name: "GWCL", tk: "#GWC", chg: "+1.8%", val: "$280M", sc: 80 },
+    { r: 3, name: "Quaye Group", tk: "#QGP", chg: "+3.3%", val: "$190M", sc: 75 },
+    { r: 4, name: "Constec GH", tk: "#CST", chg: "-0.5%", val: "$140M", sc: 68 },
+    { r: 5, name: "Aluworks", tk: "#ALW", chg: "+0.7%", val: "$88M", sc: 62 },
+  ],
+  education: [
+    { r: 1, name: "KNUST Holdings", tk: "#KNU", chg: "+3.1%", val: "$380M", sc: 86 },
+    { r: 2, name: "Accra Academy", tk: "#AAC", chg: "+2.4%", val: "$95M", sc: 78 },
+    { r: 3, name: "Edubridge GH", tk: "#EDB", chg: "+5.2%", val: "$48M", sc: 73 },
+    { r: 4, name: "Ghana Book Trust", tk: "#GBT", chg: "+1.0%", val: "$32M", sc: 66 },
+    { r: 5, name: "AfriLearn", tk: "#AFL", chg: "-0.3%", val: "$18M", sc: 61 },
+  ],
+  health: [
+    { r: 1, name: "Rabito Clinic", tk: "#RAB", chg: "+4.3%", val: "$280M", sc: 87 },
+    { r: 2, name: "mPharma Health", tk: "#MPH", chg: "+3.1%", val: "$340M", sc: 82 },
+    { r: 3, name: "Lister Hospital", tk: "#LST", chg: "+1.6%", val: "$195M", sc: 76 },
+    { r: 4, name: "Medlab GH", tk: "#MED", chg: "-0.9%", val: "$88M", sc: 70 },
+    { r: 5, name: "KCCR", tk: "#KCC", chg: "+2.0%", val: "$62M", sc: 65 },
+  ],
+  housing: [
+    { r: 1, name: "Regimanuel Gray", tk: "#RGY", chg: "+4.8%", val: "$520M", sc: 84 },
+    { r: 2, name: "Devtraco Plus", tk: "#DVT", chg: "+3.2%", val: "$310M", sc: 79 },
+    { r: 3, name: "Berock Ventures", tk: "#BRK", chg: "+2.1%", val: "$240M", sc: 74 },
+    { r: 4, name: "SSNIT Housing", tk: "#SSH", chg: "+0.6%", val: "$480M", sc: 68 },
+    { r: 5, name: "GoldKey Props", tk: "#GKP", chg: "-0.2%", val: "$95M", sc: 62 },
+  ],
+  manufacturing: [
+    { r: 1, name: "Unilever Ghana", tk: "#UNL", chg: "+3.9%", val: "$780M", sc: 83 },
+    { r: 2, name: "Fan Milk Ghana", tk: "#FML", chg: "+2.6%", val: "$420M", sc: 78 },
+    { r: 3, name: "Benso Oil", tk: "#BNO", chg: "+1.8%", val: "$190M", sc: 73 },
+    { r: 4, name: "Pioneer Food Cannon", tk: "#PFC", chg: "-1.1%", val: "$140M", sc: 65 },
+    { r: 5, name: "Aluworks", tk: "#ALW", chg: "+0.5%", val: "$88M", sc: 60 },
+  ],
+  transportation: [
+    { r: 1, name: "Antrak Ghana", tk: "#ANT", chg: "+5.2%", val: "$380M", sc: 80 },
+    { r: 2, name: "Ghana Ports Auth.", tk: "#GPA", chg: "+2.8%", val: "$1.2B", sc: 76 },
+    { r: 3, name: "Starlite Trans.", tk: "#STL", chg: "+1.4%", val: "$95M", sc: 71 },
+    { r: 4, name: "DHL Ghana", tk: "#DHL", chg: "+0.9%", val: "$280M", sc: 66 },
+    { r: 5, name: "Quaynor Express", tk: "#QEX", chg: "-0.6%", val: "$48M", sc: 58 },
+  ],
+  tourism: [
+    { r: 1, name: "La Palm Royal", tk: "#LPR", chg: "+4.1%", val: "$310M", sc: 78 },
+    { r: 2, name: "Accra City Hotel", tk: "#ACH", chg: "+2.9%", val: "$195M", sc: 73 },
+    { r: 3, name: "Kempinski GH", tk: "#KMP", chg: "+3.8%", val: "$480M", sc: 70 },
+    { r: 4, name: "Heritage GH", tk: "#HGH", chg: "+1.2%", val: "$88M", sc: 64 },
+    { r: 5, name: "Labadi Beach Hotel", tk: "#LBH", chg: "-0.7%", val: "$140M", sc: 60 },
+  ],
+  creative: [
+    { r: 1, name: "TV3 Ghana", tk: "#TV3", chg: "+5.6%", val: "$180M", sc: 79 },
+    { r: 2, name: "EIB Network", tk: "#EIB", chg: "+3.4%", val: "$95M", sc: 74 },
+    { r: 3, name: "Ameyaw Konsult", tk: "#AMK", chg: "+2.1%", val: "$28M", sc: 69 },
+    { r: 4, name: "Black Star Studios", tk: "#BSS", chg: "+4.8%", val: "$42M", sc: 65 },
+    { r: 5, name: "GhanaWeb Media", tk: "#GWM", chg: "-0.3%", val: "$38M", sc: 60 },
+  ],
+};
+function sigC(x) {
+  return x === "Bullish" ? M.green : x === "Bearish" ? M.red : M.orange;
+}
+/* ─── Section Card wrapper ─── */
+function MCard({ icon: Icon, title, badge, badgeLime = false, defaultOpen = true, children }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div
+      style={{
+        marginBottom: 8,
+        background: M.card,
+        borderRadius: 16,
+        border: `1px solid ${M.cardBorder}`,
+        overflow: "hidden",
+      }}
+    >
+      <div
+        onClick={() => setOpen((o) => !o)}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          padding: "13px 14px",
+          cursor: "pointer",
+          userSelect: "none",
+        }}
+      >
+        {Icon && (
           <div
             style={{
-              width: 52,
-              height: 52,
-              borderRadius: 16,
-              background: "#F3F4F6",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {activeNav === "dashboard" ? (
-              <LayoutGrid size={22} color={C.muted} />
-            ) : activeNav === "analytics" ? (
-              <BarChart3 size={22} color={C.muted} />
-            ) : (
-              <BookOpen size={22} color={C.muted} />
-            )}
-          </div>
-          <div style={{ fontSize: 14, fontWeight: 600, color: C.mid }}>Coming Soon</div>
-          <div style={{ fontSize: 12, color: C.muted, textAlign: "center", maxWidth: 220, lineHeight: 1.5 }}>
-            This section is being built for the full BRIDGE Intelligence platform.
-          </div>
-        </div>
-      );
-
-    /* ── REPORTS page (dark palette) ── */
-    const D = {
-      bg: "#090F0B",
-      card: "#0F1A12",
-      card2: "#132118",
-      border: "rgba(255,255,255,0.07)",
-      borderLime: "rgba(184,217,53,0.18)",
-      lime: "#B8D935",
-      green: "#22C55E",
-      red: "#EF4444",
-      amber: "#F59E0B",
-      teal: "#2E8B6E",
-      txt: "#FFFFFF",
-      txt2: "rgba(255,255,255,0.55)",
-      txt3: "rgba(255,255,255,0.28)",
-      iconBg: "rgba(184,217,53,0.12)",
-      iconBg2: "rgba(255,255,255,0.07)",
-    };
-    const sigDC = (sig) => (sig === "Bullish" ? D.green : sig === "Bearish" ? D.red : D.amber);
-    const latestSig = s.activity[0];
-    const openD = openSections;
-
-    /* Dark section head */
-    const DSectionHead = ({ id, label, icon, count, defaultOpen }) => {
-      const isOpen = openD[id] ?? defaultOpen ?? false;
-      return (
-        <button
-          onClick={() => toggleSection(id)}
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            padding: "13px 16px",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            textAlign: "left",
-          }}
-        >
-          <div
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 7,
-              background: D.iconBg,
+              width: 30,
+              height: 30,
+              borderRadius: 8,
+              background: M.accentDim,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
             }}
           >
-            {icon}
+            <Icon size={13} color={M.accent} />
           </div>
-          <span style={{ flex: 1, fontSize: 13, fontWeight: 700, color: D.txt, fontFamily: "DM Sans,sans-serif" }}>
-            {label}
-          </span>
-          {count != null && (
-            <span
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                color: D.lime,
-                background: D.iconBg,
-                borderRadius: 10,
-                padding: "2px 7px",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
-              {count}
-            </span>
-          )}
+        )}
+        <span style={{ flex: 1, fontSize: 14, fontWeight: 700, color: M.white, letterSpacing: "-.2px" }}>{title}</span>
+        {badge && (
           <div
             style={{
-              width: 20,
-              height: 20,
-              borderRadius: 5,
-              background: D.iconBg2,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-              transition: "transform .2s",
-              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-            }}
-          >
-            <ChevronDown size={12} color={D.txt3} />
-          </div>
-        </button>
-      );
-    };
-
-    return (
-      <div style={{ background: D.bg, minHeight: "100%", paddingBottom: 90 }}>
-        {/* ── REPORTS label ── */}
-        <div style={{ padding: "8px 16px 0" }}>
-          <span
-            style={{
+              padding: "3px 10px",
+              borderRadius: 20,
+              background: badgeLime ? M.accent : M.accentDim,
+              border: `1px solid ${badgeLime ? "transparent" : M.accentBorder}`,
               fontSize: 11,
               fontWeight: 700,
-              color: "#6B7280",
+              color: badgeLime ? M.bg : M.accent,
               fontFamily: "Inter,sans-serif",
-              letterSpacing: "0.8px",
-              textTransform: "uppercase",
+              flexShrink: 0,
             }}
           >
-            REPORTS
-          </span>
-        </div>
-
-        {/* ── Hero Card ── */}
-        <div
-          style={{
-            margin: "10px 12px 0",
-            background: D.card,
-            borderRadius: 18,
-            border: `1px solid ${D.borderLime}`,
-            overflow: "hidden",
-          }}
-        >
-          {/* Top: score circle + name/pills */}
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 16, padding: "16px 16px 14px" }}>
-            {/* Score circle */}
-            <div style={{ flexShrink: 0, position: "relative", width: 68, height: 68 }}>
-              <svg width={68} height={68} viewBox="0 0 68 68">
-                <circle cx={34} cy={34} r={28} fill="none" stroke="rgba(184,217,53,0.15)" strokeWidth={4} />
-                <circle
-                  cx={34}
-                  cy={34}
-                  r={28}
-                  fill="none"
-                  stroke={D.lime}
-                  strokeWidth={4}
-                  strokeLinecap="round"
-                  strokeDasharray={`${(2 * Math.PI * 28 * s.score) / 100} ${2 * Math.PI * 28}`}
-                  strokeDashoffset={2 * Math.PI * 28 * 0.25}
-                  style={{ transform: "rotate(-90deg)", transformOrigin: "34px 34px" }}
-                />
-              </svg>
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <span
-                  style={{ fontSize: 20, fontWeight: 900, color: D.txt, fontFamily: "Inter,sans-serif", lineHeight: 1 }}
-                >
-                  {s.score}
-                </span>
-              </div>
-            </div>
-            {/* Name + pills */}
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  color: D.lime,
-                  fontFamily: "Inter,sans-serif",
-                  letterSpacing: "1.2px",
-                  textTransform: "uppercase",
-                  marginBottom: 5,
-                }}
-              >
-                OVERVIEW · {s.short.toUpperCase()}
-              </div>
-              <div
-                style={{
-                  fontSize: 17,
-                  fontWeight: 800,
-                  color: D.txt,
-                  lineHeight: 1.2,
-                  marginBottom: 10,
-                  fontFamily: "DM Sans,sans-serif",
-                }}
-              >
-                {s.full}
-              </div>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                {[
-                  { l: "Cap", v: `$${s.capLow}–${s.capHigh}M` },
-                  { l: "IRR", v: `${s.irrHigh}%` },
-                  { l: "Score", v: `${s.score}` },
-                ].map((p, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 4,
-                      padding: "4px 9px",
-                      borderRadius: 6,
-                      background: "rgba(255,255,255,0.06)",
-                      border: `1px solid ${D.border}`,
-                    }}
-                  >
-                    <span style={{ fontSize: 9, color: D.txt3, fontFamily: "Inter,sans-serif" }}>{p.l}</span>
-                    <span
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: i === 2 ? D.lime : D.teal,
-                        fontFamily: "Inter,sans-serif",
-                      }}
-                    >
-                      {p.v}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            {badge}
           </div>
-
-          {/* Mid: 3-column stats */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", borderTop: `1px solid ${D.border}` }}>
-            {[
-              { l: "CAPITAL RANGE", v: `$${s.capLow}–${s.capHigh}M` },
-              { l: "IRR TARGET", v: `${s.irrLow}–${s.irrHigh}%` },
-              { l: "VENTURES", v: `${s.totalV} identified` },
-            ].map((st, i) => (
-              <div key={i} style={{ padding: "12px 14px", borderRight: i < 2 ? `1px solid ${D.border}` : "none" }}>
-                <div
-                  style={{
-                    fontSize: 8,
-                    fontWeight: 700,
-                    color: D.txt3,
-                    fontFamily: "Inter,sans-serif",
-                    letterSpacing: "0.8px",
-                    textTransform: "uppercase",
-                    marginBottom: 5,
-                  }}
-                >
-                  {st.l}
-                </div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: D.txt, fontFamily: "Inter,sans-serif" }}>
-                  {st.v}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom: signal bar */}
-          <div
-            style={{
-              margin: "0 12px 12px",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "9px 12px",
-              background: "rgba(255,255,255,0.03)",
-              borderRadius: 10,
-              border: `1px solid ${D.border}`,
-            }}
-          >
-            <div
-              style={{
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                background: sigDC(latestSig?.sig),
-                boxShadow: `0 0 6px ${sigDC(latestSig?.sig)}66`,
-                flexShrink: 0,
-              }}
-            />
-            <span
-              style={{ fontSize: 11, fontWeight: 700, color: sigDC(latestSig?.sig), fontFamily: "Inter,sans-serif" }}
-            >
-              {latestSig?.sig}
-            </span>
-            <span style={{ fontSize: 10, color: D.txt3, fontFamily: "Inter,sans-serif" }}>Market Signal</span>
-            <div style={{ marginLeft: "auto", display: "flex", gap: 2, alignItems: "flex-end" }}>
-              {[4, 6, 5, 7, 6, 8, 7, 9].map((h, i) => (
-                <div
-                  key={i}
-                  style={{ width: 4, height: h * 2, borderRadius: 1, background: i > 5 ? D.lime : `${D.lime}44` }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ── Quick Stats ── */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, padding: "10px 12px 0" }}>
-          {[
-            { l: "Bullish", v: bullish, suf: `/${s.activity.length}` },
-            { l: "Volatility", v: `${Math.round(s.score * 0.42)}%` },
-            { l: "Health", v: `${Math.round(s.score * 0.9)}%` },
-            { l: "Signal Vol.", v: `${s.activity.length * 18}` },
-          ].map((st, i) => (
-            <div
-              key={i}
-              style={{
-                background: D.card,
-                borderRadius: 12,
-                padding: "10px 8px",
-                textAlign: "center",
-                border: `1px solid ${D.border}`,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 15,
-                  fontWeight: 800,
-                  color: D.txt,
-                  fontFamily: "Inter,sans-serif",
-                  letterSpacing: "-.5px",
-                }}
-              >
-                {st.v}
-                {st.suf && <span style={{ fontSize: 10, fontWeight: 600, color: D.txt3 }}>{st.suf}</span>}
-              </div>
-              <div
-                style={{
-                  fontSize: 8,
-                  fontWeight: 600,
-                  color: D.txt3,
-                  fontFamily: "Inter,sans-serif",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  marginTop: 3,
-                }}
-              >
-                {st.l}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ── Sub-sectors ── */}
-        <div
+        )}
+        <ChevronDown
+          size={14}
+          color={M.muted}
           style={{
-            margin: "10px 12px 0",
-            background: D.card,
-            borderRadius: 16,
-            border: `1px solid ${D.border}`,
-            overflow: "hidden",
+            transition: "transform .2s",
+            transform: open ? "rotate(180deg)" : "none",
+            flexShrink: 0,
+            marginLeft: badge ? 6 : 0,
           }}
-        >
-          <DSectionHead
-            id="subsectors"
-            label="Sub-sectors"
-            icon={<BarChart3 size={13} color={D.lime} />}
-            count={s.subSectors.length}
-          />
-          {openD.subsectors && (
-            <div style={{ padding: "0 16px 14px" }}>
-              {s.subSectors.map((ss, i) => (
-                <div key={i} style={{ marginBottom: 9 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                    <span style={{ fontSize: 11, color: D.txt2, fontFamily: "Inter,sans-serif" }}>{ss.name}</span>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: D.txt, fontFamily: "Inter,sans-serif" }}>
-                      {ss.pct}%
-                    </span>
-                  </div>
-                  <div style={{ height: 5, background: "rgba(255,255,255,0.07)", borderRadius: 3, overflow: "hidden" }}>
-                    <div
-                      style={{
-                        height: "100%",
-                        width: `${ss.pct}%`,
-                        background: ss.color || D.lime,
-                        borderRadius: 3,
-                        transition: "width .6s ease",
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* ── Live Signals ── */}
-        <div
-          style={{
-            margin: "10px 12px 0",
-            background: D.card,
-            borderRadius: 16,
-            border: `1px solid ${D.border}`,
-            overflow: "hidden",
-          }}
-        >
-          <DSectionHead
-            id="signals"
-            label="Live Signals"
-            icon={<Activity size={13} color={D.lime} />}
-            count={s.activity.length}
-            defaultOpen={true}
-          />
-          {openD.signals && (
-            <div style={{ padding: "0 0 8px" }}>
-              {s.activity.map((a, i) => (
-                <div
-                  key={i}
-                  style={{
-                    display: "flex",
-                    gap: 12,
-                    padding: "10px 16px",
-                    borderTop: `1px solid ${D.border}`,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: 9,
-                      background: D.iconBg2,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      marginTop: 1,
-                    }}
-                  >
-                    {a.sig === "Bullish" ? (
-                      <TrendingUp size={13} color={D.green} />
-                    ) : a.sig === "Bearish" ? (
-                      <TrendingDown size={13} color={D.red} />
-                    ) : (
-                      <Activity size={13} color={D.amber} />
-                    )}
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: D.txt, lineHeight: 1.35, marginBottom: 3 }}>
-                      {a.h}
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <span style={{ fontSize: 10, color: D.txt3, fontFamily: "Inter,sans-serif" }}>{a.date}</span>
-                      <span
-                        style={{ fontSize: 10, fontWeight: 700, color: sigDC(a.sig), fontFamily: "Inter,sans-serif" }}
-                      >
-                        {a.sig}
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 12,
-                      fontWeight: 700,
-                      color: D.lime,
-                      fontFamily: "Inter,sans-serif",
-                      whiteSpace: "nowrap",
-                      marginTop: 2,
-                    }}
-                  >
-                    {a.amt}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* ── Top Opportunities ── */}
-        <div
-          style={{
-            margin: "10px 12px 0",
-            background: D.card,
-            borderRadius: 16,
-            border: `1px solid ${D.border}`,
-            overflow: "hidden",
-          }}
-        >
-          <DSectionHead
-            id="opportunities"
-            label="Top Opportunities"
-            icon={<ArrowUpRight size={13} color={D.lime} />}
-            count={s.t1.length}
-          />
-          {openD.opportunities && (
-            <div style={{ padding: "0 0 8px" }}>
-              {s.t1.map((op, i) => (
-                <div
-                  key={i}
-                  style={{
-                    padding: "10px 16px",
-                    borderTop: `1px solid ${D.border}`,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <div style={{ width: 3, alignSelf: "stretch", borderRadius: 2, background: D.lime, flexShrink: 0 }} />
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div
-                      style={{
-                        fontSize: 12,
-                        fontWeight: 600,
-                        color: D.txt,
-                        marginBottom: 4,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {op.name}
-                    </div>
-                    <div style={{ display: "flex", gap: 6 }}>
-                      <span style={{ fontSize: 10, color: D.teal, fontWeight: 700, fontFamily: "Inter,sans-serif" }}>
-                        {op.cap}
-                      </span>
-                      <span style={{ fontSize: 10, color: D.txt3, fontFamily: "Inter,sans-serif" }}>·</span>
-                      <span style={{ fontSize: 10, color: D.txt2, fontWeight: 600, fontFamily: "Inter,sans-serif" }}>
-                        {op.irr} IRR
-                      </span>
-                    </div>
-                  </div>
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: riskColor(op.risk),
-                      fontFamily: "Inter,sans-serif",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {op.risk}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* ── Performance Chart ── */}
-        <div
-          style={{
-            margin: "10px 12px 0",
-            background: D.card,
-            borderRadius: 16,
-            border: `1px solid ${D.border}`,
-            overflow: "hidden",
-          }}
-        >
-          <DSectionHead id="performance" label="Performance Chart" icon={<BarChart3 size={13} color={D.lime} />} />
-          {openD.performance && (
-            <div style={{ padding: "0 8px 12px", height: 160 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <RBarChart
-                  data={genBarData(s, "sector-performance", "30D")}
-                  barSize={14}
-                  barGap={2}
-                  margin={{ top: 4, right: 4, left: -28, bottom: 0 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                  <XAxis
-                    dataKey="day"
-                    tick={{ fontSize: 9, fill: D.txt3, fontFamily: "Inter,sans-serif" }}
-                    axisLine={false}
-                    tickLine={false}
-                  />
-                  <YAxis tick={{ fontSize: 9, fill: D.txt3 }} axisLine={false} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{
-                      background: D.card2,
-                      border: `1px solid ${D.border}`,
-                      borderRadius: 8,
-                      color: D.txt,
-                      fontSize: 11,
-                    }}
-                  />
-                  <Bar dataKey="primary" fill={D.lime} radius={[3, 3, 0, 0]} name="Primary" />
-                  <Bar dataKey="secondary" fill={`${D.teal}66`} radius={[3, 3, 0, 0]} name="Secondary" />
-                </RBarChart>
-              </ResponsiveContainer>
-            </div>
-          )}
-        </div>
-
-        {/* ── Sector Rankings ── */}
-        <div
-          style={{
-            margin: "10px 12px 0",
-            background: D.card,
-            borderRadius: 16,
-            border: `1px solid ${D.border}`,
-            overflow: "hidden",
-          }}
-        >
-          <DSectionHead
-            id="rankings"
-            label="Sector Rankings"
-            icon={<BarChart3 size={13} color={D.lime} />}
-            count="12"
-          />
-          {openD.rankings && (
-            <div style={{ padding: "0 16px 12px" }}>
-              {[...SECTORS]
-                .sort((a, b) => b.score - a.score)
-                .map((sec, i) => {
-                  const act = sec.id === s.id;
-                  return (
-                    <div
-                      key={sec.id}
-                      onClick={() => setS(sec)}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 10,
-                        padding: "8px 0",
-                        borderBottom: i < 11 ? `1px solid ${D.border}` : "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: act ? D.lime : D.txt3,
-                          fontFamily: "Inter,sans-serif",
-                          width: 14,
-                          textAlign: "center",
-                        }}
-                      >
-                        {i + 1}
-                      </span>
-                      <div
-                        style={{
-                          width: 26,
-                          height: 26,
-                          borderRadius: 6,
-                          background: act ? "rgba(184,217,53,0.12)" : D.iconBg2,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
-                      >
-                        {sec.svgIcon(act ? D.lime : D.txt3, 12)}
-                      </div>
-                      <span
-                        style={{
-                          flex: 1,
-                          fontSize: 11,
-                          fontWeight: act ? 700 : 400,
-                          color: act ? D.txt : D.txt2,
-                          fontFamily: "Inter,sans-serif",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {sec.short}
-                      </span>
-                      <div
-                        style={{
-                          width: 70,
-                          height: 4,
-                          background: "rgba(255,255,255,0.07)",
-                          borderRadius: 2,
-                          overflow: "hidden",
-                          flexShrink: 0,
-                        }}
-                      >
-                        <div
-                          style={{
-                            height: "100%",
-                            width: `${sec.score}%`,
-                            background: act ? D.lime : D.teal,
-                            borderRadius: 2,
-                          }}
-                        />
-                      </div>
-                      <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: act ? D.lime : D.txt3,
-                          fontFamily: "Inter,sans-serif",
-                          width: 24,
-                          textAlign: "right",
-                        }}
-                      >
-                        {sec.score}
-                      </span>
-                    </div>
-                  );
-                })}
-            </div>
-          )}
-        </div>
-
-        {/* ── Upsell ── */}
-        <div
-          style={{
-            margin: "10px 12px 0",
-            borderRadius: 16,
-            background: "linear-gradient(135deg,#1E3327,#0F1A12)",
-            border: `1px solid ${D.borderLime}`,
-            padding: 18,
-          }}
-        >
-          <div style={{ fontSize: 14, fontWeight: 700, color: D.txt, marginBottom: 4 }}>Unlock Full Intelligence</div>
-          <div
-            style={{ fontSize: 11, color: D.txt3, fontFamily: "Inter,sans-serif", lineHeight: 1.5, marginBottom: 14 }}
-          >
-            IRR models, risk matrices, and deep venture profiles across all 12 sectors.
-          </div>
-          <button
-            style={{
-              width: "100%",
-              background: D.lime,
-              border: "none",
-              borderRadius: 10,
-              padding: "11px 0",
-              fontSize: 12,
-              fontWeight: 700,
-              color: "#1B4D3E",
-              fontFamily: "Inter,sans-serif",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 6,
-            }}
-          >
-            Upgrade to Pro <ArrowUpRight size={13} />
-          </button>
-        </div>
-
-        <div style={{ height: 16 }} />
+        />
       </div>
-    );
-  };
+      <div style={{ height: "1px", background: M.divider, margin: "0 14px" }} />
+      {open && <div>{children}</div>}
+    </div>
+  );
+}
+/* ─── Score ring ─── */
+function ScoreRing({ score, size = 64, stroke = 5 }) {
+  const r = size / 2 - stroke,
+    c = 2 * Math.PI * r,
+    fill = c * (score / 100);
+  const col = score >= 88 ? M.green : score >= 80 ? M.orange : M.red;
+  return (
+    <div style={{ position: "relative", width: size, height: size, flexShrink: 0 }}>
+      <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth={stroke} />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke={col}
+          strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={`${fill} ${c}`}
+          style={{ transition: "stroke-dasharray .8s ease" }}
+        />
+      </svg>
+      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ fontSize: size * 0.26, fontWeight: 700, color: M.white, fontFamily: "Inter,sans-serif" }}>
+          {score}
+        </span>
+      </div>
+    </div>
+  );
+}
+/* ─── Heatmap ─── */
+function Heatmap() {
+  const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+  const hours = ["00", "04", "08", "12", "16", "20"];
+  const data = days.map(() => hours.map(() => Math.floor(Math.random() * 5)));
+  const shades = [
+    "rgba(255,255,255,0.04)",
+    "rgba(46,90,77,0.3)",
+    "rgba(46,90,77,0.5)",
+    "rgba(46,90,77,0.75)",
+    "rgba(184,217,53,0.5)",
+  ];
+  return (
+    <div style={{ padding: "12px 14px 14px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "24px repeat(6,1fr)", gap: 3 }}>
+        <div />
+        {hours.map((h) => (
+          <div
+            key={h}
+            style={{
+              fontSize: 9,
+              color: M.muted,
+              textAlign: "center",
+              fontFamily: "Inter,sans-serif",
+              marginBottom: 4,
+            }}
+          >
+            {h}
+          </div>
+        ))}
+        {days.map((d, di) => [
+          <div
+            key={d}
+            style={{
+              fontSize: 9,
+              color: M.muted,
+              display: "flex",
+              alignItems: "center",
+              fontFamily: "Inter,sans-serif",
+            }}
+          >
+            {d}
+          </div>,
+          ...data[di].map((v, ci) => <div key={ci} style={{ height: 18, borderRadius: 3, background: shades[v] }} />),
+        ])}
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 10 }}>
+        <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>Low</span>
+        {shades.map((sh, i) => (
+          <div key={i} style={{ width: 16, height: 10, borderRadius: 2, background: sh }} />
+        ))}
+        <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>Peak</span>
+      </div>
+    </div>
+  );
+}
+/* ─── Sub-tab pills ─── */
+function SubTabs({ tabs, active, onChange }) {
+  return (
+    <div style={{ display: "flex", gap: 6, overflowX: "auto", padding: "10px 14px 0", scrollbarWidth: "none" }}>
+      {tabs.map((t) => (
+        <button
+          key={t.id}
+          onClick={() => onChange(t.id)}
+          style={{
+            padding: "6px 14px",
+            borderRadius: 20,
+            border: `1px solid ${active === t.id ? M.accent : M.cardBorder}`,
+            background: active === t.id ? M.accent : "transparent",
+            color: active === t.id ? M.bg : M.muted,
+            fontSize: 12,
+            fontWeight: active === t.id ? 700 : 500,
+            fontFamily: "Inter,sans-serif",
+            whiteSpace: "nowrap",
+            cursor: "pointer",
+            flexShrink: 0,
+            transition: "all .15s",
+          }}
+        >
+          {t.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+/* ─── MAIN MOBILE DASHBOARD ─── */
+function MobileDashboard({ s, setS }) {
+  const [navTab, setNavTab] = useState("dashboard");
+  const [dashSub, setDashSub] = useState("overview");
+  const [dashMenu, setDashMenu] = useState(false);
+  const [analyticsSub, setAnalyticsSub] = useState("kpis");
+  const [analyticsMenu, setAnalyticsMenu] = useState(false);
+  const [notif, setNotif] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [sectorDrawer, setSectorDrawer] = useState(false);
+  const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
+  const Icon = s.icon;
+  const companies = COMPANIES[s.id] || COMPANIES.financial;
+  const DASH_SUBS = [
+    { id: "overview", label: "Overview" },
+    { id: "ventures", label: "Ventures" },
+    { id: "signals", label: "Signals" },
+    { id: "companies", label: "Companies" },
+    { id: "analytics", label: "Analytics" },
+  ];
+  const ANALYTICS_SUBS = [
+    { id: "kpis", label: "KPIs" },
+    { id: "performance", label: "Performance" },
+    { id: "activity", label: "Activity" },
+    { id: "companies", label: "Companies" },
+    { id: "map", label: "Map" },
+  ];
+  /* ── Bar chart data for engagement ── */
+  const barData = Array.from({ length: 24 }, (_, i) => Math.floor(20 + Math.random() * 80));
+  const maxBar = Math.max(...barData);
 
   return (
     <div
@@ -3962,33 +2044,111 @@ function MobileDashboard({ s, setS }) {
         display: "flex",
         flexDirection: "column",
         height: "100vh",
-        overflow: "hidden",
-        background: C.bg,
+        background: M.bg,
         fontFamily: "'DM Sans',sans-serif",
+        overflow: "hidden",
       }}
     >
-      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{display:none;}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.spin{animation:spin 1s linear infinite}@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}.drawer{animation:slideUp .25s ease}`}</style>
+      <style>{`
+      @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+      .mscroll::-webkit-scrollbar{display:none}
+      .mscroll{-ms-overflow-style:none;scrollbar-width:none}
+    `}</style>
 
-      {/* ── Mobile Header ── */}
+      {/* ═══ TOP BAR ═══ */}
       <div
         style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
+          flexShrink: 0,
           height: 56,
-          background: "rgba(15,26,18,0.95)",
+          background: "rgba(15,26,18,0.94)",
           borderBottom: "1px solid rgba(255,255,255,0.08)",
           backdropFilter: "blur(16px)",
           display: "flex",
           alignItems: "center",
           padding: "0 14px",
           gap: 8,
-          flexShrink: 0,
+          position: "relative",
+          zIndex: 50,
         }}
       >
-        {/* BRIDGE Logo */}
+        {/* BRIDGE logo SVG */}
         <div style={{ flexShrink: 0 }}>
-          <BridgeLogo />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 3434.33 932.3"
+            style={{ width: 104, height: 28, display: "block" }}
+          >
+            <path
+              style={{ fill: "#fff" }}
+              d="M1853.06,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.56,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1v.1Z"
+            />
+            <path
+              style={{ fill: "#fff", stroke: "#000", strokeWidth: ".5px", strokeMiterlimit: 10 }}
+              d="M1431.68,224.45h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.05c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5l.1.1Z"
+            />
+            <path
+              style={{ fill: "#fff", stroke: "#000", strokeWidth: ".5px", strokeMiterlimit: 10 }}
+              d="M1488.08,578.65v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"
+            />
+            <rect
+              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+              x="1427.38"
+              y="17.35"
+              width="205.2"
+              height="145"
+            />
+            <rect style={{ fill: "#fff" }} x="1427.48" y="221.75" width="205.2" height="693.2" rx="9.6" ry="9.6" />
+            <path
+              style={{ fill: "#fff" }}
+              d="M2757.31,19.09h491.3c5.42,0,9.82,4.4,9.82,9.82v218.7c0,5.42-4.4,9.82-9.82,9.82h-507.36c-56.98,0-108.53,23.02-145.87,60.35-37.34,37.23-60.45,88.79-60.45,145.66,0,113.75,92.37,206.01,206.32,206.01h12.89c2.86,0,5.11,2.25,5.11,5.11v236.7c0,1.13-.92,1.94-1.94,1.94h0c-242.22,0-438.52-195.99-438.52-437.8v-18.51c0-241.81,196.29-437.8,438.52-437.8h0Z"
+            />
+            <rect style={{ fill: "#fff" }} x="2812.75" y="339.47" width="216.75" height="572.62" rx="9.6" ry="9.6" />
+            <rect
+              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+              x="3083.41"
+              y="339.47"
+              width="175.12"
+              height="257.67"
+            />
+            <rect
+              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+              x="3083.41"
+              y="654.42"
+              width="175.12"
+              height="257.67"
+            />
+            <circle
+              style={{ fill: "none", stroke: "#231f20", strokeWidth: "5px", strokeMiterlimit: 10 }}
+              cx="3385.56"
+              cy="866.94"
+              r="46.27"
+            />
+            <path
+              style={{ fill: "#fff" }}
+              d="M3404.8,889.32l-10.31-14.71c.25,0,.38-.13.63-.25,2.89-1.26,5.03-3.02,6.54-5.41s2.26-5.15,2.26-8.55c0-5.03-1.76-8.93-5.16-11.82s-8.05-4.27-14.08-4.27h-18.36v44.89h8.3v-13.08h11.94l9.18,13.08h8.93l.13.13ZM3392.85,853.74c1.89,1.51,2.77,3.77,2.77,6.66s-.88,5.03-2.77,6.66-4.65,2.39-8.3,2.39h-9.81v-17.85h9.81c3.65,0,6.41.75,8.3,2.26h0v-.13Z"
+            />
+            <rect
+              style={{ fill: "none", stroke: "#fff", strokeWidth: "80px", strokeMiterlimit: 10 }}
+              x="40"
+              y="40"
+              width="843.91"
+              height="852.3"
+              rx="36.55"
+              ry="36.55"
+            />
+            <polygon
+              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+              points="722.6 322.13 462.28 452.8 201.97 322.75 461.21 192.52 722.6 322.13"
+            />
+            <path
+              style={{ fill: "#74914a" }}
+              d="M197.84,426.78c3.86-.53,7.04.85,10.74,1.41l252.53,125.67c84.54-40,167.66-83.83,251.89-124.84,33.14-11.49,50.09,34.15,18.55,49.11l-259.23,129.08c-10.18,3.72-14.14,2.57-23.85-1.31l-264.23-132.98c-17.04-14.4-7.96-43.2,13.61-46.14Z"
+            />
+            <path
+              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
+              d="M195.25,558c3.65-.63,7.4-.4,11.08-.22,86.11,40.47,170.4,85.05,255.95,126.78l252.92-126c29.53-7.22,45.44,28.67,22.29,46.49l-270.42,134.42-8.62.31c-91.6-42.21-181.07-89.86-271.7-134.42-18.72-12.06-13.3-43.58,8.5-47.37Z"
+            />
+          </svg>
         </div>
 
         {/* Sector selector pill */}
@@ -4019,14 +2179,14 @@ function MobileDashboard({ s, setS }) {
               flexShrink: 0,
             }}
           >
-            {s.svgIcon("#B8D935", 13)}
+            <Icon size={13} color={M.accent} strokeWidth={1.8} />
           </div>
           <span
             style={{
               flex: 1,
               fontSize: 13,
               fontWeight: 600,
-              color: "#FFFFFF",
+              color: M.white,
               fontFamily: "DM Sans,sans-serif",
               whiteSpace: "nowrap",
               overflow: "hidden",
@@ -4036,15 +2196,15 @@ function MobileDashboard({ s, setS }) {
             {s.short}
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: "#B8D935", fontFamily: "Inter,sans-serif" }}>
+            <span style={{ fontSize: 13, fontWeight: 800, color: M.accent, fontFamily: "Inter,sans-serif" }}>
               {s.score}
             </span>
             <svg
-              width={12}
-              height={12}
+              width="12"
+              height="12"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#B8D935"
+              stroke={M.accent}
               strokeWidth="2.5"
               strokeLinecap="round"
             >
@@ -4056,7 +2216,7 @@ function MobileDashboard({ s, setS }) {
         {/* Bell */}
         <button
           onClick={() => {
-            setNotifOpen((o) => !o);
+            setNotif((o) => !o);
             setMenuOpen(false);
           }}
           style={{
@@ -4074,13 +2234,14 @@ function MobileDashboard({ s, setS }) {
           }}
         >
           <svg
-            width={16}
-            height={16}
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="rgba(255,255,255,0.45)"
             strokeWidth="2"
             strokeLinecap="round"
+            strokeLinejoin="round"
           >
             <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
             <path d="M13.73 21a2 2 0 01-3.46 0" />
@@ -4094,7 +2255,7 @@ function MobileDashboard({ s, setS }) {
               height: 6,
               borderRadius: "50%",
               background: "#EF4444",
-              border: "1.5px solid #070D09",
+              border: `1.5px solid #070D09`,
             }}
           />
         </button>
@@ -4103,7 +2264,7 @@ function MobileDashboard({ s, setS }) {
         <button
           onClick={() => {
             setMenuOpen((o) => !o);
-            setNotifOpen(false);
+            setNotif(false);
           }}
           style={{
             width: 34,
@@ -4127,7 +2288,7 @@ function MobileDashboard({ s, setS }) {
               width: 13,
               height: 1.5,
               borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
+              background: menuOpen ? M.accent : "rgba(255,255,255,0.45)",
             }}
           />
           <span
@@ -4136,7 +2297,7 @@ function MobileDashboard({ s, setS }) {
               width: 13,
               height: 1.5,
               borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
+              background: menuOpen ? M.accent : "rgba(255,255,255,0.45)",
             }}
           />
           <span
@@ -4145,20 +2306,18 @@ function MobileDashboard({ s, setS }) {
               width: 9,
               height: 1.5,
               borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
+              background: menuOpen ? M.accent : "rgba(255,255,255,0.45)",
               alignSelf: "flex-start",
               marginLeft: 10,
             }}
           />
         </button>
-      </div>
 
-      {/* ── Notifications Dropdown ── */}
-      {notifOpen && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 340 }} onClick={() => setNotifOpen(false)}>
+        {/* Notif dropdown */}
+        {notif && (
           <div
             style={{
-              position: "absolute",
+              position: "fixed",
               top: 64,
               right: 12,
               width: 280,
@@ -4166,9 +2325,9 @@ function MobileDashboard({ s, setS }) {
               border: "1px solid rgba(255,255,255,0.08)",
               borderRadius: 14,
               boxShadow: "0 16px 48px rgba(0,0,0,0.5)",
+              zIndex: 350,
               overflow: "hidden",
             }}
-            onClick={(e) => e.stopPropagation()}
           >
             <div
               style={{
@@ -4179,10 +2338,10 @@ function MobileDashboard({ s, setS }) {
                 borderBottom: "1px solid rgba(255,255,255,0.08)",
               }}
             >
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>Alerts</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: M.white }}>Alerts</span>
               <span
-                style={{ fontSize: 11, color: "#B8D935", fontWeight: 700, cursor: "pointer" }}
-                onClick={() => setNotifOpen(false)}
+                style={{ fontSize: 11, color: M.accent, fontWeight: 700, cursor: "pointer" }}
+                onClick={() => setNotif(false)}
               >
                 Mark all read
               </span>
@@ -4202,13 +2361,13 @@ function MobileDashboard({ s, setS }) {
                     width: 6,
                     height: 6,
                     borderRadius: "50%",
-                    background: a.sig === "Bullish" ? "#22C55E" : "#F59E0B",
+                    background: sigC(a.sig),
                     marginTop: 4,
                     flexShrink: 0,
                   }}
                 />
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: "#fff", lineHeight: 1.3 }}>{a.h}</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: M.white, lineHeight: 1.3 }}>{a.h}</div>
                   <div
                     style={{
                       fontSize: 10,
@@ -4223,19 +2382,20 @@ function MobileDashboard({ s, setS }) {
               </div>
             ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* ── Hamburger Menu Drawer ── */}
+      {/* ═══ HAMBURGER MENU DRAWER ═══ */}
       {menuOpen && (
-        <div
-          style={{ position: "fixed", inset: 0, zIndex: 400, background: "rgba(0,0,0,0.65)" }}
-          onClick={() => setMenuOpen(false)}
-        >
+        <>
           <div
-            className="drawer"
+            onClick={() => setMenuOpen(false)}
+            style={{ position: "fixed", inset: 0, zIndex: 400, background: "rgba(0,0,0,0.65)" }}
+          />
+          <div
+            className="mscroll"
             style={{
-              position: "absolute",
+              position: "fixed",
               bottom: 0,
               left: 0,
               right: 0,
@@ -4243,9 +2403,10 @@ function MobileDashboard({ s, setS }) {
               borderRadius: "20px 20px 0 0",
               border: "1px solid rgba(184,217,53,0.15)",
               borderBottom: "none",
-              paddingBottom: "env(safe-area-inset-bottom,24px)",
+              zIndex: 401,
+              paddingBottom: 24,
+              animation: "slideUp .25s ease",
             }}
-            onClick={(e) => e.stopPropagation()}
           >
             <div
               style={{
@@ -4317,8 +2478,8 @@ function MobileDashboard({ s, setS }) {
                 }}
               >
                 <svg
-                  width={20}
-                  height={20}
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#B8D935"
@@ -4331,7 +2492,7 @@ function MobileDashboard({ s, setS }) {
                 </svg>
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", fontFamily: "DM Sans,sans-serif" }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: M.white, fontFamily: "DM Sans,sans-serif" }}>
                   Joseph Asante
                 </div>
                 <div
@@ -4353,26 +2514,22 @@ function MobileDashboard({ s, setS }) {
                   padding: "3px 8px",
                 }}
               >
-                <span style={{ fontSize: 10, fontWeight: 700, color: "#B8D935", fontFamily: "Inter,sans-serif" }}>
+                <span style={{ fontSize: 10, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
                   Pro
                 </span>
               </div>
             </div>
             {/* Return to website */}
-            <button
-              onClick={() => setMenuOpen(false)}
+            <div
               style={{
-                width: "100%",
                 display: "flex",
                 alignItems: "center",
                 gap: 14,
                 padding: "15px 20px",
-                background: "transparent",
-                border: "none",
                 borderBottom: "1px solid rgba(255,255,255,0.06)",
                 cursor: "pointer",
-                textAlign: "left",
               }}
+              onClick={() => setMenuOpen(false)}
             >
               <div
                 style={{
@@ -4387,8 +2544,8 @@ function MobileDashboard({ s, setS }) {
                 }}
               >
                 <svg
-                  width={18}
-                  height={18}
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="rgba(255,255,255,0.35)"
@@ -4401,7 +2558,7 @@ function MobileDashboard({ s, setS }) {
                 </svg>
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", fontFamily: "DM Sans,sans-serif" }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: M.white, fontFamily: "DM Sans,sans-serif" }}>
                   Return to Website
                 </div>
                 <div
@@ -4416,8 +2573,8 @@ function MobileDashboard({ s, setS }) {
                 </div>
               </div>
               <svg
-                width={14}
-                height={14}
+                width="14"
+                height="14"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="rgba(255,255,255,0.2)"
@@ -4426,16 +2583,16 @@ function MobileDashboard({ s, setS }) {
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </button>
-            {/* Nav links */}
+            </div>
+            {/* Nav items */}
             {[
               {
                 label: "About BRIDGE",
                 desc: "Our mission, model & sectors",
                 icon: (
                   <svg
-                    width={18}
-                    height={18}
+                    width="18"
+                    height="18"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="rgba(255,255,255,0.35)"
@@ -4454,8 +2611,8 @@ function MobileDashboard({ s, setS }) {
                 desc: "Full dashboard experience",
                 icon: (
                   <svg
-                    width={18}
-                    height={18}
+                    width="18"
+                    height="18"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="rgba(255,255,255,0.35)"
@@ -4474,8 +2631,8 @@ function MobileDashboard({ s, setS }) {
                 desc: "Manage alert preferences",
                 icon: (
                   <svg
-                    width={18}
-                    height={18}
+                    width="18"
+                    height="18"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="rgba(255,255,255,0.35)"
@@ -4493,8 +2650,8 @@ function MobileDashboard({ s, setS }) {
                 desc: "Docs, guides & contact",
                 icon: (
                   <svg
-                    width={18}
-                    height={18}
+                    width="18"
+                    height="18"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="rgba(255,255,255,0.35)"
@@ -4509,21 +2666,17 @@ function MobileDashboard({ s, setS }) {
                 ),
               },
             ].map((item, i) => (
-              <button
+              <div
                 key={i}
-                onClick={() => setMenuOpen(false)}
                 style={{
-                  width: "100%",
                   display: "flex",
                   alignItems: "center",
                   gap: 14,
                   padding: "13px 20px",
-                  background: "transparent",
-                  border: "none",
                   borderBottom: "1px solid rgba(255,255,255,0.04)",
                   cursor: "pointer",
-                  textAlign: "left",
                 }}
+                onClick={() => setMenuOpen(false)}
               >
                 <div
                   style={{
@@ -4562,8 +2715,8 @@ function MobileDashboard({ s, setS }) {
                   </div>
                 </div>
                 <svg
-                  width={14}
-                  height={14}
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="rgba(255,255,255,0.15)"
@@ -4572,23 +2725,19 @@ function MobileDashboard({ s, setS }) {
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </button>
+              </div>
             ))}
             {/* Sign out */}
-            <button
-              onClick={() => setMenuOpen(false)}
+            <div
               style={{
-                width: "100%",
                 display: "flex",
                 alignItems: "center",
                 gap: 14,
                 padding: "14px 20px",
-                background: "transparent",
-                border: "none",
                 borderTop: "1px solid rgba(255,255,255,0.06)",
                 cursor: "pointer",
-                textAlign: "left",
               }}
+              onClick={() => setMenuOpen(false)}
             >
               <div
                 style={{
@@ -4603,8 +2752,8 @@ function MobileDashboard({ s, setS }) {
                 }}
               >
                 <svg
-                  width={18}
-                  height={18}
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="rgba(239,68,68,0.6)"
@@ -4629,21 +2778,1453 @@ function MobileDashboard({ s, setS }) {
                   Sign Out
                 </div>
               </div>
-            </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* ── Sector Picker Drawer ── */}
-      {sectorDrawer && (
+      {/* ═══ SECTOR HEADER CARD ═══ */}
+      <div style={{ padding: "8px 16px 0" }}>
         <div
-          style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.65)" }}
-          onClick={() => setSectorDrawer(false)}
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            color: "#6B7280",
+            letterSpacing: "0.8px",
+            textTransform: "uppercase",
+            fontFamily: "Inter,sans-serif",
+            marginBottom: 10,
+          }}
         >
+          Dashboard
+        </div>
+        <div
+          style={{
+            background: M.card,
+            borderRadius: 16,
+            border: `1px solid ${M.accentBorder}`,
+            padding: "13px 14px",
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
+          <ScoreRing score={s.score} size={62} stroke={5} />
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div
+              style={{
+                fontSize: 9,
+                fontWeight: 700,
+                color: M.accent,
+                letterSpacing: "1.3px",
+                textTransform: "uppercase",
+                fontFamily: "Inter,sans-serif",
+                marginBottom: 2,
+              }}
+            >
+              Analytics · {s.tag}
+            </div>
+            <div
+              style={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: M.white,
+                lineHeight: 1.2,
+                letterSpacing: "-.2px",
+                marginBottom: 7,
+              }}
+            >
+              {s.full}
+            </div>
+            <div style={{ display: "flex", gap: 6 }}>
+              {[
+                { l: "Cap", v: `$${s.capLow}–${s.capHigh}M` },
+                { l: "IRR", v: `${s.irrHigh}%` },
+                { l: "Score", v: `${s.score}` },
+              ].map((m, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "3px 8px",
+                    borderRadius: 6,
+                    background: "rgba(255,255,255,0.05)",
+                    border: `1px solid ${M.divider}`,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                >
+                  <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>{m.l}</span>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: i === 1 ? M.accent : M.white,
+                      fontFamily: "Inter,sans-serif",
+                    }}
+                  >
+                    {m.v}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ SCROLLABLE CONTENT ═══ */}
+      <div className="mscroll" style={{ flex: 1, overflowY: "auto", padding: "10px 12px 0" }}>
+        {/* ─ DASHBOARD / OVERVIEW ─ */}
+        {navTab === "dashboard" && dashSub === "overview" && (
+          <>
+            {/* KPI 2x2 grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+              {[
+                {
+                  icon: TrendingUp,
+                  label: "Market Cap",
+                  val: `$${(s.capHigh * 0.75).toFixed(1)}B`,
+                  sub: "Sector aggregate",
+                  chg: "+5.1%",
+                },
+                { icon: ArrowUpRight, label: "IRR Ceiling", val: `${s.irrHigh}%`, sub: "Target return", chg: "+2.4%" },
+                {
+                  icon: LayoutDashboard,
+                  label: "Sub-sector Rev",
+                  val: `$${(s.capLow * 0.7).toFixed(1)}B`,
+                  sub: "Lead segment",
+                  chg: "+3.8%",
+                },
+                { icon: Clock, label: "BRIDGE Score", val: `${s.score}`, sub: "/ 100 composite", chg: "+1.2%" },
+              ].map((k, i) => {
+                const KIcon = k.icon;
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      background: M.card,
+                      borderRadius: 14,
+                      border: `1px solid ${M.cardBorder}`,
+                      padding: "12px 13px",
+                      position: "relative",
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 10,
+                        right: 11,
+                        fontSize: 10,
+                        fontWeight: 700,
+                        color: M.green,
+                        fontFamily: "Inter,sans-serif",
+                      }}
+                    >
+                      {k.chg}
+                    </div>
+                    <div
+                      style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: 7,
+                        background: M.accentDim,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginBottom: 10,
+                      }}
+                    >
+                      <KIcon size={13} color={M.accent} />
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 22,
+                        fontWeight: 700,
+                        color: M.white,
+                        letterSpacing: "-.5px",
+                        lineHeight: 1,
+                        marginBottom: 4,
+                      }}
+                    >
+                      {k.val}
+                    </div>
+                    <div style={{ fontSize: 10, color: M.muted, fontFamily: "Inter,sans-serif", lineHeight: 1.2 }}>
+                      {k.label}
+                    </div>
+                    <div style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif", marginTop: 2 }}>
+                      {k.sub}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Sub-sector breakdown */}
+            <MCard
+              icon={LayoutGrid}
+              title="Sub-sector Breakdown"
+              badge={`${s.subSectors.length} segments`}
+              defaultOpen={true}
+            >
+              <div style={{ padding: "12px 14px" }}>
+                <div style={{ height: 6, borderRadius: 4, overflow: "hidden", display: "flex", marginBottom: 13 }}>
+                  {s.subSectors.map((ss, i) => (
+                    <div key={i} style={{ flex: ss.pct, background: ss.color }} />
+                  ))}
+                </div>
+                {s.subSectors.map((ss, i) => (
+                  <div key={i} style={{ marginBottom: 11 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                        <div style={{ width: 7, height: 7, borderRadius: 2, background: ss.color, flexShrink: 0 }} />
+                        <span style={{ fontSize: 12, fontWeight: 600, color: M.white }}>{ss.name}</span>
+                      </div>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
+                        {ss.pct}%
+                      </span>
+                    </div>
+                    <div
+                      style={{ height: 3, background: "rgba(255,255,255,0.05)", borderRadius: 2, overflow: "hidden" }}
+                    >
+                      <div style={{ width: `${ss.pct}%`, height: "100%", background: M.tealBright, borderRadius: 2 }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+
+            {/* Impact Score */}
+            <MCard icon={Target} title="BRIDGE Impact Score" badge={`${s.score}`} badgeLime={true} defaultOpen={true}>
+              <div style={{ padding: "12px 14px" }}>
+                {[
+                  ["Peace & Prosperity", Math.min(s.score + 4, 96)],
+                  ["Strategic Fit", Math.max(s.score - 2, 0)],
+                  ["Feasibility", Math.min(s.score + 2, 98)],
+                  ["Scalability", Math.max(s.score - 1, 0)],
+                ].map(([l, v]) => (
+                  <div key={l} style={{ marginBottom: 11 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                      <span style={{ fontSize: 12, color: "rgba(255,255,255,0.65)", fontFamily: "Inter,sans-serif" }}>
+                        {l}
+                      </span>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
+                        {v}
+                      </span>
+                    </div>
+                    <div
+                      style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}
+                    >
+                      <div
+                        style={{
+                          width: `${v}%`,
+                          height: "100%",
+                          background: `linear-gradient(90deg,${M.tealBright},${M.accent})`,
+                          borderRadius: 2,
+                          transition: "width .8s ease",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+
+            {/* Capital Pipeline */}
+            <MCard icon={BarChart3} title="Capital Pipeline" badge={`${s.pipeline.length} active`} defaultOpen={false}>
+              <div style={{ padding: "12px 14px" }}>
+                {s.pipeline.map((p, i) => (
+                  <div key={i} style={{ marginBottom: 13 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: M.white }}>{p.label}</span>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
+                        {p.pct}%
+                      </span>
+                    </div>
+                    <div
+                      style={{ height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}
+                    >
+                      <div
+                        style={{
+                          width: `${p.pct}%`,
+                          height: "100%",
+                          background: `linear-gradient(90deg,${M.teal},${M.accent})`,
+                          borderRadius: 2,
+                        }}
+                      />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
+                      <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>
+                        {p.current} of {p.target}
+                      </span>
+                      <span style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>~{p.months}mo</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+
+            {/* Activity Heatmap */}
+            <MCard icon={LayoutGrid} title="Activity Heatmap" badge="7 Days" defaultOpen={false}>
+              <Heatmap />
+            </MCard>
+
+            {/* 30-Day Engagement */}
+            <MCard icon={Activity} title="30-Day Engagement" badge="Live" badgeLime={true} defaultOpen={false}>
+              <div style={{ padding: "12px 14px 0" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, marginBottom: 14 }}>
+                  {[
+                    { v: "1,692", l: "Active Signals", chg: "+56%" },
+                    { v: "1,423", l: "Conversion", chg: "+43%" },
+                    { v: "11,992", l: "Avg Duration", chg: "+28%" },
+                  ].map((m, i) => (
+                    <div
+                      key={i}
+                      style={{ background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "10px 10px" }}
+                    >
+                      <div style={{ fontSize: 16, fontWeight: 700, color: M.white, lineHeight: 1, marginBottom: 4 }}>
+                        {m.v}
+                      </div>
+                      <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginBottom: 5 }}>
+                        {m.l}
+                      </div>
+                      <div style={{ fontSize: 10, fontWeight: 700, color: M.green, fontFamily: "Inter,sans-serif" }}>
+                        {m.chg}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* Bar chart */}
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 60, marginBottom: 8 }}>
+                  {barData.map((v, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        flex: 1,
+                        background: i % 6 === 0 ? M.tealBright : `rgba(46,90,77,${0.25 + (v / maxBar) * 0.55})`,
+                        borderRadius: "2px 2px 0 0",
+                        height: `${(v / maxBar) * 100}%`,
+                        minHeight: 3,
+                      }}
+                    />
+                  ))}
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: 12 }}>
+                  {["Feb 5", "Feb 15", "Feb 25", "Mar 1"].map((d) => (
+                    <span key={d} style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </MCard>
+
+            {/* Cross-Sector Links */}
+            <MCard icon={Globe} title="Cross-Sector Links" defaultOpen={false}>
+              <div style={{ padding: "12px 14px", display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {s.cross.map((cid, i) => {
+                  const found = SECTORS.find((sec) => sec.id === cid);
+                  if (!found) return null;
+                  const FIcon = found.icon;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => setS(found)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 7,
+                        padding: "7px 13px",
+                        borderRadius: 20,
+                        border: `1px solid ${M.cardBorder}`,
+                        background: "rgba(255,255,255,0.04)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <FIcon size={12} color={M.accent} />
+                      <span
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 600,
+                          color: "rgba(255,255,255,0.7)",
+                          fontFamily: "Inter,sans-serif",
+                        }}
+                      >
+                        {found.short}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </MCard>
+            <div style={{ height: 16 }} />
+          </>
+        )}
+
+        {/* ─ DASHBOARD / VENTURES ─ */}
+        {navTab === "dashboard" && dashSub === "ventures" && (
+          <>
+            {/* Tier distribution */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 8 }}>
+              {[
+                [s.t1?.length, "I", M.accent, M.accentDim, "Priority"],
+                [s.t2?.length, "II", "rgba(61,122,102,1)", "rgba(61,122,102,0.15)", "Mid-term"],
+                [s.t3?.length, "III", M.muted, "rgba(255,255,255,0.06)", "Long-term"],
+              ].map(([n, lbl, col, bg, sub]) => (
+                <div
+                  key={lbl}
+                  style={{
+                    background: bg,
+                    borderRadius: 12,
+                    border: `1px solid ${M.cardBorder}`,
+                    padding: "12px",
+                    textAlign: "center",
+                  }}
+                >
+                  <div
+                    style={{ fontSize: 24, fontWeight: 700, color: col, fontFamily: "Inter,sans-serif", lineHeight: 1 }}
+                  >
+                    {n}
+                  </div>
+                  <div
+                    style={{ fontSize: 10, fontWeight: 700, color: col, fontFamily: "Inter,sans-serif", marginTop: 3 }}
+                  >
+                    Tier {lbl}
+                  </div>
+                  <div style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif", marginTop: 2 }}>{sub}</div>
+                </div>
+              ))}
+            </div>
+            <MCard
+              icon={Star}
+              title="Tier I Ventures"
+              badge={`${s.t1?.length} priority`}
+              badgeLime={true}
+              defaultOpen={true}
+            >
+              <div style={{ padding: "4px 0 4px" }}>
+                {(s.t1 || []).map((v, i) => {
+                  const VIcon = ventureIcon(v.name);
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 11,
+                        padding: "10px 14px",
+                        borderBottom: i < (s.t1 || []).length - 1 ? `1px solid ${M.divider}` : "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 8,
+                          background: "rgba(255,255,255,0.05)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <VIcon size={14} color={M.accent} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 600,
+                            color: M.white,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {v.name}
+                        </div>
+                        <div style={{ display: "flex", gap: 5, marginTop: 3, alignItems: "center" }}>
+                          <span
+                            style={{ fontSize: 10, color: M.accent, fontFamily: "Inter,sans-serif", fontWeight: 700 }}
+                          >
+                            {v.irr}
+                          </span>
+                          <span style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>·</span>
+                          <span
+                            style={{
+                              fontSize: 9,
+                              fontWeight: 700,
+                              color: v.risk === "LOW" ? M.green : v.risk === "HIGH" ? M.red : M.orange,
+                              fontFamily: "Inter,sans-serif",
+                            }}
+                          >
+                            {v.risk}
+                          </span>
+                        </div>
+                      </div>
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: M.white, fontFamily: "Inter,sans-serif" }}>
+                          {v.cap}
+                        </div>
+                        <div style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                          Capital
+                        </div>
+                      </div>
+                      <ChevronRight size={12} color={M.dim} />
+                    </div>
+                  );
+                })}
+              </div>
+            </MCard>
+            <MCard icon={Activity} title="Tier II Ventures" badge={`${s.t2?.length} mid-term`} defaultOpen={false}>
+              <div style={{ padding: "4px 0 4px" }}>
+                {(s.t2 || []).map((v, i) => {
+                  const VIcon = ventureIcon(v.name);
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 11,
+                        padding: "10px 14px",
+                        borderBottom: i < (s.t2 || []).length - 1 ? `1px solid ${M.divider}` : "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 8,
+                          background: "rgba(61,122,102,0.12)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <VIcon size={14} color={M.tealBright} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 600,
+                            color: M.white,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {v.name}
+                        </div>
+                        <div style={{ display: "flex", gap: 5, marginTop: 3 }}>
+                          <span
+                            style={{
+                              fontSize: 10,
+                              color: M.tealBright,
+                              fontFamily: "Inter,sans-serif",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {v.irr}
+                          </span>
+                          <span style={{ fontSize: 9, color: M.dim }}>·</span>
+                          <span
+                            style={{
+                              fontSize: 9,
+                              fontWeight: 700,
+                              color: v.risk === "LOW" ? M.green : v.risk === "HIGH" ? M.red : M.orange,
+                            }}
+                          >
+                            {v.risk}
+                          </span>
+                        </div>
+                      </div>
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            fontWeight: 600,
+                            color: "rgba(255,255,255,0.7)",
+                            fontFamily: "Inter,sans-serif",
+                          }}
+                        >
+                          {v.cap}
+                        </div>
+                      </div>
+                      <ChevronRight size={12} color={M.dim} />
+                    </div>
+                  );
+                })}
+              </div>
+            </MCard>
+            <MCard icon={FolderOpen} title="Tier III Ventures" badge={`${s.t3?.length} long-term`} defaultOpen={false}>
+              <div style={{ padding: "4px 0 4px" }}>
+                {(s.t3 || []).map((v, i) => {
+                  const VIcon = ventureIcon(v.name);
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 11,
+                        padding: "10px 14px",
+                        borderBottom: i < (s.t3 || []).length - 1 ? `1px solid ${M.divider}` : "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 8,
+                          background: "rgba(255,255,255,0.04)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <VIcon size={14} color={M.muted} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 500,
+                            color: "rgba(255,255,255,0.65)",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {v.name}
+                        </div>
+                        <div style={{ display: "flex", gap: 5, marginTop: 3 }}>
+                          <span style={{ fontSize: 10, color: M.muted, fontFamily: "Inter,sans-serif" }}>{v.irr}</span>
+                          <span style={{ fontSize: 9, color: M.dim }}>·</span>
+                          <span style={{ fontSize: 9, fontWeight: 700, color: v.risk === "HIGH" ? M.red : M.orange }}>
+                            {v.risk}
+                          </span>
+                        </div>
+                      </div>
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
+                        <div style={{ fontSize: 11, color: M.muted, fontFamily: "Inter,sans-serif" }}>{v.cap}</div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </MCard>
+            <div style={{ height: 16 }} />
+          </>
+        )}
+
+        {/* ─ DASHBOARD / SIGNALS ─ */}
+        {navTab === "dashboard" && dashSub === "signals" && (
+          <>
+            {/* Signal source breakdown */}
+            <MCard icon={BarChart2} title="Signal Source Breakdown" badge="+180%" defaultOpen={true}>
+              <div style={{ padding: "12px 14px" }}>
+                {/* Stacked bar */}
+                <div style={{ height: 32, borderRadius: 8, overflow: "hidden", display: "flex", marginBottom: 14 }}>
+                  <div
+                    style={{
+                      flex: 25,
+                      background: M.tealBright,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>25%</span>
+                  </div>
+                  <div
+                    style={{
+                      flex: 25,
+                      background: "rgba(61,122,102,0.55)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>25%</span>
+                  </div>
+                  <div
+                    style={{
+                      flex: 50,
+                      background: "rgba(46,90,77,0.35)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>50%</span>
+                  </div>
+                </div>
+                {[
+                  { l: "Earnings & Policy", pct: 25, col: M.tealBright },
+                  { l: "News & Media", pct: 25, col: "rgba(61,122,102,0.85)" },
+                  { l: "Analyst Ratings", pct: 50, col: "rgba(46,90,77,0.7)" },
+                ].map((src, i) => (
+                  <div key={i} style={{ marginBottom: 12 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                        <div style={{ width: 7, height: 7, borderRadius: "50%", background: src.col, flexShrink: 0 }} />
+                        <span style={{ fontSize: 12, fontWeight: 600, color: M.white }}>{src.l}</span>
+                      </div>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
+                        {src.pct}%
+                      </span>
+                    </div>
+                    <div
+                      style={{ height: 3, background: "rgba(255,255,255,0.05)", borderRadius: 2, overflow: "hidden" }}
+                    >
+                      <div style={{ width: `${src.pct}%`, height: "100%", background: src.col, borderRadius: 2 }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+
+            {/* Market signals (activity) */}
+            <MCard icon={TrendingUp} title="Market Signals" badge={`${s.activity.length}`} defaultOpen={true}>
+              <div style={{ padding: "4px 0 4px" }}>
+                {s.activity.map((a, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: 11,
+                      padding: "11px 14px",
+                      borderBottom: i < s.activity.length - 1 ? `1px solid ${M.divider}` : "none",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        background: sigC(a.sig),
+                        marginTop: 5,
+                        flexShrink: 0,
+                        boxShadow: `0 0 7px ${sigC(a.sig)}`,
+                      }}
+                    />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: M.white, lineHeight: 1.3, marginBottom: 5 }}>
+                        {a.h}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                        <span
+                          style={{
+                            fontSize: 9,
+                            fontWeight: 700,
+                            padding: "2px 7px",
+                            borderRadius: 5,
+                            background:
+                              a.sig === "Bullish"
+                                ? "rgba(74,222,128,0.12)"
+                                : a.sig === "Bearish"
+                                  ? "rgba(248,113,113,0.12)"
+                                  : "rgba(251,191,36,0.12)",
+                            color: sigC(a.sig),
+                            fontFamily: "Inter,sans-serif",
+                          }}
+                        >
+                          {a.sig}
+                        </span>
+                        <span style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>{a.date}</span>
+                        <span
+                          style={{
+                            marginLeft: "auto",
+                            fontSize: 11,
+                            fontWeight: 700,
+                            color: sigC(a.sig),
+                            fontFamily: "Inter,sans-serif",
+                          }}
+                        >
+                          {a.amt}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+
+            {/* Sector Performance Index */}
+            <MCard icon={Activity} title="Sector Performance Index" badge="8-Month" defaultOpen={false}>
+              <div style={{ padding: "12px 14px 6px" }}>
+                <div style={{ display: "flex", gap: 14, marginBottom: 12 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: M.tealBright }} />
+                    <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>Actual</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(184,217,53,0.35)" }} />
+                    <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>AI Projection</span>
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 70 }}>
+                  {["A", "S", "O", "N", "D", "J", "F", "M"].map((mo, i) => {
+                    const h = 25 + i * 8 + Math.random() * 15;
+                    const isProj = i >= 5;
+                    return (
+                      <div
+                        key={mo}
+                        style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}
+                      >
+                        <div
+                          style={{
+                            width: "100%",
+                            background: isProj ? "rgba(184,217,53,0.25)" : M.tealBright,
+                            borderRadius: "3px 3px 0 0",
+                            height: `${h}px`,
+                            border: isProj ? `1px dashed rgba(184,217,53,0.4)` : "none",
+                          }}
+                        />
+                        <span style={{ fontSize: 8, color: M.dim, fontFamily: "Inter,sans-serif" }}>{mo}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </MCard>
+
+            {/* Volatility breakdown */}
+            <MCard icon={SlidersHorizontal} title="Volatility vs Growth Rate" badge="Sub-sectors" defaultOpen={false}>
+              <div style={{ padding: "6px 0 6px" }}>
+                <div style={{ padding: "0 14px 8px", fontSize: 10, color: M.muted, fontFamily: "Inter,sans-serif" }}>
+                  Risk-return profile · bubble size = market share
+                </div>
+                {s.subSectors.map((ss, i) => {
+                  const growth = Math.floor(25 + Math.random() * 55);
+                  const risk = Math.floor(10 + Math.random() * 70);
+                  const abbr = ss.name
+                    .split(" ")
+                    .map((w) => w[0])
+                    .join("")
+                    .slice(0, 2)
+                    .toUpperCase();
+                  const rCol = risk > 60 ? M.red : risk > 35 ? M.orange : M.green;
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 11,
+                        padding: "10px 14px",
+                        borderBottom: i < s.subSectors.length - 1 ? `1px solid ${M.divider}` : "none",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: "50%",
+                          background: "rgba(46,90,77,0.4)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <span style={{ fontSize: 10, fontWeight: 700, color: M.white, fontFamily: "Inter,sans-serif" }}>
+                          {abbr}
+                        </span>
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: M.white }}>{ss.name}</div>
+                        <div style={{ fontSize: 10, color: M.dim, fontFamily: "Inter,sans-serif", marginTop: 2 }}>
+                          Growth <span style={{ color: M.green, fontWeight: 700 }}>{growth}%</span>
+                          {"  "}Risk <span style={{ color: rCol, fontWeight: 700 }}>{risk}%</span>
+                        </div>
+                      </div>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
+                        {ss.pct}%
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </MCard>
+            <div style={{ height: 16 }} />
+          </>
+        )}
+
+        {/* ─ DASHBOARD / COMPANIES ─ */}
+        {navTab === "dashboard" && dashSub === "companies" && (
+          <>
+            {/* Sector market overview — 3 stat chips */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 8 }}>
+              {[
+                { label: "Total Market Cap", val: `$${(s.capHigh * 0.9).toFixed(1)}B`, chg: "+4.2%", up: true },
+                {
+                  label: "Avg BRIDGE Score",
+                  val: `${Math.round(companies.reduce((a, c) => a + c.sc, 0) / companies.length)}`,
+                  chg: "+1.8pt",
+                  up: true,
+                },
+                { label: "Active Players", val: `${companies.length}`, chg: "Tracked", up: null },
+              ].map((m, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: M.card,
+                    borderRadius: 12,
+                    border: `1px solid ${M.cardBorder}`,
+                    padding: "11px 10px",
+                  }}
+                >
+                  <div style={{ fontSize: 16, fontWeight: 700, color: M.white, lineHeight: 1, marginBottom: 3 }}>
+                    {m.val}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 8,
+                      color: M.muted,
+                      fontFamily: "Inter,sans-serif",
+                      marginBottom: 5,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {m.label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 9,
+                      fontWeight: 700,
+                      color: m.up === null ? M.muted : m.up ? M.green : M.red,
+                      fontFamily: "Inter,sans-serif",
+                    }}
+                  >
+                    {m.chg}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Top Companies — expanded rows */}
+            <MCard icon={User} title="Top Companies" badge={`${companies.length} active`} defaultOpen={true}>
+              <div style={{ padding: "4px 0 4px" }}>
+                {companies.map((co, i) => {
+                  const sparkData = [40, 55, 48, 62, 58, 70, 65, co.sc];
+                  const sparkMax = Math.max(...sparkData),
+                    sparkMin = Math.min(...sparkData);
+                  const pts = sparkData
+                    .map((v, idx) => `${idx * (40 / 7)},${20 - ((v - sparkMin) / (sparkMax - sparkMin || 1)) * 18}`)
+                    .join(" ");
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        padding: "12px 14px",
+                        borderBottom: i < companies.length - 1 ? `1px solid ${M.divider}` : "none",
+                      }}
+                    >
+                      {/* Row 1: rank + name + value */}
+                      <div style={{ display: "flex", alignItems: "flex-start", gap: 11, marginBottom: 8 }}>
+                        <div
+                          style={{
+                            width: 32,
+                            height: 32,
+                            borderRadius: 8,
+                            background: "rgba(255,255,255,0.05)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                            fontSize: 11,
+                            fontWeight: 800,
+                            color: M.muted,
+                            fontFamily: "Inter,sans-serif",
+                          }}
+                        >
+                          {co.r}
+                        </div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div
+                            style={{
+                              fontSize: 13,
+                              fontWeight: 700,
+                              color: M.white,
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {co.name}
+                          </div>
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 2 }}>
+                            <span style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>{co.tk}</span>
+                            <span
+                              style={{
+                                fontSize: 10,
+                                fontWeight: 700,
+                                color: co.chg.startsWith("-") ? M.red : M.green,
+                                fontFamily: "Inter,sans-serif",
+                              }}
+                            >
+                              {co.chg}
+                            </span>
+                            <span style={{ fontSize: 9, color: M.dim }}>·</span>
+                            <span style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>30d</span>
+                          </div>
+                        </div>
+                        <div style={{ textAlign: "right", flexShrink: 0 }}>
+                          <div
+                            style={{ fontSize: 14, fontWeight: 700, color: M.white, fontFamily: "Inter,sans-serif" }}
+                          >
+                            {co.val}
+                          </div>
+                          <div style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                            Valuation
+                          </div>
+                        </div>
+                      </div>
+                      {/* Row 2: score bar + sparkline */}
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                            <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>
+                              BRIDGE Score
+                            </span>
+                            <span
+                              style={{
+                                fontSize: 9,
+                                fontWeight: 700,
+                                color: co.sc >= 80 ? M.green : co.sc >= 65 ? M.orange : M.red,
+                                fontFamily: "Inter,sans-serif",
+                              }}
+                            >
+                              {co.sc}
+                            </span>
+                          </div>
+                          <div
+                            style={{
+                              height: 4,
+                              background: "rgba(255,255,255,0.06)",
+                              borderRadius: 2,
+                              overflow: "hidden",
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: `${co.sc}%`,
+                                height: "100%",
+                                background: `linear-gradient(90deg,${M.teal},${co.sc >= 80 ? M.green : co.sc >= 65 ? M.orange : M.red})`,
+                                borderRadius: 2,
+                              }}
+                            />
+                          </div>
+                        </div>
+                        {/* Mini sparkline */}
+                        <svg width="40" height="20" style={{ flexShrink: 0, opacity: 0.7 }}>
+                          <polyline
+                            points={pts}
+                            fill="none"
+                            stroke={co.chg.startsWith("-") ? M.red : M.tealBright}
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </MCard>
+
+            {/* Market Share Breakdown */}
+            <MCard
+              icon={BarChart2}
+              title="Market Share Breakdown"
+              badge={`${s.subSectors.length} segments`}
+              defaultOpen={true}
+            >
+              <div style={{ padding: "12px 14px" }}>
+                {/* Stacked bar */}
+                <div
+                  style={{ height: 10, borderRadius: 6, overflow: "hidden", display: "flex", marginBottom: 14, gap: 1 }}
+                >
+                  {s.subSectors.map((ss, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        flex: ss.pct,
+                        background: ss.color,
+                        borderRadius: i === 0 ? "6px 0 0 6px" : i === s.subSectors.length - 1 ? "0 6px 6px 0" : "0",
+                      }}
+                    />
+                  ))}
+                </div>
+                {s.subSectors.map((ss, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: 2, background: ss.color, flexShrink: 0 }} />
+                    <span style={{ flex: 1, fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.7)" }}>
+                      {ss.name}
+                    </span>
+                    <div style={{ textAlign: "right" }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
+                        {ss.pct}%
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+
+            {/* Momentum Watch — movers */}
+            <MCard icon={TrendingUp} title="Momentum Watch" badge="30 days" defaultOpen={true}>
+              <div style={{ padding: "10px 14px" }}>
+                <div
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    color: M.muted,
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    fontFamily: "Inter,sans-serif",
+                    marginBottom: 10,
+                  }}
+                >
+                  Top Movers
+                </div>
+                {[...companies]
+                  .sort((a, b) => parseFloat(b.chg) - parseFloat(a.chg))
+                  .slice(0, 3)
+                  .map((co, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        padding: "8px 0",
+                        borderBottom: i < 2 ? `1px solid ${M.divider}` : "none",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 28,
+                          height: 28,
+                          borderRadius: 7,
+                          background: co.chg.startsWith("-") ? "rgba(248,113,113,0.1)" : "rgba(74,222,128,0.1)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        {co.chg.startsWith("-") ? (
+                          <TrendingDown size={13} color={M.red} />
+                        ) : (
+                          <TrendingUp size={13} color={M.green} />
+                        )}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 600,
+                            color: M.white,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {co.name}
+                        </div>
+                        <div style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                          {co.tk} · Score {co.sc}
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          padding: "4px 10px",
+                          borderRadius: 20,
+                          background: co.chg.startsWith("-") ? "rgba(248,113,113,0.12)" : "rgba(74,222,128,0.12)",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: 11,
+                            fontWeight: 700,
+                            color: co.chg.startsWith("-") ? M.red : M.green,
+                            fontFamily: "Inter,sans-serif",
+                          }}
+                        >
+                          {co.chg}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                <div style={{ height: "1px", background: M.divider, margin: "10px 0" }} />
+                <div
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    color: M.muted,
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    fontFamily: "Inter,sans-serif",
+                    marginBottom: 10,
+                  }}
+                >
+                  Laggards
+                </div>
+                {[...companies]
+                  .sort((a, b) => parseFloat(a.chg) - parseFloat(b.chg))
+                  .slice(0, 2)
+                  .map((co, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        padding: "8px 0",
+                        borderBottom: i < 1 ? `1px solid ${M.divider}` : "none",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 28,
+                          height: 28,
+                          borderRadius: 7,
+                          background: "rgba(248,113,113,0.1)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <TrendingDown size={13} color={M.red} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 12,
+                            fontWeight: 600,
+                            color: M.white,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {co.name}
+                        </div>
+                        <div style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                          {co.tk} · Score {co.sc}
+                        </div>
+                      </div>
+                      <div style={{ padding: "4px 10px", borderRadius: 20, background: "rgba(248,113,113,0.12)" }}>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: M.red, fontFamily: "Inter,sans-serif" }}>
+                          {co.chg}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </MCard>
+
+            {/* BRIDGE Score Distribution */}
+            <MCard icon={Target} title="Score Distribution" badge="All tracked" defaultOpen={false}>
+              <div style={{ padding: "12px 14px" }}>
+                {[
+                  { range: "80–100", label: "Strong", col: M.green, count: companies.filter((c) => c.sc >= 80).length },
+                  {
+                    range: "65–79",
+                    label: "Moderate",
+                    col: M.orange,
+                    count: companies.filter((c) => c.sc >= 65 && c.sc < 80).length,
+                  },
+                  { range: "<65", label: "Watch", col: M.red, count: companies.filter((c) => c.sc < 65).length },
+                ].map((band, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                    <div
+                      style={{
+                        width: 38,
+                        height: 38,
+                        borderRadius: 10,
+                        background: `rgba(${band.col === "#4ADE80" ? "74,222,128" : band.col === "#F59E0B" ? "245,158,11" : "248,113,113"},0.1)`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <span style={{ fontSize: 11, fontWeight: 700, color: band.col, fontFamily: "Inter,sans-serif" }}>
+                        {band.count}
+                      </span>
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                        <span style={{ fontSize: 12, fontWeight: 600, color: M.white }}>{band.label}</span>
+                        <span style={{ fontSize: 10, color: M.dim, fontFamily: "Inter,sans-serif" }}>{band.range}</span>
+                      </div>
+                      <div
+                        style={{ height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}
+                      >
+                        <div
+                          style={{
+                            width: `${(band.count / companies.length) * 100}%`,
+                            height: "100%",
+                            background: band.col,
+                            borderRadius: 2,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+
+            <div style={{ height: 16 }} />
+          </>
+        )}
+
+        {/* ─ DASHBOARD / ANALYTICS ─ */}
+        {navTab === "dashboard" && dashSub === "analytics" && (
+          <>
+            {/* Engagement + heatmap */}
+            <MCard icon={Activity} title="30-Day Engagement" badge="Live" badgeLime={true} defaultOpen={true}>
+              <div style={{ padding: "12px 14px 6px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, marginBottom: 14 }}>
+                  {[
+                    { v: "1,692", l: "Active Signals", chg: "+56%" },
+                    { v: "1,423", l: "Conversion", chg: "+43%" },
+                    { v: "11,992", l: "Avg Duration", chg: "+28%" },
+                  ].map((m, i) => (
+                    <div
+                      key={i}
+                      style={{ background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "10px 9px" }}
+                    >
+                      <div style={{ fontSize: 17, fontWeight: 700, color: M.white, lineHeight: 1, marginBottom: 3 }}>
+                        {m.v}
+                      </div>
+                      <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginBottom: 5 }}>
+                        {m.l}
+                      </div>
+                      <div style={{ fontSize: 10, fontWeight: 700, color: M.green, fontFamily: "Inter,sans-serif" }}>
+                        {m.chg}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 55, marginBottom: 8 }}>
+                  {barData.map((v, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        flex: 1,
+                        background: i % 6 === 0 ? M.tealBright : `rgba(46,90,77,${0.25 + (v / maxBar) * 0.55})`,
+                        borderRadius: "2px 2px 0 0",
+                        height: `${(v / maxBar) * 100}%`,
+                        minHeight: 3,
+                      }}
+                    />
+                  ))}
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: 10 }}>
+                  {["Feb 5", "Feb 15", "Feb 25", "Mar 1"].map((d) => (
+                    <span key={d} style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </MCard>
+
+            <MCard icon={LayoutGrid} title="Activity Heatmap" badge="7 Days" defaultOpen={true}>
+              <Heatmap />
+            </MCard>
+
+            <MCard icon={BarChart2} title="Signal Source Breakdown" badge="+180%" defaultOpen={false}>
+              <div style={{ padding: "12px 14px" }}>
+                <div style={{ height: 32, borderRadius: 8, overflow: "hidden", display: "flex", marginBottom: 14 }}>
+                  <div
+                    style={{
+                      flex: 25,
+                      background: M.tealBright,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>25%</span>
+                  </div>
+                  <div
+                    style={{
+                      flex: 25,
+                      background: "rgba(61,122,102,0.55)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>25%</span>
+                  </div>
+                  <div
+                    style={{
+                      flex: 50,
+                      background: "rgba(46,90,77,0.35)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>50%</span>
+                  </div>
+                </div>
+                {[
+                  { l: "Earnings & Policy", pct: 25, col: M.tealBright },
+                  { l: "News & Media", pct: 25, col: "rgba(61,122,102,0.85)" },
+                  { l: "Analyst Ratings", pct: 50, col: "rgba(46,90,77,0.7)" },
+                ].map((src, i) => (
+                  <div key={i} style={{ marginBottom: 12 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                        <div style={{ width: 7, height: 7, borderRadius: "50%", background: src.col, flexShrink: 0 }} />
+                        <span style={{ fontSize: 12, fontWeight: 600, color: M.white }}>{src.l}</span>
+                      </div>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
+                        {src.pct}%
+                      </span>
+                    </div>
+                    <div
+                      style={{ height: 3, background: "rgba(255,255,255,0.05)", borderRadius: 2, overflow: "hidden" }}
+                    >
+                      <div style={{ width: `${src.pct}%`, height: "100%", background: src.col, borderRadius: 2 }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+            <div style={{ height: 16 }} />
+          </>
+        )}
+      </div>
+
+      {/* ═══ SECTOR DRAWER ═══ */}
+      {sectorDrawer && (
+        <>
           <div
-            className="drawer"
+            onClick={() => setSectorDrawer(false)}
+            style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.65)" }}
+          />
+          <div
+            className="mscroll"
             style={{
-              position: "absolute",
+              position: "fixed",
               bottom: 0,
               left: 0,
               right: 0,
@@ -4652,12 +4233,14 @@ function MobileDashboard({ s, setS }) {
               maxHeight: "82vh",
               display: "flex",
               flexDirection: "column",
-              paddingBottom: "env(safe-area-inset-bottom,16px)",
+              zIndex: 201,
+              paddingBottom: 16,
               border: "1px solid rgba(184,217,53,0.15)",
               borderBottom: "none",
+              animation: "slideUp .25s ease",
             }}
-            onClick={(e) => e.stopPropagation()}
           >
+            {/* Drag handle */}
             <div
               style={{
                 width: 36,
@@ -4665,8 +4248,10 @@ function MobileDashboard({ s, setS }) {
                 borderRadius: 2,
                 background: "rgba(255,255,255,0.15)",
                 margin: "12px auto 0",
+                flexShrink: 0,
               }}
             />
+            {/* Header */}
             <div
               style={{
                 padding: "12px 20px 8px",
@@ -4704,11 +4289,13 @@ function MobileDashboard({ s, setS }) {
                 Done
               </button>
             </div>
-            <div style={{ overflowY: "auto", flex: 1 }}>
+            {/* List */}
+            <div className="mscroll" style={{ overflowY: "auto", flex: 1 }}>
               {[...SECTORS]
                 .sort((a, b) => b.score - a.score)
                 .map((sec, i) => {
-                  const act = sec.id === s.id;
+                  const SI = sec.icon,
+                    act = sec.id === s.id;
                   return (
                     <div
                       key={sec.id}
@@ -4731,21 +4318,21 @@ function MobileDashboard({ s, setS }) {
                           width: 38,
                           height: 38,
                           borderRadius: 11,
-                          background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
+                          flexShrink: 0,
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          flexShrink: 0,
+                          background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
                         }}
                       >
-                        {sec.svgIcon(act ? "#B8D935" : "rgba(255,255,255,0.35)", 16)}
+                        <SI size={16} color={act ? M.accent : "rgba(255,255,255,0.35)"} />
                       </div>
-                      <div style={{ flex: 1 }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
                         <div
                           style={{
                             fontSize: 13,
                             fontWeight: act ? 700 : 500,
-                            color: act ? "#fff" : "rgba(255,255,255,0.7)",
+                            color: act ? M.white : "rgba(255,255,255,0.7)",
                             fontFamily: "DM Sans,sans-serif",
                           }}
                         >
@@ -4759,16 +4346,16 @@ function MobileDashboard({ s, setS }) {
                             marginTop: 1,
                           }}
                         >
-                          {sec.totalV} ventures · ${sec.capLow}–{sec.capHigh}M
+                          {sec.t1?.length || 5} ventures · ${sec.capLow}–{sec.capHigh}M
                         </div>
                       </div>
-                      <div style={{ textAlign: "right" }}>
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
                         <div
                           style={{
                             fontSize: 16,
                             fontWeight: 800,
-                            color: act ? "#B8D935" : "rgba(255,255,255,0.28)",
                             fontFamily: "Inter,sans-serif",
+                            color: act ? M.accent : "rgba(255,255,255,0.28)",
                           }}
                         >
                           {sec.score}
@@ -4779,7 +4366,7 @@ function MobileDashboard({ s, setS }) {
                       </div>
                       {act && (
                         <div
-                          style={{ width: 8, height: 8, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }}
+                          style={{ width: 8, height: 8, borderRadius: "50%", background: M.accent, flexShrink: 0 }}
                         />
                       )}
                     </div>
@@ -4787,381 +4374,310 @@ function MobileDashboard({ s, setS }) {
                 })}
             </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* ── Resources Sub-menu Popup ── */}
-      {resourcesMenu && (
-        <div
-          style={{ position: "fixed", inset: 0, zIndex: 300, background: "rgba(0,0,0,0.55)" }}
-          onClick={() => setResourcesMenu(false)}
-        >
+      {/* ═══ DASHBOARD SUB-MENU POPUP ═══ */}
+      {dashMenu && (
+        <>
+          <div onClick={() => setDashMenu(false)} style={{ position: "fixed", inset: 0, zIndex: 98 }} />
           <div
-            className="drawer"
             style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
+              position: "fixed",
+              bottom: 72,
+              left: 16,
+              width: 220,
               background: "#0F1A12",
-              borderRadius: "20px 20px 0 0",
-              paddingBottom: "calc(env(safe-area-inset-bottom,16px) + 70px)",
-              border: "1px solid rgba(184,217,53,0.15)",
-              borderBottom: "none",
+              borderRadius: 16,
+              border: "1px solid rgba(255,255,255,0.08)",
+              boxShadow: "0 -8px 32px rgba(0,0,0,0.5)",
+              zIndex: 99,
+              padding: 6,
+              animation: "slideUp .2s ease",
             }}
-            onClick={(e) => e.stopPropagation()}
           >
+            {/* caret */}
             <div
               style={{
-                width: 36,
-                height: 4,
-                borderRadius: 2,
-                background: "rgba(255,255,255,0.15)",
-                margin: "12px auto 16px",
+                position: "absolute",
+                bottom: -6,
+                left: 52,
+                width: 12,
+                height: 12,
+                background: "#0F1A12",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderTop: "none",
+                borderLeft: "none",
+                transform: "rotate(45deg)",
+                zIndex: 100,
               }}
             />
-            <div
-              style={{ padding: "0 20px 6px", display: "flex", alignItems: "center", justifyContent: "space-between" }}
-            >
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: "rgba(255,255,255,0.35)",
-                  fontFamily: "Inter,sans-serif",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                }}
-              >
-                Reports
-              </span>
-              <button
-                onClick={() => setResourcesMenu(false)}
-                style={{
-                  background: "rgba(255,255,255,0.08)",
-                  border: "none",
-                  borderRadius: 7,
-                  padding: "4px 10px",
-                  fontSize: 11,
-                  color: "rgba(255,255,255,0.4)",
-                  cursor: "pointer",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                Done
-              </button>
-            </div>
-            {/* ── Reports parent ── */}
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-              <button
-                onClick={() => {
-                  setResourcesView("reports");
-                  setActiveNav("resources");
-                  setResourcesMenu(false);
-                }}
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 14,
-                  padding: "14px 20px",
-                  background:
-                    resourcesView === "reports" && activeNav === "resources" ? "rgba(184,217,53,0.07)" : "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  textAlign: "left",
-                }}
-              >
-                <div
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 11,
-                    background:
-                      resourcesView === "reports" && activeNav === "resources"
-                        ? "rgba(184,217,53,0.15)"
-                        : "rgba(255,255,255,0.06)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    color:
-                      resourcesView === "reports" && activeNav === "resources" ? "#B8D935" : "rgba(255,255,255,0.35)",
-                  }}
-                >
-                  <svg
-                    width={18}
-                    height={18}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                  </svg>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 700,
-                      color: resourcesView === "reports" && activeNav === "resources" ? "#B8D935" : "#fff",
-                      fontFamily: "DM Sans,sans-serif",
-                    }}
-                  >
-                    Reports
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 11,
-                      color: "rgba(255,255,255,0.35)",
-                      fontFamily: "Inter,sans-serif",
-                      marginTop: 2,
-                    }}
-                  >
-                    Sector intelligence & analysis
-                  </div>
-                </div>
-                {resourcesView === "reports" && activeNav === "resources" && (
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
-                )}
-              </button>
-
-              {/* Sub-items */}
-              {[
-                {
-                  id: "sector-performance",
-                  label: "Sector Performance",
-                  sub: "Charts, KPIs & capital flow",
-                  icon: (
-                    <svg
-                      width={15}
-                      height={15}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                    </svg>
-                  ),
-                },
-                {
-                  id: "activity-log",
-                  label: "Sector Activity Log",
-                  sub: "Searchable activity & signal feed",
-                  icon: (
-                    <svg
-                      width={15}
-                      height={15}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M9 11l3 3L22 4" />
-                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                    </svg>
-                  ),
-                },
-              ].map((opt, i) => {
-                const act = resourcesView === opt.id && activeNav === "resources";
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {DASH_SUBS.map((item) => {
+                const act = dashSub === item.id;
                 return (
                   <button
-                    key={opt.id}
+                    key={item.id}
                     onClick={() => {
-                      setResourcesView(opt.id);
-                      setActiveNav("resources");
-                      setResourcesMenu(false);
+                      setDashSub(item.id);
+                      setDashMenu(false);
                     }}
                     style={{
-                      width: "100%",
                       display: "flex",
                       alignItems: "center",
-                      gap: 12,
-                      padding: "11px 20px 11px 74px",
-                      background: act ? "rgba(184,217,53,0.07)" : "transparent",
+                      justifyContent: "space-between",
+                      padding: "8px 16px",
+                      borderRadius: 10,
+                      background: act ? "rgba(184,217,53,0.12)" : "transparent",
                       border: "none",
                       cursor: "pointer",
-                      borderTop: "1px solid rgba(255,255,255,0.04)",
+                      width: "100%",
                       textAlign: "left",
                     }}
                   >
-                    <div
+                    <span
                       style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: 8,
-                        background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        color: act ? "#B8D935" : "rgba(255,255,255,0.35)",
+                        fontSize: 12,
+                        fontWeight: act ? 700 : 500,
+                        color: act ? "#B8D935" : "rgba(255,255,255,0.5)",
+                        fontFamily: "Inter,sans-serif",
                       }}
                     >
-                      {opt.icon}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div
-                        style={{
-                          fontSize: 13,
-                          fontWeight: act ? 700 : 600,
-                          color: act ? "#B8D935" : "rgba(255,255,255,0.8)",
-                          fontFamily: "DM Sans,sans-serif",
-                        }}
-                      >
-                        {opt.label}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: 10,
-                          color: "rgba(255,255,255,0.3)",
-                          fontFamily: "Inter,sans-serif",
-                          marginTop: 1,
-                        }}
-                      >
-                        {opt.sub}
-                      </div>
-                    </div>
+                      {item.label}
+                    </span>
                     {act && (
-                      <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
+                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
                     )}
                   </button>
                 );
               })}
             </div>
-
-            {/* ── Resource Library ── */}
-            <button
-              onClick={() => {
-                setResourcesView("library");
-                setActiveNav("resources");
-                setResourcesMenu(false);
-              }}
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                padding: "14px 20px",
-                background:
-                  resourcesView === "library" && activeNav === "resources" ? "rgba(184,217,53,0.07)" : "transparent",
-                border: "none",
-                borderTop: "1px solid rgba(255,255,255,0.06)",
-                cursor: "pointer",
-                textAlign: "left",
-              }}
-            >
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 11,
-                  background:
-                    resourcesView === "library" && activeNav === "resources"
-                      ? "rgba(184,217,53,0.15)"
-                      : "rgba(255,255,255,0.06)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                  color:
-                    resourcesView === "library" && activeNav === "resources" ? "#B8D935" : "rgba(255,255,255,0.35)",
-                }}
-              >
-                <svg
-                  width={18}
-                  height={18}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
-                </svg>
-              </div>
-              <div style={{ flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 700,
-                    color: resourcesView === "library" && activeNav === "resources" ? "#B8D935" : "#fff",
-                    fontFamily: "DM Sans,sans-serif",
-                  }}
-                >
-                  Resource Library
-                </div>
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: "rgba(255,255,255,0.35)",
-                    fontFamily: "Inter,sans-serif",
-                    marginTop: 2,
-                  }}
-                >
-                  Docs, guides & reference materials
-                </div>
-              </div>
-              {resourcesView === "library" && activeNav === "resources" && (
-                <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
-              )}
-            </button>
           </div>
-        </div>
+        </>
       )}
 
-      {/* ── Scrollable Content ── */}
-      <div style={{ flex: 1, overflowY: "auto", background: activeNav === "resources" ? "#090F0B" : C.bg }}>
-        {renderPage()}
-      </div>
+      {/* ═══ ANALYTICS SUB-MENU POPUP ═══ */}
+      {analyticsMenu && (
+        <>
+          <div onClick={() => setAnalyticsMenu(false)} style={{ position: "fixed", inset: 0, zIndex: 98 }} />
+          <div
+            style={{
+              position: "fixed",
+              bottom: 72,
+              left: "50%",
+              transform: "translateX(-50%)",
+              minWidth: 160,
+              background: "#0F1A12",
+              borderRadius: 16,
+              border: "1px solid rgba(255,255,255,0.08)",
+              boxShadow: "0 -8px 32px rgba(0,0,0,0.5)",
+              zIndex: 99,
+              padding: 6,
+              animation: "slideUp .2s ease",
+            }}
+          >
+            {/* caret arrow pointing down toward Analytics icon */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: -6,
+                left: "50%",
+                transform: "translateX(-50%) rotate(45deg)",
+                width: 12,
+                height: 12,
+                background: "#0F1A12",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderTop: "none",
+                borderLeft: "none",
+                zIndex: 100,
+              }}
+            />
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {ANALYTICS_SUBS.map((item) => {
+                const act = analyticsSub === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setAnalyticsSub(item.id);
+                      setAnalyticsMenu(false);
+                    }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "8px 16px",
+                      borderRadius: 10,
+                      background: act ? "rgba(184,217,53,0.12)" : "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      width: "100%",
+                      textAlign: "left",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 12,
+                        fontWeight: act ? 700 : 500,
+                        color: act ? "#B8D935" : "rgba(255,255,255,0.5)",
+                        fontFamily: "Inter,sans-serif",
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                    {act && (
+                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      )}
 
-      {/* ── Bottom Nav ── */}
+      {/* ═══ BOTTOM NAV ═══ */}
       <div
         style={{
-          background: C.sidebar,
-          borderTop: "1px solid rgba(255,255,255,0.06)",
+          flexShrink: 0,
+          height: 56,
+          background: "#080E09",
+          borderTop: `1px solid ${M.divider}`,
           display: "flex",
           alignItems: "stretch",
-          flexShrink: 0,
-          paddingBottom: "env(safe-area-inset-bottom,0px)",
+          position: "relative",
+          zIndex: 50,
         }}
       >
         {[
-          { id: "dashboard", label: "Dashboard", icon: (c) => <LayoutGrid size={20} color={c} /> },
-          { id: "overview", label: "Overview", icon: (c) => <Activity size={20} color={c} /> },
-          { id: "analytics", label: "Analytics", icon: (c) => <BarChart3 size={20} color={c} /> },
-          { id: "watch", label: "Watch", icon: (c) => <Eye size={20} color={c} /> },
-          { id: "resources", label: "Reports", icon: (c) => <FileBarChart size={20} color={c} /> },
+          {
+            id: "dashboard",
+            label: "Dashboard",
+            svg: (c) => (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={c}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+              </svg>
+            ),
+          },
+          {
+            id: "overview",
+            label: "Overview",
+            svg: (c) => (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={c}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4l3 3" />
+              </svg>
+            ),
+          },
+          {
+            id: "analytics",
+            label: "Analytics",
+            svg: (c) => (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={c}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
+            ),
+          },
+          {
+            id: "watch",
+            label: "Watch",
+            svg: (c) => (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={c}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            ),
+          },
+          {
+            id: "resources",
+            label: "Resources",
+            svg: (c) => (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={c}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+              </svg>
+            ),
+          },
         ].map((n) => {
-          const act = activeNav === n.id;
-          const isReports = n.id === "resources";
+          const act = navTab === n.id;
+          const col = act ? M.accent : "rgba(255,255,255,0.28)";
+          /* dynamic label: analytics tab shows active sub-section name */
+          const displayLabel =
+            n.id === "analytics" && act
+              ? ANALYTICS_SUBS.find((x) => x.id === analyticsSub)?.label || "Analytics"
+              : n.label;
           return (
             <button
               key={n.id}
               onClick={() => {
-                if (isReports) {
-                  if (act) {
-                    setResourcesMenu((o) => !o);
+                if (n.id === "dashboard") {
+                  setAnalyticsMenu(false);
+                  if (navTab === "dashboard") {
+                    setDashMenu((o) => !o);
                   } else {
-                    setActiveNav("resources");
-                    setResourcesMenu(true);
+                    setNavTab("dashboard");
+                    setDashMenu(true);
+                  }
+                } else if (n.id === "analytics") {
+                  setDashMenu(false);
+                  if (navTab === "analytics") {
+                    setAnalyticsMenu((o) => !o);
+                  } else {
+                    setNavTab("analytics");
+                    setAnalyticsMenu(true);
                   }
                 } else {
-                  setActiveNav(n.id);
-                  setResourcesMenu(false);
+                  setNavTab(n.id);
+                  setDashMenu(false);
+                  setAnalyticsMenu(false);
                 }
               }}
               style={{
@@ -5171,11 +4687,11 @@ function MobileDashboard({ s, setS }) {
                 alignItems: "center",
                 justifyContent: "center",
                 gap: 3,
-                padding: "9px 0",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
                 position: "relative",
+                padding: 0,
               }}
             >
               {act && (
@@ -5183,25 +4699,27 @@ function MobileDashboard({ s, setS }) {
                   style={{
                     position: "absolute",
                     top: 0,
-                    left: "25%",
-                    right: "25%",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: 28,
                     height: 2,
                     borderRadius: "0 0 2px 2px",
-                    background: C.accent,
+                    background: M.accent,
                   }}
                 />
               )}
-              {n.icon(act ? C.accent : "rgba(255,255,255,0.28)")}
+              {n.svg(col)}
               <span
                 style={{
-                  fontSize: 8,
-                  fontWeight: act ? 700 : 500,
-                  color: act ? C.accent : "rgba(255,255,255,0.28)",
+                  fontSize: 9,
+                  fontWeight: act ? 700 : 400,
+                  color: col,
                   fontFamily: "Inter,sans-serif",
-                  letterSpacing: "0.2px",
+                  letterSpacing: ".3px",
+                  transition: "all .15s",
                 }}
               >
-                {n.label}
+                {displayLabel}
               </span>
             </button>
           );
@@ -5211,1610 +4729,1395 @@ function MobileDashboard({ s, setS }) {
   );
 }
 
-/* ═══════════════════════════════════════════════
-   MOBILE RESOURCES PAGE — mobile adaptation of desktop Reports
-═══════════════════════════════════════════════ */
-function MobileResourcesPage({ s, view = "sector-performance" }) {
-  const D = {
-    bg: "#090F0B",
-    card: "#0F1A12",
-    card2: "#132118",
-    border: "rgba(255,255,255,0.07)",
-    borderLime: "rgba(184,217,53,0.18)",
-    lime: "#B8D935",
-    primary: "#1B4D3E",
-    teal: "#2E8B6E",
-    green: "#22C55E",
-    red: "#EF4444",
-    amber: "#F59E0B",
-    txt: "#FFFFFF",
-    txt2: "rgba(255,255,255,0.55)",
-    txt3: "rgba(255,255,255,0.28)",
-    iconBg: "rgba(184,217,53,0.12)",
-    iconBg2: "rgba(255,255,255,0.07)",
-  };
-
-  const TABS = ["Sector Perf.", "Market", "Sub-sector", "Financials", "Growth", "Comparative", "Monthly", "Signals"];
-  const TAB_KEYS = [
-    "sector-performance",
-    "market-analysis",
-    "sub-sector-breakdown",
-    "financials",
-    "growth-tracking",
-    "comparative-analysis",
-    "monthly-summary",
-    "signal-tracker",
-  ];
-  const [activeTab, setActiveTab] = useState("sector-performance");
-  const [chartFilter, setChartFilter] = useState("30D");
-  const [overtimeView, setOvertimeView] = useState(false);
-  const [tableSearch, setTableSearch] = useState("");
-  const [tablePage, setTablePage] = useState(1);
-  const [open, setOpen] = useState({ metrics: true, value: true, capital: true, tabpanel: true, activity: true });
-  const tog = (k) => setOpen((o) => ({ ...o, [k]: !o[k] }));
-  const PAGE_SIZE = 6;
-
-  const sigC = (sig) => (sig === "Bullish" ? D.green : sig === "Bearish" ? D.red : D.amber);
-
-  /* ── Data helpers (reuse desktop logic) ── */
-  const tabMetrics = getTabMetrics(s, activeTab);
-  const tabStats = getTabStats(s, activeTab);
-  const barData = genBarData(s, activeTab, chartFilter);
-  const monthlyData = genMonthlyData(s);
-  const allRows = genTableRows(s);
-  const filtered = allRows.filter(
-    (r) =>
-      !tableSearch ||
-      [r.source, r.category, r.signal, r.sector].some((f) => f.toLowerCase().includes(tableSearch.toLowerCase())),
-  );
-  const pageRows = filtered.slice((tablePage - 1) * PAGE_SIZE, tablePage * PAGE_SIZE);
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-
-  const totalCap = Math.round(((s.capLow + s.capHigh) / 2) * 10) / 10;
-  const bullish = s.activity.filter((a) => a.sig === "Bullish").length;
-  const donutData = [
-    { name: "Market Cap", value: s.subSectors[0]?.pct || 35, color: D.lime },
-    { name: "Growth", value: s.subSectors[1]?.pct || 25, color: D.teal },
-    {
-      name: "Other",
-      value: 100 - (s.subSectors[0]?.pct || 35) - (s.subSectors[1]?.pct || 25),
-      color: "rgba(255,255,255,0.1)",
-    },
-  ];
-  const goals = [
-    { count: s.totalV, label: "Ventures Tracked", pct: Math.round((s.totalV / 20) * 100), color: D.lime },
-    {
-      count: s.activity.length * 18,
-      label: "Active Signals",
-      pct: Math.round((bullish / s.activity.length) * 100),
-      color: D.teal,
-    },
-    { count: 12, label: "Sectors Covered", pct: 100, color: D.amber },
-  ];
-  const capitalLast = monthlyData[monthlyData.length - 1];
-  const capitalTotal = monthlyData.reduce((a, d) => a + d.growth, 0);
-
-  /* ── Dark section header ── */
-  const DHead = ({ id, label, badge, children }) => {
-    const isOpen = open[id] ?? true;
-    return (
-      <button
-        onClick={() => tog(id)}
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          padding: "13px 16px",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          textAlign: "left",
+/* ─────────── DESKTOP DASHBOARD ─────────── */
+function DesktopDashboard() {
+  const [s, setS] = useState(SECTORS[0]);
+  const [collapsed, setCollapsed] = useState(false);
+  const [chart, setChart] = useState("bar");
+  const [notif, setNotif] = useState(false);
+  const cData = (s.t1 || [])
+    .slice(0, 6)
+    .map((v, i) => ({
+      name: v.name.split(" ").slice(0, 2).join(" "),
+      "Tier I": 60 + i * 5,
+      "Tier II": 40 + i * 4,
+      "Tier III": 25 + i * 3,
+    }));
+  return (
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        overflow: "hidden",
+        background: "#EFF3EF",
+        fontFamily: "'DM Sans',sans-serif",
+      }}
+    >
+      <Sidebar
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+        activeSector={s}
+        setActiveSector={(sec) => {
+          if (sec) setS(sec);
         }}
-      >
+      />
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
         <div
           style={{
-            width: 28,
-            height: 28,
-            borderRadius: 7,
-            background: D.iconBg,
+            background: "#fff",
+            borderBottom: "1px solid #E5E7EB",
+            padding: "0 22px",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            gap: 14,
+            height: 56,
             flexShrink: 0,
+            boxShadow: "0 1px 0 rgba(0,0,0,0.04)",
           }}
         >
-          {children}
-        </div>
-        <span style={{ flex: 1, fontSize: 13, fontWeight: 700, color: D.txt, fontFamily: "DM Sans,sans-serif" }}>
-          {label}
-        </span>
-        {badge != null && (
-          <span
+          {/* LEFT — Title + filter state */}
+          <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0 }}>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", lineHeight: 1.1 }}>Dashboard</div>
+              <div style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                {new Date().toLocaleString("default", { month: "long", year: "numeric" })}
+              </div>
+            </div>
+            {/* Vertical divider */}
+            <div style={{ width: 1, height: 28, background: "#E5E7EB", flexShrink: 0 }} />
+            {/* Filter state pill */}
+            {(() => {
+              const Icon = s.icon;
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 5,
+                    padding: "3px 9px",
+                    borderRadius: 7,
+                    background: "#EBF5B0",
+                    border: "1px solid rgba(184,217,53,0.27)",
+                    cursor: "pointer",
+                  }}
+                  title="Active filter"
+                >
+                  <Icon size={11} color="#1B4D3E" strokeWidth={1.8} />
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: "#1B4D3E",
+                      fontFamily: "Inter,sans-serif",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {s.short}
+                  </span>
+                  <span
+                    style={{ fontSize: 9, color: "rgba(27,77,62,0.45)", fontFamily: "Inter,sans-serif", marginLeft: 1 }}
+                  >
+                    ×
+                  </span>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* CENTER — Search */}
+          <div
             style={{
-              fontSize: 10,
-              fontWeight: 700,
-              color: D.lime,
-              background: D.iconBg,
-              borderRadius: 20,
-              padding: "2px 8px",
-              fontFamily: "Inter,sans-serif",
+              flex: 1,
+              maxWidth: 360,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              background: "#F9FAFB",
+              border: "1px solid #E5E7EB",
+              borderRadius: 9,
+              padding: "7px 12px",
+              marginLeft: "auto",
             }}
           >
-            {badge}
-          </span>
-        )}
-        <div
-          style={{
-            width: 22,
-            height: 22,
-            borderRadius: 6,
-            background: D.iconBg2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "transform .2s",
-            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-            flexShrink: 0,
-          }}
-        >
-          <ChevronDown size={12} color={D.txt3} />
-        </div>
-      </button>
-    );
-  };
+            <Search size={13} color="#6B7280" />
+            <input
+              placeholder="Search sectors, ventures, metrics…"
+              style={{
+                background: "none",
+                border: "none",
+                outline: "none",
+                fontSize: 12,
+                color: "#374151",
+                fontFamily: "Inter,sans-serif",
+                width: "100%",
+              }}
+            />
+            <span
+              style={{
+                fontSize: 9,
+                color: "#6B7280",
+                background: "#E5E7EB",
+                padding: "1px 5px",
+                borderRadius: 3,
+                fontFamily: "Inter,sans-serif",
+                flexShrink: 0,
+              }}
+            >
+              CMD+K
+            </span>
+          </div>
 
-  return (
-    <div style={{ background: D.bg, minHeight: "100%", paddingBottom: 90 }}>
-      {/* ── Section label ── */}
-      <div style={{ padding: "8px 16px 0", display: "flex", alignItems: "center", gap: 8 }}>
-        <span
-          style={{
-            fontSize: 11,
-            fontWeight: 700,
-            color: "#6B7280",
-            fontFamily: "Inter,sans-serif",
-            letterSpacing: "0.8px",
-            textTransform: "uppercase",
-          }}
-        >
-          {view === "activity-log" ? "ACTIVITY LOG" : "SECTOR PERFORMANCE"}
-        </span>
-        <div style={{ flex: 1, height: 1, background: D.border }} />
-        <span style={{ fontSize: 9, fontWeight: 700, color: D.lime, fontFamily: "Inter,sans-serif" }}>{s.short}</span>
-      </div>
-
-      {/* ══════════════════════════════════════
-          1. METRICS CHART CARD — Sector Performance only
-      ══════════════════════════════════════ */}
-      {view === "sector-performance" && (
-        <div
-          style={{
-            margin: "10px 12px 10px",
-            background: D.card,
-            borderRadius: 16,
-            border: `1px solid ${D.border}`,
-            overflow: "hidden",
-          }}
-        >
-          <DHead id="metrics" label={TABS[TAB_KEYS.indexOf(activeTab)] || "Sector Performance"} badge={chartFilter}>
-            <BarChart3 size={13} color={D.lime} />
-          </DHead>
-          {open.metrics && (
-            <>
-              {/* Tab strip */}
-              <div
-                style={{ display: "flex", overflowX: "auto", padding: "0 12px 10px", gap: 5, scrollbarWidth: "none" }}
-              >
-                {TABS.map((t, i) => {
-                  const act = activeTab === TAB_KEYS[i];
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        setActiveTab(TAB_KEYS[i]);
-                        setTablePage(1);
-                      }}
-                      style={{
-                        flexShrink: 0,
-                        padding: "5px 11px",
-                        borderRadius: 20,
-                        background: act ? D.lime : D.iconBg2,
-                        border: `1px solid ${act ? D.lime : D.border}`,
-                        fontSize: 10,
-                        fontWeight: 700,
-                        color: act ? D.primary : D.txt2,
-                        fontFamily: "Inter,sans-serif",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {t}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* 7D/30D/90D toggle */}
-              <div
+          {/* RIGHT — Actions */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+            <div style={{ position: "relative" }}>
+              <button
+                onClick={() => setNotif((o) => !o)}
                 style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 9,
+                  border: "1px solid #E5E7EB",
+                  background: "#fff",
                   display: "flex",
-                  justifyContent: "space-between",
                   alignItems: "center",
-                  padding: "0 16px 10px",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  position: "relative",
                 }}
               >
-                <div style={{ display: "flex", gap: 6 }}>
-                  {[tabMetrics.p, tabMetrics.s].map((m, i) => (
+                <Bell size={15} color="#374151" />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 7,
+                    right: 7,
+                    width: 7,
+                    height: 7,
+                    borderRadius: "50%",
+                    background: "#DC2626",
+                    border: "2px solid #fff",
+                  }}
+                />
+              </button>
+              {notif && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 44,
+                    right: 0,
+                    width: 280,
+                    background: "#fff",
+                    border: "1px solid #E5E7EB",
+                    borderRadius: 12,
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+                    zIndex: 99,
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      padding: "11px 14px",
+                      borderBottom: "1px solid #E5E7EB",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span style={{ fontSize: 13, fontWeight: 700, color: "#111827" }}>Alerts</span>
+                    <span style={{ fontSize: 11, color: "#B8D935", cursor: "pointer", fontWeight: 600 }}>
+                      Mark all read
+                    </span>
+                  </div>
+                  {s.activity.slice(0, 3).map((a, i) => (
                     <div
                       key={i}
-                      style={{
-                        padding: "8px 12px",
-                        background: D.iconBg2,
-                        borderRadius: 10,
-                        border: `1px solid ${D.border}`,
-                      }}
+                      style={{ display: "flex", gap: 9, padding: "10px 14px", borderBottom: "1px solid #E5E7EB" }}
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}>
-                        <div
-                          style={{ width: 6, height: 6, borderRadius: "50%", background: i === 0 ? D.lime : D.teal }}
-                        />
-                        <span style={{ fontSize: 9, color: D.txt3, fontFamily: "Inter,sans-serif" }}>{m.l}</span>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: 5 }}>
-                        <span
-                          style={{
-                            fontSize: 20,
-                            fontWeight: 800,
-                            color: D.txt,
-                            letterSpacing: "-1px",
-                            fontFamily: "Inter,sans-serif",
-                          }}
-                        >
-                          {m.v}
-                        </span>
-                        <span
-                          style={{
-                            fontSize: 9,
-                            fontWeight: 700,
-                            color: m.up ? D.green : D.red,
-                            fontFamily: "Inter,sans-serif",
-                          }}
-                        >
-                          {m.t}
-                        </span>
+                      <div
+                        style={{
+                          width: 7,
+                          height: 7,
+                          borderRadius: "50%",
+                          background: sigCol(a.sig),
+                          marginTop: 4,
+                          flexShrink: 0,
+                        }}
+                      />
+                      <div>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{a.h}</div>
+                        <div style={{ fontSize: 10, color: "#6B7280", marginTop: 2, fontFamily: "Inter,sans-serif" }}>
+                          {a.date}
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div style={{ display: "flex", gap: 2, background: D.iconBg2, borderRadius: 7, padding: 2 }}>
-                  {["7D", "30D", "90D"].map((v) => (
-                    <button
-                      key={v}
-                      onClick={() => setChartFilter(v)}
-                      style={{
-                        padding: "3px 8px",
-                        borderRadius: 5,
-                        border: "none",
-                        background: chartFilter === v ? D.lime : "transparent",
-                        fontSize: 10,
-                        fontWeight: 700,
-                        color: chartFilter === v ? D.primary : D.txt3,
-                        cursor: "pointer",
-                        fontFamily: "Inter,sans-serif",
-                      }}
-                    >
-                      {v}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bar chart */}
-              <div style={{ height: 140, padding: "0 8px 4px" }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <RBarChart data={barData} barSize={14} barGap={2} margin={{ top: 0, right: 4, left: -28, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                    <XAxis
-                      dataKey="day"
-                      tick={{ fontSize: 9, fill: D.txt3, fontFamily: "Inter,sans-serif" }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <YAxis tick={{ fontSize: 9, fill: D.txt3 }} axisLine={false} tickLine={false} />
-                    <Tooltip
-                      contentStyle={{
-                        background: D.card2,
-                        border: `1px solid ${D.border}`,
-                        borderRadius: 8,
-                        color: D.txt,
-                        fontSize: 11,
-                      }}
-                    />
-                    <Bar dataKey="primary" fill={D.lime} radius={[3, 3, 0, 0]} name="Primary" />
-                    <Bar dataKey="secondary" fill={`${D.teal}66`} radius={[3, 3, 0, 0]} name="Secondary" />
-                  </RBarChart>
-                </ResponsiveContainer>
-              </div>
-
-              {/* 4 bottom stats */}
-              <div
-                style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", borderTop: `1px solid ${D.border}` }}
-              >
-                {tabStats.map((stat, i) => (
-                  <div key={i} style={{ padding: "10px 12px", borderRight: i < 3 ? `1px solid ${D.border}` : "none" }}>
-                    <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: D.txt,
-                        letterSpacing: "-.5px",
-                        fontFamily: "Inter,sans-serif",
-                      }}
-                    >
-                      {stat.v}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 8,
-                        color: D.txt3,
-                        fontFamily: "Inter,sans-serif",
-                        marginTop: 1,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {stat.l}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      )}
-
-      {/* ══════════════════════════════════════
-          2. SECTOR VALUE CARD (DonutGoalCard)
-      ══════════════════════════════════════ */}
-      {view === "sector-performance" && (
-        <div
-          style={{
-            margin: "0 12px 10px",
-            background: D.card,
-            borderRadius: 16,
-            border: `1px solid ${D.border}`,
-            overflow: "hidden",
-          }}
-        >
-          <DHead id="value" label="Sector Value">
-            <svg
-              width={13}
-              height={13}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={D.lime}
-              strokeWidth="2"
-              strokeLinecap="round"
+              )}
+            </div>
+            <button
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 9,
+                border: "1px solid #E5E7EB",
+                background: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
             >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 8v4l3 3" />
-            </svg>
-          </DHead>
-          {open.value && (
-            <div style={{ padding: "0 16px 16px" }}>
-              <div style={{ display: "flex", gap: 14, alignItems: "center", marginBottom: 14 }}>
-                {/* Donut */}
-                <div style={{ position: "relative", width: 100, height: 100, flexShrink: 0 }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={donutData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={28}
-                        outerRadius={46}
-                        dataKey="value"
-                        stroke="none"
-                        startAngle={90}
-                        endAngle={-270}
-                      >
-                        {donutData.map((e, i) => (
-                          <Cell key={i} fill={e.color} />
-                        ))}
-                      </Pie>
-                    </PieChart>
-                  </ResponsiveContainer>
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%,-50%)",
-                      textAlign: "center",
-                      pointerEvents: "none",
-                    }}
-                  >
-                    <div style={{ fontSize: 11, fontWeight: 800, color: D.txt, lineHeight: 1 }}>${totalCap}M</div>
-                    <div style={{ fontSize: 8, color: D.txt3, fontFamily: "Inter,sans-serif", marginTop: 1 }}>Cap</div>
-                  </div>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 800,
-                      color: D.txt,
-                      letterSpacing: "-1px",
-                      marginBottom: 8,
-                      fontFamily: "Inter,sans-serif",
-                    }}
-                  >
-                    ${totalCap}M
-                  </div>
-                  {donutData.map((d, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        marginBottom: i < 2 ? 4 : 0,
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: d.color }} />
-                        <span style={{ fontSize: 10, color: D.txt3, fontFamily: "Inter,sans-serif" }}>{d.name}</span>
-                      </div>
-                      <span style={{ fontSize: 10, fontWeight: 700, color: D.txt, fontFamily: "Inter,sans-serif" }}>
-                        {d.value}%
-                      </span>
-                    </div>
-                  ))}
-                </div>
+              <SlidersHorizontal size={14} color="#374151" />
+            </button>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 9,
+                padding: "5px 11px",
+                border: "1px solid #E5E7EB",
+                borderRadius: 9,
+                cursor: "pointer",
+                background: "#fff",
+              }}
+            >
+              <div
+                style={{
+                  width: 27,
+                  height: 27,
+                  borderRadius: "50%",
+                  background: "rgba(184,217,53,0.2)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <User size={13} color="#1B4D3E" />
               </div>
-              {/* Goal bars */}
-              <div style={{ height: 1, background: D.border, marginBottom: 12 }} />
-              {goals.map((g, i) => (
-                <div key={i} style={{ marginBottom: i < 2 ? 12 : 0 }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#111827", lineHeight: 1 }}>Joseph A.</div>
+                <div style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>Full Access</div>
+              </div>
+              <ChevronDown size={11} color="#6B7280" />
+            </div>
+            <button
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                background: "#1B4D3E",
+                color: "#fff",
+                border: "none",
+                borderRadius: 9,
+                padding: "8px 14px",
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <PlusCircle size={13} />
+              Add Widget
+            </button>
+          </div>
+        </div>
+        <div style={{ flex: 1, overflow: "hidden", display: "flex" }}>
+          <div style={{ flex: 1, overflowY: "auto", padding: "18px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 252px", gap: 14, marginBottom: 14 }}>
+              <Card style={{ padding: 0 }}>
+                <div style={{ padding: "16px 20px 10px" }}>
                   <div
                     style={{
                       display: "flex",
+                      alignItems: "flex-start",
                       justifyContent: "space-between",
-                      alignItems: "baseline",
-                      marginBottom: 4,
+                      marginBottom: 2,
                     }}
                   >
                     <div>
                       <div
                         style={{
-                          fontSize: 15,
+                          fontSize: 10,
                           fontWeight: 700,
-                          color: D.txt,
-                          letterSpacing: "-.5px",
+                          color: "#6B7280",
+                          letterSpacing: "1px",
+                          textTransform: "uppercase",
+                          fontFamily: "Inter,sans-serif",
+                          marginBottom: 3,
+                        }}
+                      >
+                        {s.full}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 30,
+                          fontWeight: 700,
+                          color: "#111827",
                           lineHeight: 1,
+                          letterSpacing: "-1px",
+                        }}
+                      >
+                        {s.totalV}{" "}
+                        <span style={{ fontSize: 13, fontWeight: 400, color: "#6B7280" }}>ventures identified</span>
+                      </div>
+                      <div style={{ fontSize: 12, color: "#6B7280", marginTop: 2, fontFamily: "Inter,sans-serif" }}>
+                        ${s.capLow}–{s.capHigh}M capital range · {s.irrLow}–{s.irrHigh}% projected IRR
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7 }}>
+                      <div style={{ display: "flex", gap: 2, background: "#F3F4F6", borderRadius: 7, padding: 3 }}>
+                        {[
+                          ["Bar", "bar", BarChart3],
+                          ["Line", "line", LineChart],
+                        ].map(([l, v, Icon]) => (
+                          <button
+                            key={v}
+                            onClick={() => setChart(v)}
+                            style={{
+                              padding: "4px 8px",
+                              borderRadius: 5,
+                              border: "none",
+                              background: chart === v ? "#fff" : "transparent",
+                              fontSize: 10,
+                              fontWeight: 600,
+                              color: chart === v ? "#1B4D3E" : "#6B7280",
+                              cursor: "pointer",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 4,
+                              boxShadow: chart === v ? "0 1px 3px rgba(0,0,0,0.07)" : "none",
+                            }}
+                          >
+                            <Icon size={11} />
+                            {l}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
+                    {[
+                      ["Tier I Priority", "#B8D935"],
+                      ["Tier II Medium-term", "#2E5A4D"],
+                      ["Tier III Long-term", "rgba(107,114,128,0.6)"],
+                    ].map(([l, c]) => (
+                      <div key={l} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                        <div style={{ width: 9, height: 9, borderRadius: 2, background: c }} />
+                        <span style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{l}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ height: 190, padding: "0 8px 10px" }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    {chart === "bar" ? (
+                      <BarChart data={cData} barSize={16} barGap={3}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+                        <XAxis
+                          dataKey="name"
+                          tick={{ fontSize: 9, fill: "#6B7280", fontFamily: "Inter,sans-serif" }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <YAxis tick={{ fontSize: 9, fill: "#6B7280" }} axisLine={false} tickLine={false} />
+                        <Tooltip content={<Tip />} />
+                        <Bar dataKey="Tier I" fill="#B8D935" radius={[3, 3, 0, 0]} />
+                        <Bar dataKey="Tier II" fill="#2E5A4D" radius={[3, 3, 0, 0]} />
+                        <Bar dataKey="Tier III" fill="rgba(107,114,128,0.5)" radius={[3, 3, 0, 0]} />
+                      </BarChart>
+                    ) : (
+                      <LC data={cData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                        <XAxis
+                          dataKey="name"
+                          tick={{ fontSize: 9, fill: "#6B7280" }}
+                          axisLine={false}
+                          tickLine={false}
+                        />
+                        <YAxis tick={{ fontSize: 9, fill: "#6B7280" }} axisLine={false} tickLine={false} />
+                        <Tooltip content={<Tip />} />
+                        <Line dataKey="Tier I" stroke="#B8D935" strokeWidth={2} dot={{ r: 3 }} type="monotone" />
+                        <Line dataKey="Tier II" stroke="#2E5A4D" strokeWidth={2} dot={{ r: 3 }} type="monotone" />
+                        <Line
+                          dataKey="Tier III"
+                          stroke="#6B7280"
+                          strokeWidth={1.5}
+                          dot={{ r: 2 }}
+                          type="monotone"
+                          strokeDasharray="5 4"
+                        />
+                      </LC>
+                    )}
+                  </ResponsiveContainer>
+                </div>
+              </Card>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {[
+                  {
+                    label: "Portfolio Capital",
+                    v: `$${s.capLow}–${s.capHigh}M`,
+                    sub: "Capital Range",
+                    up: true,
+                    d: "+Growth",
+                  },
+                  {
+                    label: "BRIDGE Impact Score",
+                    v: String(s.score),
+                    sub: "/ 100 Current",
+                    up: s.score >= 80,
+                    d: s.score >= 88 ? "Tier I Ready" : s.score >= 80 ? "Strong" : "Developing",
+                  },
+                  {
+                    label: "IRR Potential",
+                    v: `${s.irrLow}–${s.irrHigh}%`,
+                    sub: "Projected Return",
+                    up: true,
+                    d: `${s.totalV} Ventures`,
+                  },
+                ].map((m, i) => (
+                  <Card key={i} style={{ padding: "15px 17px", flex: 1 }}>
+                    <div style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif", marginBottom: 4 }}>
+                      {m.label}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 22,
+                        fontWeight: 700,
+                        color: "#111827",
+                        letterSpacing: "-.5px",
+                        lineHeight: 1,
+                        marginBottom: 5,
+                      }}
+                    >
+                      {m.v}
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      {m.up ? <TrendingUp size={11} color="#16A34A" /> : <TrendingDown size={11} color="#DC2626" />}
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 600,
+                          color: m.up ? "#16A34A" : "#DC2626",
                           fontFamily: "Inter,sans-serif",
                         }}
                       >
-                        {g.count}
-                      </div>
-                      <div style={{ fontSize: 9, color: D.txt3, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
-                        {g.label}
-                      </div>
+                        {m.d}
+                      </span>
+                      <span style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{m.sub}</span>
                     </div>
-                    <span style={{ fontSize: 9, fontWeight: 700, color: g.color, fontFamily: "Inter,sans-serif" }}>
-                      {g.pct}% goal
-                    </span>
-                  </div>
-                  <div style={{ height: 5, background: "rgba(255,255,255,0.07)", borderRadius: 3, overflow: "hidden" }}>
-                    <div style={{ width: `${g.pct}%`, height: "100%", background: g.color, borderRadius: 3 }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ══════════════════════════════════════
-          3. CAPITAL FLOW CARD (ComposedChartRow)
-      ══════════════════════════════════════ */}
-      {view === "sector-performance" && (
-        <div
-          style={{
-            margin: "0 12px 10px",
-            background: D.card,
-            borderRadius: 16,
-            border: `1px solid ${D.border}`,
-            overflow: "hidden",
-          }}
-        >
-          <DHead id="capital" label="Capital Flow Analysis" badge={overtimeView ? "Overtime" : "6-Month"}>
-            <TrendingUp size={13} color={D.lime} />
-          </DHead>
-          {open.capital && (
-            <div style={{ padding: "0 12px 16px" }}>
-              <div style={{ fontSize: 10, color: D.txt3, fontFamily: "Inter,sans-serif", marginBottom: 10 }}>
-                Growth revenue · Operating costs · Net income
-              </div>
-              {/* Legend + overtime toggle */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                <div style={{ display: "flex", gap: 12 }}>
-                  {[
-                    { c: D.lime, l: "Growth" },
-                    { c: D.teal, l: "Expenses" },
-                    { c: D.amber, l: "Net" },
-                  ].map((lg, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <div style={{ width: 7, height: 7, borderRadius: "50%", background: lg.c }} />
-                      <span style={{ fontSize: 9, color: D.txt3, fontFamily: "Inter,sans-serif" }}>{lg.l}</span>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setOvertimeView((o) => !o)}
-                  style={{
-                    padding: "3px 10px",
-                    borderRadius: 7,
-                    border: `1px solid ${overtimeView ? D.lime : D.border}`,
-                    background: overtimeView ? D.iconBg : "transparent",
-                    fontSize: 10,
-                    fontWeight: 600,
-                    color: overtimeView ? D.lime : D.txt3,
-                    cursor: "pointer",
-                    fontFamily: "Inter,sans-serif",
-                  }}
-                >
-                  Overtime
-                </button>
-              </div>
-              {/* Composed chart */}
-              <div style={{ height: 160 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart data={monthlyData} margin={{ top: 4, right: 4, left: -24, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                    <XAxis
-                      dataKey="month"
-                      tick={{ fontSize: 9, fill: D.txt3, fontFamily: "Inter,sans-serif" }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <YAxis
-                      tick={{ fontSize: 9, fill: D.txt3 }}
-                      axisLine={false}
-                      tickLine={false}
-                      tickFormatter={(v) => (overtimeView ? `${Math.round(v / 10)}%` : `$${v}`)}
-                    />
-                    <Tooltip
-                      contentStyle={{
-                        background: D.card2,
-                        border: `1px solid ${D.border}`,
-                        borderRadius: 8,
-                        color: D.txt,
-                        fontSize: 11,
-                      }}
-                    />
-                    <ReferenceLine y={0} stroke="rgba(255,255,255,0.1)" strokeDasharray="3 3" />
-                    <Bar
-                      dataKey="growth"
-                      fill={D.lime}
-                      fillOpacity={0.85}
-                      radius={[3, 3, 0, 0]}
-                      name="Growth"
-                      barSize={12}
-                    />
-                    <Bar
-                      dataKey="expenses"
-                      fill={D.teal}
-                      fillOpacity={0.55}
-                      radius={[3, 3, 0, 0]}
-                      name="Expenses"
-                      barSize={12}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="net"
-                      stroke={D.amber}
-                      strokeWidth={2}
-                      strokeDasharray="5 5"
-                      dot={{ r: 3, fill: D.amber, strokeWidth: 0 }}
-                      name="Net Income"
-                    />
-                  </ComposedChart>
-                </ResponsiveContainer>
-              </div>
-              {/* Summary row */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginTop: 12 }}>
-                {[
-                  { l: "Total Capital", v: `$${capitalTotal.toLocaleString()}`, c: D.lime },
-                  { l: "Net Margin", v: `${Math.round((capitalLast.net / capitalLast.growth) * 100)}%`, c: D.green },
-                  { l: "Net Income", v: `$${capitalLast.net}`, c: D.amber },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      background: D.iconBg2,
-                      borderRadius: 10,
-                      padding: "10px 10px",
-                      border: `1px solid ${D.border}`,
-                    }}
-                  >
-                    <div style={{ fontSize: 9, color: D.txt3, fontFamily: "Inter,sans-serif", marginBottom: 4 }}>
-                      {item.l}
-                    </div>
-                    <div style={{ fontSize: 15, fontWeight: 800, color: item.c, fontFamily: "Inter,sans-serif" }}>
-                      {item.v}
-                    </div>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </div>
-          )}
-        </div>
-      )}
-
-      {/* ══════════════════════════════════════
-          4. TAB PANEL (TabPanel extra content)
-      ══════════════════════════════════════ */}
-      {view === "sector-performance" &&
-        ["sub-sector-breakdown", "financials", "comparative-analysis", "monthly-summary"].includes(activeTab) && (
-          <div
-            style={{
-              margin: "0 12px 10px",
-              background: D.card,
-              borderRadius: 16,
-              border: `1px solid ${D.border}`,
-              overflow: "hidden",
-            }}
-          >
-            <DHead id="tabpanel" label={TABS[TAB_KEYS.indexOf(activeTab)] + " Detail"}>
-              <BarChart3 size={13} color={D.lime} />
-            </DHead>
-            {open.tabpanel && (
-              <div style={{ padding: "0 16px 16px" }}>
-                {/* Sub-sector breakdown */}
-                {activeTab === "sub-sector-breakdown" && (
-                  <>
-                    <div
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+              <Card style={{ padding: "16px 20px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    marginBottom: 12,
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: "#111827" }}>Capital Deployment Progress</div>
+                    <div style={{ fontSize: 11, color: "#6B7280", fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                      Venture pipeline vs. target allocation
+                    </div>
+                  </div>
+                  <button style={{ background: "none", border: "none", cursor: "pointer", color: "#6B7280" }}>
+                    <RefreshCw size={13} />
+                  </button>
+                </div>
+                {s.pipeline.map((p, i) => (
+                  <div key={i} style={{ marginBottom: 11 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: "#374151", fontFamily: "Inter,sans-serif" }}>
+                        {p.label}
+                      </span>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: "#1B4D3E", fontFamily: "Inter,sans-serif" }}>
+                        {p.current} <span style={{ fontWeight: 400, color: "#6B7280" }}>/ {p.target}</span>
+                      </span>
+                    </div>
+                    <div style={{ height: 5, background: "#F3F4F6", borderRadius: 3, overflow: "hidden" }}>
+                      <div
+                        style={{
+                          width: `${p.pct}%`,
+                          height: "100%",
+                          background: "linear-gradient(90deg,#B8D935,#2E5A4D)",
+                          borderRadius: 3,
+                        }}
+                      />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
+                      <span style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>
+                        {p.pct}% deployed
+                      </span>
+                      <span style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>
+                        ~{p.months}mo remaining
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </Card>
+              <Card
+                style={{
+                  padding: "20px 22px",
+                  background: "linear-gradient(145deg,#1B4D3E 0%,#243F2F 60%,#1A3528 100%)",
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    right: -20,
+                    top: -20,
+                    width: 140,
+                    height: 140,
+                    borderRadius: "50%",
+                    background: "rgba(184,217,53,0.05)",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    left: -30,
+                    bottom: -30,
+                    width: 120,
+                    height: 120,
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.03)",
+                  }}
+                />
+                <div style={{ position: "relative", zIndex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
+                    <span
                       style={{
-                        fontSize: 11,
+                        fontSize: 9,
                         fontWeight: 700,
-                        color: D.txt2,
-                        marginBottom: 10,
-                        fontFamily: "DM Sans,sans-serif",
+                        padding: "3px 9px",
+                        borderRadius: 4,
+                        background: "#EBF5B0",
+                        color: "#1B4D3E",
+                        fontFamily: "Inter,sans-serif",
+                        letterSpacing: ".8px",
+                        textTransform: "uppercase",
                       }}
                     >
-                      Sub-sector Distribution
-                    </div>
-                    {s.subSectors.map((ss, i) => (
-                      <div key={i} style={{ marginBottom: 10 }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            <div style={{ width: 4, height: 4, borderRadius: "50%", background: ss.color || D.lime }} />
-                            <span style={{ fontSize: 11, color: D.txt2, fontFamily: "Inter,sans-serif" }}>
-                              {ss.name}
-                            </span>
-                          </div>
-                          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                            <span style={{ fontSize: 10, color: D.green, fontFamily: "Inter,sans-serif" }}>
-                              +{Math.round(ss.pct * 0.12)}%
-                            </span>
-                            <span
-                              style={{ fontSize: 12, fontWeight: 800, color: D.lime, fontFamily: "Inter,sans-serif" }}
-                            >
-                              {ss.pct}%
-                            </span>
-                          </div>
-                        </div>
-                        <div
-                          style={{
-                            height: 5,
-                            background: "rgba(255,255,255,0.07)",
-                            borderRadius: 3,
-                            overflow: "hidden",
-                          }}
-                        >
-                          <div
-                            style={{
-                              height: "100%",
-                              width: `${ss.pct}%`,
-                              background: ss.color || D.lime,
-                              borderRadius: 3,
-                              transition: "width .6s ease",
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </>
-                )}
-
-                {/* Financials */}
-                {activeTab === "financials" && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                      Key Insight
+                    </span>
+                    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontFamily: "Inter,sans-serif" }}>
+                      {s.tag}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 700,
+                      color: "#fff",
+                      lineHeight: 1.45,
+                      marginBottom: 10,
+                      letterSpacing: "-.2px",
+                    }}
+                  >
+                    {s.headline}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 12,
+                      color: "rgba(255,255,255,0.62)",
+                      lineHeight: 1.65,
+                      fontFamily: "Inter,sans-serif",
+                      marginBottom: 18,
+                    }}
+                  >
+                    {s.insight}
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 18 }}>
                     {[
-                      { l: "Total Revenue", v: `$${s.capHigh}M`, chg: "+15.2%", col: D.green },
-                      { l: "Total Expenses", v: `$${Math.round(s.capLow * 0.4)}M`, chg: "+2.1%", col: D.amber },
-                      {
-                        l: "Net Income",
-                        v: `$${s.capHigh - Math.round(s.capLow * 0.4)}M`,
-                        chg: "+18.4%",
-                        col: D.green,
-                      },
-                    ].map((item, i) => (
+                      { label: "Capital Range", val: `$${s.capLow}–${s.capHigh}M` },
+                      { label: "IRR Potential", val: `${s.irrLow}–${s.irrHigh}%` },
+                      { label: "Ventures", val: `${s.totalV} identified` },
+                    ].map((st, i) => (
                       <div
                         key={i}
                         style={{
-                          background: D.iconBg2,
-                          borderRadius: 12,
-                          padding: "14px 14px",
-                          border: `1px solid ${D.border}`,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
+                          background: "rgba(255,255,255,0.07)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          borderRadius: 9,
+                          padding: "10px 12px",
                         }}
                       >
-                        <div>
-                          <div style={{ fontSize: 10, color: D.txt3, fontFamily: "Inter,sans-serif", marginBottom: 4 }}>
-                            {item.l}
-                          </div>
-                          <div
-                            style={{
-                              fontSize: 22,
-                              fontWeight: 800,
-                              color: D.txt,
-                              letterSpacing: "-1px",
-                              fontFamily: "Inter,sans-serif",
-                            }}
-                          >
-                            {item.v}
-                          </div>
+                        <div
+                          style={{
+                            fontSize: 14,
+                            fontWeight: 700,
+                            color: i === 1 ? "#B8D935" : "#fff",
+                            fontFamily: "Inter,sans-serif",
+                            lineHeight: 1,
+                            marginBottom: 4,
+                          }}
+                        >
+                          {st.val}
                         </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                          <TrendingUp size={12} color={item.col} />
-                          <span
-                            style={{ fontSize: 12, fontWeight: 700, color: item.col, fontFamily: "Inter,sans-serif" }}
-                          >
-                            {item.chg}
-                          </span>
+                        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", fontFamily: "Inter,sans-serif" }}>
+                          {st.label}
                         </div>
                       </div>
                     ))}
                   </div>
-                )}
-
-                {/* Comparative */}
-                {activeTab === "comparative-analysis" && (
-                  <>
-                    <div
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: D.txt2,
-                        marginBottom: 10,
-                        fontFamily: "DM Sans,sans-serif",
-                      }}
-                    >
-                      All Sectors — BRIDGE Score Ranking
-                    </div>
-                    {[...SECTORS]
-                      .sort((a, b) => b.score - a.score)
-                      .map((sec, i) => {
-                        const act = sec.id === s.id;
-                        return (
-                          <div
-                            key={sec.id}
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 10,
-                              padding: "7px 0",
-                              borderBottom: i < 11 ? `1px solid ${D.border}` : "none",
-                            }}
-                          >
-                            <span
-                              style={{
-                                fontSize: 10,
-                                fontWeight: 700,
-                                color: act ? D.lime : D.txt3,
-                                width: 14,
-                                textAlign: "right",
-                                fontFamily: "Inter,sans-serif",
-                              }}
-                            >
-                              {i + 1}
-                            </span>
-                            <div
-                              style={{
-                                width: 24,
-                                height: 24,
-                                borderRadius: 6,
-                                background: act ? "rgba(184,217,53,0.15)" : D.iconBg2,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexShrink: 0,
-                              }}
-                            >
-                              {sec.svgIcon(act ? D.lime : D.txt3, 11)}
-                            </div>
-                            <span
-                              style={{
-                                flex: 1,
-                                fontSize: 11,
-                                fontWeight: act ? 700 : 400,
-                                color: act ? D.txt : D.txt2,
-                                fontFamily: "Inter,sans-serif",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              {sec.short}
-                            </span>
-                            <div
-                              style={{
-                                width: 60,
-                                height: 4,
-                                background: "rgba(255,255,255,0.07)",
-                                borderRadius: 2,
-                                overflow: "hidden",
-                                flexShrink: 0,
-                              }}
-                            >
-                              <div
-                                style={{
-                                  width: `${sec.score}%`,
-                                  height: "100%",
-                                  background: act ? D.lime : D.teal,
-                                  borderRadius: 2,
-                                }}
-                              />
-                            </div>
-                            <span
-                              style={{
-                                fontSize: 10,
-                                fontWeight: 700,
-                                color: act ? D.lime : D.txt3,
-                                width: 24,
-                                textAlign: "right",
-                                fontFamily: "Inter,sans-serif",
-                              }}
-                            >
-                              {sec.score}
-                            </span>
-                          </div>
-                        );
-                      })}
-                  </>
-                )}
-
-                {/* Monthly summary */}
-                {activeTab === "monthly-summary" && (
-                  <>
-                    <div
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: D.txt2,
-                        marginBottom: 10,
-                        fontFamily: "DM Sans,sans-serif",
-                      }}
-                    >
-                      Monthly Performance 2025/2026
-                    </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 6 }}>
-                      {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map(
-                        (m, i) => {
-                          const val = Math.round(
-                            s.score * (0.85 + Math.sin(i * 0.9 + s.score * 0.03) * 0.12 + i * 0.01),
-                          );
-                          const up = val >= s.score;
-                          const cur = m === "Jan";
-                          return (
-                            <div
-                              key={m}
-                              style={{
-                                padding: "8px 10px",
-                                background: cur ? "rgba(184,217,53,0.1)" : D.iconBg2,
-                                borderRadius: 8,
-                                border: `1px solid ${cur ? D.lime : D.border}`,
-                              }}
-                            >
-                              <div
-                                style={{
-                                  fontSize: 9,
-                                  fontWeight: 700,
-                                  color: cur ? D.lime : D.txt3,
-                                  fontFamily: "Inter,sans-serif",
-                                  marginBottom: 2,
-                                }}
-                              >
-                                {m}
-                              </div>
-                              <div
-                                style={{
-                                  fontSize: 14,
-                                  fontWeight: 700,
-                                  color: D.txt,
-                                  lineHeight: 1,
-                                  fontFamily: "Inter,sans-serif",
-                                }}
-                              >
-                                {val}
-                              </div>
-                              <div style={{ display: "flex", alignItems: "center", gap: 2, marginTop: 2 }}>
-                                {up ? <TrendingUp size={8} color={D.green} /> : <TrendingDown size={8} color={D.red} />}
-                                <span
-                                  style={{ fontSize: 8, color: up ? D.green : D.red, fontFamily: "Inter,sans-serif" }}
-                                >
-                                  {up ? `+${val - s.score}` : `${val - s.score}`}
-                                </span>
-                              </div>
-                            </div>
-                          );
-                        },
-                      )}
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-      {/* ══════════════════════════════════════
-          5. ACTIVITY LOG (ActivityTable adapted)
-      ══════════════════════════════════════ */}
-      <div
-        style={{
-          margin: "0 12px 10px",
-          background: D.card,
-          borderRadius: 16,
-          border: `1px solid ${D.border}`,
-          overflow: "hidden",
-        }}
-      >
-        <DHead id="activity" label="Sector Activity Log" badge={`${filtered.length} entries`}>
-          <FileText size={13} color={D.lime} />
-        </DHead>
-        {open.activity && (
-          <>
-            {/* Search + filter */}
-            <div style={{ padding: "0 16px 10px", display: "flex", gap: 8 }}>
-              <div
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  background: D.iconBg2,
-                  border: `1px solid ${D.border}`,
-                  borderRadius: 8,
-                  padding: "7px 10px",
-                }}
-              >
-                <Search size={11} color={D.txt3} />
-                <input
-                  value={tableSearch}
-                  onChange={(e) => {
-                    setTableSearch(e.target.value);
-                    setTablePage(1);
-                  }}
-                  placeholder="Search activities..."
-                  style={{
-                    background: "none",
-                    border: "none",
-                    outline: "none",
-                    fontSize: 11,
-                    color: D.txt,
-                    fontFamily: "Inter,sans-serif",
-                    width: "100%",
-                  }}
-                />
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                {["Bullish", "Watch"].map((v) => (
-                  <div
-                    key={v}
+                  <button
                     style={{
-                      display: "flex",
+                      display: "inline-flex",
                       alignItems: "center",
-                      gap: 3,
-                      padding: "4px 8px",
-                      borderRadius: 6,
-                      background: D.iconBg2,
-                      border: `1px solid ${D.border}`,
+                      gap: 6,
+                      background: "#B8D935",
+                      color: "#1B4D3E",
+                      border: "none",
+                      padding: "9px 16px",
+                      borderRadius: 8,
+                      fontSize: 12,
+                      fontWeight: 700,
+                      fontFamily: "Inter,sans-serif",
+                      cursor: "pointer",
                     }}
                   >
-                    <div style={{ width: 5, height: 5, borderRadius: "50%", background: sigC(v) }} />
-                    <span style={{ fontSize: 9, fontWeight: 600, color: sigC(v), fontFamily: "Inter,sans-serif" }}>
-                      {filtered.filter((r) => r.signal === v).length}
+                    Full Analysis <ArrowUpRight size={12} />
+                  </button>
+                </div>
+              </Card>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 14 }}>
+              <Card style={{ padding: "16px 18px" }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", marginBottom: 2 }}>
+                  Venture Breakdown
+                </div>
+                <div style={{ fontSize: 11, color: "#6B7280", fontFamily: "Inter,sans-serif", marginBottom: 10 }}>
+                  By intervention type · {s.totalV} ventures
+                </div>
+                <div
+                  style={{ fontSize: 22, fontWeight: 700, color: "#111827", letterSpacing: "-.5px", marginBottom: 1 }}
+                >
+                  ${s.capLow}–{s.capHigh}M
+                </div>
+                <div style={{ fontSize: 11, color: "#6B7280", fontFamily: "Inter,sans-serif", marginBottom: 10 }}>
+                  Total sector capital range
+                </div>
+                <div style={{ height: 8, borderRadius: 5, overflow: "hidden", display: "flex", marginBottom: 13 }}>
+                  {s.subSectors.map((ss, i) => (
+                    <div key={i} style={{ flex: ss.pct, background: ss.color }} />
+                  ))}
+                </div>
+                {s.subSectors.map((ss, i) => (
+                  <div
+                    key={i}
+                    style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 7 }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                      <div style={{ width: 9, height: 9, borderRadius: 2, background: ss.color, flexShrink: 0 }} />
+                      <span style={{ fontSize: 11, color: "#374151", fontFamily: "Inter,sans-serif" }}>{ss.name}</span>
+                    </div>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: "#111827", fontFamily: "Inter,sans-serif" }}>
+                      {ss.pct}%
                     </span>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Row cards */}
-            <div style={{ padding: "0 0 4px" }}>
-              {pageRows.map((row, i) => {
-                const sec = SECTORS.find((x) => x.id === row.sectorId);
-                const isPrimary = row.sectorId === s.id;
-                return (
+                <div style={{ borderTop: "1px solid #F3F4F6", marginTop: 12, paddingTop: 12 }}>
                   <div
-                    key={row.id}
                     style={{
-                      padding: "10px 16px",
-                      borderTop: `1px solid ${D.border}`,
-                      background: isPrimary ? "rgba(184,217,53,0.03)" : "transparent",
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: "#6B7280",
+                      letterSpacing: ".8px",
+                      textTransform: "uppercase",
+                      fontFamily: "Inter,sans-serif",
+                      marginBottom: 8,
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 6 }}>
+                    Tier Distribution
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 6 }}>
+                    {[
+                      [s.t1?.length, "I", "#EBF5B0", "#1B4D3E", "Priority"],
+                      [s.t2?.length, "II", "rgba(46,90,77,0.1)", "#2E5A4D", "Mid-term"],
+                      [s.t3?.length, "III", "rgba(107,114,128,0.08)", "#6B7280", "Long-term"],
+                    ].map(([n, label, bg, col, sub]) => (
                       <div
-                        style={{
-                          width: 30,
-                          height: 30,
-                          borderRadius: 8,
-                          background: isPrimary ? "rgba(184,217,53,0.12)" : D.iconBg2,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
+                        key={label}
+                        style={{ background: bg, borderRadius: 8, padding: "8px 10px", textAlign: "center" }}
                       >
-                        {sec && sec.svgIcon(isPrimary ? D.lime : D.txt3, 12)}
-                      </div>
-                      <div style={{ flex: 1, minWidth: 0 }}>
                         <div
                           style={{
-                            fontSize: 12,
-                            fontWeight: isPrimary ? 700 : 600,
-                            color: D.txt,
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          {row.source}
-                        </div>
-                        <div style={{ fontSize: 10, color: D.txt3, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
-                          {row.sector} · {row.date}
-                        </div>
-                      </div>
-                      <div style={{ textAlign: "right", flexShrink: 0 }}>
-                        <div
-                          style={{
-                            fontSize: 12,
-                            fontWeight: 800,
-                            color: row.value.startsWith("+") ? D.green : row.value.startsWith("-") ? D.red : D.txt,
-                            fontFamily: "Inter,sans-serif",
-                          }}
-                        >
-                          {row.value}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: 10,
+                            fontSize: 17,
                             fontWeight: 700,
-                            color: sigC(row.signal),
+                            color: col,
+                            fontFamily: "Inter,sans-serif",
+                            lineHeight: 1,
+                          }}
+                        >
+                          {n}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 9,
+                            fontWeight: 700,
+                            color: col,
                             fontFamily: "Inter,sans-serif",
                             marginTop: 2,
                           }}
                         >
-                          {row.signal}
+                          T{label}
                         </div>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-                      <span
-                        style={{
-                          fontSize: 9,
-                          padding: "2px 6px",
-                          borderRadius: 4,
-                          background: "rgba(184,217,53,0.08)",
-                          color: D.lime,
-                          fontFamily: "Inter,sans-serif",
-                          fontWeight: 600,
-                          border: `1px solid ${D.iconBg}`,
-                        }}
-                      >
-                        {row.category}
-                      </span>
-                      {row.tags.map((t, j) => (
-                        <span
-                          key={j}
+                        <div
                           style={{
                             fontSize: 9,
-                            padding: "2px 6px",
-                            borderRadius: 4,
-                            background: D.iconBg2,
-                            color: D.txt3,
+                            color: col,
+                            opacity: 0.7,
                             fontFamily: "Inter,sans-serif",
-                            border: `1px solid ${D.border}`,
+                            marginTop: 1,
                           }}
                         >
-                          {t}
-                        </span>
-                      ))}
-                      <span
-                        style={{
-                          fontSize: 9,
-                          padding: "2px 6px",
-                          borderRadius: 4,
-                          background: D.iconBg2,
-                          color: row.status === "Active" ? D.green : row.status === "Monitoring" ? D.amber : D.txt3,
-                          fontFamily: "Inter,sans-serif",
-                          fontWeight: 600,
-                          border: `1px solid ${D.border}`,
-                          marginLeft: "auto",
-                        }}
-                      >
-                        {row.status}
+                          {sub}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    style={{
+                      marginTop: 10,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      background: "#F9FAFB",
+                      borderRadius: 8,
+                      padding: "8px 12px",
+                      border: "1px solid #F3F4F6",
+                    }}
+                  >
+                    <span style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>
+                      IRR Potential Range
+                    </span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: "#1B4D3E", fontFamily: "Inter,sans-serif" }}>
+                      {s.irrLow}–{s.irrHigh}%
+                    </span>
+                  </div>
+                </div>
+              </Card>
+              <Card style={{ padding: "18px 18px" }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", marginBottom: 2 }}>Impact Score</div>
+                <div style={{ fontSize: 11, color: "#6B7280", fontFamily: "Inter,sans-serif", marginBottom: 16 }}>
+                  4-dimension BRIDGE methodology
+                </div>
+                <Gauge score={s.score} />
+                <div style={{ textAlign: "center", marginTop: 12, marginBottom: 18 }}>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      color: s.score >= 88 ? "#16A34A" : s.score >= 80 ? "#CA8A04" : "#DC2626",
+                      fontFamily: "Inter,sans-serif",
+                    }}
+                  >
+                    {s.score >= 88 ? "Tier I Ready" : s.score >= 80 ? "Strong" : "Developing"}
+                  </span>
+                </div>
+                {[
+                  ["P&P Alignment", Math.min(s.score + 4, 96)],
+                  ["Strategic Fit", Math.max(s.score - 2, 0)],
+                  ["Feasibility", Math.min(s.score + 2, 98)],
+                  ["Scalability", Math.max(s.score - 1, 0)],
+                ].map(([l, v]) => (
+                  <div key={l} style={{ marginBottom: 9 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                      <span style={{ fontSize: 11, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{l}</span>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: "#374151", fontFamily: "Inter,sans-serif" }}>
+                        {v}
                       </span>
                     </div>
+                    <div style={{ height: 5, background: "#F3F4F6", borderRadius: 3, overflow: "hidden" }}>
+                      <div style={{ width: `${v}%`, height: "100%", background: "#1B4D3E", borderRadius: 3 }} />
+                    </div>
                   </div>
-                );
-              })}
-            </div>
-
-            {/* Pagination */}
-            <div
-              style={{
-                padding: "10px 16px",
-                borderTop: `1px solid ${D.border}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <span style={{ fontSize: 11, color: D.txt3, fontFamily: "Inter,sans-serif" }}>
-                Page {tablePage} of {totalPages}
-              </span>
-              <div style={{ display: "flex", gap: 4 }}>
-                <button
-                  onClick={() => setTablePage((p) => Math.max(1, p - 1))}
-                  disabled={tablePage === 1}
+                ))}
+                <div
                   style={{
-                    width: 28,
-                    height: 28,
-                    borderRadius: 6,
-                    border: `1px solid ${D.border}`,
-                    background: D.iconBg2,
-                    cursor: tablePage === 1 ? "not-allowed" : "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    opacity: tablePage === 1 ? 0.3 : 1,
+                    marginTop: 12,
+                    fontSize: 10,
+                    color: "#9CA3AF",
+                    fontFamily: "Inter,sans-serif",
+                    lineHeight: 1.5,
+                    borderTop: "1px solid #F3F4F6",
+                    paddingTop: 10,
                   }}
                 >
-                  <ChevronLeft size={12} color={D.txt2} />
-                </button>
-                {Array.from({ length: Math.min(4, totalPages) }, (_, i) => i + 1).map((p) => (
+                  Based on BRIDGE 6-stage methodology across {s.totalV} ventures. Mar 2026.
+                </div>
+              </Card>
+              <Card style={{ padding: "16px 18px" }}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}
+                >
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: "#111827" }}>Venture Pipeline</div>
+                    <div style={{ fontSize: 11, color: "#6B7280", fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                      {s.totalV} ventures · 3 tiers
+                    </div>
+                  </div>
                   <button
-                    key={p}
-                    onClick={() => setTablePage(p)}
                     style={{
-                      width: 28,
-                      height: 28,
-                      borderRadius: 6,
-                      border: `1px solid ${p === tablePage ? D.lime : D.border}`,
-                      background: p === tablePage ? "rgba(184,217,53,0.15)" : D.iconBg2,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 4,
                       fontSize: 10,
-                      fontWeight: p === tablePage ? 700 : 400,
-                      color: p === tablePage ? D.lime : D.txt3,
+                      fontWeight: 600,
+                      color: "#1B4D3E",
+                      background: "none",
+                      border: "1px solid #E5E7EB",
+                      borderRadius: 5,
+                      padding: "3px 8px",
                       cursor: "pointer",
                       fontFamily: "Inter,sans-serif",
                     }}
                   >
-                    {p}
+                    <Target size={10} />
+                    Targets
                   </button>
-                ))}
-                <button
-                  onClick={() => setTablePage((p) => Math.min(totalPages, p + 1))}
-                  disabled={tablePage === totalPages}
-                  style={{
-                    width: 28,
-                    height: 28,
-                    borderRadius: 6,
-                    border: `1px solid ${D.border}`,
-                    background: D.iconBg2,
-                    cursor: tablePage === totalPages ? "not-allowed" : "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    opacity: tablePage === totalPages ? 0.3 : 1,
-                  }}
-                >
-                  <ChevronRight size={12} color={D.txt2} />
-                </button>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function MobileSectorsPage({ s, setS }) {
-  const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
-  return (
-    <div style={{ paddingBottom: 90 }}>
-      <div style={{ padding: "16px 16px 8px" }}>
-        <div style={{ fontSize: 17, fontWeight: 800, color: C.dark, marginBottom: 2 }}>All Sectors</div>
-        <div style={{ fontSize: 11, color: C.muted, fontFamily: "Inter,sans-serif" }}>
-          Ranked by BRIDGE Impact Score · Ghana 2026
-        </div>
-      </div>
-      {sorted.map((sec, i) => {
-        const act = sec.id === s.id;
-        const bullish = sec.activity.filter((a) => a.sig === "Bullish").length;
-        return (
-          <div
-            key={sec.id}
-            onClick={() => setS(sec)}
-            style={{
-              margin: "0 12px 10px",
-              borderRadius: 16,
-              background: "#fff",
-              border: act ? `2px solid ${C.accent}` : "2px solid transparent",
-              boxShadow: act ? "0 4px 16px rgba(184,217,53,0.12)" : "0 1px 4px rgba(0,0,0,0.04)",
-              cursor: "pointer",
-              overflow: "hidden",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 16px 12px" }}>
-              <div style={{ position: "relative", flexShrink: 0 }}>
-                <div
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 12,
-                    background: act ? C.accentBg : "#F3F4F6",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {sec.svgIcon(act ? C.primary : C.muted, 20)}
                 </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: -2,
-                    right: -2,
-                    width: 16,
-                    height: 16,
-                    borderRadius: "50%",
-                    background: act ? C.accent : "#E5E7EB",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: 7,
-                      fontWeight: 900,
-                      color: act ? C.primary : "#9CA3AF",
-                      fontFamily: "Inter,sans-serif",
-                    }}
-                  >
-                    {i + 1}
-                  </span>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                  {[
+                    [s.t1?.length, "I", "#EBF5B0", "#1B4D3E"],
+                    [s.t2?.length, "II", "rgba(46,90,77,0.12)", "#2E5A4D"],
+                    [s.t3?.length, "III", "rgba(107,114,128,0.1)", "#6B7280"],
+                  ].map(([n, label, bg, col]) => (
+                    <div
+                      key={label}
+                      style={{ flex: 1, padding: "9px 10px", background: bg, borderRadius: 8, textAlign: "center" }}
+                    >
+                      <div
+                        style={{
+                          fontSize: 18,
+                          fontWeight: 700,
+                          color: col,
+                          fontFamily: "Inter,sans-serif",
+                          lineHeight: 1,
+                        }}
+                      >
+                        {n}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 9,
+                          fontWeight: 700,
+                          color: col,
+                          fontFamily: "Inter,sans-serif",
+                          marginTop: 2,
+                        }}
+                      >
+                        TIER {label}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: C.dark, marginBottom: 2 }}>{sec.short}</div>
                 <div
                   style={{
                     fontSize: 10,
-                    color: C.muted,
+                    fontWeight: 700,
+                    color: "#6B7280",
+                    letterSpacing: ".8px",
+                    textTransform: "uppercase",
                     fontFamily: "Inter,sans-serif",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
+                    marginBottom: 7,
                   }}
                 >
-                  {sec.totalV} ventures · ${sec.capLow}–{sec.capHigh}M cap
+                  Priority — Tier I
                 </div>
-              </div>
-              <div style={{ textAlign: "right", flexShrink: 0 }}>
+                {s.pipeline.slice(0, 2).map((p, i) => (
+                  <div key={i} style={{ marginBottom: 9 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                      <span
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 600,
+                          color: "#374151",
+                          fontFamily: "Inter,sans-serif",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          flex: 1,
+                        }}
+                      >
+                        {p.label}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#1B4D3E",
+                          fontFamily: "Inter,sans-serif",
+                          flexShrink: 0,
+                          marginLeft: 4,
+                        }}
+                      >
+                        {p.current}
+                      </span>
+                    </div>
+                    <div style={{ height: 5, background: "#F3F4F6", borderRadius: 3, overflow: "hidden" }}>
+                      <div style={{ width: `${p.pct}%`, height: "100%", background: "#B8D935", borderRadius: 3 }} />
+                    </div>
+                    <div style={{ fontSize: 9, color: "#6B7280", marginTop: 2, fontFamily: "Inter,sans-serif" }}>
+                      {p.months}mo remaining
+                    </div>
+                  </div>
+                ))}
                 <div
                   style={{
-                    fontSize: 22,
-                    fontWeight: 900,
-                    color: act ? C.accent : C.dark,
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "#6B7280",
+                    letterSpacing: ".8px",
+                    textTransform: "uppercase",
                     fontFamily: "Inter,sans-serif",
-                    letterSpacing: "-1px",
-                    lineHeight: 1,
+                    margin: "10px 0 7px",
                   }}
                 >
-                  {sec.score}
+                  Medium-term — Tier II
                 </div>
-                <div style={{ fontSize: 9, color: C.muted, fontFamily: "Inter,sans-serif" }}>score</div>
+                {s.pipeline.slice(2, 4).map((p, i) => (
+                  <div key={i} style={{ marginBottom: 9 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                      <span
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 600,
+                          color: "#374151",
+                          fontFamily: "Inter,sans-serif",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          flex: 1,
+                        }}
+                      >
+                        {p.label}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#2E5A4D",
+                          fontFamily: "Inter,sans-serif",
+                          flexShrink: 0,
+                          marginLeft: 4,
+                        }}
+                      >
+                        {p.current}
+                      </span>
+                    </div>
+                    <div style={{ height: 5, background: "#F3F4F6", borderRadius: 3, overflow: "hidden" }}>
+                      <div style={{ width: `${p.pct}%`, height: "100%", background: "#2E5A4D", borderRadius: 3 }} />
+                    </div>
+                    <div style={{ fontSize: 9, color: "#6B7280", marginTop: 2, fontFamily: "Inter,sans-serif" }}>
+                      {p.months}mo remaining
+                    </div>
+                  </div>
+                ))}
+              </Card>
+            </div>
+          </div>
+          <div
+            style={{
+              width: 322,
+              flexShrink: 0,
+              background: "#fff",
+              borderLeft: "1px solid #E5E7EB",
+              overflowY: "auto",
+              padding: "14px 0",
+            }}
+          >
+            <div style={{ margin: "0 12px 14px", borderRadius: 12, overflow: "hidden", border: "1px solid #E5E7EB" }}>
+              <div style={{ background: "#1B4D3E", padding: "14px" }}>
+                <SectorHeader s={s} />
+                <div style={{ display: "flex", gap: 3, overflowX: "auto", scrollbarWidth: "none", paddingBottom: 2 }}>
+                  {SECTORS.map((sec) => (
+                    <button
+                      key={sec.id}
+                      onClick={() => setS(sec)}
+                      style={{
+                        flexShrink: 0,
+                        padding: "3px 8px",
+                        borderRadius: 14,
+                        border: `1px solid ${sec.id === s.id ? "#B8D935" : "rgba(255,255,255,0.15)"}`,
+                        background: sec.id === s.id ? "#B8D935" : "transparent",
+                        fontSize: 9,
+                        fontWeight: sec.id === s.id ? 700 : 400,
+                        color: sec.id === s.id ? "#1B4D3E" : "rgba(255,255,255,0.45)",
+                        cursor: "pointer",
+                        fontFamily: "Inter,sans-serif",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {sec.short.split(" ")[0]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div style={{ padding: "11px 12px" }}>
+                <div
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "#6B7280",
+                    letterSpacing: ".8px",
+                    textTransform: "uppercase",
+                    fontFamily: "Inter,sans-serif",
+                    marginBottom: 7,
+                  }}
+                >
+                  Quick Actions
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
+                  {[
+                    [FileText, "View Report"],
+                    [Download, "Export Data"],
+                    [BarChart2, "Compare"],
+                    [Clock, "History"],
+                    [Share2, "Share"],
+                    [MoreHorizontal, "More"],
+                  ].map(([Icon, label]) => (
+                    <button
+                      key={label}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 5,
+                        padding: "6px 8px",
+                        background: "#F9FAFB",
+                        border: "1px solid #E5E7EB",
+                        borderRadius: 7,
+                        cursor: "pointer",
+                        fontSize: 10,
+                        fontWeight: 500,
+                        color: "#374151",
+                        fontFamily: "Inter,sans-serif",
+                        transition: "all .15s",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = "#1B4D3E";
+                        e.currentTarget.style.color = "#1B4D3E";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "#E5E7EB";
+                        e.currentTarget.style.color = "#374151";
+                      }}
+                    >
+                      <Icon size={11} />
+                      {label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", borderTop: "1px solid #F3F4F6" }}>
+            <div style={{ margin: "0 12px 14px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#111827" }}>Key Ventures</span>
+                <span style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{s.totalV} total</span>
+              </div>
               {[
-                { l: "IRR", v: `${sec.irrLow}–${sec.irrHigh}%` },
-                { l: "Bullish", v: `${bullish}/${sec.activity.length}` },
-                { l: "Health", v: `${Math.round(sec.score * 0.9)}%` },
-              ].map((st, si) => (
-                <div
-                  key={si}
-                  style={{ padding: "9px 0", textAlign: "center", borderRight: si < 2 ? "1px solid #F3F4F6" : "none" }}
-                >
-                  <div style={{ fontSize: 12, fontWeight: 700, color: C.dark, fontFamily: "Inter,sans-serif" }}>
-                    {st.v}
+                ...(s.t1 || []).slice(0, 3).map((v) => ({ ...v, t: 1 })),
+                ...(s.t2 || []).slice(0, 1).map((v) => ({ ...v, t: 2 })),
+                ...(s.t3 || []).slice(0, 1).map((v) => ({ ...v, t: 3 })),
+              ].map((v, i) => {
+                const VIcon = ventureIcon(v.name);
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 9,
+                      padding: "7px 8px",
+                      borderRadius: 8,
+                      marginBottom: 3,
+                      cursor: "pointer",
+                      transition: "background .1s",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#F9FAFB")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                  >
+                    <div
+                      style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: 7,
+                        background: "rgba(27,77,62,0.06)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <VIcon size={13} color="#2E5A4D" />
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 600,
+                          color: "#111827",
+                          fontFamily: "Inter,sans-serif",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {v.name}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 2 }}>
+                        <TierB t={v.t} />
+                        <span style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>
+                          {v.irr} IRR
+                        </span>
+                      </div>
+                    </div>
+                    <ChevronRight size={11} color="#6B7280" />
                   </div>
+                );
+              })}
+            </div>
+            <div style={{ margin: "0 12px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#111827" }}>Sector Intelligence</span>
+                <select
+                  style={{
+                    fontSize: 10,
+                    color: "#6B7280",
+                    border: "1px solid #E5E7EB",
+                    borderRadius: 5,
+                    padding: "2px 5px",
+                    background: "#fff",
+                    cursor: "pointer",
+                    fontFamily: "Inter,sans-serif",
+                  }}
+                >
+                  <option>Mar 2026</option>
+                  <option>Feb 2026</option>
+                </select>
+              </div>
+              {s.activity.map((a, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    gap: 9,
+                    padding: "9px 9px",
+                    borderRadius: 8,
+                    marginBottom: 4,
+                    background: "#FAFAFA",
+                    border: "1px solid #E5E7EB",
+                    cursor: "pointer",
+                    transition: "border-color .15s",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#1B4D3E")}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
+                >
                   <div
                     style={{
-                      fontSize: 9,
-                      color: C.muted,
-                      fontFamily: "Inter,sans-serif",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.3px",
-                      marginTop: 1,
+                      width: 26,
+                      height: 26,
+                      borderRadius: 7,
+                      background: "#F3F4F6",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      fontSize: 11,
+                      color: sigCol(a.sig),
+                      fontWeight: 700,
                     }}
                   >
-                    {st.l}
+                    {a.sig === "Bullish" ? "↑" : a.sig === "Bearish" ? "↓" : "→"}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 11, fontWeight: 600, color: "#111827", lineHeight: 1.3, marginBottom: 2 }}>
+                      {a.h}
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <span style={{ fontSize: 9, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{a.date}</span>
+                      <span
+                        style={{ fontSize: 9, fontWeight: 700, color: sigCol(a.sig), fontFamily: "Inter,sans-serif" }}
+                      >
+                        {a.sig}
+                      </span>
+                      <span
+                        style={{
+                          marginLeft: "auto",
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: sigCol(a.sig),
+                          fontFamily: "Inter,sans-serif",
+                        }}
+                      >
+                        {a.amt}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
+            <div style={{ margin: "14px 12px 0" }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: "#111827", marginBottom: 7 }}>Cross-Sector Links</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {s.cross.map((cid, i) => {
+                  const found = SECTORS.find((sec) => sec.id === cid);
+                  if (!found) return null;
+                  const Icon = found.icon;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => setS(found)}
+                      title={found.full}
+                      style={{
+                        width: 34,
+                        height: 34,
+                        borderRadius: 10,
+                        border: "1px solid #E5E7EB",
+                        background: "#fff",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        transition: "all .15s",
+                        flexShrink: 0,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "#EBF5B0";
+                        e.currentTarget.style.borderColor = "#B8D935";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "#fff";
+                        e.currentTarget.style.borderColor = "#E5E7EB";
+                      }}
+                    >
+                      <Icon size={14} color="#1B4D3E" />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-        );
-      })}
-      <div style={{ height: 16 }} />
-    </div>
-  );
-}
-
-function MobileSignalsPage({ s }) {
-  const [filter, setFilter] = useState("All");
-  const allSignals = SECTORS.flatMap((sec) =>
-    sec.activity.map((a) => ({ ...a, sector: sec.short, svgIcon: sec.svgIcon })),
-  );
-  const filtered = filter === "All" ? allSignals : allSignals.filter((a) => a.sig === filter);
-  return (
-    <div style={{ paddingBottom: 90 }}>
-      <div style={{ padding: "16px 16px 8px" }}>
-        <div style={{ fontSize: 17, fontWeight: 800, color: C.dark, marginBottom: 2 }}>Signal Feed</div>
-        <div style={{ fontSize: 11, color: C.muted, fontFamily: "Inter,sans-serif" }}>
-          All sectors · Real-time intelligence
         </div>
-      </div>
-      {/* Filter pills */}
-      <div style={{ display: "flex", gap: 6, padding: "0 16px 12px", overflowX: "auto", scrollbarWidth: "none" }}>
-        {["All", "Bullish", "Watch", "Bearish"].map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            style={{
-              padding: "6px 14px",
-              borderRadius: 20,
-              border: `1px solid ${filter === f ? C.accent : "#E5E7EB"}`,
-              background: filter === f ? C.accentBg : "#fff",
-              fontSize: 11,
-              fontWeight: filter === f ? 700 : 500,
-              color: filter === f ? C.primary : C.mid,
-              cursor: "pointer",
-              whiteSpace: "nowrap",
-              fontFamily: "Inter,sans-serif",
-              flexShrink: 0,
-            }}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
-      {filtered.map((a, i) => (
+        {/* Status Bar */}
         <div
-          key={i}
           style={{
-            margin: "0 12px 8px",
-            borderRadius: 14,
-            background: "#fff",
-            border: "1px solid #F3F4F6",
-            overflow: "hidden",
+            height: 36,
+            flexShrink: 0,
+            background: "#111E17",
+            borderTop: "1px solid #1A2E22",
+            display: "flex",
+            alignItems: "center",
+            padding: "0 22px",
+            gap: 0,
           }}
         >
-          <div style={{ display: "flex", gap: 12, padding: "12px 14px", alignItems: "flex-start" }}>
-            <div
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginRight: 20 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935" }} />
+            <span
               style={{
-                width: 36,
-                height: 36,
-                borderRadius: 10,
-                background: "#F3F4F6",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
+                fontSize: 10,
+                fontWeight: 700,
+                color: "rgba(255,255,255,0.7)",
+                letterSpacing: ".5px",
+                fontFamily: "Inter,sans-serif",
               }}
             >
-              {a.sig === "Bullish" ? (
-                <TrendingUp size={15} color={C.green} />
-              ) : a.sig === "Bearish" ? (
-                <TrendingDown size={15} color={C.red} />
-              ) : (
-                <Activity size={15} color={C.yellow} />
-              )}
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: C.dark, lineHeight: 1.4, marginBottom: 4 }}>
-                {a.h}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                    padding: "2px 7px",
-                    borderRadius: 6,
-                    background: "#F3F4F6",
-                  }}
-                >
-                  {a.svgIcon(C.muted, 9)}
-                  <span style={{ fontSize: 9, color: C.muted, fontFamily: "Inter,sans-serif" }}>{a.sector}</span>
-                </div>
-                <span style={{ fontSize: 9, color: C.muted, fontFamily: "Inter,sans-serif" }}>{a.date}</span>
-              </div>
-            </div>
-            <div style={{ flexShrink: 0, textAlign: "right" }}>
-              <div style={{ fontSize: 13, fontWeight: 800, color: sigCol(a.sig), fontFamily: "Inter,sans-serif" }}>
-                {a.amt}
-              </div>
+              BRIDGE Intelligence
+            </span>
+          </div>
+          {[
+            ["12 Sectors", ""],
+            ["174 Ventures", ""],
+            [`Active: ${s.full}`, ""],
+            ["Data: Mar 2026", ""],
+          ].map(([label], i) => (
+            <>
+              <span
+                key={`d${i}`}
+                style={{
+                  fontSize: 10,
+                  color: "rgba(255,255,255,0.18)",
+                  marginRight: 14,
+                  fontFamily: "Inter,sans-serif",
+                }}
+              >
+                ·
+              </span>
+              <span
+                key={`l${i}`}
+                style={{
+                  fontSize: 10,
+                  color: "rgba(255,255,255,0.35)",
+                  marginRight: 14,
+                  fontFamily: "Inter,sans-serif",
+                }}
+              >
+                {label}
+              </span>
+            </>
+          ))}
+          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 14 }}>
+            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", fontFamily: "Inter,sans-serif" }}>
+              © 2026 BRIDGE PBC
+            </span>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                padding: "3px 8px",
+                borderRadius: 4,
+                background: "rgba(184,217,53,0.08)",
+                border: "1px solid rgba(184,217,53,0.15)",
+              }}
+            >
               <div
+                style={{
+                  width: 5,
+                  height: 5,
+                  borderRadius: "50%",
+                  background: "#B8D935",
+                  boxShadow: "0 0 5px #B8D935",
+                }}
+              />
+              <span
                 style={{
                   fontSize: 9,
                   fontWeight: 700,
-                  color: sigCol(a.sig),
+                  color: "#B8D935",
+                  letterSpacing: ".8px",
+                  textTransform: "uppercase",
                   fontFamily: "Inter,sans-serif",
-                  marginTop: 2,
                 }}
               >
-                {a.sig}
-              </div>
+                Live
+              </span>
             </div>
           </div>
         </div>
-      ))}
-      <div style={{ height: 16 }} />
+      </div>
     </div>
   );
 }
 
-function MobileSettingsPage() {
-  return (
-    <div style={{ paddingBottom: 90 }}>
-      <div style={{ padding: "16px 16px 8px" }}>
-        <div style={{ fontSize: 17, fontWeight: 800, color: C.dark, marginBottom: 2 }}>Settings</div>
-        <div style={{ fontSize: 11, color: C.muted, fontFamily: "Inter,sans-serif" }}>Account & preferences</div>
-      </div>
-      {/* Profile card */}
-      <div
-        style={{
-          margin: "0 12px 12px",
-          borderRadius: 16,
-          background: `linear-gradient(135deg,${C.sidebar},#1A3326)`,
-          padding: 20,
-          display: "flex",
-          alignItems: "center",
-          gap: 14,
-        }}
-      >
-        <div
-          style={{
-            width: 52,
-            height: 52,
-            borderRadius: 16,
-            background: "rgba(184,217,53,0.2)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          <User size={24} color={C.accent} />
-        </div>
-        <div>
-          <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 2 }}>Joseph A.</div>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: C.accent,
-                boxShadow: `0 0 5px ${C.accent}`,
-              }}
-            />
-            <span style={{ fontSize: 11, color: C.accent, fontFamily: "Inter,sans-serif", fontWeight: 700 }}>
-              Full Access
-            </span>
-          </div>
-        </div>
-        <div
-          style={{
-            marginLeft: "auto",
-            padding: "6px 12px",
-            borderRadius: 8,
-            background: "rgba(184,217,53,0.12)",
-            border: "1px solid rgba(184,217,53,0.2)",
-          }}
-        >
-          <span style={{ fontSize: 11, fontWeight: 700, color: C.accent, fontFamily: "Inter,sans-serif" }}>Pro</span>
-        </div>
-      </div>
-      {/* Settings groups */}
-      {[
-        {
-          group: "Intelligence",
-          items: [
-            { l: "Data Refresh", v: "Live" },
-            { l: "Alert Threshold", v: "Score >85" },
-            { l: "Default Sector", v: "Agriculture" },
-          ],
-        },
-        {
-          group: "Display",
-          items: [
-            { l: "Currency", v: "USD" },
-            { l: "Date Format", v: "MMM YYYY" },
-            { l: "Compact View", v: "Off" },
-          ],
-        },
-        {
-          group: "Account",
-          items: [
-            { l: "Version", v: "2.1.0" },
-            { l: "Data: Mar 2026", v: "" },
-            { l: "© 2026 BRIDGE PBC", v: "" },
-          ],
-        },
-      ].map((g, gi) => (
-        <div
-          key={gi}
-          style={{
-            margin: "0 12px 10px",
-            background: "#fff",
-            borderRadius: 16,
-            border: "1px solid #E5E7EB",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              padding: "11px 16px 8px",
-              fontSize: 10,
-              fontWeight: 700,
-              color: C.muted,
-              textTransform: "uppercase",
-              letterSpacing: "0.8px",
-              fontFamily: "Inter,sans-serif",
-            }}
-          >
-            {g.group}
-          </div>
-          {g.items.map((item, ii) => (
-            <div
-              key={ii}
-              style={{ display: "flex", alignItems: "center", padding: "12px 16px", borderTop: "1px solid #F3F4F6" }}
-            >
-              <span style={{ flex: 1, fontSize: 13, color: C.dark }}>{item.l}</span>
-              {item.v && (
-                <span style={{ fontSize: 12, fontWeight: 600, color: C.muted, fontFamily: "Inter,sans-serif" }}>
-                  {item.v}
-                </span>
-              )}
-              {item.v && <ChevronRight size={14} color="#D1D5DB" style={{ marginLeft: 6 }} />}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
+export default function BridgeDashboard() {
+  const [isMobile, setMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
+  const [s, setS] = useState(SECTORS[0]);
+  useState(() => {
+    const h = () => setMobile(window.innerWidth < 768);
+    window.addEventListener("resize", h);
+    return () => window.removeEventListener("resize", h);
+  });
+  if (isMobile) return <MobileDashboard s={s} setS={setS} />;
+  return <DesktopDashboard />;
 }
