@@ -25,9 +25,9 @@ const FOOTER_LINKS: Record<string, string> = {
   "Research Library": "/resources",
   "Data & Reports": "/resources",
   "Insights & Analysis": "/insights",
-  "Sector Briefs": "/resources",
-  "Policy Updates": "/insights",
-  "Annual Review": "/insights",
+  "Sector Briefs": "/sectors",
+  "Policy Updates": "/policy",
+  "Annual Review": "/resources",
 };
 
 const footerLinkHref = (link: string): string => FOOTER_LINKS[link] || "#";

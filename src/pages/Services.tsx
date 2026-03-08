@@ -1230,9 +1230,9 @@ const footerLinkHref = (link: string): string => {
     "Research Library": "/resources",
     "Data & Reports": "/resources",
     "Insights & Analysis": "/insights",
-    "Sector Briefs": "/insights",
-    "Policy Updates": "/insights",
-    "Annual Review": "/insights",
+    "Sector Briefs": "/sectors",
+    "Policy Updates": "/policy",
+    "Annual Review": "/resources",
   };
   return map[link] || "#";
 };

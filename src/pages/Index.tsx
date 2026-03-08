@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
@@ -667,6 +668,7 @@ const sectorRoutes: Record<string, string> = {
 // ═══════════════════════════════════════════════
 
 export default function BRIDGEHomePage() {
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [hoveredCard, setHoveredCard] = useState(null);
   const sectorCount = useCounter(12, 1200, 300);
@@ -1910,6 +1912,7 @@ export default function BRIDGEHomePage() {
               </div>
               <button
                 className="cta-learn-more"
+                onClick={() => navigate("/methodology")}
                 style={{
                   backgroundColor: colors.white,
                   color: colors.primary,
@@ -2576,6 +2579,7 @@ export default function BRIDGEHomePage() {
               <span style={{ fontWeight: "700", color: colors.accent }}>Join Us!</span>
             </h3>
             <button
+              onClick={() => navigate("/services")}
               style={{
                 backgroundColor: colors.accent,
                 color: colors.primary,
@@ -2894,6 +2898,7 @@ export default function BRIDGEHomePage() {
               })}
               <div
                 className="sector-row"
+                onClick={() => navigate("/sectors")}
                 style={{
                   backgroundColor: colors.background,
                   borderRadius: "14px",
@@ -3021,6 +3026,7 @@ export default function BRIDGEHomePage() {
                   A development engine — identifying opportunities, connecting resources, and initiating ventures.
                 </p>
                 <button
+                  onClick={() => navigate("/about")}
                   style={{
                     backgroundColor: colors.accent,
                     color: colors.primary,
@@ -3176,6 +3182,7 @@ export default function BRIDGEHomePage() {
                     ventures. Let's work together to create a lasting impact.
                   </p>
                   <button
+                    onClick={() => navigate("/about")}
                     style={{
                       backgroundColor: colors.primary,
                       color: colors.white,
