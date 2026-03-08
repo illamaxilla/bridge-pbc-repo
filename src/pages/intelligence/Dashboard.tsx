@@ -5591,11 +5591,13 @@ function DesktopDashboard() {
                   </button>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                  {[
-                    [s.t1?.length, "I", "#EBF5B0", "#1B4D3E"],
-                    [s.t2?.length, "II", "rgba(46,90,77,0.12)", "#2E5A4D"],
-                    [s.t3?.length, "III", "rgba(107,114,128,0.1)", "#6B7280"],
-                  ].map(([n, label, bg, col]) => (
+                  {(
+                    [
+                      [s.t1?.length, "I", "#EBF5B0", "#1B4D3E"],
+                      [s.t2?.length, "II", "rgba(46,90,77,0.12)", "#2E5A4D"],
+                      [s.t3?.length, "III", "rgba(107,114,128,0.1)", "#6B7280"],
+                    ] as [any, string, string, string][]
+                  ).map(([n, label, bg, col]) => (
                     <div
                       key={label}
                       style={{ flex: 1, padding: "9px 10px", background: bg, borderRadius: 8, textAlign: "center" }}
