@@ -1912,6 +1912,7 @@ export default function BRIDGEHomePage() {
               </div>
               <button
                 className="cta-learn-more"
+                onClick={() => navigate("/methodology")}
                 style={{
                   backgroundColor: colors.white,
                   color: colors.primary,
