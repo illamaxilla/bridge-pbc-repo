@@ -1,9 +1,9 @@
-import { Outlet, NavLink, Navigate, useLocation } from "react-router-dom";
+import { Outlet, NavLink, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, TrendingUp, FileText, Bookmark, BarChart2, FolderOpen,
-  Menu, X, ChevronLeft, ChevronRight, ArrowUpRight,
+  Menu, X, ChevronLeft, ChevronRight, ArrowUpRight, Check,
   Wallet, Cpu, GraduationCap, Sprout, Camera, Home, Luggage,
-  BatteryCharging, Factory, Truck, Blocks, Cross,
+  BatteryCharging, Factory, Truck, Blocks, Cross, Zap, Shield, Globe,
 } from "lucide-react";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -12,7 +12,6 @@ const C = {
   accent: "#B8D935",
   primary: "#1B4D3E",
   sidebar: "#0F1A12",
-  sideL: "#1A2E22",
   sideAct: "#1E3327",
   white: "#FFFFFF",
 };
@@ -26,7 +25,7 @@ const navItems = [
   { to: "/intelligence/resources",  label: "Resources",       icon: FolderOpen },
 ];
 
-// Sectors sorted by score (descending) — no scores shown per user request
+// Sorted by score descending
 const SIDEBAR_SECTORS = [
   { id: "financial",      short: "Financial Inclusion", icon: Wallet },
   { id: "agriculture",    short: "Agriculture",         icon: Sprout },
@@ -40,6 +39,13 @@ const SIDEBAR_SECTORS = [
   { id: "creative",       short: "Creative Industries", icon: Camera },
   { id: "transportation", short: "Transportation",      icon: Truck },
   { id: "tourism",        short: "Tourism",             icon: Luggage },
+];
+
+const PRO_FEATURES = [
+  { icon: Globe,  text: "All 12 sector deep-dives" },
+  { icon: Zap,    text: "Real-time opportunity alerts" },
+  { icon: Shield, text: "Risk & IRR benchmarking" },
+  { icon: BarChart2, text: "Custom watchlist & exports" },
 ];
 
 function BridgeLogo() {
@@ -72,11 +78,107 @@ function BridgeLogo() {
   );
 }
 
+function UpgradeModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      style={{
+        position: "fixed", inset: 0, zIndex: 100,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: "rgba(0,0,0,0.65)", backdropFilter: "blur(4px)",
+        padding: 20,
+      }}
+      onClick={onClose}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          background: "#0F1A12",
+          border: "1px solid rgba(184,217,53,0.2)",
+          borderRadius: 16,
+          padding: 32,
+          maxWidth: 420,
+          width: "100%",
+          position: "relative",
+          boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+        }}
+      >
+        {/* Close */}
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute", top: 14, right: 14,
+            background: "rgba(255,255,255,0.06)", border: "none",
+            borderRadius: 6, cursor: "pointer", padding: 6,
+            color: "rgba(255,255,255,0.4)", display: "flex",
+          }}
+        >
+          <X size={16} />
+        </button>
+
+        {/* Badge */}
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 6,
+          background: "rgba(184,217,53,0.12)", border: "1px solid rgba(184,217,53,0.25)",
+          borderRadius: 20, padding: "4px 12px", marginBottom: 16,
+        }}>
+          <Zap size={12} color={C.accent} />
+          <span style={{ fontSize: 10, fontWeight: 700, color: C.accent, fontFamily: "Inter,sans-serif", letterSpacing: ".06em" }}>
+            BRIDGE INTELLIGENCE PRO
+          </span>
+        </div>
+
+        {/* Headline */}
+        <h2 style={{ fontSize: 22, fontWeight: 800, color: C.white, fontFamily: "DM Sans,sans-serif", margin: "0 0 6px" }}>
+          Unlock the Full Picture
+        </h2>
+        <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", fontFamily: "Inter,sans-serif", marginBottom: 24, lineHeight: 1.5 }}>
+          Get deep-dive access to all 12 Ghana investment sectors, live opportunity alerts, and custom portfolio tools.
+        </p>
+
+        {/* Features */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
+          {PRO_FEATURES.map(({ icon: Icon, text }) => (
+            <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{
+                width: 28, height: 28, borderRadius: 6,
+                background: "rgba(184,217,53,0.1)", border: "1px solid rgba(184,217,53,0.15)",
+                display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+              }}>
+                <Icon size={14} color={C.accent} />
+              </div>
+              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", fontFamily: "DM Sans,sans-serif" }}>{text}</span>
+              <Check size={13} color={C.accent} style={{ marginLeft: "auto", flexShrink: 0 }} />
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <button
+          style={{
+            width: "100%", background: C.accent, border: "none", borderRadius: 8,
+            padding: "13px 0", fontSize: 13, fontWeight: 700, color: C.primary,
+            fontFamily: "Inter,sans-serif", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+            marginBottom: 10,
+          }}
+        >
+          Request Pro Access <ArrowUpRight size={14} />
+        </button>
+        <p style={{ textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.25)", fontFamily: "Inter,sans-serif", margin: 0 }}>
+          Institutional & diaspora investor pricing available
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function Intelligence() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [showUpgrade, setShowUpgrade] = useState(false);
 
   if (location.pathname === "/intelligence" || location.pathname === "/intelligence/") {
     return <Navigate to="/intelligence/dashboard" replace />;
@@ -84,8 +186,16 @@ export default function Intelligence() {
 
   const sidebarWidth = isMobile ? (sidebarOpen ? 220 : 0) : collapsed ? 56 : 220;
 
+  const handleSectorClick = (sectorId: string) => {
+    navigate(`/intelligence/dashboard?sector=${sectorId}`);
+    setSidebarOpen(false);
+  };
+
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "#F3F5F2", fontFamily: "Inter, sans-serif" }}>
+
+      {/* ── Upgrade Modal ── */}
+      {showUpgrade && <UpgradeModal onClose={() => setShowUpgrade(false)} />}
 
       {/* ── Top Bar ── */}
       <header style={{
@@ -151,9 +261,11 @@ export default function Intelligence() {
 
           {/* ── Nav Items ── */}
           <nav style={{ padding: "10px 8px", flexShrink: 0, minWidth: 220 }}>
-            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "Inter,sans-serif", padding: "6px 8px 6px", textTransform: "uppercase", whiteSpace: "nowrap" }}>
-              Navigation
-            </p>
+            {!collapsed && (
+              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "Inter,sans-serif", padding: "6px 8px 6px", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                Navigation
+              </p>
+            )}
             {navItems.map(({ to, label, icon: Icon }) => (
               <NavLink
                 key={to}
@@ -190,16 +302,16 @@ export default function Intelligence() {
 
           {/* ── Sectors ── */}
           <div style={{ flex: 1, overflowY: "auto", padding: "0 8px 12px", scrollbarWidth: "none", minWidth: 220 }}>
-            {collapsed ? (
-              <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "4px 6px 10px" }} />
-            ) : (
+            {!collapsed && (
               <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "Inter,sans-serif", padding: "6px 8px 6px", textTransform: "uppercase", whiteSpace: "nowrap" }}>
                 Sectors
               </p>
             )}
+            {collapsed && <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "4px 6px 10px" }} />}
             {SIDEBAR_SECTORS.map(({ id, short, icon: Icon }) => (
-              <div
+              <button
                 key={id}
+                onClick={() => handleSectorClick(id)}
                 title={collapsed ? short : undefined}
                 style={{
                   display: "flex",
@@ -211,7 +323,15 @@ export default function Intelligence() {
                   marginBottom: 1,
                   whiteSpace: "nowrap",
                   overflow: "hidden",
+                  width: "100%",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "background 0.12s",
+                  textAlign: "left",
                 }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "none")}
               >
                 {collapsed ? (
                   <div style={{
@@ -229,7 +349,7 @@ export default function Intelligence() {
                     </span>
                   </>
                 )}
-              </div>
+              </button>
             ))}
           </div>
 
@@ -247,12 +367,18 @@ export default function Intelligence() {
               <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", fontFamily: "Inter,sans-serif", marginBottom: 8, lineHeight: 1.4 }}>
                 Full access to all 12 sector analyses
               </div>
-              <button style={{
-                width: "100%", background: C.accent, border: "none", borderRadius: 5,
-                padding: "7px 0", fontSize: 10, fontWeight: 700, color: C.primary,
-                fontFamily: "Inter,sans-serif", cursor: "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
-              }}>
+              <button
+                onClick={() => setShowUpgrade(true)}
+                style={{
+                  width: "100%", background: C.accent, border: "none", borderRadius: 5,
+                  padding: "7px 0", fontSize: 10, fontWeight: 700, color: C.primary,
+                  fontFamily: "Inter,sans-serif", cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
+                  transition: "opacity 0.15s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "0.88")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+              >
                 Get Access <ArrowUpRight size={10} />
               </button>
             </div>
