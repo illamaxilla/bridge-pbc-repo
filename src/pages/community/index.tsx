@@ -1042,6 +1042,7 @@ function CommunityDashboard({ memberType, onLogout }) {
             {["Home", "Forum", "Members", "Resources"].map((item) => (
               <button
                 key={item}
+                onClick={() => setActivePage(item)}
                 style={{
                   padding: "6px 14px",
                   borderRadius: 8,
@@ -1049,9 +1050,10 @@ function CommunityDashboard({ memberType, onLogout }) {
                   cursor: "pointer",
                   fontFamily: font.body,
                   fontSize: 13,
-                  fontWeight: 500,
-                  background: item === "Home" ? `rgba(27,77,62,0.08)` : "transparent",
-                  color: item === "Home" ? C.primary : C.text,
+                  fontWeight: activePage === item ? 600 : 500,
+                  background: activePage === item ? `rgba(27,77,62,0.08)` : "transparent",
+                  color: activePage === item ? C.primary : C.text,
+                  transition: "all 0.15s",
                 }}
               >
                 {item}
