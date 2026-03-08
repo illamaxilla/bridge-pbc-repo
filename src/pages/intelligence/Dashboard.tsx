@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   Blocks,
@@ -4095,6 +4095,163 @@ function MobileDashboard({ s, setS }) {
   );
 }
 
+/* ─────────── COMPARE PANEL ─────────── */
+function ComparePanel({ sA, sB, onClose }: { sA: any; sB: any; onClose: () => void }) {
+  const cols = [sA, sB];
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 300, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)",
+      display: "flex", alignItems: "center", justifyContent: "center", padding: 24,
+    }} onClick={onClose}>
+      <div onClick={e => e.stopPropagation()} style={{
+        background: "#fff", borderRadius: 20, width: "100%", maxWidth: 900,
+        maxHeight: "90vh", overflow: "auto", boxShadow: "0 24px 80px rgba(0,0,0,0.2)",
+      }}>
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 24px", borderBottom: "1px solid #E5E7EB" }}>
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#111827" }}>Sector Comparison</div>
+            <div style={{ fontSize: 11, color: "#6B7280", fontFamily: "Inter,sans-serif", marginTop: 2 }}>Side-by-side analysis · Mar 2026</div>
+          </div>
+          <button onClick={onClose} style={{ background: "#F3F4F6", border: "none", borderRadius: 8, padding: "6px 12px", cursor: "pointer", fontSize: 12, fontWeight: 600, color: "#374151", fontFamily: "Inter,sans-serif" }}>Close ×</button>
+        </div>
+        {/* Column headers */}
+        <div style={{ display: "grid", gridTemplateColumns: "200px 1fr 1fr", borderBottom: "1px solid #E5E7EB" }}>
+          <div style={{ padding: "14px 16px", background: "#F9FAFB" }} />
+          {cols.map((sec) => {
+            const Icon = sec.icon;
+            return (
+              <div key={sec.id} style={{ padding: "14px 16px", background: "#F9FAFB", borderLeft: "1px solid #E5E7EB" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: 8, background: "rgba(27,77,62,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Icon size={15} color="#1B4D3E" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: "#111827" }}>{sec.short}</div>
+                    <div style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{sec.tag}</div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {/* Rows */}
+        {[
+          { label: "BRIDGE Score", key: "score", render: (v) => <span style={{ fontSize: 18, fontWeight: 800, color: v >= 88 ? "#16A34A" : v >= 80 ? "#CA8A04" : "#DC2626", fontFamily: "Inter,sans-serif" }}>{v}</span> },
+          { label: "Capital Range", key: null, render: (_, sec) => <span style={{ fontSize: 13, fontWeight: 600, color: "#374151", fontFamily: "Inter,sans-serif" }}>${sec.capLow}–{sec.capHigh}M</span> },
+          { label: "IRR Potential", key: null, render: (_, sec) => <span style={{ fontSize: 13, fontWeight: 600, color: "#B8D935", fontFamily: "Inter,sans-serif" }}>{sec.irrLow}–{sec.irrHigh}%</span> },
+          { label: "Ventures Identified", key: "totalV", render: (v) => <span style={{ fontSize: 13, fontWeight: 600, color: "#374151", fontFamily: "Inter,sans-serif" }}>{v}</span> },
+          { label: "Tier I Ventures", key: null, render: (_, sec) => <span style={{ fontSize: 13, fontWeight: 600, color: "#1B4D3E", fontFamily: "Inter,sans-serif" }}>{sec.t1?.length || 0}</span> },
+          { label: "Sector Tag", key: "tag", render: (v) => <span style={{ fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 5, background: "#EBF5B0", color: "#1B4D3E", fontFamily: "Inter,sans-serif" }}>{v}</span> },
+        ].map(({ label, key, render }, ri) => (
+          <div key={ri} style={{ display: "grid", gridTemplateColumns: "200px 1fr 1fr", borderBottom: "1px solid #F3F4F6" }}>
+            <div style={{ padding: "13px 16px", fontSize: 12, fontWeight: 600, color: "#6B7280", fontFamily: "Inter,sans-serif", display: "flex", alignItems: "center" }}>{label}</div>
+            {cols.map((sec) => (
+              <div key={sec.id} style={{ padding: "13px 16px", borderLeft: "1px solid #F3F4F6", display: "flex", alignItems: "center" }}>
+                {render(key ? sec[key] : null, sec)}
+              </div>
+            ))}
+          </div>
+        ))}
+        {/* Top ventures side by side */}
+        <div style={{ display: "grid", gridTemplateColumns: "200px 1fr 1fr" }}>
+          <div style={{ padding: "13px 16px", fontSize: 12, fontWeight: 600, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>Top Ventures</div>
+          {cols.map((sec) => (
+            <div key={sec.id} style={{ padding: "10px 16px", borderLeft: "1px solid #F3F4F6" }}>
+              {(sec.t1 || []).slice(0, 3).map((v, vi) => (
+                <div key={vi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", borderBottom: vi < 2 ? "1px solid #F3F4F6" : "none" }}>
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 11, fontWeight: 600, color: "#111827", fontFamily: "Inter,sans-serif", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{v.name}</div>
+                    <div style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{v.irr} IRR · {v.cap}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────── SEARCH RESULT OVERLAY ─────────── */
+function SearchOverlay({ query, onSelect, onClose }: { query: string; onSelect: (s: any) => void; onClose: () => void }) {
+  const q = query.toLowerCase().trim();
+  if (!q) return null;
+  // Search sectors by name/tag
+  const sectorResults = SECTORS.filter(sec =>
+    sec.short.toLowerCase().includes(q) || sec.full.toLowerCase().includes(q) || sec.tag.toLowerCase().includes(q)
+  );
+  // Search ventures across all sectors
+  const ventureResults: { venture: any; sector: any }[] = [];
+  SECTORS.forEach(sec => {
+    [...(sec.t1 || []), ...(sec.t2 || []), ...(sec.t3 || [])].forEach(v => {
+      if (v.name.toLowerCase().includes(q)) {
+        ventureResults.push({ venture: v, sector: sec });
+      }
+    });
+  });
+  const hasResults = sectorResults.length > 0 || ventureResults.length > 0;
+  return (
+    <div style={{
+      position: "absolute", top: "calc(100% + 8px)", left: 0, right: 0,
+      background: "#fff", borderRadius: 12, border: "1px solid #E5E7EB",
+      boxShadow: "0 8px 32px rgba(0,0,0,0.12)", zIndex: 200, overflow: "hidden", maxHeight: 360, overflowY: "auto",
+    }}>
+      {!hasResults && (
+        <div style={{ padding: "18px 16px", fontSize: 12, color: "#9CA3AF", textAlign: "center", fontFamily: "Inter,sans-serif" }}>
+          No results for "{query}"
+        </div>
+      )}
+      {sectorResults.length > 0 && (
+        <>
+          <div style={{ padding: "8px 14px 4px", fontSize: 9, fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "1px", fontFamily: "Inter,sans-serif" }}>Sectors</div>
+          {sectorResults.slice(0, 4).map((sec) => {
+            const Icon = sec.icon;
+            return (
+              <div key={sec.id} onClick={() => { onSelect(sec); onClose(); }}
+                style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 14px", cursor: "pointer", transition: "background .1s" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#F9FAFB")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+              >
+                <div style={{ width: 28, height: 28, borderRadius: 7, background: "#EBF5B0", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Icon size={13} color="#1B4D3E" />
+                </div>
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#111827", fontFamily: "DM Sans,sans-serif" }}>{sec.short}</div>
+                  <div style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{sec.tag} · Score {sec.score}</div>
+                </div>
+                <div style={{ marginLeft: "auto", fontSize: 10, fontWeight: 700, color: "#B8D935", fontFamily: "Inter,sans-serif" }}>${sec.capLow}–{sec.capHigh}M</div>
+              </div>
+            );
+          })}
+        </>
+      )}
+      {ventureResults.length > 0 && (
+        <>
+          <div style={{ padding: "8px 14px 4px", fontSize: 9, fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "1px", fontFamily: "Inter,sans-serif", borderTop: sectorResults.length > 0 ? "1px solid #F3F4F6" : "none" }}>Ventures</div>
+          {ventureResults.slice(0, 5).map(({ venture, sector }, i) => (
+            <div key={i} onClick={() => { onSelect(sector); onClose(); }}
+              style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 14px", cursor: "pointer", transition: "background .1s" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "#F9FAFB")}
+              onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+            >
+              <div style={{ width: 28, height: 28, borderRadius: 7, background: "rgba(46,90,77,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <Briefcase size={12} color="#2E5A4D" />
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: "#111827", fontFamily: "DM Sans,sans-serif", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{venture.name}</div>
+                <div style={{ fontSize: 10, color: "#6B7280", fontFamily: "Inter,sans-serif" }}>{sector.short} · {venture.irr} IRR · {venture.cap}</div>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  );
+}
+
 /* ─────────── DESKTOP DASHBOARD ─────────── */
 function DesktopDashboard() {
   const [searchParams] = useSearchParams();
@@ -4106,6 +4263,41 @@ function DesktopDashboard() {
   const [chart, setChart] = useState("bar");
   const [notif, setNotif] = useState(false);
   const [fadeKey, setFadeKey] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [compareMode, setCompareMode] = useState(false);
+  const [compareSectors, setCompareSectors] = useState<any[]>([]);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Cmd+K / Ctrl+K keyboard shortcut
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        searchRef.current?.focus();
+        setSearchOpen(true);
+      }
+      if (e.key === "Escape") {
+        setSearchOpen(false);
+        setSearchQuery("");
+        searchRef.current?.blur();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  // Close search on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setSearchOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   // Sync when URL param changes (e.g. sidebar sector click)
   useEffect(() => {
@@ -4118,6 +4310,21 @@ function DesktopDashboard() {
       }
     }
   }, [searchParams]);
+
+  const handleSectorSelect = useCallback((sec: any) => {
+    setFadeKey(k => k + 1);
+    setS(sec);
+    setSearchQuery("");
+    setSearchOpen(false);
+  }, []);
+
+  const handleCompareToggle = (sec: any) => {
+    setCompareSectors(prev => {
+      if (prev.find(p => p.id === sec.id)) return prev.filter(p => p.id !== sec.id);
+      if (prev.length >= 2) return [prev[1], sec];
+      return [...prev, sec];
+    });
+  };
 
   const cData = (s.t1 || [])
     .slice(0, 6)
@@ -4137,6 +4344,10 @@ function DesktopDashboard() {
         fontFamily: "'DM Sans',sans-serif",
       }}
     >
+      {/* Compare Panel */}
+      {compareMode && compareSectors.length === 2 && (
+        <ComparePanel sA={compareSectors[0]} sB={compareSectors[1]} onClose={() => { setCompareMode(false); setCompareSectors([]); }} />
+      )}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
         <div
           style={{
@@ -4214,21 +4425,28 @@ function DesktopDashboard() {
 
           {/* CENTER — Search */}
           <div
+            ref={searchContainerRef}
             style={{
               flex: 1,
               maxWidth: 360,
+              position: "relative",
               display: "flex",
               alignItems: "center",
               gap: 8,
-              background: "#F9FAFB",
-              border: "1px solid #E5E7EB",
+              background: searchOpen ? "#fff" : "#F9FAFB",
+              border: `1px solid ${searchOpen ? "#1B4D3E" : "#E5E7EB"}`,
               borderRadius: 9,
               padding: "7px 12px",
               marginLeft: "auto",
+              transition: "border-color 0.15s, background 0.15s",
             }}
           >
-            <Search size={13} color="#6B7280" />
+            <Search size={13} color={searchOpen ? "#1B4D3E" : "#6B7280"} />
             <input
+              ref={searchRef}
+              value={searchQuery}
+              onChange={e => { setSearchQuery(e.target.value); setSearchOpen(true); }}
+              onFocus={() => setSearchOpen(true)}
               placeholder="Search sectors, ventures, metrics…"
               style={{
                 background: "none",
@@ -4240,19 +4458,17 @@ function DesktopDashboard() {
                 width: "100%",
               }}
             />
-            <span
-              style={{
-                fontSize: 9,
-                color: "#6B7280",
-                background: "#E5E7EB",
-                padding: "1px 5px",
-                borderRadius: 3,
-                fontFamily: "Inter,sans-serif",
-                flexShrink: 0,
-              }}
-            >
-              CMD+K
-            </span>
+            {searchQuery ? (
+              <button onClick={() => { setSearchQuery(""); setSearchOpen(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", color: "#9CA3AF", flexShrink: 0 }}>
+                ×
+              </button>
+            ) : (
+              <span style={{ fontSize: 9, color: "#6B7280", background: "#E5E7EB", padding: "1px 5px", borderRadius: 3, fontFamily: "Inter,sans-serif", flexShrink: 0, whiteSpace: "nowrap" }}>⌘K</span>
+            )}
+            {/* Search Results Overlay */}
+            {searchOpen && searchQuery && (
+              <SearchOverlay query={searchQuery} onSelect={handleSectorSelect} onClose={() => { setSearchOpen(false); setSearchQuery(""); }} />
+            )}
           </div>
 
           {/* RIGHT — Actions */}
@@ -5174,31 +5390,70 @@ function DesktopDashboard() {
                 >
                   Quick Actions
                 </div>
+                {/* Compare sector selector */}
+                {compareMode && (
+                  <div style={{ marginBottom: 8, padding: "8px 10px", background: "#EBF5B0", borderRadius: 8, border: "1px solid rgba(184,217,53,0.4)" }}>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: "#1B4D3E", fontFamily: "Inter,sans-serif", marginBottom: 6 }}>
+                      Select 2 sectors to compare ({compareSectors.length}/2)
+                    </div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 6 }}>
+                      {SECTORS.slice(0, 6).map(sec => {
+                        const selected = compareSectors.find(p => p.id === sec.id);
+                        return (
+                          <button key={sec.id} onClick={() => handleCompareToggle(sec)} style={{
+                            padding: "3px 8px", borderRadius: 5, border: `1px solid ${selected ? "#1B4D3E" : "rgba(27,77,62,0.2)"}`,
+                            background: selected ? "#1B4D3E" : "transparent", color: selected ? "#B8D935" : "#1B4D3E",
+                            fontSize: 10, fontWeight: 600, cursor: "pointer", fontFamily: "Inter,sans-serif",
+                          }}>{sec.short.split(" ")[0]}</button>
+                        );
+                      })}
+                    </div>
+                    <div style={{ display: "flex", gap: 4 }}>
+                      <button
+                        disabled={compareSectors.length < 2}
+                        onClick={() => compareSectors.length === 2 && setCompareMode(true)}
+                        style={{
+                          flex: 1, padding: "5px 0", borderRadius: 5, border: "none",
+                          background: compareSectors.length === 2 ? "#1B4D3E" : "#D1D5DB",
+                          color: compareSectors.length === 2 ? "#B8D935" : "#9CA3AF",
+                          fontSize: 10, fontWeight: 700, cursor: compareSectors.length === 2 ? "pointer" : "not-allowed",
+                          fontFamily: "Inter,sans-serif",
+                        }}
+                      >Compare Now</button>
+                      <button onClick={() => { setCompareMode(false); setCompareSectors([]); }} style={{
+                        padding: "5px 8px", borderRadius: 5, border: "1px solid rgba(27,77,62,0.2)",
+                        background: "transparent", color: "#1B4D3E", fontSize: 10, fontWeight: 600,
+                        cursor: "pointer", fontFamily: "Inter,sans-serif",
+                      }}>Cancel</button>
+                    </div>
+                  </div>
+                )}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
                   {(
                     [
-                      [FileText, "View Report"],
-                      [Download, "Export Data"],
-                      [BarChart2, "Compare"],
-                      [Clock, "History"],
-                      [Share2, "Share"],
-                      [MoreHorizontal, "More"],
-                    ] as [React.ComponentType<{ size?: number }>, string][]
-                  ).map(([ActionIcon, label]) => (
+                      [FileText, "View Report", null],
+                      [Download, "Export Data", null],
+                      [BarChart2, "Compare", () => { setCompareMode(m => !m); if (!compareMode) setCompareSectors([]); }],
+                      [Clock, "History", null],
+                      [Share2, "Share", null],
+                      [MoreHorizontal, "More", null],
+                    ] as [React.ComponentType<{ size?: number }>, string, (() => void) | null][]
+                  ).map(([ActionIcon, label, onClick]) => (
                     <button
                       key={label}
+                      onClick={onClick || undefined}
                       style={{
                         display: "flex",
                         alignItems: "center",
                         gap: 5,
                         padding: "6px 8px",
-                        background: "#F9FAFB",
-                        border: "1px solid #E5E7EB",
+                        background: label === "Compare" && compareMode ? "#EBF5B0" : "#F9FAFB",
+                        border: `1px solid ${label === "Compare" && compareMode ? "#B8D935" : "#E5E7EB"}`,
                         borderRadius: 7,
                         cursor: "pointer",
                         fontSize: 10,
-                        fontWeight: 500,
-                        color: "#374151",
+                        fontWeight: label === "Compare" && compareMode ? 700 : 500,
+                        color: label === "Compare" && compareMode ? "#1B4D3E" : "#374151",
                         fontFamily: "Inter,sans-serif",
                         transition: "all .15s",
                       }}
@@ -5207,8 +5462,8 @@ function DesktopDashboard() {
                         e.currentTarget.style.color = "#1B4D3E";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = "#E5E7EB";
-                        e.currentTarget.style.color = "#374151";
+                        e.currentTarget.style.borderColor = label === "Compare" && compareMode ? "#B8D935" : "#E5E7EB";
+                        e.currentTarget.style.color = label === "Compare" && compareMode ? "#1B4D3E" : "#374151";
                       }}
                     >
                       <ActionIcon size={11} />
