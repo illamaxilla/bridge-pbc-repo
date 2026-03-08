@@ -4344,6 +4344,10 @@ function DesktopDashboard() {
         fontFamily: "'DM Sans',sans-serif",
       }}
     >
+      {/* Compare Panel */}
+      {compareMode && compareSectors.length === 2 && (
+        <ComparePanel sA={compareSectors[0]} sB={compareSectors[1]} onClose={() => { setCompareMode(false); setCompareSectors([]); }} />
+      )}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
         <div
           style={{
