@@ -4262,6 +4262,19 @@ const CrossSectorSection = () => {
   const [activeNode, setActiveNode] = useState(null);
   const [showMoreRipple, setShowMoreRipple] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const SECTOR_ROUTES: Record<string, string> = {
+    "Financial Inclusion": "/sectors/financial",
+    "Health Systems": "/sectors/health",
+    "Agriculture & Value Chains": "/sectors/agriculture",
+    "Agriculture": "/sectors/agriculture",
+    "Energy": "/sectors/energy",
+    "Manufacturing": "/sectors/manufacturing",
+    "Transportation": "/sectors/transport",
+    "Infrastructure": "/sectors/infrastructure",
+    "Technology & Innovation": "/sectors/technology",
+    "Education & Skills": "/sectors/education",
+  };
 
   const pathways = crossSectorData.map((sector, i) => ({
     ...sector,
