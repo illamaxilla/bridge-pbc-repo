@@ -5051,15 +5051,17 @@ function HomePageContent({
 export default function App() {
   const [screen, setScreen] = useState("login");
   const [memberType, setMemberType] = useState("premium");
+  const navigate = useNavigate();
 
   return screen === "login" ? (
     <LoginPage
       onLogin={(type) => {
         setMemberType(type);
         setScreen("community");
+        navigate("/community");
       }}
     />
   ) : (
-    <CommunityDashboard memberType={memberType} onLogout={() => setScreen("login")} />
+    <CommunityDashboard memberType={memberType} onLogout={() => { setScreen("login"); navigate("/community"); }} />
   );
 }
