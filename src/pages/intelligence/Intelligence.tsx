@@ -314,49 +314,52 @@ export default function Intelligence() {
               </p>
             )}
             {collapsed && <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "4px 6px 10px" }} />}
-            {SIDEBAR_SECTORS.map(({ id, short, icon: Icon }) => (
-              <button
-                key={id}
-                onClick={() => handleSectorClick(id)}
-                title={collapsed ? short : undefined}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 7,
-                  padding: collapsed ? "5px 0" : "6px 8px",
-                  justifyContent: collapsed ? "center" : "flex-start",
-                  borderRadius: 5,
-                  marginBottom: 1,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  width: "100%",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  transition: "background 0.12s",
-                  textAlign: "left",
-                }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "none")}
-              >
-                {collapsed ? (
-                  <div style={{
-                    width: 28, height: 28, borderRadius: 4,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    background: "rgba(255,255,255,0.05)",
-                  }}>
-                    <Icon size={14} color="rgba(255,255,255,0.35)" />
-                  </div>
-                ) : (
-                  <>
-                    <Icon size={12} color="rgba(255,255,255,0.3)" />
-                    <span style={{ fontSize: 11.5, fontWeight: 400, color: "rgba(255,255,255,0.45)", fontFamily: "DM Sans,sans-serif" }}>
-                      {short}
-                    </span>
-                  </>
-                )}
-              </button>
-            ))}
+            {SIDEBAR_SECTORS.map(({ id, short, icon: Icon }) => {
+              const isActiveSector = activeSectorId === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => handleSectorClick(id)}
+                  title={collapsed ? short : undefined}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 7,
+                    padding: collapsed ? "5px 0" : "6px 8px",
+                    justifyContent: collapsed ? "center" : "flex-start",
+                    borderRadius: 5,
+                    marginBottom: 1,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    width: "100%",
+                    background: isActiveSector ? "rgba(184,217,53,0.12)" : "none",
+                    border: isActiveSector ? "1px solid rgba(184,217,53,0.22)" : "1px solid transparent",
+                    cursor: "pointer",
+                    transition: "background 0.12s, border-color 0.12s",
+                    textAlign: "left",
+                  }}
+                  onMouseEnter={e => { if (!isActiveSector) e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+                  onMouseLeave={e => { if (!isActiveSector) e.currentTarget.style.background = "none"; }}
+                >
+                  {collapsed ? (
+                    <div style={{
+                      width: 28, height: 28, borderRadius: 4,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      background: isActiveSector ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.05)",
+                    }}>
+                      <Icon size={14} color={isActiveSector ? C.accent : "rgba(255,255,255,0.35)"} />
+                    </div>
+                  ) : (
+                    <>
+                      <Icon size={12} color={isActiveSector ? C.accent : "rgba(255,255,255,0.3)"} />
+                      <span style={{ fontSize: 11.5, fontWeight: isActiveSector ? 600 : 400, color: isActiveSector ? C.accent : "rgba(255,255,255,0.45)", fontFamily: "DM Sans,sans-serif" }}>
+                        {short}
+                      </span>
+                    </>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {/* ── Upgrade to Pro ── */}
