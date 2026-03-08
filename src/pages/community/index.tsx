@@ -1872,8 +1872,10 @@ function CommunityDashboard({ memberType, onLogout }) {
             </div>
           )}
         </section>
+        </>)}
 
-        {/* ── DISCUSSION BOARD ── */}
+        {/* ══ FORUM PAGE ══ */}
+        {activePage === "Forum" && (
         <section style={{ background: C.white, borderRadius: 20, overflow: "hidden", boxShadow: C.cardShadow }}>
           <div
             style={{
