@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Sports, Entertainment & Creative Industries
