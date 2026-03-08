@@ -4840,6 +4840,7 @@ const CrossSectorSection = () => {
 
 const InvestmentCTASection = ({ sector }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("returns");
   const [activeAudience, setActiveAudience] = useState(0);
   const [showInvestmentDetails, setShowInvestmentDetails] = useState(false);
