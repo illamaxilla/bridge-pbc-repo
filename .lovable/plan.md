@@ -1,85 +1,88 @@
 
-## Audit Summary: What's Working vs. What Needs Fixing
+## Full Crawl Findings
 
-### ✅ Working correctly
-- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
-- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
-- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
-- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
+### Issues found across all 20 pages:
 
-### ❌ Issues to fix
+**Issue A — "Our Approach" → goes to Sectors page (wrong)**
+In `Index.tsx` (line 759), `Services.tsx` (1222), and all 12 sector pages (`Energy`, `Technology`, `Sports`, `Transport`, `Manufacturing`, `Housing`, `Financial`, `Health`, `Infrastructure`, `Tourism`, `Education`, `Agriculture`):
+- `"Sectors": "/services"` — still maps to `/services` instead of `/sectors`
 
-**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
-- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
-- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
+**Issue B — "Dashboard" button → goes to `/dashboard` (dead route)**
+In `Insights.tsx` line 1645: `href="/dashboard"` — this route doesn't exist. Should be `/intelligence/dashboard`.
 
-**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
-- Line 6934 has `href="#"` instead of the object-lookup pattern
-- Fix: same object-lookup pattern as other pages
+**Issue C — Services column footer links all go to `/services` (acceptable but worth confirming)**
+`Research & Guidance`, `Venture Development`, `Direct Investment`, `Strategic Partnerships` all → `/services`. This is correct — they're features of the Services page.
 
-**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
-- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
-- Fix: apply the object-lookup href pattern
+**Issue D — Sector Briefs → `/insights` (should go to `/resources`)**
+Every file maps `"Sector Briefs": "/insights"`. Sector Briefs are content documents — they belong in Resources (`/resources`). Same for `"White Paper"`, `"Case Studies"`, `"Research Library"`, `"Data & Reports"` which correctly go to `/resources` already. Only `"Sector Briefs"` is miscategorized — it's in the Insights column but should logically link to `/resources`.
 
-**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
-- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
-- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
-- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
+**Issue E — The footer is copy-pasted in 20 files with no shared component**
+The footer JSX + `footerLinkHref` + `SectorGrid` + `socialIcons` are duplicated in every single page file. This is the root cause of all routing bugs — fixing one file fixes one page, but the rest stay broken.
 
-**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
-- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
-- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
+---
 
-**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
-- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
-- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
-- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
+## The plan: Create a shared `SiteFooter` component
 
-**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
-- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
-- Minor cleanup
+Rather than making 20+ individual edits (fragile, error-prone), we create **one shared component** and replace the inline footer in every page. This also means future link changes need editing in exactly one place.
 
-### Implementation Plan
+### New file: `src/components/SiteFooter.tsx`
 
-**Files to fix: 4 real fixes + 1 cleanup**
+Contains:
+- The correct `footerLinkHref` map (single source of truth)
+- `SectorGrid` sub-component (with correct `/sectors/X` routes)
+- `socialIcons` array
+- The full `Footer` JSX (dark green background, logo, contact, 4-column nav, subscribe row, sector grid, bottom bar)
+- Accepts `isMobile` as a prop (or reads it internally via `useIsMobile`)
 
-1. **`Tourism.tsx`** (2 fixes):
-   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
-   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
+**Correct link map (fixes all issues at once):**
+```
+"About BRIDGE"         → /about
+"Our Approach"         → /methodology        ← fixes Issue A
+"Sectors"              → /sectors            ← fixes Issue A  
+"Contact Us"           → /contact
+"Research & Guidance"  → /services
+"Venture Development"  → /services
+"Direct Investment"    → /services
+"Strategic Partnerships" → /services
+"White Paper"          → /resources
+"Case Studies"         → /resources
+"Research Library"     → /resources
+"Data & Reports"       → /resources
+"Insights & Analysis"  → /insights
+"Sector Briefs"        → /resources          ← fixes Issue D
+"Policy Updates"       → /insights
+"Annual Review"        → /insights
+```
 
-2. **`Infrastructure.tsx`** (1 fix):
-   - Line 6952: `href="#"` → object-lookup href
+### Fix `Insights.tsx` Dashboard button
 
-3. **`Education.tsx`** (1 fix):
-   - Line 6947: `href="#"` → object-lookup href
+Change `href="/dashboard"` → `href="/intelligence/dashboard"` at line 1645.
 
-4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
-   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
-   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
+### Replace footer in all 20 pages
 
-5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
-   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
-   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
+Remove the inline `Footer` component definition and `footerLinkHref` / `SectorGrid` / `socialIcons` from each file, and replace `<Footer />` with `<SiteFooter />` (imported from `@/components/SiteFooter`).
 
-6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
+**Pages to update (20 total):**
+- `Index.tsx`, `About.tsx`, `Services.tsx`, `Resources.tsx`, `Insights.tsx`, `Methodology.tsx`, `Contact.tsx`
+- `sectors/Energy.tsx`, `sectors/Technology.tsx`, `sectors/Sports.tsx`, `sectors/Transport.tsx`, `sectors/Manufacturing.tsx`, `sectors/Housing.tsx`, `sectors/Financial.tsx`, `sectors/Health.tsx`, `sectors/Infrastructure.tsx`, `sectors/Tourism.tsx`, `sectors/Education.tsx`, `sectors/Agriculture.tsx`
+- `Sectors.tsx` (uses `FooterSectorGrid` variant — handle separately)
 
-### Files to edit
-| File | Change |
-|---|---|
-| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
-| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
-| `Education.tsx` | Fix mobile labels `href="#"` |
-| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
-| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
+### Files to create / edit
+
+| Action | File | Change |
+|---|---|---|
+| Create | `src/components/SiteFooter.tsx` | New shared footer component with correct routes |
+| Edit | `src/pages/Insights.tsx` | Fix Dashboard button `href` → `/intelligence/dashboard` |
+| Edit | 19 page files | Remove inline footer code, import + use `<SiteFooter />` |
+
+### Note on `Sectors.tsx`
+
+The user's `Sectors.tsx` has a `FooterSectorGrid` variant that differs slightly from the other pages' `SectorGrid`. The shared `SiteFooter` will use the standard `SectorGrid` pattern consistent with all other pages. `Sectors.tsx` will be updated to use `<SiteFooter />` like all other pages.
+
+### What this fixes
+
+- "Our Approach" → correctly routes to `/methodology` on all pages
+- "Sectors" → correctly routes to `/sectors` on all pages  
+- "Sector Briefs" → correctly routes to `/resources` on all pages
+- "Dashboard" / "Access Dashboard" button on Insights → correctly routes to `/intelligence/dashboard`
+- All future footer link changes need editing in exactly one place
