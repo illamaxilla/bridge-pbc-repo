@@ -1126,6 +1126,9 @@ function CommunityDashboard({ memberType, onLogout }) {
       </header>
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px" }}>
+
+        {/* ══ HOME PAGE ══ */}
+        {activePage === "Home" && (<>
         {/* ── WELCOME HERO ── */}
         <section
           style={{
