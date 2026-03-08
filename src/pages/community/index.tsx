@@ -1707,8 +1707,28 @@ function CommunityDashboard({ memberType, onLogout }) {
 }
 
 // ─── FORUM PAGE ────────────────────────────────────────────────
-function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, setCurrentPage }) {
-  const [forumView, setForumView] = useState("Questions");
+function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, setCurrentPage, initialForumView }) {
+  const navigate = useNavigate();
+  const forumRouteMap: Record<string, string> = {
+    "Home": "/community/forum",
+    "Questions": "/community/forum/questions",
+    "Most Answered": "/community/forum/most-answered",
+    "Polls": "/community/forum/polls",
+    "Groups": "/community/forum/groups",
+    "Tags": "/community/forum/tags",
+    "Sectors": "/community/forum/sectors",
+    "Badges": "/community/forum/badges",
+    "Members": "/community/members",
+  };
+  const handleForumNav = (label: string) => {
+    if (label === "Members") {
+      setCurrentPage("members");
+    } else {
+      setForumView(label);
+    }
+    navigate(forumRouteMap[label] ?? "/community/forum");
+  };
+  const [forumView, setForumView] = useState(initialForumView ?? "Questions");
   const [forumFilter, setForumFilter] = useState("Recent");
   const [searchQuery, setSearchQuery] = useState("");
 
