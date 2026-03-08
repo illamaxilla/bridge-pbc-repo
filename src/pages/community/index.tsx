@@ -1140,7 +1140,7 @@ function CommunityDashboard({ memberType, onLogout }) {
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.key}
-                  onClick={() => setCurrentPage(item.key)}
+                  onClick={() => handleNavChange(item.key)}
                   style={{
                     padding: "6px 14px",
                     borderRadius: 8,
