@@ -2423,13 +2423,18 @@ const GuidedWidget = () => {
   const [submitted, setSubmitted] = useState(false);
   const [hovBtn, setHovBtn] = useState(false);
 
+  // Pre-fill from URL params (e.g. from Intelligence Pro Access CTA)
+  const prefillNote = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("note") || ""
+    : "";
+
   const [who, setWho] = useState(null);
   const [whoFreeText, setWhoFreeText] = useState("");
   const [sectors, setSectors] = useState([]);
   const [sectorFreeText, setSectorFreeText] = useState("");
   const [goal, setGoal] = useState(null);
   const [goalFreeText, setGoalFreeText] = useState("");
-  const [details, setDetails] = useState({ name: "", email: "", organization: "", note: "" });
+  const [details, setDetails] = useState({ name: "", email: "", organization: "", note: prefillNote });
 
   const canNext = () => {
     if (step === 0) return !!who || whoFreeText.trim().length > 0;
