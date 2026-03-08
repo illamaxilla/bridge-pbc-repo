@@ -2640,6 +2640,7 @@ function CTASection({ seg }) {
               }}
             >
               <button
+                onClick={() => navigate("/contact")}
                 style={{
                   background: C.accent,
                   color: C.primary,
@@ -2660,6 +2661,7 @@ function CTASection({ seg }) {
                 {seg.cta} <ArrowRight size={16} />
               </button>
               <button
+                onClick={() => navigate("/resources")}
                 style={{
                   background: "transparent",
                   color: C.white,
