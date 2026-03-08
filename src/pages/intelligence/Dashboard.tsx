@@ -4112,20 +4112,12 @@ function DesktopDashboard() {
     <div
       style={{
         display: "flex",
-        height: "100vh",
+        height: "100%",
         overflow: "hidden",
         background: "#EFF3EF",
         fontFamily: "'DM Sans',sans-serif",
       }}
     >
-      <Sidebar
-        collapsed={collapsed}
-        setCollapsed={setCollapsed}
-        activeSector={s}
-        setActiveSector={(sec) => {
-          if (sec) setS(sec);
-        }}
-      />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
         <div
           style={{
