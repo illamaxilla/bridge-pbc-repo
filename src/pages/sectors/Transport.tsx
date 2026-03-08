@@ -843,9 +843,69 @@ const BridgeLogo = ({ height = 40 }) => (
 // MAIN PAGE COMPONENT
 // ============================================================================
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 export default function TransportationLogisticsSectorPage() {
   const isMobile = useIsMobile();
   return (
+    <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white, overflowX: "hidden" }}>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+      <style>{`*, *::before, *::after { box-sizing: border-box; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`}</style>
+      <SiteHeader />
+      <section style={{ backgroundColor: colors.primary, padding: isMobile ? "100px 20px 80px" : "140px 80px 100px", minHeight: "60vh", display: "flex", alignItems: "center" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(184,217,53,0.12)", border: "1px solid rgba(184,217,53,0.3)", borderRadius: 50, padding: "8px 18px", marginBottom: 28 }}>
+            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: colors.accent }}>{sectorData.category}</span>
+          </div>
+          <h1 style={{ fontFamily: "'Poppins',sans-serif", fontSize: isMobile ? 36 : 64, fontWeight: 700, color: colors.white, margin: "0 0 24px", lineHeight: 1.1, maxWidth: 800 }}>{sectorData.name}</h1>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: isMobile ? 16 : 20, color: "rgba(255,255,255,0.75)", maxWidth: 640, lineHeight: 1.7, margin: "0 0 40px" }}>{sectorData.problemSubheadline}</p>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            {sectorData.keyStats?.map((stat, i) => (
+              <div key={i} style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "20px 24px", minWidth: 160 }}>
+                <div style={{ fontFamily: "'Poppins',sans-serif", fontSize: 28, fontWeight: 700, color: colors.accent }}>{stat.value}</div>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: "rgba(255,255,255,0.6)", marginTop: 4 }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "80px 80px" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "'Poppins',sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 700, color: colors.primary, marginBottom: 40 }}>Venture Opportunities</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 24 }}>
+            {sectorData.solutions?.slice(0, 6).map((s, i) => (
+              <div key={i} style={{ background: "#F3F5F2", borderRadius: 16, padding: 28, border: "1px solid #DEDEDE" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#E8F5E0", borderRadius: 50, padding: "4px 12px", marginBottom: 12 }}>
+                  <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 700, color: colors.primary }}>Tier {s.tier} · Score {s.score}</span>
+                </div>
+                <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 18, fontWeight: 700, color: colors.primary, margin: "0 0 10px" }}>{s.name}</h3>
+                <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 14, color: "#4B5563", lineHeight: 1.6, margin: "0 0 10px" }}>{s.description}</p>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 600, color: colors.primary }}>{s.capital}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "80px 80px" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "'Poppins',sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 700, color: colors.white, marginBottom: 16 }}>Ready to Build in {sectorData.shortName}?</h2>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 18, color: "rgba(255,255,255,0.7)", marginBottom: 36 }}>Capital range: {sectorData.capitalRange} · {sectorData.ventures} venture opportunities identified</p>
+          <a href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: colors.accent, color: colors.primary, textDecoration: "none", padding: "16px 36px", borderRadius: 50, fontSize: 16, fontWeight: 700, fontFamily: "'DM Sans',sans-serif" }}>Start a Conversation</a>
+        </div>
+      </section>
+      <SiteFooter />
+    </div>
+  );
+}
     <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white, overflowX: "hidden" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
       <style>{`*, *::before, *::after { box-sizing: border-box; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`}</style>
