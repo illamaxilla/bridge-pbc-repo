@@ -3936,10 +3936,6 @@ export default function BRIDGEHomePage() {
     </div>
   );
 }
-                      style={{
-                        display: "flex",
-                        gap: "16px",
-                        flexWrap: "wrap",
                         marginLeft: "auto",
                         justifyContent: "flex-end",
                       }}
