@@ -11,6 +11,8 @@ import Resources from "./pages/Resources";
 import Insights from "./pages/Insights";
 import Methodology from "./pages/Methodology";
 import Intelligence from "./pages/intelligence/Intelligence";
+import Community from "./pages/community/Community";
+import CommunityHome from "./pages/community/index";
 import IntelDashboard from "./pages/intelligence/Dashboard";
 import MarketOverview from "./pages/intelligence/MarketOverview";
 import Reports from "./pages/intelligence/Reports";
@@ -68,6 +70,9 @@ const App = () => (
           <Route path="/sectors/tourism" element={<Tourism />} />
           <Route path="/sectors/education" element={<Education />} />
           <Route path="/sectors/agriculture" element={<Agriculture />} />
+          <Route path="/community/*" element={<Community />}>
+            <Route index element={<CommunityHome />} />
+          </Route>
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/sectors" element={<Sectors />} />
