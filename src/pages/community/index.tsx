@@ -2041,8 +2041,12 @@ function CommunityDashboard({ memberType, onLogout }) {
               </div>
             </div>
 
-            {/* Main Feed */}
+            {/* Main Feed — switches by forumSection */}
             <div style={{ padding: "20px 24px" }}>
+              {forumSection === "Home" && (
+                // ── FORUM HOME: existing Q&A feed ──────────────────
+                <>
+
               {/* Search */}
               <div style={{ position: "relative", marginBottom: 16 }}>
                 <Search
