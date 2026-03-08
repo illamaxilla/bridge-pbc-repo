@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Technology & Innovation
@@ -7511,7 +7512,7 @@ export default function TechnologyInnovationSectorPage() {
       <ImpactSection />
       <FinalCTASection />
       <CTAFooterSeparator />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

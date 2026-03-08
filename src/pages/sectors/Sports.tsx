@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Sports, Entertainment & Creative Industries
@@ -7316,7 +7317,7 @@ export default function SportsEntertainmentSectorPage() {
       <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
         <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
       </div>
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

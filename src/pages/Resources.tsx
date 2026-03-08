@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteFooter from "@/components/SiteFooter";
 import {
   Box,
   CreditCard,
@@ -3006,7 +3007,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

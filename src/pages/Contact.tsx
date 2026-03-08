@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE PBC — Contact Page (Integrated with Guided Widget)
@@ -4077,7 +4078,7 @@ export default function ContactPage() {
       <SiteHeader />
       <HeroSection />
       <WidgetSection />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

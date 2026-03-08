@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 const colors = {
   primary: "#1B4D3E",
@@ -2483,7 +2484,7 @@ export default function BRIDGESectorsLanding() {
       <SectorGrid />
       <CrossSector />
       <CTA />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

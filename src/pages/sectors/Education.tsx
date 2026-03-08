@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Education & Skills
@@ -7301,7 +7302,7 @@ export default function EducationSkillsSectorPage() {
       <div style={{ backgroundColor: colors.primary, padding: "0 80px" }}>
         <div style={{ height: "0.5px", backgroundColor: "rgba(255,255,255,0.08)" }} />
       </div>
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

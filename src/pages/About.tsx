@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE ABOUT US PAGE v3
@@ -3242,7 +3243,7 @@ export default function BRIDGEAboutPage() {
       <ThreeGapsSection isMobile={isMobile} />
       <BridgeToImpactSection isMobile={isMobile} />
       <CTASection isMobile={isMobile} />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

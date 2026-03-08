@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Energy & Renewable Resources
@@ -6710,7 +6711,7 @@ export default function EnergySectorPage() {
       <InvestmentCTASection sector={sectorData} />
       <ImpactSection sector={sectorData} />
       <FinalCTASection />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

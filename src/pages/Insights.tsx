@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteFooter from "@/components/SiteFooter";
 import {
   ArrowUpRight,
   ChevronRight,
@@ -1642,7 +1643,7 @@ export default function InsightsPage() {
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <a
-                  href="/dashboard"
+                  href="/intelligence/dashboard"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -2565,7 +2566,7 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

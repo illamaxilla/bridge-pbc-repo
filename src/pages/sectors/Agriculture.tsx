@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Agriculture & Value Chains
@@ -7947,7 +7948,7 @@ export default function AgricultureSectorPageIntegrated() {
       <InvestmentThesisSection />
       <FinalCTASection />
 
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

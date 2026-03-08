@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteFooter from "@/components/SiteFooter";
 import {
   Lightbulb,
   Building2,
@@ -3472,7 +3473,7 @@ export default function HowWeWorkPage() {
         <DeliverablesSection seg={seg} />
         <MethodologySection />
         <CTASection seg={seg} />
-        <Footer />
+        <SiteFooter />
       </div>
     </>
   );

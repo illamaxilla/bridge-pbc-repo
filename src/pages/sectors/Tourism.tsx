@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Tourism & Hospitality
@@ -7268,7 +7269,7 @@ export default function TourismHospitalitySectorPage() {
       <CrossSectorSection />
       <InvestmentCTASection />
       <FinalCTASection />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
