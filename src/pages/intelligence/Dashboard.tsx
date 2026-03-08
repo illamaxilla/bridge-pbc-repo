@@ -5488,7 +5488,20 @@ function DesktopDashboard() {
 
 export default function BridgeDashboard() {
   const [isMobile, setMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
-  const [s, setS] = useState(SECTORS[0]);
+  const [searchParams] = useSearchParams();
+  const [s, setS] = useState(() => {
+    const id = searchParams.get("sector");
+    return SECTORS.find(sec => sec.id === id) || SECTORS[0];
+  });
+
+  useEffect(() => {
+    const id = searchParams.get("sector");
+    if (id) {
+      const found = SECTORS.find(sec => sec.id === id);
+      if (found) setS(found);
+    }
+  }, [searchParams]);
+
   useState(() => {
     const h = () => setMobile(window.innerWidth < 768);
     window.addEventListener("resize", h);
