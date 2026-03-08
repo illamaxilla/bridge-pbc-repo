@@ -3466,7 +3466,7 @@ export default function BRIDGEHomePage() {
               marginBottom: "60px",
             }}
           >
-            <div style={{ flex: 1, height: "1px", backgroundColor: colors.line }} />
+            {!isMobile && <div style={{ flex: 1, height: "1px", backgroundColor: colors.line }} />}
             <div
               style={{
                 display: "inline-flex",
@@ -3482,21 +3482,23 @@ export default function BRIDGEHomePage() {
                 fontFamily: "Inter, sans-serif",
                 textTransform: "uppercase",
                 backgroundColor: colors.white,
-                margin: "0 24px",
+                margin: isMobile ? "0" : "0 24px",
               }}
             >
-              <span
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                  display: "inline-block",
-                }}
-              />
+              {!isMobile && (
+                <span
+                  style={{
+                    width: "6px",
+                    height: "6px",
+                    borderRadius: "50%",
+                    backgroundColor: colors.accent,
+                    display: "inline-block",
+                  }}
+                />
+              )}
               Aligned With Government Priorities
             </div>
-            <div style={{ flex: 1, height: "1px", backgroundColor: colors.line }} />
+            {!isMobile && <div style={{ flex: 1, height: "1px", backgroundColor: colors.line }} />}
           </div>
           <div style={{ overflow: "hidden", position: "relative" }}>
             <div
