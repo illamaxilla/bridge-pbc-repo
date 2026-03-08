@@ -874,842 +874,6 @@ function ModuleCard({ icon, title, badge, badgeStyle, defaultOpen = false, noPad
   );
 }
 
-/* ─── MOBILE HEADER — SECTOR DRAWER ──────────────────────────────────────── */
-function MSectorDrawer({ activeSector, setActiveSector, open, onClose }) {
-  if (!open) return null;
-  const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
-  return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.65)" }} onClick={onClose}>
-      <div
-        className="drawer"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          background: "#0F1A12",
-          borderRadius: "20px 20px 0 0",
-          maxHeight: "82vh",
-          display: "flex",
-          flexDirection: "column",
-          paddingBottom: "env(safe-area-inset-bottom,16px)",
-          border: "1px solid rgba(184,217,53,0.15)",
-          borderBottom: "none",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div
-          style={{
-            width: 36,
-            height: 4,
-            borderRadius: 2,
-            background: "rgba(255,255,255,0.15)",
-            margin: "12px auto 0",
-            flexShrink: 0,
-          }}
-        />
-        <div
-          style={{
-            padding: "12px 20px 8px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexShrink: 0,
-          }}
-        >
-          <span
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              color: "#6B7280",
-              fontFamily: "Inter,sans-serif",
-              letterSpacing: "0.8px",
-              textTransform: "uppercase",
-            }}
-          >
-            Select Sector
-          </span>
-          <button
-            onClick={onClose}
-            style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "none",
-              borderRadius: 7,
-              padding: "4px 10px",
-              fontSize: 11,
-              color: "rgba(255,255,255,0.4)",
-              cursor: "pointer",
-              fontFamily: "Inter,sans-serif",
-            }}
-          >
-            Done
-          </button>
-        </div>
-        <div style={{ overflowY: "auto", flex: 1, scrollbarWidth: "none" }}>
-          {sorted.map((sec, i) => {
-            const act = activeSector?.id === sec.id;
-            return (
-              <div
-                key={sec.id}
-                onClick={() => {
-                  setActiveSector(act ? null : sec);
-                  onClose();
-                }}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  padding: "13px 20px",
-                  borderTop: i > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                  background: act ? "rgba(184,217,53,0.07)" : "transparent",
-                  cursor: "pointer",
-                }}
-              >
-                <div
-                  style={{
-                    width: 38,
-                    height: 38,
-                    borderRadius: 11,
-                    flexShrink: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
-                  }}
-                >
-                  {sec.svgIcon(act ? "#B8D935" : "rgba(255,255,255,0.35)", 16)}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div
-                    style={{
-                      fontSize: 13,
-                      fontWeight: act ? 700 : 500,
-                      color: act ? "#fff" : "rgba(255,255,255,0.7)",
-                      fontFamily: "DM Sans,sans-serif",
-                    }}
-                  >
-                    {sec.short}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 10,
-                      color: "rgba(255,255,255,0.3)",
-                      fontFamily: "Inter,sans-serif",
-                      marginTop: 1,
-                    }}
-                  >
-                    {sec.ventures} ventures · {sec.cap}
-                  </div>
-                </div>
-                <div style={{ textAlign: "right", flexShrink: 0 }}>
-                  <div
-                    style={{
-                      fontSize: 16,
-                      fontWeight: 800,
-                      fontFamily: "Inter,sans-serif",
-                      color: act ? "#B8D935" : "rgba(255,255,255,0.28)",
-                    }}
-                  >
-                    {sec.score}
-                  </div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", fontFamily: "Inter,sans-serif" }}>
-                    score
-                  </div>
-                </div>
-                {act && (
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ─── MOBILE HEADER — HAMBURGER MENU ─────────────────────────────────────── */
-function MMenuDrawer({ open, onClose }) {
-  if (!open) return null;
-  const NAV_ITEMS = [
-    {
-      label: "About BRIDGE",
-      desc: "Our mission, model & sectors",
-      icon: (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="rgba(255,255,255,0.35)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <line x1="12" y1="8" x2="12" y2="12" />
-          <line x1="12" y1="16" x2="12.01" y2="16" />
-        </svg>
-      ),
-    },
-    {
-      label: "Switch to Desktop",
-      desc: "Full dashboard experience",
-      icon: (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="rgba(255,255,255,0.35)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="2" y="3" width="20" height="14" rx="2" />
-          <line x1="8" y1="21" x2="16" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
-        </svg>
-      ),
-    },
-    {
-      label: "Notifications",
-      desc: "Manage alert preferences",
-      icon: (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="rgba(255,255,255,0.35)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 01-3.46 0" />
-        </svg>
-      ),
-    },
-    {
-      label: "Help & Support",
-      desc: "Docs, guides & contact",
-      icon: (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="rgba(255,255,255,0.35)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
-          <line x1="12" y1="17" x2="12.01" y2="17" />
-        </svg>
-      ),
-    },
-  ];
-  const ChevR = () => (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="rgba(255,255,255,0.18)"
-      strokeWidth="2"
-      strokeLinecap="round"
-    >
-      <path d="M5 12h14M12 5l7 7-7 7" />
-    </svg>
-  );
-  return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 400, background: "rgba(0,0,0,0.65)" }} onClick={onClose}>
-      <div
-        className="drawer"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          background: "#0F1A12",
-          borderRadius: "20px 20px 0 0",
-          border: "1px solid rgba(184,217,53,0.15)",
-          borderBottom: "none",
-          paddingBottom: "env(safe-area-inset-bottom,24px)",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div
-          style={{ width: 36, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.15)", margin: "12px auto 0" }}
-        />
-        <div
-          style={{ padding: "12px 20px 8px", display: "flex", justifyContent: "space-between", alignItems: "center" }}
-        >
-          <span
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              color: "#6B7280",
-              fontFamily: "Inter,sans-serif",
-              letterSpacing: "0.8px",
-              textTransform: "uppercase",
-            }}
-          >
-            Menu
-          </span>
-          <button
-            onClick={onClose}
-            style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "none",
-              borderRadius: 7,
-              padding: "4px 10px",
-              fontSize: 11,
-              color: "rgba(255,255,255,0.4)",
-              cursor: "pointer",
-              fontFamily: "Inter,sans-serif",
-            }}
-          >
-            Done
-          </button>
-        </div>
-        {/* Profile */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 14,
-            padding: "14px 20px 16px",
-            borderTop: "1px solid rgba(255,255,255,0.06)",
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
-          }}
-        >
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: "50%",
-              background: "rgba(184,217,53,0.12)",
-              border: "1.5px solid rgba(184,217,53,0.25)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#B8D935"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-            </svg>
-          </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", fontFamily: "DM Sans,sans-serif" }}>
-              Joseph Asante
-            </div>
-            <div
-              style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontFamily: "Inter,sans-serif", marginTop: 2 }}
-            >
-              BRIDGE Intelligence · Analyst
-            </div>
-          </div>
-          <div
-            style={{
-              background: "rgba(184,217,53,0.12)",
-              border: "1px solid rgba(184,217,53,0.2)",
-              borderRadius: 6,
-              padding: "3px 8px",
-            }}
-          >
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#B8D935", fontFamily: "Inter,sans-serif" }}>Pro</span>
-          </div>
-        </div>
-        {/* Return to website */}
-        <button
-          onClick={onClose}
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            gap: 14,
-            padding: "15px 20px",
-            background: "transparent",
-            border: "none",
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
-            cursor: "pointer",
-            textAlign: "left",
-          }}
-        >
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 11,
-              background: "rgba(255,255,255,0.06)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="rgba(255,255,255,0.35)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-          </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", fontFamily: "DM Sans,sans-serif" }}>
-              Return to Website
-            </div>
-            <div
-              style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontFamily: "Inter,sans-serif", marginTop: 2 }}
-            >
-              Back to bridge-pbc.com
-            </div>
-          </div>
-          <ChevR />
-        </button>
-        {/* Nav links */}
-        {NAV_ITEMS.map((item, i) => (
-          <button
-            key={i}
-            onClick={onClose}
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              padding: "13px 20px",
-              background: "transparent",
-              border: "none",
-              borderBottom: "1px solid rgba(255,255,255,0.04)",
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 11,
-                background: "rgba(255,255,255,0.06)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              {item.icon}
-            </div>
-            <div style={{ flex: 1 }}>
-              <div
-                style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: "rgba(255,255,255,0.85)",
-                  fontFamily: "DM Sans,sans-serif",
-                }}
-              >
-                {item.label}
-              </div>
-              <div
-                style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontFamily: "Inter,sans-serif", marginTop: 2 }}
-              >
-                {item.desc}
-              </div>
-            </div>
-            <ChevR />
-          </button>
-        ))}
-        {/* Sign out */}
-        <button
-          onClick={onClose}
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            gap: 14,
-            padding: "14px 20px",
-            background: "transparent",
-            border: "none",
-            borderTop: "1px solid rgba(255,255,255,0.06)",
-            cursor: "pointer",
-            textAlign: "left",
-          }}
-        >
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 11,
-              background: "rgba(239,68,68,0.08)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="rgba(239,68,68,0.6)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-          </div>
-          <div style={{ flex: 1 }}>
-            <div
-              style={{ fontSize: 14, fontWeight: 600, color: "rgba(239,68,68,0.75)", fontFamily: "DM Sans,sans-serif" }}
-            >
-              Sign Out
-            </div>
-          </div>
-        </button>
-      </div>
-    </div>
-  );
-}
-
-/* ─── MOBILE HEADER — NOTIF DROPDOWN ─────────────────────────────────────── */
-function MNotifDropdown({ open, onClose }) {
-  if (!open) return null;
-  const items = [
-    { h: "BoG Digital Credit Directive updated", date: "Mar 2026", sig: "Bullish" },
-    { h: "New resource published: Sector Report", date: "Mar 2026", sig: "Neutral" },
-    { h: "Financial Inclusion score reached 91", date: "Feb 2026", sig: "Bullish" },
-  ];
-  return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 340 }} onClick={onClose}>
-      <div
-        style={{
-          position: "absolute",
-          top: 64,
-          right: 12,
-          width: 280,
-          background: "#0F1A12",
-          border: "1px solid rgba(255,255,255,0.08)",
-          borderRadius: 14,
-          boxShadow: "0 16px 48px rgba(0,0,0,0.5)",
-          overflow: "hidden",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "12px 14px",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
-          }}
-        >
-          <span style={{ fontSize: 13, fontWeight: 700, color: "#fff", fontFamily: "DM Sans,sans-serif" }}>Alerts</span>
-          <span
-            style={{
-              fontSize: 11,
-              color: "#B8D935",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "Inter,sans-serif",
-            }}
-            onClick={onClose}
-          >
-            Mark all read
-          </span>
-        </div>
-        {items.map((a, i) => (
-          <div
-            key={i}
-            style={{ display: "flex", gap: 10, padding: "10px 14px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-          >
-            <div
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: a.sig === "Bullish" ? "#22C55E" : "#F59E0B",
-                marginTop: 4,
-                flexShrink: 0,
-              }}
-            />
-            <div>
-              <div
-                style={{
-                  fontSize: 12,
-                  fontWeight: 600,
-                  color: "#fff",
-                  lineHeight: 1.3,
-                  fontFamily: "DM Sans,sans-serif",
-                }}
-              >
-                {a.h}
-              </div>
-              <div
-                style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontFamily: "Inter,sans-serif", marginTop: 2 }}
-              >
-                {a.date}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ─── MOBILE HEADER ───────────────────────────────────────────────────────── */
-function MobileHeader({ activeSector, setActiveSector }) {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  return (
-    <>
-      {/* Header bar */}
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          height: 56,
-          background: "rgba(15,26,18,0.95)",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-          backdropFilter: "blur(16px)",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 14px",
-          gap: 8,
-          flexShrink: 0,
-        }}
-      >
-        {/* BRIDGE Logo */}
-        <div style={{ flexShrink: 0 }}>
-          <BridgeLogo />
-        </div>
-
-        {/* Sector selector pill */}
-        <div
-          onClick={() => {
-            setDrawerOpen(true);
-            setNotifOpen(false);
-            setMenuOpen(false);
-          }}
-          style={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            cursor: "pointer",
-            minWidth: 0,
-            background: "rgba(255,255,255,0.06)",
-            borderRadius: 10,
-            padding: "6px 10px 6px 8px",
-            marginLeft: 8,
-          }}
-        >
-          <div
-            style={{
-              width: 24,
-              height: 24,
-              borderRadius: 6,
-              background: "rgba(255,255,255,0.08)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            {activeSector ? (
-              activeSector.svgIcon("#B8D935", 13)
-            ) : (
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#B8D935"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
-              </svg>
-            )}
-          </div>
-          <span
-            style={{
-              flex: 1,
-              fontSize: 13,
-              fontWeight: 600,
-              color: "#FFFFFF",
-              fontFamily: "DM Sans,sans-serif",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {activeSector ? activeSector.short : "All Sectors"}
-          </span>
-          <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: "#B8D935", fontFamily: "Inter,sans-serif" }}>
-              {activeSector ? activeSector.score : "—"}
-            </span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#B8D935"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            >
-              <path d="M6 9l6 6 6-6" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Bell */}
-        <button
-          onClick={() => {
-            setNotifOpen((o) => !o);
-            setMenuOpen(false);
-          }}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            position: "relative",
-            flexShrink: 0,
-          }}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="rgba(255,255,255,0.45)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
-          <div
-            style={{
-              position: "absolute",
-              top: 6,
-              right: 6,
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "#EF4444",
-              border: "1.5px solid #070D09",
-            }}
-          />
-        </button>
-
-        {/* Hamburger */}
-        <button
-          onClick={() => {
-            setMenuOpen((o) => !o);
-            setNotifOpen(false);
-          }}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: menuOpen ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.06)",
-            border: `1px solid ${menuOpen ? "rgba(184,217,53,0.25)" : "rgba(255,255,255,0.08)"}`,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 4,
-            cursor: "pointer",
-            flexShrink: 0,
-            padding: 0,
-          }}
-        >
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 9,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-              alignSelf: "flex-start",
-              marginLeft: 10,
-            }}
-          />
-        </button>
-      </div>
-
-      <MNotifDropdown open={notifOpen} onClose={() => setNotifOpen(false)} />
-      <MMenuDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
-      <MSectorDrawer
-        activeSector={activeSector}
-        setActiveSector={setActiveSector}
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      />
-    </>
-  );
-}
-
 /* ─── SECTOR HERO CARD ────────────────────────────────────────────────────── */
 function SectorHeroCard({ sector }) {
   if (!sector) return null;
@@ -1794,149 +958,6 @@ function SectorHeroCard({ sector }) {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-/* ─── SECTOR SELECTOR ─────────────────────────────────────────────────────── */
-function MobileSectorPanel({ activeSector, setActiveSector }) {
-  const [open, setOpen] = useState(false);
-  const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
-  return (
-    <div
-      style={{
-        background: DM.card,
-        border: `1px solid ${DM.border}`,
-        borderRadius: 14,
-        margin: "10px 10px 0",
-        overflow: "hidden",
-      }}
-    >
-      <button
-        onClick={() => setOpen((o) => !o)}
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          padding: "11px 14px",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-        }}
-      >
-        <div
-          style={{
-            width: 7,
-            height: 7,
-            borderRadius: "50%",
-            background: activeSector ? DM.accent : DM.textFaint,
-            flexShrink: 0,
-          }}
-        />
-        <span
-          style={{
-            flex: 1,
-            textAlign: "left",
-            fontSize: 11,
-            fontWeight: 700,
-            color: DM.textMid,
-            fontFamily: "Inter,sans-serif",
-            letterSpacing: "0.5px",
-            textTransform: "uppercase",
-          }}
-        >
-          {activeSector ? activeSector.short : "All Sectors"}
-        </span>
-        <span style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>12 sectors</span>
-        {open ? <ChevronUp size={12} color={DM.textMuted} /> : <ChevronDown size={12} color={DM.textMuted} />}
-      </button>
-      {open && (
-        <div
-          style={{
-            borderTop: `1px solid ${DM.borderSub}`,
-            overflowX: "auto",
-            scrollbarWidth: "none",
-            padding: "8px 12px 12px",
-          }}
-        >
-          <div style={{ display: "flex", gap: 6, width: "max-content" }}>
-            <button
-              onClick={() => {
-                setActiveSector(null);
-                setOpen(false);
-              }}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 12px",
-                borderRadius: 20,
-                border: `1px solid ${!activeSector ? DM.accent : DM.borderSub}`,
-                background: !activeSector ? DM.accentDim : "transparent",
-                cursor: "pointer",
-                flexShrink: 0,
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: !activeSector ? DM.accent : DM.textMuted,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                All
-              </span>
-            </button>
-            {sorted.map((s) => {
-              const act = activeSector?.id === s.id;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => {
-                    setActiveSector(act ? null : s);
-                    setOpen(false);
-                  }}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 5,
-                    padding: "6px 12px",
-                    borderRadius: 20,
-                    border: `1px solid ${act ? DM.accent : DM.borderSub}`,
-                    background: act ? DM.accentDim : "transparent",
-                    cursor: "pointer",
-                    flexShrink: 0,
-                  }}
-                >
-                  {s.svgIcon(act ? DM.accent : DM.textMuted, 10)}
-                  <span
-                    style={{
-                      fontSize: 11,
-                      fontWeight: act ? 700 : 400,
-                      color: act ? DM.accent : DM.textMuted,
-                      fontFamily: "Inter,sans-serif",
-                    }}
-                  >
-                    {s.short}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 9,
-                      fontWeight: 700,
-                      color: act ? DM.accent : DM.textFaint,
-                      fontFamily: "Inter,sans-serif",
-                    }}
-                  >
-                    {s.score}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -2310,181 +1331,6 @@ function HeatmapModule() {
         ))}
         <span style={{ fontSize: 7, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>Peak</span>
       </div>
-    </ModuleCard>
-  );
-}
-
-/* ─── SIGNALS MODULE ──────────────────────────────────────────────────────── */
-function SignalsModule({ activeSector }) {
-  const intel = getIntel(activeSector);
-  const items = intel
-    ? intel.signals
-    : [
-        { title: "GIPC Sector Policy Update", sentiment: "Bullish", date: "Mar 2026", cat: "Policy" },
-        { title: "New Venture Pipeline Active", sentiment: "Bullish", date: "Feb 2026", cat: "Market" },
-        { title: "Global Supply Chain Pressure", sentiment: "Watch", date: "Jan 2026", cat: "Risk" },
-      ];
-  return (
-    <ModuleCard
-      icon={<TrendingUp size={14} color={DM.accent} />}
-      title="Market Signals"
-      badge={`${items.length}`}
-      badgeStyle={{ background: DM.accentDim, color: DM.accent, border: `1px solid ${DM.border}` }}
-    >
-      {items.map((s, i) => {
-        const bull = s.sentiment === "Bullish";
-        return (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              gap: 10,
-              padding: "10px 0",
-              borderBottom: i < items.length - 1 ? `1px solid ${DM.borderSub}` : "none",
-            }}
-          >
-            <div
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
-                background: bull ? DM.positive : DM.warning,
-                marginTop: 4,
-                flexShrink: 0,
-              }}
-            />
-            <div style={{ flex: 1 }}>
-              <div
-                style={{
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: DM.text,
-                  fontFamily: "DM Sans,sans-serif",
-                  lineHeight: 1.3,
-                  marginBottom: 5,
-                }}
-              >
-                {s.title}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                <span
-                  style={{
-                    fontSize: 9,
-                    fontWeight: 700,
-                    color: bull ? DM.positive : DM.warning,
-                    fontFamily: "Inter,sans-serif",
-                    background: bull ? DM.posDim : DM.warnDim,
-                    padding: "2px 7px",
-                    borderRadius: 4,
-                  }}
-                >
-                  {s.sentiment}
-                </span>
-                <span style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>{s.date}</span>
-                <span style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>{s.cat}</span>
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </ModuleCard>
-  );
-}
-
-/* ─── COMPANIES MODULE ────────────────────────────────────────────────────── */
-function CompaniesModule({ activeSector }) {
-  const intel = getIntel(activeSector);
-  if (!intel) return null;
-  const { companies } = intel;
-  return (
-    <ModuleCard
-      icon={<User size={14} color={DM.accent} />}
-      title="Top Companies"
-      badge={`${companies.length} active`}
-      badgeStyle={{ background: DM.accentDim, color: DM.accent, border: `1px solid ${DM.border}` }}
-    >
-      {companies.map((co, i) => (
-        <div
-          key={i}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            padding: "10px 0",
-            borderBottom: i < companies.length - 1 ? `1px solid ${DM.borderSub}` : "none",
-          }}
-        >
-          <div
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 8,
-              background: DM.surface,
-              border: `1px solid ${DM.borderSub}`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <span style={{ fontSize: 10, fontWeight: 700, color: DM.textMid, fontFamily: "Inter,sans-serif" }}>
-              {co.rank}
-            </span>
-          </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div
-              style={{
-                fontSize: 13,
-                fontWeight: 700,
-                color: DM.text,
-                fontFamily: "DM Sans,sans-serif",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {co.name}
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <span style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>#{co.ticker}</span>
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  color: co.chg >= 0 ? DM.positive : "#F87171",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                {co.chg >= 0 ? "+" : ""}
-                {co.chg}%
-              </span>
-            </div>
-          </div>
-          <div style={{ textAlign: "right", flexShrink: 0 }}>
-            <div
-              style={{ fontSize: 14, fontWeight: 800, color: DM.text, fontFamily: "DM Sans,sans-serif", lineHeight: 1 }}
-            >
-              {co.val}
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 3 }}>
-              <div
-                style={{
-                  width: 36,
-                  height: 3,
-                  background: "rgba(255,255,255,0.07)",
-                  borderRadius: 2,
-                  overflow: "hidden",
-                }}
-              >
-                <div style={{ height: "100%", width: `${co.score}%`, background: DM.tealMid, borderRadius: 2 }} />
-              </div>
-              <span style={{ fontSize: 8, fontWeight: 700, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>
-                {co.score}
-              </span>
-            </div>
-          </div>
-        </div>
-      ))}
     </ModuleCard>
   );
 }
@@ -2874,196 +1720,59 @@ function MobileBottomSheet({ resource, onClose, onWatchlist }) {
   );
 }
 
-/* ─── NOTIFICATION PANEL ──────────────────────────────────────────────────── */
-function MobileNotifPanel({ onClose }) {
-  const items = [
-    { h: "Agriculture sector signal updated", date: "Mar 2026", sig: "Bullish" },
-    { h: "New GIPC policy brief published", date: "Mar 2026", sig: "Neutral" },
-    { h: "Financial Inclusion score to 91", date: "Feb 2026", sig: "Bullish" },
-  ];
+function MSectorDrawer({ activeSector, setActiveSector, open, onClose }) {
+  if (!open) return null;
+  const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
   return (
-    <>
-      <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 200 }} />
-      <div
-        style={{
-          position: "fixed",
-          top: 58,
-          right: 10,
-          width: 285,
-          background: DM.card,
-          borderRadius: 14,
-          border: `1px solid ${DM.border}`,
-          boxShadow: "0 8px 40px rgba(0,0,0,0.6)",
-          zIndex: 201,
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            padding: "11px 14px",
-            borderBottom: `1px solid ${DM.borderSub}`,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <span style={{ fontSize: 13, fontWeight: 700, color: DM.text, fontFamily: "DM Sans,sans-serif" }}>
-            Alerts
-          </span>
-          <button
-            onClick={onClose}
-            style={{
-              fontSize: 10,
-              color: DM.accent,
-              fontWeight: 700,
-              fontFamily: "Inter,sans-serif",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Mark all read
-          </button>
-        </div>
-        {items.map((a, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              gap: 9,
-              padding: "10px 14px",
-              borderBottom: i < items.length - 1 ? `1px solid ${DM.borderSub}` : "none",
-            }}
-          >
-            <div
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
-                background: a.sig === "Bullish" ? DM.positive : DM.warning,
-                marginTop: 4,
-                flexShrink: 0,
-              }}
-            />
-            <div>
-              <div
-                style={{
-                  fontSize: 11,
-                  fontWeight: 600,
-                  color: DM.text,
-                  lineHeight: 1.3,
-                  fontFamily: "DM Sans,sans-serif",
-                }}
-              >
-                {a.h}
-              </div>
-              <div style={{ fontSize: 9, color: DM.textMuted, marginTop: 2, fontFamily: "Inter,sans-serif" }}>
-                {a.date}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
-}
-
-/* ─── RESOURCES FOOTER MENU ───────────────────────────────────────────────── */
-function ResourcesFooterMenu({ resourcesView, setResourcesView, onClose }) {
-  const SI: React.SVGProps<SVGSVGElement> = { fill: "none", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, stroke: "currentColor" };
-  const items = [
-    {
-      type: "top",
-      view: "reports",
-      label: "Reports",
-      desc: "Sector intelligence & analysis",
-      icon: (c) => (
-        <svg width="18" height="18" viewBox="0 0 24 24" {...SI} style={{ color: c }}>
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <polyline points="14 2 14 8 20 8" />
-          <line x1="16" y1="13" x2="8" y2="13" />
-          <line x1="16" y1="17" x2="8" y2="17" />
-        </svg>
-      ),
-    },
-    {
-      type: "sub",
-      view: "sector-performance",
-      label: "Sector Performance",
-      desc: "Charts, KPIs & capital flow",
-      icon: (c) => (
-        <svg width="15" height="15" viewBox="0 0 24 24" {...SI} style={{ color: c }}>
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-        </svg>
-      ),
-    },
-    {
-      type: "sub",
-      view: "activity-log",
-      label: "Sector Activity Log",
-      desc: "Searchable activity & signal feed",
-      icon: (c) => (
-        <svg width="15" height="15" viewBox="0 0 24 24" {...SI} style={{ color: c }}>
-          <path d="M9 11l3 3L22 4" />
-          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-        </svg>
-      ),
-    },
-    {
-      type: "top",
-      view: "library",
-      label: "Resource Library",
-      desc: "Docs, guides & reference materials",
-      icon: (c) => (
-        <svg width="18" height="18" viewBox="0 0 24 24" {...SI} style={{ color: c }}>
-          <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
-        </svg>
-      ),
-    },
-  ];
-
-  return (
-    <>
-      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: 300 }} />
+    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.65)" }} onClick={onClose}>
       <div
         className="drawer"
         style={{
-          position: "fixed",
+          position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
-          zIndex: 301,
           background: "#0F1A12",
           borderRadius: "20px 20px 0 0",
+          maxHeight: "82vh",
+          display: "flex",
+          flexDirection: "column",
+          paddingBottom: "env(safe-area-inset-bottom,16px)",
           border: "1px solid rgba(184,217,53,0.15)",
           borderBottom: "none",
-          paddingBottom: "calc(env(safe-area-inset-bottom,16px) + 70px)",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Drag handle */}
         <div
           style={{
             width: 36,
             height: 4,
             borderRadius: 2,
             background: "rgba(255,255,255,0.15)",
-            margin: "12px auto 16px",
+            margin: "12px auto 0",
+            flexShrink: 0,
           }}
         />
-        {/* Header */}
-        <div style={{ padding: "0 20px 6px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div
+          style={{
+            padding: "12px 20px 8px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexShrink: 0,
+          }}
+        >
           <span
             style={{
               fontSize: 11,
               fontWeight: 700,
-              color: "rgba(255,255,255,0.35)",
+              color: "#6B7280",
               fontFamily: "Inter,sans-serif",
+              letterSpacing: "0.8px",
               textTransform: "uppercase",
-              letterSpacing: "1px",
             }}
           >
-            REPORTS
+            Select Sector
           </span>
           <button
             onClick={onClose}
@@ -3074,98 +1783,1037 @@ function ResourcesFooterMenu({ resourcesView, setResourcesView, onClose }) {
               padding: "4px 10px",
               fontSize: 11,
               color: "rgba(255,255,255,0.4)",
-              fontFamily: "Inter,sans-serif",
               cursor: "pointer",
+              fontFamily: "Inter,sans-serif",
             }}
           >
             Done
           </button>
         </div>
-        {/* Items */}
-        {items.map((item, i) => {
-          const act = resourcesView === item.view;
-          const isTop = item.type === "top";
-          const iconSize = isTop ? 40 : 30;
-          const iconR = isTop ? 11 : 8;
-          const iconBg = act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)";
-          const iconColor = act ? DM.accent : "rgba(255,255,255,0.35)";
-          const rowBg = act ? "rgba(184,217,53,0.07)" : "transparent";
-          const borderTop = isTop ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(255,255,255,0.04)";
-          const pad = isTop ? "14px 20px" : "11px 20px 11px 74px";
-          const dotSize = isTop ? 8 : 7;
+        <div style={{ overflowY: "auto", flex: 1, scrollbarWidth: "none" }}>
+          {sorted.map((sec, i) => {
+            const act = activeSector?.id === sec.id;
+            return (
+              <div
+                key={sec.id}
+                onClick={() => {
+                  setActiveSector(act ? null : sec);
+                  onClose();
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  padding: "13px 20px",
+                  borderTop: i > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                  background: act ? "rgba(184,217,53,0.07)" : "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                <div
+                  style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: 11,
+                    flexShrink: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
+                  }}
+                >
+                  {sec.svgIcon(act ? "#B8D935" : "rgba(255,255,255,0.35)", 16)}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      fontWeight: act ? 700 : 500,
+                      color: act ? "#fff" : "rgba(255,255,255,0.7)",
+                      fontFamily: "DM Sans,sans-serif",
+                    }}
+                  >
+                    {sec.short}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 10,
+                      color: "rgba(255,255,255,0.3)",
+                      fontFamily: "Inter,sans-serif",
+                      marginTop: 1,
+                    }}
+                  >
+                    {sec.ventures} ventures · {sec.cap}
+                  </div>
+                </div>
+                <div style={{ textAlign: "right", flexShrink: 0 }}>
+                  <div
+                    style={{
+                      fontSize: 16,
+                      fontWeight: 800,
+                      fontFamily: "Inter,sans-serif",
+                      color: act ? "#B8D935" : "rgba(255,255,255,0.28)",
+                    }}
+                  >
+                    {sec.score}
+                  </div>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", fontFamily: "Inter,sans-serif" }}>
+                    score
+                  </div>
+                </div>
+                {act && (
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MobileHeader({ activeSector, setActiveSector }) {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  return (
+    <>
+      <div
+        style={{
+          height: 52,
+          background: "rgba(15,26,18,0.97)",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
+          display: "flex",
+          alignItems: "center",
+          padding: "0 14px",
+          flexShrink: 0,
+        }}
+      >
+        <div
+          onClick={() => setDrawerOpen(true)}
+          style={{
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            gap: 9,
+            cursor: "pointer",
+            background: "rgba(255,255,255,0.05)",
+            borderRadius: 10,
+            padding: "7px 12px 7px 10px",
+          }}
+        >
+          <div
+            style={{
+              width: 24,
+              height: 24,
+              borderRadius: 6,
+              background: "rgba(255,255,255,0.07)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            {activeSector ? (
+              activeSector.svgIcon("#B8D935", 13)
+            ) : (
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#B8D935"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+              </svg>
+            )}
+          </div>
+          <span
+            style={{
+              flex: 1,
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#FFFFFF",
+              fontFamily: "DM Sans,sans-serif",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {activeSector ? activeSector.short : "All Sectors"}
+          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+            <span style={{ fontSize: 13, fontWeight: 800, color: "#B8D935", fontFamily: "Inter,sans-serif" }}>
+              {activeSector ? activeSector.score : "—"}
+            </span>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#B8D935"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <MSectorDrawer
+        activeSector={activeSector}
+        setActiveSector={setActiveSector}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      />
+    </>
+  );
+}
+
+/* ─── TAB: REPORTS ────────────────────────────────────────────────────────── */
+function ReportsTab({ activeSector, resources, onOpen, onWatch }) {
+  const [filter, setFilter] = useState("all");
+  const FILTERS = [
+    { k: "all", l: "All" },
+    { k: "report", l: "Reports" },
+    { k: "dataset", l: "Datasets" },
+    { k: "guide", l: "Guides" },
+  ];
+  const items = resources.filter((r) => filter === "all" || r.type === filter);
+  return (
+    <div style={{ paddingTop: 10 }}>
+      <div style={{ padding: "0 10px 10px", display: "flex", gap: 7, overflowX: "auto", scrollbarWidth: "none" }}>
+        {FILTERS.map((f) => {
+          const act = filter === f.k;
           return (
             <button
-              key={item.view}
-              onClick={() => {
-                setResourcesView(item.view);
-                onClose();
-              }}
+              key={f.k}
+              onClick={() => setFilter(f.k)}
               style={{
-                width: "100%",
+                flexShrink: 0,
+                padding: "6px 14px",
+                borderRadius: 20,
+                border: `1px solid ${act ? DM.accent : DM.borderSub}`,
+                background: act ? DM.accentDim : "transparent",
+                fontSize: 11,
+                fontWeight: act ? 700 : 400,
+                color: act ? DM.accent : DM.textMuted,
+                fontFamily: "Inter,sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              {f.l}
+            </button>
+          );
+        })}
+      </div>
+      {items.map((r, i) => {
+        const tm = TYPE_META[r.type] || TYPE_META.report;
+        const ss = STATUS_STYLE[r.status] || STATUS_STYLE.available;
+        return (
+          <div
+            key={r.id}
+            onClick={() => onOpen(r)}
+            style={{
+              display: "flex",
+              gap: 12,
+              padding: "12px 14px",
+              margin: "0 10px 8px",
+              background: DM.card,
+              border: `1px solid ${DM.border}`,
+              borderRadius: 12,
+              cursor: "pointer",
+            }}
+          >
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 10,
+                background: DM.surface,
+                border: `1px solid ${DM.borderSub}`,
                 display: "flex",
                 alignItems: "center",
-                gap: isTop ? 14 : 12,
-                padding: pad,
-                border: "none",
-                borderTop,
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <tm.Icon size={16} color={DM.tealMid} />
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: DM.text,
+                  fontFamily: "DM Sans,sans-serif",
+                  lineHeight: 1.3,
+                  marginBottom: 4,
+                }}
+              >
+                {r.name}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                <span
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    color: DM.tealMid,
+                    fontFamily: "Inter,sans-serif",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {tm.label}
+                </span>
+                <span style={{ fontSize: 9, color: DM.textFaint }}>·</span>
+                <span style={{ fontSize: 9, fontWeight: 600, color: ss.color, fontFamily: "Inter,sans-serif" }}>
+                  {ss.label}
+                </span>
+                <span style={{ fontSize: 9, color: DM.textFaint }}>·</span>
+                <span style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>
+                  {r.downloads.toLocaleString()} dl
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onWatch(r.id);
+              }}
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: 7,
+                border: `1px solid ${r.isWatchlisted ? DM.accent : DM.borderSub}`,
+                background: r.isWatchlisted ? DM.accentDim : "transparent",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 cursor: "pointer",
-                textAlign: "left",
-                background: rowBg,
+                flexShrink: 0,
+                alignSelf: "center",
+              }}
+            >
+              <Bookmark
+                size={12}
+                color={r.isWatchlisted ? DM.accent : DM.textMuted}
+                fill={r.isWatchlisted ? DM.accent : "none"}
+              />
+            </button>
+          </div>
+        );
+      })}
+      {items.length === 0 && (
+        <div style={{ textAlign: "center", padding: "40px 20px" }}>
+          <AlertCircle size={24} color={DM.textMuted} />
+          <div style={{ fontSize: 12, color: DM.textMuted, marginTop: 8, fontFamily: "Inter,sans-serif" }}>
+            No resources match this filter
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── TAB: GUIDES ─────────────────────────────────────────────────────────── */
+const GUIDES_DATA = [
+  {
+    title: "Ghana Market Entry Playbook",
+    cat: "Market Entry",
+    sector: "All Sectors",
+    pages: 42,
+    level: "Foundational",
+    updated: "Mar 2026",
+  },
+  {
+    title: "Sector Due Diligence Framework",
+    cat: "Due Diligence",
+    sector: "All Sectors",
+    pages: 28,
+    level: "Intermediate",
+    updated: "Feb 2026",
+  },
+  {
+    title: "Agribusiness Value Chain Guide",
+    cat: "Operations",
+    sector: "Agriculture",
+    pages: 35,
+    level: "Advanced",
+    updated: "Jan 2026",
+  },
+  {
+    title: "Fintech Licensing & Compliance",
+    cat: "Regulatory",
+    sector: "Financial",
+    pages: 19,
+    level: "Intermediate",
+    updated: "Mar 2026",
+  },
+  {
+    title: "Infrastructure Procurement Guide",
+    cat: "Procurement",
+    sector: "Infrastructure",
+    pages: 56,
+    level: "Advanced",
+    updated: "Feb 2026",
+  },
+  {
+    title: "Impact Measurement Handbook",
+    cat: "Reporting",
+    sector: "All Sectors",
+    pages: 24,
+    level: "Foundational",
+    updated: "Jan 2026",
+  },
+  {
+    title: "SME Financing & Capital Access",
+    cat: "Finance",
+    sector: "All Sectors",
+    pages: 31,
+    level: "Foundational",
+    updated: "Mar 2026",
+  },
+  {
+    title: "Energy Project Feasibility Guide",
+    cat: "Feasibility",
+    sector: "Energy",
+    pages: 48,
+    level: "Advanced",
+    updated: "Feb 2026",
+  },
+];
+const LEVEL_COLOR = { Foundational: DM.positive, Intermediate: "#60A5FA", Advanced: DM.warning };
+function GuidesTab() {
+  const [filter, setFilter] = useState("all");
+  const FILTERS = [
+    { k: "all", l: "All" },
+    { k: "Foundational", l: "Foundational" },
+    { k: "Intermediate", l: "Intermediate" },
+    { k: "Advanced", l: "Advanced" },
+  ];
+  const items = filter === "all" ? GUIDES_DATA : GUIDES_DATA.filter((g) => g.level === filter);
+  return (
+    <div style={{ paddingTop: 10 }}>
+      <div style={{ padding: "0 10px 10px", display: "flex", gap: 7, overflowX: "auto", scrollbarWidth: "none" }}>
+        {FILTERS.map((f) => {
+          const act = filter === f.k;
+          return (
+            <button
+              key={f.k}
+              onClick={() => setFilter(f.k)}
+              style={{
+                flexShrink: 0,
+                padding: "6px 14px",
+                borderRadius: 20,
+                border: `1px solid ${act ? DM.accent : DM.borderSub}`,
+                background: act ? DM.accentDim : "transparent",
+                fontSize: 11,
+                fontWeight: act ? 700 : 400,
+                color: act ? DM.accent : DM.textMuted,
+                fontFamily: "Inter,sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              {f.l}
+            </button>
+          );
+        })}
+      </div>
+      <ModuleCard
+        icon={
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={DM.accent}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+          </svg>
+        }
+        title="Playbooks & Frameworks"
+        badge={`${items.length}`}
+        badgeStyle={{ background: DM.accentDim, color: DM.accent, border: `1px solid ${DM.border}` }}
+        defaultOpen={true}
+      >
+        {items.map((g, i) => {
+          const lc = LEVEL_COLOR[g.level] || DM.textMuted;
+          return (
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                gap: 12,
+                padding: "11px 0",
+                borderBottom: i < items.length - 1 ? `1px solid ${DM.borderSub}` : "none",
               }}
             >
               <div
                 style={{
-                  width: iconSize,
-                  height: iconSize,
-                  borderRadius: iconR,
-                  background: iconBg,
+                  width: 38,
+                  height: 38,
+                  borderRadius: 10,
+                  background: DM.surface,
+                  border: `1px solid ${DM.borderSub}`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   flexShrink: 0,
                 }}
               >
-                {item.icon(iconColor)}
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={DM.tealMid}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                </svg>
               </div>
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <div
                   style={{
-                    fontSize: isTop ? 14 : 13,
-                    fontWeight: act ? 700 : isTop ? 700 : 600,
-                    color: act ? DM.accent : isTop ? "#FFFFFF" : "rgba(255,255,255,0.8)",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: DM.text,
                     fontFamily: "DM Sans,sans-serif",
-                    lineHeight: 1.2,
-                    marginBottom: isTop ? 2 : 1,
+                    lineHeight: 1.3,
+                    marginBottom: 5,
                   }}
                 >
-                  {item.label}
+                  {g.title}
                 </div>
-                <div
-                  style={{ fontSize: isTop ? 11 : 10, color: "rgba(255,255,255,0.35)", fontFamily: "Inter,sans-serif" }}
-                >
-                  {item.desc}
+                <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                  <span
+                    style={{
+                      fontSize: 9,
+                      fontWeight: 700,
+                      color: lc,
+                      fontFamily: "Inter,sans-serif",
+                      background: `${lc}18`,
+                      padding: "2px 7px",
+                      borderRadius: 4,
+                    }}
+                  >
+                    {g.level}
+                  </span>
+                  <span style={{ fontSize: 9, color: DM.textFaint }}>·</span>
+                  <span style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>{g.cat}</span>
+                  <span style={{ fontSize: 9, color: DM.textFaint }}>·</span>
+                  <span style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>{g.pages}pp</span>
                 </div>
               </div>
-              {act && (
-                <div
-                  style={{ width: dotSize, height: dotSize, borderRadius: "50%", background: DM.accent, flexShrink: 0 }}
-                />
-              )}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-end",
+                  justifyContent: "space-between",
+                  flexShrink: 0,
+                }}
+              >
+                <span style={{ fontSize: 8, color: DM.textFaint, fontFamily: "Inter,sans-serif" }}>{g.updated}</span>
+                <span style={{ fontSize: 9, color: DM.tealMid, fontFamily: "Inter,sans-serif", fontWeight: 600 }}>
+                  {g.sector}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </ModuleCard>
+    </div>
+  );
+}
+
+/* ─── TAB: DATASETS ───────────────────────────────────────────────────────── */
+const DATASETS_DATA = [
+  {
+    title: "Ghana Trade Flow Q1 2026",
+    cat: "Trade",
+    sector: "All Sectors",
+    rows: "12,400",
+    fmt: "CSV",
+    updated: "Mar 2026",
+    access: "free",
+  },
+  {
+    title: "Sector FDI Inflows 2020–2025",
+    cat: "Investment",
+    sector: "All Sectors",
+    rows: "8,200",
+    fmt: "XLSX",
+    updated: "Feb 2026",
+    access: "pro",
+  },
+  {
+    title: "Agri Value Chain Price Index",
+    cat: "Prices",
+    sector: "Agriculture",
+    rows: "34,500",
+    fmt: "CSV",
+    updated: "Mar 2026",
+    access: "free",
+  },
+  {
+    title: "SME Credit Access Survey 2025",
+    cat: "Finance",
+    sector: "Financial",
+    rows: "5,100",
+    fmt: "XLSX",
+    updated: "Jan 2026",
+    access: "pro",
+  },
+  {
+    title: "Energy Production by Region",
+    cat: "Production",
+    sector: "Energy",
+    rows: "9,800",
+    fmt: "CSV",
+    updated: "Feb 2026",
+    access: "free",
+  },
+  {
+    title: "Infrastructure Spend Database",
+    cat: "Expenditure",
+    sector: "Infrastructure",
+    rows: "21,300",
+    fmt: "XLSX",
+    updated: "Jan 2026",
+    access: "pro",
+  },
+  {
+    title: "Labour Market & Skills Gap 2025",
+    cat: "Labour",
+    sector: "All Sectors",
+    rows: "6,700",
+    fmt: "CSV",
+    updated: "Mar 2026",
+    access: "free",
+  },
+  {
+    title: "Tourism Arrivals & Revenue Data",
+    cat: "Tourism",
+    sector: "Tourism",
+    rows: "4,900",
+    fmt: "XLSX",
+    updated: "Feb 2026",
+    access: "pro",
+  },
+];
+function DatasetsTab() {
+  const [filter, setFilter] = useState("all");
+  const FILTERS = [
+    { k: "all", l: "All" },
+    { k: "free", l: "Free" },
+    { k: "pro", l: "Pro" },
+    { k: "CSV", l: "CSV" },
+    { k: "XLSX", l: "XLSX" },
+  ];
+  const items = FILTERS.find((f) => f.k === filter && (f.k === "CSV" || f.k === "XLSX"))
+    ? DATASETS_DATA.filter((d) => d.fmt === filter)
+    : filter === "all"
+      ? DATASETS_DATA
+      : DATASETS_DATA.filter((d) => d.access === filter);
+  return (
+    <div style={{ paddingTop: 10 }}>
+      <div style={{ padding: "0 10px 10px", display: "flex", gap: 7, overflowX: "auto", scrollbarWidth: "none" }}>
+        {FILTERS.map((f) => {
+          const act = filter === f.k;
+          return (
+            <button
+              key={f.k}
+              onClick={() => setFilter(f.k)}
+              style={{
+                flexShrink: 0,
+                padding: "6px 14px",
+                borderRadius: 20,
+                border: `1px solid ${act ? DM.accent : DM.borderSub}`,
+                background: act ? DM.accentDim : "transparent",
+                fontSize: 11,
+                fontWeight: act ? 700 : 400,
+                color: act ? DM.accent : DM.textMuted,
+                fontFamily: "Inter,sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              {f.l}
             </button>
           );
         })}
       </div>
-    </>
+      <ModuleCard
+        icon={
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={DM.accent}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+          </svg>
+        }
+        title="Sector Datasets"
+        badge={`${items.length} files`}
+        badgeStyle={{ background: DM.accentDim, color: DM.accent, border: `1px solid ${DM.border}` }}
+        defaultOpen={true}
+      >
+        {items.map((d, i) => {
+          const isFree = d.access === "free";
+          const isCsv = d.fmt === "CSV";
+          return (
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                gap: 12,
+                padding: "11px 0",
+                borderBottom: i < items.length - 1 ? `1px solid ${DM.borderSub}` : "none",
+              }}
+            >
+              <div
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: 10,
+                  background: DM.surface,
+                  border: `1px solid ${DM.borderSub}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={isCsv ? DM.tealMid : "#60A5FA"}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <ellipse cx="12" cy="5" rx="9" ry="3" />
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                </svg>
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: DM.text,
+                    fontFamily: "DM Sans,sans-serif",
+                    lineHeight: 1.3,
+                    marginBottom: 5,
+                  }}
+                >
+                  {d.title}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                  <span
+                    style={{
+                      fontSize: 9,
+                      fontWeight: 700,
+                      color: isCsv ? DM.tealMid : "#60A5FA",
+                      fontFamily: "Inter,sans-serif",
+                      background: isCsv ? "rgba(42,94,66,0.3)" : "rgba(96,165,250,0.15)",
+                      padding: "2px 7px",
+                      borderRadius: 4,
+                    }}
+                  >
+                    {d.fmt}
+                  </span>
+                  <span style={{ fontSize: 9, color: DM.textFaint }}>·</span>
+                  <span style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>
+                    {d.rows} rows
+                  </span>
+                  <span style={{ fontSize: 9, color: DM.textFaint }}>·</span>
+                  <span
+                    style={{
+                      fontSize: 9,
+                      fontWeight: 700,
+                      color: isFree ? DM.positive : DM.accent,
+                      fontFamily: "Inter,sans-serif",
+                    }}
+                  >
+                    {isFree ? "Free" : "Pro"}
+                  </span>
+                </div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-end",
+                  justifyContent: "space-between",
+                  flexShrink: 0,
+                }}
+              >
+                <span style={{ fontSize: 8, color: DM.textFaint, fontFamily: "Inter,sans-serif" }}>{d.updated}</span>
+                <button
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                  }}
+                >
+                  <Download size={11} color={DM.tealMid} />
+                  <span style={{ fontSize: 9, color: DM.tealMid, fontFamily: "Inter,sans-serif", fontWeight: 600 }}>
+                    Get
+                  </span>
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </ModuleCard>
+    </div>
+  );
+}
+
+/* ─── TAB: SAVED ──────────────────────────────────────────────────────────── */
+function SavedTab({ resources, onOpen, onWatch }) {
+  const saved = resources.filter((r) => r.isWatchlisted);
+  const recent = resources.filter((r) => r.isNew).slice(0, 4);
+  return (
+    <div style={{ paddingTop: 10 }}>
+      <ModuleCard
+        icon={
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={DM.accent}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+          </svg>
+        }
+        title="Saved Resources"
+        badge={String(saved.length)}
+        badgeStyle={{ background: DM.accentDim, color: DM.accent, border: `1px solid ${DM.border}` }}
+        defaultOpen={true}
+      >
+        {saved.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "20px 0" }}>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={DM.textMuted}
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ margin: "0 auto 8px" }}
+            >
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            </svg>
+            <div style={{ fontSize: 12, color: DM.textMuted, fontFamily: "Inter,sans-serif" }}>
+              No saved resources yet
+            </div>
+            <div style={{ fontSize: 10, color: DM.textFaint, fontFamily: "Inter,sans-serif", marginTop: 4 }}>
+              Tap the bookmark icon on any resource
+            </div>
+          </div>
+        ) : (
+          saved.map((r, i) => {
+            const tm = TYPE_META[r.type] || TYPE_META.report;
+            const ss = STATUS_STYLE[r.status] || STATUS_STYLE.available;
+            return (
+              <div
+                key={r.id}
+                onClick={() => onOpen(r)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "10px 0",
+                  borderBottom: i < saved.length - 1 ? `1px solid ${DM.borderSub}` : "none",
+                  cursor: "pointer",
+                }}
+              >
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: 9,
+                    background: DM.surface,
+                    border: `1px solid ${DM.borderSub}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <tm.Icon size={15} color={DM.tealMid} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 700,
+                      color: DM.text,
+                      fontFamily: "DM Sans,sans-serif",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {r.name}
+                  </div>
+                  <div style={{ fontSize: 9, color: DM.textMuted, fontFamily: "Inter,sans-serif", marginTop: 2 }}>
+                    {tm.label} · <span style={{ color: ss.color }}>{ss.label}</span>
+                  </div>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onWatch(r.id);
+                  }}
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: 7,
+                    border: `1px solid ${DM.accent}`,
+                    background: DM.accentDim,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Bookmark size={11} color={DM.accent} fill={DM.accent} />
+                </button>
+              </div>
+            );
+          })
+        )}
+      </ModuleCard>
+
+      <ModuleCard
+        icon={
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={DM.accent}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        }
+        title="Recently Added"
+        badge="New"
+        badgeStyle={{ background: "rgba(37,99,235,0.15)", color: "#60A5FA", border: "1px solid rgba(37,99,235,0.2)" }}
+        defaultOpen={true}
+      >
+        {recent.map((r, i) => {
+          const tm = TYPE_META[r.type] || TYPE_META.report;
+          return (
+            <div
+              key={r.id}
+              onClick={() => onOpen(r)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "10px 0",
+                borderBottom: i < recent.length - 1 ? `1px solid ${DM.borderSub}` : "none",
+                cursor: "pointer",
+              }}
+            >
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 9,
+                  background: DM.surface,
+                  border: `1px solid ${DM.borderSub}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <tm.Icon size={15} color={DM.tealMid} />
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: DM.text,
+                    fontFamily: "DM Sans,sans-serif",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {r.name}
+                </div>
+                <div
+                  style={{
+                    fontSize: 9,
+                    color: "#60A5FA",
+                    fontFamily: "Inter,sans-serif",
+                    marginTop: 2,
+                    fontWeight: 700,
+                  }}
+                >
+                  NEW · {r.fileFormat || tm.label}
+                </div>
+              </div>
+              <span style={{ fontSize: 9, color: DM.textFaint, fontFamily: "Inter,sans-serif", flexShrink: 0 }}>
+                {r.downloads} dl
+              </span>
+            </div>
+          );
+        })}
+      </ModuleCard>
+    </div>
   );
 }
 
 /* ─── MOBILE BOTTOM NAV ───────────────────────────────────────────────────── */
-function MobileBottomNav({ resourcesMenu, setResourcesMenu }) {
-  const S = { fill: "none", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2 };
+function MobileBottomNav({ activeTab, setActiveTab }) {
   const NAV = [
     {
-      id: "dashboard",
-      label: "Dashboard",
+      id: "library",
+      label: "Library",
       icon: (c) => (
         <svg
           width="20"
@@ -3177,16 +2825,14 @@ function MobileBottomNav({ resourcesMenu, setResourcesMenu }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <rect x="3" y="3" width="7" height="7" rx="1" />
-          <rect x="14" y="3" width="7" height="7" rx="1" />
-          <rect x="3" y="14" width="7" height="7" rx="1" />
-          <rect x="14" y="14" width="7" height="7" rx="1" />
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
         </svg>
       ),
     },
     {
-      id: "overview",
-      label: "Overview",
+      id: "reports",
+      label: "Reports",
       icon: (c) => (
         <svg
           width="20"
@@ -3198,13 +2844,17 @@ function MobileBottomNav({ resourcesMenu, setResourcesMenu }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <line x1="10" y1="9" x2="8" y2="9" />
         </svg>
       ),
     },
     {
-      id: "analytics",
-      label: "Analytics",
+      id: "guides",
+      label: "Guides",
       icon: (c) => (
         <svg
           width="20"
@@ -3216,15 +2866,14 @@ function MobileBottomNav({ resourcesMenu, setResourcesMenu }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <line x1="18" y1="20" x2="18" y2="10" />
-          <line x1="12" y1="20" x2="12" y2="4" />
-          <line x1="6" y1="20" x2="6" y2="14" />
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
         </svg>
       ),
     },
     {
-      id: "watch",
-      label: "Watch",
+      id: "datasets",
+      label: "Datasets",
       icon: (c) => (
         <svg
           width="20"
@@ -3236,14 +2885,15 @@ function MobileBottomNav({ resourcesMenu, setResourcesMenu }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-          <circle cx="12" cy="12" r="3" />
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
         </svg>
       ),
     },
     {
-      id: "resources",
-      label: "Resources",
+      id: "saved",
+      label: "Saved",
       icon: (c) => (
         <svg
           width="20"
@@ -3255,8 +2905,7 @@ function MobileBottomNav({ resourcesMenu, setResourcesMenu }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
         </svg>
       ),
     },
@@ -3272,14 +2921,11 @@ function MobileBottomNav({ resourcesMenu, setResourcesMenu }) {
       }}
     >
       {NAV.map((n) => {
-        const act = n.id === "resources";
-        const isRes = n.id === "resources";
+        const act = n.id === activeTab;
         return (
           <button
             key={n.id}
-            onClick={() => {
-              if (isRes) setResourcesMenu((o) => !o);
-            }}
+            onClick={() => setActiveTab(n.id)}
             style={{
               flex: 1,
               display: "flex",
@@ -3335,8 +2981,7 @@ function MobileResourcesPage() {
   const [selectedRes, setSelectedRes] = useState(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [resources, setResources] = useState(RESOURCES);
-  const [resourcesView, setResourcesView] = useState("reports");
-  const [resourcesMenu, setResourcesMenu] = useState(false);
+  const [activeTab, setActiveTab] = useState("library");
 
   const filtered = resources.filter((r) => {
     const mc = activeCategory === "all" || r.type === activeCategory;
@@ -3380,41 +3025,30 @@ function MobileResourcesPage() {
 
       <MobileHeader activeSector={activeSector} setActiveSector={setActiveSector} />
 
-      <div style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none", paddingTop: 10 }}>
+      <div style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none" }}>
         {activeSector && <SectorHeroCard sector={activeSector} />}
 
-        <div style={{ height: 10 }} />
-
-        <LibraryModule
-          resources={filtered}
-          activeCategory={activeCategory}
-          setCategory={setCategory}
-          onOpen={openRes}
-          onWatch={toggleWatch}
-        />
-
-        {activeSector && <SubsectorModule activeSector={activeSector} />}
-
-        <AnalyticsModule />
-
-        <SignalsModule activeSector={activeSector} />
-
-        {activeSector && <CompaniesModule activeSector={activeSector} />}
-
-        <HeatmapModule />
+        {activeTab === "library" && (
+          <LibraryModule
+            resources={filtered}
+            activeCategory={activeCategory}
+            setCategory={setCategory}
+            onOpen={openRes}
+            onWatch={toggleWatch}
+          />
+        )}
+        {activeTab === "reports" && (
+          <ReportsTab activeSector={activeSector} resources={filtered} onOpen={openRes} onWatch={toggleWatch} />
+        )}
+        {activeTab === "guides" && <GuidesTab />}
+        {activeTab === "datasets" && <DatasetsTab />}
+        {activeTab === "saved" && <SavedTab resources={resources} onOpen={openRes} onWatch={toggleWatch} />}
 
         <div style={{ height: 12 }} />
       </div>
 
-      <MobileBottomNav resourcesMenu={resourcesMenu} setResourcesMenu={setResourcesMenu} />
+      <MobileBottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {resourcesMenu && (
-        <ResourcesFooterMenu
-          resourcesView={resourcesView}
-          setResourcesView={setResourcesView}
-          onClose={() => setResourcesMenu(false)}
-        />
-      )}
       {sheetOpen && <MobileBottomSheet resource={selectedRes} onClose={closeSheet} onWatchlist={toggleWatch} />}
     </div>
   );
@@ -5018,10 +4652,10 @@ function DesktopResourcesPage() {
                     overflow: "hidden",
                   }}
                 >
-                  {([
+                  {[
                     ["table", List],
                     ["grid", LayoutGrid],
-                  ] as [string, React.ElementType][]).map(([v, Ic]) => (
+                  ].map(([v, Ic]) => (
                     <button
                       key={v}
                       onClick={() => setViewMode(v)}
