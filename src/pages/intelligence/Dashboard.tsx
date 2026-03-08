@@ -2014,6 +2014,7 @@ function SubTabs({ tabs, active, onChange }) {
 function MobileDashboard({ s, setS }) {
   const [dashSub, setDashSub] = useState("overview");
   const [notif, setNotif] = useState(false);
+  const [pressedTab, setPressedTab] = useState<string | null>(null);
   const Icon = s.icon;
   const companies = COMPANIES[s.id] || COMPANIES.financial;
   const DASH_SUBS = [
@@ -3806,6 +3807,9 @@ function MobileDashboard({ s, setS }) {
             <button
               key={n.id}
               onClick={() => setDashSub(n.id)}
+              onPointerDown={() => setPressedTab(n.id)}
+              onPointerUp={() => setTimeout(() => setPressedTab(null), 120)}
+              onPointerLeave={() => setTimeout(() => setPressedTab(null), 120)}
               style={{
                 flex: 1,
                 display: "flex",
@@ -3818,6 +3822,8 @@ function MobileDashboard({ s, setS }) {
                 cursor: "pointer",
                 position: "relative",
                 padding: 0,
+                transform: pressedTab === n.id ? "scale(0.82)" : "scale(1)",
+                transition: "transform 0.12s cubic-bezier(0.36,0.07,0.19,0.97)",
               }}
             >
               {act && (
