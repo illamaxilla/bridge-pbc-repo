@@ -277,18 +277,24 @@ export default function Intelligence() {
 
         {/* ── Sidebar ── */}
         <aside style={{
-          width: sidebarWidth,
+          width: isMobile ? 220 : sidebarWidth,
           flexShrink: 0,
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
-          transition: "width 0.22s ease",
+          transition: isMobile
+            ? "transform 0.28s cubic-bezier(0.4,0,0.2,1)"
+            : "width 0.22s ease",
+          transform: isMobile
+            ? (sidebarOpen ? "translateX(0)" : "translateX(-100%)")
+            : "none",
           backgroundColor: C.sidebar,
           borderRight: "1px solid rgba(255,255,255,0.06)",
-          position: isMobile ? "absolute" : "relative",
-          zIndex: isMobile ? 40 : "auto",
+          position: isMobile ? "fixed" : "relative",
+          zIndex: isMobile ? 45 : "auto",
           top: isMobile ? 56 : "auto",
           bottom: isMobile ? 0 : "auto",
+          left: isMobile ? 0 : "auto",
           height: isMobile ? "calc(100vh - 56px)" : "auto",
         }}>
 
