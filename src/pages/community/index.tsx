@@ -1,5 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+
+// ─── COMMUNITY SECTION COMPONENTS ─────────────────────────────
+import MembersPage from "./Members";
+import CommunityResourcesPage from "./CommunityResources";
+import ForumHome from "./forum/ForumHome";
+import Questions from "./forum/Questions";
+import MostAnswered from "./forum/MostAnswered";
+import Polls from "./forum/Polls";
+import Groups from "./forum/Groups";
+import Tags from "./forum/Tags";
+import ForumSectors from "./forum/ForumSectors";
+import Badges from "./forum/Badges";
+import ForumMembers from "./forum/ForumMembers";
 import {
   Bell,
   MessageCircle,
