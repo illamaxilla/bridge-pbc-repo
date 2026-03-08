@@ -788,7 +788,7 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
                   </p>
                 </div>
 
-                <SignInForm onSuccess={() => setSuccess("signin")} onForgot={() => {}} />
+                <SignInForm onSuccess={() => { onSignInSuccess?.(); setSuccess("signin"); }} onForgot={() => {}} />
 
                 <p style={{ textAlign: "center" as const, fontSize: "13px", color: "#666", fontFamily: "Inter, sans-serif", marginTop: "20px" }}>
                   Don't have access yet?{" "}
