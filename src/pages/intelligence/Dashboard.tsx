@@ -5181,7 +5181,7 @@ function DesktopDashboard() {
                         e.currentTarget.style.color = "#374151";
                       }}
                     >
-                      <Icon size={11} />
+                      <ActionIcon size={11} />
                       {label}
                     </button>
                   ))}

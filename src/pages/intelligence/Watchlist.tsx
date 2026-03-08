@@ -5222,7 +5222,7 @@ function PortfolioPage({ sector }) {
     { sector: SECTORS[4], pct: 10, deployed: 3.8, target: 10, status: "On Track" },
     { sector: SECTORS[5], pct: 8, deployed: 2.1, target: 8, status: "On Track" },
   ];
-  const totalDeployed = allocations.reduce((s, a) => s + a.deployed, 0).toFixed(1);
+  const totalDeployed = allocations.reduce((s, a) => s + a.deployed, 0);
   const totalTarget = allocations.reduce((s, a) => s + a.target, 0);
   const overallPct = Math.round((totalDeployed / totalTarget) * 100);
 

@@ -4652,10 +4652,12 @@ function DesktopResourcesPage() {
                     overflow: "hidden",
                   }}
                 >
-                  {[
-                    ["table", List],
-                    ["grid", LayoutGrid],
-                  ].map(([v, Ic]) => (
+                  {(
+                    [
+                      ["table", List],
+                      ["grid", LayoutGrid],
+                    ] as [string, React.ComponentType<{ size?: number; color?: string }>][]
+                  ).map(([v, ViewIcon]) => (
                     <button
                       key={v}
                       onClick={() => setViewMode(v)}

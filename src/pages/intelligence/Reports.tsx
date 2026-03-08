@@ -4946,7 +4946,7 @@ function MobileResourcesPage({ s, setS, view = "sector-performance" }: { s: any;
   const capitalTotal = monthlyData.reduce((a, d) => a + d.growth, 0);
 
   /* ── Dark section header ── */
-  const DHead = ({ id, label, badge, children }) => {
+  const DHead = ({ id, label, badge = undefined, children }: { id: any; label: any; badge?: any; children?: any }) => {
     const isOpen = open[id] ?? true;
     return (
       <button
