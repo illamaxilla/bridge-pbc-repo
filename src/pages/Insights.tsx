@@ -1643,7 +1643,7 @@ export default function InsightsPage() {
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <a
-                  href="/dashboard"
+                  href="/intelligence/dashboard"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",

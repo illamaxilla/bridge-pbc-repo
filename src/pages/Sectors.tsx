@@ -2484,7 +2484,7 @@ export default function BRIDGESectorsLanding() {
       <SectorGrid />
       <CrossSector />
       <CTA />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

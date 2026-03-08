@@ -3473,7 +3473,7 @@ export default function HowWeWorkPage() {
         <DeliverablesSection seg={seg} />
         <MethodologySection />
         <CTASection seg={seg} />
-        <Footer />
+        <SiteFooter />
       </div>
     </>
   );
