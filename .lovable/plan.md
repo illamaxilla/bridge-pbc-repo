@@ -1,67 +1,85 @@
 
-## Audit Results — All 6 Intelligence Pages
+## Audit Summary: What's Working vs. What Needs Fixing
 
-### Desktop Results (1280px)
-| Page | Status | Notes |
-|---|---|---|
-| /intelligence/dashboard | PASS | Renders fully, charts working |
-| /intelligence/market | PASS | Renders fully, charts working |
-| /intelligence/analytics | PASS | Renders fully, charts working |
-| /intelligence/reports | **BLANK** | Root cause below |
-| /intelligence/watchlist | PASS | Renders fully |
-| /intelligence/resources | PASS | Renders fully |
+### ✅ Working correctly
+- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
+- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
+- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
+- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
 
-### Mobile Results (375px)
-| Page | Status | Notes |
-|---|---|---|
-| /intelligence/dashboard | PASS | Mobile layout working |
-| /intelligence/market | PASS | Mobile layout working |
-| /intelligence/analytics | PASS | Mobile layout with bottom tab bar |
-| /intelligence/reports | PASS | Mobile-specific MobileDashboard renders correctly |
-| /intelligence/watchlist | Not yet checked, likely fine |
-| /intelligence/resources | PASS |
+### ❌ Issues to fix
 
-### Console Warnings
-All console "errors" are React `forwardRef` warnings on third-party library components (Radix UI, react-router, react-query). These are non-breaking dev-mode warnings from library internals, not code we own. No actual runtime errors.
+**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
+- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
+- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
 
----
+**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
+- Line 6934 has `href="#"` instead of the object-lookup pattern
+- Fix: same object-lookup pattern as other pages
 
-## Root Cause: Reports Blank on Desktop
+**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
+- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
+- Fix: apply the object-lookup href pattern
 
-`Reports.tsx` has its own full-page layout (its own `Sidebar`, its own top nav) — it was designed to be a standalone page. The problem is at line 2384–2386:
+**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
+- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
+- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
+- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
 
-```js
-style={{
-  display: "flex",
-  height: "100vh",   // <-- THIS IS THE PROBLEM
-  overflow: "hidden",
-}}
-```
+**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
+- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
+- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
 
-When `BridgeReportsPage` renders inside the Intelligence shell's `<main className="flex-1 overflow-auto">`, the `height: "100vh"` pushes the content to fill the entire viewport height. However, the flex layout of the Intelligence shell means the `<main>` starts at y=56px (below the top bar). The inner `100vh` element then overflows 56px below the bottom of the viewport — and because `overflow: "hidden"` is set, the entire content is clipped invisible.
+**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
+- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
+- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
+- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
 
-**Fix**: Change `height: "100vh"` → `height: "100%"` on the root div of `BridgeReportsPage`. This makes it fill the available height within the `<main>` container instead of the full viewport. The `<main>` already has `overflow: auto` which handles scrolling.
+**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
+- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
+- Minor cleanup
 
----
+### Implementation Plan
 
-## Plan
+**Files to fix: 4 real fixes + 1 cleanup**
 
-### Single Fix Required
+1. **`Tourism.tsx`** (2 fixes):
+   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
+   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
 
-**File**: `src/pages/intelligence/Reports.tsx`, line 2385
+2. **`Infrastructure.tsx`** (1 fix):
+   - Line 6952: `href="#"` → object-lookup href
 
-Change:
-```js
-height: "100vh",
-```
-To:
-```js
-height: "100%",
-```
+3. **`Education.tsx`** (1 fix):
+   - Line 6947: `href="#"` → object-lookup href
 
-That's the only change needed. Everything else across all 6 intelligence pages is working correctly on both desktop and mobile.
+4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
+   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
+   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
 
-### No other changes needed
-- Dashboard, Market, Analytics, Watchlist, Resources: all render correctly on desktop and mobile
-- Console warnings are all from third-party library internals (Radix UI, React Router, React Query) — non-actionable
-- Mobile sidebar hamburger, sector switching, charts, and tooltips all function correctly
+5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
+   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
+   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
+
+6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
+
+### Files to edit
+| File | Change |
+|---|---|
+| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
+| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
+| `Education.tsx` | Fix mobile labels `href="#"` |
+| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
+| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |

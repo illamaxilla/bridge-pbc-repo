@@ -2382,7 +2382,7 @@ export default function BridgeReportsPage() {
     <div
       style={{
         display: "flex",
-        height: "100vh",
+        height: "100%",
         overflow: "hidden",
         background: C.bg,
         fontFamily: "'DM Sans',sans-serif",
