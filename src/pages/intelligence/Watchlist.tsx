@@ -46,6 +46,7 @@ import {
   Award,
   Wifi,
   PieChart,
+  MapPin,
 } from "lucide-react";
 import {
   Bar,
