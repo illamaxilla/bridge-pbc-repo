@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import SiteHeader from "@/components/SiteHeader";
+import SiteHeader from "@/components/SiteHeaderMinimal";
 
 // ============================================================================
 // BRIDGE ABOUT US PAGE v3
