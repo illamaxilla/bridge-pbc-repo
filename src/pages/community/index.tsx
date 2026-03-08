@@ -1966,9 +1966,10 @@ function CommunityDashboard({ memberType, onLogout }) {
                 { icon: <Globe size={14} />, label: "Sectors" },
                 { icon: <Award size={14} />, label: "Badges" },
                 { icon: <Users size={14} />, label: "Members" },
-              ].map((item, i) => (
+              ].map((item) => (
                 <button
                   key={item.label}
+                  onClick={() => setForumSection(item.label)}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -1978,11 +1979,11 @@ function CommunityDashboard({ memberType, onLogout }) {
                     borderRadius: 8,
                     border: "none",
                     cursor: "pointer",
-                    background: i === 0 ? `${C.primary}12` : "transparent",
-                    color: i === 0 ? C.primary : C.muted,
+                    background: forumSection === item.label ? `${C.primary}12` : "transparent",
+                    color: forumSection === item.label ? C.primary : C.muted,
                     fontFamily: font.body,
                     fontSize: 13,
-                    fontWeight: i === 0 ? 600 : 400,
+                    fontWeight: forumSection === item.label ? 600 : 400,
                     textAlign: "left",
                     marginBottom: 2,
                   }}
