@@ -617,9 +617,10 @@ export interface BRIDGEAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultTab?: "signin" | "request";
+  onSignInSuccess?: () => void;
 }
 
-export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin" }: BRIDGEAuthModalProps) => {
+export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSignInSuccess }: BRIDGEAuthModalProps) => {
   const [tab, setTab] = useState<"signin" | "request">(defaultTab);
   const [success, setSuccess] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
