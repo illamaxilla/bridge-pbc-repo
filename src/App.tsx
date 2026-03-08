@@ -11,6 +11,8 @@ import Resources from "./pages/Resources";
 import Insights from "./pages/Insights";
 import Methodology from "./pages/Methodology";
 import Intelligence from "./pages/intelligence/Intelligence";
+import Community from "./pages/community/Community";
+import CommunityHome from "./pages/community/index";
 import IntelDashboard from "./pages/intelligence/Dashboard";
 import MarketOverview from "./pages/intelligence/MarketOverview";
 import Reports from "./pages/intelligence/Reports";
