@@ -3937,12 +3937,6 @@ export default function BRIDGEHomePage() {
   );
 }
 
-              {isMobile ? (
-                /* ═══ MOBILE FOOTER ═══ */
-                <div style={{ padding: "32px 20px 16px", display: "flex", flexDirection: "column", gap: "24px" }}>
-                  {/* Row 1: Logo + Nav labels */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-                    <div style={{ flexShrink: 0 }}>
                       <BridgeLogoWhite />
                     </div>
                     <div
