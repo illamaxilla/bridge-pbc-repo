@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Bell,
   MessageCircle,
@@ -971,9 +972,25 @@ function LoginPage({ onLogin }) {
 
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
-  const [activePage, setActivePage] = useState("Home");
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const pageMap: Record<string, string> = {
+    "/community": "Home",
+    "/community/forum": "Forum",
+    "/community/members": "Members",
+    "/community/resources": "Resources",
+  };
+  const activePage = pageMap[pathname] ?? "Home";
+  const setActivePage = (name: string) => {
+    const routeMap: Record<string, string> = {
+      Home: "/community",
+      Forum: "/community/forum",
+      Members: "/community/members",
+      Resources: "/community/resources",
+    };
+    navigate(routeMap[name] ?? "/community");
+  };
   const [activeTab, setActiveTab] = useState("active");
-  const [feedFilter, setFeedFilter] = useState("Recent");
   const [forumFilter, setForumFilter] = useState("Recent");
   const [questions, setQuestions] = useState(QUESTIONS);
   const [noteText, setNoteText] = useState("");
