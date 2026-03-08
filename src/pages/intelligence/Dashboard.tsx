@@ -1502,7 +1502,7 @@ function Gauge({ score }) {
     </div>
   );
 }
-const Tip = ({ active, payload, label }) => {
+const Tip = ({ active, payload, label }: { active?: any; payload?: any; label?: any }) => {
   if (!active || !payload?.length) return null;
   return (
     <div
