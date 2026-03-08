@@ -3263,6 +3263,7 @@ export default function BRIDGEHomePage() {
               Insights
             </div>
             <h2
+              onClick={() => navigate("/resources")}
               style={{
                 fontFamily: "Georgia, serif",
                 fontSize: isMobile ? "32px" : "48px",
@@ -3271,6 +3272,7 @@ export default function BRIDGEHomePage() {
                 color: colors.primary,
                 margin: "0 0 16px 0",
                 fontStyle: "italic",
+                cursor: "pointer",
               }}
             >
               Our Latest Insights
