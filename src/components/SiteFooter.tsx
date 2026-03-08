@@ -314,11 +314,11 @@ export default function SiteFooter() {
               <BridgeLogoWhite />
             </div>
             <div style={{ display: "flex", gap: "16px", flexWrap: "nowrap", marginLeft: "auto", justifyContent: "flex-end", whiteSpace: "nowrap" }}>
-              {(["Services", "Resources", "Insights"] as const).map((label) => {
+              {(["Company", "Services", "Insight"] as const).map((label) => {
                 const href: Record<string, string> = {
+                  Company: "/about",
                   Services: "/services",
-                  Resources: "/resources",
-                  Insights: "/insights",
+                  Insight: "/insights",
                 };
                 return (
                   <a
