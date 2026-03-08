@@ -11,6 +11,7 @@ import Resources from "./pages/Resources";
 import Insights from "./pages/Insights";
 import Methodology from "./pages/Methodology";
 import Intelligence from "./pages/intelligence/Intelligence";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import CommunityHome from "./pages/community/index";
 import IntelDashboard from "./pages/intelligence/Dashboard";
 import MarketOverview from "./pages/intelligence/MarketOverview";
@@ -50,7 +51,7 @@ const App = () => (
           <Route path="/resources" element={<Resources />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/methodology" element={<Methodology />} />
-          <Route path="/intelligence/*" element={<Intelligence />}>
+          <Route path="/intelligence/*" element={<ProtectedRoute><Intelligence /></ProtectedRoute>}>
             <Route path="dashboard" element={<IntelDashboard />} />
             <Route path="market" element={<MarketOverview />} />
             <Route path="reports" element={<Reports />} />

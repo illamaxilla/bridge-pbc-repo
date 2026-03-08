@@ -617,9 +617,10 @@ export interface BRIDGEAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultTab?: "signin" | "request";
+  onSignInSuccess?: () => void;
 }
 
-export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin" }: BRIDGEAuthModalProps) => {
+export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSignInSuccess }: BRIDGEAuthModalProps) => {
   const [tab, setTab] = useState<"signin" | "request">(defaultTab);
   const [success, setSuccess] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
@@ -787,7 +788,7 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin" }: BRID
                   </p>
                 </div>
 
-                <SignInForm onSuccess={() => setSuccess("signin")} onForgot={() => {}} />
+                <SignInForm onSuccess={() => { onSignInSuccess?.(); setSuccess("signin"); }} onForgot={() => {}} />
 
                 <p style={{ textAlign: "center" as const, fontSize: "13px", color: "#666", fontFamily: "Inter, sans-serif", marginTop: "20px" }}>
                   Don't have access yet?{" "}
