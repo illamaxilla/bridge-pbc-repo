@@ -7029,7 +7029,9 @@ const Footer = () => {
               {socialIcons.map((icon, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={["https://linkedin.com/company/bridgepbc", "https://twitter.com/bridgepbc", "https://facebook.com/bridgepbc"][i] || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     width: "28px",
                     height: "28px",
