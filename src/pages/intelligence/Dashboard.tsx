@@ -4811,7 +4811,7 @@ function DesktopDashboard() {
                       [s.t1?.length, "I", "#EBF5B0", "#1B4D3E", "Priority"],
                       [s.t2?.length, "II", "rgba(46,90,77,0.1)", "#2E5A4D", "Mid-term"],
                       [s.t3?.length, "III", "rgba(107,114,128,0.08)", "#6B7280", "Long-term"],
-                    ].map(([n, label, bg, col, sub]) => (
+                    ].map(([n, label, bg, col, sub]: [any, any, any, any, any]) => (
                       <div
                         key={label}
                         style={{ background: bg, borderRadius: 8, padding: "8px 10px", textAlign: "center" }}
