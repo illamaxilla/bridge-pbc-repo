@@ -1867,7 +1867,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               return (
                 <button
                   key={item.label}
-                  onClick={() => (goesToMembers ? setCurrentPage("members") : setForumView(item.label))}
+                  onClick={() => handleForumNav(item.label)}
                   style={{
                     display: "flex",
                     alignItems: "center",
