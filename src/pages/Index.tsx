@@ -3936,10 +3936,6 @@ export default function BRIDGEHomePage() {
     </div>
   );
 }
-
-                      <BridgeLogoWhite />
-                    </div>
-                    <div
                       style={{
                         display: "flex",
                         gap: "16px",
