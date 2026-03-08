@@ -1,113 +1,85 @@
 
-## Pre-publish sanitation audit — full findings
+## Audit Summary: What's Working vs. What Needs Fixing
 
-### What I examined
-- All header components (SiteHeader, SiteHeaderMinimal)
-- SiteFooter (centralized component)
-- All 20 pages for footer usage
-- Console errors
-- Typography/font families used across the codebase
-- Logo → home routing
-- Nav item completeness
+### ✅ Working correctly
+- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
+- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
+- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
+- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
 
----
+### ❌ Issues to fix
 
-## Issues Found
+**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
+- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
+- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
 
-### 1. CRITICAL — Console errors (2 active warnings)
+**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
+- Line 6934 has `href="#"` instead of the object-lookup pattern
+- Fix: same object-lookup pattern as other pages
 
-The console shows two React `ref` warnings on every page that uses `SiteFooter`:
+**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
+- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
+- Fix: apply the object-lookup href pattern
 
-```
-Warning: Function components cannot be given refs.
-Check the render method of `SiteFooter`.
-  at BridgeLogoWhite    ← in SiteFooter.tsx line 205
-  at SectorGrid         ← in SiteFooter.tsx line 231
-```
+**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
+- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
+- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
+- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
 
-**Root cause**: `BridgeLogoWhite` and `SectorGrid` are defined as plain arrow functions inside `SiteFooter.tsx` (not exported, not `forwardRef`). React throws this warning when a plain function component is passed a ref. This happens because they're inline components rendered inside `SiteFooter` — not a blocking error, but will clutter the console in production. Fix: wrap both with `React.memo` or convert to named function declarations, which silences this React dev-mode warning.
+**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
+- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
+- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
 
----
+**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
+- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
+- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
+- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
 
-### 2. MAJOR — `Index.tsx` has its OWN inline footer (not using SiteFooter)
+**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
+- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
+- Minor cleanup
 
-`Index.tsx` is the only page that **never got migrated** to `<SiteFooter />`. It still has its own ~400-line inline footer starting at line 3932, with its own `BridgeLogoWhite` function, its own `footerLinkHref` map, and its own sector grid — all with the **old incorrect link mappings** (e.g. "Sector Briefs" → `/insights`, etc.).
+### Implementation Plan
 
-This means the homepage footer is still broken with the old links, while every other page was fixed.
+**Files to fix: 4 real fixes + 1 cleanup**
 
-**Fix**: Replace the inline footer block in `Index.tsx` with `<SiteFooter />`, import `SiteFooter` at the top, and delete the dead `BridgeLogoWhite` function defined at line 648.
+1. **`Tourism.tsx`** (2 fixes):
+   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
+   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
 
----
+2. **`Infrastructure.tsx`** (1 fix):
+   - Line 6952: `href="#"` → object-lookup href
 
-### 3. MODERATE — `SiteHeader.tsx` (sector pages) is missing nav items
+3. **`Education.tsx`** (1 fix):
+   - Line 6947: `href="#"` → object-lookup href
 
-`SiteHeaderMinimal.tsx` (used on Home, About, etc.) has the full 9-item nav:
-```
-Home, About, Methodology, Sectors, Insight, BRIDGE Intelligence, Community, Resources, Contact
-```
+4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
+   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
+   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
 
-But `SiteHeader.tsx` (used on ALL 13 sector pages + Sectors.tsx) only has 6:
-```
-Home, About, Sectors, Insight, Resources, Contact
-```
-Missing: **Methodology**, **BRIDGE Intelligence**, **Community**
+5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
+   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
+   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
 
-A user on a sector page who wants to navigate to the Intelligence dashboard or Community has no way to get there from the header nav.
+6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
 
-**Fix**: Update `ALL_NAV` in `SiteHeader.tsx` to match the full 9-item list from `SiteHeaderMinimal.tsx`.
-
----
-
-### 4. MINOR — Dead `BridgeLogoWhite` code in 13 page files
-
-Since `SiteFooter` is now used everywhere (and has its own `BridgeLogoWhite` inside it), the following pages still have their own unused `BridgeLogoWhite` const declarations that are never rendered:
-
-`About.tsx`, `Insights.tsx`, `Methodology.tsx` (core pages) + all 12 sector pages (`Energy`, `Technology`, `Sports`, `Transport`, `Manufacturing`, `Housing`, `Financial`, `Health`, `Infrastructure`, `Tourism`, `Education`, `Agriculture`).
-
-These are harmless dead code but bloat each file by ~100+ lines. Not blocking for publish, but clean-up is recommended.
-
----
-
-### 5. TYPOGRAPHY — Consistent and intentional ✓ (with notes)
-
-The site uses a deliberate 3-font system:
-```
-Poppins       → Hero headlines, large display text
-DM Sans       → Body copy, subheadings, UI labels, footer
-Inter         → Data labels, intelligence dashboard, metrics/numbers
-```
-
-This is **thematic** — Poppins for impact, DM Sans for reading, Inter for data. However:
-- `SiteHeader.tsx` uses `Inter, sans-serif` for nav links (15px / 500 weight) — **consistent**
-- `SiteHeaderMinimal.tsx` uses `DM Sans, sans-serif` in the overlay menu — **consistent**
-- Footer exclusively uses `DM Sans` — **consistent**
-- Individual page body text is consistently `DM Sans` — **consistent**
-
-Verdict: Typography is **systematic and intentional**, not scattered.
-
----
-
-### 6. LOGO → HOME — Works correctly ✓
-
-Both headers have:
-```tsx
-<a href="/" onClick={(e) => { e.preventDefault(); handleNavClick("/"); }}>
-  <BridgeLogo />
-</a>
-```
-The footer logo (`BridgeLogoWhite` in `SiteFooter.tsx` line 206) also wraps in `<a href="/">`. All three correctly return to home.
-
-**One exception**: The inline footer in `Index.tsx` (issue #2 above) — `BridgeLogoWhite` on the homepage is just a `<div>` with no link wrapper.
-
----
-
-## Summary of Changes Needed
-
-| Priority | File | Fix |
-|---|---|---|
-| Critical | `src/components/SiteFooter.tsx` | Suppress `BridgeLogoWhite` + `SectorGrid` ref warnings |
-| Major | `src/pages/Index.tsx` | Replace inline footer with `<SiteFooter />`, fix logo link |
-| Moderate | `src/components/SiteHeader.tsx` | Add missing 3 nav items (Methodology, BRIDGE Intelligence, Community) |
-| Minor | 13 page files | Remove dead `BridgeLogoWhite` declarations (optional, post-publish) |
-
-**Recommendation**: Fix the Critical + Major + Moderate items before publishing (3 files). The dead code cleanup (13 files) can be done post-launch as it has no user-visible impact.
+### Files to edit
+| File | Change |
+|---|---|
+| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
+| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
+| `Education.tsx` | Fix mobile labels `href="#"` |
+| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
+| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
