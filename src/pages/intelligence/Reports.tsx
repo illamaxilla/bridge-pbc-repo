@@ -3250,7 +3250,7 @@ function MobileDashboard({ s, setS }) {
     const openD = openSections;
 
     /* Dark section head */
-    const DSectionHead = ({ id, label, icon, count, defaultOpen }) => {
+    const DSectionHead = ({ id, label, icon, count = undefined, defaultOpen = false }: { id: string; label: string; icon: any; count?: any; defaultOpen?: any }) => {
       const isOpen = openD[id] ?? defaultOpen ?? false;
       return (
         <button
