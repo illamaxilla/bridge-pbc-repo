@@ -12,7 +12,7 @@ import {
   BatteryCharging,
   Factory,
   Truck,
-  Bell,
+  Wifi,
   Search,
   PlusCircle,
   User,
@@ -44,6 +44,7 @@ import {
   Settings,
   Eye,
   LogOut,
+  Briefcase,
 } from "lucide-react";
 import {
   BarChart,
@@ -1500,7 +1501,7 @@ function Gauge({ score }) {
     </div>
   );
 }
-const Tip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
+const Tip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
     <div
@@ -1819,7 +1820,7 @@ function sigC(x) {
   return x === "Bullish" ? M.green : x === "Bearish" ? M.red : M.orange;
 }
 /* ─── Section Card wrapper ─── */
-function MCard({ icon: Icon, title, badge = undefined, badgeLime = false, defaultOpen = true, children }: { icon: any; title: any; badge?: any; badgeLime?: boolean; defaultOpen?: boolean; children: any }) {
+function MCard({ icon: Icon, title, badge, badgeLime = false, defaultOpen = true, children }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div
@@ -2009,13 +2010,8 @@ function SubTabs({ tabs, active, onChange }) {
 }
 /* ─── MAIN MOBILE DASHBOARD ─── */
 function MobileDashboard({ s, setS }) {
-  const [navTab, setNavTab] = useState("dashboard");
   const [dashSub, setDashSub] = useState("overview");
-  const [dashMenu, setDashMenu] = useState(false);
-  const [analyticsSub, setAnalyticsSub] = useState("kpis");
-  const [analyticsMenu, setAnalyticsMenu] = useState(false);
   const [notif, setNotif] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [sectorDrawer, setSectorDrawer] = useState(false);
   const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
   const Icon = s.icon;
@@ -2059,99 +2055,18 @@ function MobileDashboard({ s, setS }) {
       <div
         style={{
           flexShrink: 0,
-          height: 56,
+          height: 52,
           background: "rgba(15,26,18,0.94)",
           borderBottom: "1px solid rgba(255,255,255,0.08)",
           backdropFilter: "blur(16px)",
           display: "flex",
           alignItems: "center",
           padding: "0 14px",
-          gap: 8,
           position: "relative",
           zIndex: 50,
         }}
       >
-        {/* BRIDGE logo SVG */}
-        <div style={{ flexShrink: 0 }}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 3434.33 932.3"
-            style={{ width: 104, height: 28, display: "block" }}
-          >
-            <path
-              style={{ fill: "#fff" }}
-              d="M1853.06,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.56,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1v.1Z"
-            />
-            <path
-              style={{ fill: "#fff", stroke: "#000", strokeWidth: ".5px", strokeMiterlimit: 10 }}
-              d="M1431.68,224.45h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.05c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5l.1.1Z"
-            />
-            <path
-              style={{ fill: "#fff", stroke: "#000", strokeWidth: ".5px", strokeMiterlimit: 10 }}
-              d="M1488.08,578.65v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"
-            />
-            <rect
-              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
-              x="1427.38"
-              y="17.35"
-              width="205.2"
-              height="145"
-            />
-            <rect style={{ fill: "#fff" }} x="1427.48" y="221.75" width="205.2" height="693.2" rx="9.6" ry="9.6" />
-            <path
-              style={{ fill: "#fff" }}
-              d="M2757.31,19.09h491.3c5.42,0,9.82,4.4,9.82,9.82v218.7c0,5.42-4.4,9.82-9.82,9.82h-507.36c-56.98,0-108.53,23.02-145.87,60.35-37.34,37.23-60.45,88.79-60.45,145.66,0,113.75,92.37,206.01,206.32,206.01h12.89c2.86,0,5.11,2.25,5.11,5.11v236.7c0,1.13-.92,1.94-1.94,1.94h0c-242.22,0-438.52-195.99-438.52-437.8v-18.51c0-241.81,196.29-437.8,438.52-437.8h0Z"
-            />
-            <rect style={{ fill: "#fff" }} x="2812.75" y="339.47" width="216.75" height="572.62" rx="9.6" ry="9.6" />
-            <rect
-              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
-              x="3083.41"
-              y="339.47"
-              width="175.12"
-              height="257.67"
-            />
-            <rect
-              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
-              x="3083.41"
-              y="654.42"
-              width="175.12"
-              height="257.67"
-            />
-            <circle
-              style={{ fill: "none", stroke: "#231f20", strokeWidth: "5px", strokeMiterlimit: 10 }}
-              cx="3385.56"
-              cy="866.94"
-              r="46.27"
-            />
-            <path
-              style={{ fill: "#fff" }}
-              d="M3404.8,889.32l-10.31-14.71c.25,0,.38-.13.63-.25,2.89-1.26,5.03-3.02,6.54-5.41s2.26-5.15,2.26-8.55c0-5.03-1.76-8.93-5.16-11.82s-8.05-4.27-14.08-4.27h-18.36v44.89h8.3v-13.08h11.94l9.18,13.08h8.93l.13.13ZM3392.85,853.74c1.89,1.51,2.77,3.77,2.77,6.66s-.88,5.03-2.77,6.66-4.65,2.39-8.3,2.39h-9.81v-17.85h9.81c3.65,0,6.41.75,8.3,2.26h0v-.13Z"
-            />
-            <rect
-              style={{ fill: "none", stroke: "#fff", strokeWidth: "80px", strokeMiterlimit: 10 }}
-              x="40"
-              y="40"
-              width="843.91"
-              height="852.3"
-              rx="36.55"
-              ry="36.55"
-            />
-            <polygon
-              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
-              points="722.6 322.13 462.28 452.8 201.97 322.75 461.21 192.52 722.6 322.13"
-            />
-            <path
-              style={{ fill: "#74914a" }}
-              d="M197.84,426.78c3.86-.53,7.04.85,10.74,1.41l252.53,125.67c84.54-40,167.66-83.83,251.89-124.84,33.14-11.49,50.09,34.15,18.55,49.11l-259.23,129.08c-10.18,3.72-14.14,2.57-23.85-1.31l-264.23-132.98c-17.04-14.4-7.96-43.2,13.61-46.14Z"
-            />
-            <path
-              style={{ fill: "#B8D935", stroke: "#1b4d3e", strokeMiterlimit: 10 }}
-              d="M195.25,558c3.65-.63,7.4-.4,11.08-.22,86.11,40.47,170.4,85.05,255.95,126.78l252.92-126c29.53-7.22,45.44,28.67,22.29,46.49l-270.42,134.42-8.62.31c-91.6-42.21-181.07-89.86-271.7-134.42-18.72-12.06-13.3-43.58,8.5-47.37Z"
-            />
-          </svg>
-        </div>
-
-        {/* Sector selector pill */}
+        {/* Sector selector pill — full width */}
         <div
           onClick={() => setSectorDrawer(true)}
           style={{
@@ -2163,14 +2078,13 @@ function MobileDashboard({ s, setS }) {
             minWidth: 0,
             background: "rgba(255,255,255,0.06)",
             borderRadius: 10,
-            padding: "6px 10px 6px 8px",
-            marginLeft: 8,
+            padding: "7px 12px 7px 10px",
           }}
         >
           <div
             style={{
-              width: 24,
-              height: 24,
+              width: 26,
+              height: 26,
               borderRadius: 6,
               background: "rgba(255,255,255,0.08)",
               display: "flex",
@@ -2212,576 +2126,7 @@ function MobileDashboard({ s, setS }) {
             </svg>
           </div>
         </div>
-
-        {/* Bell */}
-        <button
-          onClick={() => {
-            setNotif((o) => !o);
-            setMenuOpen(false);
-          }}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            position: "relative",
-            flexShrink: 0,
-          }}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="rgba(255,255,255,0.45)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
-          <div
-            style={{
-              position: "absolute",
-              top: 6,
-              right: 6,
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "#EF4444",
-              border: `1.5px solid #070D09`,
-            }}
-          />
-        </button>
-
-        {/* Hamburger */}
-        <button
-          onClick={() => {
-            setMenuOpen((o) => !o);
-            setNotif(false);
-          }}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: menuOpen ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.06)",
-            border: `1px solid ${menuOpen ? "rgba(184,217,53,0.25)" : "rgba(255,255,255,0.08)"}`,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 4,
-            cursor: "pointer",
-            flexShrink: 0,
-            padding: 0,
-          }}
-        >
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? M.accent : "rgba(255,255,255,0.45)",
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? M.accent : "rgba(255,255,255,0.45)",
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 9,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? M.accent : "rgba(255,255,255,0.45)",
-              alignSelf: "flex-start",
-              marginLeft: 10,
-            }}
-          />
-        </button>
-
-        {/* Notif dropdown */}
-        {notif && (
-          <div
-            style={{
-              position: "fixed",
-              top: 64,
-              right: 12,
-              width: 280,
-              background: "#0F1A12",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 14,
-              boxShadow: "0 16px 48px rgba(0,0,0,0.5)",
-              zIndex: 350,
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "12px 14px",
-                borderBottom: "1px solid rgba(255,255,255,0.08)",
-              }}
-            >
-              <span style={{ fontSize: 13, fontWeight: 700, color: M.white }}>Alerts</span>
-              <span
-                style={{ fontSize: 11, color: M.accent, fontWeight: 700, cursor: "pointer" }}
-                onClick={() => setNotif(false)}
-              >
-                Mark all read
-              </span>
-            </div>
-            {s.activity.slice(0, 3).map((a, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  gap: 10,
-                  padding: "10px 14px",
-                  borderBottom: "1px solid rgba(255,255,255,0.06)",
-                }}
-              >
-                <div
-                  style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: sigC(a.sig),
-                    marginTop: 4,
-                    flexShrink: 0,
-                  }}
-                />
-                <div>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: M.white, lineHeight: 1.3 }}>{a.h}</div>
-                  <div
-                    style={{
-                      fontSize: 10,
-                      color: "rgba(255,255,255,0.35)",
-                      fontFamily: "Inter,sans-serif",
-                      marginTop: 2,
-                    }}
-                  >
-                    {a.date}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
-
-      {/* ═══ HAMBURGER MENU DRAWER ═══ */}
-      {menuOpen && (
-        <>
-          <div
-            onClick={() => setMenuOpen(false)}
-            style={{ position: "fixed", inset: 0, zIndex: 400, background: "rgba(0,0,0,0.65)" }}
-          />
-          <div
-            className="mscroll"
-            style={{
-              position: "fixed",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              background: "#0F1A12",
-              borderRadius: "20px 20px 0 0",
-              border: "1px solid rgba(184,217,53,0.15)",
-              borderBottom: "none",
-              zIndex: 401,
-              paddingBottom: 24,
-              animation: "slideUp .25s ease",
-            }}
-          >
-            <div
-              style={{
-                width: 36,
-                height: 4,
-                borderRadius: 2,
-                background: "rgba(255,255,255,0.15)",
-                margin: "12px auto 0",
-              }}
-            />
-            <div
-              style={{
-                padding: "12px 20px 8px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: "#6B7280",
-                  fontFamily: "Inter,sans-serif",
-                  letterSpacing: "0.8px",
-                  textTransform: "uppercase",
-                }}
-              >
-                Menu
-              </span>
-              <button
-                onClick={() => setMenuOpen(false)}
-                style={{
-                  background: "rgba(255,255,255,0.08)",
-                  border: "none",
-                  borderRadius: 7,
-                  padding: "4px 10px",
-                  fontSize: 11,
-                  color: "rgba(255,255,255,0.4)",
-                  cursor: "pointer",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                Done
-              </button>
-            </div>
-            {/* Profile block */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                padding: "14px 20px 16px",
-                borderTop: "1px solid rgba(255,255,255,0.06)",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
-              }}
-            >
-              <div
-                style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: "50%",
-                  background: "rgba(184,217,53,0.12)",
-                  border: "1.5px solid rgba(184,217,53,0.25)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#B8D935"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                </svg>
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: M.white, fontFamily: "DM Sans,sans-serif" }}>
-                  Joseph Asante
-                </div>
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: "rgba(255,255,255,0.35)",
-                    fontFamily: "Inter,sans-serif",
-                    marginTop: 2,
-                  }}
-                >
-                  BRIDGE Intelligence · Analyst
-                </div>
-              </div>
-              <div
-                style={{
-                  background: "rgba(184,217,53,0.12)",
-                  border: "1px solid rgba(184,217,53,0.2)",
-                  borderRadius: 6,
-                  padding: "3px 8px",
-                }}
-              >
-                <span style={{ fontSize: 10, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
-                  Pro
-                </span>
-              </div>
-            </div>
-            {/* Return to website */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                padding: "15px 20px",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
-                cursor: "pointer",
-              }}
-              onClick={() => setMenuOpen(false)}
-            >
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 11,
-                  background: "rgba(255,255,255,0.06)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.35)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                  <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: M.white, fontFamily: "DM Sans,sans-serif" }}>
-                  Return to Website
-                </div>
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: "rgba(255,255,255,0.35)",
-                    fontFamily: "Inter,sans-serif",
-                    marginTop: 2,
-                  }}
-                >
-                  Back to bridge-pbc.com
-                </div>
-              </div>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="rgba(255,255,255,0.2)"
-                strokeWidth="2"
-                strokeLinecap="round"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </div>
-            {/* Nav items */}
-            {[
-              {
-                label: "About BRIDGE",
-                desc: "Our mission, model & sectors",
-                icon: (
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.35)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
-                ),
-              },
-              {
-                label: "Switch to Desktop",
-                desc: "Full dashboard experience",
-                icon: (
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.35)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                    <line x1="8" y1="21" x2="16" y2="21" />
-                    <line x1="12" y1="17" x2="12" y2="21" />
-                  </svg>
-                ),
-              },
-              {
-                label: "Notifications",
-                desc: "Manage alert preferences",
-                icon: (
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.35)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                    <path d="M13.73 21a2 2 0 01-3.46 0" />
-                  </svg>
-                ),
-              },
-              {
-                label: "Help & Support",
-                desc: "Docs, guides & contact",
-                icon: (
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.35)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
-                    <line x1="12" y1="17" x2="12.01" y2="17" />
-                  </svg>
-                ),
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 14,
-                  padding: "13px 20px",
-                  borderBottom: "1px solid rgba(255,255,255,0.04)",
-                  cursor: "pointer",
-                }}
-                onClick={() => setMenuOpen(false)}
-              >
-                <div
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 11,
-                    background: "rgba(255,255,255,0.06)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  {item.icon}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: "rgba(255,255,255,0.85)",
-                      fontFamily: "DM Sans,sans-serif",
-                    }}
-                  >
-                    {item.label}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 11,
-                      color: "rgba(255,255,255,0.3)",
-                      fontFamily: "Inter,sans-serif",
-                      marginTop: 2,
-                    }}
-                  >
-                    {item.desc}
-                  </div>
-                </div>
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.15)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
-            ))}
-            {/* Sign out */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                padding: "14px 20px",
-                borderTop: "1px solid rgba(255,255,255,0.06)",
-                cursor: "pointer",
-              }}
-              onClick={() => setMenuOpen(false)}
-            >
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 11,
-                  background: "rgba(239,68,68,0.08)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="rgba(239,68,68,0.6)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                  <polyline points="16 17 21 12 16 7" />
-                  <line x1="21" y1="12" x2="9" y2="12" />
-                </svg>
-              </div>
-              <div style={{ flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: "rgba(239,68,68,0.75)",
-                    fontFamily: "DM Sans,sans-serif",
-                  }}
-                >
-                  Sign Out
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
 
       {/* ═══ SECTOR HEADER CARD ═══ */}
       <div style={{ padding: "8px 16px 0" }}>
@@ -2875,7 +2220,7 @@ function MobileDashboard({ s, setS }) {
       {/* ═══ SCROLLABLE CONTENT ═══ */}
       <div className="mscroll" style={{ flex: 1, overflowY: "auto", padding: "10px 12px 0" }}>
         {/* ─ DASHBOARD / OVERVIEW ─ */}
-        {navTab === "dashboard" && dashSub === "overview" && (
+        {dashSub === "overview" && (
           <>
             {/* KPI 2x2 grid */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
@@ -3161,7 +2506,7 @@ function MobileDashboard({ s, setS }) {
         )}
 
         {/* ─ DASHBOARD / VENTURES ─ */}
-        {navTab === "dashboard" && dashSub === "ventures" && (
+        {dashSub === "ventures" && (
           <>
             {/* Tier distribution */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 8 }}>
@@ -3424,7 +2769,7 @@ function MobileDashboard({ s, setS }) {
         )}
 
         {/* ─ DASHBOARD / SIGNALS ─ */}
-        {navTab === "dashboard" && dashSub === "signals" && (
+        {dashSub === "signals" && (
           <>
             {/* Signal source breakdown */}
             <MCard icon={BarChart2} title="Signal Source Breakdown" badge="+180%" defaultOpen={true}>
@@ -3659,7 +3004,7 @@ function MobileDashboard({ s, setS }) {
         )}
 
         {/* ─ DASHBOARD / COMPANIES ─ */}
-        {navTab === "dashboard" && dashSub === "companies" && (
+        {dashSub === "companies" && (
           <>
             {/* Sector market overview — 3 stat chips */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 8 }}>
@@ -4093,122 +3438,319 @@ function MobileDashboard({ s, setS }) {
         )}
 
         {/* ─ DASHBOARD / ANALYTICS ─ */}
-        {navTab === "dashboard" && dashSub === "analytics" && (
+        {dashSub === "analytics" && (
           <>
-            {/* Engagement + heatmap */}
-            <MCard icon={Activity} title="30-Day Engagement" badge="Live" badgeLime={true} defaultOpen={true}>
-              <div style={{ padding: "12px 14px 6px" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7, marginBottom: 14 }}>
-                  {[
-                    { v: "1,692", l: "Active Signals", chg: "+56%" },
-                    { v: "1,423", l: "Conversion", chg: "+43%" },
-                    { v: "11,992", l: "Avg Duration", chg: "+28%" },
-                  ].map((m, i) => (
+            {/* ── KPI STRIP ── */}
+            <div style={{ padding: "12px 14px 0" }}>
+              <div
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "#6B7280",
+                  letterSpacing: "0.8px",
+                  textTransform: "uppercase",
+                  fontFamily: "Inter,sans-serif",
+                  marginBottom: 10,
+                }}
+              >
+                Key Metrics
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+                {[
+                  { l: "Avg IRR (Tier I)", v: `${s.irrHigh}%`, sub: "projected", chg: "+2.1pp", up: true },
+                  {
+                    l: "Capital Deployed",
+                    v: `$${Math.round(s.capLow * 0.6)}M`,
+                    sub: "of target",
+                    chg: "+18%",
+                    up: true,
+                  },
+                  {
+                    l: "Active Ventures",
+                    v: `${s.totalV}`,
+                    sub: "identified",
+                    chg: `${s.t1?.length} Tier I`,
+                    up: true,
+                  },
+                  {
+                    l: "BRIDGE Score",
+                    v: `${s.score}`,
+                    sub: "/ 100",
+                    chg: s.score >= 88 ? "Tier I Ready" : "Strong",
+                    up: s.score >= 80,
+                  },
+                ].map((k, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: M.card,
+                      borderRadius: 12,
+                      border: `1px solid ${M.cardBorder}`,
+                      padding: "12px 12px 10px",
+                    }}
+                  >
                     <div
-                      key={i}
-                      style={{ background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "10px 9px" }}
-                    >
-                      <div style={{ fontSize: 17, fontWeight: 700, color: M.white, lineHeight: 1, marginBottom: 3 }}>
-                        {m.v}
-                      </div>
-                      <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginBottom: 5 }}>
-                        {m.l}
-                      </div>
-                      <div style={{ fontSize: 10, fontWeight: 700, color: M.green, fontFamily: "Inter,sans-serif" }}>
-                        {m.chg}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 55, marginBottom: 8 }}>
-                  {barData.map((v, i) => (
-                    <div
-                      key={i}
                       style={{
-                        flex: 1,
-                        background: i % 6 === 0 ? M.tealBright : `rgba(46,90,77,${0.25 + (v / maxBar) * 0.55})`,
-                        borderRadius: "2px 2px 0 0",
-                        height: `${(v / maxBar) * 100}%`,
-                        minHeight: 3,
+                        fontSize: 9,
+                        color: M.muted,
+                        fontFamily: "Inter,sans-serif",
+                        marginBottom: 5,
+                        letterSpacing: ".3px",
                       }}
-                    />
-                  ))}
+                    >
+                      {k.l}
+                    </div>
+                    <div
+                      style={{ fontSize: 22, fontWeight: 800, color: M.white, lineHeight: 1, letterSpacing: "-0.5px" }}
+                    >
+                      {k.v}
+                    </div>
+                    <div
+                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 5 }}
+                    >
+                      <span style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>{k.sub}</span>
+                      <span
+                        style={{
+                          fontSize: 9,
+                          fontWeight: 700,
+                          color: k.up ? M.green : M.orange,
+                          fontFamily: "Inter,sans-serif",
+                        }}
+                      >
+                        {k.chg}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── IRR PERFORMANCE TREND ── */}
+            <MCard icon={TrendingUp} title="IRR Performance" badge="12-Month" badgeLime={true} defaultOpen={true}>
+              <div style={{ padding: "10px 14px 6px" }}>
+                {/* Sparkline area */}
+                <div style={{ position: "relative", height: 72, marginBottom: 6 }}>
+                  <svg width="100%" height="72" viewBox="0 0 280 72" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="irrGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#B8D935" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#B8D935" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    {(() => {
+                      const pts = [42, 45, 43, 48, 47, 52, 50, 55, 58, 54, 60, s.irrHigh];
+                      const max = Math.max(...pts) + 4,
+                        min = Math.min(...pts) - 4;
+                      const x = (i) => i * (280 / 11);
+                      const y = (v) => 72 - ((v - min) / (max - min)) * 68;
+                      const line = pts.map((v, i) => `${i === 0 ? "M" : "L"}${x(i)},${y(v)}`).join(" ");
+                      const area = `${line} L${x(11)},72 L${x(0)},72 Z`;
+                      return (
+                        <>
+                          <path d={area} fill="url(#irrGrad)" />
+                          <path
+                            d={line}
+                            stroke="#B8D935"
+                            strokeWidth="1.8"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <circle cx={x(11)} cy={y(s.irrHigh)} r="3.5" fill="#B8D935" />
+                        </>
+                      );
+                    })()}
+                  </svg>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: 10 }}>
-                  {["Feb 5", "Feb 15", "Feb 25", "Mar 1"].map((d) => (
-                    <span key={d} style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>
-                      {d}
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
+                  {["Apr", "Jun", "Aug", "Oct", "Dec", "Mar"].map((m) => (
+                    <span key={m} style={{ fontSize: 9, color: M.dim, fontFamily: "Inter,sans-serif" }}>
+                      {m}
                     </span>
                   ))}
                 </div>
-              </div>
-            </MCard>
-
-            <MCard icon={LayoutGrid} title="Activity Heatmap" badge="7 Days" defaultOpen={true}>
-              <Heatmap />
-            </MCard>
-
-            <MCard icon={BarChart2} title="Signal Source Breakdown" badge="+180%" defaultOpen={false}>
-              <div style={{ padding: "12px 14px" }}>
-                <div style={{ height: 32, borderRadius: 8, overflow: "hidden", display: "flex", marginBottom: 14 }}>
-                  <div
-                    style={{
-                      flex: 25,
-                      background: M.tealBright,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>25%</span>
-                  </div>
-                  <div
-                    style={{
-                      flex: 25,
-                      background: "rgba(61,122,102,0.55)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>25%</span>
-                  </div>
-                  <div
-                    style={{
-                      flex: 50,
-                      background: "rgba(46,90,77,0.35)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>50%</span>
-                  </div>
-                </div>
+                {/* Tier breakdown bars */}
                 {[
-                  { l: "Earnings & Policy", pct: 25, col: M.tealBright },
-                  { l: "News & Media", pct: 25, col: "rgba(61,122,102,0.85)" },
-                  { l: "Analyst Ratings", pct: 50, col: "rgba(46,90,77,0.7)" },
-                ].map((src, i) => (
-                  <div key={i} style={{ marginBottom: 12 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                        <div style={{ width: 7, height: 7, borderRadius: "50%", background: src.col, flexShrink: 0 }} />
-                        <span style={{ fontSize: 12, fontWeight: 600, color: M.white }}>{src.l}</span>
-                      </div>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: M.accent, fontFamily: "Inter,sans-serif" }}>
-                        {src.pct}%
+                  { l: "Tier I Average", v: s.irrHigh, max: 30, col: M.accent },
+                  { l: "Tier II Average", v: Math.round(s.irrHigh * 0.78), max: 30, col: M.tealBright },
+                  { l: "Tier III Average", v: Math.round(s.irrHigh * 0.62), max: 30, col: "rgba(46,90,77,0.6)" },
+                ].map((row, i) => (
+                  <div key={i} style={{ marginBottom: 9 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                      <span style={{ fontSize: 10, color: M.muted, fontFamily: "Inter,sans-serif" }}>{row.l}</span>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: M.white, fontFamily: "Inter,sans-serif" }}>
+                        {row.v}%
                       </span>
                     </div>
                     <div
-                      style={{ height: 3, background: "rgba(255,255,255,0.05)", borderRadius: 2, overflow: "hidden" }}
+                      style={{ height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}
                     >
-                      <div style={{ width: `${src.pct}%`, height: "100%", background: src.col, borderRadius: 2 }} />
+                      <div
+                        style={{
+                          width: `${(row.v / row.max) * 100}%`,
+                          height: "100%",
+                          background: row.col,
+                          borderRadius: 2,
+                        }}
+                      />
                     </div>
                   </div>
                 ))}
               </div>
             </MCard>
+
+            {/* ── CAPITAL DEPLOYMENT ── */}
+            <MCard icon={BarChart2} title="Capital Deployment" badge="Pipeline" defaultOpen={true}>
+              <div style={{ padding: "10px 14px" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 14 }}>
+                  <span style={{ fontSize: 24, fontWeight: 800, color: M.white, letterSpacing: "-0.5px" }}>
+                    ${Math.round(((s.capLow + s.capHigh) / 2) * 0.52)}M
+                  </span>
+                  <span style={{ fontSize: 11, color: M.muted, fontFamily: "Inter,sans-serif" }}>
+                    of ${Math.round((s.capLow + s.capHigh) / 2)}M target
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: M.green,
+                      fontFamily: "Inter,sans-serif",
+                      marginLeft: "auto",
+                    }}
+                  >
+                    52% filled
+                  </span>
+                </div>
+                {/* Stacked progress */}
+                <div
+                  style={{ height: 10, borderRadius: 5, overflow: "hidden", display: "flex", marginBottom: 14, gap: 1 }}
+                >
+                  <div style={{ flex: 32, background: M.accent }} />
+                  <div style={{ flex: 20, background: M.tealBright }} />
+                  <div style={{ flex: 0, background: "rgba(46,90,77,0.4)" }} />
+                  <div style={{ flex: 48, background: "rgba(255,255,255,0.06)" }} />
+                </div>
+                {s.pipeline.map((p, i) => (
+                  <div key={i} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                      <span
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 600,
+                          color: M.white,
+                          flex: 1,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {p.label}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: i < 2 ? M.accent : M.tealBright,
+                          fontFamily: "Inter,sans-serif",
+                          flexShrink: 0,
+                          marginLeft: 8,
+                        }}
+                      >
+                        {p.current} / {p.target}
+                      </span>
+                    </div>
+                    <div
+                      style={{ height: 5, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}
+                    >
+                      <div
+                        style={{
+                          width: `${p.pct}%`,
+                          height: "100%",
+                          background: i < 2 ? M.accent : M.tealBright,
+                          borderRadius: 3,
+                        }}
+                      />
+                    </div>
+                    <div style={{ fontSize: 9, color: M.dim, marginTop: 2, fontFamily: "Inter,sans-serif" }}>
+                      {p.months}mo remaining · {p.pct}% funded
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MCard>
+
+            {/* ── SECTOR SCORE VS AVERAGE ── */}
+            <MCard icon={BarChart3} title="Sector Benchmarking" badge="All 12" defaultOpen={false}>
+              <div style={{ padding: "10px 14px" }}>
+                <div style={{ fontSize: 10, color: M.muted, fontFamily: "Inter,sans-serif", marginBottom: 12 }}>
+                  BRIDGE Score vs. portfolio average (81)
+                </div>
+                {SECTORS.slice(0, 6).map((sec, i) => {
+                  const act = sec.id === s.id;
+                  return (
+                    <div key={i} style={{ marginBottom: 8 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                        <span
+                          style={{
+                            fontSize: 10,
+                            fontWeight: act ? 700 : 400,
+                            color: act ? M.accent : M.muted,
+                            fontFamily: "Inter,sans-serif",
+                          }}
+                        >
+                          {sec.short}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: 10,
+                            fontWeight: 700,
+                            color: act ? M.accent : M.white,
+                            fontFamily: "Inter,sans-serif",
+                          }}
+                        >
+                          {sec.score}
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          height: 4,
+                          background: "rgba(255,255,255,0.06)",
+                          borderRadius: 2,
+                          overflow: "hidden",
+                          position: "relative",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: `${sec.score}%`,
+                            height: "100%",
+                            background: act ? M.accent : "rgba(46,90,77,0.55)",
+                            borderRadius: 2,
+                          }}
+                        />
+                        {/* avg line */}
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: "81%",
+                            width: 1,
+                            height: "100%",
+                            background: "rgba(255,255,255,0.25)",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </MCard>
+
+            {/* ── ACTIVITY HEATMAP ── */}
+            <MCard icon={LayoutGrid} title="Activity Heatmap" badge="7 Days" defaultOpen={false}>
+              <Heatmap />
+            </MCard>
+
             <div style={{ height: 16 }} />
           </>
         )}
@@ -4378,165 +3920,7 @@ function MobileDashboard({ s, setS }) {
       )}
 
       {/* ═══ DASHBOARD SUB-MENU POPUP ═══ */}
-      {dashMenu && (
-        <>
-          <div onClick={() => setDashMenu(false)} style={{ position: "fixed", inset: 0, zIndex: 98 }} />
-          <div
-            style={{
-              position: "fixed",
-              bottom: 72,
-              left: 16,
-              width: 220,
-              background: "#0F1A12",
-              borderRadius: 16,
-              border: "1px solid rgba(255,255,255,0.08)",
-              boxShadow: "0 -8px 32px rgba(0,0,0,0.5)",
-              zIndex: 99,
-              padding: 6,
-              animation: "slideUp .2s ease",
-            }}
-          >
-            {/* caret */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: -6,
-                left: 52,
-                width: 12,
-                height: 12,
-                background: "#0F1A12",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderTop: "none",
-                borderLeft: "none",
-                transform: "rotate(45deg)",
-                zIndex: 100,
-              }}
-            />
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {DASH_SUBS.map((item) => {
-                const act = dashSub === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      setDashSub(item.id);
-                      setDashMenu(false);
-                    }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "8px 16px",
-                      borderRadius: 10,
-                      background: act ? "rgba(184,217,53,0.12)" : "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      width: "100%",
-                      textAlign: "left",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: 12,
-                        fontWeight: act ? 700 : 500,
-                        color: act ? "#B8D935" : "rgba(255,255,255,0.5)",
-                        fontFamily: "Inter,sans-serif",
-                      }}
-                    >
-                      {item.label}
-                    </span>
-                    {act && (
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* ═══ ANALYTICS SUB-MENU POPUP ═══ */}
-      {analyticsMenu && (
-        <>
-          <div onClick={() => setAnalyticsMenu(false)} style={{ position: "fixed", inset: 0, zIndex: 98 }} />
-          <div
-            style={{
-              position: "fixed",
-              bottom: 72,
-              left: "50%",
-              transform: "translateX(-50%)",
-              minWidth: 160,
-              background: "#0F1A12",
-              borderRadius: 16,
-              border: "1px solid rgba(255,255,255,0.08)",
-              boxShadow: "0 -8px 32px rgba(0,0,0,0.5)",
-              zIndex: 99,
-              padding: 6,
-              animation: "slideUp .2s ease",
-            }}
-          >
-            {/* caret arrow pointing down toward Analytics icon */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: -6,
-                left: "50%",
-                transform: "translateX(-50%) rotate(45deg)",
-                width: 12,
-                height: 12,
-                background: "#0F1A12",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderTop: "none",
-                borderLeft: "none",
-                zIndex: 100,
-              }}
-            />
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {ANALYTICS_SUBS.map((item) => {
-                const act = analyticsSub === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      setAnalyticsSub(item.id);
-                      setAnalyticsMenu(false);
-                    }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "8px 16px",
-                      borderRadius: 10,
-                      background: act ? "rgba(184,217,53,0.12)" : "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      width: "100%",
-                      textAlign: "left",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: 12,
-                        fontWeight: act ? 700 : 500,
-                        color: act ? "#B8D935" : "rgba(255,255,255,0.5)",
-                        fontFamily: "Inter,sans-serif",
-                      }}
-                    >
-                      {item.label}
-                    </span>
-                    {act && (
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* ═══ BOTTOM NAV ═══ */}
+      {/* ═══ BOTTOM NAV — 5 sections ═══ */}
       <div
         style={{
           flexShrink: 0,
@@ -4551,8 +3935,8 @@ function MobileDashboard({ s, setS }) {
       >
         {[
           {
-            id: "dashboard",
-            label: "Dashboard",
+            id: "overview",
+            label: "Overview",
             svg: (c) => (
               <svg
                 width="20"
@@ -4572,8 +3956,8 @@ function MobileDashboard({ s, setS }) {
             ),
           },
           {
-            id: "overview",
-            label: "Overview",
+            id: "ventures",
+            label: "Ventures",
             svg: (c) => (
               <svg
                 width="20"
@@ -4585,8 +3969,51 @@ function MobileDashboard({ s, setS }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 8v4l3 3" />
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 17 12 22 22 17" />
+                <polyline points="2 12 12 17 22 12" />
+              </svg>
+            ),
+          },
+          {
+            id: "signals",
+            label: "Signals",
+            svg: (c) => (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={c}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+                <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+                <circle cx="12" cy="20" r="1" fill={c} />
+              </svg>
+            ),
+          },
+          {
+            id: "companies",
+            label: "Companies",
+            svg: (c) => (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={c}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="7" width="20" height="14" rx="2" />
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                <line x1="12" y1="12" x2="12" y2="16" />
+                <line x1="10" y1="14" x2="14" y2="14" />
               </svg>
             ),
           },
@@ -4604,82 +4031,19 @@ function MobileDashboard({ s, setS }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-              </svg>
-            ),
-          },
-          {
-            id: "watch",
-            label: "Watch",
-            svg: (c) => (
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={c}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            ),
-          },
-          {
-            id: "resources",
-            label: "Resources",
-            svg: (c) => (
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={c}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+                <line x1="18" y1="20" x2="18" y2="10" />
+                <line x1="12" y1="20" x2="12" y2="4" />
+                <line x1="6" y1="20" x2="6" y2="14" />
               </svg>
             ),
           },
         ].map((n) => {
-          const act = navTab === n.id;
+          const act = dashSub === n.id;
           const col = act ? M.accent : "rgba(255,255,255,0.28)";
-          /* dynamic label: analytics tab shows active sub-section name */
-          const displayLabel =
-            n.id === "analytics" && act
-              ? ANALYTICS_SUBS.find((x) => x.id === analyticsSub)?.label || "Analytics"
-              : n.label;
           return (
             <button
               key={n.id}
-              onClick={() => {
-                if (n.id === "dashboard") {
-                  setAnalyticsMenu(false);
-                  if (navTab === "dashboard") {
-                    setDashMenu((o) => !o);
-                  } else {
-                    setNavTab("dashboard");
-                    setDashMenu(true);
-                  }
-                } else if (n.id === "analytics") {
-                  setDashMenu(false);
-                  if (navTab === "analytics") {
-                    setAnalyticsMenu((o) => !o);
-                  } else {
-                    setNavTab("analytics");
-                    setAnalyticsMenu(true);
-                  }
-                } else {
-                  setNavTab(n.id);
-                  setDashMenu(false);
-                  setAnalyticsMenu(false);
-                }
-              }}
+              onClick={() => setDashSub(n.id)}
               style={{
                 flex: 1,
                 display: "flex",
@@ -4719,7 +4083,7 @@ function MobileDashboard({ s, setS }) {
                   transition: "all .15s",
                 }}
               >
-                {displayLabel}
+                {n.label}
               </span>
             </button>
           );
@@ -5066,12 +4430,10 @@ function DesktopDashboard() {
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7 }}>
                       <div style={{ display: "flex", gap: 2, background: "#F3F4F6", borderRadius: 7, padding: 3 }}>
-                        {(
-                          [
-                            ["Bar", "bar", BarChart3],
-                            ["Line", "line", LineChart],
-                          ] as [string, string, React.ElementType][]
-                        ).map(([l, v, Icon]) => (
+                        {[
+                          ["Bar", "bar", BarChart3],
+                          ["Line", "line", LineChart],
+                        ].map(([l, v, Icon]) => (
                           <button
                             key={v}
                             onClick={() => setChart(v)}
@@ -5442,13 +4804,11 @@ function DesktopDashboard() {
                     Tier Distribution
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 6 }}>
-                    {(
-                      [
-                        [s.t1?.length, "I", "#EBF5B0", "#1B4D3E", "Priority"],
-                        [s.t2?.length, "II", "rgba(46,90,77,0.1)", "#2E5A4D", "Mid-term"],
-                        [s.t3?.length, "III", "rgba(107,114,128,0.08)", "#6B7280", "Long-term"],
-                      ] as [any, string, string, string, string][]
-                    ).map(([n, label, bg, col, sub]) => (
+                    {[
+                      [s.t1?.length, "I", "#EBF5B0", "#1B4D3E", "Priority"],
+                      [s.t2?.length, "II", "rgba(46,90,77,0.1)", "#2E5A4D", "Mid-term"],
+                      [s.t3?.length, "III", "rgba(107,114,128,0.08)", "#6B7280", "Long-term"],
+                    ].map(([n, label, bg, col, sub]) => (
                       <div
                         key={label}
                         style={{ background: bg, borderRadius: 8, padding: "8px 10px", textAlign: "center" }}
@@ -5591,13 +4951,11 @@ function DesktopDashboard() {
                   </button>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                  {(
-                    [
-                      [s.t1?.length, "I", "#EBF5B0", "#1B4D3E"],
-                      [s.t2?.length, "II", "rgba(46,90,77,0.12)", "#2E5A4D"],
-                      [s.t3?.length, "III", "rgba(107,114,128,0.1)", "#6B7280"],
-                    ] as [any, string, string, string][]
-                  ).map(([n, label, bg, col]) => (
+                  {[
+                    [s.t1?.length, "I", "#EBF5B0", "#1B4D3E"],
+                    [s.t2?.length, "II", "rgba(46,90,77,0.12)", "#2E5A4D"],
+                    [s.t3?.length, "III", "rgba(107,114,128,0.1)", "#6B7280"],
+                  ].map(([n, label, bg, col]) => (
                     <div
                       key={label}
                       style={{ flex: 1, padding: "9px 10px", background: bg, borderRadius: 8, textAlign: "center" }}
@@ -5784,14 +5142,14 @@ function DesktopDashboard() {
                   Quick Actions
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
-                  {([
+                  {[
                     [FileText, "View Report"],
                     [Download, "Export Data"],
                     [BarChart2, "Compare"],
                     [Clock, "History"],
                     [Share2, "Share"],
                     [MoreHorizontal, "More"],
-                  ] as [React.ElementType, string][]).map(([Icon, label]) => (
+                  ].map(([Icon, label]) => (
                     <button
                       key={label}
                       style={{
