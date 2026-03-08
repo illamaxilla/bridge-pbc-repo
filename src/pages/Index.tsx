@@ -3026,6 +3026,7 @@ export default function BRIDGEHomePage() {
                   A development engine — identifying opportunities, connecting resources, and initiating ventures.
                 </p>
                 <button
+                  onClick={() => navigate("/about")}
                   style={{
                     backgroundColor: colors.accent,
                     color: colors.primary,
