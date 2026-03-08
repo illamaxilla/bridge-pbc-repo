@@ -2430,6 +2430,7 @@ function CTASection({ isMobile }) {
             <button
               onMouseEnter={() => setHoveredBtn("partner")}
               onMouseLeave={() => setHoveredBtn(null)}
+              onClick={() => navigate("/services")}
               style={{
                 padding: "16px 36px",
                 borderRadius: "50px",
@@ -2449,6 +2450,7 @@ function CTASection({ isMobile }) {
             <button
               onMouseEnter={() => setHoveredBtn("materials")}
               onMouseLeave={() => setHoveredBtn(null)}
+              onClick={() => navigate("/resources")}
               style={{
                 padding: "16px 36px",
                 borderRadius: "50px",
