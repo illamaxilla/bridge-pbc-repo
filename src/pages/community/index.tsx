@@ -1070,7 +1070,11 @@ function CommunityDashboard({ memberType, onLogout }) {
               return (
                 <button
                   key={item}
-                  onClick={() => setCurrentPage(key)}
+                  onClick={() => {
+                    const routeMap: Record<string, string> = { home: "/community", forum: "/community/forum", members: "/community/members", resources: "/community/resources" };
+                    setCurrentPage(key);
+                    navigate(routeMap[key]);
+                  }}
                   style={{
                     padding: "6px 14px",
                     borderRadius: 8,
