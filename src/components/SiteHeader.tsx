@@ -156,9 +156,18 @@ export default function SiteHeader() {
                   letterSpacing: "0.3px",
                   transition: "color 0.2s ease",
                   position: "relative" as const,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
                 }}
               >
                 {item.label}
+                {BADGE_ITEMS.has(item.to) && (
+                  <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
+                    <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
+                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
+                  </span>
+                )}
               </a>
             ))}
           </nav>
