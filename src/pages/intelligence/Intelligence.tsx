@@ -157,6 +157,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
 
         {/* CTA */}
         <button
+          onClick={handleRequestAccess}
           style={{
             width: "100%", background: C.accent, border: "none", borderRadius: 8,
             padding: "13px 0", fontSize: 13, fontWeight: 700, color: C.primary,
