@@ -2293,6 +2293,7 @@ function BridgeToImpactSection({ isMobile }) {
 // ============================================================================
 function CTASection({ isMobile }) {
   const [hoveredBtn, setHoveredBtn] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <section
