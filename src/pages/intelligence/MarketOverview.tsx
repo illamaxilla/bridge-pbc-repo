@@ -836,7 +836,7 @@ function Pill({ children, active, onClick, col = "#1B4D3E" }: { children: any; a
     </button>
   );
 }
-const ChartTip = ({ active, payload, label }) => {
+const ChartTip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
   if (!active || !payload?.length) return null;
   return (
     <div
