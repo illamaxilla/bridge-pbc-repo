@@ -2417,18 +2417,22 @@ const GuidedWidget = () => {
   const isMobile = useIsMobile();
   // Steps: 0=who, 1=sectors, 2=goal, 3=details, 4=emailPreview, 5=success
   const TOTAL_STEPS = 5;
-  const [step, setStep] = useState(0);
+
+  // Pre-fill from URL params (e.g. from Intelligence Pro Access CTA)
+  const isProAccess = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("note") === "BRIDGE Intelligence Pro Access Request"
+    : false;
+  const prefillNote = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("note") || ""
+    : "";
+
+  const [step, setStep] = useState(() => isProAccess ? 1 : 0);
   const [dir, setDir] = useState("fwd");
   const [anim, setAnim] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [hovBtn, setHovBtn] = useState(false);
 
-  // Pre-fill from URL params (e.g. from Intelligence Pro Access CTA)
-  const prefillNote = typeof window !== "undefined"
-    ? new URLSearchParams(window.location.search).get("note") || ""
-    : "";
-
-  const [who, setWho] = useState(null);
+  const [who, setWho] = useState<string | null>(isProAccess ? "investor" : null);
   const [whoFreeText, setWhoFreeText] = useState("");
   const [sectors, setSectors] = useState([]);
   const [sectorFreeText, setSectorFreeText] = useState("");
