@@ -3930,12 +3930,12 @@ export default function BRIDGEHomePage() {
             </div>
           )}
 
-          <div style={{ backgroundColor: colors.primary }}>
-            <footer style={{ backgroundColor: colors.primary, padding: "0" }}>
-              {/* Section separator */}
-              <div style={{ padding: isMobile ? "0 20px" : "0 80px" }}>
-                <div style={{ height: "0.5px", backgroundColor: "rgba(255,255,255,0.08)" }} />
-              </div>
+          <SiteFooter />
+        </div>
+      </section>
+    </div>
+  );
+}
 
               {isMobile ? (
                 /* ═══ MOBILE FOOTER ═══ */
