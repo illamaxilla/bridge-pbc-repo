@@ -5106,7 +5106,7 @@ function WatchSignals({ sector }) {
   const sigBG = (s) => (s === "Bullish" ? MB.greenDim : s === "Watch" ? MB.yellowDim : MB.redDim);
   const bullish = sector.activity.filter((a) => a.sig === "Bullish");
   const watches = sector.activity.filter((a) => a.sig === "Watch");
-  const cats = [...new Set(sector.activity.map((a) => a.cat))];
+  const cats: string[] = [...new Set(sector.activity.map((a) => a.cat))];
 
   // Signal strength: ratio of bullish to total
   const strength = Math.round((bullish.length / sector.activity.length) * 100);
