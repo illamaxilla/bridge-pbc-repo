@@ -2014,8 +2014,6 @@ function SubTabs({ tabs, active, onChange }) {
 function MobileDashboard({ s, setS }) {
   const [dashSub, setDashSub] = useState("overview");
   const [notif, setNotif] = useState(false);
-  const [sectorDrawer, setSectorDrawer] = useState(false);
-  const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
   const Icon = s.icon;
   const companies = COMPANIES[s.id] || COMPANIES.financial;
   const DASH_SUBS = [
@@ -2041,10 +2039,9 @@ function MobileDashboard({ s, setS }) {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        height: "100%",
         background: M.bg,
         fontFamily: "'DM Sans',sans-serif",
-        overflow: "hidden",
       }}
     >
       <style>{`
@@ -2052,83 +2049,6 @@ function MobileDashboard({ s, setS }) {
       .mscroll::-webkit-scrollbar{display:none}
       .mscroll{-ms-overflow-style:none;scrollbar-width:none}
     `}</style>
-
-      {/* ═══ TOP BAR ═══ */}
-      <div
-        style={{
-          flexShrink: 0,
-          height: 52,
-          background: "rgba(15,26,18,0.94)",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-          backdropFilter: "blur(16px)",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 14px",
-          position: "relative",
-          zIndex: 50,
-        }}
-      >
-        {/* Sector selector pill — full width */}
-        <div
-          onClick={() => setSectorDrawer(true)}
-          style={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            cursor: "pointer",
-            minWidth: 0,
-            background: "rgba(255,255,255,0.06)",
-            borderRadius: 10,
-            padding: "7px 12px 7px 10px",
-          }}
-        >
-          <div
-            style={{
-              width: 26,
-              height: 26,
-              borderRadius: 6,
-              background: "rgba(255,255,255,0.08)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <Icon size={13} color={M.accent} strokeWidth={1.8} />
-          </div>
-          <span
-            style={{
-              flex: 1,
-              fontSize: 13,
-              fontWeight: 600,
-              color: M.white,
-              fontFamily: "DM Sans,sans-serif",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {s.short}
-          </span>
-          <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: M.accent, fontFamily: "Inter,sans-serif" }}>
-              {s.score}
-            </span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={M.accent}
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            >
-              <path d="M6 9l6 6 6-6" />
-            </svg>
-          </div>
-        </div>
-      </div>
 
       {/* ═══ SECTOR HEADER CARD ═══ */}
       <div style={{ padding: "8px 16px 0" }}>
@@ -3758,170 +3678,7 @@ function MobileDashboard({ s, setS }) {
         )}
       </div>
 
-      {/* ═══ SECTOR DRAWER ═══ */}
-      {sectorDrawer && (
-        <>
-          <div
-            onClick={() => setSectorDrawer(false)}
-            style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.65)" }}
-          />
-          <div
-            className="mscroll"
-            style={{
-              position: "fixed",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              background: "#0F1A12",
-              borderRadius: "20px 20px 0 0",
-              maxHeight: "82vh",
-              display: "flex",
-              flexDirection: "column",
-              zIndex: 201,
-              paddingBottom: 16,
-              border: "1px solid rgba(184,217,53,0.15)",
-              borderBottom: "none",
-              animation: "slideUp .25s ease",
-            }}
-          >
-            {/* Drag handle */}
-            <div
-              style={{
-                width: 36,
-                height: 4,
-                borderRadius: 2,
-                background: "rgba(255,255,255,0.15)",
-                margin: "12px auto 0",
-                flexShrink: 0,
-              }}
-            />
-            {/* Header */}
-            <div
-              style={{
-                padding: "12px 20px 8px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexShrink: 0,
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: "#6B7280",
-                  fontFamily: "Inter,sans-serif",
-                  letterSpacing: "0.8px",
-                  textTransform: "uppercase",
-                }}
-              >
-                Select Sector
-              </span>
-              <button
-                onClick={() => setSectorDrawer(false)}
-                style={{
-                  background: "rgba(255,255,255,0.08)",
-                  border: "none",
-                  borderRadius: 7,
-                  padding: "4px 10px",
-                  fontSize: 11,
-                  color: "rgba(255,255,255,0.4)",
-                  cursor: "pointer",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
-                Done
-              </button>
-            </div>
-            {/* List */}
-            <div className="mscroll" style={{ overflowY: "auto", flex: 1 }}>
-              {[...SECTORS]
-                .sort((a, b) => b.score - a.score)
-                .map((sec, i) => {
-                  const SI = sec.icon,
-                    act = sec.id === s.id;
-                  return (
-                    <div
-                      key={sec.id}
-                      onClick={() => {
-                        setS(sec);
-                        setSectorDrawer(false);
-                      }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 12,
-                        padding: "13px 20px",
-                        borderTop: i > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                        background: act ? "rgba(184,217,53,0.07)" : "transparent",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: 38,
-                          height: 38,
-                          borderRadius: 11,
-                          flexShrink: 0,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
-                        }}
-                      >
-                        <SI size={16} color={act ? M.accent : "rgba(255,255,255,0.35)"} />
-                      </div>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div
-                          style={{
-                            fontSize: 13,
-                            fontWeight: act ? 700 : 500,
-                            color: act ? M.white : "rgba(255,255,255,0.7)",
-                            fontFamily: "DM Sans,sans-serif",
-                          }}
-                        >
-                          {sec.short}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: 10,
-                            color: "rgba(255,255,255,0.3)",
-                            fontFamily: "Inter,sans-serif",
-                            marginTop: 1,
-                          }}
-                        >
-                          {sec.t1?.length || 5} ventures · ${sec.capLow}–{sec.capHigh}M
-                        </div>
-                      </div>
-                      <div style={{ textAlign: "right", flexShrink: 0 }}>
-                        <div
-                          style={{
-                            fontSize: 16,
-                            fontWeight: 800,
-                            fontFamily: "Inter,sans-serif",
-                            color: act ? M.accent : "rgba(255,255,255,0.28)",
-                          }}
-                        >
-                          {sec.score}
-                        </div>
-                        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", fontFamily: "Inter,sans-serif" }}>
-                          score
-                        </div>
-                      </div>
-                      {act && (
-                        <div
-                          style={{ width: 8, height: 8, borderRadius: "50%", background: M.accent, flexShrink: 0 }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* ═══ DASHBOARD SUB-MENU POPUP ═══ */}
+      {/* ═══ BOTTOM NAV — 5 sections ═══ */}
       {/* ═══ BOTTOM NAV — 5 sections ═══ */}
       <div
         style={{
