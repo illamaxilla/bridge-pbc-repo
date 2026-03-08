@@ -46,6 +46,7 @@ import {
   Award,
   Wifi,
   PieChart,
+  MapPin,
 } from "lucide-react";
 import {
   Bar,
@@ -820,7 +821,7 @@ const SECTORS = [
   },
 ];
 // Attach svgIcon to each sector
-SECTORS.forEach((s) => {
+(SECTORS as any[]).forEach((s) => {
   s.svgIcon = SVG_MAP[s.id];
 });
 
@@ -915,7 +916,7 @@ function Card({ children, style: ex = {} }) {
   );
 }
 
-const Tip = ({ active, payload, label }) => {
+const Tip = ({ active, payload, label }: { active?: any; payload?: any; label?: any }) => {
   if (!active || !payload?.length) return null;
   return (
     <div style={{ background: "#111827", color: "#fff", borderRadius: 8, padding: "8px 12px", fontSize: 11 }}>
@@ -1158,12 +1159,12 @@ function Sidebar({ collapsed, setCollapsed, active, setActive }) {
                     background: act ? "rgba(184,217,53,0.2)" : "rgba(255,255,255,0.05)",
                   }}
                 >
-                  {s.svgIcon(act ? C.accent : "rgba(255,255,255,0.35)", 14)}
+                  {(s as any).svgIcon(act ? C.accent : "rgba(255,255,255,0.35)", 14)}
                 </div>
               ) : (
                 <>
                   <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    {s.svgIcon(act ? C.accent : "rgba(255,255,255,0.3)", 12)}
+                    {(s as any).svgIcon(act ? C.accent : "rgba(255,255,255,0.3)", 12)}
                     <span
                       style={{
                         fontSize: 11.5,
@@ -1509,7 +1510,7 @@ function OverviewTab({ item }) {
   const gv = (i, j) => Math.round(15 + Math.sin(i * 1.2 + j * 0.7) * 10 + j * 2);
   const gc = (i, j) => {
     const v = (Math.sin(i * 0.8 + j * 1.1) * 3).toFixed(2);
-    return v > 0 ? `+${v}` : `${v}`;
+    return Number(v) > 0 ? `+${v}` : `${v}`;
   };
   return (
     <div>
@@ -2804,12 +2805,12 @@ const mCard = (extra = {}) => ({
   overflow: "hidden",
   ...extra,
 });
-const mLabel = {
+const mLabel: React.CSSProperties = {
   fontSize: 9,
   fontWeight: 700,
   color: MB.faint,
   letterSpacing: "1.2px",
-  textTransform: "uppercase",
+  textTransform: "uppercase" as const,
   fontFamily: "Inter,sans-serif",
 };
 
@@ -3015,7 +3016,7 @@ function MSectorDrawer({ s, setS, open, onClose }) {
                     background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
                   }}
                 >
-                  {sec.svgIcon(act ? "#B8D935" : "rgba(255,255,255,0.35)", 16)}
+                  {(sec as any).svgIcon(act ? "#B8D935" : "rgba(255,255,255,0.35)", 16)}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div
@@ -5066,7 +5067,7 @@ function SignalsPage({ sector }) {
                 <span
                   style={{ fontSize: 11, color: "rgba(255,255,255,0.65)", flex: 1, fontFamily: "Inter,sans-serif" }}
                 >
-                  {cat}
+                  {cat as string}
                 </span>
                 <span
                   style={{
@@ -5222,7 +5223,7 @@ function PortfolioPage({ sector }) {
     { sector: SECTORS[4], pct: 10, deployed: 3.8, target: 10, status: "On Track" },
     { sector: SECTORS[5], pct: 8, deployed: 2.1, target: 8, status: "On Track" },
   ];
-  const totalDeployed = allocations.reduce((s, a) => s + a.deployed, 0).toFixed(1);
+  const totalDeployed = allocations.reduce((s, a) => s + a.deployed, 0);
   const totalTarget = allocations.reduce((s, a) => s + a.target, 0);
   const overallPct = Math.round((totalDeployed / totalTarget) * 100);
 
@@ -5478,7 +5479,7 @@ function PortfolioPage({ sector }) {
                 flexShrink: 0,
               }}
             >
-              {a.sector.svgIcon(MB.accent, 14)}
+              {(a.sector as any).svgIcon(MB.accent, 14)}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div

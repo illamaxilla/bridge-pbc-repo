@@ -1,66 +1,85 @@
 
-## Summary of All Build Errors
+## Audit Summary: What's Working vs. What Needs Fixing
 
-These are TypeScript strict-typing errors across two files. No logic changes needed — only type annotations/signatures need to be relaxed. Here's the full breakdown:
+### ✅ Working correctly
+- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
+- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
+- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
+- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
 
----
+### ❌ Issues to fix
 
-### `src/pages/intelligence/Dashboard.tsx`
+**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
+- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
+- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
 
-**Error 1 — Line 2467: `MCard` missing `badge` prop**
-`MCard` is defined at line 1823 with signature: `{ icon, title, badge, badgeLime, defaultOpen, children }` — `badge` is treated as required by TypeScript since there's no `?`. But it's used without `badge` at line 2467. Fix: add `?` to `badge` in the MCard prop destructure.
+**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
+- Line 6934 has `href="#"` instead of the object-lookup pattern
+- Fix: same object-lookup pattern as other pages
 
-**Error 2 — Line 4252: `Bell` not found**
-`Bell` is used but not imported (Dashboard.tsx imports list at lines 2–48 does not include `Bell`). Fix: add `Bell` to the lucide-react import block.
+**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
+- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
+- Fix: apply the object-lookup href pattern
 
-**Error 3 — Lines 4438–4439 and 5154, 5180: `Icon` component used as `key` and as `ReactNode`**
-The `[l, v, Icon]` destructuring arrays at line 4433 creates `string | ComponentType` union types. Using `v` as `key` and `Icon` as a rendered element causes TS errors. Fix: type the array explicitly or cast `key={v as string}` and `<Icon />` properly.
+**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
+- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
+- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
+- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
 
-**Error 4 — Lines 4487, 4502: `<Tip />` has missing required props**
-`Tip` at line 1504 is defined as `({ active, payload, label })` with required props. Recharts injects these at runtime but TS doesn't know that. Fix: make all three props optional: `{ active?, payload?, label? }`.
+**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
+- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
+- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
 
-**Error 5 — Lines 4820, 4831, 4841, 4967, 4978: `color: col` where `col` is `string | number`**
-In array destructuring like `[n, label, bg, col, sub]`, TypeScript infers mixed types. The `color` style property requires `string`. Fix: cast `col as string` at usage sites, or type the array items explicitly.
+**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
+- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
+- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
+- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
 
----
+**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
+- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
+- Minor cleanup
 
-### `src/pages/intelligence/MarketOverview.tsx`
+### Implementation Plan
 
-**Error 6 — Lines 1464, 1863, 1911: `<ChartTip />` missing required props**
-`ChartTip` at line 846 has required `{ active, payload, label }`. Fix: make all optional: `{ active?, payload?, label? }`.
+**Files to fix: 4 real fixes + 1 cleanup**
 
-**Error 7 — Line 2082: `<Pill>` missing `col` prop**
-`Pill` is called without a `col` prop but the component has `col` as an implied required. Fix: add `col?` as optional in destructure.
+1. **`Tourism.tsx`** (2 fixes):
+   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
+   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
 
-**Error 8 — Line 3683: `MSection` missing `badgeStyle` and `iconColor`**  
-`MSection` at line 2583 has `iconColor` and `badgeStyle` in its signature — these are required. Multiple `MSection` usages omit them. Fix: add default values (`iconColor = M.accent`, `badgeStyle = {}`) already done on MCardHeader but not propagated — ensure `MSection` defaults cover the cases.
+2. **`Infrastructure.tsx`** (1 fix):
+   - Line 6952: `href="#"` → object-lookup href
 
-**Error 9 — Line 5617: `MCard` called with `onClick` but `MCard` at line 2507 only accepts `{ children, style }`**
-Fix: add optional `onClick?: () => void` to `MCard`'s prop destructure.
+3. **`Education.tsx`** (1 fix):
+   - Line 6947: `href="#"` → object-lookup href
 
-**Error 10 — Lines across MarketOverview: Various `MSection` usages missing `badge`, `badgeStyle`, `iconColor`**
-All these props should be optional with defaults (which they almost are in MSection/MCardHeader, but TypeScript is enforcing strict checking because the component isn't explicitly typed). Fix: add explicit optional TypeScript types to `MSection`, `MCard`, `MCardHeader`.
+4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
+   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
+   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
 
----
+5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
+   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
+   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
 
-## Fix Plan
+6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
 
-**Files to edit: `Dashboard.tsx` and `MarketOverview.tsx`**
-
-### Dashboard.tsx — 5 targeted fixes:
-
-1. **Add `Bell` to imports** (line 2–48): add `Bell,` to the lucide-react import block
-2. **Make `Tip` props optional** (line 1504): `({ active?, payload?, label? })`
-3. **Make `MCard`'s `badge` optional** (line 1823): already has `badge` in destructure, just add `?` via default or JSDoc
-4. **Fix array destructuring type for chart toggle** (lines 4433–4456): add `as const` assertion or cast `key={v as string}` and `Icon as React.ComponentType`
-5. **Fix `color: col` where col is `string|number`** (lines 4807–4841, 4948–4978): cast `String(col)` or `col as string` in the style props
-6. **Fix `Tip` used in `<Tooltip content={<Tip />} />`** (lines 4487, 4502): already covered by making props optional
-
-### MarketOverview.tsx — 4 targeted fixes:
-
-1. **Make `ChartTip` props optional** (line 846): `({ active?, payload?, label? })`
-2. **Add `onClick?` to `MCard`** (line 2507): `function MCard({ children, style = {}, onClick? })`
-3. **Make `Pill`'s `col` optional** (line 824): `col?` in destructure — already has it implicitly but TS needs `?`
-4. **All `MSection`/`MCardHeader` props made truly optional** (lines 2517, 2583): add `?` and defaults to `badge`, `badgeStyle`, `iconColor`, `defaultOpen`
-
-These are pure TypeScript annotation fixes — no visual or behavioral changes.
+### Files to edit
+| File | Change |
+|---|---|
+| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
+| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
+| `Education.tsx` | Fix mobile labels `href="#"` |
+| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
+| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |

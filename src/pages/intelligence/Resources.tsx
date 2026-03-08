@@ -4652,10 +4652,12 @@ function DesktopResourcesPage() {
                     overflow: "hidden",
                   }}
                 >
-                  {[
-                    ["table", List],
-                    ["grid", LayoutGrid],
-                  ].map(([v, Ic]) => (
+                  {(
+                    [
+                      ["table", List],
+                      ["grid", LayoutGrid],
+                    ] as [string, React.ComponentType<{ size?: number; color?: string }>][]
+                  ).map(([v, ViewIcon]) => (
                     <button
                       key={v}
                       onClick={() => setViewMode(v)}
@@ -4669,7 +4671,7 @@ function DesktopResourcesPage() {
                         transition: "background 0.15s",
                       }}
                     >
-                      <Ic size={13} color={viewMode === v ? C.white : C.muted} />
+                      <ViewIcon size={13} color={viewMode === v ? C.white : C.muted} />
                     </button>
                   ))}
                 </div>

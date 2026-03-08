@@ -28,7 +28,7 @@ import {
   Book,
   LogOut,
   ClipboardList,
-  PieChart,
+  PieChart as PieLucide,
   DollarSign,
   Lightbulb,
   ShieldAlert,
@@ -825,7 +825,7 @@ function Card({ children, style: ex = {} }) {
     </div>
   );
 }
-const ChartTip = ({ active, payload, label }) => {
+const ChartTip = ({ active, payload, label }: { active?: any; payload?: any; label?: any }) => {
   if (!active || !payload?.length) return null;
   return (
     <div
@@ -1909,7 +1909,7 @@ function ActivityTable({
   const sortBy = (col) => setTableSort((p) => ({ col, dir: p.col === col && p.dir === "desc" ? "asc" : "desc" }));
   const toggleRow = (id) => setSelectedRows((p) => (p.includes(id) ? p.filter((r) => r !== id) : [...p, id]));
   const toggleAll = () => setSelectedRows((p) => (p.length === pageRows.length ? [] : pageRows.map((r) => r.id)));
-  const cols = [
+  const cols: [string, string, boolean][] = [
     ["sector", "Sector", true],
     ["date", "Date", true],
     ["status", "Status", false],
@@ -2122,8 +2122,9 @@ function ActivityTable({
           </thead>
           <tbody>
             {pageRows.map((row) => {
-              const sec = SECTORS.find((x) => x.id === row.sectorId);
-              const Icon = sec?.icon || FileText;
+              const secData = SECTORS.find((x) => x.id === row.sectorId) as any;
+              const Icon = secData?.svgIcon ? null : (secData?.icon || FileText);
+              const SvgIcon = secData?.svgIcon;
               const sel = selectedRows.includes(row.id);
               const isPrimary = row.sectorId === s.id;
               return (
@@ -2930,7 +2931,7 @@ export default function BridgeReportsPage() {
 ═══════════════════════════════════════════════ */
 function MobileDashboard({ s, setS }) {
   const [activeTab, setActiveTab] = useState("overview");
-  const [openSections, setOpenSections] = useState({ signals: true, score: true });
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({ signals: true, score: true });
   const [sectorDrawer, setSectorDrawer] = useState(false);
   const rank = [...SECTORS].sort((a, b) => b.score - a.score).findIndex((x) => x.id === s.id) + 1;
   const bullish = s.activity.filter((a) => a.sig === "Bullish").length;
@@ -3474,7 +3475,7 @@ function MobileDashboard({ s, setS }) {
             <DSectionHead
               id="subsectors"
               label="Sub-sector Breakdown"
-              icon={<PieChart size={13} color={D.lime} />}
+              icon={<PieLucide size={13} color={D.lime} />}
               count={s.subSectors?.length}
             />
             {openD.subsectors && (
@@ -4804,7 +4805,7 @@ function MobileDashboard({ s, setS }) {
       >
         {[
           { id: "overview", label: "Overview", icon: (c) => <FileText size={19} color={c} /> },
-          { id: "performance", label: "Performance", icon: (c) => <PieChart size={19} color={c} /> },
+          { id: "performance", label: "Performance", icon: (c) => <PieLucide size={19} color={c} /> },
           { id: "activity", label: "Activity", icon: (c) => <ClipboardList size={19} color={c} /> },
           { id: "capital", label: "Capital", icon: (c) => <DollarSign size={19} color={c} /> },
           { id: "rankings", label: "Insights", icon: (c) => <Lightbulb size={19} color={c} /> },
@@ -4865,7 +4866,7 @@ function MobileDashboard({ s, setS }) {
 /* ═══════════════════════════════════════════════
    MOBILE RESOURCES PAGE — mobile adaptation of desktop Reports
 ═══════════════════════════════════════════════ */
-function MobileResourcesPage({ s, view = "sector-performance" }) {
+function MobileResourcesPage({ s, setS, view = "sector-performance" }: { s: any; setS?: any; view?: string }) {
   const D = {
     bg: "#090F0B",
     card: "#0F1A12",
@@ -4946,7 +4947,7 @@ function MobileResourcesPage({ s, view = "sector-performance" }) {
   const capitalTotal = monthlyData.reduce((a, d) => a + d.growth, 0);
 
   /* ── Dark section header ── */
-  const DHead = ({ id, label, badge, children }) => {
+  const DHead = ({ id, label, badge = undefined, children }: { id: any; label: any; badge?: any; children?: any }) => {
     const isOpen = open[id] ?? true;
     return (
       <button
