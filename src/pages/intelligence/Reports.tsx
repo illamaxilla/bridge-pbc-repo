@@ -1901,7 +1901,7 @@ function ActivityTable({
   const sortBy = (col) => setTableSort((p) => ({ col, dir: p.col === col && p.dir === "desc" ? "asc" : "desc" }));
   const toggleRow = (id) => setSelectedRows((p) => (p.includes(id) ? p.filter((r) => r !== id) : [...p, id]));
   const toggleAll = () => setSelectedRows((p) => (p.length === pageRows.length ? [] : pageRows.map((r) => r.id)));
-  const cols = [
+  const cols: [string, string, boolean][] = [
     ["sector", "Sector", true],
     ["date", "Date", true],
     ["status", "Status", false],
