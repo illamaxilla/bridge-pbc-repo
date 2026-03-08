@@ -5066,7 +5066,7 @@ function SignalsPage({ sector }) {
                 <span
                   style={{ fontSize: 11, color: "rgba(255,255,255,0.65)", flex: 1, fontFamily: "Inter,sans-serif" }}
                 >
-                  {cat}
+                  {cat as string}
                 </span>
                 <span
                   style={{
