@@ -3182,6 +3182,7 @@ export default function BRIDGEHomePage() {
                     ventures. Let's work together to create a lasting impact.
                   </p>
                   <button
+                    onClick={() => navigate("/about")}
                     style={{
                       backgroundColor: colors.primary,
                       color: colors.white,
