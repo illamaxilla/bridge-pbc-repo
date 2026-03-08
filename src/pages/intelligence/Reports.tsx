@@ -817,7 +817,7 @@ function Card({ children, style: ex = {} }) {
     </div>
   );
 }
-const ChartTip = ({ active, payload, label }) => {
+const ChartTip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
   if (!active || !payload?.length) return null;
   return (
     <div

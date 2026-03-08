@@ -5791,7 +5791,7 @@ function DesktopDashboard() {
                     [Clock, "History"],
                     [Share2, "Share"],
                     [MoreHorizontal, "More"],
-                  ].map(([Icon, label]) => (
+                  ] as [React.ElementType, string][]).map(([Icon, label]) => (
                     <button
                       key={label}
                       style={{
