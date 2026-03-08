@@ -2014,8 +2014,6 @@ function SubTabs({ tabs, active, onChange }) {
 function MobileDashboard({ s, setS }) {
   const [dashSub, setDashSub] = useState("overview");
   const [notif, setNotif] = useState(false);
-  const [sectorDrawer, setSectorDrawer] = useState(false);
-  const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
   const Icon = s.icon;
   const companies = COMPANIES[s.id] || COMPANIES.financial;
   const DASH_SUBS = [
