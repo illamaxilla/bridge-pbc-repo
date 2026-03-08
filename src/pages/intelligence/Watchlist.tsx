@@ -2804,12 +2804,12 @@ const mCard = (extra = {}) => ({
   overflow: "hidden",
   ...extra,
 });
-const mLabel = {
+const mLabel: React.CSSProperties = {
   fontSize: 9,
   fontWeight: 700,
   color: MB.faint,
   letterSpacing: "1.2px",
-  textTransform: "uppercase",
+  textTransform: "uppercase" as const,
   fontFamily: "Inter,sans-serif",
 };
 
