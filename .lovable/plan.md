@@ -1,85 +1,142 @@
 
-## Audit Summary: What's Working vs. What Needs Fixing
+## What the user did
 
-### ✅ Working correctly
-- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
-- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
-- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
-- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
+The user pasted their fully-developed Community app into `src/pages/community/index.tsx`. This single file (3,544 lines) now contains everything working:
+- `LoginPage` — the community login screen
+- `CommunityDashboard` — the main shell with top nav tabs (Home, Forum, Members, Resources)
+- `HomePageContent` — the home tab content
+- `ForumPage` — the forum with all 9 sub-views inline (Questions, Most Answered, Polls, Groups, Tags, Sectors, Badges) using `forumView` state
+- `MembersPage` — full member directory with filters
+- `ResourcesPage` — full resources/knowledge hub
 
-### ❌ Issues to fix
+The navigation is **fully state-based** inside the file — `currentPage` state switches between Home/Forum/Members/Resources, and `forumView` state switches forum sub-sections. The URL routing in `App.tsx` already points all `/community/*` paths to this component.
 
-**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
-- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
-- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
+---
 
-**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
-- Line 6934 has `href="#"` instead of the object-lookup pattern
-- Fix: same object-lookup pattern as other pages
+## Issues to fix
 
-**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
-- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
-- Fix: apply the object-lookup href pattern
+### 1. Build error (1 line) — BLOCKER
+Line 1058 has `fontWeight` declared twice in the same style object:
+```
+fontWeight: 500,          ← line 1056 (inactive state)
+color: currentPage === key ? C.primary : C.text,
+fontWeight: currentPage === key ? 700 : 500,  ← line 1058 (duplicate)
+```
+Fix: remove the first `fontWeight: 500` at line 1055, keep the ternary one at line 1058.
 
-**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
-- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
-- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
-- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
+### 2. URL routing vs state navigation — needs a decision
+Currently, `App.tsx` routes like `/community/members`, `/community/forum/polls` all render `<CommunityHome />` but the component ignores the URL — it uses internal state only. This means direct URL navigation won't land on the right tab.
 
-**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
-- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
-- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
+**Best approach given the pasted code**: Add `useLocation` into `CommunityDashboard` to read the URL pathname and derive the initial `currentPage` + `forumView` from it on mount. The internal state still drives everything, but it **initialises from the URL** so deep links work.
 
-**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
-- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
-- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
-- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
+The URL map:
+```
+/community              → currentPage = "home"
+/community/forum        → currentPage = "forum", forumView = "Home"
+/community/forum/questions    → currentPage = "forum", forumView = "Questions"
+/community/forum/most-answered → currentPage = "forum", forumView = "Most Answered"
+/community/forum/polls  → currentPage = "forum", forumView = "Polls"
+/community/forum/groups → currentPage = "forum", forumView = "Groups"
+/community/forum/tags   → currentPage = "forum", forumView = "Tags"
+/community/forum/sectors → currentPage = "forum", forumView = "Sectors"
+/community/forum/badges → currentPage = "forum", forumView = "Badges"
+/community/members      → currentPage = "members"
+/community/resources    → currentPage = "resources"
+```
 
-**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
-- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
-- Minor cleanup
+Also update the tab buttons in `CommunityDashboard` (lines ~1042-1064) and forum nav buttons to call `navigate()` when switching tabs, so the URL stays in sync with the UI.
 
-### Implementation Plan
+### 3. Dead placeholder files — cleanup
+These files are now superseded and should be deleted or left as empty stubs. Since removing them doesn't break anything (they're no longer imported), they can be left. The real code lives in `index.tsx`.
 
-**Files to fix: 4 real fixes + 1 cleanup**
+---
 
-1. **`Tourism.tsx`** (2 fixes):
-   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
-   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
+## Files changed
 
-2. **`Infrastructure.tsx`** (1 fix):
-   - Line 6952: `href="#"` → object-lookup href
-
-3. **`Education.tsx`** (1 fix):
-   - Line 6947: `href="#"` → object-lookup href
-
-4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
-   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
-   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
-
-5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
-   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
-   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
-
-6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
-
-### Files to edit
 | File | Change |
 |---|---|
-| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
-| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
-| `Education.tsx` | Fix mobile labels `href="#"` |
-| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
-| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
+| `src/pages/community/index.tsx` | Fix duplicate `fontWeight` build error (1 line) + add URL sync |
+
+That's it — **one file**. The `App.tsx` routes are already correct. The placeholder files in `Members.tsx`, `CommunityResources.tsx`, and `forum/*.tsx` don't need touching — they're just unused.
+
+---
+
+## Exact changes to `index.tsx`
+
+**Change 1** — Remove duplicate `fontWeight` (line 1055):
+```tsx
+// Remove this line:
+fontWeight: 500,
+// Keep the ternary one at line 1058
+fontWeight: currentPage === key ? 700 : 500,
+```
+
+**Change 2** — Add `useNavigate` and `useLocation` to the import at line 1:
+```tsx
+import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+```
+
+**Change 3** — In `CommunityDashboard` function (line 973), derive initial page from URL:
+```tsx
+const navigate = useNavigate();
+const { pathname } = useLocation();
+
+// Derive initial currentPage and forumView from URL
+const getInitialPage = () => {
+  if (pathname.startsWith("/community/forum")) return "forum";
+  if (pathname === "/community/members") return "members";
+  if (pathname === "/community/resources") return "resources";
+  return "home";
+};
+const getInitialForumView = () => {
+  const map = {
+    "/community/forum/questions": "Questions",
+    "/community/forum/most-answered": "Most Answered",
+    "/community/forum/polls": "Polls",
+    "/community/forum/groups": "Groups",
+    "/community/forum/tags": "Tags",
+    "/community/forum/sectors": "Sectors",
+    "/community/forum/badges": "Badges",
+    "/community/forum/members": "Members",
+  };
+  return map[pathname] ?? "Home";
+};
+// Replace useState("home") with:
+const [currentPage, setCurrentPage] = useState(getInitialPage);
+```
+
+**Change 4** — In `ForumPage`, replace `useState("Questions")` for forumView with `useState("Home")` as default (the home Q&A feed view), and pass forumView init from parent based on URL.
+
+**Change 5** — Update the top nav tab buttons to call `navigate()` in addition to `setCurrentPage()`:
+```tsx
+onClick={() => {
+  const routeMap = { home: "/community", forum: "/community/forum", members: "/community/members", resources: "/community/resources" };
+  setCurrentPage(key);
+  navigate(routeMap[key]);
+}}
+```
+
+**Change 6** — In `ForumPage`, update each forum nav button to also call `navigate()`:
+```tsx
+const routeMap = {
+  "Home": "/community/forum",
+  "Questions": "/community/forum/questions",
+  "Most Answered": "/community/forum/most-answered",
+  "Polls": "/community/forum/polls",
+  "Groups": "/community/forum/groups",
+  "Tags": "/community/forum/tags",
+  "Sectors": "/community/forum/sectors",
+  "Badges": "/community/forum/badges",
+  "Members": "/community/members",
+};
+```
+The "Members" item already navigates to `setCurrentPage("members")` — that stays, but now also calls `navigate("/community/members")`.
+
+---
+
+## What doesn't change
+- The login flow (`LoginPage` → `CommunityDashboard`) stays entirely state-based — no URL involvement
+- All the UI, data, and visual code is untouched
+- `App.tsx` routes unchanged
+- Placeholder files in `Members.tsx`, forum files etc. — left as-is (unused, harmless)
