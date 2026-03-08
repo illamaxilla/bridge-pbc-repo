@@ -2579,6 +2579,7 @@ export default function BRIDGEHomePage() {
               <span style={{ fontWeight: "700", color: colors.accent }}>Join Us!</span>
             </h3>
             <button
+              onClick={() => navigate("/services")}
               style={{
                 backgroundColor: colors.accent,
                 color: colors.primary,
