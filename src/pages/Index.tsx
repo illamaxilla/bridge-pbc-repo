@@ -2898,6 +2898,7 @@ export default function BRIDGEHomePage() {
               })}
               <div
                 className="sector-row"
+                onClick={() => navigate("/sectors")}
                 style={{
                   backgroundColor: colors.background,
                   borderRadius: "14px",
