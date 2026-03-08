@@ -4345,7 +4345,7 @@ export default function ServicesSectorsPageV2() {
                 </span>
               </button>
             </a>
-            <a href="/services" style={{ textDecoration: "none" }}>
+            <a href="/services" style={{ textDecoration: "none", display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
               <button
                 style={{
                   backgroundColor: "transparent",
