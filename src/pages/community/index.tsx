@@ -1003,6 +1003,7 @@ function CommunityDashboard({ memberType, onLogout }) {
     };
     navigate(routeMap[name] ?? "/community");
   };
+  const [forumSection, setForumSection] = useState("Home");
   const [activeTab, setActiveTab] = useState("active");
   const [forumFilter, setForumFilter] = useState("Recent");
   const [questions, setQuestions] = useState(QUESTIONS);
