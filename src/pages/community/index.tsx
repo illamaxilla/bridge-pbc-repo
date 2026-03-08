@@ -1053,7 +1053,6 @@ function CommunityDashboard({ memberType, onLogout }) {
                     cursor: "pointer",
                     fontFamily: font.body,
                     fontSize: 13,
-                    fontWeight: 500,
                     background: currentPage === key ? `rgba(27,77,62,0.08)` : "transparent",
                     color: currentPage === key ? C.primary : C.text,
                     fontWeight: currentPage === key ? 700 : 500,
