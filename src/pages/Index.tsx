@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
@@ -2741,8 +2742,8 @@ export default function BRIDGEHomePage() {
                 </ResponsiveContainer>
               </div>
             )}
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              {sectorData.slice(0, isMobile ? 4 : 6).map((sector, index) => {
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px", ...(isMobile ? { maxHeight: "420px", overflowY: "auto", paddingRight: "4px" } : {}) }}>
+              {sectorData.slice(0, isMobile ? 12 : 6).map((sector, index) => {
                 const isOpen = openSector === index;
                 return (
                   <div
@@ -2892,42 +2893,43 @@ export default function BRIDGEHomePage() {
                   </div>
                 );
               })}
-              <div
-                className="sector-row"
+            </div>
+            <Link
+              to="/sectors"
+              style={{
+                backgroundColor: colors.background,
+                borderRadius: "14px",
+                padding: isMobile ? "14px 16px" : "16px 20px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                textDecoration: "none",
+                marginTop: "8px",
+              }}
+            >
+              <span
                 style={{
-                  backgroundColor: colors.background,
-                  borderRadius: "14px",
-                  padding: isMobile ? "14px 16px" : "16px 20px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  color: colors.accent,
+                  fontFamily: "Inter, sans-serif",
+                  letterSpacing: "0.3px",
                 }}
               >
-                <span
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    color: colors.accent,
-                    fontFamily: "Inter, sans-serif",
-                    letterSpacing: "0.3px",
-                  }}
-                >
-                  View all 12 sectors
-                </span>
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke={colors.accent}
-                  strokeWidth="2"
-                  style={{ flexShrink: 0 }}
-                >
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </div>
-            </div>
+                View all 12 sectors
+              </span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={colors.accent}
+                strokeWidth="2"
+                style={{ flexShrink: 0 }}
+              >
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
