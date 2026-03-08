@@ -1502,8 +1502,8 @@ function OverviewTab({ item }) {
           ? ["Jan", "Feb", "Mar"]
           : ["2021", "2022", "2023", "2024", "2025"];
   const gv = (i, j) => Math.round(15 + Math.sin(i * 1.2 + j * 0.7) * 10 + j * 2);
-  const gc = (i, j) => {
-    const v = (Math.sin(i * 0.8 + j * 1.1) * 3).toFixed(2);
+  const gc = (i: number, j: number) => {
+    const v = parseFloat((Math.sin(i * 0.8 + j * 1.1) * 3).toFixed(2));
     return v > 0 ? `+${v}` : `${v}`;
   };
   return (
