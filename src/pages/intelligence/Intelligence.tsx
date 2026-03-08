@@ -183,6 +183,8 @@ export default function Intelligence() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [searchParams] = useSearchParams();
+  const activeSectorId = searchParams.get("sector");
 
   if (location.pathname === "/intelligence" || location.pathname === "/intelligence/") {
     return <Navigate to="/intelligence/dashboard" replace />;
