@@ -4105,13 +4105,17 @@ function DesktopDashboard() {
   const [collapsed, setCollapsed] = useState(false);
   const [chart, setChart] = useState("bar");
   const [notif, setNotif] = useState(false);
+  const [fadeKey, setFadeKey] = useState(0);
 
   // Sync when URL param changes (e.g. sidebar sector click)
   useEffect(() => {
     const id = searchParams.get("sector");
     if (id) {
       const found = SECTORS.find(sec => sec.id === id);
-      if (found) setS(found);
+      if (found) {
+        setFadeKey(k => k + 1);
+        setS(found);
+      }
     }
   }, [searchParams]);
 
@@ -4394,7 +4398,14 @@ function DesktopDashboard() {
           </div>
         </div>
         <div style={{ flex: 1, overflow: "hidden", display: "flex" }}>
-          <div style={{ flex: 1, overflowY: "auto", padding: "18px" }}>
+          <div
+            key={fadeKey}
+            style={{
+              flex: 1, overflowY: "auto", padding: "18px",
+              animation: "dash-fade-in 0.28s ease-out",
+            }}
+          >
+            <style>{`@keyframes dash-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }`}</style>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 252px", gap: 14, marginBottom: 14 }}>
               <Card style={{ padding: 0 }}>
                 <div style={{ padding: "16px 20px 10px" }}>
