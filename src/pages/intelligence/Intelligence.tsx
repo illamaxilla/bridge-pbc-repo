@@ -435,10 +435,19 @@ export default function Intelligence() {
           </div>
         </aside>
 
-        {/* Mobile overlay */}
-        {isMobile && sidebarOpen && (
-          <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 30, top: 56 }}
-            onClick={() => setSidebarOpen(false)} />
+        {/* Mobile overlay — sits above sidebar so tapping it dismisses */}
+        {isMobile && (
+          <div
+            onClick={() => setSidebarOpen(false)}
+            style={{
+              position: "fixed", inset: 0, top: 56,
+              background: "rgba(0,0,0,0.45)",
+              zIndex: 44,
+              opacity: sidebarOpen ? 1 : 0,
+              pointerEvents: sidebarOpen ? "auto" : "none",
+              transition: "opacity 0.28s cubic-bezier(0.4,0,0.2,1)",
+            }}
+          />
         )}
 
         {/* ── Main Content ── */}
