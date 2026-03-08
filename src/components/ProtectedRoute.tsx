@@ -18,6 +18,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
         onSignInSuccess={() => {
           sessionStorage.setItem("bridge_authed", "1");
           setAuthed(true);
+          navigate("/intelligence/dashboard");
         }}
       />
     </>
