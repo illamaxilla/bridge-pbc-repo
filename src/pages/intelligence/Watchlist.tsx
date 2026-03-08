@@ -1158,7 +1158,7 @@ function Sidebar({ collapsed, setCollapsed, active, setActive }) {
                     background: act ? "rgba(184,217,53,0.2)" : "rgba(255,255,255,0.05)",
                   }}
                 >
-                  {s.svgIcon(act ? C.accent : "rgba(255,255,255,0.35)", 14)}
+                  {(s as any).svgIcon(act ? C.accent : "rgba(255,255,255,0.35)", 14)}
                 </div>
               ) : (
                 <>
