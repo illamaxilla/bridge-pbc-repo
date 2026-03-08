@@ -2140,7 +2140,7 @@ function MobileDashboard({ s, setS }) {
       </div>
 
       {/* ═══ SCROLLABLE CONTENT ═══ */}
-      <div className="mscroll" style={{ flex: 1, overflowY: "auto", padding: "10px 12px 0" }}>
+      <div className="mscroll" style={{ flex: 1, overflowY: "auto", padding: "10px 12px 80px" }}>
         {/* ─ DASHBOARD / OVERVIEW ─ */}
         {dashSub === "overview" && (
           <>
