@@ -1682,7 +1682,7 @@ function OverviewTab({ item }) {
                                   gap: 5,
                                 }}
                               >
-                                <MapPin size={10} color={C.muted} style={{ marginTop: 2, flexShrink: 0 }} />
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: 2, flexShrink: 0 }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 Accra Business District, Ring Road Central, Accra, Ghana
                               </div>
                             </div>
