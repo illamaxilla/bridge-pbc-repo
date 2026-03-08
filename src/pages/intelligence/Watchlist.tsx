@@ -1163,7 +1163,7 @@ function Sidebar({ collapsed, setCollapsed, active, setActive }) {
               ) : (
                 <>
                   <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    {s.svgIcon(act ? C.accent : "rgba(255,255,255,0.3)", 12)}
+                    {(s as any).svgIcon(act ? C.accent : "rgba(255,255,255,0.3)", 12)}
                     <span
                       style={{
                         fontSize: 11.5,
