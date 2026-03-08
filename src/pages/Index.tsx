@@ -3306,6 +3306,7 @@ export default function BRIDGEHomePage() {
               {insights.map((insight, index) => (
                 <div
                   key={index}
+                  onClick={() => navigate("/resources")}
                   style={{
                     flex: isMobile ? "0 0 100%" : "0 0 calc(50% - 12px)",
                     backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
