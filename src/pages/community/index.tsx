@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import {
   Bell,
   MessageCircle,
@@ -58,6 +57,17 @@ import {
   Lock,
   Mail,
 } from "lucide-react";
+
+// ─── RESPONSIVE HOOK ──────────────────────────────────────────
+function useWindowWidth() {
+  const [width, setWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  useEffect(() => {
+    const handle = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handle);
+    return () => window.removeEventListener("resize", handle);
+  }, []);
+  return width;
+}
 
 // ─── DESIGN TOKENS ────────────────────────────────────────────
 const C = {
@@ -536,6 +546,7 @@ function LoginPage({ onLogin }) {
   const [remember, setRemember] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isMobile = useWindowWidth() < 768;
 
   const handleLogin = () => {
     if (!email || !password) return;
@@ -551,172 +562,212 @@ function LoginPage({ onLogin }) {
       style={{
         minHeight: "100vh",
         display: "flex",
+        flexDirection: isMobile ? "column" : "row",
         background: C.primary,
         fontFamily: font.body,
       }}
     >
-      {/* Left Panel */}
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "60px 64px",
-          background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 60%, #1e5c4a 100%)`,
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* Decorative circles */}
+      {/* ── BRAND PANEL (full on desktop, compact header on mobile) ── */}
+      {isMobile ? (
+        /* Mobile: compact brand header */
         <div
           style={{
-            position: "absolute",
-            top: -80,
-            left: -80,
-            width: 300,
-            height: 300,
-            borderRadius: "50%",
-            border: `1px solid rgba(184,217,53,0.12)`,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: 60,
-            left: 40,
-            width: 180,
-            height: 180,
-            borderRadius: "50%",
-            border: `1px solid rgba(184,217,53,0.08)`,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: -60,
-            right: -60,
-            width: 400,
-            height: 400,
-            borderRadius: "50%",
-            border: `1px solid rgba(255,255,255,0.06)`,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 80,
-            right: 40,
-            width: 200,
-            height: 200,
-            borderRadius: "50%",
-            border: `1px solid rgba(184,217,53,0.1)`,
-          }}
-        />
-
-        {/* Logo */}
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <BridgeLogo height={48} />
-        </div>
-
-        {/* Hero Text */}
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div style={{ marginBottom: 24 }}>
-            <Pill color={C.accent} bg="rgba(184,217,53,0.12)" border={false} small>
-              Ghana-First Community
-            </Pill>
-          </div>
-          <h1
-            style={{
-              fontFamily: font.display,
-              fontWeight: 300,
-              fontSize: 52,
-              color: C.white,
-              lineHeight: 1.1,
-              letterSpacing: "-1.5px",
-              margin: "0 0 24px 0",
-            }}
-          >
-            Where Ghana's
-            <br />
-            <span style={{ fontWeight: 800, color: C.accent }}>Builders</span>
-            <br />
-            Come Together
-          </h1>
-          <p
-            style={{
-              fontSize: 16,
-              color: "rgba(255,255,255,0.6)",
-              lineHeight: 1.7,
-              maxWidth: 380,
-              margin: 0,
-            }}
-          >
-            Join a community of investors, innovators, and development professionals working to drive Peace & Prosperity
-            across the nation.
-          </p>
-
-          {/* Stats Row */}
-          <div style={{ display: "flex", gap: 40, marginTop: 48 }}>
-            {[
-              { val: "174+", label: "Active Ventures" },
-              { val: "6,200+", label: "Traders Onboarded" },
-              { val: "23%", label: "Avg. Yield Growth" },
-            ].map((s) => (
-              <div key={s.val}>
-                <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 28, color: C.accent }}>{s.val}</div>
-                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 500, letterSpacing: "0.5px" }}>
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom Quote */}
-        <div
-          style={{
+            padding: "32px 24px 28px",
+            background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 100%)`,
             position: "relative",
-            zIndex: 1,
-            borderTop: "1px solid rgba(255,255,255,0.1)",
-            paddingTop: 24,
+            overflow: "hidden",
           }}
         >
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", fontStyle: "italic", margin: 0 }}>
-            "Blending Resources and Innovation to Drive Ghana's Empowerment"
-          </p>
+          <div
+            style={{
+              position: "absolute",
+              top: -40,
+              right: -40,
+              width: 180,
+              height: 180,
+              borderRadius: "50%",
+              border: "1px solid rgba(184,217,53,0.12)",
+            }}
+          />
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <BridgeLogo height={36} />
+            <p
+              style={{
+                fontSize: 13,
+                color: "rgba(255,255,255,0.55)",
+                margin: "14px 0 0",
+                lineHeight: 1.5,
+                maxWidth: 280,
+              }}
+            >
+              Where Ghana's <strong style={{ color: C.accent }}>Builders</strong> Come Together
+            </p>
+            {/* Mini stats row */}
+            <div style={{ display: "flex", gap: 24, marginTop: 18 }}>
+              {[
+                { val: "174+", label: "Ventures" },
+                { val: "6,200+", label: "Traders" },
+                { val: "23%", label: "Yield Growth" },
+              ].map((s) => (
+                <div key={s.val}>
+                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 18, color: C.accent }}>
+                    {s.val}
+                  </div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.3px" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Desktop: full left panel */
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: "60px 64px",
+            background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 60%, #1e5c4a 100%)`,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: -80,
+              left: -80,
+              width: 300,
+              height: 300,
+              borderRadius: "50%",
+              border: "1px solid rgba(184,217,53,0.12)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: 60,
+              left: 40,
+              width: 180,
+              height: 180,
+              borderRadius: "50%",
+              border: "1px solid rgba(184,217,53,0.08)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              bottom: -60,
+              right: -60,
+              width: 400,
+              height: 400,
+              borderRadius: "50%",
+              border: "1px solid rgba(255,255,255,0.06)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              bottom: 80,
+              right: 40,
+              width: 200,
+              height: 200,
+              borderRadius: "50%",
+              border: "1px solid rgba(184,217,53,0.1)",
+            }}
+          />
 
-      {/* Right Panel — Login Form */}
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <BridgeLogo height={48} />
+          </div>
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div style={{ marginBottom: 24 }}>
+              <Pill color={C.accent} bg="rgba(184,217,53,0.12)" border={false} small>
+                Ghana-First Community
+              </Pill>
+            </div>
+            <h1
+              style={{
+                fontFamily: font.display,
+                fontWeight: 300,
+                fontSize: 52,
+                color: C.white,
+                lineHeight: 1.1,
+                letterSpacing: "-1.5px",
+                margin: "0 0 24px 0",
+              }}
+            >
+              Where Ghana's
+              <br />
+              <span style={{ fontWeight: 800, color: C.accent }}>Builders</span>
+              <br />
+              Come Together
+            </h1>
+            <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, maxWidth: 380, margin: 0 }}>
+              Join a community of investors, innovators, and development professionals working to drive Peace &
+              Prosperity across the nation.
+            </p>
+            <div style={{ display: "flex", gap: 40, marginTop: 48 }}>
+              {[
+                { val: "174+", label: "Active Ventures" },
+                { val: "6,200+", label: "Traders Onboarded" },
+                { val: "23%", label: "Avg. Yield Growth" },
+              ].map((s) => (
+                <div key={s.val}>
+                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 28, color: C.accent }}>
+                    {s.val}
+                  </div>
+                  <div
+                    style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 500, letterSpacing: "0.5px" }}
+                  >
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 24 }}
+          >
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", fontStyle: "italic", margin: 0 }}>
+              "Blending Resources and Innovation to Drive Ghana's Empowerment"
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ── FORM PANEL ── */}
       <div
         style={{
-          width: 480,
+          width: isMobile ? "100%" : 480,
           background: C.bg,
+          flex: isMobile ? 1 : "none",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "60px 52px",
+          justifyContent: isMobile ? "flex-start" : "center",
+          padding: isMobile ? "32px 24px 40px" : "60px 52px",
+          overflowY: "auto",
         }}
       >
-        <div style={{ marginBottom: 40 }}>
+        <div style={{ marginBottom: 28 }}>
           <h2
             style={{
               fontFamily: font.display,
               fontWeight: 700,
-              fontSize: 32,
+              fontSize: isMobile ? 26 : 32,
               color: C.primary,
-              margin: "0 0 8px 0",
+              margin: "0 0 6px 0",
               letterSpacing: "-0.5px",
             }}
           >
             Welcome back
           </h2>
-          <p style={{ fontSize: 15, color: C.muted, margin: 0 }}>Sign in to your BRIDGE community account</p>
+          <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>Sign in to your BRIDGE community account</p>
         </div>
 
         {/* Member Type Toggle */}
-        <div style={{ marginBottom: 32 }}>
+        <div style={{ marginBottom: 24 }}>
           <div
             style={{
               fontSize: 11,
@@ -724,7 +775,7 @@ function LoginPage({ onLogin }) {
               letterSpacing: "1px",
               color: C.muted,
               textTransform: "uppercase",
-              marginBottom: 10,
+              marginBottom: 8,
             }}
           >
             Account Type
@@ -732,7 +783,6 @@ function LoginPage({ onLogin }) {
           <div
             style={{
               display: "flex",
-              gap: 0,
               borderRadius: 12,
               border: `1.5px solid ${C.line}`,
               overflow: "hidden",
@@ -765,8 +815,8 @@ function LoginPage({ onLogin }) {
           </div>
         </div>
 
-        {/* Form Fields */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
+        {/* Fields */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 20 }}>
           <div>
             <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
               Email Address
@@ -783,23 +833,21 @@ function LoginPage({ onLogin }) {
                 placeholder="you@example.com"
                 style={{
                   width: "100%",
-                  padding: "12px 14px 12px 42px",
+                  padding: "13px 14px 13px 42px",
                   borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
                   fontFamily: font.body,
-                  fontSize: 14,
+                  fontSize: 15,
                   background: C.white,
                   outline: "none",
                   boxSizing: "border-box",
                   color: C.dark,
-                  transition: "border-color 0.2s",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = C.primary)}
                 onBlur={(e) => (e.target.style.borderColor = C.line)}
               />
             </div>
           </div>
-
           <div>
             <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
               Password
@@ -816,16 +864,15 @@ function LoginPage({ onLogin }) {
                 placeholder="••••••••"
                 style={{
                   width: "100%",
-                  padding: "12px 42px 12px 42px",
+                  padding: "13px 42px 13px 42px",
                   borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
                   fontFamily: font.body,
-                  fontSize: 14,
+                  fontSize: 15,
                   background: C.white,
                   outline: "none",
                   boxSizing: "border-box",
                   color: C.dark,
-                  transition: "border-color 0.2s",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = C.primary)}
                 onBlur={(e) => (e.target.style.borderColor = C.line)}
@@ -851,15 +898,14 @@ function LoginPage({ onLogin }) {
           </div>
         </div>
 
-        {/* Remember + Forgot */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
           <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
             <div
               onClick={() => setRemember(!remember)}
               style={{
-                width: 18,
-                height: 18,
-                borderRadius: 4,
+                width: 20,
+                height: 20,
+                borderRadius: 5,
                 border: `1.5px solid ${remember ? C.primary : C.line}`,
                 background: remember ? C.primary : "transparent",
                 display: "flex",
@@ -878,13 +924,12 @@ function LoginPage({ onLogin }) {
           </a>
         </div>
 
-        {/* Submit */}
         <button
           onClick={handleLogin}
           disabled={loading}
           style={{
             width: "100%",
-            padding: "14px 24px",
+            padding: "15px 24px",
             borderRadius: 12,
             border: "none",
             cursor: loading ? "not-allowed" : "pointer",
@@ -898,6 +943,7 @@ function LoginPage({ onLogin }) {
             justifyContent: "center",
             gap: 8,
             transition: "all 0.2s",
+            minHeight: 52,
           }}
         >
           {loading ? (
@@ -906,8 +952,8 @@ function LoginPage({ onLogin }) {
                 style={{
                   width: 16,
                   height: 16,
-                  border: `2px solid rgba(255,255,255,0.3)`,
-                  borderTop: `2px solid white`,
+                  border: "2px solid rgba(255,255,255,0.3)",
+                  borderTop: "2px solid white",
                   borderRadius: "50%",
                   animation: "spin 0.8s linear infinite",
                 }}
@@ -922,25 +968,23 @@ function LoginPage({ onLogin }) {
           )}
         </button>
 
-        <div style={{ textAlign: "center", marginTop: 28, fontSize: 13, color: C.muted }}>
+        <div style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: C.muted }}>
           Don't have an account?{" "}
           <a href="#" style={{ color: C.primary, fontWeight: 700, textDecoration: "none" }}>
             Request Access
           </a>
         </div>
 
-        {/* Divider */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "28px 0" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "24px 0" }}>
           <div style={{ flex: 1, height: 1, background: C.line }} />
           <span style={{ fontSize: 12, color: C.muted }}>or</span>
           <div style={{ flex: 1, height: 1, background: C.line }} />
         </div>
 
-        {/* SSO */}
         <button
           style={{
             width: "100%",
-            padding: "12px 20px",
+            padding: "13px 20px",
             borderRadius: 12,
             border: `1.5px solid ${C.line}`,
             background: C.white,
@@ -953,11 +997,26 @@ function LoginPage({ onLogin }) {
             alignItems: "center",
             justifyContent: "center",
             gap: 10,
+            minHeight: 48,
           }}
         >
           <Globe size={16} color={C.primary} />
           Continue with BRIDGE SSO
         </button>
+
+        {isMobile && (
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: 11,
+              color: "rgba(27,77,62,0.35)",
+              fontStyle: "italic",
+              marginTop: 32,
+            }}
+          >
+            "Blending Resources and Innovation to Drive Ghana's Empowerment"
+          </p>
+        )}
       </div>
 
       <style>{`
@@ -972,30 +1031,6 @@ function LoginPage({ onLogin }) {
 
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  const getInitialPage = () => {
-    if (pathname.startsWith("/community/forum")) return "forum";
-    if (pathname === "/community/members") return "members";
-    if (pathname === "/community/resources") return "resources";
-    return "home";
-  };
-
-  const getInitialForumView = () => {
-    const map: Record<string, string> = {
-      "/community/forum/questions": "Questions",
-      "/community/forum/most-answered": "Most Answered",
-      "/community/forum/polls": "Polls",
-      "/community/forum/groups": "Groups",
-      "/community/forum/tags": "Tags",
-      "/community/forum/sectors": "Sectors",
-      "/community/forum/badges": "Badges",
-      "/community/forum/members": "Members",
-    };
-    return map[pathname] ?? "Home";
-  };
-
   const [activeTab, setActiveTab] = useState("active");
   const [feedFilter, setFeedFilter] = useState("Recent");
   const [forumFilter, setForumFilter] = useState("Recent");
@@ -1005,10 +1040,9 @@ function CommunityDashboard({ memberType, onLogout }) {
   const [showGoalModal, setShowGoalModal] = useState(false);
   const [showQuestionModal, setShowQuestionModal] = useState(false);
   const [expandedGoal, setExpandedGoal] = useState(null);
-  const [navOpen, setNavOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [savedInsight, setSavedInsight] = useState(false);
-  const [currentPage, setCurrentPage] = useState(getInitialPage);
-  const [initialForumView] = useState(getInitialForumView);
+  const [currentPage, setCurrentPage] = useState("home");
   const [contributions, setContributions] = useState([
     { label: "Discussions participated in this week", done: true },
     { label: "Sector insight submitted", done: false },
@@ -1016,23 +1050,25 @@ function CommunityDashboard({ memberType, onLogout }) {
     { label: "Peer review completed", done: false },
   ]);
 
+  const isMobile = useWindowWidth() < 768;
   const user = { name: "Joseph", initials: "JA", sector: "Infrastructure", journey: 2 };
   const mType = MEMBER_TYPES[memberType];
 
-  const handleVote = (qId, dir) => {
-    setQuestions((prev) =>
-      prev.map((q) => {
-        if (q.id !== qId) return q;
-        if (q.userVote === dir) return { ...q, votes: q.votes - 1, userVote: null };
-        const delta = q.userVote ? 2 : 1;
-        return { ...q, votes: q.votes + (dir === "up" ? delta : -delta), userVote: dir };
-      }),
-    );
+  const NAV_ITEMS = [
+    { key: "home", label: "Home", icon: <Home size={20} /> },
+    { key: "forum", label: "Forum", icon: <MessageSquare size={20} /> },
+    { key: "members", label: "Members", icon: <Users size={20} /> },
+    { key: "resources", label: "Resources", icon: <BookOpen size={20} /> },
+  ];
+
+  const handleNavChange = (key) => {
+    setCurrentPage(key);
+    setMobileMenuOpen(false);
   };
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: font.body }}>
-      {/* ── TOP NAV ── */}
+      {/* ── HEADER ── */}
       <header
         style={{
           position: "sticky",
@@ -1040,41 +1076,37 @@ function CommunityDashboard({ memberType, onLogout }) {
           zIndex: 100,
           background: C.white,
           borderBottom: `1px solid ${C.line}`,
-          padding: "0 32px",
-          height: 64,
+          padding: isMobile ? "0 16px" : "0 32px",
+          height: isMobile ? 56 : 64,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           boxShadow: "0 2px 12px rgba(27,77,62,0.06)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <BridgeLogo height={28} dark />
+        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 40 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <BridgeLogo height={isMobile ? 24 : 28} dark />
             <span
               style={{
-                fontSize: 9,
+                fontSize: 8,
                 fontWeight: 700,
                 letterSpacing: "2px",
                 color: C.muted,
                 borderLeft: `1px solid ${C.line}`,
-                paddingLeft: 12,
+                paddingLeft: 10,
               }}
             >
               COMMUNITY
             </span>
           </div>
-          <nav style={{ display: "flex", gap: 4 }}>
-            {["Home", "Forum", "Members", "Resources"].map((item) => {
-              const key = item.toLowerCase();
-              return (
+          {/* Desktop nav */}
+          {!isMobile && (
+            <nav style={{ display: "flex", gap: 4 }}>
+              {NAV_ITEMS.map((item) => (
                 <button
-                  key={item}
-                  onClick={() => {
-                    const routeMap: Record<string, string> = { home: "/community", forum: "/community/forum", members: "/community/members", resources: "/community/resources" };
-                    setCurrentPage(key);
-                    navigate(routeMap[key]);
-                  }}
+                  key={item.key}
+                  onClick={() => setCurrentPage(item.key)}
                   style={{
                     padding: "6px 14px",
                     borderRadius: 8,
@@ -1082,84 +1114,189 @@ function CommunityDashboard({ memberType, onLogout }) {
                     cursor: "pointer",
                     fontFamily: font.body,
                     fontSize: 13,
-                    background: currentPage === key ? `rgba(27,77,62,0.08)` : "transparent",
-                    color: currentPage === key ? C.primary : C.text,
-                    fontWeight: currentPage === key ? 700 : 500,
+                    background: currentPage === item.key ? `rgba(27,77,62,0.08)` : "transparent",
+                    color: currentPage === item.key ? C.primary : C.text,
+                    fontWeight: currentPage === item.key ? 700 : 500,
                   }}
                 >
-                  {item}
+                  {item.label}
                 </button>
-              );
-            })}
-          </nav>
+              ))}
+            </nav>
+          )}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              padding: "5px 12px",
-              borderRadius: 20,
-              background: mType.color + "18",
-              border: `1.5px solid ${mType.color}30`,
-            }}
-          >
-            <Shield size={12} color={mType.color} />
-            <span style={{ fontSize: 11, fontWeight: 700, color: mType.color, letterSpacing: "0.5px" }}>
-              {mType.badge}
-            </span>
-          </div>
-
+        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 16 }}>
+          {!isMobile && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "5px 12px",
+                borderRadius: 20,
+                background: mType.color + "18",
+                border: `1.5px solid ${mType.color}30`,
+              }}
+            >
+              <Shield size={12} color={mType.color} />
+              <span style={{ fontSize: 11, fontWeight: 700, color: mType.color, letterSpacing: "0.5px" }}>
+                {mType.badge}
+              </span>
+            </div>
+          )}
           <button style={{ background: "none", border: "none", cursor: "pointer", padding: 6, position: "relative" }}>
-            <Bell size={18} color={C.text} />
+            <Bell size={isMobile ? 20 : 18} color={C.text} />
             <span
               style={{
                 position: "absolute",
                 top: 4,
                 right: 4,
-                width: 8,
-                height: 8,
+                width: 7,
+                height: 7,
                 borderRadius: "50%",
                 background: C.accent,
                 border: `2px solid ${C.white}`,
               }}
             />
           </button>
-          <button style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}>
-            <MessageCircle size={18} color={C.text} />
-          </button>
-
+          {!isMobile && (
+            <button style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}>
+              <MessageCircle size={18} color={C.text} />
+            </button>
+          )}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               gap: 8,
-              paddingLeft: 16,
-              borderLeft: `1px solid ${C.line}`,
+              paddingLeft: isMobile ? 4 : 16,
+              borderLeft: isMobile ? "none" : `1px solid ${C.line}`,
             }}
           >
-            <Avatar initials={user.initials} size={32} />
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: C.dark, lineHeight: 1.2 }}>{user.name}</div>
-              <div style={{ fontSize: 10, color: C.muted }}>2,840 pts</div>
-            </div>
+            <Avatar initials={user.initials} size={isMobile ? 30 : 32} />
+            {!isMobile && (
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: C.dark, lineHeight: 1.2 }}>{user.name}</div>
+                <div style={{ fontSize: 10, color: C.muted }}>2,840 pts</div>
+              </div>
+            )}
           </div>
-
-          <button
-            onClick={onLogout}
-            title="Sign out"
-            style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}
-          >
-            <LogOut size={16} color={C.muted} />
-          </button>
+          {isMobile ? (
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}
+            >
+              {mobileMenuOpen ? <X size={22} color={C.dark} /> : <Menu size={22} color={C.dark} />}
+            </button>
+          ) : (
+            <button
+              onClick={onLogout}
+              title="Sign out"
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}
+            >
+              <LogOut size={16} color={C.muted} />
+            </button>
+          )}
         </div>
       </header>
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px" }}>
+      {/* ── MOBILE SLIDE-DOWN MENU ── */}
+      {isMobile && mobileMenuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 56,
+            left: 0,
+            right: 0,
+            zIndex: 99,
+            background: C.white,
+            borderBottom: `1px solid ${C.line}`,
+            boxShadow: "0 8px 32px rgba(27,77,62,0.12)",
+            padding: "8px 0 12px",
+          }}
+        >
+          <div style={{ padding: "8px 16px 12px", borderBottom: `1px solid ${C.line}`, marginBottom: 8 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <Avatar initials={user.initials} size={36} />
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: C.dark }}>{user.name}</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ fontSize: 11, color: C.primary, fontWeight: 600 }}>2,840 pts</span>
+                  <span
+                    style={{
+                      fontSize: 9,
+                      fontWeight: 700,
+                      color: mType.color,
+                      background: mType.color + "18",
+                      padding: "1px 7px",
+                      borderRadius: 10,
+                    }}
+                  >
+                    {mType.badge}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.key}
+              onClick={() => handleNavChange(item.key)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+                width: "100%",
+                padding: "13px 20px",
+                border: "none",
+                cursor: "pointer",
+                textAlign: "left",
+                background: currentPage === item.key ? `${C.primary}08` : "transparent",
+                color: currentPage === item.key ? C.primary : C.text,
+                fontFamily: font.body,
+                fontSize: 15,
+                fontWeight: currentPage === item.key ? 700 : 400,
+              }}
+            >
+              <span style={{ color: currentPage === item.key ? C.primary : C.muted }}>{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+          <div style={{ borderTop: `1px solid ${C.line}`, marginTop: 8, padding: "8px 0 0" }}>
+            <button
+              onClick={onLogout}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+                width: "100%",
+                padding: "12px 20px",
+                border: "none",
+                cursor: "pointer",
+                background: "transparent",
+                color: C.muted,
+                fontFamily: font.body,
+                fontSize: 14,
+              }}
+            >
+              <LogOut size={18} color={C.muted} /> Sign Out
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── PAGE CONTENT ── */}
+      <div
+        style={{
+          maxWidth: isMobile ? "100%" : 1280,
+          margin: "0 auto",
+          padding: isMobile ? "16px 16px 88px" : "32px 32px 80px",
+        }}
+      >
         {currentPage === "home" && (
           <HomePageContent
+            isMobile={isMobile}
             user={user}
             mType={mType}
             contributions={contributions}
@@ -1180,17 +1317,84 @@ function CommunityDashboard({ memberType, onLogout }) {
         )}
         {currentPage === "forum" && (
           <ForumPage
+            isMobile={isMobile}
             questions={questions}
             setQuestions={setQuestions}
             setShowQuestionModal={setShowQuestionModal}
-            setCurrentPage={(page: string) => { setCurrentPage(page); navigate(page === "members" ? "/community/members" : "/community"); }}
-            initialForumView={initialForumView}
+            setCurrentPage={setCurrentPage}
           />
         )}
-        {currentPage === "members" && <MembersPage />}
-        {currentPage === "resources" && <ResourcesPage />}
+        {currentPage === "members" && <MembersPage isMobile={isMobile} />}
+        {currentPage === "resources" && <ResourcesPage isMobile={isMobile} />}
       </div>
 
+      {/* ── MOBILE BOTTOM TAB BAR ── */}
+      {isMobile && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 100,
+            background: C.white,
+            borderTop: `1px solid ${C.line}`,
+            display: "flex",
+            height: 64,
+            boxShadow: "0 -4px 20px rgba(27,77,62,0.08)",
+          }}
+        >
+          {NAV_ITEMS.map((item) => {
+            const active = currentPage === item.key;
+            return (
+              <button
+                key={item.key}
+                onClick={() => handleNavChange(item.key)}
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 3,
+                  border: "none",
+                  cursor: "pointer",
+                  background: "transparent",
+                  padding: "8px 0",
+                  color: active ? C.primary : C.muted,
+                  position: "relative",
+                }}
+              >
+                {active && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: 32,
+                      height: 3,
+                      borderRadius: "0 0 3px 3px",
+                      background: C.accent,
+                    }}
+                  />
+                )}
+                <div style={{ color: active ? C.primary : C.muted, transition: "color 0.15s" }}>{item.icon}</div>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: active ? 700 : 400,
+                    fontFamily: font.body,
+                    letterSpacing: "0.2px",
+                  }}
+                >
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
       {/* ── CREATE GOAL MODAL ── */}
       {showGoalModal && (
         <div
@@ -1199,7 +1403,7 @@ function CommunityDashboard({ memberType, onLogout }) {
             inset: 0,
             background: "rgba(27,77,62,0.5)",
             display: "flex",
-            alignItems: "center",
+            alignItems: isMobile ? "flex-end" : "center",
             justifyContent: "center",
             zIndex: 200,
             backdropFilter: "blur(4px)",
@@ -1207,11 +1411,17 @@ function CommunityDashboard({ memberType, onLogout }) {
           onClick={() => setShowGoalModal(false)}
         >
           <div
-            style={{ background: C.white, borderRadius: 20, padding: 36, width: 520, boxShadow: C.deepShadow }}
+            style={{
+              background: C.white,
+              borderRadius: isMobile ? "20px 20px 0 0" : 20,
+              padding: isMobile ? "28px 20px 36px" : 36,
+              width: isMobile ? "100%" : 520,
+              boxShadow: C.deepShadow,
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-              <h2 style={{ fontFamily: font.display, fontSize: 22, fontWeight: 700, color: C.primary, margin: 0 }}>
+              <h2 style={{ fontFamily: font.display, fontSize: 20, fontWeight: 700, color: C.primary, margin: 0 }}>
                 Create New Goal
               </h2>
               <button
@@ -1222,7 +1432,7 @@ function CommunityDashboard({ memberType, onLogout }) {
               </button>
             </div>
             {["Goal Name", "Details", "Deadline"].map((field) => (
-              <div key={field} style={{ marginBottom: 16 }}>
+              <div key={field} style={{ marginBottom: 14 }}>
                 <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
                   {field}
                 </label>
@@ -1235,7 +1445,7 @@ function CommunityDashboard({ memberType, onLogout }) {
                       border: `1.5px solid ${C.line}`,
                       padding: "10px 12px",
                       fontFamily: font.body,
-                      fontSize: 13,
+                      fontSize: 14,
                       resize: "none",
                       minHeight: 80,
                       outline: "none",
@@ -1248,11 +1458,11 @@ function CommunityDashboard({ memberType, onLogout }) {
                     placeholder={`Enter ${field.toLowerCase()}...`}
                     style={{
                       width: "100%",
-                      padding: "10px 12px",
+                      padding: "12px",
                       borderRadius: 10,
                       border: `1.5px solid ${C.line}`,
                       fontFamily: font.body,
-                      fontSize: 13,
+                      fontSize: 14,
                       outline: "none",
                       boxSizing: "border-box",
                     }}
@@ -1265,14 +1475,14 @@ function CommunityDashboard({ memberType, onLogout }) {
                 onClick={() => setShowGoalModal(false)}
                 style={{
                   flex: 1,
-                  padding: "11px",
+                  padding: "13px",
                   borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
                   background: "transparent",
                   color: C.text,
                   cursor: "pointer",
                   fontFamily: font.body,
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: 600,
                 }}
               >
@@ -1282,14 +1492,14 @@ function CommunityDashboard({ memberType, onLogout }) {
                 onClick={() => setShowGoalModal(false)}
                 style={{
                   flex: 2,
-                  padding: "11px",
+                  padding: "13px",
                   borderRadius: 10,
                   border: "none",
                   background: C.primary,
                   color: C.white,
                   cursor: "pointer",
                   fontFamily: font.body,
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: 700,
                 }}
               >
@@ -1308,7 +1518,7 @@ function CommunityDashboard({ memberType, onLogout }) {
             inset: 0,
             background: "rgba(27,77,62,0.5)",
             display: "flex",
-            alignItems: "center",
+            alignItems: isMobile ? "flex-end" : "center",
             justifyContent: "center",
             zIndex: 200,
             backdropFilter: "blur(4px)",
@@ -1316,11 +1526,17 @@ function CommunityDashboard({ memberType, onLogout }) {
           onClick={() => setShowQuestionModal(false)}
         >
           <div
-            style={{ background: C.white, borderRadius: 20, padding: 36, width: 540, boxShadow: C.deepShadow }}
+            style={{
+              background: C.white,
+              borderRadius: isMobile ? "20px 20px 0 0" : 20,
+              padding: isMobile ? "28px 20px 36px" : 36,
+              width: isMobile ? "100%" : 540,
+              boxShadow: C.deepShadow,
+            }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-              <h2 style={{ fontFamily: font.display, fontSize: 22, fontWeight: 700, color: C.primary, margin: 0 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+              <h2 style={{ fontFamily: font.display, fontSize: 20, fontWeight: 700, color: C.primary, margin: 0 }}>
                 Ask the Community
               </h2>
               <button
@@ -1330,7 +1546,7 @@ function CommunityDashboard({ memberType, onLogout }) {
                 <X size={20} color={C.muted} />
               </button>
             </div>
-            <div style={{ marginBottom: 16 }}>
+            <div style={{ marginBottom: 14 }}>
               <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
                 Question
               </label>
@@ -1338,17 +1554,17 @@ function CommunityDashboard({ memberType, onLogout }) {
                 placeholder="What would you like to ask the BRIDGE community?"
                 style={{
                   width: "100%",
-                  padding: "10px 12px",
+                  padding: "12px",
                   borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
                   fontFamily: font.body,
-                  fontSize: 13,
+                  fontSize: 14,
                   outline: "none",
                   boxSizing: "border-box",
                 }}
               />
             </div>
-            <div style={{ marginBottom: 16 }}>
+            <div style={{ marginBottom: 14 }}>
               <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
                 Details
               </label>
@@ -1360,16 +1576,16 @@ function CommunityDashboard({ memberType, onLogout }) {
                   border: `1.5px solid ${C.line}`,
                   padding: "10px 12px",
                   fontFamily: font.body,
-                  fontSize: 13,
+                  fontSize: 14,
                   resize: "none",
-                  minHeight: 100,
+                  minHeight: 80,
                   outline: "none",
                   boxSizing: "border-box",
                 }}
               />
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <div style={{ marginBottom: 18 }}>
+              <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 8 }}>
                 Sector Tag
               </label>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -1377,14 +1593,14 @@ function CommunityDashboard({ memberType, onLogout }) {
                   <button
                     key={s}
                     style={{
-                      padding: "5px 12px",
+                      padding: "7px 14px",
                       borderRadius: 20,
                       border: `1.5px solid ${C.line}`,
                       background: "transparent",
                       color: C.text,
                       cursor: "pointer",
                       fontFamily: font.body,
-                      fontSize: 12,
+                      fontSize: 13,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = C.primary;
@@ -1405,14 +1621,14 @@ function CommunityDashboard({ memberType, onLogout }) {
                 onClick={() => setShowQuestionModal(false)}
                 style={{
                   flex: 1,
-                  padding: "11px",
+                  padding: "13px",
                   borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
                   background: "transparent",
                   color: C.text,
                   cursor: "pointer",
                   fontFamily: font.body,
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: 600,
                 }}
               >
@@ -1422,7 +1638,7 @@ function CommunityDashboard({ memberType, onLogout }) {
                 onClick={() => setShowQuestionModal(false)}
                 style={{
                   flex: 2,
-                  padding: "11px",
+                  padding: "13px",
                   borderRadius: 10,
                   border: "none",
                   background: C.accent,
@@ -1456,9 +1672,8 @@ function CommunityDashboard({ memberType, onLogout }) {
 }
 
 // ─── FORUM PAGE ────────────────────────────────────────────────
-function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPage, initialForumView = "Home" }) {
-  const navigate = useNavigate();
-  const [forumView, setForumView] = useState(initialForumView);
+function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, setCurrentPage }) {
+  const [forumView, setForumView] = useState("Questions");
   const [forumFilter, setForumFilter] = useState("Recent");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -1492,15 +1707,16 @@ function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPa
     : sortedQs;
 
   return (
-    <div style={{ background: C.white, borderRadius: 20, overflow: "hidden", boxShadow: C.cardShadow }}>
+    <div style={{ background: C.white, borderRadius: isMobile ? 16 : 20, overflow: "hidden", boxShadow: C.cardShadow }}>
       {/* Header */}
       <div
         style={{
-          padding: "28px 32px 20px",
+          padding: isMobile ? "20px 16px 16px" : "28px 32px 20px",
           borderBottom: `1px solid ${C.line}`,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          gap: 12,
         }}
       >
         <div>
@@ -1508,7 +1724,7 @@ function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPa
           <h2
             style={{
               fontFamily: font.display,
-              fontSize: 28,
+              fontSize: isMobile ? 22 : 28,
               fontWeight: 700,
               color: C.primary,
               margin: 0,
@@ -1521,70 +1737,61 @@ function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPa
         <button
           onClick={() => setShowQuestionModal(true)}
           style={{
-            padding: "11px 22px",
+            padding: isMobile ? "9px 14px" : "11px 22px",
             borderRadius: 20,
             border: "none",
             cursor: "pointer",
             background: C.accent,
             color: C.primary,
             fontFamily: font.body,
-            fontSize: 13,
+            fontSize: isMobile ? 12 : 13,
             fontWeight: 700,
             display: "flex",
             alignItems: "center",
             gap: 6,
+            whiteSpace: "nowrap",
+            flexShrink: 0,
           }}
         >
-          <Plus size={14} /> Ask a Question
+          <Plus size={14} />
+          {isMobile ? "Ask" : "Ask a Question"}
         </button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "220px 1fr 260px" }}>
-        {/* Left Nav */}
-        <div style={{ borderRight: `1px solid ${C.line}`, padding: "24px 16px" }}>
-          {FORUM_NAV.map((item) => {
+      {/* Mobile: horizontal scrolling pill nav */}
+      {isMobile && (
+        <div
+          style={{
+            overflowX: "auto",
+            display: "flex",
+            gap: 6,
+            padding: "12px 16px",
+            borderBottom: `1px solid ${C.line}`,
+            scrollbarWidth: "none",
+          }}
+        >
+          <style>{`.forum-nav::-webkit-scrollbar{display:none}`}</style>
+          {FORUM_NAV.filter((n) => n.label !== "Members").map((item) => {
             const isActive = forumView === item.label;
-            const goesToMembers = item.label === "Members";
             return (
               <button
                 key={item.label}
-                onClick={() => {
-                  const forumRouteMap: Record<string, string> = {
-                    "Home": "/community/forum",
-                    "Questions": "/community/forum/questions",
-                    "Most Answered": "/community/forum/most-answered",
-                    "Polls": "/community/forum/polls",
-                    "Groups": "/community/forum/groups",
-                    "Tags": "/community/forum/tags",
-                    "Sectors": "/community/forum/sectors",
-                    "Badges": "/community/forum/badges",
-                    "Members": "/community/members",
-                  };
-                  if (goesToMembers) {
-                    setCurrentPage("members");
-                    navigate("/community/members");
-                  } else {
-                    setForumView(item.label);
-                    navigate(forumRouteMap[item.label] ?? "/community/forum");
-                  }
-                }}
+                onClick={() => setForumView(item.label)}
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 10,
-                  width: "100%",
-                  padding: "9px 12px",
-                  borderRadius: 8,
-                  border: "none",
-                  cursor: "pointer",
-                  background: isActive ? `${C.primary}10` : "transparent",
-                  color: isActive ? C.primary : C.muted,
+                  gap: 5,
+                  padding: "7px 14px",
+                  borderRadius: 20,
+                  border: `1.5px solid ${isActive ? C.primary : C.line}`,
+                  background: isActive ? C.primary : "transparent",
+                  color: isActive ? C.white : C.muted,
                   fontFamily: font.body,
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: isActive ? 700 : 400,
-                  textAlign: "left",
-                  marginBottom: 2,
-                  transition: "all 0.15s",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
                 }}
               >
                 {item.icon}
@@ -1592,56 +1799,97 @@ function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPa
               </button>
             );
           })}
-
-          <div style={{ marginTop: 24, borderTop: `1px solid ${C.line}`, paddingTop: 16 }}>
-            <div
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: "1.5px",
-                color: C.muted,
-                textTransform: "uppercase",
-                padding: "0 12px",
-                marginBottom: 10,
-              }}
-            >
-              Sectors
-            </div>
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat.name}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "100%",
-                  padding: "6px 12px",
-                  border: "none",
-                  cursor: "pointer",
-                  background: "transparent",
-                  color: C.text,
-                  fontFamily: font.body,
-                  fontSize: 12,
-                  textAlign: "left",
-                  borderRadius: 6,
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = C.bg)}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-              >
-                <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ color: C.primary }}>{cat.icon}</span>
-                  {cat.name}
-                </span>
-                <span style={{ fontSize: 11, color: C.muted, background: C.bg, padding: "1px 6px", borderRadius: 10 }}>
-                  {cat.count}
-                </span>
-              </button>
-            ))}
-          </div>
         </div>
+      )}
+
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "220px 1fr 260px" }}>
+        {/* Left Nav — hidden on mobile (replaced by pill strip above) */}
+        {!isMobile && (
+          <div style={{ borderRight: `1px solid ${C.line}`, padding: "24px 16px" }}>
+            {FORUM_NAV.map((item) => {
+              const isActive = forumView === item.label;
+              const goesToMembers = item.label === "Members";
+              return (
+                <button
+                  key={item.label}
+                  onClick={() => (goesToMembers ? setCurrentPage("members") : setForumView(item.label))}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    width: "100%",
+                    padding: "9px 12px",
+                    borderRadius: 8,
+                    border: "none",
+                    cursor: "pointer",
+                    background: isActive ? `${C.primary}10` : "transparent",
+                    color: isActive ? C.primary : C.muted,
+                    fontFamily: font.body,
+                    fontSize: 13,
+                    fontWeight: isActive ? 700 : 400,
+                    textAlign: "left",
+                    marginBottom: 2,
+                    transition: "all 0.15s",
+                  }}
+                >
+                  {item.icon}
+                  {item.label}
+                </button>
+              );
+            })}
+
+            <div style={{ marginTop: 24, borderTop: `1px solid ${C.line}`, paddingTop: 16 }}>
+              <div
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "1.5px",
+                  color: C.muted,
+                  textTransform: "uppercase",
+                  padding: "0 12px",
+                  marginBottom: 10,
+                }}
+              >
+                Sectors
+              </div>
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.name}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    padding: "6px 12px",
+                    border: "none",
+                    cursor: "pointer",
+                    background: "transparent",
+                    color: C.text,
+                    fontFamily: font.body,
+                    fontSize: 12,
+                    textAlign: "left",
+                    borderRadius: 6,
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = C.bg)}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                >
+                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ color: C.primary }}>{cat.icon}</span>
+                    {cat.name}
+                  </span>
+                  <span
+                    style={{ fontSize: 11, color: C.muted, background: C.bg, padding: "1px 6px", borderRadius: 10 }}
+                  >
+                    {cat.count}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Main Content */}
-        <div style={{ padding: "24px", minHeight: 600 }}>
+        <div style={{ padding: isMobile ? "16px" : "24px", minHeight: isMobile ? "auto" : 600 }}>
           {/* Search */}
           <div style={{ position: "relative", marginBottom: 16 }}>
             <Search
@@ -1859,15 +2107,21 @@ function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPa
             </>
           )}
 
-          {forumView === "Polls" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              {[
+          {forumView === "Polls" &&
+            (() => {
+              const POLLS = [
                 {
+                  id: 0,
+                  sector: "Strategy",
+                  closes: "Mar 14",
                   q: "Which sector should BRIDGE prioritize for its next flagship venture?",
                   options: ["Agriculture", "Health Systems", "Energy", "Manufacturing"],
                   votes: [42, 31, 18, 9],
                 },
                 {
+                  id: 1,
+                  sector: "Financial Inclusion",
+                  closes: "Mar 20",
                   q: "What is the biggest barrier to financial inclusion for rural Ghanaians?",
                   options: [
                     "No mobile coverage",
@@ -1878,356 +2132,998 @@ function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPa
                   votes: [28, 22, 35, 15],
                 },
                 {
+                  id: 2,
+                  sector: "Governance",
+                  closes: "Mar 18",
                   q: "Should BRIDGE publish quarterly sector performance reports publicly?",
                   options: ["Yes — full transparency", "Yes — summary only", "No — members only", "No preference"],
                   votes: [58, 24, 12, 6],
                 },
-              ].map((poll, pi) => {
-                const total = poll.votes.reduce((a, b) => a + b, 0);
+                {
+                  id: 3,
+                  sector: "Infrastructure",
+                  closes: "Mar 25",
+                  q: "What should drive Kejetia Phase 2 sequencing for payment integration?",
+                  options: [
+                    "By stall type",
+                    "By transaction volume",
+                    "By geographic cluster",
+                    "Phased hybrid approach",
+                  ],
+                  votes: [19, 33, 27, 21],
+                },
+              ];
+              const PollCard = ({ poll }) => {
+                const [voted, setVoted] = useState(null);
+                const baseVotes = poll.votes;
+                const liveVotes = voted !== null ? baseVotes.map((v, i) => (i === voted ? v + 1 : v)) : baseVotes;
+                const total = liveVotes.reduce((a, b) => a + b, 0);
                 return (
-                  <div key={pi} style={{ border: `1.5px solid ${C.line}`, borderRadius: 14, padding: 24 }}>
-                    <h3 style={{ fontSize: 15, fontWeight: 700, color: C.dark, margin: "0 0 16px", lineHeight: 1.4 }}>
-                      {poll.q}
-                    </h3>
-                    {poll.options.map((opt, oi) => {
-                      const pct = Math.round((poll.votes[oi] / total) * 100);
-                      return (
-                        <div key={oi} style={{ marginBottom: 10 }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                            <span style={{ fontSize: 13, color: C.dark }}>{opt}</span>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: C.primary }}>{pct}%</span>
-                          </div>
-                          <div style={{ height: 8, borderRadius: 6, background: C.line, overflow: "hidden" }}>
+                  <div
+                    style={{
+                      background: C.white,
+                      border: `1.5px solid ${C.line}`,
+                      borderRadius: 16,
+                      overflow: "hidden",
+                      boxShadow: C.cardShadow,
+                    }}
+                  >
+                    <div style={{ padding: "20px 24px 16px", borderBottom: `1px solid ${C.line}` }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "flex-start",
+                          marginBottom: 12,
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: 10,
+                            fontWeight: 700,
+                            letterSpacing: "1px",
+                            textTransform: "uppercase",
+                            color: C.primary,
+                            background: `${C.primary}10`,
+                            padding: "3px 10px",
+                            borderRadius: 6,
+                          }}
+                        >
+                          {poll.sector}
+                        </span>
+                        <span style={{ fontSize: 11, color: C.muted, display: "flex", alignItems: "center", gap: 4 }}>
+                          <Clock size={11} /> Closes {poll.closes}
+                        </span>
+                      </div>
+                      <h3 style={{ fontSize: 15, fontWeight: 700, color: C.dark, margin: 0, lineHeight: 1.45 }}>
+                        {poll.q}
+                      </h3>
+                    </div>
+                    <div style={{ padding: "16px 24px 20px" }}>
+                      {poll.options.map((opt, oi) => {
+                        const pct = Math.round((liveVotes[oi] / total) * 100);
+                        const isVoted = voted === oi;
+                        const isLeading = liveVotes[oi] === Math.max(...liveVotes);
+                        return (
+                          <button
+                            key={oi}
+                            onClick={() => !voted && setVoted(oi)}
+                            style={{
+                              display: "block",
+                              width: "100%",
+                              marginBottom: 10,
+                              padding: 0,
+                              border: "none",
+                              background: "none",
+                              cursor: voted ? "default" : "pointer",
+                              textAlign: "left",
+                            }}
+                          >
+                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                              <span
+                                style={{
+                                  fontSize: 13,
+                                  color: isVoted ? C.primary : C.dark,
+                                  fontWeight: isVoted ? 700 : 400,
+                                  fontFamily: font.body,
+                                }}
+                              >
+                                {opt}
+                              </span>
+                              {voted !== null && (
+                                <span
+                                  style={{
+                                    fontSize: 12,
+                                    fontWeight: 700,
+                                    color: isLeading ? C.primary : C.muted,
+                                    fontFamily: font.body,
+                                  }}
+                                >
+                                  {pct}%
+                                </span>
+                              )}
+                            </div>
                             <div
                               style={{
-                                width: `${pct}%`,
-                                height: "100%",
-                                background: `linear-gradient(90deg, ${C.primary}, ${C.accent})`,
+                                height: 9,
                                 borderRadius: 6,
+                                background: C.bg,
+                                overflow: "hidden",
+                                border: `1px solid ${isVoted ? C.primary + "40" : C.line}`,
                               }}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <div style={{ marginTop: 12, fontSize: 12, color: C.muted }}>
-                      {total} votes · Closes Mar 14, 2026
+                            >
+                              <div
+                                style={{
+                                  width: voted !== null ? `${pct}%` : "0%",
+                                  height: "100%",
+                                  borderRadius: 6,
+                                  background: isVoted
+                                    ? `linear-gradient(90deg, ${C.primary}, #2E7D5E)`
+                                    : isLeading
+                                      ? `linear-gradient(90deg, ${C.accent}, ${C.primary})`
+                                      : C.line,
+                                  transition: "width 0.6s ease",
+                                }}
+                              />
+                            </div>
+                          </button>
+                        );
+                      })}
+                      <div
+                        style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}
+                      >
+                        <span style={{ fontSize: 12, color: C.muted }}>{total} votes</span>
+                        {voted !== null && (
+                          <span style={{ fontSize: 11, fontWeight: 700, color: "#27AE60" }}>✓ Your vote recorded</span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
-              })}
-            </div>
-          )}
+              };
+              return (
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                  {POLLS.map((p) => (
+                    <PollCard key={p.id} poll={p} />
+                  ))}
+                </div>
+              );
+            })()}
 
           {forumView === "Groups" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               {[
                 {
                   name: "Kejetia Market Digitization",
                   sector: "Infrastructure",
+                  sectorColor: "#1B4D3E",
                   members: 18,
                   active: true,
-                  desc: "Coordinating Phase 2 of the digital payment rollout across 10,000+ stalls.",
+                  posts: 12,
+                  desc: "Coordinating Phase 2 of the digital payment rollout across 10,000+ stalls in West Africa's largest market.",
+                  avatars: ["AO", "KM", "EA", "KB", "AD"],
                 },
                 {
                   name: "Northern Corridor AgriFinance",
                   sector: "Agriculture",
+                  sectorColor: "#4A7C59",
                   members: 12,
                   active: true,
-                  desc: "Designing cooperative financing models for smallholder farmers in Brong-Ahafo.",
+                  posts: 7,
+                  desc: "Designing cooperative financing models for smallholder farmers in Brong-Ahafo and the Northern Corridor.",
+                  avatars: ["KM", "AO", "FM", "NA"],
                 },
                 {
                   name: "TVET Skills Pipeline",
                   sector: "Education",
+                  sectorColor: "#7B5EA7",
                   members: 9,
                   active: false,
-                  desc: "Aligning TVET curriculum with BRIDGE manufacturing sector venture requirements.",
+                  posts: 2,
+                  desc: "Aligning TVET curriculum with BRIDGE manufacturing sector venture requirements and 2026 targets.",
+                  avatars: ["AD", "EA", "AB"],
                 },
                 {
                   name: "CHW Deployment Task Force",
                   sector: "Health Systems",
+                  sectorColor: "#2C5F8A",
                   members: 14,
                   active: true,
-                  desc: "Scaling community health worker programs across the UE Region.",
+                  posts: 9,
+                  desc: "Scaling community health worker programs to serve rural populations across the UE Region.",
+                  avatars: ["EA", "AO", "FM", "KB", "AD"],
                 },
                 {
                   name: "FinTech Innovation Lab",
                   sector: "Technology",
+                  sectorColor: "#C07A2A",
                   members: 22,
                   active: true,
-                  desc: "Piloting mobile-first financial tools for unbanked populations.",
+                  posts: 18,
+                  desc: "Piloting mobile-first financial tools and agent banking models for unbanked populations.",
+                  avatars: ["KB", "KM", "AO", "FM", "NA"],
                 },
                 {
                   name: "Renewable Energy Atlas",
                   sector: "Energy",
+                  sectorColor: "#B04040",
                   members: 7,
                   active: false,
-                  desc: "Mapping off-grid solar opportunity zones across Ghana's rural districts.",
+                  posts: 1,
+                  desc: "Mapping off-grid solar opportunity zones across Ghana's rural districts using GIS data.",
+                  avatars: ["FM", "AB", "NA"],
                 },
               ].map((g, i) => (
                 <div
                   key={i}
                   style={{
+                    background: C.white,
+                    border: `1.5px solid ${C.line}`,
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    boxShadow: C.cardShadow,
+                    transition: "box-shadow 0.2s, border-color 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = g.sectorColor;
+                    e.currentTarget.style.boxShadow = C.deepShadow;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = C.line;
+                    e.currentTarget.style.boxShadow = C.cardShadow;
+                  }}
+                >
+                  {/* Colored top accent */}
+                  <div
+                    style={{ height: 4, background: `linear-gradient(90deg, ${g.sectorColor}, ${g.sectorColor}80)` }}
+                  />
+                  <div style={{ padding: "18px 20px 16px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        marginBottom: 12,
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          letterSpacing: "0.8px",
+                          textTransform: "uppercase",
+                          color: g.sectorColor,
+                          background: g.sectorColor + "14",
+                          padding: "3px 9px",
+                          borderRadius: 6,
+                        }}
+                      >
+                        {g.sector}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: g.active ? "#27AE60" : C.muted,
+                          background: g.active ? "#27AE6012" : C.bg,
+                          padding: "3px 9px",
+                          borderRadius: 20,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 4,
+                        }}
+                      >
+                        <span
+                          style={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: "50%",
+                            background: g.active ? "#27AE60" : C.muted,
+                            display: "inline-block",
+                          }}
+                        />
+                        {g.active ? "Active" : "Inactive"}
+                      </span>
+                    </div>
+                    <h3 style={{ fontSize: 15, fontWeight: 700, color: C.dark, margin: "0 0 8px", lineHeight: 1.3 }}>
+                      {g.name}
+                    </h3>
+                    <p style={{ fontSize: 12, color: C.muted, margin: "0 0 16px", lineHeight: 1.55 }}>{g.desc}</p>
+
+                    {/* Member avatars + stats */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <div style={{ display: "flex" }}>
+                          {g.avatars.slice(0, 4).map((av, ai) => (
+                            <div
+                              key={ai}
+                              style={{
+                                width: 26,
+                                height: 26,
+                                borderRadius: "50%",
+                                background: g.sectorColor,
+                                color: C.white,
+                                fontSize: 9,
+                                fontWeight: 700,
+                                fontFamily: font.body,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                marginLeft: ai > 0 ? -8 : 0,
+                                border: `2px solid ${C.white}`,
+                                zIndex: 4 - ai,
+                              }}
+                            >
+                              {av[0]}
+                            </div>
+                          ))}
+                          {g.avatars.length > 4 && (
+                            <div
+                              style={{
+                                width: 26,
+                                height: 26,
+                                borderRadius: "50%",
+                                background: C.bg,
+                                color: C.muted,
+                                fontSize: 9,
+                                fontWeight: 700,
+                                fontFamily: font.body,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                marginLeft: -8,
+                                border: `2px solid ${C.white}`,
+                              }}
+                            >
+                              +{g.avatars.length - 4}
+                            </div>
+                          )}
+                        </div>
+                        <span style={{ fontSize: 12, color: C.muted }}>{g.members} members</span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <span style={{ fontSize: 11, color: C.muted }}>
+                          <MessageSquare size={10} style={{ display: "inline", marginRight: 3 }} />
+                          {g.posts} this week
+                        </span>
+                        <button
+                          style={{
+                            padding: "6px 14px",
+                            borderRadius: 20,
+                            border: `1.5px solid ${g.sectorColor}`,
+                            background: "transparent",
+                            color: g.sectorColor,
+                            fontSize: 12,
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            fontFamily: font.body,
+                          }}
+                        >
+                          Join
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {forumView === "Tags" &&
+            (() => {
+              const [tagSearch, setTagSearch] = useState("");
+              const TAG_GROUPS = [
+                {
+                  sector: "Agriculture",
+                  color: "#4A7C59",
+                  tags: [
+                    { t: "post-harvest-loss", n: 34 },
+                    { t: "agri-value-chain", n: 38 },
+                    { t: "cooperative-finance", n: 27 },
+                    { t: "northern-corridor", n: 12 },
+                    { t: "smallholder-farming", n: 19 },
+                    { t: "irrigation", n: 8 },
+                  ],
+                },
+                {
+                  sector: "Infrastructure",
+                  color: "#1B4D3E",
+                  tags: [
+                    { t: "kejetia-market", n: 28 },
+                    { t: "digital-payment", n: 31 },
+                    { t: "ghanapostgps", n: 9 },
+                    { t: "last-mile", n: 16 },
+                    { t: "road-network", n: 22 },
+                    { t: "urban-planning", n: 11 },
+                  ],
+                },
+                {
+                  sector: "Financial Inclusion",
+                  color: "#2C5F8A",
+                  tags: [
+                    { t: "mobile-money", n: 41 },
+                    { t: "fintech-pilot", n: 24 },
+                    { t: "agent-banking", n: 17 },
+                    { t: "microfinance", n: 29 },
+                    { t: "unbanked", n: 33 },
+                  ],
+                },
+                {
+                  sector: "Technology",
+                  color: "#C07A2A",
+                  tags: [
+                    { t: "digital-literacy", n: 21 },
+                    { t: "ict-access", n: 14 },
+                    { t: "open-data", n: 9 },
+                    { t: "gis-mapping", n: 18 },
+                  ],
+                },
+                {
+                  sector: "Health Systems",
+                  color: "#7B5EA7",
+                  tags: [
+                    { t: "chw-deployment", n: 22 },
+                    { t: "health-equity", n: 29 },
+                    { t: "nhia-integration", n: 13 },
+                    { t: "telemedicine", n: 10 },
+                  ],
+                },
+                {
+                  sector: "Education",
+                  color: "#B04040",
+                  tags: [
+                    { t: "tvet-curriculum", n: 19 },
+                    { t: "youth-employment", n: 18 },
+                    { t: "skills-gap", n: 25 },
+                    { t: "stem-education", n: 11 },
+                  ],
+                },
+                {
+                  sector: "BRIDGE Platform",
+                  color: "#888",
+                  tags: [
+                    { t: "bridge-ventures", n: 45 },
+                    { t: "impact-score", n: 11 },
+                    { t: "2026-budget", n: 33 },
+                    { t: "peace-prosperity", n: 20 },
+                  ],
+                },
+              ];
+              const allTags = TAG_GROUPS.flatMap((g) =>
+                g.tags.map((t) => ({ ...t, sector: g.sector, color: g.color })),
+              );
+              const trending = [...allTags].sort((a, b) => b.n - a.n).slice(0, 6);
+              const filtered = TAG_GROUPS.map((g) => ({
+                ...g,
+                tags: tagSearch ? g.tags.filter((t) => t.t.includes(tagSearch.toLowerCase())) : g.tags,
+              })).filter((g) => g.tags.length > 0);
+
+              return (
+                <div>
+                  {/* Search */}
+                  <div style={{ position: "relative", marginBottom: 20 }}>
+                    <Search
+                      size={14}
+                      style={{
+                        position: "absolute",
+                        left: 12,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: C.muted,
+                      }}
+                    />
+                    <input
+                      value={tagSearch}
+                      onChange={(e) => setTagSearch(e.target.value)}
+                      placeholder="Search tags..."
+                      style={{
+                        width: "100%",
+                        padding: "9px 12px 9px 36px",
+                        borderRadius: 10,
+                        border: `1.5px solid ${C.line}`,
+                        fontFamily: font.body,
+                        fontSize: 13,
+                        outline: "none",
+                        boxSizing: "border-box",
+                        background: C.bg,
+                      }}
+                      onFocus={(e) => (e.target.style.borderColor = C.primary)}
+                      onBlur={(e) => (e.target.style.borderColor = C.line)}
+                    />
+                  </div>
+
+                  {/* Trending strip */}
+                  {!tagSearch && (
+                    <div
+                      style={{
+                        background: `linear-gradient(135deg, ${C.primary}08, ${C.accent}10)`,
+                        border: `1px solid ${C.accent}30`,
+                        borderRadius: 12,
+                        padding: "14px 18px",
+                        marginBottom: 24,
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          letterSpacing: "1.5px",
+                          textTransform: "uppercase",
+                          color: C.primary,
+                          marginBottom: 10,
+                        }}
+                      >
+                        🔥 Trending This Week
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                        {trending.map((t, i) => (
+                          <button
+                            key={i}
+                            style={{
+                              padding: "6px 14px",
+                              borderRadius: 8,
+                              border: `1.5px solid ${t.color}40`,
+                              background: t.color + "10",
+                              cursor: "pointer",
+                              fontFamily: font.body,
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 7,
+                              transition: "all 0.2s",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = t.color + "20";
+                              e.currentTarget.style.borderColor = t.color;
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = t.color + "10";
+                              e.currentTarget.style.borderColor = t.color + "40";
+                            }}
+                          >
+                            <span style={{ fontSize: 12, fontWeight: 600, color: t.color }}>{t.t}</span>
+                            <span
+                              style={{
+                                fontSize: 10,
+                                fontWeight: 700,
+                                color: C.white,
+                                background: t.color,
+                                padding: "1px 6px",
+                                borderRadius: 4,
+                              }}
+                            >
+                              {t.n}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Grouped tags */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                    {filtered.map((group, gi) => (
+                      <div key={gi}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                          <div style={{ width: 3, height: 16, borderRadius: 2, background: group.color }} />
+                          <span
+                            style={{
+                              fontSize: 11,
+                              fontWeight: 700,
+                              letterSpacing: "1px",
+                              textTransform: "uppercase",
+                              color: group.color,
+                            }}
+                          >
+                            {group.sector}
+                          </span>
+                          <span style={{ fontSize: 11, color: C.muted }}>— {group.tags.length} tags</span>
+                        </div>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                          {group.tags.map((t, ti) => {
+                            const intensity = Math.min(t.n / 50, 1);
+                            return (
+                              <button
+                                key={ti}
+                                style={{
+                                  padding: "7px 14px",
+                                  borderRadius: 8,
+                                  border: `1.5px solid ${group.color}${Math.round(30 + intensity * 60).toString(16)}`,
+                                  background:
+                                    group.color +
+                                    Math.round(8 + intensity * 18)
+                                      .toString(16)
+                                      .padStart(2, "0"),
+                                  cursor: "pointer",
+                                  fontFamily: font.body,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 8,
+                                  transition: "all 0.18s",
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.background = group.color + "28";
+                                  e.currentTarget.style.borderColor = group.color;
+                                  e.currentTarget.style.transform = "translateY(-1px)";
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.background =
+                                    group.color +
+                                    Math.round(8 + intensity * 18)
+                                      .toString(16)
+                                      .padStart(2, "0");
+                                  e.currentTarget.style.borderColor = `${group.color}${Math.round(30 + intensity * 60).toString(16)}`;
+                                  e.currentTarget.style.transform = "none";
+                                }}
+                              >
+                                <span style={{ fontSize: 12, fontWeight: t.n > 25 ? 700 : 500, color: group.color }}>
+                                  {t.t}
+                                </span>
+                                <span
+                                  style={{
+                                    fontSize: 10,
+                                    fontWeight: 700,
+                                    color: C.white,
+                                    background: group.color + "cc",
+                                    padding: "1px 6px",
+                                    borderRadius: 4,
+                                    minWidth: 18,
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {t.n}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
+          {forumView === "Sectors" && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+              {[
+                { ...CATEGORIES[0], members: 31, trending: "kejetia-market", hot: true },
+                { ...CATEGORIES[1], members: 24, trending: "mobile-money", hot: true },
+                { ...CATEGORIES[2], members: 19, trending: "chw-deployment", hot: false },
+                { ...CATEGORIES[3], members: 28, trending: "fintech-pilot", hot: true },
+                { ...CATEGORIES[4], members: 15, trending: "tvet-curriculum", hot: false },
+                { ...CATEGORIES[5], members: 34, trending: "agri-value-chain", hot: true },
+                { ...CATEGORIES[6], members: 10, trending: "creative-economy", hot: false },
+                { ...CATEGORIES[7], members: 12, trending: "housing-deficit", hot: false },
+                { ...CATEGORIES[8], members: 9, trending: "eco-tourism", hot: false },
+                { ...CATEGORIES[9], members: 16, trending: "off-grid-solar", hot: false },
+                { ...CATEGORIES[10], members: 13, trending: "light-manufacturing", hot: false },
+                { ...CATEGORIES[11], members: 11, trending: "northern-corridor", hot: false },
+              ].map((cat, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: C.white,
                     border: `1.5px solid ${C.line}`,
                     borderRadius: 14,
                     padding: 20,
-                    transition: "border-color 0.2s",
+                    transition: "all 0.2s",
+                    cursor: "pointer",
+                    boxShadow: C.cardShadow,
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.primary)}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = C.primary;
+                    e.currentTarget.style.boxShadow = C.deepShadow;
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = C.line;
+                    e.currentTarget.style.boxShadow = C.cardShadow;
+                    e.currentTarget.style.transform = "none";
+                  }}
                 >
                   <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "flex-start",
-                      marginBottom: 10,
+                      marginBottom: 12,
                     }}
                   >
-                    <Pill color={C.primary} small border>
-                      {g.sector}
-                    </Pill>
-                    <span
+                    <div
                       style={{
-                        fontSize: 10,
-                        fontWeight: 700,
-                        color: g.active ? "#27AE60" : C.muted,
-                        background: g.active ? "#27AE6015" : C.bg,
-                        padding: "3px 8px",
-                        borderRadius: 20,
-                      }}
-                    >
-                      {g.active ? "● Active" : "○ Inactive"}
-                    </span>
-                  </div>
-                  <h3 style={{ fontSize: 14, fontWeight: 700, color: C.dark, margin: "0 0 8px" }}>{g.name}</h3>
-                  <p style={{ fontSize: 12, color: C.muted, margin: "0 0 14px", lineHeight: 1.5 }}>{g.desc}</p>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontSize: 12, color: C.muted }}>
-                      <Users size={11} style={{ display: "inline", marginRight: 4 }} />
-                      {g.members} members
-                    </span>
-                    <button
-                      style={{
-                        padding: "5px 14px",
-                        borderRadius: 20,
-                        border: `1.5px solid ${C.primary}`,
-                        background: "transparent",
+                        width: 38,
+                        height: 38,
+                        borderRadius: 10,
+                        background: `${C.primary}10`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                         color: C.primary,
-                        fontSize: 12,
-                        fontWeight: 600,
-                        cursor: "pointer",
-                        fontFamily: font.body,
                       }}
                     >
-                      Join
-                    </button>
+                      {cat.icon}
+                    </div>
+                    {cat.hot && (
+                      <span
+                        style={{
+                          fontSize: 9,
+                          fontWeight: 700,
+                          letterSpacing: "0.5px",
+                          color: "#E07020",
+                          background: "#E0702012",
+                          padding: "2px 7px",
+                          borderRadius: 6,
+                        }}
+                      >
+                        🔥 HOT
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: C.dark, marginBottom: 4 }}>{cat.name}</div>
+                  <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted, marginBottom: 10 }}>
+                    <span>{cat.count} posts</span>
+                    <span>·</span>
+                    <span>{cat.members} members</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <Tag size={10} color={C.accent} />
+                    <span style={{ fontSize: 11, color: C.primary, fontWeight: 600 }}>{cat.trending}</span>
                   </div>
                 </div>
               ))}
             </div>
           )}
 
-          {forumView === "Tags" && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-              {[
-                { tag: "post-harvest-loss", count: 34 },
-                { tag: "kejetia-market", count: 28 },
-                { tag: "tvet-curriculum", count: 19 },
-                { tag: "chw-deployment", count: 22 },
-                { tag: "mobile-money", count: 41 },
-                { tag: "off-grid-solar", count: 15 },
-                { tag: "cooperative-finance", count: 27 },
-                { tag: "2026-budget", count: 33 },
-                { tag: "youth-employment", count: 18 },
-                { tag: "northern-corridor", count: 12 },
-                { tag: "fintech-pilot", count: 24 },
-                { tag: "agri-value-chain", count: 38 },
-                { tag: "housing-deficit", count: 16 },
-                { tag: "health-equity", count: 29 },
-                { tag: "digital-literacy", count: 21 },
-                { tag: "impact-score", count: 11 },
-                { tag: "bridge-ventures", count: 45 },
-                { tag: "ghanapostgps", count: 9 },
-              ].map((t, i) => (
-                <button
-                  key={i}
-                  style={{
-                    padding: "8px 16px",
-                    borderRadius: 20,
-                    border: `1.5px solid ${C.line}`,
-                    background: C.bg,
-                    fontFamily: font.body,
-                    fontSize: 13,
-                    color: C.text,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    transition: "all 0.2s",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = C.accent;
-                    e.currentTarget.style.background = `${C.accent}15`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = C.line;
-                    e.currentTarget.style.background = C.bg;
-                  }}
-                >
-                  <Tag size={11} color={C.primary} />
-                  {t.tag}
-                  <span
-                    style={{
-                      fontSize: 11,
-                      color: C.muted,
-                      background: C.white,
-                      padding: "1px 6px",
-                      borderRadius: 10,
-                      border: `1px solid ${C.line}`,
-                    }}
-                  >
-                    ×{t.count}
-                  </span>
-                </button>
-              ))}
-            </div>
-          )}
-
-          {forumView === "Sectors" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
-              {CATEGORIES.map((cat, i) => (
-                <div
-                  key={i}
-                  style={{
-                    border: `1.5px solid ${C.line}`,
-                    borderRadius: 14,
-                    padding: 20,
-                    transition: "border-color 0.2s",
-                    cursor: "pointer",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.accent)}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
-                >
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: 10,
-                      background: `${C.primary}12`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginBottom: 10,
-                      color: C.primary,
-                    }}
-                  >
-                    {cat.icon}
-                  </div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: C.dark }}>{cat.name}</div>
-                  <div style={{ fontSize: 12, color: C.muted, marginTop: 4 }}>{cat.count} discussions</div>
+          {forumView === "Badges" &&
+            (() => {
+              const TIERS = [
+                {
+                  tier: "Starter",
+                  color: "#888",
+                  desc: "First steps in the BRIDGE community",
+                  badges: [
+                    {
+                      name: "First Post",
+                      icon: "✍️",
+                      desc: "Published your first community contribution",
+                      earned: true,
+                      progress: null,
+                    },
+                    {
+                      name: "First Answer",
+                      icon: "🎯",
+                      desc: "Answered your first community question",
+                      earned: true,
+                      progress: null,
+                    },
+                    {
+                      name: "Profile Complete",
+                      icon: "👤",
+                      desc: "Filled out your full member profile",
+                      earned: true,
+                      progress: null,
+                    },
+                  ],
+                },
+                {
+                  tier: "Contributor",
+                  color: "#2C5F8A",
+                  desc: "Actively shaping BRIDGE discussions",
+                  badges: [
+                    {
+                      name: "Sector Expert",
+                      icon: "🏅",
+                      desc: "Top 5 contributor in your sector for 30 days",
+                      earned: true,
+                      progress: null,
+                    },
+                    {
+                      name: "Insight Publisher",
+                      icon: "📊",
+                      desc: "Published 5+ sector analysis insights",
+                      earned: false,
+                      progress: 60,
+                    },
+                    {
+                      name: "Policy Watcher",
+                      icon: "📋",
+                      desc: "Flagged 10+ policy developments",
+                      earned: false,
+                      progress: 40,
+                    },
+                    {
+                      name: "Working Group Lead",
+                      icon: "👥",
+                      desc: "Led a BRIDGE working group to completion",
+                      earned: false,
+                      progress: 20,
+                    },
+                  ],
+                },
+                {
+                  tier: "Champion",
+                  color: C.primary,
+                  desc: "A recognized BRIDGE community leader",
+                  badges: [
+                    {
+                      name: "Champion",
+                      icon: "🏆",
+                      desc: "Reached Champion status — 2,500+ points",
+                      earned: true,
+                      progress: null,
+                    },
+                    {
+                      name: "Bridge Builder",
+                      icon: "🌉",
+                      desc: "Connected 3+ members across different sectors",
+                      earned: false,
+                      progress: 33,
+                    },
+                    {
+                      name: "Ghana First",
+                      icon: "🇬🇭",
+                      desc: "Completed all 12 sector profiles in your dashboard",
+                      earned: false,
+                      progress: 75,
+                    },
+                    {
+                      name: "Leader",
+                      icon: "⭐",
+                      desc: "Reached Leader status — 5,000+ points (2,160 pts to go)",
+                      earned: false,
+                      progress: 57,
+                    },
+                  ],
+                },
+              ];
+              return (
+                <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+                  {TIERS.map((tier, ti) => (
+                    <div key={ti}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                        <div style={{ width: 4, height: 18, borderRadius: 2, background: tier.color }} />
+                        <div>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: tier.color }}>{tier.tier} Tier</span>
+                          <span style={{ fontSize: 12, color: C.muted, marginLeft: 8 }}>— {tier.desc}</span>
+                        </div>
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+                        {tier.badges.map((b, bi) => (
+                          <div
+                            key={bi}
+                            style={{
+                              background: b.earned
+                                ? `linear-gradient(135deg, ${tier.color}0a, ${tier.color}18)`
+                                : C.white,
+                              border: `1.5px solid ${b.earned ? tier.color + "50" : C.line}`,
+                              borderRadius: 14,
+                              padding: 18,
+                              display: "flex",
+                              flexDirection: "column",
+                              opacity: b.earned ? 1 : 0.8,
+                              transition: "all 0.2s",
+                              position: "relative",
+                              overflow: "hidden",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.borderColor = tier.color;
+                              e.currentTarget.style.opacity = "1";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.borderColor = b.earned ? tier.color + "50" : C.line;
+                              e.currentTarget.style.opacity = b.earned ? "1" : "0.8";
+                            }}
+                          >
+                            {b.earned && (
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  top: 10,
+                                  right: 10,
+                                  width: 16,
+                                  height: 16,
+                                  borderRadius: "50%",
+                                  background: "#27AE60",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <Check size={9} color={C.white} strokeWidth={3} />
+                              </div>
+                            )}
+                            <div style={{ fontSize: 28, marginBottom: 10 }}>{b.icon}</div>
+                            <div
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 700,
+                                color: b.earned ? tier.color : C.dark,
+                                marginBottom: 4,
+                                lineHeight: 1.2,
+                              }}
+                            >
+                              {b.name}
+                            </div>
+                            <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.4, flex: 1 }}>{b.desc}</div>
+                            {!b.earned && b.progress !== null && (
+                              <div style={{ marginTop: 12 }}>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    fontSize: 10,
+                                    color: C.muted,
+                                    marginBottom: 4,
+                                  }}
+                                >
+                                  <span>Progress</span>
+                                  <span style={{ fontWeight: 700, color: tier.color }}>{b.progress}%</span>
+                                </div>
+                                <div style={{ height: 4, borderRadius: 4, background: C.bg }}>
+                                  <div
+                                    style={{
+                                      width: `${b.progress}%`,
+                                      height: "100%",
+                                      borderRadius: 4,
+                                      background: tier.color,
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            )}
+                            {b.earned && (
+                              <div style={{ marginTop: 10, fontSize: 10, fontWeight: 700, color: "#27AE60" }}>
+                                ✓ Earned
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
-
-          {forumView === "Badges" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
-              {[
-                { name: "First Answer", icon: "🎯", desc: "Answered your first community question", earned: true },
-                {
-                  name: "Sector Expert",
-                  icon: "🏅",
-                  desc: "Top 5 contributor in your sector for 30 days",
-                  earned: true,
-                },
-                { name: "Champion", icon: "🏆", desc: "Reached Champion status (2,500+ points)", earned: true },
-                { name: "Insight Publisher", icon: "📊", desc: "Published 5+ sector analysis reports", earned: false },
-                {
-                  name: "Working Group Lead",
-                  icon: "👥",
-                  desc: "Led a BRIDGE working group to completion",
-                  earned: false,
-                },
-                {
-                  name: "Policy Watcher",
-                  icon: "📋",
-                  desc: "Flagged 10+ policy developments for the community",
-                  earned: false,
-                },
-                {
-                  name: "Bridge Builder",
-                  icon: "🌉",
-                  desc: "Connected 3+ members across different sectors",
-                  earned: false,
-                },
-                { name: "Leader", icon: "⭐", desc: "Reached Leader status (5,000+ points)", earned: false },
-                {
-                  name: "Ghana First",
-                  icon: "🇬🇭",
-                  desc: "Completed all 12 sector profiles in your dashboard",
-                  earned: false,
-                },
-              ].map((b, i) => (
-                <div
-                  key={i}
-                  style={{
-                    border: `1.5px solid ${b.earned ? C.primary : C.line}`,
-                    borderRadius: 14,
-                    padding: 20,
-                    opacity: b.earned ? 1 : 0.6,
-                    background: b.earned ? `${C.primary}06` : "transparent",
-                    transition: "all 0.2s",
-                  }}
-                >
-                  <div style={{ fontSize: 32, marginBottom: 10 }}>{b.icon}</div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: b.earned ? C.primary : C.dark }}>{b.name}</div>
-                  <div style={{ fontSize: 12, color: C.muted, marginTop: 4, lineHeight: 1.4 }}>{b.desc}</div>
-                  {b.earned && (
-                    <div style={{ marginTop: 8, fontSize: 11, fontWeight: 700, color: "#27AE60" }}>✓ Earned</div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+              );
+            })()}
         </div>
 
-        {/* Right Sidebar */}
-        <div style={{ borderLeft: `1px solid ${C.line}`, padding: "24px 16px" }}>
-          <SectionLabel>All Sectors</SectionLabel>
-          {CATEGORIES.map((cat) => (
-            <div
-              key={cat.name}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "6px 0",
-                borderBottom: `1px solid ${C.line}20`,
-              }}
-            >
-              <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.text }}>
-                <span style={{ color: C.primary }}>{cat.icon}</span>
-                {cat.name}
-              </span>
-              <span style={{ fontSize: 11, color: C.muted }}>{cat.count}</span>
-            </div>
-          ))}
-          <div style={{ marginTop: 24 }}>
-            <SectionLabel>Top Members</SectionLabel>
-            {MEMBERS.map((m, i) => (
-              <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: C.muted, minWidth: 16 }}>#{i + 1}</span>
-                <Avatar initials={m.avatar} size={28} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
-                  <div style={{ fontSize: 10, color: C.muted }}>{m.role}</div>
-                </div>
-                <span style={{ fontSize: 11, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
+        {/* Right Sidebar — hidden on mobile */}
+        {!isMobile && (
+          <div style={{ borderLeft: `1px solid ${C.line}`, padding: "24px 16px" }}>
+            <SectionLabel>All Sectors</SectionLabel>
+            {CATEGORIES.map((cat) => (
+              <div
+                key={cat.name}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "6px 0",
+                  borderBottom: `1px solid ${C.line}20`,
+                }}
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.text }}>
+                  <span style={{ color: C.primary }}>{cat.icon}</span>
+                  {cat.name}
+                </span>
+                <span style={{ fontSize: 11, color: C.muted }}>{cat.count}</span>
               </div>
             ))}
+            <div style={{ marginTop: 24 }}>
+              <SectionLabel>Top Members</SectionLabel>
+              {MEMBERS.map((m, i) => (
+                <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: C.muted, minWidth: 16 }}>#{i + 1}</span>
+                  <Avatar initials={m.avatar} size={28} />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
+                    <div style={{ fontSize: 10, color: C.muted }}>{m.role}</div>
+                  </div>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -2333,11 +3229,25 @@ const ALL_MEMBERS = [
   },
 ];
 
-function MembersPage() {
+function MembersPage({ isMobile }) {
   const [search, setSearch] = useState("");
   const [filterSector, setFilterSector] = useState("All");
   const [filterType, setFilterType] = useState("All");
   const [filterBadge, setFilterBadge] = useState("All");
+  const [sortBy, setSortBy] = useState("points");
+
+  const SECTOR_COLORS = {
+    Infrastructure: "#1B4D3E",
+    Agriculture: "#4A7C59",
+    "Health Systems": "#7B5EA7",
+    Technology: "#C07A2A",
+    Education: "#B04040",
+    Energy: "#2C5F8A",
+    Housing: "#5A6A2A",
+    Transportation: "#6A3A2A",
+    "Financial Inclusion": "#2A5A6A",
+  };
+  const BADGE_COLORS = { Champion: C.accent, Contributor: "#2C5F8A", Newcomer: "#888" };
 
   const filtered = ALL_MEMBERS.filter((m) => {
     const matchSearch =
@@ -2346,14 +3256,38 @@ function MembersPage() {
     const matchType = filterType === "All" || m.type === filterType;
     const matchBadge = filterBadge === "All" || m.badge === filterBadge;
     return matchSearch && matchSector && matchType && matchBadge;
-  });
+  }).sort((a, b) => (sortBy === "points" ? b.points - a.points : a.name.localeCompare(b.name)));
 
-  const badgeColor = { Champion: C.accent, Contributor: "#2C5F8A", Newcomer: "#888" };
+  const PillToggle = ({ opts, val, set }) => (
+    <div style={{ display: "flex", gap: 4 }}>
+      {opts.map((o) => (
+        <button
+          key={o}
+          onClick={() => set(o)}
+          style={{
+            padding: "5px 12px",
+            borderRadius: 8,
+            border: `1.5px solid ${val === o ? C.primary : C.line}`,
+            background: val === o ? C.primary : C.white,
+            color: val === o ? C.white : C.muted,
+            fontFamily: font.body,
+            fontSize: 12,
+            fontWeight: val === o ? 700 : 400,
+            cursor: "pointer",
+            whiteSpace: "nowrap",
+            transition: "all 0.15s",
+          }}
+        >
+          {o}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 28 }}>
+      <div style={{ marginBottom: 24 }}>
         <SectionLabel>Community</SectionLabel>
         <h2
           style={{
@@ -2361,181 +3295,451 @@ function MembersPage() {
             fontSize: 32,
             fontWeight: 700,
             color: C.primary,
-            margin: "0 0 8px",
+            margin: "0 0 6px",
             letterSpacing: "-0.5px",
           }}
         >
           Member <span style={{ color: C.accent }}>Directory</span>
         </h2>
-        <p style={{ fontSize: 15, color: C.muted, margin: 0 }}>
-          {ALL_MEMBERS.length} members across Ghana and the diaspora
+        <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>
+          {ALL_MEMBERS.length} members building Ghana's future across 12 sectors
         </p>
       </div>
 
-      {/* Filters */}
+      {/* Stats strip */}
       <div
         style={{
-          background: C.white,
-          borderRadius: 16,
-          padding: 20,
-          boxShadow: C.cardShadow,
-          marginBottom: 24,
-          display: "flex",
-          gap: 16,
-          alignItems: "center",
-          flexWrap: "wrap",
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)",
+          gap: 12,
+          marginBottom: 20,
         }}
       >
-        <div style={{ position: "relative", flex: 1, minWidth: 200 }}>
-          <Search
-            size={14}
-            style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
-          />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by name or role..."
-            style={{
-              width: "100%",
-              padding: "9px 12px 9px 36px",
-              borderRadius: 10,
-              border: `1.5px solid ${C.line}`,
-              fontFamily: font.body,
-              fontSize: 13,
-              outline: "none",
-              boxSizing: "border-box",
-            }}
-            onFocus={(e) => (e.target.style.borderColor = C.primary)}
-            onBlur={(e) => (e.target.style.borderColor = C.line)}
-          />
-        </div>
         {[
-          { label: "Type", val: filterType, set: setFilterType, opts: ["All", "Premium", "Diaspora"] },
           {
-            label: "Badge",
-            val: filterBadge,
-            set: setFilterBadge,
-            opts: ["All", "Champion", "Contributor", "Newcomer"],
+            val: ALL_MEMBERS.length,
+            label: "Total Members",
+            sub: "+3 this month",
+            trend: "+3",
+            trendUp: true,
+            icon: <Users size={18} />,
+            accent: C.primary,
+            progress: (ALL_MEMBERS.length / 20) * 100,
+            progressLabel: `${ALL_MEMBERS.length} of 20 target`,
           },
-          { label: "Sector", val: filterSector, set: setFilterSector, opts: ["All", ...CATEGORIES.map((c) => c.name)] },
-        ].map((f) => (
-          <select
-            key={f.label}
-            value={f.val}
-            onChange={(e) => f.set(e.target.value)}
-            style={{
-              padding: "9px 14px",
-              borderRadius: 10,
-              border: `1.5px solid ${C.line}`,
-              fontFamily: font.body,
-              fontSize: 13,
-              color: C.text,
-              background: C.white,
-              cursor: "pointer",
-              outline: "none",
-            }}
-          >
-            {f.opts.map((o) => (
-              <option key={o}>{o}</option>
-            ))}
-          </select>
-        ))}
-        <span style={{ fontSize: 13, color: C.muted, marginLeft: "auto" }}>
-          {filtered.length} result{filtered.length !== 1 ? "s" : ""}
-        </span>
-      </div>
-
-      {/* Stats Row */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 24 }}>
-        {[
-          { val: ALL_MEMBERS.length, label: "Total Members" },
-          { val: ALL_MEMBERS.filter((m) => m.type === "Diaspora").length, label: "Diaspora Network" },
-          { val: ALL_MEMBERS.filter((m) => m.badge === "Champion").length, label: "Champions" },
-          { val: [...new Set(ALL_MEMBERS.map((m) => m.sector))].length, label: "Sectors Represented" },
+          {
+            val: ALL_MEMBERS.filter((m) => m.type === "Diaspora").length,
+            label: "Diaspora Network",
+            sub: "3 countries",
+            trend: "UK · CA · US",
+            trendUp: null,
+            icon: <Globe size={18} />,
+            accent: "#2C5F8A",
+            progress: (ALL_MEMBERS.filter((m) => m.type === "Diaspora").length / ALL_MEMBERS.length) * 100,
+            progressLabel: "37% of community",
+          },
+          {
+            val: ALL_MEMBERS.filter((m) => m.badge === "Champion").length,
+            label: "Champions",
+            sub: "Highest tier",
+            trend: "Top tier",
+            trendUp: true,
+            icon: <Award size={18} />,
+            accent: "#96B020",
+            progress: (ALL_MEMBERS.filter((m) => m.badge === "Champion").length / ALL_MEMBERS.length) * 100,
+            progressLabel: "12% of community",
+          },
+          {
+            val: [...new Set(ALL_MEMBERS.map((m) => m.sector))].length,
+            label: "Sectors Active",
+            sub: "of 12 total",
+            trend: "4 growing",
+            trendUp: true,
+            icon: <Blocks size={18} />,
+            accent: "#7B5EA7",
+            progress: ([...new Set(ALL_MEMBERS.map((m) => m.sector))].length / 12) * 100,
+            progressLabel: "67% coverage",
+          },
         ].map((s) => (
           <div
             key={s.label}
-            style={{ background: C.white, borderRadius: 14, padding: "18px 20px", boxShadow: C.cardShadow }}
+            style={{
+              borderRadius: 16,
+              padding: "20px 20px 18px",
+              background: `linear-gradient(135deg, ${s.accent}14 0%, ${s.accent}06 100%)`,
+              border: `1.5px solid ${s.accent}22`,
+              boxShadow: C.cardShadow,
+              position: "relative",
+              overflow: "hidden",
+            }}
           >
-            <div style={{ fontFamily: font.display, fontSize: 28, fontWeight: 800, color: C.primary }}>{s.val}</div>
-            <div style={{ fontSize: 12, color: C.muted, marginTop: 4 }}>{s.label}</div>
+            {/* Background watermark circle */}
+            <div
+              style={{
+                position: "absolute",
+                top: -16,
+                right: -16,
+                width: 72,
+                height: 72,
+                borderRadius: "50%",
+                background: s.accent + "12",
+              }}
+            />
+
+            {/* Top row: icon + trend chip */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                marginBottom: 14,
+                position: "relative",
+              }}
+            >
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 10,
+                  background: s.accent + "20",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: s.accent,
+                }}
+              >
+                {s.icon}
+              </div>
+              {s.trendUp !== null ? (
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: s.trendUp ? "#27AE60" : C.muted,
+                    background: s.trendUp ? "#27AE6014" : C.bg,
+                    border: `1px solid ${s.trendUp ? "#27AE6030" : C.line}`,
+                    padding: "3px 8px",
+                    borderRadius: 20,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 3,
+                  }}
+                >
+                  {s.trendUp ? "↑" : ""} {s.trend}
+                </span>
+              ) : (
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 600,
+                    color: s.accent,
+                    background: s.accent + "14",
+                    border: `1px solid ${s.accent}30`,
+                    padding: "3px 8px",
+                    borderRadius: 20,
+                  }}
+                >
+                  {s.trend}
+                </span>
+              )}
+            </div>
+
+            {/* Value + Label */}
+            <div
+              style={{
+                fontFamily: font.display,
+                fontSize: 34,
+                fontWeight: 800,
+                color: s.accent,
+                lineHeight: 1,
+                marginBottom: 4,
+                position: "relative",
+              }}
+            >
+              {s.val}
+            </div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: C.dark, marginBottom: 2 }}>{s.label}</div>
+            <div style={{ fontSize: 11, color: C.muted, marginBottom: 14 }}>{s.sub}</div>
+
+            {/* Mini progress bar */}
+            <div>
+              <div style={{ height: 4, borderRadius: 4, background: s.accent + "20", overflow: "hidden" }}>
+                <div
+                  style={{
+                    width: `${Math.min(s.progress, 100)}%`,
+                    height: "100%",
+                    borderRadius: 4,
+                    background: `linear-gradient(90deg, ${s.accent}, ${s.accent}99)`,
+                    transition: "width 0.6s ease",
+                  }}
+                />
+              </div>
+              <div style={{ fontSize: 10, color: s.accent, fontWeight: 600, marginTop: 5 }}>{s.progressLabel}</div>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Member Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-        {filtered.map((m) => (
-          <div
-            key={m.id}
-            style={{
-              background: C.white,
-              borderRadius: 16,
-              padding: 24,
-              boxShadow: C.cardShadow,
-              border: `1.5px solid transparent`,
-              transition: "border-color 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.line)}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
-          >
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 16 }}>
-              <Avatar initials={m.avatar} size={48} />
-              <div style={{ flex: 1 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>{m.name}</div>
-                  <span
+      {/* Filter bar */}
+      <div
+        style={{
+          background: C.white,
+          borderRadius: 14,
+          padding: isMobile ? "14px 16px" : "16px 20px",
+          boxShadow: C.cardShadow,
+          marginBottom: 20,
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+        }}
+      >
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <div style={{ position: "relative", flex: 1 }}>
+            <Search
+              size={14}
+              style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+            />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by name or role..."
+              style={{
+                width: "100%",
+                padding: "9px 12px 9px 36px",
+                borderRadius: 10,
+                border: `1.5px solid ${C.line}`,
+                fontFamily: font.body,
+                fontSize: 13,
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+              onFocus={(e) => (e.target.style.borderColor = C.primary)}
+              onBlur={(e) => (e.target.style.borderColor = C.line)}
+            />
+          </div>
+          {!isMobile && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                borderLeft: `1px solid ${C.line}`,
+                paddingLeft: 12,
+              }}
+            >
+              <span style={{ fontSize: 11, color: C.muted, whiteSpace: "nowrap" }}>Sort:</span>
+              <PillToggle opts={["points", "name"]} val={sortBy} set={setSortBy} />
+            </div>
+          )}
+          <span style={{ fontSize: 12, color: C.muted, whiteSpace: "nowrap" }}>
+            {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+          </span>
+        </div>
+        {/* Filter pills — scroll horizontally on mobile */}
+        <div
+          style={{
+            overflowX: isMobile ? "auto" : "visible",
+            display: "flex",
+            flexDirection: isMobile ? "row" : "column",
+            gap: isMobile ? 6 : 12,
+            flexWrap: isMobile ? "nowrap" : "wrap",
+            scrollbarWidth: "none",
+          }}
+        >
+          {isMobile ? (
+            /* Mobile: single scrolling row of all filter pills */
+            <>
+              {["All", "Premium", "Diaspora"].map((o) => (
+                <button
+                  key={o}
+                  onClick={() => setFilterType(o)}
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    border: `1.5px solid ${filterType === o ? C.primary : C.line}`,
+                    background: filterType === o ? C.primary : C.white,
+                    color: filterType === o ? C.white : C.muted,
+                    fontFamily: font.body,
+                    fontSize: 12,
+                    fontWeight: filterType === o ? 700 : 400,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                  }}
+                >
+                  {o}
+                </button>
+              ))}
+              <div style={{ width: 1, background: C.line, flexShrink: 0 }} />
+              {["All", "Champion", "Contributor", "Newcomer"].map((o) => (
+                <button
+                  key={o}
+                  onClick={() => setFilterBadge(o)}
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    border: `1.5px solid ${filterBadge === o ? "#2C5F8A" : C.line}`,
+                    background: filterBadge === o ? "#2C5F8A" : C.white,
+                    color: filterBadge === o ? C.white : C.muted,
+                    fontFamily: font.body,
+                    fontSize: 12,
+                    fontWeight: filterBadge === o ? 700 : 400,
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                  }}
+                >
+                  {o}
+                </button>
+              ))}
+            </>
+          ) : (
+            /* Desktop: labeled rows */
+            <>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Type</span>
+                <PillToggle opts={["All", "Premium", "Diaspora"]} val={filterType} set={setFilterType} />
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Badge</span>
+                <PillToggle
+                  opts={["All", "Champion", "Contributor", "Newcomer"]}
+                  val={filterBadge}
+                  set={setFilterBadge}
+                />
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Sector</span>
+                <PillToggle
+                  opts={["All", "Infrastructure", "Agriculture", "Health Systems", "Technology", "Education"]}
+                  val={filterSector}
+                  set={setFilterSector}
+                />
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Member grid */}
+      <div
+        style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 12 : 14 }}
+      >
+        {filtered.map((m, idx) => {
+          const sColor = SECTOR_COLORS[m.sector] || C.primary;
+          return (
+            <div
+              key={m.id}
+              style={{
+                background: C.white,
+                borderRadius: 16,
+                overflow: "hidden",
+                boxShadow: C.cardShadow,
+                border: `1.5px solid transparent`,
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = sColor + "60";
+                e.currentTarget.style.boxShadow = C.deepShadow;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "transparent";
+                e.currentTarget.style.boxShadow = C.cardShadow;
+              }}
+            >
+              {/* Sector color top bar */}
+              <div style={{ height: 4, background: `linear-gradient(90deg, ${sColor}, ${sColor}60)` }} />
+              <div style={{ padding: 22 }}>
+                {/* Top row: avatar + name + badge */}
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 14 }}>
+                  <div style={{ position: "relative" }}>
+                    <Avatar initials={m.avatar} size={44} />
+                    {sortBy === "points" && idx < 3 && (
+                      <div style={{ position: "absolute", bottom: -2, right: -2, fontSize: 13 }}>
+                        {["🥇", "🥈", "🥉"][idx]}
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: C.dark, lineHeight: 1.2 }}>{m.name}</div>
+                      <span
+                        style={{
+                          fontSize: 9,
+                          fontWeight: 700,
+                          color: BADGE_COLORS[m.badge],
+                          background: BADGE_COLORS[m.badge] + "18",
+                          padding: "2px 7px",
+                          borderRadius: 6,
+                          whiteSpace: "nowrap",
+                          letterSpacing: "0.5px",
+                          flexShrink: 0,
+                        }}
+                      >
+                        {m.badge.toUpperCase()}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 12, color: C.muted, marginTop: 3, lineHeight: 1.3 }}>{m.role}</div>
+                  </div>
+                </div>
+
+                {/* Meta details */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 5,
+                    marginBottom: 16,
+                    padding: "12px 14px",
+                    background: C.bg,
+                    borderRadius: 10,
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                    <MapPin size={11} color={sColor} />
+                    <span>{m.location}</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                    <Briefcase size={11} color={sColor} />
+                    <span style={{ color: sColor, fontWeight: 600 }}>{m.sector}</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                    <Shield size={11} color={m.type === "Diaspora" ? "#2C5F8A" : C.primary} />
+                    <span style={{ color: m.type === "Diaspora" ? "#2C5F8A" : C.primary, fontWeight: 600 }}>
+                      {m.type}
+                    </span>
+                    <span>· Joined {m.joined}</span>
+                  </div>
+                </div>
+
+                {/* Points + CTA */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: sColor, fontFamily: font.display }}>
+                      {m.points.toLocaleString()}
+                    </div>
+                    <div style={{ fontSize: 10, color: C.muted }}>points</div>
+                  </div>
+                  <button
                     style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: badgeColor[m.badge],
-                      background: badgeColor[m.badge] + "18",
-                      padding: "2px 8px",
+                      padding: "7px 16px",
                       borderRadius: 20,
-                      letterSpacing: "0.5px",
+                      border: `1.5px solid ${sColor}`,
+                      background: "transparent",
+                      color: sColor,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      fontFamily: font.body,
                     }}
                   >
-                    {m.badge}
-                  </span>
+                    View Profile
+                  </button>
                 </div>
-                <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{m.role}</div>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 16 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
-                <MapPin size={11} color={C.primary} />
-                {m.location}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
-                <Briefcase size={11} color={C.primary} />
-                {m.sector}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
-                <Shield size={11} color={m.type === "Diaspora" ? "#2C5F8A" : C.primary} />
-                <span style={{ color: m.type === "Diaspora" ? "#2C5F8A" : C.primary, fontWeight: 600 }}>{m.type}</span>
-                <span>· Joined {m.joined}</span>
-              </div>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()} pts</span>
-              <button
-                style={{
-                  padding: "6px 16px",
-                  borderRadius: 20,
-                  border: `1.5px solid ${C.primary}`,
-                  background: "transparent",
-                  color: C.primary,
-                  fontSize: 12,
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                }}
-              >
-                View Profile
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -2633,9 +3837,17 @@ const TYPE_COLORS = {
   "Government Brief": "#B04040",
 };
 
-function ResourcesPage() {
+function ResourcesPage({ isMobile }) {
   const [typeFilter, setTypeFilter] = useState("All");
   const [search, setSearch] = useState("");
+
+  const DOC_ICONS = {
+    "Sector Analysis": <BarChart2 size={18} />,
+    "Strategy Brief": <Target size={18} />,
+    "Policy Alignment": <Layers size={18} />,
+    Framework: <Blocks size={18} />,
+    "Government Brief": <Flag size={18} />,
+  };
 
   const types = ["All", ...new Set(RESOURCES_DATA.map((r) => r.type))];
   const filtered = RESOURCES_DATA.filter((r) => {
@@ -2646,10 +3858,12 @@ function ResourcesPage() {
   });
   const featured = filtered.filter((r) => r.featured);
   const rest = filtered.filter((r) => !r.featured);
+  const readTime = (pages) => `${Math.ceil(pages / 3)} min read`;
+  const isNew = (date) => date === "Feb 2026" || date === "Jan 2026";
 
   return (
     <div>
-      <div style={{ marginBottom: 28 }}>
+      <div style={{ marginBottom: 24 }}>
         <SectionLabel>Knowledge Hub</SectionLabel>
         <h2
           style={{
@@ -2657,31 +3871,31 @@ function ResourcesPage() {
             fontSize: 32,
             fontWeight: 700,
             color: C.primary,
-            margin: "0 0 8px",
+            margin: "0 0 6px",
             letterSpacing: "-0.5px",
           }}
         >
           BRIDGE <span style={{ color: C.accent }}>Resources</span>
         </h2>
-        <p style={{ fontSize: 15, color: C.muted, margin: 0 }}>
+        <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>
           Sector analyses, strategy briefs, frameworks, and policy documents
         </p>
       </div>
 
-      {/* Search + Filter */}
+      {/* Search + Type filters */}
       <div
         style={{
           background: C.white,
-          borderRadius: 16,
-          padding: 20,
+          borderRadius: 14,
+          padding: isMobile ? "14px 16px" : "16px 20px",
           boxShadow: C.cardShadow,
-          marginBottom: 24,
+          marginBottom: 20,
           display: "flex",
+          flexDirection: "column",
           gap: 12,
-          alignItems: "center",
         }}
       >
-        <div style={{ position: "relative", flex: 1 }}>
+        <div style={{ position: "relative" }}>
           <Search
             size={14}
             style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
@@ -2689,7 +3903,7 @@ function ResourcesPage() {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search resources by title or sector..."
+            placeholder="Search by title or sector..."
             style={{
               width: "100%",
               padding: "9px 12px 9px 36px",
@@ -2704,222 +3918,392 @@ function ResourcesPage() {
             onBlur={(e) => (e.target.style.borderColor = C.line)}
           />
         </div>
-        <div style={{ display: "flex", gap: 6 }}>
+        <div
+          style={{
+            overflowX: isMobile ? "auto" : "visible",
+            display: "flex",
+            gap: 6,
+            flexWrap: isMobile ? "nowrap" : "wrap",
+            scrollbarWidth: "none",
+            alignItems: "center",
+          }}
+        >
           {types.map((t) => (
             <button
               key={t}
               onClick={() => setTypeFilter(t)}
               style={{
-                padding: "8px 14px",
-                borderRadius: 20,
+                padding: "6px 14px",
+                borderRadius: 8,
+                flexShrink: 0,
                 border: `1.5px solid ${typeFilter === t ? C.primary : C.line}`,
                 background: typeFilter === t ? C.primary : "transparent",
                 color: typeFilter === t ? C.white : C.muted,
                 fontFamily: font.body,
                 fontSize: 12,
-                fontWeight: 600,
+                fontWeight: typeFilter === t ? 700 : 400,
                 cursor: "pointer",
                 whiteSpace: "nowrap",
+                transition: "all 0.15s",
               }}
             >
+              {t !== "All" && (
+                <span style={{ marginRight: 4 }}>{["📊", "📋", "🔬", "⚙️", "🏛️"][types.indexOf(t) - 1] || ""}</span>
+              )}
               {t}
             </button>
           ))}
+          <span
+            style={{
+              marginLeft: "auto",
+              fontSize: 12,
+              color: C.muted,
+              display: "flex",
+              alignItems: "center",
+              flexShrink: 0,
+            }}
+          >
+            {filtered.length} doc{filtered.length !== 1 ? "s" : ""}
+          </span>
         </div>
       </div>
 
-      {/* Featured */}
+      {/* Featured — dark cards */}
       {featured.length > 0 && (
-        <div style={{ marginBottom: 28 }}>
+        <div style={{ marginBottom: 24 }}>
           <div
             style={{
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
               letterSpacing: "1.5px",
               color: C.muted,
               textTransform: "uppercase",
-              marginBottom: 14,
+              marginBottom: 12,
             }}
           >
-            Featured
+            Featured Reports
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 14 }}>
             {featured.map((r) => (
               <div
                 key={r.id}
                 style={{
                   background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
                   borderRadius: 16,
-                  padding: 28,
+                  padding: 26,
                   cursor: "pointer",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -30,
+                    right: -30,
+                    width: 120,
+                    height: 120,
+                    borderRadius: "50%",
+                    border: "1px solid rgba(184,217,53,0.1)",
+                  }}
+                />
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
                     marginBottom: 14,
+                    position: "relative",
                   }}
                 >
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      letterSpacing: "1px",
-                      textTransform: "uppercase",
-                      color: C.accent,
-                      background: "rgba(184,217,53,0.15)",
-                      padding: "3px 10px",
-                      borderRadius: 20,
-                    }}
-                  >
-                    {r.type}
-                  </span>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
-                    {r.pages}p · {r.date}
-                  </span>
+                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                    <span
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 700,
+                        letterSpacing: "1px",
+                        textTransform: "uppercase",
+                        color: C.accent,
+                        background: "rgba(184,217,53,0.12)",
+                        padding: "3px 10px",
+                        borderRadius: 6,
+                      }}
+                    >
+                      {r.type}
+                    </span>
+                    {isNew(r.date) && (
+                      <span
+                        style={{
+                          fontSize: 9,
+                          fontWeight: 700,
+                          letterSpacing: "0.5px",
+                          color: C.white,
+                          background: "#27AE60",
+                          padding: "2px 7px",
+                          borderRadius: 6,
+                        }}
+                      >
+                        NEW
+                      </span>
+                    )}
+                  </div>
+                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{readTime(r.pages)}</span>
                 </div>
                 <h3
                   style={{
                     fontFamily: font.display,
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: 700,
                     color: C.white,
                     margin: "0 0 10px",
                     lineHeight: 1.35,
+                    position: "relative",
                   }}
                 >
                   {r.title}
                 </h3>
-                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", margin: "0 0 20px", lineHeight: 1.5 }}>
-                  {r.desc}
-                </p>
-                <button
+                <p
                   style={{
-                    padding: "8px 18px",
-                    borderRadius: 20,
-                    border: `1.5px solid ${C.accent}`,
-                    background: "transparent",
-                    color: C.accent,
                     fontSize: 12,
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    fontFamily: font.body,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
+                    color: "rgba(255,255,255,0.5)",
+                    margin: "0 0 20px",
+                    lineHeight: 1.55,
+                    position: "relative",
                   }}
                 >
-                  <BookOpen size={13} /> Read Report
-                </button>
+                  {r.desc}
+                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    position: "relative",
+                  }}
+                >
+                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
+                    {r.pages}p · {r.date}
+                  </span>
+                  <button
+                    style={{
+                      padding: "7px 18px",
+                      borderRadius: 20,
+                      border: `1.5px solid ${C.accent}`,
+                      background: "transparent",
+                      color: C.accent,
+                      fontSize: 12,
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      fontFamily: font.body,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                    }}
+                  >
+                    <BookOpen size={12} /> Read Report
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* All Resources */}
-      <div
-        style={{
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: "1.5px",
-          color: C.muted,
-          textTransform: "uppercase",
-          marginBottom: 14,
-        }}
-      >
-        {typeFilter === "All" ? "All Resources" : typeFilter} {filtered.length > 0 && `(${filtered.length})`}
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {rest.map((r) => (
+      {/* All remaining docs */}
+      {rest.length > 0 && (
+        <>
           <div
-            key={r.id}
             style={{
-              background: C.white,
-              borderRadius: 14,
-              padding: "20px 24px",
-              boxShadow: C.cardShadow,
-              display: "flex",
-              gap: 20,
-              alignItems: "flex-start",
-              border: `1.5px solid transparent`,
-              transition: "border-color 0.2s",
-              cursor: "pointer",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "1.5px",
+              color: C.muted,
+              textTransform: "uppercase",
+              marginBottom: 12,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.line)}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
           >
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 10,
-                background: (TYPE_COLORS[r.type] || C.primary) + "14",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              <BookOpen size={18} color={TYPE_COLORS[r.type] || C.primary} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                <span
+            {typeFilter === "All" ? "All Documents" : typeFilter} ({rest.length})
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {rest.map((r) => {
+              const tc = TYPE_COLORS[r.type] || C.primary;
+              return (
+                <div
+                  key={r.id}
                   style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    letterSpacing: "0.8px",
-                    textTransform: "uppercase",
-                    color: TYPE_COLORS[r.type] || C.primary,
-                    background: (TYPE_COLORS[r.type] || C.primary) + "12",
-                    padding: "2px 8px",
-                    borderRadius: 20,
+                    background: C.white,
+                    borderRadius: 14,
+                    display: "flex",
+                    overflow: "hidden",
+                    boxShadow: C.cardShadow,
+                    border: `1px solid transparent`,
+                    transition: "all 0.2s",
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = tc + "40";
+                    e.currentTarget.style.boxShadow = C.deepShadow;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "transparent";
+                    e.currentTarget.style.boxShadow = C.cardShadow;
                   }}
                 >
-                  {r.type}
-                </span>
-                <Pill color={C.primary} small border>
-                  {r.sector}
-                </Pill>
-              </div>
-              <h3 style={{ fontSize: 14, fontWeight: 700, color: C.dark, margin: "0 0 4px", lineHeight: 1.35 }}>
-                {r.title}
-              </h3>
-              <p style={{ fontSize: 12, color: C.muted, margin: "0 0 10px", lineHeight: 1.5 }}>{r.desc}</p>
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <span style={{ fontSize: 11, color: C.muted }}>{r.pages} pages</span>
-                <span style={{ fontSize: 11, color: C.muted }}>·</span>
-                <span style={{ fontSize: 11, color: C.muted }}>{r.date}</span>
-              </div>
-            </div>
-            <button
-              style={{
-                padding: "8px 16px",
-                borderRadius: 20,
-                border: `1.5px solid ${C.primary}`,
-                background: "transparent",
-                color: C.primary,
-                fontSize: 12,
-                fontWeight: 600,
-                cursor: "pointer",
-                fontFamily: font.body,
-                whiteSpace: "nowrap",
-              }}
-            >
-              Read
-            </button>
+                  {/* Colored left accent bar */}
+                  <div style={{ width: 4, background: tc, flexShrink: 0 }} />
+                  {/* Icon column — hidden on mobile */}
+                  {!isMobile && (
+                    <div
+                      style={{
+                        width: 56,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                        background: tc + "0a",
+                      }}
+                    >
+                      <div style={{ color: tc }}>{DOC_ICONS[r.type] || <BookOpen size={18} />}</div>
+                    </div>
+                  )}
+                  {/* Content */}
+                  <div style={{ flex: 1, padding: isMobile ? "14px 16px" : "18px 20px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5, flexWrap: "wrap" }}>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          letterSpacing: "0.8px",
+                          textTransform: "uppercase",
+                          color: tc,
+                        }}
+                      >
+                        {r.type}
+                      </span>
+                      <span style={{ fontSize: 10, color: C.muted }}>·</span>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 600,
+                          color: C.primary,
+                          background: `${C.primary}10`,
+                          padding: "1px 7px",
+                          borderRadius: 6,
+                        }}
+                      >
+                        {r.sector}
+                      </span>
+                      {isNew(r.date) && (
+                        <span
+                          style={{
+                            fontSize: 9,
+                            fontWeight: 700,
+                            color: C.white,
+                            background: "#27AE60",
+                            padding: "1px 6px",
+                            borderRadius: 4,
+                          }}
+                        >
+                          NEW
+                        </span>
+                      )}
+                      {isMobile && (
+                        <span style={{ fontSize: 10, color: C.muted, marginLeft: "auto" }}>{readTime(r.pages)}</span>
+                      )}
+                    </div>
+                    <h3
+                      style={{
+                        fontSize: isMobile ? 13 : 14,
+                        fontWeight: 700,
+                        color: C.dark,
+                        margin: "0 0 4px",
+                        lineHeight: 1.35,
+                      }}
+                    >
+                      {r.title}
+                    </h3>
+                    {!isMobile && (
+                      <p style={{ fontSize: 12, color: C.muted, margin: "0 0 0", lineHeight: 1.5 }}>{r.desc}</p>
+                    )}
+                    {isMobile && (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          marginTop: 10,
+                        }}
+                      >
+                        <span style={{ fontSize: 11, color: C.muted }}>
+                          {r.pages}p · {r.date}
+                        </span>
+                        <button
+                          style={{
+                            padding: "5px 14px",
+                            borderRadius: 20,
+                            border: `1.5px solid ${tc}`,
+                            background: "transparent",
+                            color: tc,
+                            fontSize: 12,
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            fontFamily: font.body,
+                          }}
+                        >
+                          Read
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  {/* Right meta + CTA — desktop only */}
+                  {!isMobile && (
+                    <div
+                      style={{
+                        padding: "18px 20px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-end",
+                        justifyContent: "space-between",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <div style={{ textAlign: "right" }}>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{readTime(r.pages)}</div>
+                        <div style={{ fontSize: 11, color: C.muted }}>
+                          {r.pages}p · {r.date}
+                        </div>
+                      </div>
+                      <button
+                        style={{
+                          padding: "6px 16px",
+                          borderRadius: 20,
+                          border: `1.5px solid ${tc}`,
+                          background: "transparent",
+                          color: tc,
+                          fontSize: 12,
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          fontFamily: font.body,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Read
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 }
 
 // ─── HOME PAGE CONTENT ─────────────────────────────────────────
 function HomePageContent({
+  isMobile,
   user,
   mType,
   contributions,
@@ -2939,8 +4323,15 @@ function HomePageContent({
 }) {
   return (
     <>
-      {/* ── 3-COLUMN WIDGET ROW ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 320px", gap: 20, marginBottom: 28 }}>
+      {/* ── WIDGET ROW: 3-col on desktop, single-col on mobile ── */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 320px",
+          gap: isMobile ? 16 : 20,
+          marginBottom: isMobile ? 20 : 28,
+        }}
+      >
         {/* LEFT COLUMN */}
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           {/* Featured Insight */}
@@ -3357,15 +4748,28 @@ function HomePageContent({
 
       {/* ── GOALS SECTION ── */}
       <section
-        style={{ background: C.white, borderRadius: 20, padding: 32, boxShadow: C.cardShadow, marginBottom: 28 }}
+        style={{
+          background: C.white,
+          borderRadius: 20,
+          padding: isMobile ? "20px 16px" : 32,
+          boxShadow: C.cardShadow,
+          marginBottom: isMobile ? 20 : 28,
+        }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: isMobile ? 16 : 24,
+          }}
+        >
           <div>
             <SectionLabel>Goals & Milestones</SectionLabel>
             <h2
               style={{
                 fontFamily: font.display,
-                fontSize: 24,
+                fontSize: isMobile ? 20 : 24,
                 fontWeight: 700,
                 color: C.primary,
                 margin: 0,
@@ -3378,34 +4782,44 @@ function HomePageContent({
           <button
             onClick={() => setShowGoalModal(true)}
             style={{
-              padding: "10px 20px",
+              padding: isMobile ? "8px 14px" : "10px 20px",
               borderRadius: 20,
               border: "none",
               cursor: "pointer",
               background: C.primary,
               color: C.white,
               fontFamily: font.body,
-              fontSize: 13,
+              fontSize: isMobile ? 12 : 13,
               fontWeight: 700,
               display: "flex",
               alignItems: "center",
               gap: 6,
+              whiteSpace: "nowrap",
+              flexShrink: 0,
             }}
           >
-            <Plus size={14} /> New Goal
+            <Plus size={14} />
+            {isMobile ? "New" : "New Goal"}
           </button>
         </div>
 
-        {/* Tabs */}
+        {/* Tabs — scroll horizontally on mobile */}
         <div
-          style={{ display: "flex", gap: 4, marginBottom: 24, borderBottom: `1px solid ${C.line}`, paddingBottom: 1 }}
+          style={{
+            display: "flex",
+            gap: 0,
+            marginBottom: isMobile ? 16 : 24,
+            borderBottom: `1px solid ${C.line}`,
+            overflowX: isMobile ? "auto" : "visible",
+            scrollbarWidth: "none",
+          }}
         >
           {["active", "inactive", "completed", "draft"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               style={{
-                padding: "8px 20px",
+                padding: isMobile ? "8px 16px" : "8px 20px",
                 border: "none",
                 cursor: "pointer",
                 fontFamily: font.body,
@@ -3413,8 +4827,10 @@ function HomePageContent({
                 fontWeight: 600,
                 background: "transparent",
                 textTransform: "capitalize",
+                whiteSpace: "nowrap",
                 color: activeTab === tab ? C.primary : C.muted,
                 borderBottom: `2px solid ${activeTab === tab ? C.primary : "transparent"}`,
+                flexShrink: 0,
                 transition: "all 0.2s",
               }}
             >
@@ -3424,7 +4840,7 @@ function HomePageContent({
         </div>
 
         {activeTab === "active" ? (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 16 }}>
             {GOALS.map((goal) => (
               <div
                 key={goal.id}
