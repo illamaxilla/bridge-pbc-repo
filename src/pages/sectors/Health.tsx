@@ -3536,6 +3536,7 @@ const catLabels = { funding: "Funding & Incentives", infrastructure: "Infrastruc
 
 const PolicyAlignmentSection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("all");
   const [expandedCard, setExpandedCard] = useState(null);
 
