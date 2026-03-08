@@ -1355,7 +1355,8 @@ function CommunityDashboard({ memberType, onLogout }) {
             questions={questions}
             setQuestions={setQuestions}
             setShowQuestionModal={setShowQuestionModal}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleNavChange}
+            initialForumView={getInitialForumView()}
           />
         )}
         {currentPage === "members" && <MembersPage isMobile={isMobile} />}
