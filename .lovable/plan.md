@@ -1,85 +1,67 @@
 
-## Audit Summary: What's Working vs. What Needs Fixing
+## What to build
 
-### ✅ Working correctly
-- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
-- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
-- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
-- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
+The user wants placeholder files for every section they'll paste code into. Based on the screenshots and current code, there are three layers of depth to create:
 
-### ❌ Issues to fix
+### Layer 1 — Top-level Community tabs (already exist inline in index.tsx)
+These need to be **extracted into their own files** so the user can paste full page code there:
+- `src/pages/community/Members.tsx` — currently a 15-line "Coming Soon" block inline
+- `src/pages/community/Resources.tsx` — currently a 15-line "Coming Soon" block inline
 
-**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
-- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
-- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
+### Layer 2 — Forum left-nav sub-sections (currently not wired at all)
+The Forum left sidebar has 9 items that are plain static buttons. The user needs a `forumSection` state added and placeholder files for each sub-section:
+- `src/pages/community/forum/ForumHome.tsx`
+- `src/pages/community/forum/Questions.tsx`
+- `src/pages/community/forum/MostAnswered.tsx`
+- `src/pages/community/forum/Polls.tsx`
+- `src/pages/community/forum/Groups.tsx`
+- `src/pages/community/forum/Tags.tsx`
+- `src/pages/community/forum/Sectors.tsx`
+- `src/pages/community/forum/Badges.tsx`
+- `src/pages/community/forum/ForumMembers.tsx`
 
-**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
-- Line 6934 has `href="#"` instead of the object-lookup pattern
-- Fix: same object-lookup pattern as other pages
+### What each placeholder looks like
+Each file exports a default component that:
+- Accepts `{ C, font }` design token props (matching the existing token pattern in index.tsx) so pasting new code into them will work without re-defining tokens
+- Has a clearly commented `// PASTE YOUR CODE HERE` block
+- Renders a minimal "Coming Soon" card using the existing design tokens so nothing breaks visually
 
-**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
-- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
-- Fix: apply the object-lookup href pattern
+### Changes to index.tsx
+1. **Import** all the new placeholder files
+2. **Add `forumSection` state** (e.g. `const [forumSection, setForumSection] = useState("Home")`) 
+3. **Wire the 9 left-nav buttons** in the Forum sidebar to `setForumSection(item.label)`
+4. **Replace the Members placeholder** with `<MembersPage C={C} font={font} />`
+5. **Replace the Resources placeholder** with `<ResourcesPage C={C} font={font} />`
+6. **Replace the Forum main content area** with conditional rendering: `{forumSection === "Home" && <ForumHome ... />}`, etc. The existing Q&A feed content becomes the `ForumHome` content.
 
-**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
-- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
-- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
-- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
+### File tree result
+```
+src/pages/community/
+├── index.tsx              (updated — wires sub-components)
+├── Community.tsx          (unchanged)
+├── Members.tsx            (new placeholder)
+├── Resources.tsx          (new placeholder)
+└── forum/
+    ├── ForumHome.tsx      (new — contains existing Q&A feed JSX moved here)
+    ├── Questions.tsx      (new placeholder)
+    ├── MostAnswered.tsx   (new placeholder)
+    ├── Polls.tsx          (new placeholder)
+    ├── Groups.tsx         (new placeholder)
+    ├── Tags.tsx           (new placeholder)
+    ├── Sectors.tsx        (new placeholder)
+    ├── Badges.tsx         (new placeholder)
+    └── ForumMembers.tsx   (new placeholder)
+```
 
-**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
-- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
-- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
+### No App.tsx changes needed
+The URL routing stays as-is (`/community/forum` → Forum tab). The forum sub-sections use internal `forumSection` state — not URL sub-routes — keeping it consistent with the current pattern. URL sub-routing for forum sections can be added later when the user pastes real content.
 
-**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
-- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
-- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
-- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
-
-**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
-- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
-- Minor cleanup
-
-### Implementation Plan
-
-**Files to fix: 4 real fixes + 1 cleanup**
-
-1. **`Tourism.tsx`** (2 fixes):
-   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
-   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
-
-2. **`Infrastructure.tsx`** (1 fix):
-   - Line 6952: `href="#"` → object-lookup href
-
-3. **`Education.tsx`** (1 fix):
-   - Line 6947: `href="#"` → object-lookup href
-
-4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
-   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
-   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
-
-5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
-   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
-   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
-
-6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
-
-### Files to edit
-| File | Change |
-|---|---|
-| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
-| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
-| `Education.tsx` | Fix mobile labels `href="#"` |
-| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
-| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
+### Design token passing strategy
+Since all the styling in index.tsx uses `C` and `font` constants defined at the top of that file, the placeholder components will accept them as props typed as:
+```tsx
+interface SectionProps {
+  C: typeof import("../community/index").C; // passed as prop
+  font: typeof import("../community/index").font;
+}
+```
+This avoids re-defining the tokens in 11 different files.
