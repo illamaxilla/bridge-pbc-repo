@@ -971,6 +971,7 @@ function LoginPage({ onLogin }) {
 
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
+  const [activePage, setActivePage] = useState("Home");
   const [activeTab, setActiveTab] = useState("active");
   const [feedFilter, setFeedFilter] = useState("Recent");
   const [forumFilter, setForumFilter] = useState("Recent");
@@ -1041,6 +1042,7 @@ function CommunityDashboard({ memberType, onLogout }) {
             {["Home", "Forum", "Members", "Resources"].map((item) => (
               <button
                 key={item}
+                onClick={() => setActivePage(item)}
                 style={{
                   padding: "6px 14px",
                   borderRadius: 8,
@@ -1048,9 +1050,10 @@ function CommunityDashboard({ memberType, onLogout }) {
                   cursor: "pointer",
                   fontFamily: font.body,
                   fontSize: 13,
-                  fontWeight: 500,
-                  background: item === "Home" ? `rgba(27,77,62,0.08)` : "transparent",
-                  color: item === "Home" ? C.primary : C.text,
+                  fontWeight: activePage === item ? 600 : 500,
+                  background: activePage === item ? `rgba(27,77,62,0.08)` : "transparent",
+                  color: activePage === item ? C.primary : C.text,
+                  transition: "all 0.15s",
                 }}
               >
                 {item}
@@ -1123,6 +1126,9 @@ function CommunityDashboard({ memberType, onLogout }) {
       </header>
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px" }}>
+
+        {/* ══ HOME PAGE ══ */}
+        {activePage === "Home" && (<>
         {/* ── WELCOME HERO ── */}
         <section
           style={{
@@ -1866,8 +1872,10 @@ function CommunityDashboard({ memberType, onLogout }) {
             </div>
           )}
         </section>
+        </>)}
 
-        {/* ── DISCUSSION BOARD ── */}
+        {/* ══ FORUM PAGE ══ */}
+        {activePage === "Forum" && (
         <section style={{ background: C.white, borderRadius: 20, overflow: "hidden", boxShadow: C.cardShadow }}>
           <div
             style={{
@@ -2257,6 +2265,42 @@ function CommunityDashboard({ memberType, onLogout }) {
             </div>
           </div>
         </section>
+        )}
+
+        {/* ══ MEMBERS PAGE ══ */}
+        {activePage === "Members" && (
+          <div style={{ background: C.white, borderRadius: 20, padding: 48, boxShadow: C.cardShadow, textAlign: "center" }}>
+            <SectionLabel>Members</SectionLabel>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>👥</div>
+            <h2 style={{ fontFamily: font.display, fontSize: 26, fontWeight: 700, color: C.primary, margin: "0 0 12px" }}>
+              Member Directory
+            </h2>
+            <p style={{ fontSize: 15, color: C.muted, maxWidth: 420, margin: "0 auto 28px", lineHeight: 1.6 }}>
+              Browse profiles, connect with fellow builders, and discover expertise across Ghana's key sectors. Coming soon.
+            </p>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 20, background: C.accent + "22", border: `1.5px solid ${C.accent}`, color: C.primary, fontWeight: 700, fontSize: 13, fontFamily: font.body }}>
+              <Users size={14} /> Coming Soon
+            </div>
+          </div>
+        )}
+
+        {/* ══ RESOURCES PAGE ══ */}
+        {activePage === "Resources" && (
+          <div style={{ background: C.white, borderRadius: 20, padding: 48, boxShadow: C.cardShadow, textAlign: "center" }}>
+            <SectionLabel>Resources</SectionLabel>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
+            <h2 style={{ fontFamily: font.display, fontSize: 26, fontWeight: 700, color: C.primary, margin: "0 0 12px" }}>
+              Community Resources
+            </h2>
+            <p style={{ fontSize: 15, color: C.muted, maxWidth: 420, margin: "0 auto 28px", lineHeight: 1.6 }}>
+              Guides, sector briefs, toolkits, and knowledge assets curated for BRIDGE community members. Coming soon.
+            </p>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 20, background: C.accent + "22", border: `1.5px solid ${C.accent}`, color: C.primary, fontWeight: 700, fontSize: 13, fontFamily: font.body }}>
+              <BookOpen size={14} /> Coming Soon
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* ── CREATE GOAL MODAL ── */}
