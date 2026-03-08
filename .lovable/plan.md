@@ -1,85 +1,113 @@
 
-## Audit Summary: What's Working vs. What Needs Fixing
+## Root Cause Analysis
 
-### ✅ Working correctly
-- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
-- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
-- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
-- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
+All TypeScript errors fall into **4 distinct patterns** across 4 files. The issues are pre-existing in the intelligence pages the user updated — none were introduced by the navigation audit work.
 
-### ❌ Issues to fix
+---
 
-**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
-- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
-- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
+### Error Pattern 1 — Tooltip component props typed as `{}` instead of proper shape
+**Recharts `<Tooltip content={<Comp />} />` passes `active`, `payload`, `label` but TypeScript can't infer them when the component has no explicit prop type annotation.**
 
-**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
-- Line 6934 has `href="#"` instead of the object-lookup pattern
-- Fix: same object-lookup pattern as other pages
+Files & lines:
+- `Analytics.tsx` line 1731 — `<CustomTip />` (defined line 1591 as `({ active, payload })`)
+- `Dashboard.tsx` lines 5123, 5138 — `<Tip />` (defined line 1503 as `({ active, payload, label })`)
+- `MarketOverview.tsx` lines 1457, 1856, 1904 — tooltip components
+- `Reports.tsx` line 1314, 1535 — `<ChartTip />` (defined line 820)
 
-**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
-- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
-- Fix: apply the object-lookup href pattern
+**Fix**: Add explicit TypeScript prop interface to each tooltip component:
+```ts
+interface TooltipProps { active?: boolean; payload?: any[]; label?: string; }
+const Tip = ({ active, payload, label }: TooltipProps) => { ... }
+```
 
-**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
-- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
-- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
-- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
+---
 
-**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
-- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
-- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
+### Error Pattern 2 — `MCard` in Dashboard.tsx missing `badge` prop (required but callers omit it)
+**Dashboard.tsx line 3122**: `<MCard icon={Globe} title="Cross-Sector Links" defaultOpen={false}>` — no `badge` prop.
 
-**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
-- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
-- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
-- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
+The `MCard` definition (line 1822) has `badge` as a required destructured param (no default).
 
-**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
-- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
-- Minor cleanup
+**Fix**: Make `badge` optional with a default in the `MCard` function signature:
+```ts
+function MCard({ icon: Icon, title, badge = undefined, badgeLime = false, defaultOpen = true, children })
+```
+Or add `badge?: any` to the destructured params.
 
-### Implementation Plan
+---
 
-**Files to fix: 4 real fixes + 1 cleanup**
+### Error Pattern 3 — Array `.map()` destructuring with mixed types (`string | LucideIcon`) used as React `key` and `ReactNode`
+**Dashboard.tsx lines 5074, 5075, 5092, 5790, 5816**:
 
-1. **`Tourism.tsx`** (2 fixes):
-   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
-   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
+```js
+[["Bar", "bar", BarChart3], ["Line", "line", LineChart]].map(([l, v, Icon]) => ...)
+// TypeScript infers l/v/Icon as `string | LucideIcon` — can't use as key or ReactNode
+```
 
-2. **`Infrastructure.tsx`** (1 fix):
-   - Line 6952: `href="#"` → object-lookup href
+Same for lines 5781-5788: `[[FileText, "View Report"], ...]`.
 
-3. **`Education.tsx`** (1 fix):
-   - Line 6947: `href="#"` → object-lookup href
+**Fix**: Add explicit tuple types to these arrays:
+```ts
+([
+  ["Bar", "bar", BarChart3] as [string, string, React.ElementType],
+  ...
+]).map(([l, v, Icon]) => ...)
+```
+Or cast `key={v as string}` and `Icon` typed separately.
 
-4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
-   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
-   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
+---
 
-5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
-   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
-   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
+### Error Pattern 4 — `MSection` in MarketOverview.tsx has required `badgeStyle` and `iconColor` but callers omit them
+The `MSection` function (line 2576) and `MCardHeader` (line 2510) have `badgeStyle` and `iconColor` as required props (no defaults or `?`).
 
-6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
+Many call sites (lines 3739, 3807, 3807, 4516, 4572, etc.) omit `badgeStyle` and sometimes `iconColor`.
 
-### Files to edit
-| File | Change |
+**Fix**: Make them optional with defaults in `MSection` and `MCardHeader`:
+```ts
+function MSection({ icon, iconColor = M.accent, title, badge = "", badgeStyle = {}, defaultOpen = false, children })
+function MCardHeader({ icon: Icon, iconColor = M.accent, title, badge = "", badgeStyle = {}, onToggle, open })
+```
+
+Also: `Pill` on line 817 is missing the `col` prop type — the call site at line 2075 omits `col`. Make `col` optional with a default.
+
+---
+
+### Error Pattern 5 — `color` prop on Recharts `<Cell>` receives `string | number` but expects `Color`
+**Dashboard.tsx lines 5456, 5467, 5477, 5603, 5614**:
+
+```js
+[n, label, bg, col, sub].map(([n, label, bg, col, sub]) => ...)
+// TypeScript infers col as `string | number`
+```
+
+The array literals like `["#EBF5B0", "#1B4D3E", "Priority"]` mix strings and numbers (`s.t1?.length`), so TypeScript widens the tuple to `(string | number)[]`.
+
+**Fix**: Cast at the use site: `color={col as string}` or use `as const` tuples.
+
+---
+
+## Implementation Plan
+
+### Files to edit: 4
+
+| File | What to fix |
 |---|---|
-| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
-| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
-| `Education.tsx` | Fix mobile labels `href="#"` |
-| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
-| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
+| `Analytics.tsx` | Add `TooltipProps` interface to `CustomTip` |
+| `Dashboard.tsx` | 1) Add prop interface to `Tip`; 2) Make `badge` optional in `MCard`; 3) Fix mixed-type array `.map()` destructuring with `as [string, string, React.ElementType]` casts; 4) Cast `col as string` in tier distribution map |
+| `MarketOverview.tsx` | 1) Make `badgeStyle` and `iconColor` optional with defaults in `MSection` + `MCardHeader`; 2) Make `badge` optional with default `""`; 3) Make `col` optional in `Pill`; 4) Add prop interfaces to tooltip components |
+| `Reports.tsx` | Add `TooltipProps` interface to `ChartTip` |
+
+### Approach per fix
+
+**Tooltip props** — add a small interface above each tooltip component definition:
+```ts
+interface TipProps { active?: boolean; payload?: any[]; label?: string; }
+const Tip = ({ active, payload, label }: TipProps) => { ... }
+```
+
+**Optional props** — add `= defaultValue` to destructured params or add `?` via TypeScript interface.
+
+**Mixed array maps** — use `as [string, string, React.ComponentType<{size?: number}>]` cast on each tuple literal, or cast `key={String(v)}` and `<Icon size={11} />` with `Icon` typed as `React.ComponentType`.
+
+**`col as string` for `color` prop** — minimal cast at the usage site.
+
+All changes are surgical — no logic changes, only type annotations.
