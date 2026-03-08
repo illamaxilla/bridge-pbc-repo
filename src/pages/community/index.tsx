@@ -1038,7 +1038,7 @@ function CommunityDashboard({ memberType, onLogout }) {
             </span>
           </div>
           <nav style={{ display: "flex", gap: 4 }}>
-            {["Home", "Sectors", "Forum", "Members", "Resources"].map((item) => (
+            {["Home", "Forum", "Members", "Resources"].map((item) => (
               <button
                 key={item}
                 style={{
@@ -1168,77 +1168,29 @@ function CommunityDashboard({ memberType, onLogout }) {
             }}
           />
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
-            <div style={{ flex: 1 }}>
-              <Pill color={C.accent} bg="rgba(184,217,53,0.12)" border={false} small>
-                {mType.label}
-              </Pill>
-              <h1
-                style={{
-                  fontFamily: font.display,
-                  fontWeight: 300,
-                  fontSize: 38,
-                  color: C.white,
-                  lineHeight: 1.15,
-                  margin: "14px 0 10px",
-                  letterSpacing: "-0.5px",
-                }}
-              >
-                Welcome back, <span style={{ fontWeight: 800, color: C.accent }}>{user.name}</span>
-              </h1>
-              <p style={{ fontSize: 15, color: "rgba(255,255,255,0.55)", margin: "0 0 28px" }}>
-                You're building bridges that matter. Your contributions across Infrastructure are shaping Ghana's next
-                chapter.
-              </p>
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <Pill color={C.accent} bg="rgba(184,217,53,0.12)" border={false} small>
+              {mType.label}
+            </Pill>
+            <h1
+              style={{
+                fontFamily: font.display,
+                fontWeight: 300,
+                fontSize: 38,
+                color: C.white,
+                lineHeight: 1.15,
+                margin: "14px 0 10px",
+                letterSpacing: "-0.5px",
+              }}
+            >
+              Welcome back, <span style={{ fontWeight: 800, color: C.accent }}>{user.name}</span>
+            </h1>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.55)", margin: "0 0 28px", maxWidth: 560 }}>
+              You're building bridges that matter. Your contributions across Infrastructure are shaping Ghana's next
+              chapter.
+            </p>
 
-              <StepTracker steps={JOURNEY_STEPS} current={user.journey} />
-            </div>
-
-            {/* Quick Stats */}
-            <div style={{ display: "flex", gap: 12, marginLeft: 40 }}>
-              {[
-                { val: "Champion", label: "Your Status", icon: <Award size={16} /> },
-                { val: "2,840", label: "Impact Points", icon: <Zap size={16} /> },
-                { val: "#3", label: "Sector Rank", icon: <TrendingUp size={16} /> },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  style={{
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: 14,
-                    padding: "18px 20px",
-                    textAlign: "center",
-                    minWidth: 100,
-                  }}
-                >
-                  <div style={{ color: C.accent, marginBottom: 8, display: "flex", justifyContent: "center" }}>
-                    {s.icon}
-                  </div>
-                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 18, color: C.white }}>{s.val}</div>
-                  <div
-                    style={{
-                      fontSize: 10,
-                      color: "rgba(255,255,255,0.4)",
-                      fontWeight: 500,
-                      letterSpacing: "0.5px",
-                      textTransform: "uppercase",
-                      marginTop: 4,
-                    }}
-                  >
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <StepTracker steps={JOURNEY_STEPS} current={user.journey} />
           </div>
 
           {/* Daily Prompt */}
@@ -1256,7 +1208,6 @@ function CommunityDashboard({ memberType, onLogout }) {
               zIndex: 1,
             }}
           >
-            <Zap size={16} color={C.accent} />
             <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", flex: 1 }}>
               <strong style={{ color: C.accent }}>Today's Prompt:</strong> What's one infrastructure bottleneck in your
               sector that BRIDGE could address in Q2 2026?
@@ -1404,6 +1355,61 @@ function CommunityDashboard({ memberType, onLogout }) {
                 Save Progress
               </button>
             </div>
+
+            {/* This Week's Impact */}
+            <div
+              style={{
+                background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
+                borderRadius: 16,
+                padding: 24,
+                boxShadow: C.cardShadow,
+                flex: 1,
+              }}
+            >
+              <SectionLabel children={<span style={{ color: "rgba(255,255,255,0.5)" }}>This Week's Impact</span>} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {[
+                  { val: "3", label: "Discussions joined", delta: "+1 from last week" },
+                  { val: "1", label: "Insights submitted", delta: "On track" },
+                  { val: "12", label: "Community upvotes received", delta: "+4 from last week" },
+                ].map((s, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      paddingBottom: i < 2 ? 14 : 0,
+                      borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.08)" : "none",
+                    }}
+                  >
+                    <div>
+                      <div
+                        style={{
+                          fontSize: 22,
+                          fontWeight: 800,
+                          color: C.accent,
+                          fontFamily: font.display,
+                          lineHeight: 1,
+                        }}
+                      >
+                        {s.val}
+                      </div>
+                      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>{s.label}</div>
+                    </div>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        color: s.delta.startsWith("+") ? C.accent : "rgba(255,255,255,0.35)",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {s.delta}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* CENTER COLUMN */}
@@ -1424,54 +1430,100 @@ function CommunityDashboard({ memberType, onLogout }) {
               </p>
             </div>
 
-            {/* Get Involved */}
+            {/* Weekly Ghana Briefing */}
             <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow, flex: 1 }}>
-              <SectionLabel>Get Involved — Earn Points</SectionLabel>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              <div
+                style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}
+              >
+                <SectionLabel>Weekly Ghana Briefing</SectionLabel>
+                <span style={{ fontSize: 10, fontWeight: 600, color: C.muted, letterSpacing: "0.5px" }}>
+                  Mar 3 – 7, 2026
+                </span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 2, overflowY: "auto", maxHeight: 320 }}>
                 {[
-                  { pts: "+25pts", label: "Answer a sector question" },
-                  { pts: "+40pts", label: "Submit a venture insight" },
-                  { pts: "+15pts", label: "Join a working group" },
-                  { pts: "+50pts", label: "Publish a sector analysis" },
-                  { pts: "+10pts", label: "Upvote 5 community posts" },
-                  { pts: "+30pts", label: "Complete sector profile" },
-                ].map((a, i) => (
-                  <button
+                  {
+                    tag: "Policy",
+                    tagColor: "#2C5F8A",
+                    headline: "Ghana's 2026 Budget passes second reading — GH₵8.9B directed to infrastructure & energy",
+                    signal: "↑ High relevance to Infrastructure, Energy sectors",
+                  },
+                  {
+                    tag: "Agriculture",
+                    tagColor: C.primary,
+                    headline: "MoFA launches emergency maize storage programme across 6 northern regions",
+                    signal: "↑ Aligns with BRIDGE post-harvest loss thesis",
+                  },
+                  {
+                    tag: "Finance",
+                    tagColor: "#7B5EA7",
+                    headline: "Bank of Ghana holds policy rate at 27% — fintech lending volumes rise 18% QoQ",
+                    signal: "→ Watch: financial inclusion access gap widening",
+                  },
+                  {
+                    tag: "Technology",
+                    tagColor: "#C07A2A",
+                    headline: "GhanaPostGPS integration with mobile money platforms goes live in 12 districts",
+                    signal: "↑ Signals: logistics & last-mile delivery opportunity",
+                  },
+                  {
+                    tag: "Health",
+                    tagColor: "#B04040",
+                    headline: "NHIA expands capitation coverage — 340,000 new beneficiaries enrolled in Q1",
+                    signal: "↑ CHW deployment pipeline accelerating",
+                  },
+                ].map((item, i) => (
+                  <div
                     key={i}
                     style={{
-                      padding: "10px 14px",
-                      borderRadius: 50,
-                      border: `1.5px solid ${C.line}`,
-                      background: C.bg,
-                      fontFamily: font.body,
-                      fontSize: 12,
-                      fontWeight: 500,
-                      color: C.text,
-                      cursor: "pointer",
-                      transition: "all 0.2s",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                      textAlign: "left",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = C.accent;
-                      e.currentTarget.style.background = `${C.accent}18`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = C.line;
-                      e.currentTarget.style.background = C.bg;
+                      padding: "12px 0",
+                      borderBottom: i < 4 ? `1px solid ${C.line}` : "none",
                     }}
                   >
-                    <Star size={12} color={C.accent} fill={C.accent} style={{ flexShrink: 0 }} />
-                    <span>
-                      <span style={{ fontWeight: 700, color: C.primary }}>{a.pts}</span>
-                      {"  "}
-                      {a.label}
-                    </span>
-                  </button>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          letterSpacing: "0.8px",
+                          textTransform: "uppercase",
+                          color: item.tagColor,
+                          background: item.tagColor + "14",
+                          padding: "2px 8px",
+                          borderRadius: 20,
+                        }}
+                      >
+                        {item.tag}
+                      </span>
+                    </div>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: C.dark, margin: "0 0 4px", lineHeight: 1.4 }}>
+                      {item.headline}
+                    </p>
+                    <p style={{ fontSize: 11, color: C.muted, margin: 0, fontStyle: "italic" }}>{item.signal}</p>
+                  </div>
                 ))}
               </div>
+              <button
+                style={{
+                  marginTop: 14,
+                  width: "100%",
+                  padding: "9px",
+                  borderRadius: 8,
+                  border: `1.5px solid ${C.line}`,
+                  background: "transparent",
+                  color: C.primary,
+                  fontFamily: font.body,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 6,
+                }}
+              >
+                <BookOpen size={13} /> View Full Briefing
+              </button>
             </div>
           </div>
 
@@ -2486,7 +2538,7 @@ function CommunityDashboard({ memberType, onLogout }) {
 }
 
 // ─── ROOT APP ──────────────────────────────────────────────────
-export default function CommunityApp() {
+export default function App() {
   const [screen, setScreen] = useState("login");
   const [memberType, setMemberType] = useState("premium");
 
