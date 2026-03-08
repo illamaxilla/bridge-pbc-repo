@@ -4958,10 +4958,10 @@ function DesktopDashboard() {
                     [s.t1?.length, "I", "#EBF5B0", "#1B4D3E"],
                     [s.t2?.length, "II", "rgba(46,90,77,0.12)", "#2E5A4D"],
                     [s.t3?.length, "III", "rgba(107,114,128,0.1)", "#6B7280"],
-                  ].map(([n, label, bg, col]) => (
+                    ].map(([n, label, bg, col]: [any, any, any, any]) => (
                     <div
-                      key={label}
-                      style={{ flex: 1, padding: "9px 10px", background: bg, borderRadius: 8, textAlign: "center" }}
+                      key={label as string}
+                      style={{ flex: 1, padding: "9px 10px", background: bg as string, borderRadius: 8, textAlign: "center" }}
                     >
                       <div
                         style={{
