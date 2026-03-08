@@ -295,7 +295,7 @@ const SVG_MAP = {
   creative: sectorSvgIcons[6],
 };
 
-const SECTORS = [
+const SECTORS: any[] = [
   {
     id: "agriculture",
     icon: Sprout,
