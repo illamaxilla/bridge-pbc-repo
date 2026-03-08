@@ -2336,7 +2336,7 @@ export default function BRIDGEHomePage() {
                 </div>
               </div>
               {/* Dot scroll indicators */}
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "20px" }}>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", marginTop: "20px" }}>
                 {[0, 1, 2, 3].map((i) => (
                   <div
                     key={i}
