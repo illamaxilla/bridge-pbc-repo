@@ -4308,7 +4308,7 @@ export default function ServicesSectorsPageV2() {
               alignItems: "center",
             }}
           >
-            <a href="/contact" style={{ textDecoration: "none" }}>
+            <a href="/contact" style={{ textDecoration: "none", display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
               <button
                 style={{
                   backgroundColor: colors.accent,
