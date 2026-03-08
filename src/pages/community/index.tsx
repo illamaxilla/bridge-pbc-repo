@@ -1183,7 +1183,8 @@ function CommunityDashboard({ memberType, onLogout }) {
             questions={questions}
             setQuestions={setQuestions}
             setShowQuestionModal={setShowQuestionModal}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={(page: string) => { setCurrentPage(page); navigate(page === "members" ? "/community/members" : "/community"); }}
+            initialForumView={initialForumView}
           />
         )}
         {currentPage === "members" && <MembersPage />}
