@@ -21,6 +21,7 @@ const ALL_NAV = [
   { label: "Community",          to: "/community" },
   { label: "Resources",          to: "/resources" },
   { label: "Contact",            to: "/contact" },
+  { label: "Policy Updates",     to: "/policy", badge: true },
 ];
 // Policy pages that show a badge dot
 const BADGE_ITEMS = new Set(["/policy"]);
