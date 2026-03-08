@@ -13,12 +13,15 @@ const clr = {
 
 // ── Nav items with route mapping ──────────────────────────────────────────────
 const ALL_NAV = [
-  { label: "Home",      to: "/" },
-  { label: "About",     to: "/about" },
-  { label: "Sectors",   to: "/sectors" },
-  { label: "Insight",   to: "/insights" },
-  { label: "Resources", to: "/resources" },
-  { label: "Contact",   to: "/contact" },
+  { label: "Home",               to: "/" },
+  { label: "About",              to: "/about" },
+  { label: "Methodology",        to: "/methodology" },
+  { label: "Sectors",            to: "/sectors" },
+  { label: "Insight",            to: "/insights" },
+  { label: "BRIDGE Intelligence", to: "/intelligence/dashboard" },
+  { label: "Community",          to: "/community" },
+  { label: "Resources",          to: "/resources" },
+  { label: "Contact",            to: "/contact" },
 ];
 
 // ── BRIDGE logo (dark, header variant) ────────────────────────────────────────
