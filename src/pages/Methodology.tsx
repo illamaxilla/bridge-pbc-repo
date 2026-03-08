@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import {
@@ -2562,6 +2563,7 @@ function MethodologySection() {
 /* ─── CTA SECTION ────────────────────────────────────────────────── */
 function CTASection({ seg }) {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const ctaText = {
     Entrepreneurs: "Submit your idea today. Our team reviews every submission and responds within 14 days.",
     "Business Institutions":
@@ -2638,6 +2640,7 @@ function CTASection({ seg }) {
               }}
             >
               <button
+                onClick={() => navigate("/contact")}
                 style={{
                   background: C.accent,
                   color: C.primary,
@@ -2658,6 +2661,7 @@ function CTASection({ seg }) {
                 {seg.cta} <ArrowRight size={16} />
               </button>
               <button
+                onClick={() => navigate("/resources")}
                 style={{
                   background: "transparent",
                   color: C.white,
