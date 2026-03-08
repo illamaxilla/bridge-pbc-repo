@@ -668,6 +668,7 @@ const sectorRoutes: Record<string, string> = {
 // ═══════════════════════════════════════════════
 
 export default function BRIDGEHomePage() {
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [hoveredCard, setHoveredCard] = useState(null);
   const sectorCount = useCounter(12, 1200, 300);
