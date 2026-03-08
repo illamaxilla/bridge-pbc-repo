@@ -2041,10 +2041,9 @@ function MobileDashboard({ s, setS }) {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        height: "100%",
         background: M.bg,
         fontFamily: "'DM Sans',sans-serif",
-        overflow: "hidden",
       }}
     >
       <style>{`
@@ -2052,83 +2051,6 @@ function MobileDashboard({ s, setS }) {
       .mscroll::-webkit-scrollbar{display:none}
       .mscroll{-ms-overflow-style:none;scrollbar-width:none}
     `}</style>
-
-      {/* ═══ TOP BAR ═══ */}
-      <div
-        style={{
-          flexShrink: 0,
-          height: 52,
-          background: "rgba(15,26,18,0.94)",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-          backdropFilter: "blur(16px)",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 14px",
-          position: "relative",
-          zIndex: 50,
-        }}
-      >
-        {/* Sector selector pill — full width */}
-        <div
-          onClick={() => setSectorDrawer(true)}
-          style={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            cursor: "pointer",
-            minWidth: 0,
-            background: "rgba(255,255,255,0.06)",
-            borderRadius: 10,
-            padding: "7px 12px 7px 10px",
-          }}
-        >
-          <div
-            style={{
-              width: 26,
-              height: 26,
-              borderRadius: 6,
-              background: "rgba(255,255,255,0.08)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <Icon size={13} color={M.accent} strokeWidth={1.8} />
-          </div>
-          <span
-            style={{
-              flex: 1,
-              fontSize: 13,
-              fontWeight: 600,
-              color: M.white,
-              fontFamily: "DM Sans,sans-serif",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {s.short}
-          </span>
-          <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: M.accent, fontFamily: "Inter,sans-serif" }}>
-              {s.score}
-            </span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={M.accent}
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            >
-              <path d="M6 9l6 6 6-6" />
-            </svg>
-          </div>
-        </div>
-      </div>
 
       {/* ═══ SECTOR HEADER CARD ═══ */}
       <div style={{ padding: "8px 16px 0" }}>
