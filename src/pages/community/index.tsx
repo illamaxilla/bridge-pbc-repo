@@ -983,17 +983,38 @@ function LoginPage({ onLogin }) {
   );
 }
 
+// ─── FORUM SECTION URL MAP ─────────────────────────────────────
+const FORUM_SECTION_ROUTES: Record<string, string> = {
+  Home:         "/community/forum",
+  Questions:    "/community/forum/questions",
+  "Most Answered": "/community/forum/most-answered",
+  Polls:        "/community/forum/polls",
+  Groups:       "/community/forum/groups",
+  Tags:         "/community/forum/tags",
+  Sectors:      "/community/forum/sectors",
+  Badges:       "/community/forum/badges",
+  Members:      "/community/forum/members",
+};
+const FORUM_ROUTE_SECTIONS: Record<string, string> = Object.fromEntries(
+  Object.entries(FORUM_SECTION_ROUTES).map(([k, v]) => [v, k])
+);
+
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  // Top-level tab from URL
   const pageMap: Record<string, string> = {
     "/community": "Home",
-    "/community/forum": "Forum",
     "/community/members": "Members",
     "/community/resources": "Resources",
   };
-  const activePage = pageMap[pathname] ?? "Home";
+  // Any /community/forum/* path maps to the Forum tab
+  const activePage = pathname.startsWith("/community/forum")
+    ? "Forum"
+    : (pageMap[pathname] ?? "Home");
+
   const setActivePage = (name: string) => {
     const routeMap: Record<string, string> = {
       Home: "/community",
@@ -1003,7 +1024,12 @@ function CommunityDashboard({ memberType, onLogout }) {
     };
     navigate(routeMap[name] ?? "/community");
   };
-  const [forumSection, setForumSection] = useState("Home");
+
+  // Forum sub-section from URL
+  const forumSection = FORUM_ROUTE_SECTIONS[pathname] ?? "Home";
+  const setForumSection = (section: string) => {
+    navigate(FORUM_SECTION_ROUTES[section] ?? "/community/forum");
+  };
   const [activeTab, setActiveTab] = useState("active");
   const [forumFilter, setForumFilter] = useState("Recent");
   const [questions, setQuestions] = useState(QUESTIONS);

@@ -71,6 +71,14 @@ const App = () => (
           <Route path="/sectors/agriculture" element={<Agriculture />} />
           <Route path="/community" element={<CommunityHome />} />
           <Route path="/community/forum" element={<CommunityHome />} />
+          <Route path="/community/forum/questions" element={<CommunityHome />} />
+          <Route path="/community/forum/most-answered" element={<CommunityHome />} />
+          <Route path="/community/forum/polls" element={<CommunityHome />} />
+          <Route path="/community/forum/groups" element={<CommunityHome />} />
+          <Route path="/community/forum/tags" element={<CommunityHome />} />
+          <Route path="/community/forum/sectors" element={<CommunityHome />} />
+          <Route path="/community/forum/badges" element={<CommunityHome />} />
+          <Route path="/community/forum/members" element={<CommunityHome />} />
           <Route path="/community/members" element={<CommunityHome />} />
           <Route path="/community/resources" element={<CommunityHome />} />
           <Route path="/contact" element={<Contact />} />
