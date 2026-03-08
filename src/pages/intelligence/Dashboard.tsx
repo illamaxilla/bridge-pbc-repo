@@ -4431,10 +4431,12 @@ function DesktopDashboard() {
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7 }}>
                       <div style={{ display: "flex", gap: 2, background: "#F3F4F6", borderRadius: 7, padding: 3 }}>
-                        {[
-                          ["Bar", "bar", BarChart3],
-                          ["Line", "line", LineChart],
-                        ].map(([l, v, Icon]) => (
+                        {(
+                          [
+                            ["Bar", "bar", BarChart3],
+                            ["Line", "line", LineChart],
+                          ] as [string, string, React.ComponentType<{ size?: number }>][]
+                        ).map(([l, v, ChartIcon]) => (
                           <button
                             key={v}
                             onClick={() => setChart(v)}
@@ -4453,7 +4455,7 @@ function DesktopDashboard() {
                               boxShadow: chart === v ? "0 1px 3px rgba(0,0,0,0.07)" : "none",
                             }}
                           >
-                            <Icon size={11} />
+                            <ChartIcon size={11} />
                             {l}
                           </button>
                         ))}
