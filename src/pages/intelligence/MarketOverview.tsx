@@ -814,7 +814,7 @@ function Card({ children, style: ex = {} }) {
     </div>
   );
 }
-function Pill({ children, active, onClick, col }) {
+function Pill({ children, active, onClick, col = "#1B4D3E" }: { children: any; active: any; onClick: any; col?: any }) {
   return (
     <button
       onClick={onClick}
@@ -836,7 +836,7 @@ function Pill({ children, active, onClick, col }) {
     </button>
   );
 }
-const ChartTip = ({ active, payload, label }) => {
+const ChartTip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
   if (!active || !payload?.length) return null;
   return (
     <div
@@ -2573,7 +2573,7 @@ function MCardHeader({ icon: Icon, iconColor = M.accent, title, badge, badgeStyl
   );
 }
 
-function MSection({ icon, iconColor, title, badge, badgeStyle, defaultOpen = false, children }) {
+function MSection({ icon, iconColor = M.accent, title, badge = "", badgeStyle = {}, defaultOpen = false, children }: { icon: any; iconColor?: any; title: any; badge?: any; badgeStyle?: any; defaultOpen?: boolean; children: any }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <MCard style={{ marginBottom: 10 }}>

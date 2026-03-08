@@ -1500,7 +1500,7 @@ function Gauge({ score }) {
     </div>
   );
 }
-const Tip = ({ active, payload, label }) => {
+const Tip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
   if (!active || !payload?.length) return null;
   return (
     <div
@@ -1819,7 +1819,7 @@ function sigC(x) {
   return x === "Bullish" ? M.green : x === "Bearish" ? M.red : M.orange;
 }
 /* ─── Section Card wrapper ─── */
-function MCard({ icon: Icon, title, badge, badgeLime = false, defaultOpen = true, children }) {
+function MCard({ icon: Icon, title, badge = undefined, badgeLime = false, defaultOpen = true, children }: { icon: any; title: any; badge?: any; badgeLime?: boolean; defaultOpen?: boolean; children: any }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div
@@ -5066,10 +5066,12 @@ function DesktopDashboard() {
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7 }}>
                       <div style={{ display: "flex", gap: 2, background: "#F3F4F6", borderRadius: 7, padding: 3 }}>
-                        {[
-                          ["Bar", "bar", BarChart3],
-                          ["Line", "line", LineChart],
-                        ].map(([l, v, Icon]) => (
+                        {(
+                          [
+                            ["Bar", "bar", BarChart3],
+                            ["Line", "line", LineChart],
+                          ] as [string, string, React.ElementType][]
+                        ).map(([l, v, Icon]) => (
                           <button
                             key={v}
                             onClick={() => setChart(v)}
@@ -5440,11 +5442,13 @@ function DesktopDashboard() {
                     Tier Distribution
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 6 }}>
-                    {[
-                      [s.t1?.length, "I", "#EBF5B0", "#1B4D3E", "Priority"],
-                      [s.t2?.length, "II", "rgba(46,90,77,0.1)", "#2E5A4D", "Mid-term"],
-                      [s.t3?.length, "III", "rgba(107,114,128,0.08)", "#6B7280", "Long-term"],
-                    ].map(([n, label, bg, col, sub]) => (
+                    {(
+                      [
+                        [s.t1?.length, "I", "#EBF5B0", "#1B4D3E", "Priority"],
+                        [s.t2?.length, "II", "rgba(46,90,77,0.1)", "#2E5A4D", "Mid-term"],
+                        [s.t3?.length, "III", "rgba(107,114,128,0.08)", "#6B7280", "Long-term"],
+                      ] as [any, string, string, string, string][]
+                    ).map(([n, label, bg, col, sub]) => (
                       <div
                         key={label}
                         style={{ background: bg, borderRadius: 8, padding: "8px 10px", textAlign: "center" }}
@@ -5587,11 +5591,13 @@ function DesktopDashboard() {
                   </button>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                  {[
-                    [s.t1?.length, "I", "#EBF5B0", "#1B4D3E"],
-                    [s.t2?.length, "II", "rgba(46,90,77,0.12)", "#2E5A4D"],
-                    [s.t3?.length, "III", "rgba(107,114,128,0.1)", "#6B7280"],
-                  ].map(([n, label, bg, col]) => (
+                  {(
+                    [
+                      [s.t1?.length, "I", "#EBF5B0", "#1B4D3E"],
+                      [s.t2?.length, "II", "rgba(46,90,77,0.12)", "#2E5A4D"],
+                      [s.t3?.length, "III", "rgba(107,114,128,0.1)", "#6B7280"],
+                    ] as [any, string, string, string][]
+                  ).map(([n, label, bg, col]) => (
                     <div
                       key={label}
                       style={{ flex: 1, padding: "9px 10px", background: bg, borderRadius: 8, textAlign: "center" }}
@@ -5778,14 +5784,14 @@ function DesktopDashboard() {
                   Quick Actions
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
-                  {[
+                  {([
                     [FileText, "View Report"],
                     [Download, "Export Data"],
                     [BarChart2, "Compare"],
                     [Clock, "History"],
                     [Share2, "Share"],
                     [MoreHorizontal, "More"],
-                  ].map(([Icon, label]) => (
+                  ] as [React.ElementType, string][]).map(([Icon, label]) => (
                     <button
                       key={label}
                       style={{

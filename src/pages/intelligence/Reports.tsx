@@ -817,7 +817,7 @@ function Card({ children, style: ex = {} }) {
     </div>
   );
 }
-const ChartTip = ({ active, payload, label }) => {
+const ChartTip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
   if (!active || !payload?.length) return null;
   return (
     <div
@@ -1901,7 +1901,7 @@ function ActivityTable({
   const sortBy = (col) => setTableSort((p) => ({ col, dir: p.col === col && p.dir === "desc" ? "asc" : "desc" }));
   const toggleRow = (id) => setSelectedRows((p) => (p.includes(id) ? p.filter((r) => r !== id) : [...p, id]));
   const toggleAll = () => setSelectedRows((p) => (p.length === pageRows.length ? [] : pageRows.map((r) => r.id)));
-  const cols = [
+  const cols: [string, string, boolean][] = [
     ["sector", "Sector", true],
     ["date", "Date", true],
     ["status", "Status", false],
@@ -2115,7 +2115,7 @@ function ActivityTable({
           <tbody>
             {pageRows.map((row) => {
               const sec = SECTORS.find((x) => x.id === row.sectorId);
-              const Icon = sec?.icon || FileText;
+              const Icon = (sec as any)?.svgIcon ? null : FileText;
               const sel = selectedRows.includes(row.id);
               const isPrimary = row.sectorId === s.id;
               return (
@@ -2924,7 +2924,7 @@ function MobileDashboard({ s, setS }) {
   const [activeNav, setActiveNav] = useState("resources");
   const [resourcesView, setResourcesView] = useState("reports");
   const [resourcesMenu, setResourcesMenu] = useState(false);
-  const [openSections, setOpenSections] = useState({ signals: true, score: true });
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({ signals: true, score: true });
   const [sectorDrawer, setSectorDrawer] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -3250,7 +3250,7 @@ function MobileDashboard({ s, setS }) {
     const openD = openSections;
 
     /* Dark section head */
-    const DSectionHead = ({ id, label, icon, count, defaultOpen }) => {
+    const DSectionHead = ({ id, label, icon, count = undefined, defaultOpen = false }: { id: string; label: string; icon: any; count?: any; defaultOpen?: any }) => {
       const isOpen = openD[id] ?? defaultOpen ?? false;
       return (
         <button
@@ -5214,7 +5214,7 @@ function MobileDashboard({ s, setS }) {
 /* ═══════════════════════════════════════════════
    MOBILE RESOURCES PAGE — mobile adaptation of desktop Reports
 ═══════════════════════════════════════════════ */
-function MobileResourcesPage({ s, view = "sector-performance" }) {
+function MobileResourcesPage({ s, setS = undefined, view = "sector-performance" }: { s: any; setS?: any; view?: string }) {
   const D = {
     bg: "#090F0B",
     card: "#0F1A12",
@@ -5295,7 +5295,7 @@ function MobileResourcesPage({ s, view = "sector-performance" }) {
   const capitalTotal = monthlyData.reduce((a, d) => a + d.growth, 0);
 
   /* ── Dark section header ── */
-  const DHead = ({ id, label, badge, children }) => {
+  const DHead = ({ id, label, badge = undefined, children }: { id: string; label: string; badge?: any; children?: any }) => {
     const isOpen = open[id] ?? true;
     return (
       <button

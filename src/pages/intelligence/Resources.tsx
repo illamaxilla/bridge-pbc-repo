@@ -2970,7 +2970,7 @@ function MobileNotifPanel({ onClose }) {
 
 /* ─── RESOURCES FOOTER MENU ───────────────────────────────────────────────── */
 function ResourcesFooterMenu({ resourcesView, setResourcesView, onClose }) {
-  const SI = { fill: "none", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, stroke: "currentColor" };
+  const SI: React.SVGProps<SVGSVGElement> = { fill: "none", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, stroke: "currentColor" };
   const items = [
     {
       type: "top",
@@ -5018,10 +5018,10 @@ function DesktopResourcesPage() {
                     overflow: "hidden",
                   }}
                 >
-                  {[
+                  {([
                     ["table", List],
                     ["grid", LayoutGrid],
-                  ].map(([v, Ic]) => (
+                  ] as [string, React.ElementType][]).map(([v, Ic]) => (
                     <button
                       key={v}
                       onClick={() => setViewMode(v)}

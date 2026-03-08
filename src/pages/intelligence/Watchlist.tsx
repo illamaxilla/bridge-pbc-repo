@@ -295,7 +295,7 @@ const SVG_MAP = {
   creative: sectorSvgIcons[6],
 };
 
-const SECTORS = [
+const SECTORS: any[] = [
   {
     id: "agriculture",
     icon: Sprout,
@@ -815,7 +815,7 @@ const SECTORS = [
   },
 ];
 // Attach svgIcon to each sector
-SECTORS.forEach((s) => {
+(SECTORS as any[]).forEach((s) => {
   s.svgIcon = SVG_MAP[s.id];
 });
 
@@ -910,7 +910,7 @@ function Card({ children, style: ex = {} }) {
   );
 }
 
-const Tip = ({ active, payload, label }) => {
+const Tip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
   if (!active || !payload?.length) return null;
   return (
     <div style={{ background: "#111827", color: "#fff", borderRadius: 8, padding: "8px 12px", fontSize: 11 }}>
@@ -1502,8 +1502,8 @@ function OverviewTab({ item }) {
           ? ["Jan", "Feb", "Mar"]
           : ["2021", "2022", "2023", "2024", "2025"];
   const gv = (i, j) => Math.round(15 + Math.sin(i * 1.2 + j * 0.7) * 10 + j * 2);
-  const gc = (i, j) => {
-    const v = (Math.sin(i * 0.8 + j * 1.1) * 3).toFixed(2);
+  const gc = (i: number, j: number) => {
+    const v = parseFloat((Math.sin(i * 0.8 + j * 1.1) * 3).toFixed(2));
     return v > 0 ? `+${v}` : `${v}`;
   };
   return (
@@ -1682,7 +1682,7 @@ function OverviewTab({ item }) {
                                   gap: 5,
                                 }}
                               >
-                                <MapPin size={10} color={C.muted} style={{ marginTop: 2, flexShrink: 0 }} />
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: 2, flexShrink: 0 }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 Accra Business District, Ring Road Central, Accra, Ghana
                               </div>
                             </div>
@@ -2799,12 +2799,12 @@ const mCard = (extra = {}) => ({
   overflow: "hidden",
   ...extra,
 });
-const mLabel = {
+const mLabel: React.CSSProperties = {
   fontSize: 9,
   fontWeight: 700,
   color: MB.faint,
   letterSpacing: "1.2px",
-  textTransform: "uppercase",
+  textTransform: "uppercase" as const,
   fontFamily: "Inter,sans-serif",
 };
 
@@ -5106,7 +5106,7 @@ function WatchSignals({ sector }) {
   const sigBG = (s) => (s === "Bullish" ? MB.greenDim : s === "Watch" ? MB.yellowDim : MB.redDim);
   const bullish = sector.activity.filter((a) => a.sig === "Bullish");
   const watches = sector.activity.filter((a) => a.sig === "Watch");
-  const cats = [...new Set(sector.activity.map((a) => a.cat))];
+  const cats: string[] = [...new Set<string>(sector.activity.map((a: any) => a.cat as string))];
 
   // Signal strength: ratio of bullish to total
   const strength = Math.round((bullish.length / sector.activity.length) * 100);
