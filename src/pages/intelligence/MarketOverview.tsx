@@ -38,6 +38,13 @@ import {
   FileBarChart,
   Book,
   LogOut,
+  Globe,
+  Building2,
+  PieChart,
+  Compass,
+  Radio,
+  AlertCircle,
+  CheckCircle2,
 } from "lucide-react";
 import {
   AreaChart,
@@ -814,7 +821,7 @@ function Card({ children, style: ex = {} }) {
     </div>
   );
 }
-function Pill({ children, active, onClick, col = "#1B4D3E" }: { children: any; active: any; onClick: any; col?: any }) {
+function Pill({ children, active, onClick, col }) {
   return (
     <button
       onClick={onClick}
@@ -836,7 +843,7 @@ function Pill({ children, active, onClick, col = "#1B4D3E" }: { children: any; a
     </button>
   );
 }
-const ChartTip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
+const ChartTip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
     <div
@@ -2573,7 +2580,7 @@ function MCardHeader({ icon: Icon, iconColor = M.accent, title, badge, badgeStyl
   );
 }
 
-function MSection({ icon, iconColor = M.accent, title, badge = "", badgeStyle = {}, defaultOpen = false, children }: { icon: any; iconColor?: any; title: any; badge?: any; badgeStyle?: any; defaultOpen?: boolean; children: any }) {
+function MSection({ icon, iconColor, title, badge, badgeStyle, defaultOpen = false, children }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <MCard style={{ marginBottom: 10 }}>
@@ -3243,82 +3250,111 @@ function MNotifDropdown({ open, onClose, s }) {
 /* ── Top Header ── */
 function MobileHeader({ s, setS }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
-      {/* Header bar */}
       <div
         style={{
           position: "sticky",
           top: 0,
           zIndex: 50,
-          height: 56,
-          background: "rgba(15,26,18,0.95)",
+          height: 52,
+          background: "rgba(15,26,18,0.97)",
           borderBottom: "1px solid rgba(255,255,255,0.08)",
           backdropFilter: "blur(16px)",
           display: "flex",
           alignItems: "center",
           padding: "0 14px",
-          gap: 8,
           flexShrink: 0,
         }}
       >
-        <MobileLogo />
-        {/* Sector selector pill */}
         <div
           onClick={() => setDrawerOpen(true)}
           style={{
             flex: 1,
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            gap: 10,
             cursor: "pointer",
-            minWidth: 0,
             background: "rgba(255,255,255,0.06)",
-            borderRadius: 10,
-            padding: "6px 10px 6px 8px",
-            marginLeft: 8,
+            borderRadius: 12,
+            padding: "8px 12px",
           }}
         >
           <div
             style={{
-              width: 24,
-              height: 24,
-              borderRadius: 6,
-              background: "rgba(255,255,255,0.08)",
+              width: 28,
+              height: 28,
+              borderRadius: 8,
+              background: "rgba(184,217,53,0.15)",
+              border: "1px solid rgba(184,217,53,0.2)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
             }}
           >
-            {s.svgIcon("#B8D935", 13)}
+            {s.svgIcon("#B8D935", 14)}
           </div>
-          <span
-            style={{
-              flex: 1,
-              fontSize: 13,
-              fontWeight: 600,
-              color: "#fff",
-              fontFamily: "DM Sans,sans-serif",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {s.short}
-          </span>
-          <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: "#B8D935", fontFamily: "Inter,sans-serif" }}>
-              {s.score}
-            </span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div
+              style={{
+                fontSize: 9,
+                fontWeight: 700,
+                color: "rgba(255,255,255,0.3)",
+                letterSpacing: "0.8px",
+                textTransform: "uppercase",
+                fontFamily: "Inter,sans-serif",
+              }}
+            >
+              Active Sector
+            </div>
+            <div
+              style={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: "#fff",
+                fontFamily: "DM Sans,sans-serif",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                lineHeight: 1.2,
+                marginTop: 1,
+              }}
+            >
+              {s.short}
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+            <div style={{ textAlign: "right" }}>
+              <div
+                style={{
+                  fontSize: 18,
+                  fontWeight: 800,
+                  color: "#B8D935",
+                  fontFamily: "Inter,sans-serif",
+                  lineHeight: 1,
+                  letterSpacing: "-0.5px",
+                }}
+              >
+                {s.score}
+              </div>
+              <div
+                style={{
+                  fontSize: 8,
+                  color: "rgba(255,255,255,0.25)",
+                  fontFamily: "Inter,sans-serif",
+                  letterSpacing: "0.3px",
+                }}
+              >
+                SCORE
+              </div>
+            </div>
             <svg
-              width="12"
-              height="12"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#B8D935"
+              stroke="rgba(184,217,53,0.6)"
               strokeWidth="2.5"
               strokeLinecap="round"
             >
@@ -3326,99 +3362,7 @@ function MobileHeader({ s, setS }) {
             </svg>
           </div>
         </div>
-        {/* Bell */}
-        <button
-          onClick={() => {
-            setNotifOpen((o) => !o);
-            setMenuOpen(false);
-          }}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            position: "relative",
-            flexShrink: 0,
-          }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="2">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
-          <div
-            style={{
-              position: "absolute",
-              top: 6,
-              right: 6,
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "#EF4444",
-              border: "1.5px solid #070D09",
-            }}
-          />
-        </button>
-        {/* Hamburger */}
-        <button
-          onClick={() => {
-            setMenuOpen((o) => !o);
-            setNotifOpen(false);
-          }}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: menuOpen ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.06)",
-            border: `1px solid ${menuOpen ? "rgba(184,217,53,0.25)" : "rgba(255,255,255,0.08)"}`,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 4,
-            cursor: "pointer",
-            flexShrink: 0,
-            padding: 0,
-          }}
-        >
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 9,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : "rgba(255,255,255,0.45)",
-              alignSelf: "flex-start",
-              marginLeft: "10px",
-            }}
-          />
-        </button>
       </div>
-      {/* Overlays */}
-      <MNotifDropdown open={notifOpen} onClose={() => setNotifOpen(false)} s={s} />
-      <MMenuDrawer open={menuOpen} onClose={() => setMenuOpen(false)} s={s} />
       <MSectorDrawer s={s} setS={setS} open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </>
   );
@@ -5551,179 +5495,1245 @@ const ANALYTICS_SUBS = [
   { id: "map", label: "Map" },
 ];
 
-const NAV_ICONS = {
-  dashboard: (c) => <LayoutGrid size={19} color={c} strokeWidth={1.5} />,
-  overview: (c) => <Activity size={19} color={c} strokeWidth={1.5} />,
-  analytics: (c) => <BarChart3 size={19} color={c} strokeWidth={1.5} />,
-  watch: (c) => <Eye size={19} color={c} strokeWidth={1.5} />,
-  resources: (c) => <Book size={19} color={c} strokeWidth={1.5} />,
-};
+/* ── 5 overview-focused tab definitions ── */
+const MOV_TABS = [
+  { id: "overview", label: "Overview", icon: (c, sw) => <Globe size={19} color={c} strokeWidth={sw} /> },
+  { id: "signals", label: "Signals", icon: (c, sw) => <Radio size={19} color={c} strokeWidth={sw} /> },
+  { id: "ventures", label: "Ventures", icon: (c, sw) => <Building2 size={19} color={c} strokeWidth={sw} /> },
+  { id: "capital", label: "Capital", icon: (c, sw) => <PieChart size={19} color={c} strokeWidth={sw} /> },
+  { id: "outlook", label: "Outlook", icon: (c, sw) => <Compass size={19} color={c} strokeWidth={sw} /> },
+];
 
-function MobileBottomNav({ page, setPage, sub, setSub }) {
-  const [subOpen, setSubOpen] = useState(false);
-
-  const handleTab = (id) => {
-    if (id === "analytics") {
-      if (page === "analytics") setSubOpen((o) => !o);
-      else {
-        setPage("analytics");
-        setSubOpen(true);
-      }
-    } else {
-      setSubOpen(false);
-      setPage(id);
-    }
-  };
-
-  const handleSub = (id) => {
-    setSub(id);
-    setSubOpen(false);
-  };
-
-  const analyticsLabel =
-    page === "analytics" ? ANALYTICS_SUBS.find((s) => s.id === sub)?.label || "Analytics" : "Analytics";
-
-  const TABS = [
-    { id: "dashboard", label: "Dashboard" },
-    { id: "overview", label: "Overview" },
-    { id: "analytics", label: analyticsLabel },
-    { id: "watch", label: "Watch" },
-    { id: "resources", label: "Resources" },
-  ];
-
+function MobileBottomNav({ page, setPage }) {
   return (
-    <>
-      {/* Backdrop */}
-      {subOpen && <div onClick={() => setSubOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 98 }} />}
-
-      {/* Analytics popover */}
-      {subOpen && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: 72,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 160,
-            background: "#0F1A12",
-            border: `1px solid ${M.border}`,
-            borderRadius: 16,
-            padding: 6,
-            boxShadow: "0 -8px 32px rgba(0,0,0,0.5)",
-            zIndex: 99,
-          }}
-        >
-          {ANALYTICS_SUBS.map((item) => {
-            const act = sub === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleSub(item.id)}
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "8px 16px",
-                  borderRadius: 10,
-                  border: "none",
-                  cursor: "pointer",
-                  background: act ? M.accentDim : "transparent",
-                  fontFamily: "Inter,sans-serif",
-                  fontSize: 12,
-                  fontWeight: act ? 700 : 500,
-                  color: act ? M.accent : "rgba(255,255,255,0.5)",
-                }}
-              >
-                {item.label}
-                {act && (
-                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: M.accent, flexShrink: 0 }} />
-                )}
-              </button>
-            );
-          })}
-          {/* Caret */}
-          <div
+    <div
+      style={{
+        height: 64,
+        background: "#050B05",
+        borderTop: `1px solid ${M.border}`,
+        display: "flex",
+        flexShrink: 0,
+        position: "relative",
+        zIndex: 97,
+      }}
+    >
+      {MOV_TABS.map((t) => {
+        const act = page === t.id;
+        return (
+          <button
+            key={t.id}
+            onClick={() => setPage(t.id)}
             style={{
-              position: "absolute",
-              bottom: -6,
-              left: "50%",
-              transform: "translateX(-50%) rotate(45deg)",
-              width: 10,
-              height: 10,
-              background: "#0F1A12",
-              border: `1px solid ${M.border}`,
-              borderTop: "none",
-              borderLeft: "none",
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 3,
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              position: "relative",
+              padding: 0,
             }}
-          />
-        </div>
-      )}
-
-      {/* Footer bar */}
-      <div
-        style={{
-          height: 64,
-          background: "#050B05",
-          borderTop: `1px solid ${M.border}`,
-          display: "flex",
-          flexShrink: 0,
-          position: "relative",
-          zIndex: 97,
-        }}
-      >
-        {TABS.map((t) => {
-          const act = page === t.id;
-          return (
-            <button
-              key={t.id}
-              onClick={() => handleTab(t.id)}
+          >
+            {act && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 20,
+                  height: 2,
+                  borderRadius: "0 0 3px 3px",
+                  background: M.accent,
+                }}
+              />
+            )}
+            {t.icon(act ? M.accent : M.muted, act ? 2 : 1.5)}
+            <span
               style={{
-                flex: 1,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 3,
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                position: "relative",
-                padding: 0,
+                fontSize: 9,
+                fontWeight: act ? 700 : 500,
+                color: act ? M.accent : M.muted,
+                fontFamily: "Inter,sans-serif",
+                letterSpacing: ".2px",
+                marginTop: 1,
               }}
             >
-              {act && (
+              {t.label}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════
+   SIGNALS TAB — Intelligence feed for sector
+   ════════════════════════════════════════ */
+function SignalsTab({ s }) {
+  const [filter, setFilter] = useState("all");
+  const signals = s.activity || [];
+  const filtered = filter === "all" ? signals : signals.filter((a) => a.sig === filter);
+  const counts = {
+    Bullish: signals.filter((a) => a.sig === "Bullish").length,
+    Bearish: signals.filter((a) => a.sig === "Bearish").length,
+    Neutral: signals.filter((a) => a.sig === "Neutral").length,
+  };
+  return (
+    <div style={{ padding: "12px 14px 80px" }}>
+      <div
+        style={{
+          fontSize: 9,
+          fontWeight: 700,
+          color: M.muted,
+          letterSpacing: "0.8px",
+          textTransform: "uppercase",
+          fontFamily: "Inter,sans-serif",
+          marginBottom: 10,
+        }}
+      >
+        Intelligence · {s.short}
+      </div>
+      {/* Stat row */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
+        {[
+          ["Bullish", counts.Bullish, M.green, M.greenDim],
+          ["Bearish", counts.Bearish, M.red, M.redDim],
+          ["Neutral", counts.Neutral, M.amber, M.amberDim],
+        ].map(([l, n, col, bg]) => (
+          <MCard
+            key={l}
+            style={{
+              padding: "10px 12px",
+              textAlign: "center",
+              cursor: "pointer",
+              border: filter === l ? `1px solid ${col}` : `1px solid ${M.border}`,
+              background: filter === l ? bg : M.card,
+            }}
+            onClick={() => setFilter(filter === l ? "all" : l)}
+          >
+            <div style={{ fontSize: 18, fontWeight: 800, color: col, fontFamily: "Inter,sans-serif", lineHeight: 1 }}>
+              {n}
+            </div>
+            <div style={{ fontSize: 9, color: M.mid, fontFamily: "Inter,sans-serif", marginTop: 3 }}>{l}</div>
+          </MCard>
+        ))}
+      </div>
+      {/* Filter pills */}
+      <div style={{ display: "flex", gap: 6, marginBottom: 12 }}>
+        {["all", "Bullish", "Bearish", "Neutral"].map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            style={{
+              padding: "4px 10px",
+              borderRadius: 20,
+              border: `1px solid ${filter === f ? M.accentBorder : M.border}`,
+              background: filter === f ? M.accentDim : "transparent",
+              fontSize: 9,
+              fontWeight: 700,
+              color: filter === f ? M.accent : M.muted,
+              fontFamily: "Inter,sans-serif",
+              cursor: "pointer",
+              textTransform: "capitalize",
+            }}
+          >
+            {f === "all" ? "All" : f}
+          </button>
+        ))}
+      </div>
+      {/* Signal list */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {filtered.map((a, i) => {
+          const col = msigCol(a.sig),
+            dim = msigDim(a.sig);
+          return (
+            <MCard key={i} style={{ padding: "12px 14px" }}>
+              <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                 <div
                   style={{
-                    position: "absolute",
-                    top: 0,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: 20,
-                    height: 2,
-                    borderRadius: "0 0 3px 3px",
-                    background: M.accent,
+                    width: 32,
+                    height: 32,
+                    borderRadius: 9,
+                    background: dim,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    marginTop: 1,
                   }}
-                />
-              )}
-              {NAV_ICONS[t.id](act ? M.accent : M.muted)}
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: act ? 700 : 500,
-                  color: act ? M.accent : M.muted,
-                  fontFamily: "Inter,sans-serif",
-                  letterSpacing: ".2px",
-                  marginTop: 1,
-                }}
-              >
-                {t.label}
-              </span>
-            </button>
+                >
+                  {a.sig === "Bullish" ? (
+                    <TrendingUp size={14} color={col} />
+                  ) : a.sig === "Bearish" ? (
+                    <TrendingDown size={14} color={col} />
+                  ) : (
+                    <Minus size={14} color={col} />
+                  )}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: M.white, lineHeight: 1.35, marginBottom: 4 }}>
+                    {a.h}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span
+                      style={{
+                        fontSize: 9,
+                        fontWeight: 700,
+                        padding: "2px 7px",
+                        borderRadius: 4,
+                        background: dim,
+                        color: col,
+                        fontFamily: "Inter,sans-serif",
+                      }}
+                    >
+                      {a.sig}
+                    </span>
+                    <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>{a.date}</span>
+                    {a.amt && (
+                      <span
+                        style={{
+                          fontSize: 9,
+                          fontWeight: 700,
+                          color: M.accent,
+                          fontFamily: "Inter,sans-serif",
+                          marginLeft: "auto",
+                        }}
+                      >
+                        {a.amt}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </MCard>
           );
         })}
       </div>
-    </>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════
+   VENTURES TAB — Key ventures in sector
+   ════════════════════════════════════════ */
+function VenturesOverviewTab({ s }) {
+  const [tier, setTier] = useState("t1");
+  const [expanded, setExpanded] = useState(null);
+  const ventures = s[tier] || [];
+  const SIcon = s.icon;
+  const allV = [...(s.t1 || []), ...(s.t2 || []), ...(s.t3 || [])];
+  const riskCounts = {
+    LOW: allV.filter((v) => v.risk === "LOW").length,
+    MEDIUM: allV.filter((v) => v.risk === "MEDIUM").length,
+    HIGH: allV.filter((v) => v.risk === "HIGH").length,
+  };
+  const avgIRR = allV.length
+    ? Math.round(allV.reduce((a, v) => a + (parseInt(v.irr) || s.irrLow), 0) / allV.length)
+    : 0;
+  const tiers = [
+    {
+      id: "t1",
+      label: "Tier I",
+      sublabel: "Lead Opportunities",
+      col: M.accent,
+      dim: M.accentDim,
+      count: (s.t1 || []).length,
+    },
+    {
+      id: "t2",
+      label: "Tier II",
+      sublabel: "Secondary Pipeline",
+      col: "#60A5FA",
+      dim: "rgba(96,165,250,0.12)",
+      count: (s.t2 || []).length,
+    },
+    {
+      id: "t3",
+      label: "Tier III",
+      sublabel: "Long-Horizon",
+      col: M.amber,
+      dim: M.amberDim,
+      count: (s.t3 || []).length,
+    },
+  ];
+  const active = tiers.find((t) => t.id === tier);
+
+  const ventureMeta = {
+    t1: {
+      badge: "BRIDGE Priority",
+      col: M.accent,
+      bg: M.accentDim,
+      desc: "Highest-conviction opportunities. Immediate deployment readiness, clearest path to target IRR.",
+    },
+    t2: {
+      badge: "Pipeline",
+      col: "#60A5FA",
+      bg: "rgba(96,165,250,0.12)",
+      desc: "Near-term opportunities requiring moderate development before deployment.",
+    },
+    t3: {
+      badge: "Long-Horizon",
+      col: M.amber,
+      bg: M.amberDim,
+      desc: "Strategic bets with longer development cycles and higher transformation potential.",
+    },
+  };
+  const meta = ventureMeta[tier];
+
+  return (
+    <div style={{ padding: "12px 14px 80px" }}>
+      <div
+        style={{
+          fontSize: 9,
+          fontWeight: 700,
+          color: M.muted,
+          letterSpacing: "0.8px",
+          textTransform: "uppercase",
+          fontFamily: "Inter,sans-serif",
+          marginBottom: 10,
+        }}
+      >
+        Ventures · {s.short}
+      </div>
+
+      {/* Summary row */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 10 }}>
+        {[
+          { l: "Total", v: `${allV.length}`, sub: "identified", col: M.accent },
+          { l: "Avg IRR", v: `${avgIRR}%`, sub: "est. return", col: M.green },
+          { l: "Low Risk", v: `${riskCounts.LOW}`, sub: "ventures", col: "#60A5FA" },
+        ].map((item, i) => (
+          <MCard key={i} style={{ padding: "10px 12px", textAlign: "center" }}>
+            <div
+              style={{ fontSize: 18, fontWeight: 800, color: item.col, fontFamily: "Inter,sans-serif", lineHeight: 1 }}
+            >
+              {item.v}
+            </div>
+            <div style={{ fontSize: 9, fontWeight: 600, color: M.white, marginTop: 2 }}>{item.l}</div>
+            <div style={{ fontSize: 8, color: M.muted, fontFamily: "Inter,sans-serif" }}>{item.sub}</div>
+          </MCard>
+        ))}
+      </div>
+
+      {/* Risk distribution */}
+      <MCard style={{ padding: "12px 14px", marginBottom: 10 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: M.white, marginBottom: 8 }}>
+          Portfolio Risk Distribution
+        </div>
+        <div style={{ height: 6, borderRadius: 3, overflow: "hidden", display: "flex", marginBottom: 8 }}>
+          {allV.length > 0 &&
+            [
+              { risk: "LOW", col: M.green },
+              { risk: "MEDIUM", col: M.amber },
+              { risk: "HIGH", col: M.red },
+            ].map(({ risk, col }) => (
+              <div
+                key={risk}
+                style={{ width: `${(riskCounts[risk] / allV.length) * 100}%`, height: "100%", background: col }}
+              />
+            ))}
+        </div>
+        <div style={{ display: "flex", gap: 12 }}>
+          {[
+            ["LOW", M.green, M.greenDim],
+            ["MEDIUM", M.amber, M.amberDim],
+            ["HIGH", M.red, M.redDim],
+          ].map(([risk, col, dim]) => (
+            <div key={risk} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <div style={{ width: 7, height: 7, borderRadius: 2, background: col }} />
+              <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>
+                {risk} ({riskCounts[risk]})
+              </span>
+            </div>
+          ))}
+        </div>
+      </MCard>
+
+      {/* Tier selector */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 10 }}>
+        {tiers.map((t) => (
+          <div
+            key={t.id}
+            onClick={() => {
+              setTier(t.id);
+              setExpanded(null);
+            }}
+            style={{
+              padding: "10px 12px",
+              textAlign: "center",
+              cursor: "pointer",
+              borderRadius: 16,
+              border: tier === t.id ? `1px solid ${t.col}` : `1px solid ${M.border}`,
+              background: tier === t.id ? t.dim : M.card,
+            }}
+          >
+            <div
+              style={{
+                fontSize: 18,
+                fontWeight: 800,
+                color: tier === t.id ? t.col : M.muted,
+                fontFamily: "Inter,sans-serif",
+                lineHeight: 1,
+              }}
+            >
+              {t.count}
+            </div>
+            <div
+              style={{
+                fontSize: 9,
+                color: tier === t.id ? t.col : M.muted,
+                fontFamily: "Inter,sans-serif",
+                marginTop: 3,
+                fontWeight: tier === t.id ? 700 : 400,
+              }}
+            >
+              {t.label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tier description */}
+      <div
+        style={{
+          padding: "10px 12px",
+          borderRadius: 10,
+          background: meta.bg,
+          border: `1px solid ${meta.col}30`,
+          marginBottom: 12,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+          <span
+            style={{
+              fontSize: 8,
+              fontWeight: 800,
+              padding: "2px 6px",
+              borderRadius: 3,
+              background: `${meta.col}30`,
+              color: meta.col,
+              fontFamily: "Inter,sans-serif",
+            }}
+          >
+            {meta.badge}
+          </span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: M.white }}>{active.sublabel}</span>
+        </div>
+        <div style={{ fontSize: 10, color: M.mid, lineHeight: 1.5, fontFamily: "Inter,sans-serif" }}>{meta.desc}</div>
+      </div>
+
+      {/* Venture list */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {ventures.map((v, i) => {
+          const rc = v.risk === "LOW" ? M.green : v.risk === "MEDIUM" ? M.amber : M.red;
+          const rd = v.risk === "LOW" ? M.greenDim : v.risk === "MEDIUM" ? M.amberDim : M.redDim;
+          const isOpen = expanded === i;
+          const capMid = v.cap ? v.cap.replace(/\$|\s/g, "") : "-";
+          const irrMid = v.irr || "-";
+          return (
+            <MCard
+              key={i}
+              style={{ padding: "12px 14px", cursor: "pointer" }}
+              onClick={() => setExpanded(isOpen ? null : i)}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: 10,
+                    background: active.dim,
+                    border: `1px solid ${active.col}30`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <SIcon size={15} color={active.col} strokeWidth={1.5} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: M.white, marginBottom: 3, paddingRight: 4 }}>
+                    {v.name}
+                  </div>
+                  <div style={{ display: "flex", gap: 5, flexWrap: "wrap", alignItems: "center" }}>
+                    <span
+                      style={{
+                        fontSize: 8,
+                        fontWeight: 700,
+                        padding: "2px 6px",
+                        borderRadius: 3,
+                        background: active.dim,
+                        color: active.col,
+                        fontFamily: "Inter,sans-serif",
+                      }}
+                    >
+                      {active.label}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: 8,
+                        fontWeight: 700,
+                        padding: "2px 5px",
+                        borderRadius: 3,
+                        background: rd,
+                        color: rc,
+                        fontFamily: "Inter,sans-serif",
+                      }}
+                    >
+                      {v.risk}
+                    </span>
+                  </div>
+                </div>
+                <div style={{ textAlign: "right", flexShrink: 0 }}>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 800,
+                      color: M.green,
+                      fontFamily: "Inter,sans-serif",
+                      letterSpacing: "-0.3px",
+                    }}
+                  >
+                    {v.irr}
+                  </div>
+                  <div style={{ fontSize: 8, color: M.muted, fontFamily: "Inter,sans-serif" }}>IRR</div>
+                </div>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={M.muted}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  style={{ flexShrink: 0, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </div>
+
+              {/* Expanded detail */}
+              {isOpen && (
+                <div style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${M.border}` }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
+                    {[
+                      { l: "Capital", v: v.cap || "TBD", col: M.accent },
+                      { l: "IRR", v: v.irr || "TBD", col: M.green },
+                      { l: "Risk", v: v.risk, col: rc },
+                    ].map((m, j) => (
+                      <div
+                        key={j}
+                        style={{
+                          padding: "8px 10px",
+                          borderRadius: 8,
+                          background: "rgba(255,255,255,0.03)",
+                          border: `1px solid ${M.border}`,
+                          textAlign: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: 11,
+                            fontWeight: 800,
+                            color: m.col,
+                            fontFamily: "Inter,sans-serif",
+                            lineHeight: 1,
+                            marginBottom: 2,
+                          }}
+                        >
+                          {m.v}
+                        </div>
+                        <div style={{ fontSize: 8, color: M.muted, fontFamily: "Inter,sans-serif" }}>{m.l}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    style={{
+                      padding: "8px 10px",
+                      borderRadius: 8,
+                      background: active.dim,
+                      border: `1px solid ${active.col}20`,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: 9,
+                        fontWeight: 700,
+                        color: active.col,
+                        marginBottom: 4,
+                        fontFamily: "Inter,sans-serif",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      BRIDGE Role
+                    </div>
+                    <div style={{ fontSize: 10, color: M.white, lineHeight: 1.45 }}>
+                      {tier === "t1"
+                        ? "Direct operator or lead co-investor. BRIDGE anchors capital and provides operational infrastructure."
+                        : tier === "t2"
+                          ? "Strategic co-investor. BRIDGE contributes sector expertise and network while a local partner leads operations."
+                          : "Advisory & pipeline development. BRIDGE supports feasibility and structures the deal for future T1 entry."}
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                    {(s.cross || []).slice(0, 3).map((sid, j) => {
+                      const cross = SECTORS.find((sec) => sec.id === sid);
+                      if (!cross) return null;
+                      return (
+                        <div
+                          key={j}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 4,
+                            padding: "3px 8px",
+                            borderRadius: 20,
+                            background: M.faint,
+                            border: `1px solid ${M.border}`,
+                          }}
+                        >
+                          {cross.svgIcon(M.muted, 10)}
+                          <span style={{ fontSize: 8, color: M.muted, fontFamily: "Inter,sans-serif" }}>
+                            {cross.short}
+                          </span>
+                        </div>
+                      );
+                    })}
+                    {(s.cross || []).length > 0 && (
+                      <span
+                        style={{
+                          fontSize: 8,
+                          color: M.muted,
+                          fontFamily: "Inter,sans-serif",
+                          padding: "3px 0",
+                          alignSelf: "center",
+                        }}
+                      >
+                        cross-sector
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+            </MCard>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════
+   CAPITAL TAB — Capital deployment & flows
+   ════════════════════════════════════════ */
+const CAP_STRUCTURE = {
+  agriculture: [
+    { l: "Equity", pct: 40, col: M.accent },
+    { l: "Debt", pct: 35, col: "#60A5FA" },
+    { l: "Blended", pct: 15, col: M.amber },
+    { l: "Grant", pct: 10, col: M.green },
+  ],
+  financial: [
+    { l: "Equity", pct: 35, col: M.accent },
+    { l: "Debt", pct: 40, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 5, col: M.green },
+  ],
+  technology: [
+    { l: "Equity", pct: 60, col: M.accent },
+    { l: "Debt", pct: 15, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 5, col: M.green },
+  ],
+  infrastructure: [
+    { l: "Equity", pct: 25, col: M.accent },
+    { l: "Debt", pct: 45, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 10, col: M.green },
+  ],
+  health: [
+    { l: "Equity", pct: 30, col: M.accent },
+    { l: "Debt", pct: 35, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 15, col: M.green },
+  ],
+  education: [
+    { l: "Equity", pct: 25, col: M.accent },
+    { l: "Debt", pct: 30, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 25, col: M.green },
+  ],
+  creative: [
+    { l: "Equity", pct: 55, col: M.accent },
+    { l: "Debt", pct: 20, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 5, col: M.green },
+  ],
+  housing: [
+    { l: "Equity", pct: 30, col: M.accent },
+    { l: "Debt", pct: 50, col: "#60A5FA" },
+    { l: "Blended", pct: 15, col: M.amber },
+    { l: "Grant", pct: 5, col: M.green },
+  ],
+  tourism: [
+    { l: "Equity", pct: 45, col: M.accent },
+    { l: "Debt", pct: 30, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 5, col: M.green },
+  ],
+  energy: [
+    { l: "Equity", pct: 35, col: M.accent },
+    { l: "Debt", pct: 40, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 5, col: M.green },
+  ],
+  manufacturing: [
+    { l: "Equity", pct: 40, col: M.accent },
+    { l: "Debt", pct: 35, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 5, col: M.green },
+  ],
+  transportation: [
+    { l: "Equity", pct: 30, col: M.accent },
+    { l: "Debt", pct: 45, col: "#60A5FA" },
+    { l: "Blended", pct: 20, col: M.amber },
+    { l: "Grant", pct: 5, col: M.green },
+  ],
+};
+const CO_INVESTORS = {
+  agriculture: ["IFC", "USAID", "AfDB", "GhanaVenture", "AGRA"],
+  financial: ["IFC", "FMO", "Swedfund", "GhDF", "MasterCard Fdn"],
+  technology: ["GhanaVenture", "Norrsken", "Google", "IFC", "Y Combinator"],
+  infrastructure: ["AfDB", "World Bank", "IFC", "GhInfra", "KfW"],
+  health: ["IFC", "USAID", "Gates Fdn", "WHO", "GhNHIS"],
+  education: ["USAID", "MasterCard Fdn", "IFC", "GhGovt", "FCDO"],
+  creative: ["GhFilm", "Afrobeats Fdn", "IFC", "UNESCO", "AfDB"],
+  housing: ["IFC", "GhGovt", "HomeFin", "AfDB", "SSNIT"],
+  tourism: ["GTA", "IFC", "USAID", "AfDB", "WTO"],
+  energy: ["AfDB", "IFC", "KfW", "IRENA", "GhEnergy"],
+  manufacturing: ["GhExport", "IFC", "AfDB", "GhGovt", "Trade Fns"],
+  transportation: ["AfDB", "IFC", "GhHighways", "World Bank", "GhPort"],
+};
+const ENTRY_WINDOWS = {
+  agriculture: [
+    { q: "Q2 2026", label: "Pre-Harvest", fit: "HIGH", note: "Aligns with Planting Season Fund cycle" },
+    { q: "Q4 2026", label: "Processing", fit: "MED", note: "Post-harvest value-add window opens" },
+    { q: "Q1 2027", label: "Export", fit: "HIGH", note: "Cocoa & shea export season peaks" },
+  ],
+  financial: [
+    { q: "Q2 2026", label: "MoMo Expansion", fit: "HIGH", note: "BoG Digital Credit Directive live" },
+    { q: "Q3 2026", label: "MSME Lending", fit: "HIGH", note: "SME recovery cycle aligns" },
+    { q: "Q1 2027", label: "Insurance", fit: "MED", note: "Annual policy renewal window" },
+  ],
+  technology: [
+    { q: "Q2 2026", label: "Platform Build", fit: "HIGH", note: "Kejetia Phase 2 onboarding active" },
+    { q: "Q3 2026", label: "Series A", fit: "MED", note: "Ecosystem fundraising cycle" },
+    { q: "Q1 2027", label: "AI/ML", fit: "HIGH", note: "Smart Africa policy window" },
+  ],
+  infrastructure: [
+    { q: "Q2 2026", label: "Roads Fast-Track", fit: "HIGH", note: "GH₵18B budget disbursement begins" },
+    { q: "Q3 2026", label: "Water & San", fit: "HIGH", note: "World Bank co-finance window" },
+    { q: "Q4 2026", label: "Connectivity", fit: "MED", note: "Rural broadband tender expected" },
+  ],
+  health: [
+    { q: "Q2 2026", label: "Diagnostics", fit: "HIGH", note: "NHIA digital claims expansion live" },
+    { q: "Q3 2026", label: "Supply Chain", fit: "MED", note: "Annual procurement cycle" },
+    { q: "Q1 2027", label: "Telemedicine", fit: "HIGH", note: "MoH digital health policy rollout" },
+  ],
+  education: [
+    { q: "Q2 2026", label: "EdTech Deploy", fit: "HIGH", note: "School calendar aligns post-Easter" },
+    { q: "Q3 2026", label: "TVET", fit: "HIGH", note: "Budget TVET allocation releases" },
+    { q: "Q4 2026", label: "HigherEd", fit: "MED", note: "University intake window" },
+  ],
+  creative: [
+    { q: "Q2 2026", label: "Content IP", fit: "HIGH", note: "Afrobeats season peak" },
+    { q: "Q3 2026", label: "Film/Studio", fit: "MED", note: "NAFTI partnership window" },
+    { q: "Q1 2027", label: "Events", fit: "HIGH", note: "Festival & tour season" },
+  ],
+  housing: [
+    { q: "Q2 2026", label: "Affordable Units", fit: "HIGH", note: "GhGovt REIT incentives active" },
+    { q: "Q3 2026", label: "Mortgage", fit: "MED", note: "Home Finance scheme review" },
+    { q: "Q1 2027", label: "Materials", fit: "HIGH", note: "Cement import reduction targets" },
+  ],
+  tourism: [
+    { q: "Q2 2026", label: "Eco-Tourism", fit: "HIGH", note: "Year of Return momentum" },
+    { q: "Q3 2026", label: "Hospitality", fit: "MED", note: "Shoulder season capex window" },
+    { q: "Q4 2026", label: "Diaspora", fit: "HIGH", note: "Holiday arrivals peak Dec–Jan" },
+  ],
+  energy: [
+    { q: "Q2 2026", label: "Solar Grid", fit: "HIGH", note: "PURC tariff review creates entry" },
+    { q: "Q3 2026", label: "Off-Grid", fit: "HIGH", note: "Rural electrification fund opens" },
+    { q: "Q1 2027", label: "Storage", fit: "MED", note: "Battery tech cost inflection" },
+  ],
+  manufacturing: [
+    { q: "Q2 2026", label: "Agro-Processing", fit: "HIGH", note: "Import substitution policy active" },
+    { q: "Q3 2026", label: "Light Mfg", fit: "MED", note: "Export zone incentives live" },
+    { q: "Q1 2027", label: "Packaging", fit: "HIGH", note: "Plastics levy creates opening" },
+  ],
+  transportation: [
+    { q: "Q2 2026", label: "Last-Mile", fit: "HIGH", note: "Roads budget disbursement begins" },
+    { q: "Q3 2026", label: "Port Logistics", fit: "MED", note: "Tema Port expansion Phase 2" },
+    { q: "Q1 2027", label: "Rail", fit: "HIGH", note: "GRDA revival framework expected" },
+  ],
+};
+
+function CapitalTab({ s }) {
+  const c = compute(s);
+  const data = genVolume(s);
+  const last = data[data.length - 1].deployed,
+    prev = data[data.length - 2].deployed;
+  const chg = Math.round(((last - prev) / prev) * 100);
+  const totalV = (s.t1?.length || 0) + (s.t2?.length || 0) + (s.t3?.length || 0);
+  const capStruct = CAP_STRUCTURE[s.id] || CAP_STRUCTURE.agriculture;
+  const coInvs = CO_INVESTORS[s.id] || [];
+  const windows = ENTRY_WINDOWS[s.id] || [];
+  const t1Avg = s.t1?.length ? Math.round(s.t1.reduce((a, v) => a + (parseInt(v.irr) || 0), 0) / s.t1.length) : 0;
+  const t2Avg = s.t2?.length ? Math.round(s.t2.reduce((a, v) => a + (parseInt(v.irr) || 0) / s.t2.length, 0)) : 0;
+  const tierIRR = [
+    { l: "Tier I", irr: s.irrHigh, col: M.accent, bg: M.accentDim, risk: "Balanced" },
+    { l: "Tier II", irr: Math.round(s.irrHigh * 0.82), col: "#60A5FA", bg: "rgba(96,165,250,0.12)", risk: "Moderate" },
+    { l: "Tier III", irr: Math.round(s.irrHigh * 0.65), col: M.muted, bg: M.faint, risk: "Conservative" },
+  ];
+
+  return (
+    <div style={{ padding: "12px 14px 80px" }}>
+      <div
+        style={{
+          fontSize: 9,
+          fontWeight: 700,
+          color: M.muted,
+          letterSpacing: "0.8px",
+          textTransform: "uppercase",
+          fontFamily: "Inter,sans-serif",
+          marginBottom: 10,
+        }}
+      >
+        Capital · {s.short}
+      </div>
+
+      {/* Key metrics */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
+        {[
+          { l: "Capital Range", v: `$${s.capLow}–${s.capHigh}M`, sub: "deployment target", col: M.accent },
+          { l: "IRR Target", v: `${s.irrLow}–${s.irrHigh}%`, sub: "projected return", col: M.green },
+          { l: "Pipeline Ready", v: `${c.inflow}%`, sub: "of targets active", col: "#60A5FA" },
+          { l: "Ventures Tracked", v: `${totalV}`, sub: "identified", col: M.amber },
+        ].map((item, i) => (
+          <MCard key={i} style={{ padding: "12px 14px" }}>
+            <div
+              style={{
+                fontSize: 20,
+                fontWeight: 800,
+                color: item.col,
+                letterSpacing: "-0.5px",
+                lineHeight: 1,
+                marginBottom: 3,
+              }}
+            >
+              {item.v}
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 600, color: M.white }}>{item.l}</div>
+            <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginTop: 1 }}>{item.sub}</div>
+          </MCard>
+        ))}
+      </div>
+
+      {/* Deployment chart */}
+      <MCard style={{ padding: "14px 14px 10px", marginBottom: 10 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: M.white }}>Deployment vs Target</div>
+            <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginTop: 2 }}>
+              6-month pipeline
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+              padding: "3px 8px",
+              borderRadius: 6,
+              background: chg >= 0 ? M.greenDim : M.redDim,
+              border: `1px solid ${chg >= 0 ? "rgba(74,222,128,0.25)" : "rgba(239,68,68,0.25)"}`,
+            }}
+          >
+            {chg >= 0 ? <TrendingUp size={10} color={M.green} /> : <TrendingDown size={10} color={M.red} />}
+            <span
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                color: chg >= 0 ? M.green : M.red,
+                fontFamily: "Inter,sans-serif",
+              }}
+            >
+              {chg >= 0 ? "+" : ""}
+              {chg}%
+            </span>
+          </div>
+        </div>
+        <div style={{ height: 130 }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <RBarChart data={data} barSize={10} barGap={2} margin={{ top: 4, right: 4, left: -28, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+              <XAxis
+                dataKey="month"
+                tick={{ fontSize: 9, fill: M.muted, fontFamily: "Inter,sans-serif" }}
+                axisLine={false}
+                tickLine={false}
+              />
+              <YAxis tick={{ fontSize: 9, fill: M.muted }} axisLine={false} tickLine={false} />
+              <Tooltip content={<ChartTip />} />
+              <Bar dataKey="deployed" fill={M.accent} radius={[3, 3, 0, 0]} name="Deployed" />
+              <Bar dataKey="target" fill="rgba(255,255,255,0.12)" radius={[3, 3, 0, 0]} name="Target" />
+            </RBarChart>
+          </ResponsiveContainer>
+        </div>
+        <div style={{ display: "flex", gap: 12, marginTop: 6 }}>
+          {[
+            ["Deployed", M.accent],
+            ["Target", "rgba(255,255,255,0.3)"],
+          ].map(([l, col]) => (
+            <div key={l} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <div style={{ width: 8, height: 8, borderRadius: 2, background: col }} />
+              <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>{l}</span>
+            </div>
+          ))}
+        </div>
+      </MCard>
+
+      {/* Capital Structure */}
+      <MCard style={{ padding: "14px 14px", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: M.white, marginBottom: 4 }}>Capital Structure</div>
+        <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginBottom: 12 }}>
+          Recommended instrument mix
+        </div>
+        {/* Stacked bar */}
+        <div style={{ height: 10, borderRadius: 6, overflow: "hidden", display: "flex", marginBottom: 10 }}>
+          {capStruct.map((c, i) => (
+            <div key={i} style={{ width: `${c.pct}%`, height: "100%", background: c.col, transition: "width 0.3s" }} />
+          ))}
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+          {capStruct.map((cs, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: 7,
+                  background: `${cs.col}18`,
+                  border: `1px solid ${cs.col}40`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <span style={{ fontSize: 10, fontWeight: 800, color: cs.col, fontFamily: "Inter,sans-serif" }}>
+                  {cs.pct}%
+                </span>
+              </div>
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 600, color: M.white }}>{cs.l}</div>
+                <div style={{ fontSize: 8, color: M.muted, fontFamily: "Inter,sans-serif" }}>{cs.pct}% of mix</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </MCard>
+
+      {/* Return by Tier */}
+      <MCard style={{ padding: "14px 14px", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: M.white, marginBottom: 4 }}>Return Profile by Tier</div>
+        <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginBottom: 12 }}>
+          Target IRR ceiling per investment tier
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {tierIRR.map((t, i) => (
+            <div key={i}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 5 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: 2, background: t.col }} />
+                  <span style={{ fontSize: 10, fontWeight: 600, color: M.white }}>{t.l}</span>
+                  <span
+                    style={{
+                      fontSize: 8,
+                      padding: "1px 5px",
+                      borderRadius: 3,
+                      background: t.bg,
+                      color: t.col,
+                      fontFamily: "Inter,sans-serif",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {t.risk}
+                  </span>
+                </div>
+                <span style={{ fontSize: 13, fontWeight: 800, color: t.col, fontFamily: "Inter,sans-serif" }}>
+                  {t.irr}%
+                </span>
+              </div>
+              <div style={{ height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                <div
+                  style={{ width: `${(t.irr / s.irrHigh) * 100}%`, height: "100%", background: t.col, borderRadius: 3 }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </MCard>
+
+      {/* Pipeline Readiness */}
+      <MCard style={{ padding: "14px 14px", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: M.white, marginBottom: 12 }}>Pipeline Readiness</div>
+        {[
+          { l: "Deal Flow Active", v: c.inflow, col: M.green },
+          { l: "Due Diligence", v: Math.round(c.inflow * 0.6), col: M.accent },
+          { l: "Term Sheet Ready", v: Math.round(c.inflow * 0.35), col: "#60A5FA" },
+        ].map((row, i) => (
+          <div key={i} style={{ marginBottom: i < 2 ? 10 : 0 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+              <span style={{ fontSize: 10, color: M.mid, fontFamily: "Inter,sans-serif" }}>{row.l}</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: row.col, fontFamily: "Inter,sans-serif" }}>
+                {row.v}%
+              </span>
+            </div>
+            <div style={{ height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+              <div style={{ width: `${row.v}%`, height: "100%", background: row.col, borderRadius: 3 }} />
+            </div>
+          </div>
+        ))}
+      </MCard>
+
+      {/* Entry Windows */}
+      <MCard style={{ padding: "14px 14px", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: M.white, marginBottom: 4 }}>Recommended Entry Windows</div>
+        <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginBottom: 12 }}>
+          Optimal deployment timing by opportunity
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {windows.map((w, i) => {
+            const fc = w.fit === "HIGH" ? M.green : w.fit === "MED" ? M.amber : M.muted;
+            const fd = w.fit === "HIGH" ? M.greenDim : w.fit === "MED" ? M.amberDim : M.faint;
+            return (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  padding: "10px 12px",
+                  borderRadius: 10,
+                  background: "rgba(255,255,255,0.03)",
+                  border: `1px solid ${M.border}`,
+                }}
+              >
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 800,
+                      color: M.accent,
+                      fontFamily: "Inter,sans-serif",
+                      lineHeight: 1,
+                    }}
+                  >
+                    {w.q}
+                  </div>
+                  <div
+                    style={{
+                      marginTop: 4,
+                      display: "inline-block",
+                      fontSize: 8,
+                      fontWeight: 700,
+                      padding: "2px 5px",
+                      borderRadius: 3,
+                      background: fd,
+                      color: fc,
+                      fontFamily: "Inter,sans-serif",
+                    }}
+                  >
+                    {w.fit}
+                  </div>
+                </div>
+                <div style={{ flex: 1, borderLeft: `1px solid ${M.border}`, paddingLeft: 10 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: M.white, marginBottom: 2 }}>{w.label}</div>
+                  <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", lineHeight: 1.4 }}>
+                    {w.note}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </MCard>
+
+      {/* Co-Investors */}
+      <MCard style={{ padding: "14px 14px" }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: M.white, marginBottom: 4 }}>Active Co-Investors</div>
+        <div style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif", marginBottom: 12 }}>
+          Known capital partners in this sector
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
+          {coInvs.map((ci, i) => (
+            <div
+              key={i}
+              style={{
+                padding: "5px 10px",
+                borderRadius: 20,
+                background: "rgba(255,255,255,0.05)",
+                border: `1px solid ${M.border}`,
+                fontSize: 10,
+                fontWeight: 600,
+                color: M.mid,
+                fontFamily: "Inter,sans-serif",
+              }}
+            >
+              {ci}
+            </div>
+          ))}
+        </div>
+      </MCard>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════
+   OUTLOOK TAB — Thesis, risks, watchpoints
+   ════════════════════════════════════════ */
+function OutlookTab({ s }) {
+  const thesis = THESIS[s.id] || [];
+  const risks = RISKS[s.id] || [];
+  const dims = SCORE_DIMS[s.id] || { pp: 80, sf: 80, fe: 80, ss: 80 };
+  const dimList = [
+    ["Peace & Prosperity", "pp", M.accent],
+    ["Strategic Fit", "sf", "#60A5FA"],
+    ["Feasibility", "fe", M.green],
+    ["Scalability", "ss", M.amber],
+  ];
+  return (
+    <div style={{ padding: "12px 14px 80px" }}>
+      <div
+        style={{
+          fontSize: 9,
+          fontWeight: 700,
+          color: M.muted,
+          letterSpacing: "0.8px",
+          textTransform: "uppercase",
+          fontFamily: "Inter,sans-serif",
+          marginBottom: 10,
+        }}
+      >
+        Outlook · {s.short}
+      </div>
+      {/* BRIDGE Score */}
+      <MCard style={{ padding: "14px 14px", marginBottom: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: M.white }}>BRIDGE Score Breakdown</div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: M.accent, fontFamily: "Inter,sans-serif" }}>
+            {s.score}
+          </div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+          {dimList.map(([label, key, col]) => (
+            <div key={key}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                <span style={{ fontSize: 10, fontWeight: 500, color: M.mid, fontFamily: "Inter,sans-serif" }}>
+                  {label}
+                </span>
+                <span style={{ fontSize: 10, fontWeight: 700, color: col, fontFamily: "Inter,sans-serif" }}>
+                  {dims[key]}
+                </span>
+              </div>
+              <div style={{ height: 5, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+                <div style={{ width: `${dims[key]}%`, height: "100%", background: col, borderRadius: 3 }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </MCard>
+      {/* Investment Thesis */}
+      <MCard style={{ padding: "14px 14px", marginBottom: 10 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: M.white, marginBottom: 10 }}>Investment Thesis</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {thesis.map((t, i) => (
+            <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+              <div
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: 8,
+                  background: M.accentDim,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  fontSize: 14,
+                }}
+              >
+                {t.icon}
+              </div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.72)", lineHeight: 1.45, paddingTop: 4 }}>
+                {t.point}
+              </div>
+            </div>
+          ))}
+        </div>
+      </MCard>
+      {/* Risks */}
+      <MCard style={{ padding: "14px 14px" }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: M.white, marginBottom: 10 }}>Key Risks & Watchpoints</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {risks.map((r, i) => {
+            const rc = r.level === "HIGH" ? M.red : r.level === "MED" ? M.amber : M.green;
+            const rd = r.level === "HIGH" ? M.redDim : r.level === "MED" ? M.amberDim : M.greenDim;
+            return (
+              <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <div
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: 8,
+                    background: rd,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <AlertCircle size={13} color={rc} />
+                </div>
+                <div style={{ flex: 1, paddingTop: 2 }}>
+                  <div style={{ fontSize: 11, fontWeight: 600, color: M.white, marginBottom: 2 }}>{r.title}</div>
+                  <div style={{ fontSize: 10, color: M.mid, lineHeight: 1.35, marginBottom: 4 }}>{r.desc}</div>
+                  <span
+                    style={{
+                      fontSize: 8,
+                      fontWeight: 700,
+                      padding: "2px 6px",
+                      borderRadius: 3,
+                      background: rd,
+                      color: rc,
+                      fontFamily: "Inter,sans-serif",
+                    }}
+                  >
+                    {r.level}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </MCard>
+    </div>
   );
 }
 
@@ -5733,7 +6743,6 @@ function MobileBottomNav({ page, setPage, sub, setSub }) {
 function MobileDashboard() {
   const [s, setS] = useState(SECTORS[0]);
   const [page, setPage] = useState("overview");
-  const [sub, setSub] = useState("kpis");
   return (
     <div
       style={{
@@ -5748,13 +6757,13 @@ function MobileDashboard() {
       <style>{`*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}::-webkit-scrollbar{display:none;}input::placeholder{color:rgba(255,255,255,0.2);}@keyframes mSlideUp{from{transform:translateY(100%);opacity:0;}to{transform:translateY(0);opacity:1;}}.mDrawer{animation:mSlideUp 0.25s ease;}`}</style>
       <MobileHeader s={s} setS={setS} />
       <div style={{ flex: 1, overflowY: "auto" }}>
-        {page === "dashboard" && <DashboardTab s={s} setPage={setPage} />}
         {page === "overview" && <OverviewTab s={s} />}
-        {page === "analytics" && <AnalyticsTab s={s} sub={sub} setSub={setSub} />}
-        {page === "watch" && <WatchTab s={s} />}
-        {page === "resources" && <ResourcesTab />}
+        {page === "signals" && <SignalsTab s={s} />}
+        {page === "ventures" && <VenturesOverviewTab s={s} />}
+        {page === "capital" && <CapitalTab s={s} />}
+        {page === "outlook" && <OutlookTab s={s} />}
       </div>
-      <MobileBottomNav page={page} setPage={setPage} sub={sub} setSub={setSub} />
+      <MobileBottomNav page={page} setPage={setPage} />
     </div>
   );
 }
