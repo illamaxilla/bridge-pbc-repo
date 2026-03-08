@@ -22,7 +22,9 @@ const ALL_NAV = [
   { label: "Community",          to: "/community" },
   { label: "Resources",          to: "/resources" },
   { label: "Contact",            to: "/contact" },
+  { label: "Policy Updates",     to: "/policy", badge: true },
 ];
+
 
 // ── BRIDGE logo (dark, header variant) ────────────────────────────────────────
 const BridgeLogo = ({ height = 40 }: { height?: number }) => (
