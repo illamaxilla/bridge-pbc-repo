@@ -1,5 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+
+// ─── COMMUNITY SECTION COMPONENTS ─────────────────────────────
+import MembersPage from "./Members";
+import CommunityResourcesPage from "./CommunityResources";
+import ForumHome from "./forum/ForumHome";
+import Questions from "./forum/Questions";
+import MostAnswered from "./forum/MostAnswered";
+import Polls from "./forum/Polls";
+import Groups from "./forum/Groups";
+import Tags from "./forum/Tags";
+import ForumSectors from "./forum/ForumSectors";
+import Badges from "./forum/Badges";
+import ForumMembers from "./forum/ForumMembers";
 import {
   Bell,
   MessageCircle,
@@ -990,6 +1003,7 @@ function CommunityDashboard({ memberType, onLogout }) {
     };
     navigate(routeMap[name] ?? "/community");
   };
+  const [forumSection, setForumSection] = useState("Home");
   const [activeTab, setActiveTab] = useState("active");
   const [forumFilter, setForumFilter] = useState("Recent");
   const [questions, setQuestions] = useState(QUESTIONS);
@@ -1952,9 +1966,10 @@ function CommunityDashboard({ memberType, onLogout }) {
                 { icon: <Globe size={14} />, label: "Sectors" },
                 { icon: <Award size={14} />, label: "Badges" },
                 { icon: <Users size={14} />, label: "Members" },
-              ].map((item, i) => (
+              ].map((item) => (
                 <button
                   key={item.label}
+                  onClick={() => setForumSection(item.label)}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -1964,11 +1979,11 @@ function CommunityDashboard({ memberType, onLogout }) {
                     borderRadius: 8,
                     border: "none",
                     cursor: "pointer",
-                    background: i === 0 ? `${C.primary}12` : "transparent",
-                    color: i === 0 ? C.primary : C.muted,
+                    background: forumSection === item.label ? `${C.primary}12` : "transparent",
+                    color: forumSection === item.label ? C.primary : C.muted,
                     fontFamily: font.body,
                     fontSize: 13,
-                    fontWeight: i === 0 ? 600 : 400,
+                    fontWeight: forumSection === item.label ? 600 : 400,
                     textAlign: "left",
                     marginBottom: 2,
                   }}
@@ -2026,8 +2041,12 @@ function CommunityDashboard({ memberType, onLogout }) {
               </div>
             </div>
 
-            {/* Main Feed */}
+            {/* Main Feed — switches by forumSection */}
             <div style={{ padding: "20px 24px" }}>
+              {forumSection === "Home" && (
+                // ── FORUM HOME: existing Q&A feed ──────────────────
+                <>
+
               {/* Search */}
               <div style={{ position: "relative", marginBottom: 16 }}>
                 <Search
@@ -2242,6 +2261,15 @@ function CommunityDashboard({ memberType, onLogout }) {
                   </div>
                 ))}
               </div>
+              </>)}
+              {forumSection === "Questions" && <Questions C={C} font={font} />}
+              {forumSection === "Most Answered" && <MostAnswered C={C} font={font} />}
+              {forumSection === "Polls" && <Polls C={C} font={font} />}
+              {forumSection === "Groups" && <Groups C={C} font={font} />}
+              {forumSection === "Tags" && <Tags C={C} font={font} />}
+              {forumSection === "Sectors" && <ForumSectors C={C} font={font} />}
+              {forumSection === "Badges" && <Badges C={C} font={font} />}
+              {forumSection === "Members" && <ForumMembers C={C} font={font} />}
             </div>
 
             {/* Right Sidebar */}
@@ -2285,38 +2313,10 @@ function CommunityDashboard({ memberType, onLogout }) {
         )}
 
         {/* ══ MEMBERS PAGE ══ */}
-        {activePage === "Members" && (
-          <div style={{ background: C.white, borderRadius: 20, padding: 48, boxShadow: C.cardShadow, textAlign: "center" }}>
-            <SectionLabel>Members</SectionLabel>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>👥</div>
-            <h2 style={{ fontFamily: font.display, fontSize: 26, fontWeight: 700, color: C.primary, margin: "0 0 12px" }}>
-              Member Directory
-            </h2>
-            <p style={{ fontSize: 15, color: C.muted, maxWidth: 420, margin: "0 auto 28px", lineHeight: 1.6 }}>
-              Browse profiles, connect with fellow builders, and discover expertise across Ghana's key sectors. Coming soon.
-            </p>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 20, background: C.accent + "22", border: `1.5px solid ${C.accent}`, color: C.primary, fontWeight: 700, fontSize: 13, fontFamily: font.body }}>
-              <Users size={14} /> Coming Soon
-            </div>
-          </div>
-        )}
+        {activePage === "Members" && <MembersPage C={C} font={font} />}
 
         {/* ══ RESOURCES PAGE ══ */}
-        {activePage === "Resources" && (
-          <div style={{ background: C.white, borderRadius: 20, padding: 48, boxShadow: C.cardShadow, textAlign: "center" }}>
-            <SectionLabel>Resources</SectionLabel>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
-            <h2 style={{ fontFamily: font.display, fontSize: 26, fontWeight: 700, color: C.primary, margin: "0 0 12px" }}>
-              Community Resources
-            </h2>
-            <p style={{ fontSize: 15, color: C.muted, maxWidth: 420, margin: "0 auto 28px", lineHeight: 1.6 }}>
-              Guides, sector briefs, toolkits, and knowledge assets curated for BRIDGE community members. Coming soon.
-            </p>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 20, background: C.accent + "22", border: `1.5px solid ${C.accent}`, color: C.primary, fontWeight: 700, fontSize: 13, fontFamily: font.body }}>
-              <BookOpen size={14} /> Coming Soon
-            </div>
-          </div>
-        )}
+        {activePage === "Resources" && <CommunityResourcesPage C={C} font={font} />}
 
       </div>
 
