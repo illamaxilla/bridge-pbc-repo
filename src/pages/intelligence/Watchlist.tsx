@@ -5478,7 +5478,7 @@ function PortfolioPage({ sector }) {
                 flexShrink: 0,
               }}
             >
-              {a.sector.svgIcon(MB.accent, 14)}
+              {(a.sector as any).svgIcon(MB.accent, 14)}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div

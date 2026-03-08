@@ -4671,7 +4671,7 @@ function DesktopResourcesPage() {
                         transition: "background 0.15s",
                       }}
                     >
-                      <Ic size={13} color={viewMode === v ? C.white : C.muted} />
+                      <ViewIcon size={13} color={viewMode === v ? C.white : C.muted} />
                     </button>
                   ))}
                 </div>

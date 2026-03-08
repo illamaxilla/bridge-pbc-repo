@@ -4805,7 +4805,7 @@ function MobileDashboard({ s, setS }) {
       >
         {[
           { id: "overview", label: "Overview", icon: (c) => <FileText size={19} color={c} /> },
-          { id: "performance", label: "Performance", icon: (c) => <PieChart size={19} color={c} /> },
+          { id: "performance", label: "Performance", icon: (c) => <PieLucide size={19} color={c} /> },
           { id: "activity", label: "Activity", icon: (c) => <ClipboardList size={19} color={c} /> },
           { id: "capital", label: "Capital", icon: (c) => <DollarSign size={19} color={c} /> },
           { id: "rankings", label: "Insights", icon: (c) => <Lightbulb size={19} color={c} /> },
