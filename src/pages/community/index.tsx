@@ -2486,7 +2486,7 @@ function CommunityDashboard({ memberType, onLogout }) {
 }
 
 // ─── ROOT APP ──────────────────────────────────────────────────
-export default function App() {
+export default function CommunityApp() {
   const [screen, setScreen] = useState("login");
   const [memberType, setMemberType] = useState("premium");
 
