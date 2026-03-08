@@ -313,7 +313,7 @@ export default function SiteFooter() {
             <div style={{ flexShrink: 0 }}>
               <BridgeLogoWhite />
             </div>
-            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginLeft: "auto", justifyContent: "flex-end" }}>
+            <div style={{ display: "flex", gap: "16px", flexWrap: "nowrap", marginLeft: "auto", justifyContent: "flex-end", whiteSpace: "nowrap" }}>
               {(["Services", "Resources", "Insights"] as const).map((label) => {
                 const href: Record<string, string> = {
                   Services: "/services",
