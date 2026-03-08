@@ -5474,7 +5474,8 @@ const CrossSectorSection = () => {
                       ))}
                     </div>
                     <a
-                      href="#"
+                      href={SECTOR_ROUTES[activePath.name] || "/sectors"}
+                      onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[activePath.name] || "/sectors"); }}
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
