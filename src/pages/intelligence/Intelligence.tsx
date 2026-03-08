@@ -221,6 +221,7 @@ export default function Intelligence() {
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 16px", height: 56, flexShrink: 0,
         backgroundColor: C.sidebar, borderBottom: "1px solid rgba(255,255,255,0.06)",
+        ...(isMobile ? { position: "sticky", top: 0, zIndex: 50 } : {}),
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {isMobile && (
@@ -240,13 +241,15 @@ export default function Intelligence() {
           <NavLink to="/" style={{ textDecoration: "none" }}>
             <BridgeLogo />
           </NavLink>
-          <div style={{
-            fontSize: 7, fontWeight: 700, color: C.accent,
-            textTransform: "uppercase", letterSpacing: "0.05em",
-            lineHeight: 1.4, fontFamily: "Inter,sans-serif",
-          }}>
-            Intelligence
-          </div>
+          {!isMobile && (
+            <div style={{
+              fontSize: 7, fontWeight: 700, color: C.accent,
+              textTransform: "uppercase", letterSpacing: "0.05em",
+              lineHeight: 1.4, fontFamily: "Inter,sans-serif",
+            }}>
+              Intelligence
+            </div>
+          )}
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
