@@ -225,10 +225,10 @@ function BridgeLogoWhite() { return (
       <path fill={ACCENT} d="M195.3,558c3.7-.6,7.4-.4,11.1-.2,86.1,40.5,170.4,85.1,255.9,126.8l252.9-126c29.5-7.2,45.4,28.7,22.3,46.5l-270.4,134.4-8.6.3c-91.6-42.2-181.1-89.9-271.7-134.4-18.7-12.1-13.3-43.6,8.5-47.4h0Z" />
     </svg>
   </a>
-);
+); }
 
 // ─── Sector grid sub-component ───────────────────────────────────────────────
-const SectorGrid = () => {
+function SectorGrid() {
   const [hovered, setHovered] = useState<number | null>(null);
   return (
     <div>
