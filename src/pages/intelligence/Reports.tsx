@@ -2115,7 +2115,7 @@ function ActivityTable({
           <tbody>
             {pageRows.map((row) => {
               const sec = SECTORS.find((x) => x.id === row.sectorId);
-              const Icon = sec?.icon || FileText;
+              const Icon = (sec as any)?.svgIcon ? null : FileText;
               const sel = selectedRows.includes(row.id);
               const isPrimary = row.sectorId === s.id;
               return (
