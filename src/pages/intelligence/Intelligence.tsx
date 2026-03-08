@@ -80,7 +80,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
   const navigate = useNavigate();
   const handleRequestAccess = () => {
     onClose();
-    navigate("/contact");
+    navigate("/contact?note=BRIDGE+Intelligence+Pro+Access+Request");
   };
   return (
     <div
