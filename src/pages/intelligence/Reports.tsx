@@ -28,7 +28,7 @@ import {
   Book,
   LogOut,
   ClipboardList,
-  PieChart,
+  PieChart as PieLucide,
   DollarSign,
   Lightbulb,
   ShieldAlert,
