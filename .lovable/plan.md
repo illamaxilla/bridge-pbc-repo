@@ -1,85 +1,79 @@
 
-## Audit Summary: What's Working vs. What Needs Fixing
+## What to build
 
-### ✅ Working correctly
-- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
-- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
-- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
-- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
+A `src/pages/community/` directory mirroring the pattern of `src/pages/intelligence/` — a shell layout file plus a placeholder entry point. The user will paste their full JSX flow into a clearly marked placeholder file.
 
-### ❌ Issues to fix
+The community section needs its own route group (`/community/*`) so it can support nested sub-routes when the user pastes their multi-screen flow later (login screen, feed, profile, etc.).
 
-**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
-- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
-- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
+### Structure
 
-**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
-- Line 6934 has `href="#"` instead of the object-lookup pattern
-- Fix: same object-lookup pattern as other pages
+```text
+src/pages/community/
+  Community.tsx       ← Shell layout (header + outlet) — user doesn't touch this
+  index.tsx           ← PASTE YOUR JSX HERE placeholder, mounted at /community
+```
 
-**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
-- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
-- Fix: apply the object-lookup href pattern
+### Route setup in App.tsx
 
-**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
-- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
-- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
-- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
+Add a nested wildcard route identical in pattern to `/intelligence/*`:
 
-**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
-- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
-- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
+```tsx
+import Community from "./pages/community/Community";
+import CommunityHome from "./pages/community/index";
 
-**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
-- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
-- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
-- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
+// inside <Routes>:
+<Route path="/community/*" element={<Community />}>
+  <Route index element={<CommunityHome />} />
+</Route>
+```
 
-**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
-- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
-- Minor cleanup
+This means:
+- `/community` → renders `CommunityHome` (the placeholder where the user pastes their JSX)
+- `/community/login`, `/community/feed`, etc. → ready to be added as child routes later
 
-### Implementation Plan
+### Community.tsx (shell)
 
-**Files to fix: 4 real fixes + 1 cleanup**
+Minimal wrapper — just an `<Outlet />` with no imposed chrome. The community section has its own login flow and header, so the shell must be empty/transparent. No `SiteHeaderMinimal`, no forced padding. Just:
 
-1. **`Tourism.tsx`** (2 fixes):
-   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
-   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
+```tsx
+import { Outlet } from "react-router-dom";
+export default function Community() {
+  return <Outlet />;
+}
+```
 
-2. **`Infrastructure.tsx`** (1 fix):
-   - Line 6952: `href="#"` → object-lookup href
+This lets the pasted JSX bring its own full-page layout.
 
-3. **`Education.tsx`** (1 fix):
-   - Line 6947: `href="#"` → object-lookup href
+### index.tsx (placeholder)
 
-4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
-   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
-   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
+A clearly-marked placeholder with a large comment block telling the user exactly where to paste:
 
-5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
-   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
-   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
+```tsx
+// ============================================================
+// BRIDGE COMMUNITY — PASTE YOUR JSX FLOW HERE
+// ============================================================
+// Replace the entire contents of this file with your .jsx file.
+// The component must be the default export.
+// Sub-routes (e.g. /community/login) can be added in App.tsx.
+// ============================================================
 
-6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
+export default function CommunityHome() {
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", fontFamily: "DM Sans, sans-serif", background: "#1B4D3E", color: "#fff" }}>
+      <div style={{ textAlign: "center" }}>
+        <p style={{ color: "#B8D935", letterSpacing: "0.15em", fontSize: "13px", marginBottom: "16px" }}>COMING SOON</p>
+        <h1 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: "300", margin: 0 }}>BRIDGE Community</h1>
+        <p style={{ marginTop: "12px", opacity: 0.5, fontSize: "15px" }}>Paste your JSX flow into src/pages/community/index.tsx</p>
+      </div>
+    </div>
+  );
+}
+```
 
-### Files to edit
-| File | Change |
+### Files to create / edit
+
+| Action | File |
 |---|---|
-| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
-| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
-| `Education.tsx` | Fix mobile labels `href="#"` |
-| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
-| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
+| Create | `src/pages/community/Community.tsx` |
+| Create | `src/pages/community/index.tsx` |
+| Edit   | `src/App.tsx` — add import + route |
