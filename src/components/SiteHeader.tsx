@@ -259,7 +259,7 @@ export default function SiteHeader() {
             overflowY: "auto" as const,
           }}
         >
-          <style>{`@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}`}</style>
+          <style>{`@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}@keyframes pulseBadge{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(2.2);opacity:0}}`}</style>
           <nav style={{ display: "flex", flexDirection: "column" as const, flex: 1 }}>
             {visibleNav.map((item) => (
               <a
