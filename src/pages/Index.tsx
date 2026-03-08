@@ -2742,8 +2742,8 @@ export default function BRIDGEHomePage() {
                 </ResponsiveContainer>
               </div>
             )}
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              {sectorData.slice(0, isMobile ? 4 : 6).map((sector, index) => {
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px", ...(isMobile ? { maxHeight: "420px", overflowY: "auto", paddingRight: "4px" } : {}) }}>
+              {sectorData.slice(0, isMobile ? 12 : 6).map((sector, index) => {
                 const isOpen = openSector === index;
                 return (
                   <div
