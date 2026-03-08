@@ -5390,31 +5390,70 @@ function DesktopDashboard() {
                 >
                   Quick Actions
                 </div>
+                {/* Compare sector selector */}
+                {compareMode && (
+                  <div style={{ marginBottom: 8, padding: "8px 10px", background: "#EBF5B0", borderRadius: 8, border: "1px solid rgba(184,217,53,0.4)" }}>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: "#1B4D3E", fontFamily: "Inter,sans-serif", marginBottom: 6 }}>
+                      Select 2 sectors to compare ({compareSectors.length}/2)
+                    </div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 6 }}>
+                      {SECTORS.slice(0, 6).map(sec => {
+                        const selected = compareSectors.find(p => p.id === sec.id);
+                        return (
+                          <button key={sec.id} onClick={() => handleCompareToggle(sec)} style={{
+                            padding: "3px 8px", borderRadius: 5, border: `1px solid ${selected ? "#1B4D3E" : "rgba(27,77,62,0.2)"}`,
+                            background: selected ? "#1B4D3E" : "transparent", color: selected ? "#B8D935" : "#1B4D3E",
+                            fontSize: 10, fontWeight: 600, cursor: "pointer", fontFamily: "Inter,sans-serif",
+                          }}>{sec.short.split(" ")[0]}</button>
+                        );
+                      })}
+                    </div>
+                    <div style={{ display: "flex", gap: 4 }}>
+                      <button
+                        disabled={compareSectors.length < 2}
+                        onClick={() => compareSectors.length === 2 && setCompareMode(true)}
+                        style={{
+                          flex: 1, padding: "5px 0", borderRadius: 5, border: "none",
+                          background: compareSectors.length === 2 ? "#1B4D3E" : "#D1D5DB",
+                          color: compareSectors.length === 2 ? "#B8D935" : "#9CA3AF",
+                          fontSize: 10, fontWeight: 700, cursor: compareSectors.length === 2 ? "pointer" : "not-allowed",
+                          fontFamily: "Inter,sans-serif",
+                        }}
+                      >Compare Now</button>
+                      <button onClick={() => { setCompareMode(false); setCompareSectors([]); }} style={{
+                        padding: "5px 8px", borderRadius: 5, border: "1px solid rgba(27,77,62,0.2)",
+                        background: "transparent", color: "#1B4D3E", fontSize: 10, fontWeight: 600,
+                        cursor: "pointer", fontFamily: "Inter,sans-serif",
+                      }}>Cancel</button>
+                    </div>
+                  </div>
+                )}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
                   {(
                     [
-                      [FileText, "View Report"],
-                      [Download, "Export Data"],
-                      [BarChart2, "Compare"],
-                      [Clock, "History"],
-                      [Share2, "Share"],
-                      [MoreHorizontal, "More"],
-                    ] as [React.ComponentType<{ size?: number }>, string][]
-                  ).map(([ActionIcon, label]) => (
+                      [FileText, "View Report", null],
+                      [Download, "Export Data", null],
+                      [BarChart2, "Compare", () => { setCompareMode(m => !m); if (!compareMode) setCompareSectors([]); }],
+                      [Clock, "History", null],
+                      [Share2, "Share", null],
+                      [MoreHorizontal, "More", null],
+                    ] as [React.ComponentType<{ size?: number }>, string, (() => void) | null][]
+                  ).map(([ActionIcon, label, onClick]) => (
                     <button
                       key={label}
+                      onClick={onClick || undefined}
                       style={{
                         display: "flex",
                         alignItems: "center",
                         gap: 5,
                         padding: "6px 8px",
-                        background: "#F9FAFB",
-                        border: "1px solid #E5E7EB",
+                        background: label === "Compare" && compareMode ? "#EBF5B0" : "#F9FAFB",
+                        border: `1px solid ${label === "Compare" && compareMode ? "#B8D935" : "#E5E7EB"}`,
                         borderRadius: 7,
                         cursor: "pointer",
                         fontSize: 10,
-                        fontWeight: 500,
-                        color: "#374151",
+                        fontWeight: label === "Compare" && compareMode ? 700 : 500,
+                        color: label === "Compare" && compareMode ? "#1B4D3E" : "#374151",
                         fontFamily: "Inter,sans-serif",
                         transition: "all .15s",
                       }}
@@ -5423,8 +5462,8 @@ function DesktopDashboard() {
                         e.currentTarget.style.color = "#1B4D3E";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = "#E5E7EB";
-                        e.currentTarget.style.color = "#374151";
+                        e.currentTarget.style.borderColor = label === "Compare" && compareMode ? "#B8D935" : "#E5E7EB";
+                        e.currentTarget.style.color = label === "Compare" && compareMode ? "#1B4D3E" : "#374151";
                       }}
                     >
                       <ActionIcon size={11} />
