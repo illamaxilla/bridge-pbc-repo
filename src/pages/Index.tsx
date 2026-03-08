@@ -3936,16 +3936,6 @@ export default function BRIDGEHomePage() {
     </div>
   );
 }
-                        marginLeft: "auto",
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      {["Company", "Services", "Resources", "Insights"].map((label) => (
-                        <a
-                          key={label}
-                          href={label === "Company" ? "/about" : label === "Services" ? "/services" : label === "Resources" ? "/resources" : "/insights"}
-                          style={{
-                            fontFamily: "'DM Sans', sans-serif",
                             fontSize: "12px",
                             fontWeight: "600",
                             color: "rgba(255,255,255,0.5)",
