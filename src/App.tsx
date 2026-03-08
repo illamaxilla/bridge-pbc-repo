@@ -33,6 +33,7 @@ import Agriculture from "./pages/sectors/Agriculture";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Sectors from "./pages/Sectors";
+import Policy from "./pages/Policy";
 
 const queryClient = new QueryClient();
 
