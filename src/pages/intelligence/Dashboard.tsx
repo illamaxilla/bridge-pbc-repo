@@ -1819,7 +1819,7 @@ function sigC(x) {
   return x === "Bullish" ? M.green : x === "Bearish" ? M.red : M.orange;
 }
 /* ─── Section Card wrapper ─── */
-function MCard({ icon: Icon, title, badge, badgeLime = false, defaultOpen = true, children }) {
+function MCard({ icon: Icon, title, badge = undefined, badgeLime = false, defaultOpen = true, children }: { icon: any; title: any; badge?: any; badgeLime?: boolean; defaultOpen?: boolean; children: any }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div
