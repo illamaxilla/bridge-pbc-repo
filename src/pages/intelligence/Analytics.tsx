@@ -37,6 +37,13 @@ import {
   FileBarChart,
   Book,
   LogOut,
+  Target,
+  TrendingUp,
+  Zap,
+  Building2,
+  Globe,
+  LineChart,
+  Radio,
 } from "lucide-react";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -1588,7 +1595,7 @@ function BubbleChart({ s }) {
       </g>
     );
   };
-  const CustomTip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
+  const CustomTip = ({ active, payload }) => {
     if (!active || !payload?.length) return null;
     const d = payload[0]?.payload;
     return (
@@ -10198,362 +10205,78 @@ function MobileComingSoon({ label, icon }) {
   );
 }
 
-// ─── Mobile Bottom Nav (5 tabs) ───────────────────────────────────────
-function MobileBottomNav({ tab, setTab, sub, setSub }) {
-  const [subOpen, setSubOpen] = useState(false);
-
-  const ANALYTICS_ITEMS = [
-    {
-      id: "kpis",
-      type: "top",
-      label: "KPIs",
-      desc: "Key metrics, scores & capital data",
-      icon: (c) => (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={c}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="3" y="3" width="7" height="7" />
-          <rect x="14" y="3" width="7" height="7" />
-          <rect x="3" y="14" width="7" height="7" />
-          <rect x="14" y="14" width="7" height="7" />
-        </svg>
-      ),
-    },
-    {
-      id: "performance",
-      type: "sub",
-      label: "Sector Performance",
-      desc: "Charts, growth & risk profiles",
-      icon: (c) => (
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={c}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-        </svg>
-      ),
-    },
-    {
-      id: "activity",
-      type: "sub",
-      label: "Sector Activity Log",
-      desc: "Searchable activity & signal feed",
-      icon: (c) => (
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={c}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M9 11l3 3L22 4" />
-          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-        </svg>
-      ),
-    },
-    {
-      id: "companies",
-      type: "top",
-      label: "Companies",
-      desc: "Key players, rankings & signals",
-      icon: (c) => (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={c}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 00-3-3.87" />
-          <path d="M16 3.13a4 4 0 010 7.75" />
-        </svg>
-      ),
-    },
-    {
-      id: "map",
-      type: "top",
-      label: "Global Map",
-      desc: "Investment reach & regional flow",
-      icon: (c) => (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={c}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
-          <line x1="8" y1="2" x2="8" y2="18" />
-          <line x1="16" y1="6" x2="16" y2="22" />
-        </svg>
-      ),
-    },
-  ];
-
+// ─── Mobile Bottom Nav (5 tabs → 5 content sections) ─────────────────
+function MobileBottomNav({ sub, setSub }) {
   const tabs = [
-    { id: "dashboard", label: "Dashboard", icon: (c) => <LayoutGrid size={20} color={c} /> },
-    { id: "overview", label: "Overview", icon: (c) => <Activity size={20} color={c} /> },
-    { id: "analytics", label: "Analytics", icon: (c) => <BarChart3 size={20} color={c} /> },
-    { id: "watch", label: "Watch", icon: (c) => <Eye size={20} color={c} /> },
-    { id: "resources", label: "Resources", icon: (c) => <Book size={20} color={c} /> },
+    { id: "kpis", label: "KPIs", icon: (c) => <Target size={20} color={c} /> },
+    { id: "performance", label: "Performance", icon: (c) => <LineChart size={20} color={c} /> },
+    { id: "activity", label: "Activity", icon: (c) => <Radio size={20} color={c} /> },
+    { id: "companies", label: "Companies", icon: (c) => <Building2 size={20} color={c} /> },
+    { id: "map", label: "Map", icon: (c) => <Globe size={20} color={c} /> },
   ];
-
-  const activeItem = ANALYTICS_ITEMS.find((x) => x.id === sub);
-
   return (
-    <>
-      <style>{`@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}.bridge-sheet{animation:slideUp 0.25s ease}`}</style>
-
-      {/* Dim overlay */}
-      {subOpen && (
-        <div
-          onClick={() => setSubOpen(false)}
-          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: 298 }}
-        />
-      )}
-
-      {/* Slide-up sheet */}
-      {subOpen && (
-        <div
-          className="bridge-sheet"
-          style={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            background: "#0F1A12",
-            borderRadius: "20px 20px 0 0",
-            border: "1px solid rgba(184,217,53,0.15)",
-            borderBottom: "none",
-            zIndex: 299,
-            paddingBottom: "calc(env(safe-area-inset-bottom, 16px) + 70px)",
-          }}
-        >
-          {/* Drag handle */}
+    <div
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 64,
+        background: M.surface,
+        borderTop: `1px solid ${M.border}`,
+        display: "flex",
+        alignItems: "stretch",
+        zIndex: 300,
+        backdropFilter: "blur(12px)",
+      }}
+    >
+      {tabs.map((t) => {
+        const act = t.id === sub;
+        return (
           <div
+            key={t.id}
+            onClick={() => setSub(t.id)}
             style={{
-              width: 36,
-              height: 4,
-              borderRadius: 2,
-              background: "rgba(255,255,255,0.15)",
-              margin: "12px auto 16px",
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 3,
+              cursor: "pointer",
+              position: "relative",
             }}
-          />
-          {/* Header row */}
-          <div
-            style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 20px 6px" }}
           >
+            {act && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 28,
+                  height: 2,
+                  borderRadius: "0 0 3px 3px",
+                  background: M.accent,
+                }}
+              />
+            )}
+            {t.icon(act ? M.accent : M.muted)}
             <span
               style={{
-                fontSize: 11,
-                fontWeight: 700,
-                color: "rgba(255,255,255,0.35)",
+                fontSize: 9,
+                fontWeight: act ? 700 : 400,
+                color: act ? M.accent : M.muted,
                 fontFamily: "Inter,sans-serif",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
+                letterSpacing: "0.3px",
               }}
             >
-              Analytics
+              {t.label}
             </span>
-            <button
-              onClick={() => setSubOpen(false)}
-              style={{
-                background: "rgba(255,255,255,0.08)",
-                border: "none",
-                borderRadius: 7,
-                padding: "4px 10px",
-                fontSize: 11,
-                color: "rgba(255,255,255,0.4)",
-                fontFamily: "Inter,sans-serif",
-                cursor: "pointer",
-              }}
-            >
-              Done
-            </button>
           </div>
-          {/* Items */}
-          {ANALYTICS_ITEMS.map((item) => {
-            const act = item.id === sub;
-            const isTop = item.type === "top";
-            const iconBg = act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)";
-            const iconColor = act ? "#B8D935" : "rgba(255,255,255,0.35)";
-            const iconSize = isTop ? 40 : 30;
-            const iconRadius = isTop ? 11 : 8;
-            const dividerColor = isTop ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.04)";
-            return (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setSub(item.id);
-                  setSubOpen(false);
-                }}
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 14,
-                  padding: isTop ? "14px 20px" : `11px 20px 11px 74px`,
-                  border: "none",
-                  borderTop: `1px solid ${dividerColor}`,
-                  background: act ? "rgba(184,217,53,0.07)" : "transparent",
-                  cursor: "pointer",
-                  textAlign: "left",
-                }}
-              >
-                <div
-                  style={{
-                    width: iconSize,
-                    height: iconSize,
-                    borderRadius: iconRadius,
-                    background: iconBg,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  {item.icon(iconColor)}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div
-                    style={{
-                      fontSize: isTop ? 14 : 13,
-                      fontWeight: act ? 700 : isTop ? 700 : 600,
-                      color: act ? "#B8D935" : isTop ? "#FFFFFF" : "rgba(255,255,255,0.8)",
-                      fontFamily: "DM Sans,sans-serif",
-                      lineHeight: 1.2,
-                    }}
-                  >
-                    {item.label}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: isTop ? 11 : 10,
-                      color: "rgba(255,255,255,0.35)",
-                      fontFamily: "Inter,sans-serif",
-                      marginTop: isTop ? 2 : 1,
-                    }}
-                  >
-                    {item.desc}
-                  </div>
-                </div>
-                {act && (
-                  <div
-                    style={{
-                      width: isTop ? 8 : 7,
-                      height: isTop ? 8 : 7,
-                      borderRadius: "50%",
-                      background: "#B8D935",
-                      flexShrink: 0,
-                    }}
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Bottom nav bar */}
-      <div
-        style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 64,
-          background: M.surface,
-          borderTop: `1px solid ${M.border}`,
-          display: "flex",
-          alignItems: "stretch",
-          zIndex: 300,
-          backdropFilter: "blur(12px)",
-        }}
-      >
-        {tabs.map((t) => {
-          const act = t.id === tab;
-          const isAnalytics = t.id === "analytics";
-          return (
-            <div
-              key={t.id}
-              onClick={() => {
-                if (isAnalytics) {
-                  if (tab === "analytics") setSubOpen((o) => !o);
-                  else {
-                    setTab("analytics");
-                    setSubOpen(true);
-                  }
-                } else {
-                  setTab(t.id);
-                  setSubOpen(false);
-                }
-              }}
-              style={{
-                flex: 1,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 3,
-                cursor: "pointer",
-                position: "relative",
-              }}
-            >
-              {act && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: 28,
-                    height: 2,
-                    borderRadius: "0 0 3px 3px",
-                    background: M.accent,
-                  }}
-                />
-              )}
-              {t.icon(act ? M.accent : M.muted)}
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: act ? 700 : 400,
-                  color: act ? M.accent : M.muted,
-                  fontFamily: "Inter,sans-serif",
-                  letterSpacing: "0.3px",
-                }}
-              >
-                {isAnalytics && act ? activeItem?.label || "Analytics" : t.label}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </>
+        );
+      })}
+    </div>
   );
 }
 
@@ -10719,68 +10442,17 @@ function MSectorDrawer({ s, setS, open, onClose }) {
 
 function MobileApp() {
   const [s, setS] = useState(SECTORS[1]);
-  const [tab, setTab] = useState("analytics");
   const [sub, setSub] = useState("kpis");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const TAB_LABELS = {
-    dashboard: "Dashboard",
-    overview: "Overview",
-    analytics: "Analytics",
-    watch: "Watch",
-    resources: "Resources",
-  };
-
-  const tabContent = {
-    dashboard: (
-      <MobileComingSoon
-        label="Dashboard"
-        icon={
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={M.accent} strokeWidth="1.8">
-            <rect x="3" y="3" width="7" height="7" rx="1" />
-            <rect x="14" y="3" width="7" height="7" rx="1" />
-            <rect x="3" y="14" width="7" height="7" rx="1" />
-            <rect x="14" y="14" width="7" height="7" rx="1" />
-          </svg>
-        }
-      />
-    ),
-    overview: (
-      <MobileComingSoon
-        label="Overview"
-        icon={
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={M.accent} strokeWidth="1.8">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 8v4l3 3" />
-          </svg>
-        }
-      />
-    ),
-    analytics: <MobileAnalytics s={s} sub={sub} />,
-    watch: (
-      <MobileComingSoon
-        label="Watch"
-        icon={
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={M.accent} strokeWidth="1.8">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-        }
-      />
-    ),
-    resources: (
-      <MobileComingSoon
-        label="Resources"
-        icon={
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={M.accent} strokeWidth="1.8">
-            <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
-          </svg>
-        }
-      />
-    ),
+  const SUB_LABELS = {
+    kpis: "KPIs",
+    performance: "Performance",
+    activity: "Activity",
+    companies: "Companies",
+    map: "Global Map",
   };
 
   return (
@@ -10797,7 +10469,7 @@ function MobileApp() {
     >
       <style>{`*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}::-webkit-scrollbar{display:none;}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}`}</style>
 
-      {/* Top header — single row */}
+      {/* Top header — sector selector only */}
       <div
         style={{
           position: "sticky",
@@ -10810,14 +10482,9 @@ function MobileApp() {
           display: "flex",
           alignItems: "center",
           padding: "0 14px",
-          gap: 8,
           flexShrink: 0,
         }}
       >
-        {/* Logo */}
-        <div style={{ flexShrink: 0 }}>
-          <BridgeLogo />
-        </div>
         {/* Sector selector */}
         <div
           onClick={() => setDrawerOpen(true)}
@@ -10827,12 +10494,9 @@ function MobileApp() {
             alignItems: "center",
             gap: 8,
             cursor: "pointer",
-            minWidth: 0,
-            paddingLeft: 8,
             background: "rgba(255,255,255,0.06)",
             borderRadius: 10,
             padding: "6px 10px 6px 8px",
-            marginLeft: 8,
           }}
         >
           <div
@@ -10880,89 +10544,6 @@ function MobileApp() {
             </svg>
           </div>
         </div>
-        {/* Bell */}
-        <button
-          onClick={() => setNotifOpen((o) => !o)}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: "rgba(255,255,255,0.06)",
-            border: `1px solid ${M.border}`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            position: "relative",
-            flexShrink: 0,
-          }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={M.sub} strokeWidth="2">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
-          <div
-            style={{
-              position: "absolute",
-              top: 6,
-              right: 6,
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: M.red,
-              border: "1.5px solid #070D09",
-            }}
-          />
-        </button>
-        {/* Hamburger */}
-        <button
-          onClick={() => setMenuOpen((o) => !o)}
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: menuOpen ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.06)",
-            border: `1px solid ${menuOpen ? "rgba(184,217,53,0.25)" : M.border}`,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 4,
-            cursor: "pointer",
-            flexShrink: 0,
-            padding: 0,
-          }}
-        >
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : M.sub,
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 13,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : M.sub,
-            }}
-          />
-          <span
-            style={{
-              display: "block",
-              width: 9,
-              height: 1.5,
-              borderRadius: 1,
-              background: menuOpen ? "#B8D935" : M.sub,
-              alignSelf: "flex-start",
-              marginLeft: "10px",
-            }}
-          />
-        </button>
       </div>
 
       {/* Hamburger menu drawer */}
@@ -11450,14 +11031,16 @@ function MobileApp() {
             fontFamily: "Inter,sans-serif",
           }}
         >
-          {TAB_LABELS[tab]}
+          {SUB_LABELS[sub]}
         </div>
       </div>
 
       {/* Page content */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "10px 16px 80px", minHeight: 0 }}>{tabContent[tab]}</div>
+      <div style={{ flex: 1, overflowY: "auto", padding: "10px 16px 80px", minHeight: 0 }}>
+        <MobileAnalytics s={s} sub={sub} />
+      </div>
 
-      <MobileBottomNav tab={tab} setTab={setTab} sub={sub} setSub={setSub} />
+      <MobileBottomNav sub={sub} setSub={setSub} />
       <MSectorDrawer s={s} setS={setS} open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </div>
   );
