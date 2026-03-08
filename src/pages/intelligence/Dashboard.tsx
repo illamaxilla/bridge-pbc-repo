@@ -4425,21 +4425,28 @@ function DesktopDashboard() {
 
           {/* CENTER — Search */}
           <div
+            ref={searchContainerRef}
             style={{
               flex: 1,
               maxWidth: 360,
+              position: "relative",
               display: "flex",
               alignItems: "center",
               gap: 8,
-              background: "#F9FAFB",
-              border: "1px solid #E5E7EB",
+              background: searchOpen ? "#fff" : "#F9FAFB",
+              border: `1px solid ${searchOpen ? "#1B4D3E" : "#E5E7EB"}`,
               borderRadius: 9,
               padding: "7px 12px",
               marginLeft: "auto",
+              transition: "border-color 0.15s, background 0.15s",
             }}
           >
-            <Search size={13} color="#6B7280" />
+            <Search size={13} color={searchOpen ? "#1B4D3E" : "#6B7280"} />
             <input
+              ref={searchRef}
+              value={searchQuery}
+              onChange={e => { setSearchQuery(e.target.value); setSearchOpen(true); }}
+              onFocus={() => setSearchOpen(true)}
               placeholder="Search sectors, ventures, metrics…"
               style={{
                 background: "none",
@@ -4451,19 +4458,17 @@ function DesktopDashboard() {
                 width: "100%",
               }}
             />
-            <span
-              style={{
-                fontSize: 9,
-                color: "#6B7280",
-                background: "#E5E7EB",
-                padding: "1px 5px",
-                borderRadius: 3,
-                fontFamily: "Inter,sans-serif",
-                flexShrink: 0,
-              }}
-            >
-              CMD+K
-            </span>
+            {searchQuery ? (
+              <button onClick={() => { setSearchQuery(""); setSearchOpen(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", color: "#9CA3AF", flexShrink: 0 }}>
+                ×
+              </button>
+            ) : (
+              <span style={{ fontSize: 9, color: "#6B7280", background: "#E5E7EB", padding: "1px 5px", borderRadius: 3, fontFamily: "Inter,sans-serif", flexShrink: 0, whiteSpace: "nowrap" }}>⌘K</span>
+            )}
+            {/* Search Results Overlay */}
+            {searchOpen && searchQuery && (
+              <SearchOverlay query={searchQuery} onSelect={handleSectorSelect} onClose={() => { setSearchOpen(false); setSearchQuery(""); }} />
+            )}
           </div>
 
           {/* RIGHT — Actions */}
