@@ -4097,10 +4097,24 @@ function MobileDashboard({ s, setS }) {
 
 /* ─────────── DESKTOP DASHBOARD ─────────── */
 function DesktopDashboard() {
-  const [s, setS] = useState(SECTORS[0]);
+  const [searchParams] = useSearchParams();
+  const [s, setS] = useState(() => {
+    const id = searchParams.get("sector");
+    return SECTORS.find(sec => sec.id === id) || SECTORS[0];
+  });
   const [collapsed, setCollapsed] = useState(false);
   const [chart, setChart] = useState("bar");
   const [notif, setNotif] = useState(false);
+
+  // Sync when URL param changes (e.g. sidebar sector click)
+  useEffect(() => {
+    const id = searchParams.get("sector");
+    if (id) {
+      const found = SECTORS.find(sec => sec.id === id);
+      if (found) setS(found);
+    }
+  }, [searchParams]);
+
   const cData = (s.t1 || [])
     .slice(0, 6)
     .map((v, i) => ({
