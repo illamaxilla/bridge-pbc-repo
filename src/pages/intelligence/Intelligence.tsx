@@ -203,7 +203,7 @@ export default function Intelligence() {
     return <Navigate to="/intelligence/dashboard" replace />;
   }
 
-  const sidebarWidth = isMobile ? (sidebarOpen ? 220 : 0) : collapsed ? 56 : 220;
+  const sidebarWidth = isMobile ? 220 : collapsed ? 56 : 220;
 
   const handleSectorClick = (sectorId: string) => {
     navigate(`/intelligence/dashboard?sector=${sectorId}`);
