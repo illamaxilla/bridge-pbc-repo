@@ -182,9 +182,22 @@ export default function Intelligence() {
   const isMobile = useIsMobile();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [textVisible, setTextVisible] = useState(true);
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [searchParams] = useSearchParams();
   const activeSectorId = searchParams.get("sector");
+
+  const handleToggleCollapsed = () => {
+    if (!collapsed) {
+      // Collapsing: fade text out first, then shrink
+      setTextVisible(false);
+      setTimeout(() => setCollapsed(true), 120);
+    } else {
+      // Expanding: grow first, then fade text in
+      setCollapsed(false);
+      setTimeout(() => setTextVisible(true), 160);
+    }
+  };
 
   if (location.pathname === "/intelligence" || location.pathname === "/intelligence/") {
     return <Navigate to="/intelligence/dashboard" replace />;

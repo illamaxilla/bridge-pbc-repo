@@ -4162,39 +4162,51 @@ function DesktopDashboard() {
             {/* Vertical divider */}
             <div style={{ width: 1, height: 28, background: "#E5E7EB", flexShrink: 0 }} />
             {/* Filter state pill */}
+            {/* Active sector breadcrumb chip */}
             {(() => {
               const Icon = s.icon;
+              const isDefault = s.id === SECTORS[0].id && !searchParams.get("sector");
               return (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 5,
-                    padding: "3px 9px",
-                    borderRadius: 7,
-                    background: "#EBF5B0",
-                    border: "1px solid rgba(184,217,53,0.27)",
-                    cursor: "pointer",
-                  }}
-                  title="Active filter"
-                >
-                  <Icon size={11} color="#1B4D3E" strokeWidth={1.8} />
-                  <span
+                <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                  <span style={{ fontSize: 10, color: "#9CA3AF", fontFamily: "Inter,sans-serif" }}>Viewing:</span>
+                  <div
                     style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: "#1B4D3E",
-                      fontFamily: "Inter,sans-serif",
-                      whiteSpace: "nowrap",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 5,
+                      padding: "3px 7px 3px 9px",
+                      borderRadius: 7,
+                      background: "#EBF5B0",
+                      border: "1px solid rgba(184,217,53,0.35)",
+                      animation: "dash-fade-in 0.25s ease-out",
                     }}
+                    title={`Viewing: ${s.full}`}
                   >
-                    {s.short}
-                  </span>
-                  <span
-                    style={{ fontSize: 9, color: "rgba(27,77,62,0.45)", fontFamily: "Inter,sans-serif", marginLeft: 1 }}
-                  >
-                    ×
-                  </span>
+                    <Icon size={11} color="#1B4D3E" strokeWidth={1.8} />
+                    <span style={{ fontSize: 10, fontWeight: 700, color: "#1B4D3E", fontFamily: "Inter,sans-serif", whiteSpace: "nowrap" }}>
+                      {s.short}
+                    </span>
+                    {searchParams.get("sector") && (
+                      <button
+                        onClick={() => {
+                          setFadeKey(k => k + 1);
+                          setS(SECTORS[0]);
+                          const url = new URL(window.location.href);
+                          url.searchParams.delete("sector");
+                          window.history.replaceState({}, "", url.pathname);
+                        }}
+                        title="Reset to default"
+                        style={{
+                          background: "rgba(27,77,62,0.12)", border: "none", borderRadius: 3,
+                          width: 14, height: 14, display: "flex", alignItems: "center", justifyContent: "center",
+                          cursor: "pointer", padding: 0, marginLeft: 1, flexShrink: 0,
+                          color: "#1B4D3E", fontSize: 11, lineHeight: 1,
+                        }}
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })()}
