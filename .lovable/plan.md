@@ -1,85 +1,137 @@
 
-## Audit Summary: What's Working vs. What Needs Fixing
+## What we're building
 
-### ✅ Working correctly
-- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
-- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
-- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
-- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
+A **route guard** that wraps all `/intelligence/*` routes. If the user is not logged in, they see the `BRIDGEAuthModal` instead of the dashboard. Once they sign in (mock success), they are let through and stay authenticated for the session.
 
-### ❌ Issues to fix
+Since there is no Supabase connected, the auth remains **mock-based** — the sign-in form already fakes a 1.5s success. We'll persist the "logged in" flag in `sessionStorage` so it survives navigating around but resets on tab close (appropriate for a demo/beta product).
 
-**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
-- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
-- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
+---
 
-**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
-- Line 6934 has `href="#"` instead of the object-lookup pattern
-- Fix: same object-lookup pattern as other pages
+## Approach
 
-**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
-- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
-- Fix: apply the object-lookup href pattern
+### 1. Create `src/components/ProtectedRoute.tsx`
+A wrapper component that:
+- Reads `sessionStorage.getItem("bridge_authed")` on mount
+- If `"1"` → renders `{children}` (pass-through)
+- If not → renders the `BRIDGEAuthModal` overlaid on a dark locked screen (or just fullscreen modal)
+- When `BRIDGEAuthModal` calls `onSuccess` (sign-in tab only), sets `sessionStorage.setItem("bridge_authed", "1")` and re-renders the children
 
-**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
-- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
-- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
-- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
+The `BRIDGEAuthModal` already has an `onClose` prop. We need `onSuccess` propagation — currently `SignInForm` calls `onSuccess` internally which sets `success` state in the modal. We'll intercept this by passing a custom `onAuthSuccess` callback.
 
-**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
-- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
-- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
+**Cleanest approach without touching AuthModal internals:** Instead, modify `BRIDGEAuthModal` to accept an optional `onSignInSuccess?: () => void` prop that fires when sign-in completes (before showing the success screen). The `SignInForm` already calls `onSuccess` on the modal — we just need to thread the callback up one level.
 
-**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
-- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
-- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
-- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
+### 2. Modify `src/components/AuthModal.tsx`
+- Add `onSignInSuccess?: () => void` to `BRIDGEAuthModalProps`
+- Pass it down to `SignInForm` so that when `handleSubmit` succeeds (currently `setLoading(false); onSuccess && onSuccess()`), it also calls `onSignInSuccess()`
 
-**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
-- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
-- Minor cleanup
+### 3. Wrap intelligence routes in `src/App.tsx`
+Replace the current:
+```tsx
+<Route path="/intelligence/*" element={<Intelligence />}>
+```
+with:
+```tsx
+<Route path="/intelligence/*" element={
+  <ProtectedRoute>
+    <Intelligence />
+  </ProtectedRoute>
+}>
+```
 
-### Implementation Plan
+### 4. `ProtectedRoute` behaviour
+```
+sessionStorage has "bridge_authed" = "1"
+  → render children normally
 
-**Files to fix: 4 real fixes + 1 cleanup**
+sessionStorage missing
+  → render a fullscreen dark backdrop (matching the Intelligence shell bg #0F1A12)
+    with BRIDGEAuthModal open={true}
+    onClose → navigate("/") (can't close without logging in)
+    onSignInSuccess → set sessionStorage flag + setState to allow through
+```
 
-1. **`Tourism.tsx`** (2 fixes):
-   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
-   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
+The modal is already `position: fixed, zIndex: 9998` so it will overlay anything. The backdrop underneath just needs to be a non-blank screen — we'll render it on top of the Intelligence shell (which loads but is hidden behind the modal).
 
-2. **`Infrastructure.tsx`** (1 fix):
-   - Line 6952: `href="#"` → object-lookup href
+Actually simpler: just render the Intelligence component and overlay the modal on top of it. The modal backdrop already covers everything with `position: fixed`. When `onSignInSuccess` fires, we hide the modal and the dashboard is revealed.
 
-3. **`Education.tsx`** (1 fix):
-   - Line 6947: `href="#"` → object-lookup href
+This means **no flicker, no redirect, no layout jump** — the dashboard loads silently underneath.
 
-4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
-   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
-   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
+---
 
-5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
-   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
-   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
+## Files
 
-6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
-
-### Files to edit
 | File | Change |
-|---|---|
-| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
-| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
-| `Education.tsx` | Fix mobile labels `href="#"` |
-| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
-| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
+|------|--------|
+| `src/components/ProtectedRoute.tsx` | **New** — reads sessionStorage, renders children + conditionally shows modal overlay |
+| `src/components/AuthModal.tsx` | **Edit** — add `onSignInSuccess?` prop to `BRIDGEAuthModalProps`, thread it to `SignInForm` |
+| `src/App.tsx` | **Edit** — wrap all `<Route path="/intelligence/*">` with `<ProtectedRoute>` |
+
+---
+
+## Detail
+
+### `ProtectedRoute.tsx`
+```tsx
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { BRIDGEAuthModal } from "@/components/AuthModal";
+
+export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
+  const [authed, setAuthed] = useState(
+    () => sessionStorage.getItem("bridge_authed") === "1"
+  );
+
+  return (
+    <>
+      {children}
+      <BRIDGEAuthModal
+        isOpen={!authed}
+        onClose={() => navigate("/")}
+        defaultTab="signin"
+        onSignInSuccess={() => {
+          sessionStorage.setItem("bridge_authed", "1");
+          setAuthed(true);
+        }}
+      />
+    </>
+  );
+}
+```
+
+### `AuthModal.tsx` changes
+1. Add `onSignInSuccess?: () => void` to `BRIDGEAuthModalProps`
+2. Pass it through to `SignInForm` as `onSuccess` wrapper:
+   ```tsx
+   <SignInForm
+     onSuccess={() => {
+       onSignInSuccess?.();   // ← notify parent
+       setSuccess("signin");  // ← existing behaviour
+     }}
+     onForgot={() => {}}
+   />
+   ```
+
+### `App.tsx` changes
+```tsx
+import { ProtectedRoute } from "./components/ProtectedRoute";
+
+// wrap the intelligence route:
+<Route path="/intelligence/*" element={
+  <ProtectedRoute>
+    <Intelligence />
+  </ProtectedRoute>
+}>
+  ...child routes...
+</Route>
+```
+
+---
+
+## Result
+
+- Visiting `/intelligence/dashboard` while logged out → modal slides up, dashboard blurred behind it
+- Closing modal → redirected to `/`
+- Signing in → modal dismisses, dashboard is live
+- Navigating away and back in the same tab → still authed (sessionStorage persists)
+- New tab / fresh visit → must log in again
