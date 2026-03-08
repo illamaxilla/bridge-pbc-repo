@@ -4265,29 +4265,5 @@ export default function BRIDGEHomePage() {
                 <span
                   style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontFamily: "'DM Sans', sans-serif" }}
                 >
-                  {"\u00A9"} 2026 BRIDGE PBC
-                </span>
-                <div style={{ display: "flex", gap: isMobile ? "12px" : "20px" }}>
-                  {["Terms", "Privacy", "Accessibility"].map((link) => (
-                    <a
-                      key={link}
-                      href="#"
-                      style={{
-                        fontSize: "11px",
-                        color: "rgba(255,255,255,0.25)",
-                        fontFamily: "'DM Sans', sans-serif",
-                        textDecoration: "none",
-                      }}
-                    >
-                      {link}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
+
+
