@@ -1,18 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-
-// ─── COMMUNITY SECTION COMPONENTS ─────────────────────────────
-import MembersPage from "./Members";
-import CommunityResourcesPage from "./CommunityResources";
-import ForumHome from "./forum/ForumHome";
-import Questions from "./forum/Questions";
-import MostAnswered from "./forum/MostAnswered";
-import Polls from "./forum/Polls";
-import Groups from "./forum/Groups";
-import Tags from "./forum/Tags";
-import ForumSectors from "./forum/ForumSectors";
-import Badges from "./forum/Badges";
-import ForumMembers from "./forum/ForumMembers";
 import {
   Bell,
   MessageCircle,
@@ -983,54 +969,10 @@ function LoginPage({ onLogin }) {
   );
 }
 
-// ─── FORUM SECTION URL MAP ─────────────────────────────────────
-const FORUM_SECTION_ROUTES: Record<string, string> = {
-  Home:         "/community/forum",
-  Questions:    "/community/forum/questions",
-  "Most Answered": "/community/forum/most-answered",
-  Polls:        "/community/forum/polls",
-  Groups:       "/community/forum/groups",
-  Tags:         "/community/forum/tags",
-  Sectors:      "/community/forum/sectors",
-  Badges:       "/community/forum/badges",
-  Members:      "/community/forum/members",
-};
-const FORUM_ROUTE_SECTIONS: Record<string, string> = Object.fromEntries(
-  Object.entries(FORUM_SECTION_ROUTES).map(([k, v]) => [v, k])
-);
-
 // ─── COMMUNITY DASHBOARD ───────────────────────────────────────
 function CommunityDashboard({ memberType, onLogout }) {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  // Top-level tab from URL
-  const pageMap: Record<string, string> = {
-    "/community": "Home",
-    "/community/members": "Members",
-    "/community/resources": "Resources",
-  };
-  // Any /community/forum/* path maps to the Forum tab
-  const activePage = pathname.startsWith("/community/forum")
-    ? "Forum"
-    : (pageMap[pathname] ?? "Home");
-
-  const setActivePage = (name: string) => {
-    const routeMap: Record<string, string> = {
-      Home: "/community",
-      Forum: "/community/forum",
-      Members: "/community/members",
-      Resources: "/community/resources",
-    };
-    navigate(routeMap[name] ?? "/community");
-  };
-
-  // Forum sub-section from URL
-  const forumSection = FORUM_ROUTE_SECTIONS[pathname] ?? "Home";
-  const setForumSection = (section: string) => {
-    navigate(FORUM_SECTION_ROUTES[section] ?? "/community/forum");
-  };
   const [activeTab, setActiveTab] = useState("active");
+  const [feedFilter, setFeedFilter] = useState("Recent");
   const [forumFilter, setForumFilter] = useState("Recent");
   const [questions, setQuestions] = useState(QUESTIONS);
   const [noteText, setNoteText] = useState("");
@@ -1040,6 +982,7 @@ function CommunityDashboard({ memberType, onLogout }) {
   const [expandedGoal, setExpandedGoal] = useState(null);
   const [navOpen, setNavOpen] = useState(false);
   const [savedInsight, setSavedInsight] = useState(false);
+  const [currentPage, setCurrentPage] = useState("home");
   const [contributions, setContributions] = useState([
     { label: "Discussions participated in this week", done: true },
     { label: "Sector insight submitted", done: false },
@@ -1096,26 +1039,29 @@ function CommunityDashboard({ memberType, onLogout }) {
             </span>
           </div>
           <nav style={{ display: "flex", gap: 4 }}>
-            {["Home", "Forum", "Members", "Resources"].map((item) => (
-              <button
-                key={item}
-                onClick={() => setActivePage(item)}
-                style={{
-                  padding: "6px 14px",
-                  borderRadius: 8,
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: activePage === item ? 600 : 500,
-                  background: activePage === item ? `rgba(27,77,62,0.08)` : "transparent",
-                  color: activePage === item ? C.primary : C.text,
-                  transition: "all 0.15s",
-                }}
-              >
-                {item}
-              </button>
-            ))}
+            {["Home", "Forum", "Members", "Resources"].map((item) => {
+              const key = item.toLowerCase();
+              return (
+                <button
+                  key={item}
+                  onClick={() => setCurrentPage(key)}
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    border: "none",
+                    cursor: "pointer",
+                    fontFamily: font.body,
+                    fontSize: 13,
+                    fontWeight: 500,
+                    background: currentPage === key ? `rgba(27,77,62,0.08)` : "transparent",
+                    color: currentPage === key ? C.primary : C.text,
+                    fontWeight: currentPage === key ? 700 : 500,
+                  }}
+                >
+                  {item}
+                </button>
+              );
+            })}
           </nav>
         </div>
 
@@ -1183,1167 +1129,36 @@ function CommunityDashboard({ memberType, onLogout }) {
       </header>
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px" }}>
-
-        {/* ══ HOME PAGE ══ */}
-        {activePage === "Home" && (<>
-        {/* ── WELCOME HERO ── */}
-        <section
-          style={{
-            borderRadius: 20,
-            overflow: "hidden",
-            background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
-            padding: "40px 48px",
-            marginBottom: 28,
-            position: "relative",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: -40,
-              right: -40,
-              width: 220,
-              height: 220,
-              borderRadius: "50%",
-              border: `1px solid rgba(184,217,53,0.15)`,
-            }}
+        {currentPage === "home" && (
+          <HomePageContent
+            user={user}
+            mType={mType}
+            contributions={contributions}
+            setContributions={setContributions}
+            savedInsight={savedInsight}
+            setSavedInsight={setSavedInsight}
+            noteText={noteText}
+            setNoteText={setNoteText}
+            noteSaved={noteSaved}
+            setNoteSaved={setNoteSaved}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            expandedGoal={expandedGoal}
+            setExpandedGoal={setExpandedGoal}
+            setShowGoalModal={setShowGoalModal}
+            setCurrentPage={setCurrentPage}
           />
-          <div
-            style={{
-              position: "absolute",
-              top: 30,
-              right: 80,
-              width: 120,
-              height: 120,
-              borderRadius: "50%",
-              border: `1px solid rgba(184,217,53,0.08)`,
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: -30,
-              left: 20,
-              width: 160,
-              height: 160,
-              borderRadius: "50%",
-              border: `1px solid rgba(255,255,255,0.06)`,
-            }}
-          />
-
-          <div style={{ position: "relative", zIndex: 1 }}>
-            <Pill color={C.accent} bg="rgba(184,217,53,0.12)" border={false} small>
-              {mType.label}
-            </Pill>
-            <h1
-              style={{
-                fontFamily: font.display,
-                fontWeight: 300,
-                fontSize: 38,
-                color: C.white,
-                lineHeight: 1.15,
-                margin: "14px 0 10px",
-                letterSpacing: "-0.5px",
-              }}
-            >
-              Welcome back, <span style={{ fontWeight: 800, color: C.accent }}>{user.name}</span>
-            </h1>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.55)", margin: "0 0 28px", maxWidth: 560 }}>
-              You're building bridges that matter. Your contributions across Infrastructure are shaping Ghana's next
-              chapter.
-            </p>
-
-            <StepTracker steps={JOURNEY_STEPS} current={user.journey} />
-          </div>
-
-          {/* Daily Prompt */}
-          <div
-            style={{
-              marginTop: 24,
-              padding: "14px 20px",
-              background: "rgba(184,217,53,0.1)",
-              border: `1px solid rgba(184,217,53,0.2)`,
-              borderRadius: 10,
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", flex: 1 }}>
-              <strong style={{ color: C.accent }}>Today's Prompt:</strong> What's one infrastructure bottleneck in your
-              sector that BRIDGE could address in Q2 2026?
-            </span>
-            <button
-              style={{
-                padding: "6px 16px",
-                borderRadius: 20,
-                border: `1px solid ${C.accent}`,
-                background: "transparent",
-                color: C.accent,
-                fontSize: 12,
-                fontWeight: 600,
-                cursor: "pointer",
-                fontFamily: font.body,
-              }}
-            >
-              Respond
-            </button>
-          </div>
-        </section>
-
-        {/* ── 3-COLUMN WIDGET ROW ── */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 320px", gap: 20, marginBottom: 28 }}>
-          {/* LEFT COLUMN */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            {/* Featured Insight */}
-            <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
-              <SectionLabel>Today's Featured Insight</SectionLabel>
-              <div
-                style={{
-                  background: `linear-gradient(135deg, ${C.primary}12, ${C.accent}10)`,
-                  border: `1px solid ${C.primary}20`,
-                  borderRadius: 12,
-                  padding: "16px 18px",
-                  marginBottom: 16,
-                }}
-              >
-                <p style={{ fontSize: 15, color: C.dark, lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
-                  "{INSIGHTS[0]}"
-                </p>
-              </div>
-              <div style={{ display: "flex", gap: 10 }}>
-                <button
-                  onClick={() => setSavedInsight(!savedInsight)}
-                  style={{
-                    flex: 1,
-                    padding: "9px 16px",
-                    borderRadius: 8,
-                    border: `1.5px solid ${savedInsight ? C.primary : C.line}`,
-                    background: savedInsight ? C.primary : "transparent",
-                    color: savedInsight ? C.white : C.text,
-                    cursor: "pointer",
-                    fontFamily: font.body,
-                    fontSize: 13,
-                    fontWeight: 600,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 6,
-                  }}
-                >
-                  <Bookmark size={14} />
-                  {savedInsight ? "Saved" : "Save"}
-                </button>
-                <button
-                  style={{
-                    flex: 1,
-                    padding: "9px 16px",
-                    borderRadius: 8,
-                    border: `1.5px solid ${C.accent}`,
-                    background: C.accent,
-                    color: C.primary,
-                    cursor: "pointer",
-                    fontFamily: font.body,
-                    fontSize: 13,
-                    fontWeight: 700,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 6,
-                  }}
-                >
-                  <Heart size={14} />
-                  Like
-                </button>
-              </div>
-            </div>
-
-            {/* Active Contributions */}
-            <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
-              <SectionLabel>Your Active Contributions</SectionLabel>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
-                {contributions.map((item, i) => (
-                  <div
-                    key={i}
-                    onClick={() =>
-                      setContributions((prev) => prev.map((c, j) => (j === i ? { ...c, done: !c.done } : c)))
-                    }
-                    style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
-                  >
-                    <div
-                      style={{
-                        width: 20,
-                        height: 20,
-                        borderRadius: 4,
-                        border: `1.5px solid ${item.done ? C.primary : C.line}`,
-                        background: item.done ? C.primary : "transparent",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        transition: "all 0.2s",
-                      }}
-                    >
-                      {item.done && <Check size={11} color={C.white} strokeWidth={3} />}
-                    </div>
-                    <span
-                      style={{
-                        fontSize: 13,
-                        color: item.done ? C.muted : C.dark,
-                        textDecoration: item.done ? "line-through" : "none",
-                        transition: "all 0.2s",
-                      }}
-                    >
-                      {item.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <button
-                style={{
-                  width: "100%",
-                  padding: "9px",
-                  borderRadius: 8,
-                  border: `1.5px solid ${C.primary}`,
-                  background: "transparent",
-                  color: C.primary,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: 600,
-                }}
-              >
-                Save Progress
-              </button>
-            </div>
-
-            {/* This Week's Impact */}
-            <div
-              style={{
-                background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
-                borderRadius: 16,
-                padding: 24,
-                boxShadow: C.cardShadow,
-                flex: 1,
-              }}
-            >
-              <SectionLabel children={<span style={{ color: "rgba(255,255,255,0.5)" }}>This Week's Impact</span>} />
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {[
-                  { val: "3", label: "Discussions joined", delta: "+1 from last week" },
-                  { val: "1", label: "Insights submitted", delta: "On track" },
-                  { val: "12", label: "Community upvotes received", delta: "+4 from last week" },
-                ].map((s, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      paddingBottom: i < 2 ? 14 : 0,
-                      borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.08)" : "none",
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: 22,
-                          fontWeight: 800,
-                          color: C.accent,
-                          fontFamily: font.display,
-                          lineHeight: 1,
-                        }}
-                      >
-                        {s.val}
-                      </div>
-                      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>{s.label}</div>
-                    </div>
-                    <span
-                      style={{
-                        fontSize: 11,
-                        color: s.delta.startsWith("+") ? C.accent : "rgba(255,255,255,0.35)",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {s.delta}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* CENTER COLUMN */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            {/* Progress Tracker */}
-            <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
-              <SectionLabel>Community Journey</SectionLabel>
-              <div style={{ marginBottom: 20 }}>
-                <StepTracker steps={JOURNEY_STEPS} current={user.journey} />
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                <span style={{ fontSize: 13, color: C.text, fontWeight: 600 }}>Progress to Leader</span>
-                <span style={{ fontSize: 13, color: C.primary, fontWeight: 700 }}>2,840 / 5,000 pts</span>
-              </div>
-              <ProgressBar value={56.8} />
-              <p style={{ fontSize: 12, color: C.muted, marginTop: 10 }}>
-                2,160 points needed to reach Leader status. Answer 3 more questions to earn a milestone bonus.
-              </p>
-            </div>
-
-            {/* Weekly Ghana Briefing */}
-            <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow, flex: 1 }}>
-              <div
-                style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}
-              >
-                <SectionLabel>Weekly Ghana Briefing</SectionLabel>
-                <span style={{ fontSize: 10, fontWeight: 600, color: C.muted, letterSpacing: "0.5px" }}>
-                  Mar 3 – 7, 2026
-                </span>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 2, overflowY: "auto", maxHeight: 320 }}>
-                {[
-                  {
-                    tag: "Policy",
-                    tagColor: "#2C5F8A",
-                    headline: "Ghana's 2026 Budget passes second reading — GH₵8.9B directed to infrastructure & energy",
-                    signal: "↑ High relevance to Infrastructure, Energy sectors",
-                  },
-                  {
-                    tag: "Agriculture",
-                    tagColor: C.primary,
-                    headline: "MoFA launches emergency maize storage programme across 6 northern regions",
-                    signal: "↑ Aligns with BRIDGE post-harvest loss thesis",
-                  },
-                  {
-                    tag: "Finance",
-                    tagColor: "#7B5EA7",
-                    headline: "Bank of Ghana holds policy rate at 27% — fintech lending volumes rise 18% QoQ",
-                    signal: "→ Watch: financial inclusion access gap widening",
-                  },
-                  {
-                    tag: "Technology",
-                    tagColor: "#C07A2A",
-                    headline: "GhanaPostGPS integration with mobile money platforms goes live in 12 districts",
-                    signal: "↑ Signals: logistics & last-mile delivery opportunity",
-                  },
-                  {
-                    tag: "Health",
-                    tagColor: "#B04040",
-                    headline: "NHIA expands capitation coverage — 340,000 new beneficiaries enrolled in Q1",
-                    signal: "↑ CHW deployment pipeline accelerating",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      padding: "12px 0",
-                      borderBottom: i < 4 ? `1px solid ${C.line}` : "none",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
-                      <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          letterSpacing: "0.8px",
-                          textTransform: "uppercase",
-                          color: item.tagColor,
-                          background: item.tagColor + "14",
-                          padding: "2px 8px",
-                          borderRadius: 20,
-                        }}
-                      >
-                        {item.tag}
-                      </span>
-                    </div>
-                    <p style={{ fontSize: 13, fontWeight: 600, color: C.dark, margin: "0 0 4px", lineHeight: 1.4 }}>
-                      {item.headline}
-                    </p>
-                    <p style={{ fontSize: 11, color: C.muted, margin: 0, fontStyle: "italic" }}>{item.signal}</p>
-                  </div>
-                ))}
-              </div>
-              <button
-                style={{
-                  marginTop: 14,
-                  width: "100%",
-                  padding: "9px",
-                  borderRadius: 8,
-                  border: `1.5px solid ${C.line}`,
-                  background: "transparent",
-                  color: C.primary,
-                  fontFamily: font.body,
-                  fontSize: 12,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
-                }}
-              >
-                <BookOpen size={13} /> View Full Briefing
-              </button>
-            </div>
-          </div>
-
-          {/* RIGHT SIDEBAR */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            {/* Community Feed */}
-            <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
-              <SectionLabel>Community Feed</SectionLabel>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: 220, overflowY: "auto" }}>
-                {FEED_ITEMS.map((item) => (
-                  <div key={item.id} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                    <Avatar initials={item.avatar} size={28} />
-                    <div style={{ flex: 1 }}>
-                      <p style={{ margin: 0, fontSize: 12, color: C.dark, lineHeight: 1.4 }}>
-                        <strong>{item.name}</strong> {item.action}{" "}
-                        <span style={{ color: C.primary, fontWeight: 600 }}>{item.subject}</span>
-                      </p>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 4 }}>
-                        <span style={{ fontSize: 10, color: C.muted }}>{item.time}</span>
-                        <button
-                          style={{
-                            background: "none",
-                            border: "none",
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 3,
-                            padding: 0,
-                          }}
-                        >
-                          <ThumbsUp size={10} color={C.muted} />
-                          <span style={{ fontSize: 10, color: C.muted }}>{item.likes}</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Take a Note */}
-            <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
-              <SectionLabel>Quick Note</SectionLabel>
-              <textarea
-                value={noteText}
-                onChange={(e) => {
-                  setNoteText(e.target.value);
-                  setNoteSaved(false);
-                }}
-                placeholder="Capture an idea, observation, or question..."
-                style={{
-                  width: "100%",
-                  minHeight: 80,
-                  resize: "none",
-                  border: `1.5px solid ${C.line}`,
-                  borderRadius: 10,
-                  padding: "10px 12px",
-                  fontFamily: font.body,
-                  fontSize: 12,
-                  color: C.dark,
-                  boxSizing: "border-box",
-                  outline: "none",
-                  lineHeight: 1.5,
-                }}
-                onFocus={(e) => (e.target.style.borderColor = C.primary)}
-                onBlur={(e) => (e.target.style.borderColor = C.line)}
-              />
-              <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
-                <button
-                  onClick={() => setNoteSaved(true)}
-                  style={{
-                    flex: 1,
-                    padding: "7px",
-                    borderRadius: 8,
-                    border: `1.5px solid ${noteSaved ? C.primary : C.line}`,
-                    background: noteSaved ? C.primary : "transparent",
-                    color: noteSaved ? C.white : C.text,
-                    cursor: "pointer",
-                    fontFamily: font.body,
-                    fontSize: 12,
-                    fontWeight: 600,
-                  }}
-                >
-                  {noteSaved ? "✓ Saved" : "Save"}
-                </button>
-                <button
-                  style={{
-                    flex: 1,
-                    padding: "7px",
-                    borderRadius: 8,
-                    border: `1.5px solid ${C.accent}`,
-                    background: C.accent,
-                    color: C.primary,
-                    cursor: "pointer",
-                    fontFamily: font.body,
-                    fontSize: 12,
-                    fontWeight: 600,
-                  }}
-                >
-                  Share
-                </button>
-              </div>
-            </div>
-
-            {/* Top Contributors */}
-            <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
-              <SectionLabel>Top Contributors Today</SectionLabel>
-              {MEMBERS.slice(0, 3).map((m, i) => (
-                <div
-                  key={m.id}
-                  style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: i < 2 ? 12 : 0 }}
-                >
-                  <span style={{ fontSize: 16 }}>{["🥇", "🥈", "🥉"][i]}</span>
-                  <Avatar initials={m.avatar} size={28} />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
-                    <div style={{ fontSize: 10, color: C.muted }}>{m.sector}</div>
-                  </div>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ── GOALS SECTION ── */}
-        <section
-          style={{ background: C.white, borderRadius: 20, padding: 32, boxShadow: C.cardShadow, marginBottom: 28 }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-            <div>
-              <SectionLabel>Goals & Milestones</SectionLabel>
-              <h2
-                style={{
-                  fontFamily: font.display,
-                  fontSize: 24,
-                  fontWeight: 700,
-                  color: C.primary,
-                  margin: 0,
-                  letterSpacing: "-0.3px",
-                }}
-              >
-                Your Contribution <span style={{ color: C.accent }}>Roadmap</span>
-              </h2>
-            </div>
-            <button
-              onClick={() => setShowGoalModal(true)}
-              style={{
-                padding: "10px 20px",
-                borderRadius: 20,
-                border: "none",
-                cursor: "pointer",
-                background: C.primary,
-                color: C.white,
-                fontFamily: font.body,
-                fontSize: 13,
-                fontWeight: 700,
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
-              <Plus size={14} /> New Goal
-            </button>
-          </div>
-
-          {/* Tabs */}
-          <div
-            style={{ display: "flex", gap: 4, marginBottom: 24, borderBottom: `1px solid ${C.line}`, paddingBottom: 1 }}
-          >
-            {["active", "inactive", "completed", "draft"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                style={{
-                  padding: "8px 20px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  background: "transparent",
-                  textTransform: "capitalize",
-                  color: activeTab === tab ? C.primary : C.muted,
-                  borderBottom: `2px solid ${activeTab === tab ? C.primary : "transparent"}`,
-                  transition: "all 0.2s",
-                }}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-
-          {activeTab === "active" ? (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-              {GOALS.map((goal) => (
-                <div
-                  key={goal.id}
-                  style={{
-                    border: `1.5px solid ${C.line}`,
-                    borderRadius: 14,
-                    padding: 20,
-                    transition: "border-color 0.2s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.primary)}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      marginBottom: 12,
-                    }}
-                  >
-                    <div>
-                      <Pill color={C.primary} small border>
-                        {goal.sector}
-                      </Pill>
-                      <h3
-                        style={{
-                          fontFamily: font.display,
-                          fontSize: 15,
-                          fontWeight: 700,
-                          color: C.dark,
-                          margin: "8px 0 4px",
-                          lineHeight: 1.3,
-                        }}
-                      >
-                        {goal.title}
-                      </h3>
-                      <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
-                        <Calendar size={11} />
-                        <span>{goal.deadline}</span>
-                        <span style={{ color: C.accent, fontWeight: 700 }}>· {goal.daysLeft} days left</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <ProgressBar value={goal.progress} />
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginTop: 6,
-                      fontSize: 11,
-                      color: C.muted,
-                    }}
-                  >
-                    <span>
-                      {goal.steps.filter((s) => s.done).length}/{goal.steps.length} steps
-                    </span>
-                    <span style={{ fontWeight: 700, color: C.primary }}>{goal.progress}%</span>
-                  </div>
-
-                  {/* Expandable Steps */}
-                  <button
-                    onClick={() => setExpandedGoal(expandedGoal === goal.id ? null : goal.id)}
-                    style={{
-                      marginTop: 12,
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 4,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: C.primary,
-                      padding: 0,
-                    }}
-                  >
-                    {expandedGoal === goal.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                    {expandedGoal === goal.id ? "Hide" : "View"} Micro-Steps
-                  </button>
-
-                  {expandedGoal === goal.id && (
-                    <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
-                      {goal.steps.map((step, i) => (
-                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <div
-                            style={{
-                              width: 16,
-                              height: 16,
-                              borderRadius: 3,
-                              border: `1.5px solid ${step.done ? C.primary : C.line}`,
-                              background: step.done ? C.primary : "transparent",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              flexShrink: 0,
-                            }}
-                          >
-                            {step.done && <Check size={9} color={C.white} strokeWidth={3} />}
-                          </div>
-                          <span
-                            style={{
-                              fontSize: 12,
-                              color: step.done ? C.muted : C.dark,
-                              textDecoration: step.done ? "line-through" : "none",
-                            }}
-                          >
-                            {step.label}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div style={{ textAlign: "center", padding: "48px 0" }}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>🌱</div>
-              <h3 style={{ fontFamily: font.display, fontSize: 20, color: C.primary, margin: "0 0 8px" }}>
-                No {activeTab} goals yet
-              </h3>
-              <p style={{ color: C.muted, fontSize: 14, margin: "0 0 24px" }}>
-                Start contributing and reach the BRIDGE Champion milestone
-              </p>
-              <button
-                onClick={() => setShowGoalModal(true)}
-                style={{
-                  padding: "12px 28px",
-                  borderRadius: 20,
-                  border: `2px solid ${C.primary}`,
-                  background: "transparent",
-                  color: C.primary,
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-                <Plus size={14} /> Create Goal
-              </button>
-            </div>
-          )}
-        </section>
-        </>)}
-
-        {/* ══ FORUM PAGE ══ */}
-        {activePage === "Forum" && (
-        <section style={{ background: C.white, borderRadius: 20, overflow: "hidden", boxShadow: C.cardShadow }}>
-          <div
-            style={{
-              padding: "28px 32px 20px",
-              borderBottom: `1px solid ${C.line}`,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <SectionLabel>Discussion Board</SectionLabel>
-              <h2
-                style={{
-                  fontFamily: font.display,
-                  fontSize: 24,
-                  fontWeight: 700,
-                  color: C.primary,
-                  margin: 0,
-                  letterSpacing: "-0.3px",
-                }}
-              >
-                Sector <span style={{ color: C.accent }}>Q&A Forum</span>
-              </h2>
-            </div>
-            <button
-              onClick={() => setShowQuestionModal(true)}
-              style={{
-                padding: "10px 20px",
-                borderRadius: 20,
-                border: "none",
-                cursor: "pointer",
-                background: C.accent,
-                color: C.primary,
-                fontFamily: font.body,
-                fontSize: 13,
-                fontWeight: 700,
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
-              <Plus size={14} /> Ask a Question
-            </button>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "200px 1fr 240px" }}>
-            {/* Left Nav */}
-            <div style={{ borderRight: `1px solid ${C.line}`, padding: "20px 16px" }}>
-              {[
-                { icon: <Home size={14} />, label: "Home" },
-                { icon: <HelpCircle size={14} />, label: "Questions" },
-                { icon: <Star size={14} />, label: "Most Answered" },
-                { icon: <BarChart2 size={14} />, label: "Polls" },
-                { icon: <Users size={14} />, label: "Groups" },
-                { icon: <Tag size={14} />, label: "Tags" },
-                { icon: <Globe size={14} />, label: "Sectors" },
-                { icon: <Award size={14} />, label: "Badges" },
-                { icon: <Users size={14} />, label: "Members" },
-              ].map((item) => (
-                <button
-                  key={item.label}
-                  onClick={() => setForumSection(item.label)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    width: "100%",
-                    padding: "8px 12px",
-                    borderRadius: 8,
-                    border: "none",
-                    cursor: "pointer",
-                    background: forumSection === item.label ? `${C.primary}12` : "transparent",
-                    color: forumSection === item.label ? C.primary : C.muted,
-                    fontFamily: font.body,
-                    fontSize: 13,
-                    fontWeight: forumSection === item.label ? 600 : 400,
-                    textAlign: "left",
-                    marginBottom: 2,
-                  }}
-                >
-                  {item.icon}
-                  {item.label}
-                </button>
-              ))}
-
-              {/* Categories */}
-              <div style={{ marginTop: 20 }}>
-                <div
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    letterSpacing: "1.5px",
-                    color: C.muted,
-                    textTransform: "uppercase",
-                    padding: "4px 12px",
-                    marginBottom: 8,
-                  }}
-                >
-                  Sectors
-                </div>
-                {CATEGORIES.slice(0, 6).map((cat) => (
-                  <button
-                    key={cat.name}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      width: "100%",
-                      padding: "6px 12px",
-                      border: "none",
-                      cursor: "pointer",
-                      background: "transparent",
-                      color: C.text,
-                      fontFamily: font.body,
-                      fontSize: 12,
-                      textAlign: "left",
-                      borderRadius: 6,
-                    }}
-                  >
-                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <span style={{ color: C.primary }}>{cat.icon}</span>
-                      {cat.name}
-                    </span>
-                    <span
-                      style={{ fontSize: 11, color: C.muted, background: C.bg, padding: "1px 6px", borderRadius: 10 }}
-                    >
-                      {cat.count}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Main Feed — switches by forumSection */}
-            <div style={{ padding: "20px 24px" }}>
-              {forumSection === "Home" && (
-                // ── FORUM HOME: existing Q&A feed ──────────────────
-                <>
-
-              {/* Search */}
-              <div style={{ position: "relative", marginBottom: 16 }}>
-                <Search
-                  size={15}
-                  style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: C.muted }}
-                />
-                <input
-                  placeholder="Have a question? Ask or enter a keyword..."
-                  style={{
-                    width: "100%",
-                    padding: "10px 14px 10px 40px",
-                    borderRadius: 10,
-                    border: `1.5px solid ${C.line}`,
-                    fontFamily: font.body,
-                    fontSize: 13,
-                    outline: "none",
-                    boxSizing: "border-box",
-                    background: C.bg,
-                    color: C.dark,
-                  }}
-                  onFocus={(e) => (e.target.style.borderColor = C.primary)}
-                  onBlur={(e) => (e.target.style.borderColor = C.line)}
-                />
-              </div>
-
-              {/* Filter Tabs */}
-              <div style={{ display: "flex", gap: 4, marginBottom: 16 }}>
-                {["Recent", "Most Answered", "Unanswered", "Featured"].map((f) => (
-                  <button
-                    key={f}
-                    onClick={() => setForumFilter(f)}
-                    style={{
-                      padding: "6px 14px",
-                      borderRadius: 20,
-                      border: `1.5px solid ${forumFilter === f ? C.primary : C.line}`,
-                      background: forumFilter === f ? C.primary : "transparent",
-                      color: forumFilter === f ? C.white : C.muted,
-                      fontFamily: font.body,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      cursor: "pointer",
-                    }}
-                  >
-                    {f}
-                  </button>
-                ))}
-              </div>
-
-              {/* Questions */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {questions.map((q) => (
-                  <div
-                    key={q.id}
-                    style={{
-                      border: `1.5px solid ${C.line}`,
-                      borderRadius: 14,
-                      padding: 20,
-                      transition: "border-color 0.2s, box-shadow 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = C.primary;
-                      e.currentTarget.style.boxShadow = C.cardShadow;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = C.line;
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  >
-                    <div style={{ display: "flex", gap: 12 }}>
-                      {/* Vote */}
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          gap: 4,
-                          flexShrink: 0,
-                        }}
-                      >
-                        <button
-                          onClick={() => handleVote(q.id, "up")}
-                          style={{
-                            background: q.userVote === "up" ? C.primary : C.bg,
-                            border: `1.5px solid ${q.userVote === "up" ? C.primary : C.line}`,
-                            borderRadius: 6,
-                            width: 28,
-                            height: 28,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <ThumbsUp size={12} color={q.userVote === "up" ? C.white : C.muted} />
-                        </button>
-                        <span style={{ fontSize: 13, fontWeight: 700, color: C.primary }}>{q.votes}</span>
-                        <button
-                          onClick={() => handleVote(q.id, "down")}
-                          style={{
-                            background: q.userVote === "down" ? "#e74c3c" : C.bg,
-                            border: `1.5px solid ${q.userVote === "down" ? "#e74c3c" : C.line}`,
-                            borderRadius: 6,
-                            width: 28,
-                            height: 28,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <ThumbsDown size={12} color={q.userVote === "down" ? C.white : C.muted} />
-                        </button>
-                      </div>
-
-                      <div style={{ flex: 1 }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                          <Avatar initials={q.avatar} size={24} />
-                          <span style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{q.author}</span>
-                          <span style={{ fontSize: 11, color: C.muted }}>· Asked {q.time}</span>
-                          <span style={{ fontSize: 11, color: C.muted }}>· {q.views} views</span>
-                          <Pill color={C.primary} small>
-                            {q.tag}
-                          </Pill>
-                          {q.pinned && (
-                            <Pill color="#D4AF37" bg="#FFF8E7" small border={false}>
-                              📌 Pinned
-                            </Pill>
-                          )}
-                        </div>
-
-                        <h3
-                          style={{ fontSize: 14, fontWeight: 700, color: C.dark, margin: "0 0 6px", lineHeight: 1.4 }}
-                        >
-                          {q.title}
-                        </h3>
-                        <p style={{ fontSize: 12, color: C.muted, margin: "0 0 12px", lineHeight: 1.5 }}>{q.preview}</p>
-
-                        <div style={{ display: "flex", gap: 8 }}>
-                          <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
-                          >
-                            <MessageSquare size={11} />
-                            {q.answers} Answers
-                          </button>
-                          <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
-                          >
-                            <Bookmark size={11} />
-                            Follow
-                          </button>
-                          <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
-                          >
-                            <Share2 size={11} />
-                            Share
-                          </button>
-                          <button
-                            style={{
-                              marginLeft: "auto",
-                              padding: "5px 14px",
-                              borderRadius: 6,
-                              border: `1.5px solid ${C.accent}`,
-                              background: C.accent,
-                              cursor: "pointer",
-                              fontSize: 11,
-                              fontWeight: 700,
-                              color: C.primary,
-                              fontFamily: font.body,
-                            }}
-                          >
-                            Answer
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              </>)}
-              {forumSection === "Questions" && <Questions C={C} font={font} />}
-              {forumSection === "Most Answered" && <MostAnswered C={C} font={font} />}
-              {forumSection === "Polls" && <Polls C={C} font={font} />}
-              {forumSection === "Groups" && <Groups C={C} font={font} />}
-              {forumSection === "Tags" && <Tags C={C} font={font} />}
-              {forumSection === "Sectors" && <ForumSectors C={C} font={font} />}
-              {forumSection === "Badges" && <Badges C={C} font={font} />}
-              {forumSection === "Members" && <ForumMembers C={C} font={font} />}
-            </div>
-
-            {/* Right Sidebar */}
-            <div style={{ borderLeft: `1px solid ${C.line}`, padding: "20px 16px" }}>
-              <SectionLabel>All Sectors</SectionLabel>
-              {CATEGORIES.map((cat) => (
-                <div
-                  key={cat.name}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "6px 0",
-                    borderBottom: `1px solid ${C.line}08`,
-                  }}
-                >
-                  <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.text }}>
-                    <span style={{ color: C.primary }}>{cat.icon}</span>
-                    {cat.name}
-                  </span>
-                  <span style={{ fontSize: 11, color: C.muted }}>{cat.count}</span>
-                </div>
-              ))}
-
-              <div style={{ marginTop: 24 }}>
-                <SectionLabel>Top Members</SectionLabel>
-                {MEMBERS.map((m, i) => (
-                  <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: C.muted, minWidth: 14 }}>#{i + 1}</span>
-                    <Avatar initials={m.avatar} size={24} />
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
-                      <div style={{ fontSize: 10, color: C.muted }}>{m.role}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
         )}
-
-        {/* ══ MEMBERS PAGE ══ */}
-        {activePage === "Members" && <MembersPage C={C} font={font} />}
-
-        {/* ══ RESOURCES PAGE ══ */}
-        {activePage === "Resources" && <CommunityResourcesPage C={C} font={font} />}
-
+        {currentPage === "forum" && (
+          <ForumPage
+            questions={questions}
+            setQuestions={setQuestions}
+            setShowQuestionModal={setShowQuestionModal}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
+        {currentPage === "members" && <MembersPage />}
+        {currentPage === "resources" && <ResourcesPage />}
       </div>
 
       {/* ── CREATE GOAL MODAL ── */}
@@ -2362,13 +1177,7 @@ function CommunityDashboard({ memberType, onLogout }) {
           onClick={() => setShowGoalModal(false)}
         >
           <div
-            style={{
-              background: C.white,
-              borderRadius: 20,
-              padding: 36,
-              width: 520,
-              boxShadow: C.deepShadow,
-            }}
+            style={{ background: C.white, borderRadius: 20, padding: 36, width: 520, boxShadow: C.deepShadow }}
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
@@ -2477,13 +1286,7 @@ function CommunityDashboard({ memberType, onLogout }) {
           onClick={() => setShowQuestionModal(false)}
         >
           <div
-            style={{
-              background: C.white,
-              borderRadius: 20,
-              padding: 36,
-              width: 540,
-              boxShadow: C.deepShadow,
-            }}
+            style={{ background: C.white, borderRadius: 20, padding: 36, width: 540, boxShadow: C.deepShadow }}
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
@@ -2552,7 +1355,6 @@ function CommunityDashboard({ memberType, onLogout }) {
                       cursor: "pointer",
                       fontFamily: font.body,
                       fontSize: 12,
-                      fontWeight: 500,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = C.primary;
@@ -2618,9 +1420,2109 @@ function CommunityDashboard({ memberType, onLogout }) {
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: ${C.line}; border-radius: 2px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
     </div>
+  );
+}
+
+// ─── FORUM PAGE ────────────────────────────────────────────────
+function ForumPage({ questions, setQuestions, setShowQuestionModal, setCurrentPage }) {
+  const [forumView, setForumView] = useState("Questions");
+  const [forumFilter, setForumFilter] = useState("Recent");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const FORUM_NAV = [
+    { icon: <Home size={14} />, label: "Home" },
+    { icon: <HelpCircle size={14} />, label: "Questions" },
+    { icon: <Star size={14} />, label: "Most Answered" },
+    { icon: <BarChart2 size={14} />, label: "Polls" },
+    { icon: <Users size={14} />, label: "Groups" },
+    { icon: <Tag size={14} />, label: "Tags" },
+    { icon: <Globe size={14} />, label: "Sectors" },
+    { icon: <Award size={14} />, label: "Badges" },
+    { icon: <Users size={14} />, label: "Members" },
+  ];
+
+  const handleVote = (qId, dir) => {
+    setQuestions((prev) =>
+      prev.map((q) => {
+        if (q.id !== qId) return q;
+        if (q.userVote === dir) return { ...q, votes: q.votes - 1, userVote: null };
+        const delta = q.userVote ? 2 : 1;
+        return { ...q, votes: q.votes + (dir === "up" ? delta : -delta), userVote: dir };
+      }),
+    );
+  };
+
+  const sortedQs = forumView === "Most Answered" ? [...questions].sort((a, b) => b.answers - a.answers) : questions;
+
+  const filteredQs = searchQuery
+    ? sortedQs.filter((q) => q.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    : sortedQs;
+
+  return (
+    <div style={{ background: C.white, borderRadius: 20, overflow: "hidden", boxShadow: C.cardShadow }}>
+      {/* Header */}
+      <div
+        style={{
+          padding: "28px 32px 20px",
+          borderBottom: `1px solid ${C.line}`,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <SectionLabel>Discussion Board</SectionLabel>
+          <h2
+            style={{
+              fontFamily: font.display,
+              fontSize: 28,
+              fontWeight: 700,
+              color: C.primary,
+              margin: 0,
+              letterSpacing: "-0.3px",
+            }}
+          >
+            Sector <span style={{ color: C.accent }}>Q&A Forum</span>
+          </h2>
+        </div>
+        <button
+          onClick={() => setShowQuestionModal(true)}
+          style={{
+            padding: "11px 22px",
+            borderRadius: 20,
+            border: "none",
+            cursor: "pointer",
+            background: C.accent,
+            color: C.primary,
+            fontFamily: font.body,
+            fontSize: 13,
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+          }}
+        >
+          <Plus size={14} /> Ask a Question
+        </button>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "220px 1fr 260px" }}>
+        {/* Left Nav */}
+        <div style={{ borderRight: `1px solid ${C.line}`, padding: "24px 16px" }}>
+          {FORUM_NAV.map((item) => {
+            const isActive = forumView === item.label;
+            const goesToMembers = item.label === "Members";
+            return (
+              <button
+                key={item.label}
+                onClick={() => (goesToMembers ? setCurrentPage("members") : setForumView(item.label))}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  width: "100%",
+                  padding: "9px 12px",
+                  borderRadius: 8,
+                  border: "none",
+                  cursor: "pointer",
+                  background: isActive ? `${C.primary}10` : "transparent",
+                  color: isActive ? C.primary : C.muted,
+                  fontFamily: font.body,
+                  fontSize: 13,
+                  fontWeight: isActive ? 700 : 400,
+                  textAlign: "left",
+                  marginBottom: 2,
+                  transition: "all 0.15s",
+                }}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            );
+          })}
+
+          <div style={{ marginTop: 24, borderTop: `1px solid ${C.line}`, paddingTop: 16 }}>
+            <div
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: "1.5px",
+                color: C.muted,
+                textTransform: "uppercase",
+                padding: "0 12px",
+                marginBottom: 10,
+              }}
+            >
+              Sectors
+            </div>
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.name}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  padding: "6px 12px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: "transparent",
+                  color: C.text,
+                  fontFamily: font.body,
+                  fontSize: 12,
+                  textAlign: "left",
+                  borderRadius: 6,
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = C.bg)}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ color: C.primary }}>{cat.icon}</span>
+                  {cat.name}
+                </span>
+                <span style={{ fontSize: 11, color: C.muted, background: C.bg, padding: "1px 6px", borderRadius: 10 }}>
+                  {cat.count}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div style={{ padding: "24px", minHeight: 600 }}>
+          {/* Search */}
+          <div style={{ position: "relative", marginBottom: 16 }}>
+            <Search
+              size={15}
+              style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+            />
+            <input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Have a question? Ask or enter a keyword..."
+              style={{
+                width: "100%",
+                padding: "11px 14px 11px 42px",
+                borderRadius: 10,
+                border: `1.5px solid ${C.line}`,
+                fontFamily: font.body,
+                fontSize: 13,
+                outline: "none",
+                boxSizing: "border-box",
+                background: C.bg,
+                color: C.dark,
+              }}
+              onFocus={(e) => (e.target.style.borderColor = C.primary)}
+              onBlur={(e) => (e.target.style.borderColor = C.line)}
+            />
+          </div>
+
+          {/* Sub-views */}
+          {(forumView === "Questions" || forumView === "Home" || forumView === "Most Answered") && (
+            <>
+              <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
+                {["Recent", "Most Answered", "Unanswered", "Featured"].map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setForumFilter(f)}
+                    style={{
+                      padding: "6px 14px",
+                      borderRadius: 20,
+                      border: `1.5px solid ${forumFilter === f ? C.primary : C.line}`,
+                      background: forumFilter === f ? C.primary : "transparent",
+                      color: forumFilter === f ? C.white : C.muted,
+                      fontFamily: font.body,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {f}
+                  </button>
+                ))}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {filteredQs.map((q) => (
+                  <div
+                    key={q.id}
+                    style={{
+                      border: `1.5px solid ${C.line}`,
+                      borderRadius: 14,
+                      padding: 20,
+                      transition: "border-color 0.2s, box-shadow 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = C.primary;
+                      e.currentTarget.style.boxShadow = C.cardShadow;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = C.line;
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  >
+                    <div style={{ display: "flex", gap: 12 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: 4,
+                          flexShrink: 0,
+                        }}
+                      >
+                        <button
+                          onClick={() => handleVote(q.id, "up")}
+                          style={{
+                            background: q.userVote === "up" ? C.primary : C.bg,
+                            border: `1.5px solid ${q.userVote === "up" ? C.primary : C.line}`,
+                            borderRadius: 6,
+                            width: 28,
+                            height: 28,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <ThumbsUp size={12} color={q.userVote === "up" ? C.white : C.muted} />
+                        </button>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: C.primary }}>{q.votes}</span>
+                        <button
+                          onClick={() => handleVote(q.id, "down")}
+                          style={{
+                            background: q.userVote === "down" ? "#e74c3c" : C.bg,
+                            border: `1.5px solid ${q.userVote === "down" ? "#e74c3c" : C.line}`,
+                            borderRadius: 6,
+                            width: 28,
+                            height: 28,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <ThumbsDown size={12} color={q.userVote === "down" ? C.white : C.muted} />
+                        </button>
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div
+                          style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}
+                        >
+                          <Avatar initials={q.avatar} size={24} />
+                          <span style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{q.author}</span>
+                          <span style={{ fontSize: 11, color: C.muted }}>· Asked {q.time}</span>
+                          <span style={{ fontSize: 11, color: C.muted }}>· {q.views} views</span>
+                          <Pill color={C.primary} small>
+                            {q.tag}
+                          </Pill>
+                          {q.pinned && (
+                            <Pill color="#D4AF37" bg="#FFF8E7" small border={false}>
+                              📌 Pinned
+                            </Pill>
+                          )}
+                        </div>
+                        <h3
+                          style={{ fontSize: 14, fontWeight: 700, color: C.dark, margin: "0 0 6px", lineHeight: 1.4 }}
+                        >
+                          {q.title}
+                        </h3>
+                        <p style={{ fontSize: 12, color: C.muted, margin: "0 0 12px", lineHeight: 1.5 }}>{q.preview}</p>
+                        <div style={{ display: "flex", gap: 8 }}>
+                          <button
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 4,
+                              padding: "5px 12px",
+                              borderRadius: 6,
+                              border: `1px solid ${C.line}`,
+                              background: "transparent",
+                              cursor: "pointer",
+                              fontSize: 11,
+                              color: C.muted,
+                              fontFamily: font.body,
+                            }}
+                          >
+                            <MessageSquare size={11} />
+                            {q.answers} Answers
+                          </button>
+                          <button
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 4,
+                              padding: "5px 12px",
+                              borderRadius: 6,
+                              border: `1px solid ${C.line}`,
+                              background: "transparent",
+                              cursor: "pointer",
+                              fontSize: 11,
+                              color: C.muted,
+                              fontFamily: font.body,
+                            }}
+                          >
+                            <Bookmark size={11} />
+                            Follow
+                          </button>
+                          <button
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 4,
+                              padding: "5px 12px",
+                              borderRadius: 6,
+                              border: `1px solid ${C.line}`,
+                              background: "transparent",
+                              cursor: "pointer",
+                              fontSize: 11,
+                              color: C.muted,
+                              fontFamily: font.body,
+                            }}
+                          >
+                            <Share2 size={11} />
+                            Share
+                          </button>
+                          <button
+                            style={{
+                              marginLeft: "auto",
+                              padding: "5px 14px",
+                              borderRadius: 6,
+                              border: `1.5px solid ${C.accent}`,
+                              background: C.accent,
+                              cursor: "pointer",
+                              fontSize: 11,
+                              fontWeight: 700,
+                              color: C.primary,
+                              fontFamily: font.body,
+                            }}
+                          >
+                            Answer
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {forumView === "Polls" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {[
+                {
+                  q: "Which sector should BRIDGE prioritize for its next flagship venture?",
+                  options: ["Agriculture", "Health Systems", "Energy", "Manufacturing"],
+                  votes: [42, 31, 18, 9],
+                },
+                {
+                  q: "What is the biggest barrier to financial inclusion for rural Ghanaians?",
+                  options: [
+                    "No mobile coverage",
+                    "Lack of ID documents",
+                    "Low digital literacy",
+                    "High transaction fees",
+                  ],
+                  votes: [28, 22, 35, 15],
+                },
+                {
+                  q: "Should BRIDGE publish quarterly sector performance reports publicly?",
+                  options: ["Yes — full transparency", "Yes — summary only", "No — members only", "No preference"],
+                  votes: [58, 24, 12, 6],
+                },
+              ].map((poll, pi) => {
+                const total = poll.votes.reduce((a, b) => a + b, 0);
+                return (
+                  <div key={pi} style={{ border: `1.5px solid ${C.line}`, borderRadius: 14, padding: 24 }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 700, color: C.dark, margin: "0 0 16px", lineHeight: 1.4 }}>
+                      {poll.q}
+                    </h3>
+                    {poll.options.map((opt, oi) => {
+                      const pct = Math.round((poll.votes[oi] / total) * 100);
+                      return (
+                        <div key={oi} style={{ marginBottom: 10 }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                            <span style={{ fontSize: 13, color: C.dark }}>{opt}</span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: C.primary }}>{pct}%</span>
+                          </div>
+                          <div style={{ height: 8, borderRadius: 6, background: C.line, overflow: "hidden" }}>
+                            <div
+                              style={{
+                                width: `${pct}%`,
+                                height: "100%",
+                                background: `linear-gradient(90deg, ${C.primary}, ${C.accent})`,
+                                borderRadius: 6,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                    <div style={{ marginTop: 12, fontSize: 12, color: C.muted }}>
+                      {total} votes · Closes Mar 14, 2026
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {forumView === "Groups" && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              {[
+                {
+                  name: "Kejetia Market Digitization",
+                  sector: "Infrastructure",
+                  members: 18,
+                  active: true,
+                  desc: "Coordinating Phase 2 of the digital payment rollout across 10,000+ stalls.",
+                },
+                {
+                  name: "Northern Corridor AgriFinance",
+                  sector: "Agriculture",
+                  members: 12,
+                  active: true,
+                  desc: "Designing cooperative financing models for smallholder farmers in Brong-Ahafo.",
+                },
+                {
+                  name: "TVET Skills Pipeline",
+                  sector: "Education",
+                  members: 9,
+                  active: false,
+                  desc: "Aligning TVET curriculum with BRIDGE manufacturing sector venture requirements.",
+                },
+                {
+                  name: "CHW Deployment Task Force",
+                  sector: "Health Systems",
+                  members: 14,
+                  active: true,
+                  desc: "Scaling community health worker programs across the UE Region.",
+                },
+                {
+                  name: "FinTech Innovation Lab",
+                  sector: "Technology",
+                  members: 22,
+                  active: true,
+                  desc: "Piloting mobile-first financial tools for unbanked populations.",
+                },
+                {
+                  name: "Renewable Energy Atlas",
+                  sector: "Energy",
+                  members: 7,
+                  active: false,
+                  desc: "Mapping off-grid solar opportunity zones across Ghana's rural districts.",
+                },
+              ].map((g, i) => (
+                <div
+                  key={i}
+                  style={{
+                    border: `1.5px solid ${C.line}`,
+                    borderRadius: 14,
+                    padding: 20,
+                    transition: "border-color 0.2s",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.primary)}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      marginBottom: 10,
+                    }}
+                  >
+                    <Pill color={C.primary} small border>
+                      {g.sector}
+                    </Pill>
+                    <span
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 700,
+                        color: g.active ? "#27AE60" : C.muted,
+                        background: g.active ? "#27AE6015" : C.bg,
+                        padding: "3px 8px",
+                        borderRadius: 20,
+                      }}
+                    >
+                      {g.active ? "● Active" : "○ Inactive"}
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: 14, fontWeight: 700, color: C.dark, margin: "0 0 8px" }}>{g.name}</h3>
+                  <p style={{ fontSize: 12, color: C.muted, margin: "0 0 14px", lineHeight: 1.5 }}>{g.desc}</p>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: 12, color: C.muted }}>
+                      <Users size={11} style={{ display: "inline", marginRight: 4 }} />
+                      {g.members} members
+                    </span>
+                    <button
+                      style={{
+                        padding: "5px 14px",
+                        borderRadius: 20,
+                        border: `1.5px solid ${C.primary}`,
+                        background: "transparent",
+                        color: C.primary,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        fontFamily: font.body,
+                      }}
+                    >
+                      Join
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {forumView === "Tags" && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              {[
+                { tag: "post-harvest-loss", count: 34 },
+                { tag: "kejetia-market", count: 28 },
+                { tag: "tvet-curriculum", count: 19 },
+                { tag: "chw-deployment", count: 22 },
+                { tag: "mobile-money", count: 41 },
+                { tag: "off-grid-solar", count: 15 },
+                { tag: "cooperative-finance", count: 27 },
+                { tag: "2026-budget", count: 33 },
+                { tag: "youth-employment", count: 18 },
+                { tag: "northern-corridor", count: 12 },
+                { tag: "fintech-pilot", count: 24 },
+                { tag: "agri-value-chain", count: 38 },
+                { tag: "housing-deficit", count: 16 },
+                { tag: "health-equity", count: 29 },
+                { tag: "digital-literacy", count: 21 },
+                { tag: "impact-score", count: 11 },
+                { tag: "bridge-ventures", count: 45 },
+                { tag: "ghanapostgps", count: 9 },
+              ].map((t, i) => (
+                <button
+                  key={i}
+                  style={{
+                    padding: "8px 16px",
+                    borderRadius: 20,
+                    border: `1.5px solid ${C.line}`,
+                    background: C.bg,
+                    fontFamily: font.body,
+                    fontSize: 13,
+                    color: C.text,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    transition: "all 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = C.accent;
+                    e.currentTarget.style.background = `${C.accent}15`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = C.line;
+                    e.currentTarget.style.background = C.bg;
+                  }}
+                >
+                  <Tag size={11} color={C.primary} />
+                  {t.tag}
+                  <span
+                    style={{
+                      fontSize: 11,
+                      color: C.muted,
+                      background: C.white,
+                      padding: "1px 6px",
+                      borderRadius: 10,
+                      border: `1px solid ${C.line}`,
+                    }}
+                  >
+                    ×{t.count}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {forumView === "Sectors" && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+              {CATEGORIES.map((cat, i) => (
+                <div
+                  key={i}
+                  style={{
+                    border: `1.5px solid ${C.line}`,
+                    borderRadius: 14,
+                    padding: 20,
+                    transition: "border-color 0.2s",
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.accent)}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
+                >
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 10,
+                      background: `${C.primary}12`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginBottom: 10,
+                      color: C.primary,
+                    }}
+                  >
+                    {cat.icon}
+                  </div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: C.dark }}>{cat.name}</div>
+                  <div style={{ fontSize: 12, color: C.muted, marginTop: 4 }}>{cat.count} discussions</div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {forumView === "Badges" && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+              {[
+                { name: "First Answer", icon: "🎯", desc: "Answered your first community question", earned: true },
+                {
+                  name: "Sector Expert",
+                  icon: "🏅",
+                  desc: "Top 5 contributor in your sector for 30 days",
+                  earned: true,
+                },
+                { name: "Champion", icon: "🏆", desc: "Reached Champion status (2,500+ points)", earned: true },
+                { name: "Insight Publisher", icon: "📊", desc: "Published 5+ sector analysis reports", earned: false },
+                {
+                  name: "Working Group Lead",
+                  icon: "👥",
+                  desc: "Led a BRIDGE working group to completion",
+                  earned: false,
+                },
+                {
+                  name: "Policy Watcher",
+                  icon: "📋",
+                  desc: "Flagged 10+ policy developments for the community",
+                  earned: false,
+                },
+                {
+                  name: "Bridge Builder",
+                  icon: "🌉",
+                  desc: "Connected 3+ members across different sectors",
+                  earned: false,
+                },
+                { name: "Leader", icon: "⭐", desc: "Reached Leader status (5,000+ points)", earned: false },
+                {
+                  name: "Ghana First",
+                  icon: "🇬🇭",
+                  desc: "Completed all 12 sector profiles in your dashboard",
+                  earned: false,
+                },
+              ].map((b, i) => (
+                <div
+                  key={i}
+                  style={{
+                    border: `1.5px solid ${b.earned ? C.primary : C.line}`,
+                    borderRadius: 14,
+                    padding: 20,
+                    opacity: b.earned ? 1 : 0.6,
+                    background: b.earned ? `${C.primary}06` : "transparent",
+                    transition: "all 0.2s",
+                  }}
+                >
+                  <div style={{ fontSize: 32, marginBottom: 10 }}>{b.icon}</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: b.earned ? C.primary : C.dark }}>{b.name}</div>
+                  <div style={{ fontSize: 12, color: C.muted, marginTop: 4, lineHeight: 1.4 }}>{b.desc}</div>
+                  {b.earned && (
+                    <div style={{ marginTop: 8, fontSize: 11, fontWeight: 700, color: "#27AE60" }}>✓ Earned</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Right Sidebar */}
+        <div style={{ borderLeft: `1px solid ${C.line}`, padding: "24px 16px" }}>
+          <SectionLabel>All Sectors</SectionLabel>
+          {CATEGORIES.map((cat) => (
+            <div
+              key={cat.name}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "6px 0",
+                borderBottom: `1px solid ${C.line}20`,
+              }}
+            >
+              <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.text }}>
+                <span style={{ color: C.primary }}>{cat.icon}</span>
+                {cat.name}
+              </span>
+              <span style={{ fontSize: 11, color: C.muted }}>{cat.count}</span>
+            </div>
+          ))}
+          <div style={{ marginTop: 24 }}>
+            <SectionLabel>Top Members</SectionLabel>
+            {MEMBERS.map((m, i) => (
+              <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: C.muted, minWidth: 16 }}>#{i + 1}</span>
+                <Avatar initials={m.avatar} size={28} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
+                  <div style={{ fontSize: 10, color: C.muted }}>{m.role}</div>
+                </div>
+                <span style={{ fontSize: 11, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── MEMBERS PAGE ──────────────────────────────────────────────
+const ALL_MEMBERS = [
+  {
+    id: 1,
+    name: "Abena Owusu",
+    role: "Infrastructure Advisor",
+    location: "Accra",
+    points: 2840,
+    badge: "Champion",
+    avatar: "AO",
+    sector: "Infrastructure",
+    type: "Premium",
+    joined: "Jan 2025",
+  },
+  {
+    id: 2,
+    name: "Kofi Mensah",
+    role: "AgriFinance Specialist",
+    location: "Kumasi",
+    points: 2210,
+    badge: "Contributor",
+    avatar: "KM",
+    sector: "Agriculture",
+    type: "Premium",
+    joined: "Mar 2025",
+  },
+  {
+    id: 3,
+    name: "Efua Asante",
+    role: "Health Systems Lead",
+    location: "Tamale",
+    points: 1990,
+    badge: "Contributor",
+    avatar: "EA",
+    sector: "Health Systems",
+    type: "Diaspora",
+    joined: "Feb 2025",
+  },
+  {
+    id: 4,
+    name: "Kwame Boateng",
+    role: "Tech Innovation Director",
+    location: "London",
+    points: 1750,
+    badge: "Newcomer",
+    avatar: "KB",
+    sector: "Technology",
+    type: "Diaspora",
+    joined: "Jun 2025",
+  },
+  {
+    id: 5,
+    name: "Ama Darko",
+    role: "Education Specialist",
+    location: "Cape Coast",
+    points: 1540,
+    badge: "Newcomer",
+    avatar: "AD",
+    sector: "Education",
+    type: "Premium",
+    joined: "Aug 2025",
+  },
+  {
+    id: 6,
+    name: "Fiifi Mensah",
+    role: "Energy Policy Analyst",
+    location: "Accra",
+    points: 1320,
+    badge: "Newcomer",
+    avatar: "FM",
+    sector: "Energy",
+    type: "Premium",
+    joined: "Sep 2025",
+  },
+  {
+    id: 7,
+    name: "Adwoa Boateng",
+    role: "Housing Finance Lead",
+    location: "Toronto",
+    points: 1180,
+    badge: "Newcomer",
+    avatar: "AB",
+    sector: "Housing",
+    type: "Diaspora",
+    joined: "Oct 2025",
+  },
+  {
+    id: 8,
+    name: "Nana Asare",
+    role: "Transport & Logistics Advisor",
+    location: "Takoradi",
+    points: 980,
+    badge: "Newcomer",
+    avatar: "NA",
+    sector: "Transportation",
+    type: "Premium",
+    joined: "Nov 2025",
+  },
+];
+
+function MembersPage() {
+  const [search, setSearch] = useState("");
+  const [filterSector, setFilterSector] = useState("All");
+  const [filterType, setFilterType] = useState("All");
+  const [filterBadge, setFilterBadge] = useState("All");
+
+  const filtered = ALL_MEMBERS.filter((m) => {
+    const matchSearch =
+      m.name.toLowerCase().includes(search.toLowerCase()) || m.role.toLowerCase().includes(search.toLowerCase());
+    const matchSector = filterSector === "All" || m.sector === filterSector;
+    const matchType = filterType === "All" || m.type === filterType;
+    const matchBadge = filterBadge === "All" || m.badge === filterBadge;
+    return matchSearch && matchSector && matchType && matchBadge;
+  });
+
+  const badgeColor = { Champion: C.accent, Contributor: "#2C5F8A", Newcomer: "#888" };
+
+  return (
+    <div>
+      {/* Header */}
+      <div style={{ marginBottom: 28 }}>
+        <SectionLabel>Community</SectionLabel>
+        <h2
+          style={{
+            fontFamily: font.display,
+            fontSize: 32,
+            fontWeight: 700,
+            color: C.primary,
+            margin: "0 0 8px",
+            letterSpacing: "-0.5px",
+          }}
+        >
+          Member <span style={{ color: C.accent }}>Directory</span>
+        </h2>
+        <p style={{ fontSize: 15, color: C.muted, margin: 0 }}>
+          {ALL_MEMBERS.length} members across Ghana and the diaspora
+        </p>
+      </div>
+
+      {/* Filters */}
+      <div
+        style={{
+          background: C.white,
+          borderRadius: 16,
+          padding: 20,
+          boxShadow: C.cardShadow,
+          marginBottom: 24,
+          display: "flex",
+          gap: 16,
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <div style={{ position: "relative", flex: 1, minWidth: 200 }}>
+          <Search
+            size={14}
+            style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+          />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by name or role..."
+            style={{
+              width: "100%",
+              padding: "9px 12px 9px 36px",
+              borderRadius: 10,
+              border: `1.5px solid ${C.line}`,
+              fontFamily: font.body,
+              fontSize: 13,
+              outline: "none",
+              boxSizing: "border-box",
+            }}
+            onFocus={(e) => (e.target.style.borderColor = C.primary)}
+            onBlur={(e) => (e.target.style.borderColor = C.line)}
+          />
+        </div>
+        {[
+          { label: "Type", val: filterType, set: setFilterType, opts: ["All", "Premium", "Diaspora"] },
+          {
+            label: "Badge",
+            val: filterBadge,
+            set: setFilterBadge,
+            opts: ["All", "Champion", "Contributor", "Newcomer"],
+          },
+          { label: "Sector", val: filterSector, set: setFilterSector, opts: ["All", ...CATEGORIES.map((c) => c.name)] },
+        ].map((f) => (
+          <select
+            key={f.label}
+            value={f.val}
+            onChange={(e) => f.set(e.target.value)}
+            style={{
+              padding: "9px 14px",
+              borderRadius: 10,
+              border: `1.5px solid ${C.line}`,
+              fontFamily: font.body,
+              fontSize: 13,
+              color: C.text,
+              background: C.white,
+              cursor: "pointer",
+              outline: "none",
+            }}
+          >
+            {f.opts.map((o) => (
+              <option key={o}>{o}</option>
+            ))}
+          </select>
+        ))}
+        <span style={{ fontSize: 13, color: C.muted, marginLeft: "auto" }}>
+          {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+        </span>
+      </div>
+
+      {/* Stats Row */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 24 }}>
+        {[
+          { val: ALL_MEMBERS.length, label: "Total Members" },
+          { val: ALL_MEMBERS.filter((m) => m.type === "Diaspora").length, label: "Diaspora Network" },
+          { val: ALL_MEMBERS.filter((m) => m.badge === "Champion").length, label: "Champions" },
+          { val: [...new Set(ALL_MEMBERS.map((m) => m.sector))].length, label: "Sectors Represented" },
+        ].map((s) => (
+          <div
+            key={s.label}
+            style={{ background: C.white, borderRadius: 14, padding: "18px 20px", boxShadow: C.cardShadow }}
+          >
+            <div style={{ fontFamily: font.display, fontSize: 28, fontWeight: 800, color: C.primary }}>{s.val}</div>
+            <div style={{ fontSize: 12, color: C.muted, marginTop: 4 }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Member Grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        {filtered.map((m) => (
+          <div
+            key={m.id}
+            style={{
+              background: C.white,
+              borderRadius: 16,
+              padding: 24,
+              boxShadow: C.cardShadow,
+              border: `1.5px solid transparent`,
+              transition: "border-color 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.line)}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
+          >
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 16 }}>
+              <Avatar initials={m.avatar} size={48} />
+              <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>{m.name}</div>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: badgeColor[m.badge],
+                      background: badgeColor[m.badge] + "18",
+                      padding: "2px 8px",
+                      borderRadius: 20,
+                      letterSpacing: "0.5px",
+                    }}
+                  >
+                    {m.badge}
+                  </span>
+                </div>
+                <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{m.role}</div>
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                <MapPin size={11} color={C.primary} />
+                {m.location}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                <Briefcase size={11} color={C.primary} />
+                {m.sector}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                <Shield size={11} color={m.type === "Diaspora" ? "#2C5F8A" : C.primary} />
+                <span style={{ color: m.type === "Diaspora" ? "#2C5F8A" : C.primary, fontWeight: 600 }}>{m.type}</span>
+                <span>· Joined {m.joined}</span>
+              </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 13, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()} pts</span>
+              <button
+                style={{
+                  padding: "6px 16px",
+                  borderRadius: 20,
+                  border: `1.5px solid ${C.primary}`,
+                  background: "transparent",
+                  color: C.primary,
+                  fontSize: 12,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  fontFamily: font.body,
+                }}
+              >
+                View Profile
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── RESOURCES PAGE ────────────────────────────────────────────
+const RESOURCES_DATA = [
+  {
+    id: 1,
+    type: "Sector Analysis",
+    title: "Infrastructure & Basic Services — 2026 Sector Analysis",
+    sector: "Infrastructure",
+    date: "Feb 2026",
+    pages: 42,
+    featured: true,
+    desc: "Comprehensive analysis of Ghana's infrastructure gaps, BRIDGE venture pipeline, and policy alignment across roads, utilities, and digital infrastructure.",
+  },
+  {
+    id: 2,
+    type: "Strategy Brief",
+    title: "Agricultural Value Chain Transformation in the Northern Corridor",
+    sector: "Agriculture",
+    date: "Jan 2026",
+    pages: 28,
+    featured: true,
+    desc: "BRIDGE's strategic positioning in Ghana's agri-food system: post-harvest loss, cooperative financing, and the Ejura Agricultural Hub Business Plan.",
+  },
+  {
+    id: 3,
+    type: "Policy Alignment",
+    title: "2026 Budget — BRIDGE Strategic Alignment Report",
+    sector: "Policy",
+    date: "Feb 2026",
+    pages: 18,
+    featured: false,
+    desc: "How Ghana's 2026 budget GH₵8.9B infrastructure allocation aligns with BRIDGE sector priorities and creates actionable entry points.",
+  },
+  {
+    id: 4,
+    type: "Sector Analysis",
+    title: "Financial Inclusion: Closing the Access Gap in Rural Ghana",
+    sector: "Financial Inclusion",
+    date: "Dec 2025",
+    pages: 35,
+    featured: false,
+    desc: "Mobile money penetration, cooperative banking, and BRIDGE's financial inclusion venture pipeline targeting the unbanked bottom 30%.",
+  },
+  {
+    id: 5,
+    type: "Framework",
+    title: "BRIDGE Impact Assessment Framework v2",
+    sector: "Cross-Sector",
+    date: "Jan 2026",
+    pages: 22,
+    featured: false,
+    desc: "Methodology for scoring ventures across Peace & Prosperity Alignment, Strategic Fit, Feasibility, and Scalability dimensions.",
+  },
+  {
+    id: 6,
+    type: "Sector Analysis",
+    title: "Health Systems Capacity — CHW Deployment & Rural Reach",
+    sector: "Health Systems",
+    date: "Nov 2025",
+    pages: 31,
+    featured: false,
+    desc: "Community health worker program design, NHIA integration, and health equity metrics for Northern Corridor deployment.",
+  },
+  {
+    id: 7,
+    type: "Government Brief",
+    title: "Government Partnership Strategy — Key Ministries & Entry Points",
+    sector: "Policy",
+    date: "Jan 2026",
+    pages: 15,
+    featured: false,
+    desc: "Strategic engagement map across MoFA, MoH, MESTI, and other key government actors aligned with BRIDGE's sector priorities.",
+  },
+  {
+    id: 8,
+    type: "Sector Analysis",
+    title: "Technology & Innovation: Ghana's Digital Infrastructure Opportunity",
+    sector: "Technology",
+    date: "Dec 2025",
+    pages: 38,
+    featured: false,
+    desc: "GhanaPostGPS, mobile money ecosystems, and BRIDGE's tech venture pipeline — building Ghana's digital backbone.",
+  },
+];
+
+const TYPE_COLORS = {
+  "Sector Analysis": C.primary,
+  "Strategy Brief": "#7B5EA7",
+  "Policy Alignment": "#2C5F8A",
+  Framework: "#C07A2A",
+  "Government Brief": "#B04040",
+};
+
+function ResourcesPage() {
+  const [typeFilter, setTypeFilter] = useState("All");
+  const [search, setSearch] = useState("");
+
+  const types = ["All", ...new Set(RESOURCES_DATA.map((r) => r.type))];
+  const filtered = RESOURCES_DATA.filter((r) => {
+    const matchType = typeFilter === "All" || r.type === typeFilter;
+    const matchSearch =
+      r.title.toLowerCase().includes(search.toLowerCase()) || r.sector.toLowerCase().includes(search.toLowerCase());
+    return matchType && matchSearch;
+  });
+  const featured = filtered.filter((r) => r.featured);
+  const rest = filtered.filter((r) => !r.featured);
+
+  return (
+    <div>
+      <div style={{ marginBottom: 28 }}>
+        <SectionLabel>Knowledge Hub</SectionLabel>
+        <h2
+          style={{
+            fontFamily: font.display,
+            fontSize: 32,
+            fontWeight: 700,
+            color: C.primary,
+            margin: "0 0 8px",
+            letterSpacing: "-0.5px",
+          }}
+        >
+          BRIDGE <span style={{ color: C.accent }}>Resources</span>
+        </h2>
+        <p style={{ fontSize: 15, color: C.muted, margin: 0 }}>
+          Sector analyses, strategy briefs, frameworks, and policy documents
+        </p>
+      </div>
+
+      {/* Search + Filter */}
+      <div
+        style={{
+          background: C.white,
+          borderRadius: 16,
+          padding: 20,
+          boxShadow: C.cardShadow,
+          marginBottom: 24,
+          display: "flex",
+          gap: 12,
+          alignItems: "center",
+        }}
+      >
+        <div style={{ position: "relative", flex: 1 }}>
+          <Search
+            size={14}
+            style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+          />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search resources by title or sector..."
+            style={{
+              width: "100%",
+              padding: "9px 12px 9px 36px",
+              borderRadius: 10,
+              border: `1.5px solid ${C.line}`,
+              fontFamily: font.body,
+              fontSize: 13,
+              outline: "none",
+              boxSizing: "border-box",
+            }}
+            onFocus={(e) => (e.target.style.borderColor = C.primary)}
+            onBlur={(e) => (e.target.style.borderColor = C.line)}
+          />
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          {types.map((t) => (
+            <button
+              key={t}
+              onClick={() => setTypeFilter(t)}
+              style={{
+                padding: "8px 14px",
+                borderRadius: 20,
+                border: `1.5px solid ${typeFilter === t ? C.primary : C.line}`,
+                background: typeFilter === t ? C.primary : "transparent",
+                color: typeFilter === t ? C.white : C.muted,
+                fontFamily: font.body,
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Featured */}
+      {featured.length > 0 && (
+        <div style={{ marginBottom: 28 }}>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "1.5px",
+              color: C.muted,
+              textTransform: "uppercase",
+              marginBottom: 14,
+            }}
+          >
+            Featured
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            {featured.map((r) => (
+              <div
+                key={r.id}
+                style={{
+                  background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
+                  borderRadius: 16,
+                  padding: 28,
+                  cursor: "pointer",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    marginBottom: 14,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      letterSpacing: "1px",
+                      textTransform: "uppercase",
+                      color: C.accent,
+                      background: "rgba(184,217,53,0.15)",
+                      padding: "3px 10px",
+                      borderRadius: 20,
+                    }}
+                  >
+                    {r.type}
+                  </span>
+                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
+                    {r.pages}p · {r.date}
+                  </span>
+                </div>
+                <h3
+                  style={{
+                    fontFamily: font.display,
+                    fontSize: 17,
+                    fontWeight: 700,
+                    color: C.white,
+                    margin: "0 0 10px",
+                    lineHeight: 1.35,
+                  }}
+                >
+                  {r.title}
+                </h3>
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", margin: "0 0 20px", lineHeight: 1.5 }}>
+                  {r.desc}
+                </p>
+                <button
+                  style={{
+                    padding: "8px 18px",
+                    borderRadius: 20,
+                    border: `1.5px solid ${C.accent}`,
+                    background: "transparent",
+                    color: C.accent,
+                    fontSize: 12,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    fontFamily: font.body,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <BookOpen size={13} /> Read Report
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* All Resources */}
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "1.5px",
+          color: C.muted,
+          textTransform: "uppercase",
+          marginBottom: 14,
+        }}
+      >
+        {typeFilter === "All" ? "All Resources" : typeFilter} {filtered.length > 0 && `(${filtered.length})`}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {rest.map((r) => (
+          <div
+            key={r.id}
+            style={{
+              background: C.white,
+              borderRadius: 14,
+              padding: "20px 24px",
+              boxShadow: C.cardShadow,
+              display: "flex",
+              gap: 20,
+              alignItems: "flex-start",
+              border: `1.5px solid transparent`,
+              transition: "border-color 0.2s",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.line)}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
+          >
+            <div
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 10,
+                background: (TYPE_COLORS[r.type] || C.primary) + "14",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <BookOpen size={18} color={TYPE_COLORS[r.type] || C.primary} />
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    letterSpacing: "0.8px",
+                    textTransform: "uppercase",
+                    color: TYPE_COLORS[r.type] || C.primary,
+                    background: (TYPE_COLORS[r.type] || C.primary) + "12",
+                    padding: "2px 8px",
+                    borderRadius: 20,
+                  }}
+                >
+                  {r.type}
+                </span>
+                <Pill color={C.primary} small border>
+                  {r.sector}
+                </Pill>
+              </div>
+              <h3 style={{ fontSize: 14, fontWeight: 700, color: C.dark, margin: "0 0 4px", lineHeight: 1.35 }}>
+                {r.title}
+              </h3>
+              <p style={{ fontSize: 12, color: C.muted, margin: "0 0 10px", lineHeight: 1.5 }}>{r.desc}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <span style={{ fontSize: 11, color: C.muted }}>{r.pages} pages</span>
+                <span style={{ fontSize: 11, color: C.muted }}>·</span>
+                <span style={{ fontSize: 11, color: C.muted }}>{r.date}</span>
+              </div>
+            </div>
+            <button
+              style={{
+                padding: "8px 16px",
+                borderRadius: 20,
+                border: `1.5px solid ${C.primary}`,
+                background: "transparent",
+                color: C.primary,
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: "pointer",
+                fontFamily: font.body,
+                whiteSpace: "nowrap",
+              }}
+            >
+              Read
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── HOME PAGE CONTENT ─────────────────────────────────────────
+function HomePageContent({
+  user,
+  mType,
+  contributions,
+  setContributions,
+  savedInsight,
+  setSavedInsight,
+  noteText,
+  setNoteText,
+  noteSaved,
+  setNoteSaved,
+  activeTab,
+  setActiveTab,
+  expandedGoal,
+  setExpandedGoal,
+  setShowGoalModal,
+  setCurrentPage,
+}) {
+  return (
+    <>
+      {/* ── 3-COLUMN WIDGET ROW ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 320px", gap: 20, marginBottom: 28 }}>
+        {/* LEFT COLUMN */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          {/* Featured Insight */}
+          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+            <SectionLabel>Today's Featured Insight</SectionLabel>
+            <div
+              style={{
+                background: `linear-gradient(135deg, ${C.primary}12, ${C.accent}10)`,
+                border: `1px solid ${C.primary}20`,
+                borderRadius: 12,
+                padding: "16px 18px",
+                marginBottom: 16,
+              }}
+            >
+              <p style={{ fontSize: 15, color: C.dark, lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
+                "{INSIGHTS[0]}"
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: 10 }}>
+              <button
+                onClick={() => setSavedInsight(!savedInsight)}
+                style={{
+                  flex: 1,
+                  padding: "9px 16px",
+                  borderRadius: 8,
+                  border: `1.5px solid ${savedInsight ? C.primary : C.line}`,
+                  background: savedInsight ? C.primary : "transparent",
+                  color: savedInsight ? C.white : C.text,
+                  cursor: "pointer",
+                  fontFamily: font.body,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 6,
+                }}
+              >
+                <Bookmark size={14} />
+                {savedInsight ? "Saved" : "Save"}
+              </button>
+              <button
+                style={{
+                  flex: 1,
+                  padding: "9px 16px",
+                  borderRadius: 8,
+                  border: `1.5px solid ${C.accent}`,
+                  background: C.accent,
+                  color: C.primary,
+                  cursor: "pointer",
+                  fontFamily: font.body,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 6,
+                }}
+              >
+                <Heart size={14} />
+                Like
+              </button>
+            </div>
+          </div>
+
+          {/* Active Contributions */}
+          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+            <SectionLabel>Your Active Contributions</SectionLabel>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
+              {contributions.map((item, i) => (
+                <div
+                  key={i}
+                  onClick={() =>
+                    setContributions((prev) => prev.map((c, j) => (j === i ? { ...c, done: !c.done } : c)))
+                  }
+                  style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
+                >
+                  <div
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      border: `1.5px solid ${item.done ? C.primary : C.line}`,
+                      background: item.done ? C.primary : "transparent",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    {item.done && <Check size={11} color={C.white} strokeWidth={3} />}
+                  </div>
+                  <span
+                    style={{
+                      fontSize: 13,
+                      color: item.done ? C.muted : C.dark,
+                      textDecoration: item.done ? "line-through" : "none",
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <button
+              style={{
+                width: "100%",
+                padding: "9px",
+                borderRadius: 8,
+                border: `1.5px solid ${C.primary}`,
+                background: "transparent",
+                color: C.primary,
+                cursor: "pointer",
+                fontFamily: font.body,
+                fontSize: 13,
+                fontWeight: 600,
+              }}
+            >
+              Save Progress
+            </button>
+          </div>
+
+          {/* This Week's Impact */}
+          <div
+            style={{
+              background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
+              borderRadius: 16,
+              padding: 24,
+              boxShadow: C.cardShadow,
+              flex: 1,
+            }}
+          >
+            <SectionLabel children={<span style={{ color: "rgba(255,255,255,0.5)" }}>This Week's Impact</span>} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {[
+                { val: "3", label: "Discussions joined", delta: "+1 from last week" },
+                { val: "1", label: "Insights submitted", delta: "On track" },
+                { val: "12", label: "Community upvotes received", delta: "+4 from last week" },
+              ].map((s, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    paddingBottom: i < 2 ? 14 : 0,
+                    borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.08)" : "none",
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        fontSize: 22,
+                        fontWeight: 800,
+                        color: C.accent,
+                        fontFamily: font.display,
+                        lineHeight: 1,
+                      }}
+                    >
+                      {s.val}
+                    </div>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>{s.label}</div>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      color: s.delta.startsWith("+") ? C.accent : "rgba(255,255,255,0.35)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {s.delta}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* CENTER COLUMN */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          {/* Progress Tracker */}
+          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+            <SectionLabel>Community Journey</SectionLabel>
+            <div style={{ marginBottom: 20 }}>
+              <StepTracker steps={JOURNEY_STEPS} current={user.journey} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: C.text, fontWeight: 600 }}>Progress to Leader</span>
+              <span style={{ fontSize: 13, color: C.primary, fontWeight: 700 }}>2,840 / 5,000 pts</span>
+            </div>
+            <ProgressBar value={56.8} />
+            <p style={{ fontSize: 12, color: C.muted, marginTop: 10 }}>
+              2,160 points needed to reach Leader status. Answer 3 more questions to earn a milestone bonus.
+            </p>
+          </div>
+
+          {/* Weekly Ghana Briefing */}
+          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow, flex: 1 }}>
+            <div
+              style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}
+            >
+              <SectionLabel>Weekly Ghana Briefing</SectionLabel>
+              <span style={{ fontSize: 10, fontWeight: 600, color: C.muted, letterSpacing: "0.5px" }}>
+                Mar 3 – 7, 2026
+              </span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 2, overflowY: "auto", maxHeight: 320 }}>
+              {[
+                {
+                  tag: "Policy",
+                  tagColor: "#2C5F8A",
+                  headline: "Ghana's 2026 Budget passes second reading — GH₵8.9B directed to infrastructure & energy",
+                  signal: "↑ High relevance to Infrastructure, Energy sectors",
+                },
+                {
+                  tag: "Agriculture",
+                  tagColor: C.primary,
+                  headline: "MoFA launches emergency maize storage programme across 6 northern regions",
+                  signal: "↑ Aligns with BRIDGE post-harvest loss thesis",
+                },
+                {
+                  tag: "Finance",
+                  tagColor: "#7B5EA7",
+                  headline: "Bank of Ghana holds policy rate at 27% — fintech lending volumes rise 18% QoQ",
+                  signal: "→ Watch: financial inclusion access gap widening",
+                },
+                {
+                  tag: "Technology",
+                  tagColor: "#C07A2A",
+                  headline: "GhanaPostGPS integration with mobile money platforms goes live in 12 districts",
+                  signal: "↑ Signals: logistics & last-mile delivery opportunity",
+                },
+                {
+                  tag: "Health",
+                  tagColor: "#B04040",
+                  headline: "NHIA expands capitation coverage — 340,000 new beneficiaries enrolled in Q1",
+                  signal: "↑ CHW deployment pipeline accelerating",
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "12px 0",
+                    borderBottom: i < 4 ? `1px solid ${C.line}` : "none",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                    <span
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 700,
+                        letterSpacing: "0.8px",
+                        textTransform: "uppercase",
+                        color: item.tagColor,
+                        background: item.tagColor + "14",
+                        padding: "2px 8px",
+                        borderRadius: 20,
+                      }}
+                    >
+                      {item.tag}
+                    </span>
+                  </div>
+                  <p style={{ fontSize: 13, fontWeight: 600, color: C.dark, margin: "0 0 4px", lineHeight: 1.4 }}>
+                    {item.headline}
+                  </p>
+                  <p style={{ fontSize: 11, color: C.muted, margin: 0, fontStyle: "italic" }}>{item.signal}</p>
+                </div>
+              ))}
+            </div>
+            <button
+              style={{
+                marginTop: 14,
+                width: "100%",
+                padding: "9px",
+                borderRadius: 8,
+                border: `1.5px solid ${C.line}`,
+                background: "transparent",
+                color: C.primary,
+                fontFamily: font.body,
+                fontSize: 12,
+                fontWeight: 700,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 6,
+              }}
+            >
+              <BookOpen size={13} /> View Full Briefing
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT SIDEBAR */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          {/* Community Feed */}
+          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+            <SectionLabel>Community Feed</SectionLabel>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: 220, overflowY: "auto" }}>
+              {FEED_ITEMS.map((item) => (
+                <div key={item.id} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                  <Avatar initials={item.avatar} size={28} />
+                  <div style={{ flex: 1 }}>
+                    <p style={{ margin: 0, fontSize: 12, color: C.dark, lineHeight: 1.4 }}>
+                      <strong>{item.name}</strong> {item.action}{" "}
+                      <span style={{ color: C.primary, fontWeight: 600 }}>{item.subject}</span>
+                    </p>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 4 }}>
+                      <span style={{ fontSize: 10, color: C.muted }}>{item.time}</span>
+                      <button
+                        style={{
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 3,
+                          padding: 0,
+                        }}
+                      >
+                        <ThumbsUp size={10} color={C.muted} />
+                        <span style={{ fontSize: 10, color: C.muted }}>{item.likes}</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Take a Note */}
+          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+            <SectionLabel>Quick Note</SectionLabel>
+            <textarea
+              value={noteText}
+              onChange={(e) => {
+                setNoteText(e.target.value);
+                setNoteSaved(false);
+              }}
+              placeholder="Capture an idea, observation, or question..."
+              style={{
+                width: "100%",
+                minHeight: 80,
+                resize: "none",
+                border: `1.5px solid ${C.line}`,
+                borderRadius: 10,
+                padding: "10px 12px",
+                fontFamily: font.body,
+                fontSize: 12,
+                color: C.dark,
+                boxSizing: "border-box",
+                outline: "none",
+                lineHeight: 1.5,
+              }}
+              onFocus={(e) => (e.target.style.borderColor = C.primary)}
+              onBlur={(e) => (e.target.style.borderColor = C.line)}
+            />
+            <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+              <button
+                onClick={() => setNoteSaved(true)}
+                style={{
+                  flex: 1,
+                  padding: "7px",
+                  borderRadius: 8,
+                  border: `1.5px solid ${noteSaved ? C.primary : C.line}`,
+                  background: noteSaved ? C.primary : "transparent",
+                  color: noteSaved ? C.white : C.text,
+                  cursor: "pointer",
+                  fontFamily: font.body,
+                  fontSize: 12,
+                  fontWeight: 600,
+                }}
+              >
+                {noteSaved ? "✓ Saved" : "Save"}
+              </button>
+              <button
+                style={{
+                  flex: 1,
+                  padding: "7px",
+                  borderRadius: 8,
+                  border: `1.5px solid ${C.accent}`,
+                  background: C.accent,
+                  color: C.primary,
+                  cursor: "pointer",
+                  fontFamily: font.body,
+                  fontSize: 12,
+                  fontWeight: 600,
+                }}
+              >
+                Share
+              </button>
+            </div>
+          </div>
+
+          {/* Top Contributors */}
+          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+            <SectionLabel>Top Contributors Today</SectionLabel>
+            {MEMBERS.slice(0, 3).map((m, i) => (
+              <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: i < 2 ? 12 : 0 }}>
+                <span style={{ fontSize: 16 }}>{["🥇", "🥈", "🥉"][i]}</span>
+                <Avatar initials={m.avatar} size={28} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
+                  <div style={{ fontSize: 10, color: C.muted }}>{m.sector}</div>
+                </div>
+                <span style={{ fontSize: 12, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── GOALS SECTION ── */}
+      <section
+        style={{ background: C.white, borderRadius: 20, padding: 32, boxShadow: C.cardShadow, marginBottom: 28 }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+          <div>
+            <SectionLabel>Goals & Milestones</SectionLabel>
+            <h2
+              style={{
+                fontFamily: font.display,
+                fontSize: 24,
+                fontWeight: 700,
+                color: C.primary,
+                margin: 0,
+                letterSpacing: "-0.3px",
+              }}
+            >
+              Your Contribution <span style={{ color: C.accent }}>Roadmap</span>
+            </h2>
+          </div>
+          <button
+            onClick={() => setShowGoalModal(true)}
+            style={{
+              padding: "10px 20px",
+              borderRadius: 20,
+              border: "none",
+              cursor: "pointer",
+              background: C.primary,
+              color: C.white,
+              fontFamily: font.body,
+              fontSize: 13,
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            <Plus size={14} /> New Goal
+          </button>
+        </div>
+
+        {/* Tabs */}
+        <div
+          style={{ display: "flex", gap: 4, marginBottom: 24, borderBottom: `1px solid ${C.line}`, paddingBottom: 1 }}
+        >
+          {["active", "inactive", "completed", "draft"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              style={{
+                padding: "8px 20px",
+                border: "none",
+                cursor: "pointer",
+                fontFamily: font.body,
+                fontSize: 13,
+                fontWeight: 600,
+                background: "transparent",
+                textTransform: "capitalize",
+                color: activeTab === tab ? C.primary : C.muted,
+                borderBottom: `2px solid ${activeTab === tab ? C.primary : "transparent"}`,
+                transition: "all 0.2s",
+              }}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {activeTab === "active" ? (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            {GOALS.map((goal) => (
+              <div
+                key={goal.id}
+                style={{
+                  border: `1.5px solid ${C.line}`,
+                  borderRadius: 14,
+                  padding: 20,
+                  transition: "border-color 0.2s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.primary)}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    marginBottom: 12,
+                  }}
+                >
+                  <div>
+                    <Pill color={C.primary} small border>
+                      {goal.sector}
+                    </Pill>
+                    <h3
+                      style={{
+                        fontFamily: font.display,
+                        fontSize: 15,
+                        fontWeight: 700,
+                        color: C.dark,
+                        margin: "8px 0 4px",
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {goal.title}
+                    </h3>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                      <Calendar size={11} />
+                      <span>{goal.deadline}</span>
+                      <span style={{ color: C.accent, fontWeight: 700 }}>· {goal.daysLeft} days left</span>
+                    </div>
+                  </div>
+                </div>
+
+                <ProgressBar value={goal.progress} />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: 6,
+                    fontSize: 11,
+                    color: C.muted,
+                  }}
+                >
+                  <span>
+                    {goal.steps.filter((s) => s.done).length}/{goal.steps.length} steps
+                  </span>
+                  <span style={{ fontWeight: 700, color: C.primary }}>{goal.progress}%</span>
+                </div>
+
+                {/* Expandable Steps */}
+                <button
+                  onClick={() => setExpandedGoal(expandedGoal === goal.id ? null : goal.id)}
+                  style={{
+                    marginTop: 12,
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: C.primary,
+                    padding: 0,
+                  }}
+                >
+                  {expandedGoal === goal.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                  {expandedGoal === goal.id ? "Hide" : "View"} Micro-Steps
+                </button>
+
+                {expandedGoal === goal.id && (
+                  <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+                    {goal.steps.map((step, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <div
+                          style={{
+                            width: 16,
+                            height: 16,
+                            borderRadius: 3,
+                            border: `1.5px solid ${step.done ? C.primary : C.line}`,
+                            background: step.done ? C.primary : "transparent",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                          }}
+                        >
+                          {step.done && <Check size={9} color={C.white} strokeWidth={3} />}
+                        </div>
+                        <span
+                          style={{
+                            fontSize: 12,
+                            color: step.done ? C.muted : C.dark,
+                            textDecoration: step.done ? "line-through" : "none",
+                          }}
+                        >
+                          {step.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ textAlign: "center", padding: "48px 0" }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>🌱</div>
+            <h3 style={{ fontFamily: font.display, fontSize: 20, color: C.primary, margin: "0 0 8px" }}>
+              No {activeTab} goals yet
+            </h3>
+            <p style={{ color: C.muted, fontSize: 14, margin: "0 0 24px" }}>
+              Start contributing and reach the BRIDGE Champion milestone
+            </p>
+            <button
+              onClick={() => setShowGoalModal(true)}
+              style={{
+                padding: "12px 28px",
+                borderRadius: 20,
+                border: `2px solid ${C.primary}`,
+                background: "transparent",
+                color: C.primary,
+                fontFamily: font.body,
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <Plus size={14} /> Create Goal
+            </button>
+          </div>
+        )}
+      </section>
+    </>
   );
 }
 
