@@ -3958,7 +3958,8 @@ const PolicyAlignmentSection = () => {
             </div>
           </div>
           <a
-            href="#"
+            href="/contact"
+            onClick={(e) => { e.preventDefault(); navigate("/contact"); }}
             style={{
               fontFamily: "DM Sans, sans-serif",
               fontSize: "13px",

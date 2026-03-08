@@ -5609,8 +5609,8 @@ const InvestmentCTASection = () => {
                   Full financial model available
                 </span>
                 <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
+                  href="/resources"
+                  onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
