@@ -1651,7 +1651,8 @@ const SectorCard = ({ s, hov, onE, onL }) => {
         </span>
       </div>
       <a
-        href="#"
+        href={href}
+        onClick={(e) => { e.preventDefault(); navigate(href); }}
         style={{
           display: "flex",
           alignItems: "center",
