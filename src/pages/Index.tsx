@@ -2582,6 +2582,7 @@ export default function BRIDGEHomePage() {
               Connecting <span style={{ fontWeight: "700" }}>Resources</span>, Building Pathways —{" "}
               <span style={{ fontWeight: "700", color: colors.accent }}>Join Us!</span>
             </h3>
+            <a href="/services" style={{ textDecoration: "none" }}>
             <button
               style={{
                 backgroundColor: colors.accent,
@@ -2624,6 +2625,7 @@ export default function BRIDGEHomePage() {
                 </svg>
               </span>
             </button>
+            </a>
           </div>
         </div>
       </section>
