@@ -3032,6 +3032,7 @@ export default function BRIDGEHomePage() {
                 >
                   A development engine — identifying opportunities, connecting resources, and initiating ventures.
                 </p>
+                <a href="/about" style={{ textDecoration: "none" }}>
                 <button
                   style={{
                     backgroundColor: colors.accent,
@@ -3054,6 +3055,7 @@ export default function BRIDGEHomePage() {
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </button>
+                </a>
               </div>
             </div>
           ) : (
