@@ -1126,7 +1126,8 @@ export default function BRIDGEHomePage() {
                   +6
                 </div>
                 <div style={{ marginLeft: "auto" }}>
-                  <div
+                  <Link
+                    to="/sectors"
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -1136,6 +1137,7 @@ export default function BRIDGEHomePage() {
                       fontWeight: "600",
                       fontFamily: "Inter, sans-serif",
                       cursor: "pointer",
+                      textDecoration: "none",
                     }}
                   >
                     Explore
@@ -1161,7 +1163,7 @@ export default function BRIDGEHomePage() {
                         <path d="M7 17L17 7M17 7H7M17 7V17" />
                       </svg>
                     </span>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
