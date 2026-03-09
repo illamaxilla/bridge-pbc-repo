@@ -2750,7 +2750,8 @@ export default function BRIDGEHomePage() {
                     <div
                       key={index}
                       style={{
-                        backgroundColor: isOpen ? colors.primary : colors.background,
+                        backgroundColor: isOpen ? colors.primary : colors.white,
+                        border: `1px solid ${isOpen ? "transparent" : colors.line}`,
                         borderRadius: "14px",
                         overflow: "hidden",
                         transition: "background-color 0.3s ease",
