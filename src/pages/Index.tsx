@@ -1942,21 +1942,19 @@ export default function BRIDGEHomePage() {
                 </svg>
               </Link>
             </div>
-            <div
-              style={
-                isMobile
-                  ? {
-                      display: "flex",
-                      gap: "12px",
-                      overflowX: "auto",
-                      WebkitOverflowScrolling: "touch",
-                      scrollSnapType: "x mandatory",
-                      paddingBottom: "4px",
-                    }
-                  : { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }
-              }
-            >
-              {[
+            {isMobile ? (
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "12px",
+                    overflowX: "auto",
+                    WebkitOverflowScrolling: "touch",
+                    scrollSnapType: "x mandatory",
+                    paddingBottom: "4px",
+                  }}
+                >
+                  {[
                 {
                   name: "Research",
                   description: "Deep market analysis and evidence-based diagnostics across all 12 sectors.",
