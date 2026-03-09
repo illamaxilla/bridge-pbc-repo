@@ -690,6 +690,7 @@ export default function BRIDGEHomePage() {
   const [hoveredInsight, setHoveredInsight] = useState(null);
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
+  const [contactSubmitted, setContactSubmitted] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
