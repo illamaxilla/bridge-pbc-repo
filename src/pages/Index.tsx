@@ -2742,194 +2742,195 @@ export default function BRIDGEHomePage() {
                 </ResponsiveContainer>
               </div>
             )}
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px", ...(isMobile ? { maxHeight: "420px", overflowY: "auto", paddingRight: "4px" } : {}) }}>
-              {sectorData.slice(0, isMobile ? 12 : 6).map((sector, index) => {
-                const isOpen = openSector === index;
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      backgroundColor: isOpen ? colors.primary : colors.background,
-                      borderRadius: "14px",
-                      overflow: "hidden",
-                      transition: "background-color 0.3s ease",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setOpenSector(isOpen ? null : index)}
-                  >
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px", ...(isMobile ? { maxHeight: "420px", overflowY: "auto", paddingRight: "4px" } : {}) }}>
+                {sectorData.slice(0, isMobile ? 12 : 6).map((sector, index) => {
+                  const isOpen = openSector === index;
+                  return (
                     <div
-                      className="sector-row"
+                      key={index}
                       style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: isMobile ? "14px 16px" : "16px 20px",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: isMobile ? "14px" : "15px",
-                          fontWeight: isOpen ? "600" : "400",
-                          color: isOpen ? colors.white : colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                          transition: "color 0.3s ease",
-                        }}
-                      >
-                        {sector.fullName}
-                      </span>
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke={isOpen ? colors.white : colors.primary}
-                        strokeWidth="1.5"
-                        style={{
-                          opacity: isOpen ? 1 : 0.3,
-                          flexShrink: 0,
-                          transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                          transition:
-                            "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, stroke 0.3s ease",
-                        }}
-                      >
-                        <path d="M6 9l6 6 6-6" />
-                      </svg>
-                    </div>
-                    <div
-                      style={{
-                        maxHeight: isOpen ? "120px" : "0px",
-                        opacity: isOpen ? 1 : 0,
-                        padding: isOpen ? "0 20px 18px 20px" : "0 20px",
+                        backgroundColor: isOpen ? colors.primary : colors.background,
+                        borderRadius: "14px",
                         overflow: "hidden",
-                        transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+                        transition: "background-color 0.3s ease",
+                        cursor: "pointer",
                       }}
+                      onClick={() => setOpenSector(isOpen ? null : index)}
                     >
                       <div
-                        style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: isMobile ? "8px" : "12px" }}
+                        className="sector-row"
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: isMobile ? "14px 16px" : "16px 20px",
+                        }}
                       >
-                        <div>
-                          <p
-                            style={{
-                              fontSize: "10px",
-                              fontWeight: "500",
-                              color: "rgba(255,255,255,0.5)",
-                              fontFamily: "Inter, sans-serif",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.5px",
-                              margin: "0 0 4px 0",
-                            }}
-                          >
-                            The Gap
-                          </p>
-                          <p
-                            style={{
-                              fontSize: isMobile ? "14px" : "18px",
-                              fontWeight: "700",
-                              color: colors.white,
-                              fontFamily: "Inter, sans-serif",
-                              margin: 0,
-                              lineHeight: "1.2",
-                            }}
-                          >
-                            {sector.gap}
-                          </p>
-                        </div>
-                        <div>
-                          <p
-                            style={{
-                              fontSize: "10px",
-                              fontWeight: "500",
-                              color: "rgba(255,255,255,0.5)",
-                              fontFamily: "Inter, sans-serif",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.5px",
-                              margin: "0 0 4px 0",
-                            }}
-                          >
-                            At Stake
-                          </p>
-                          <p
-                            style={{
-                              fontSize: isMobile ? "14px" : "18px",
-                              fontWeight: "700",
-                              color: colors.accent,
-                              fontFamily: "Inter, sans-serif",
-                              margin: 0,
-                              lineHeight: "1.2",
-                            }}
-                          >
-                            {sector.market}
-                          </p>
-                        </div>
-                        <div>
-                          <p
-                            style={{
-                              fontSize: "10px",
-                              fontWeight: "500",
-                              color: "rgba(255,255,255,0.5)",
-                              fontFamily: "Inter, sans-serif",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.5px",
-                              margin: "0 0 4px 0",
-                            }}
-                          >
-                            Identified
-                          </p>
-                          <p
-                            style={{
-                              fontSize: isMobile ? "14px" : "18px",
-                              fontWeight: "700",
-                              color: colors.white,
-                              fontFamily: "Inter, sans-serif",
-                              margin: 0,
-                              lineHeight: "1.2",
-                            }}
-                          >
-                            {sector.pathways}
-                          </p>
+                        <span
+                          style={{
+                            fontSize: isMobile ? "14px" : "15px",
+                            fontWeight: isOpen ? "600" : "400",
+                            color: isOpen ? colors.white : colors.primary,
+                            fontFamily: "Inter, sans-serif",
+                            transition: "color 0.3s ease",
+                          }}
+                        >
+                          {sector.fullName}
+                        </span>
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke={isOpen ? colors.white : colors.primary}
+                          strokeWidth="1.5"
+                          style={{
+                            opacity: isOpen ? 1 : 0.3,
+                            flexShrink: 0,
+                            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                            transition:
+                              "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, stroke 0.3s ease",
+                          }}
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </div>
+                      <div
+                        style={{
+                          maxHeight: isOpen ? "120px" : "0px",
+                          opacity: isOpen ? 1 : 0,
+                          padding: isOpen ? "0 20px 18px 20px" : "0 20px",
+                          overflow: "hidden",
+                          transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+                        }}
+                      >
+                        <div
+                          style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: isMobile ? "8px" : "12px" }}
+                        >
+                          <div>
+                            <p
+                              style={{
+                                fontSize: "10px",
+                                fontWeight: "500",
+                                color: "rgba(255,255,255,0.5)",
+                                fontFamily: "Inter, sans-serif",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.5px",
+                                margin: "0 0 4px 0",
+                              }}
+                            >
+                              The Gap
+                            </p>
+                            <p
+                              style={{
+                                fontSize: isMobile ? "14px" : "18px",
+                                fontWeight: "700",
+                                color: colors.white,
+                                fontFamily: "Inter, sans-serif",
+                                margin: 0,
+                                lineHeight: "1.2",
+                              }}
+                            >
+                              {sector.gap}
+                            </p>
+                          </div>
+                          <div>
+                            <p
+                              style={{
+                                fontSize: "10px",
+                                fontWeight: "500",
+                                color: "rgba(255,255,255,0.5)",
+                                fontFamily: "Inter, sans-serif",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.5px",
+                                margin: "0 0 4px 0",
+                              }}
+                            >
+                              At Stake
+                            </p>
+                            <p
+                              style={{
+                                fontSize: isMobile ? "14px" : "18px",
+                                fontWeight: "700",
+                                color: colors.accent,
+                                fontFamily: "Inter, sans-serif",
+                                margin: 0,
+                                lineHeight: "1.2",
+                              }}
+                            >
+                              {sector.market}
+                            </p>
+                          </div>
+                          <div>
+                            <p
+                              style={{
+                                fontSize: "10px",
+                                fontWeight: "500",
+                                color: "rgba(255,255,255,0.5)",
+                                fontFamily: "Inter, sans-serif",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.5px",
+                                margin: "0 0 4px 0",
+                              }}
+                            >
+                              Identified
+                            </p>
+                            <p
+                              style={{
+                                fontSize: isMobile ? "14px" : "18px",
+                                fontWeight: "700",
+                                color: colors.white,
+                                fontFamily: "Inter, sans-serif",
+                                margin: 0,
+                                lineHeight: "1.2",
+                              }}
+                            >
+                              {sector.pathways}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-            <Link
-              to="/sectors"
-              style={{
-                backgroundColor: colors.background,
-                borderRadius: "14px",
-                padding: isMobile ? "14px 16px" : "16px 20px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                textDecoration: "none",
-                marginTop: "8px",
-              }}
-            >
-              <span
+                  );
+                })}
+              </div>
+              <Link
+                to="/sectors"
                 style={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  color: colors.accent,
-                  fontFamily: "Inter, sans-serif",
-                  letterSpacing: "0.3px",
+                  backgroundColor: colors.background,
+                  borderRadius: "14px",
+                  padding: isMobile ? "14px 16px" : "16px 20px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  textDecoration: "none",
                 }}
               >
-                View all 12 sectors
-              </span>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.accent}
-                strokeWidth="2"
-                style={{ flexShrink: 0 }}
-              >
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg>
-            </Link>
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    color: colors.accent,
+                    fontFamily: "Inter, sans-serif",
+                    letterSpacing: "0.3px",
+                  }}
+                >
+                  View all 12 sectors
+                </span>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={colors.accent}
+                  strokeWidth="2"
+                  style={{ flexShrink: 0 }}
+                >
+                  <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
