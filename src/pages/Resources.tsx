@@ -2701,6 +2701,7 @@ const Footer = () => {
 };
 
 export default function ResourcesPage() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState("intelligence");
   const [mobile, setMobile] = useState(false);
   const [filter, setFilter] = useState("All");
