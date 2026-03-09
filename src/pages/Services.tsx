@@ -1713,6 +1713,7 @@ export default function ServicesSectorsPageV2() {
                 </div>
 
                 {/* CTA Button - pushed to bottom */}
+                <a href="/contact" style={{ textDecoration: "none" }}>
                 <button
                   className="cta-lime"
                   style={{
@@ -1756,6 +1757,7 @@ export default function ServicesSectorsPageV2() {
                     </svg>
                   </span>
                 </button>
+                </a>
               </div>
 
               {/* Right - Sector Icons Grid + Highlight Tags */}
