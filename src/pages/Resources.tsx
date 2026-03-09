@@ -973,7 +973,7 @@ function SectorIconBtn({ svgIcon, label, active, onClick }) {
   );
 }
 
-function BridgeTab({ mobile, filter, setFilter }) {
+function BridgeTab({ mobile, filter, setFilter, onUnlock }) {
   const [expanded, setExpanded] = useState(null);
   const tags = ["All", "Foundation", "Human Capital", "Economic Engine", "Growth Engine"];
   const shown = filter === "All" ? sectors : sectors.filter((s) => s.full === filter || s.tag === filter);
