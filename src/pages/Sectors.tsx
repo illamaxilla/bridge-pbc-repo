@@ -1492,11 +1492,14 @@ const HeroSection = () => {
 const SectorCard = ({ s, hov, onE, onL }) => {
   const Icon = icons[s.ik];
   const mb = useIsMobile();
+  const navigate = useNavigate();
+  const href = sectorRoute(s.slug);
   return (
     <div
       className="value-card"
       onMouseEnter={onE}
       onMouseLeave={onL}
+      onClick={() => navigate(href)}
       style={{
         backgroundColor: colors.white,
         borderRadius: mb ? "16px" : "20px",
