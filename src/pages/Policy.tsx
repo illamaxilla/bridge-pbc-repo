@@ -304,12 +304,6 @@ const EVENT_TYPE_CONFIG = {
   implementation: { label: "Implementation" },
 };
 
-const URGENCY_CONFIG = {
-  high: { color: C.line },
-  medium: { color: C.line },
-  low: { color: C.line },
-};
-
 const BRIEFS_PER_PAGE = 6;
 
 // ── Components ───────────────────────────────────────────────────────
@@ -338,7 +332,7 @@ function StatusBadge({ status }: { status: "enacted" | "pending" | "under-review
     <span style={{
       display: "inline-flex", alignItems: "center", gap: "5px",
       fontSize: "11px", fontWeight: "600", padding: "3px 10px",
-      borderRadius: "20px", color: C.primary, backgroundColor: C.background,
+      borderRadius: "20px", color: C.primary, backgroundColor: C.white,
       border: `1px solid ${C.line}`, letterSpacing: "0.3px", flexShrink: 0,
     }}>
       {dotEl}{cfg.label}
@@ -351,27 +345,27 @@ function BriefCard({ brief }: { brief: PolicyBrief }) {
   return (
     <div
       style={{
-        backgroundColor: C.white, borderRadius: "14px",
-        border: `1px solid ${C.line}`, padding: "20px",
+        backgroundColor: C.white, borderRadius: "10px",
+        border: `1px solid ${C.line}`, padding: "20px 24px",
         transition: "box-shadow 0.2s ease", cursor: "pointer",
       }}
       onClick={() => setExpanded(v => !v)}
     >
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "12px", marginBottom: "12px" }}>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px" }}>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", flexWrap: "wrap" as const }}>
-            <span style={{ fontSize: "11px", fontWeight: "600", color: C.muted, textTransform: "uppercase" as const, letterSpacing: "1px" }}>{brief.category}</span>
-            <span style={{ color: C.line }}>·</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px", flexWrap: "wrap" as const }}>
+            <span style={{ fontSize: "10px", fontWeight: "700", color: C.muted, textTransform: "uppercase" as const, letterSpacing: "1.2px" }}>{brief.category}</span>
+            <span style={{ color: C.line, fontSize: "10px" }}>·</span>
             <span style={{ fontSize: "11px", color: C.muted }}>{brief.date}</span>
           </div>
           <h3 style={{ fontSize: "14px", fontWeight: "600", color: C.primary, margin: 0, lineHeight: "1.45", fontFamily: "Inter, sans-serif" }}>
             {brief.title}
           </h3>
         </div>
-        <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "flex-end", gap: "8px", flexShrink: 0 }}>
+        <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "flex-end", gap: "10px", flexShrink: 0 }}>
           <StatusBadge status={brief.status} />
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-            style={{ transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            style={{ transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s", marginRight: "2px" }}>
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </div>
@@ -381,7 +375,7 @@ function BriefCard({ brief }: { brief: PolicyBrief }) {
           <p style={{ fontSize: "14px", color: C.text, lineHeight: "1.7", margin: "0 0 14px" }}>{brief.summary}</p>
           <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" as const }}>
             {brief.tags.map(tag => (
-              <span key={tag} style={{ fontSize: "11px", fontWeight: "500", padding: "3px 10px", borderRadius: "20px", background: C.background, border: `1px solid ${C.line}`, color: C.text }}>
+              <span key={tag} style={{ fontSize: "11px", fontWeight: "500", padding: "3px 10px", borderRadius: "4px", background: C.background, border: `1px solid ${C.line}`, color: C.text }}>
                 {tag}
               </span>
             ))}
@@ -398,19 +392,19 @@ function BriefTableRow({ brief }: { brief: PolicyBrief }) {
       onMouseEnter={e => (e.currentTarget.style.background = C.background)}
       onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
     >
-      <td style={{ padding: "14px 12px", verticalAlign: "top" }}>
+      <td style={{ padding: "14px 16px", verticalAlign: "top" }}>
         <div style={{ fontSize: "13px", fontWeight: "600", color: C.primary, lineHeight: "1.4", marginBottom: "4px" }}>{brief.title}</div>
         <div style={{ fontSize: "11px", color: C.muted }}>{brief.category}</div>
       </td>
-      <td style={{ padding: "14px 12px", verticalAlign: "middle", whiteSpace: "nowrap" as const }}>
-        <span style={{ fontSize: "11px", fontWeight: "500", color: C.text, background: C.background, padding: "3px 9px", borderRadius: "20px", border: `1px solid ${C.line}`, textTransform: "capitalize" as const }}>
+      <td style={{ padding: "14px 16px", verticalAlign: "middle", whiteSpace: "nowrap" as const }}>
+        <span style={{ fontSize: "11px", fontWeight: "500", color: C.text, background: C.background, padding: "3px 9px", borderRadius: "4px", border: `1px solid ${C.line}`, textTransform: "capitalize" as const }}>
           {brief.sector.replace("-", " ")}
         </span>
       </td>
-      <td style={{ padding: "14px 12px", verticalAlign: "middle" }}>
+      <td style={{ padding: "14px 16px", verticalAlign: "middle" }}>
         <StatusBadge status={brief.status} />
       </td>
-      <td style={{ padding: "14px 12px", verticalAlign: "middle", fontSize: "12px", color: C.muted, whiteSpace: "nowrap" as const }}>{brief.date}</td>
+      <td style={{ padding: "14px 16px", verticalAlign: "middle", fontSize: "12px", color: C.muted, whiteSpace: "nowrap" as const }}>{brief.date}</td>
     </tr>
   );
 }
@@ -420,30 +414,33 @@ function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: bool
   const typeCfg = EVENT_TYPE_CONFIG[ev.type];
   return (
     <div style={{
-      backgroundColor: C.background, borderRadius: "14px",
+      backgroundColor: C.white, borderRadius: "10px",
       border: `1px solid ${C.line}`,
-      padding: isMobile ? "16px" : "20px", display: "flex", gap: "14px",
+      padding: isMobile ? "16px" : "20px 24px", display: "flex", gap: "16px",
     }}>
       {/* Date badge */}
-      <div style={{ textAlign: "center", flexShrink: 0, width: "44px" }}>
-        <div style={{ fontSize: "9px", fontWeight: "700", color: C.muted, letterSpacing: "1px", textTransform: "uppercase" as const }}>{ev.month}</div>
-        <div style={{ fontSize: "24px", fontWeight: "700", color: C.primary, lineHeight: "1.1", fontFamily: "Inter, sans-serif" }}>{ev.day}</div>
+      <div style={{
+        textAlign: "center", flexShrink: 0, width: "48px",
+        paddingRight: "16px", borderRight: `1px solid ${C.line}`,
+      }}>
+        <div style={{ fontSize: "9px", fontWeight: "700", color: C.muted, letterSpacing: "1px", textTransform: "uppercase" as const, marginBottom: "2px" }}>{ev.month}</div>
+        <div style={{ fontSize: "26px", fontWeight: "700", color: C.primary, lineHeight: "1", fontFamily: "Inter, sans-serif" }}>{ev.day}</div>
       </div>
 
       {/* Content */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "5px", flexWrap: "wrap" as const }}>
-          <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "20px", color: C.primary, background: C.background, border: `1px solid ${C.line}` }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "5px", flexWrap: "wrap" as const }}>
+          <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "4px", color: C.primary, background: C.background, border: `1px solid ${C.line}`, letterSpacing: "0.5px", textTransform: "uppercase" as const }}>
             {typeCfg.label}
           </span>
           <span style={{ fontSize: "11px", color: C.muted }}>{ev.sector}</span>
         </div>
-        <h4 style={{ fontSize: "13px", fontWeight: "600", color: C.primary, margin: "0 0 4px", lineHeight: "1.4", fontFamily: "Inter, sans-serif" }}>
+        <h4 style={{ fontSize: "13px", fontWeight: "600", color: C.primary, margin: "0 0 5px", lineHeight: "1.4", fontFamily: "Inter, sans-serif" }}>
           {ev.title}
         </h4>
-        <p style={{ fontSize: "12px", color: C.text, lineHeight: "1.55", margin: "0 0 10px" }}>{ev.description}</p>
+        <p style={{ fontSize: "12px", color: C.text, lineHeight: "1.6", margin: "0 0 10px" }}>{ev.description}</p>
         {ev.location && (
-          <div style={{ fontSize: "11px", color: C.muted, marginBottom: "8px", display: "flex", alignItems: "center", gap: "4px" }}>
+          <div style={{ fontSize: "11px", color: C.muted, marginBottom: "10px", display: "flex", alignItems: "center", gap: "4px" }}>
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
             </svg>
@@ -455,14 +452,14 @@ function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: bool
           onClick={(e) => { e.stopPropagation(); downloadICS(ev); }}
           style={{
             display: "inline-flex", alignItems: "center", gap: "5px",
-            padding: "5px 12px", borderRadius: "20px",
-            border: `1px solid ${C.line}`, backgroundColor: C.white,
+            padding: "5px 12px", borderRadius: "6px",
+            border: `1px solid ${C.line}`, backgroundColor: "transparent",
             color: C.primary, fontSize: "11px", fontWeight: "600",
             cursor: "pointer", fontFamily: "Inter, sans-serif",
             transition: "all 0.15s ease",
           }}
-          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.primary; (e.currentTarget as HTMLButtonElement).style.color = C.white; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.white; (e.currentTarget as HTMLButtonElement).style.color = C.primary; }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.primary; (e.currentTarget as HTMLButtonElement).style.color = C.white; (e.currentTarget as HTMLButtonElement).style.borderColor = C.primary; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = C.primary; (e.currentTarget as HTMLButtonElement).style.borderColor = C.line; }}
         >
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
@@ -518,7 +515,6 @@ export default function PolicyPage() {
 
   return (
     <div style={{ fontFamily: "Inter, sans-serif", backgroundColor: C.white, minHeight: "100vh" }}>
-      <style>{`@keyframes pulseBadge{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(2.2);opacity:0}}`}</style>
       <SiteHeader />
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
@@ -542,7 +538,7 @@ export default function PolicyPage() {
           {/* Stats row */}
           <div style={{
             display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
-            gap: isMobile ? "10px" : "16px", maxWidth: "560px", margin: "0 auto",
+            gap: isMobile ? "10px" : "16px", maxWidth: "480px", margin: "0 auto",
           }}>
             {[
               { val: stats.enacted, label: "Enacted" },
@@ -550,11 +546,12 @@ export default function PolicyPage() {
               { val: stats.underReview, label: "Under Review" },
             ].map(s => (
               <div key={s.label} style={{
-                backgroundColor: "rgba(255,255,255,0.07)", borderRadius: "12px",
-                border: "1px solid rgba(255,255,255,0.12)", padding: isMobile ? "16px 10px" : "20px 16px",
+                borderTop: `2px solid rgba(184,217,53,0.4)`,
+                backgroundColor: "rgba(255,255,255,0.06)",
+                padding: isMobile ? "16px 10px" : "20px 16px",
               }}>
-                <div style={{ fontSize: isMobile ? "22px" : "28px", fontWeight: "700", color: C.white, marginBottom: "4px" }}>{s.val}</div>
-                <div style={{ fontSize: "10px", fontWeight: "600", color: "rgba(255,255,255,0.55)", textTransform: "uppercase" as const, letterSpacing: "1px" }}>{s.label}</div>
+                <div style={{ fontSize: isMobile ? "24px" : "30px", fontWeight: "700", color: C.white, marginBottom: "4px", lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontSize: "10px", fontWeight: "600", color: "rgba(255,255,255,0.45)", textTransform: "uppercase" as const, letterSpacing: "1px" }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -562,75 +559,63 @@ export default function PolicyPage() {
       </section>
 
       {/* ── LEGISLATIVE CALENDAR ──────────────────────────────────── */}
-      <section style={{ backgroundColor: C.white, padding: `${isMobile ? "48px" : "72px"} ${HP}` }}>
+      <section style={{ backgroundColor: C.background, padding: `${isMobile ? "48px" : "72px"} ${HP}` }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           {/* Header row */}
           <div style={{
             display: "flex", alignItems: isMobile ? "flex-start" : "flex-end",
-            justifyContent: "space-between", marginBottom: "28px",
+            justifyContent: "space-between", marginBottom: "32px",
             flexDirection: isMobile ? "column" : "row", gap: "16px",
           }}>
             <div>
               <div style={{
                 display: "inline-flex", alignItems: "center", gap: "8px",
-                padding: "6px 14px", background: C.accentBg, borderRadius: "50px",
-                fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px",
-                color: C.primary, marginBottom: "10px", textTransform: "uppercase" as const,
+                padding: "5px 14px", background: C.accentBg, borderRadius: "4px",
+                fontSize: "10px", fontWeight: "700", letterSpacing: "1.5px",
+                color: C.primary, marginBottom: "12px", textTransform: "uppercase" as const,
               }}>
                 Upcoming
               </div>
               <h2 style={{
-                fontSize: "clamp(22px, 3.5vw, 34px)", fontWeight: "300", color: C.primary,
+                fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: "300", color: C.primary,
                 margin: 0, lineHeight: "1.2", fontFamily: "Inter, sans-serif",
               }}>
                 Legislative <strong style={{ fontWeight: "700" }}>Calendar</strong>
               </h2>
-              <p style={{ fontSize: "13px", color: C.muted, margin: "6px 0 0", lineHeight: "1.6" }}>
+              <p style={{ fontSize: "13px", color: C.muted, margin: "8px 0 0", lineHeight: "1.6" }}>
                 Key dates for readings, consultations, deadlines and policy reviews.
               </p>
             </div>
 
-            {/* Legend + view toggle */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: isMobile ? "flex-start" : "flex-end", gap: "12px" }}>
-              {/* View toggle */}
-              <div style={{ display: "flex", gap: "0", borderRadius: "10px", border: `1px solid ${C.line}`, overflow: "hidden" }}>
-                {(["list", "month"] as const).map(mode => (
-                  <button
-                    key={mode}
-                    onClick={() => setCalendarMode(mode)}
-                    style={{
-                      padding: "8px 16px", border: "none",
-                      backgroundColor: calendarMode === mode ? C.primary : C.white,
-                      color: calendarMode === mode ? C.white : C.muted,
-                      fontSize: "12px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-                      cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
-                      transition: "all 0.15s ease", textTransform: "capitalize" as const,
-                    }}
-                  >
-                    {mode === "list" ? (
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                    ) : (
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    )}
-                    {mode === "list" ? "List" : "By Month"}
-                  </button>
-                ))}
-              </div>
-
-              {/* Legend pills */}
-              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" as const, justifyContent: isMobile ? "flex-start" : "flex-end" }}>
-                {Object.entries(EVENT_TYPE_CONFIG).map(([key, cfg]) => (
-                  <span key={key} style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "3px 9px", borderRadius: "20px", fontSize: "10px", fontWeight: "600", color: C.primary, background: C.background, border: `1px solid ${C.line}` }}>
-                    {cfg.label}
-                  </span>
-                ))}
-              </div>
+            {/* View toggle */}
+            <div style={{ display: "flex", gap: "0", borderRadius: "8px", border: `1px solid ${C.line}`, overflow: "hidden", flexShrink: 0 }}>
+              {(["list", "month"] as const).map(mode => (
+                <button
+                  key={mode}
+                  onClick={() => setCalendarMode(mode)}
+                  style={{
+                    padding: "9px 18px", border: "none",
+                    backgroundColor: calendarMode === mode ? C.primary : C.white,
+                    color: calendarMode === mode ? C.white : C.muted,
+                    fontSize: "12px", fontWeight: "600", fontFamily: "Inter, sans-serif",
+                    cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
+                    transition: "all 0.15s ease",
+                  }}
+                >
+                  {mode === "list" ? (
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  ) : (
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  )}
+                  {mode === "list" ? "List" : "By Month"}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* ── LIST VIEW ── */}
           {calendarMode === "list" && (
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(320px, 1fr))", gap: "14px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(340px, 1fr))", gap: "12px" }}>
               {CALENDAR_EVENTS.map(ev => (
                 <CalendarEventCard key={ev.id} ev={ev} isMobile={isMobile} />
               ))}
@@ -639,18 +624,19 @@ export default function PolicyPage() {
 
           {/* ── MONTH VIEW ── */}
           {calendarMode === "month" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
               {Object.entries(eventsByMonth).map(([month, events]) => (
                 <div key={month}>
                   {/* Month header */}
                   <div style={{
                     display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px",
-                    paddingBottom: "10px", borderBottom: `2px solid ${C.line}`,
+                    paddingBottom: "12px", borderBottom: `1px solid ${C.line}`,
                   }}>
                     <div style={{
                       backgroundColor: C.primary, color: C.white,
-                      borderRadius: "10px", padding: "6px 16px",
-                      fontSize: "13px", fontWeight: "700", fontFamily: "Inter, sans-serif",
+                      borderRadius: "6px", padding: "5px 14px",
+                      fontSize: "12px", fontWeight: "700", fontFamily: "Inter, sans-serif",
+                      letterSpacing: "0.3px",
                     }}>
                       {month}
                     </div>
@@ -658,12 +644,12 @@ export default function PolicyPage() {
                       {events.length} event{events.length !== 1 ? "s" : ""}
                     </span>
                     {events.some(e => e.urgency === "high") && (
-                      <span style={{ fontSize: "10px", fontWeight: "700", color: "#DC2626", background: "#FEE2E2", padding: "2px 8px", borderRadius: "20px" }}>
-                        High Priority
+                      <span style={{ fontSize: "10px", fontWeight: "700", color: C.primary, background: C.accentBg, padding: "2px 8px", borderRadius: "4px", letterSpacing: "0.5px" }}>
+                        Action Required
                       </span>
                     )}
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(320px, 1fr))", gap: "12px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(340px, 1fr))", gap: "12px" }}>
                     {events.map(ev => (
                       <CalendarEventCard key={ev.id} ev={ev} isMobile={isMobile} />
                     ))}
@@ -676,7 +662,7 @@ export default function PolicyPage() {
       </section>
 
       {/* ── FILTERS + VIEW TOGGLE ──────────────────────────────────── */}
-      <section style={{ backgroundColor: C.background, padding: `32px ${HP} 0`, borderBottom: `1px solid ${C.line}` }}>
+      <section style={{ backgroundColor: C.white, padding: `32px ${HP} 0`, borderBottom: `1px solid ${C.line}` }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           {/* Top row: search + view toggle */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px", flexWrap: "wrap" as const }}>
@@ -692,7 +678,7 @@ export default function PolicyPage() {
                 value={searchQuery}
                 onChange={e => { setSearchQuery(e.target.value); setVisibleCount(BRIEFS_PER_PAGE); }}
                 style={{
-                  width: "100%", padding: "10px 14px 10px 36px", borderRadius: "50px",
+                  width: "100%", padding: "10px 14px 10px 36px", borderRadius: "6px",
                   border: `1px solid ${C.line}`, backgroundColor: C.white,
                   fontFamily: "Inter, sans-serif", fontSize: "13px", color: C.dark,
                   outline: "none", boxSizing: "border-box" as const,
@@ -701,18 +687,18 @@ export default function PolicyPage() {
             </div>
 
             {/* View toggle */}
-            <div style={{ display: "flex", borderRadius: "10px", border: `1px solid ${C.line}`, overflow: "hidden", flexShrink: 0 }}>
+            <div style={{ display: "flex", borderRadius: "8px", border: `1px solid ${C.line}`, overflow: "hidden", flexShrink: 0 }}>
               {(["card", "table"] as const).map(mode => (
                 <button
                   key={mode}
                   onClick={() => setViewMode(mode)}
                   style={{
-                    padding: "8px 14px", border: "none",
+                    padding: "9px 16px", border: "none",
                     backgroundColor: viewMode === mode ? C.primary : C.white,
                     color: viewMode === mode ? C.white : C.muted,
                     fontSize: "12px", fontWeight: "600", fontFamily: "Inter, sans-serif",
                     cursor: "pointer", display: "flex", alignItems: "center", gap: "5px",
-                    transition: "all 0.15s ease", textTransform: "capitalize" as const,
+                    transition: "all 0.15s ease",
                   }}
                 >
                   {mode === "card" ? (
@@ -726,16 +712,16 @@ export default function PolicyPage() {
             </div>
           </div>
 
-          {/* Category filters - scrollable on mobile */}
-          <div style={{ display: "flex", gap: "8px", overflowX: "auto" as const, scrollbarWidth: "none" as const, marginBottom: "16px", paddingBottom: "4px" }}>
+          {/* Category filters */}
+          <div style={{ display: "flex", gap: "6px", overflowX: "auto" as const, scrollbarWidth: "none" as const, marginBottom: "16px", paddingBottom: "4px" }}>
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
                 onClick={() => { setActiveCategory(cat); setVisibleCount(BRIEFS_PER_PAGE); }}
                 style={{
-                  padding: "7px 14px", borderRadius: "50px", flexShrink: 0,
+                  padding: "6px 14px", borderRadius: "4px", flexShrink: 0,
                   border: `1px solid ${activeCategory === cat ? C.primary : C.line}`,
-                  backgroundColor: activeCategory === cat ? C.primary : C.white,
+                  backgroundColor: activeCategory === cat ? C.primary : "transparent",
                   color: activeCategory === cat ? C.white : C.text,
                   fontSize: "12px", fontWeight: "500", cursor: "pointer",
                   fontFamily: "Inter, sans-serif", transition: "all 0.15s ease",
@@ -752,13 +738,12 @@ export default function PolicyPage() {
             display: "flex", gap: "0", overflowX: "auto" as const,
             scrollbarWidth: "none" as const, borderBottom: `1px solid ${C.line}`,
           }}>
-            <style>{`.sector-tabs::-webkit-scrollbar{display:none}`}</style>
             {SECTORS.map(s => (
               <button
                 key={s.key}
                 onClick={() => { setActiveSector(s.key); setVisibleCount(BRIEFS_PER_PAGE); }}
                 style={{
-                  padding: "10px 14px", border: "none", flexShrink: 0,
+                  padding: "10px 16px", border: "none", flexShrink: 0,
                   borderBottom: `2px solid ${activeSector === s.key ? C.primary : "transparent"}`,
                   backgroundColor: "transparent",
                   color: activeSector === s.key ? C.primary : C.muted,
@@ -775,45 +760,45 @@ export default function PolicyPage() {
       </section>
 
       {/* ── BRIEFS LIST / TABLE ──────────────────────────────────── */}
-      <section style={{ backgroundColor: C.background, padding: `32px ${HP} 64px` }}>
+      <section style={{ backgroundColor: C.white, padding: `32px ${HP} 72px` }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontSize: "13px", color: C.muted, marginBottom: "16px", fontFamily: "Inter, sans-serif" }}>
+          <div style={{ fontSize: "12px", color: C.muted, marginBottom: "20px", fontFamily: "Inter, sans-serif" }}>
             Showing <strong style={{ color: C.primary }}>{Math.min(visibleCount, filtered.length)}</strong> of{" "}
             <strong style={{ color: C.primary }}>{filtered.length}</strong> policy briefs
           </div>
 
           {filtered.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "64px 24px", backgroundColor: C.white, borderRadius: "16px", border: `1px solid ${C.line}` }}>
-              <h3 style={{ fontSize: "18px", fontWeight: "600", color: C.primary, margin: "0 0 8px" }}>No briefs match your filters</h3>
-              <p style={{ fontSize: "14px", color: C.muted, margin: 0 }}>Try adjusting your sector filter or search query.</p>
+            <div style={{ textAlign: "center", padding: "72px 24px", backgroundColor: C.background, borderRadius: "10px", border: `1px solid ${C.line}` }}>
+              <h3 style={{ fontSize: "16px", fontWeight: "600", color: C.primary, margin: "0 0 8px" }}>No briefs match your filters</h3>
+              <p style={{ fontSize: "13px", color: C.muted, margin: 0 }}>Try adjusting your sector filter or search query.</p>
             </div>
           ) : viewMode === "card" ? (
             <>
-              <div style={{ display: "flex", flexDirection: "column" as const, gap: "10px" }}>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: "8px" }}>
                 {visibleBriefs.map(brief => <BriefCard key={brief.id} brief={brief} />)}
               </div>
               {hasMore && (
-                <div style={{ textAlign: "center", marginTop: "28px" }}>
+                <div style={{ textAlign: "center", marginTop: "32px" }}>
                   <button
                     onClick={() => setVisibleCount(c => c + BRIEFS_PER_PAGE)}
                     style={{
-                      padding: "13px 32px", borderRadius: "50px",
-                      border: `1px solid ${C.line}`, backgroundColor: C.white,
+                      padding: "11px 32px", borderRadius: "6px",
+                      border: `1px solid ${C.line}`, backgroundColor: "transparent",
                       color: C.primary, fontFamily: "Inter, sans-serif",
-                      fontSize: "14px", fontWeight: "600", cursor: "pointer",
+                      fontSize: "13px", fontWeight: "600", cursor: "pointer",
                       display: "inline-flex", alignItems: "center", gap: "8px",
                       transition: "all 0.2s ease",
                     }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.primary; (e.currentTarget as HTMLButtonElement).style.color = C.white; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.white; (e.currentTarget as HTMLButtonElement).style.color = C.primary; }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.primary; (e.currentTarget as HTMLButtonElement).style.color = C.white; (e.currentTarget as HTMLButtonElement).style.borderColor = C.primary; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = C.primary; (e.currentTarget as HTMLButtonElement).style.borderColor = C.line; }}
                   >
-                    Load more briefs
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    Load more
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
                   </button>
                   <p style={{ fontSize: "12px", color: C.muted, marginTop: "8px" }}>
-                    {filtered.length - Math.min(visibleCount, filtered.length)} more brief{filtered.length - Math.min(visibleCount, filtered.length) !== 1 ? "s" : ""} available
+                    {filtered.length - Math.min(visibleCount, filtered.length)} more available
                   </p>
                 </div>
               )}
@@ -821,22 +806,22 @@ export default function PolicyPage() {
           ) : (
             /* Table view — only on desktop, card fallback on mobile */
             isMobile ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                 {visibleBriefs.map(brief => <BriefCard key={brief.id} brief={brief} />)}
                 {hasMore && (
                   <button onClick={() => setVisibleCount(c => c + BRIEFS_PER_PAGE)}
-                    style={{ padding: "12px 24px", borderRadius: "50px", border: `1px solid ${C.line}`, backgroundColor: C.white, color: C.primary, fontSize: "13px", fontWeight: "600", cursor: "pointer", fontFamily: "Inter, sans-serif", marginTop: "8px" }}>
-                    Load more →
+                    style={{ padding: "10px 24px", borderRadius: "6px", border: `1px solid ${C.line}`, backgroundColor: "transparent", color: C.primary, fontSize: "13px", fontWeight: "600", cursor: "pointer", fontFamily: "Inter, sans-serif", marginTop: "8px" }}>
+                    Load more
                   </button>
                 )}
               </div>
             ) : (
-              <div style={{ backgroundColor: C.white, borderRadius: "14px", border: `1px solid ${C.line}`, overflow: "hidden" }}>
+              <div style={{ backgroundColor: C.white, borderRadius: "10px", border: `1px solid ${C.line}`, overflow: "hidden" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse" as const, fontFamily: "Inter, sans-serif" }}>
                   <thead>
-                    <tr style={{ backgroundColor: C.background, borderBottom: `2px solid ${C.line}` }}>
+                    <tr style={{ backgroundColor: C.background, borderBottom: `1px solid ${C.line}` }}>
                       {["Brief / Category", "Sector", "Status", "Date"].map(h => (
-                        <th key={h} style={{ padding: "12px 12px", textAlign: "left" as const, fontSize: "10px", fontWeight: "700", color: C.muted, textTransform: "uppercase" as const, letterSpacing: "1px", whiteSpace: "nowrap" as const }}>
+                        <th key={h} style={{ padding: "12px 16px", textAlign: "left" as const, fontSize: "10px", fontWeight: "700", color: C.muted, textTransform: "uppercase" as const, letterSpacing: "1px", whiteSpace: "nowrap" as const }}>
                           {h}
                         </th>
                       ))}
@@ -849,8 +834,8 @@ export default function PolicyPage() {
                 {hasMore && (
                   <div style={{ padding: "18px", borderTop: `1px solid ${C.line}`, textAlign: "center" }}>
                     <button onClick={() => setVisibleCount(c => c + BRIEFS_PER_PAGE)}
-                      style={{ padding: "9px 24px", borderRadius: "50px", border: `1px solid ${C.line}`, backgroundColor: "transparent", color: C.primary, fontFamily: "Inter, sans-serif", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
-                      Load {Math.min(BRIEFS_PER_PAGE, filtered.length - visibleCount)} more →
+                      style={{ padding: "9px 24px", borderRadius: "6px", border: `1px solid ${C.line}`, backgroundColor: "transparent", color: C.primary, fontFamily: "Inter, sans-serif", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
+                      Load {Math.min(BRIEFS_PER_PAGE, filtered.length - visibleCount)} more
                     </button>
                   </div>
                 )}
@@ -861,34 +846,28 @@ export default function PolicyPage() {
       </section>
 
       {/* ── CATEGORIES PREVIEW ──────────────────────────────────── */}
-      <section style={{ backgroundColor: C.white, padding: `${isMobile ? "48px" : "72px"} ${HP}` }}>
+      <section style={{ backgroundColor: C.background, padding: `${isMobile ? "48px" : "72px"} ${HP}` }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "36px" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "7px 16px", border: `1px solid ${C.line}`, borderRadius: "50px", fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px", color: C.primary, marginBottom: "16px", textTransform: "uppercase" as const }}>
-              Intelligence Categories
-            </div>
-            <h2 style={{ fontSize: "clamp(22px, 3vw, 30px)", fontWeight: "300", color: C.primary, margin: "0 0 10px", fontFamily: "Inter, sans-serif" }}>
-              Four pillars of <strong style={{ fontWeight: "700" }}>policy intelligence</strong>
+          <div style={{ marginBottom: "32px" }}>
+            <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "300", color: C.primary, margin: "0 0 8px", fontFamily: "Inter, sans-serif" }}>
+              Policy intelligence by <strong style={{ fontWeight: "700" }}>category</strong>
             </h2>
-            <p style={{ fontSize: "14px", color: C.text, lineHeight: "1.6", maxWidth: "520px", margin: "0 auto" }}>
-              Our policy intelligence hub tracks developments across regulatory, legislative, analytical, and stakeholder dimensions.
+            <p style={{ fontSize: "14px", color: C.muted, lineHeight: "1.6", margin: 0, maxWidth: "480px" }}>
+              Tracking developments across regulatory, legislative, analytical, and stakeholder dimensions.
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: "14px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: "1px", backgroundColor: C.line, border: `1px solid ${C.line}`, borderRadius: "10px", overflow: "hidden" }}>
             {[
               { label: "Regulatory Frameworks", desc: "Licensing, compliance, and operating environment analysis.", count: BRIEFS.filter(b => b.category === "Regulatory Framework").length },
               { label: "Legislative Tracker", desc: "Pending and enacted legislation across Ghana's 12 BRIDGE sectors.", count: BRIEFS.filter(b => b.category === "Legislation").length },
               { label: "Policy Briefs", desc: "Concise analyses of policy shifts and economic implications.", count: BRIEFS.filter(b => b.category === "Policy Brief").length },
               { label: "Stakeholder Positions", desc: "Government, private sector, and civil society perspectives.", count: BRIEFS.filter(b => b.category === "Stakeholder Position").length },
             ].map(card => (
-              <div key={card.label} style={{ backgroundColor: C.background, borderRadius: "14px", padding: "22px", border: `1px solid ${C.line}` }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                  <div style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: C.accent }} />
-                  <span style={{ fontSize: "20px", fontWeight: "700", color: C.primary, fontFamily: "Inter, sans-serif" }}>{card.count}</span>
-                </div>
+              <div key={card.label} style={{ backgroundColor: C.white, padding: "24px" }}>
+                <div style={{ fontSize: "30px", fontWeight: "700", color: C.primary, fontFamily: "Inter, sans-serif", lineHeight: 1, marginBottom: "12px" }}>{card.count}</div>
                 <h3 style={{ fontSize: "13px", fontWeight: "600", color: C.primary, margin: "0 0 6px", fontFamily: "Inter, sans-serif", lineHeight: "1.3" }}>{card.label}</h3>
-                <p style={{ fontSize: "12px", color: C.text, lineHeight: "1.55", margin: 0 }}>{card.desc}</p>
+                <p style={{ fontSize: "12px", color: C.muted, lineHeight: "1.55", margin: 0 }}>{card.desc}</p>
               </div>
             ))}
           </div>
@@ -897,40 +876,40 @@ export default function PolicyPage() {
 
       {/* ── NEWSLETTER ──────────────────────────────────────────── */}
       <section style={{ backgroundColor: C.primary, padding: `${isMobile ? "56px" : "80px"} ${HP}` }}>
-        <div style={{ maxWidth: "680px", margin: "0 auto", textAlign: "center" }}>
+        <div style={{ maxWidth: "640px", margin: "0 auto", textAlign: "center" }}>
           <div style={{ marginBottom: "18px" }}>
             <Pill label="Stay Informed" />
           </div>
-          <h2 style={{ fontSize: "clamp(22px, 4vw, 36px)", fontWeight: "300", color: C.white, margin: "0 0 14px", lineHeight: "1.2", fontFamily: "Inter, sans-serif" }}>
-            Get policy updates{" "}
+          <h2 style={{ fontSize: "clamp(22px, 4vw, 34px)", fontWeight: "300", color: C.white, margin: "0 0 14px", lineHeight: "1.2", fontFamily: "Inter, sans-serif" }}>
+            Policy updates{" "}
             <span style={{ fontWeight: "700", color: C.accent }}>delivered to you</span>
           </h2>
-          <p style={{ fontSize: isMobile ? "14px" : "16px", color: "rgba(255,255,255,0.65)", lineHeight: "1.65", margin: "0 0 32px" }}>
-            Receive concise briefings whenever a significant regulatory change, new legislation, or policy shift affects Ghana's 12 BRIDGE sectors. No noise — only what matters to your work.
+          <p style={{ fontSize: isMobile ? "14px" : "15px", color: "rgba(255,255,255,0.6)", lineHeight: "1.7", margin: "0 0 32px" }}>
+            Receive concise briefings whenever a significant regulatory change, new legislation, or policy shift affects Ghana's 12 BRIDGE sectors. Only what matters to your work.
           </p>
 
           {subscribed ? (
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", backgroundColor: "rgba(184,217,53,0.15)", border: "1px solid rgba(184,217,53,0.35)", borderRadius: "50px", padding: "14px 28px" }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", backgroundColor: "rgba(184,217,53,0.12)", border: "1px solid rgba(184,217,53,0.3)", borderRadius: "8px", padding: "14px 28px" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span style={{ fontSize: "14px", fontWeight: "600", color: C.accent }}>You're subscribed — we'll be in touch.</span>
+              <span style={{ fontSize: "14px", fontWeight: "600", color: C.accent }}>Subscribed — we'll be in touch.</span>
             </div>
           ) : (
-            <div style={{ display: "flex", gap: "10px", maxWidth: "480px", margin: "0 auto", flexWrap: "wrap" as const }}>
+            <div style={{ display: "flex", gap: "8px", maxWidth: "460px", margin: "0 auto", flexWrap: "wrap" as const }}>
               <input
                 type="email" placeholder="Your email address" value={email}
                 onChange={e => setEmail(e.target.value)}
                 style={{
-                  flex: "1 1 200px", padding: "13px 18px", borderRadius: "50px",
-                  border: "1px solid rgba(255,255,255,0.2)", backgroundColor: "rgba(255,255,255,0.08)",
+                  flex: "1 1 200px", padding: "12px 18px", borderRadius: "6px",
+                  border: "1px solid rgba(255,255,255,0.15)", backgroundColor: "rgba(255,255,255,0.07)",
                   color: C.white, fontFamily: "Inter, sans-serif", fontSize: "14px", outline: "none",
                 }}
               />
               <button
                 onClick={() => { if (email.includes("@")) setSubscribed(true); }}
                 style={{
-                  padding: "13px 24px", borderRadius: "50px", border: "none",
+                  padding: "12px 24px", borderRadius: "6px", border: "none",
                   backgroundColor: C.accent, color: C.primary,
                   fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: "700", cursor: "pointer", flexShrink: 0,
                 }}
@@ -939,12 +918,11 @@ export default function PolicyPage() {
               </button>
             </div>
           )}
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", marginTop: "14px" }}>
+          <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", marginTop: "14px" }}>
             No spam. Unsubscribe at any time.
           </p>
         </div>
       </section>
-
 
       <SiteFooter />
     </div>
