@@ -312,11 +312,11 @@ export default function SiteFooter() {
         /* ═══ MOBILE FOOTER ═══ */
         <div style={{ padding: "32px 20px 16px", display: "flex", flexDirection: "column", gap: "24px" }}>
           {/* Row 1: Logo + Nav labels */}
-          <div style={{ display: "flex", alignItems: "flex-end", gap: "24px" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: "0" }}>
             <div style={{ flexShrink: 0 }}>
               <BridgeLogoWhite />
             </div>
-            <div style={{ display: "flex", gap: "12px", flexWrap: "nowrap", marginLeft: "auto", justifyContent: "flex-end", whiteSpace: "nowrap" }}>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "nowrap", marginLeft: "auto", alignItems: "flex-end", overflow: "hidden" }}>
               {(["Company", "Services", "Insight"] as const).map((label) => {
                 const href: Record<string, string> = {
                   Company: "/about",
@@ -332,8 +332,11 @@ export default function SiteFooter() {
                       fontSize: "11px",
                       fontWeight: "600",
                       color: "rgba(255,255,255,0.5)",
-                      letterSpacing: "0.5px",
+                      letterSpacing: "0px",
                       textDecoration: "none",
+                      whiteSpace: "nowrap",
+                      flexShrink: 0,
+                      lineHeight: "1",
                     }}
                   >
                     {label}
