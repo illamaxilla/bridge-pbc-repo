@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import {
@@ -2700,6 +2701,7 @@ const Footer = () => {
 };
 
 export default function ResourcesPage() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState("intelligence");
   const [mobile, setMobile] = useState(false);
   const [filter, setFilter] = useState("All");
@@ -2963,46 +2965,52 @@ export default function ResourcesPage() {
             </div>
           </div>
           <div
-            style={{ display: "flex", gap: "10px", flexShrink: 0, flexWrap: "wrap", width: mobile ? "100%" : "auto" }}
+            style={{ display: "flex", flexDirection: mobile ? "column" : "row", gap: "10px", flexShrink: 0, width: mobile ? "100%" : "auto" }}
           >
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                background: C.accent,
-                color: C.primary,
-                border: "none",
-                padding: "12px 22px",
-                borderRadius: "50px",
-                fontSize: "14px",
-                fontWeight: "700",
-                fontFamily: "Inter,sans-serif",
-                cursor: "pointer",
-                flex: mobile ? 1 : "none",
-              }}
-            >
-              <Lock size={13} />
-              Get Full Access
-              <ArrowUpRight size={14} />
-            </button>
-            <button
-              style={{
-                background: "transparent",
-                color: "rgba(255,255,255,0.65)",
-                border: "1px solid rgba(255,255,255,0.18)",
-                padding: "12px 22px",
-                borderRadius: "50px",
-                fontSize: "14px",
-                fontWeight: "600",
-                fontFamily: "Inter,sans-serif",
-                cursor: "pointer",
-                flex: mobile ? 1 : "none",
-              }}
-            >
-              Partner with BRIDGE
-            </button>
+            <a href="/login" onClick={(e) => { e.preventDefault(); navigate("/login"); }} style={{ textDecoration: "none", width: mobile ? "100%" : "auto" }}>
+              <button
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  background: C.accent,
+                  color: C.primary,
+                  border: "none",
+                  padding: "12px 22px",
+                  borderRadius: "50px",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  fontFamily: "Inter,sans-serif",
+                  cursor: "pointer",
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                <Lock size={13} />
+                Get Full Access
+                <ArrowUpRight size={14} />
+              </button>
+            </a>
+            <a href="/contact" onClick={(e) => { e.preventDefault(); navigate("/contact"); }} style={{ textDecoration: "none", width: mobile ? "100%" : "auto" }}>
+              <button
+                style={{
+                  background: "transparent",
+                  color: "rgba(255,255,255,0.65)",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  padding: "12px 22px",
+                  borderRadius: "50px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  fontFamily: "Inter,sans-serif",
+                  cursor: "pointer",
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                Partner with BRIDGE
+              </button>
+            </a>
           </div>
         </div>
       </section>
