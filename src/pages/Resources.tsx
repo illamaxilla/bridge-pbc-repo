@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
+import { BRIDGEAuthModal } from "@/components/AuthModal";
 import {
   Box,
   CreditCard,
