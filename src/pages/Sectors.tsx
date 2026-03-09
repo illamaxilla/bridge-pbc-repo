@@ -2455,7 +2455,9 @@ const Footer = () => {
                   {socialIcons.map((icon, i) => (
                     <a
                       key={i}
-                      href="#"
+                      href={SOCIAL_URLS[i]}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{
                         width: "34px",
                         height: "34px",
