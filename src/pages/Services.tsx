@@ -4947,7 +4947,20 @@ export default function ServicesSectorsPageV2() {
                       return (
                         <a
                           key={sector.key}
-                          href="#"
+                          href={({
+                            infra: "/sectors/infrastructure",
+                            fin: "/sectors/financial",
+                            health: "/sectors/health",
+                            tech: "/sectors/technology",
+                            edu: "/sectors/education",
+                            agri: "/sectors/agriculture",
+                            creative: "/sectors/sports",
+                            housing: "/sectors/housing",
+                            tourism: "/sectors/tourism",
+                            energy: "/sectors/energy",
+                            mfg: "/sectors/manufacturing",
+                            transport: "/sectors/transport",
+                          }[sector.key] ?? "/sectors")}
                           title={sector.label}
                           onMouseEnter={() => setFooterSectorHovered(i)}
                           onMouseLeave={() => setFooterSectorHovered(null)}
