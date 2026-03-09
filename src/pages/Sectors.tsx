@@ -1852,6 +1852,7 @@ const SectorGrid = () => {
 
 const CTA = () => {
   const mb = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section style={{ backgroundColor: colors.primary, padding: mb ? "16px 20px 56px" : "19px 80px 67px" }}>
       <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
@@ -1864,55 +1865,60 @@ const CTA = () => {
             alignItems: mb ? "stretch" : "center",
           }}
         >
-          <button
-            className="cta-lime-swap"
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              border: "none",
-              padding: mb ? "14px 24px" : "16px 28px",
-              fontSize: mb ? "14px" : "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              borderRadius: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
-            }}
-          >
-            Request Full Access
-            <span
-              className="cta-btn-arrow"
+          <a href="/login" onClick={(e) => { e.preventDefault(); navigate("/login"); }} style={{ textDecoration: "none" }}>
+            <button
               style={{
-                width: "32px",
-                height: "32px",
-                backgroundColor: colors.primary,
-                borderRadius: "50%",
+                backgroundColor: colors.accent,
+                color: colors.primary,
+                border: "none",
+                padding: mb ? "14px 24px" : "16px 28px",
+                fontSize: mb ? "14px" : "15px",
+                fontWeight: "600",
+                fontFamily: "Inter, sans-serif",
+                cursor: "pointer",
+                borderRadius: "50px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                gap: "10px",
+                width: mb ? "100%" : "auto",
               }}
             >
-              <Arr s={12} c={colors.white} />
-            </span>
-          </button>
-          <button
-            style={{
-              backgroundColor: "transparent",
-              color: colors.white,
-              border: "2px solid rgba(255,255,255,0.3)",
-              padding: mb ? "14px 24px" : "16px 28px",
-              fontSize: mb ? "14px" : "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              borderRadius: "50px",
-            }}
-          >
-            Schedule a Briefing
-          </button>
+              Request Full Access
+              <span
+                className="cta-btn-arrow"
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  backgroundColor: colors.primary,
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Arr s={12} c={colors.white} />
+              </span>
+            </button>
+          </a>
+          <a href="/contact" onClick={(e) => { e.preventDefault(); navigate("/contact"); }} style={{ textDecoration: "none" }}>
+            <button
+              style={{
+                backgroundColor: "transparent",
+                color: colors.white,
+                border: "2px solid rgba(255,255,255,0.3)",
+                padding: mb ? "14px 24px" : "16px 28px",
+                fontSize: mb ? "14px" : "15px",
+                fontWeight: "600",
+                fontFamily: "Inter, sans-serif",
+                cursor: "pointer",
+                borderRadius: "50px",
+                width: mb ? "100%" : "auto",
+              }}
+            >
+              Schedule a Briefing
+            </button>
+          </a>
         </div>
       </div>
     </section>
