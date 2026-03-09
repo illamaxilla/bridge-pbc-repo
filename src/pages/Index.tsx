@@ -1593,7 +1593,8 @@ export default function BRIDGEHomePage() {
               connections that turn fragmented potential into shared prosperity.
             </p>
             {!isMobile && (
-              <button
+              <Link
+                to="/methodology"
                 className="cta-approach"
                 style={{
                   backgroundColor: colors.primary,
@@ -1610,6 +1611,7 @@ export default function BRIDGEHomePage() {
                   gap: "10px",
                   marginTop: "auto",
                   alignSelf: "flex-start",
+                  textDecoration: "none",
                 }}
               >
                 See How It Works
@@ -1630,7 +1632,7 @@ export default function BRIDGEHomePage() {
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </span>
-              </button>
+              </Link>
             )}
           </div>
 
