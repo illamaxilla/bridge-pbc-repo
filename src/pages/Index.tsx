@@ -1024,15 +1024,33 @@ export default function BRIDGEHomePage() {
             position: "relative",
           }}
         >
+          {/* Crossfade: aerial cityscape */}
           <img
             src={heroBridge}
             alt="Aerial view of Ghana cityscape and agricultural landscape at sunrise"
+            className="hero-img-1"
             style={{
+              position: "absolute",
+              inset: 0,
               width: "100%",
               height: "100%",
               objectFit: "cover",
               objectPosition: "center 40%",
-              display: "block",
+            }}
+          />
+          {/* Crossfade: people in community setting */}
+          <img
+            src={heroPeople}
+            alt="Diverse business professionals collaborating in Accra, Ghana"
+            className="hero-img-2"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center 30%",
+              opacity: 0,
             }}
           />
           <div
@@ -1041,6 +1059,7 @@ export default function BRIDGEHomePage() {
               inset: 0,
               background: "linear-gradient(to bottom, rgba(27,77,62,0.15) 0%, rgba(27,77,62,0.05) 60%, rgba(27,77,62,0.3) 100%)",
               borderRadius: "inherit",
+              zIndex: 1,
             }}
           />
         </div>
