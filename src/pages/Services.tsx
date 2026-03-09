@@ -1713,6 +1713,7 @@ export default function ServicesSectorsPageV2() {
                 </div>
 
                 {/* CTA Button - pushed to bottom */}
+                <a href="/contact" style={{ textDecoration: "none" }}>
                 <button
                   className="cta-lime"
                   style={{
@@ -1756,6 +1757,7 @@ export default function ServicesSectorsPageV2() {
                     </svg>
                   </span>
                 </button>
+                </a>
               </div>
 
               {/* Right - Sector Icons Grid + Highlight Tags */}
@@ -2417,6 +2419,7 @@ export default function ServicesSectorsPageV2() {
 
             {/* CTA Button */}
             <div style={{ marginTop: isMobile ? "28px" : "40px" }}>
+              <a href="/contact" style={{ textDecoration: "none", width: isMobile ? "100%" : "auto" }}>
               <button
                 style={{
                   backgroundColor: colors.accent,
@@ -2453,6 +2456,7 @@ export default function ServicesSectorsPageV2() {
                   </svg>
                 </span>
               </button>
+              </a>
             </div>
           </div>
         </div>
@@ -2796,6 +2800,7 @@ export default function ServicesSectorsPageV2() {
                             </span>
                           ))}
                         </div>
+                        <a href="/login" style={{ textDecoration: "none", width: "100%" }}>
                         <button
                           style={{
                             backgroundColor: colors.accent,
@@ -2827,6 +2832,7 @@ export default function ServicesSectorsPageV2() {
                             <path d="M7 17L17 7M17 7H7M17 7V17" />
                           </svg>
                         </button>
+                        </a>
                       </div>
                     )}
                   </div>
@@ -3131,6 +3137,7 @@ export default function ServicesSectorsPageV2() {
                       </div>
 
                       {/* View Full Analysis Button */}
+                      <a href="/login" style={{ textDecoration: "none", width: "100%" }}>
                       <button
                         style={{
                           backgroundColor: colors.accent,
@@ -3162,6 +3169,7 @@ export default function ServicesSectorsPageV2() {
                           <path d="M7 17L17 7M17 7H7M17 7V17" />
                         </svg>
                       </button>
+                      </a>
                     </div>
                   )}
                 </div>
@@ -3278,6 +3286,7 @@ export default function ServicesSectorsPageV2() {
 
               {/* CTA - hidden on mobile, shown after pathways */}
               {!isMobile && (
+                <a href="/methodology" style={{ textDecoration: "none" }}>
                 <button
                   style={{
                     backgroundColor: colors.primary,
@@ -3311,6 +3320,7 @@ export default function ServicesSectorsPageV2() {
                     </svg>
                   </span>
                 </button>
+                </a>
               )}
             </div>
 
@@ -3502,6 +3512,7 @@ export default function ServicesSectorsPageV2() {
                 )}
 
                 {/* Mobile CTA - below pathways */}
+                <a href="/contact" style={{ textDecoration: "none", width: "100%" }}>
                 <button
                   style={{
                     backgroundColor: colors.primary,
@@ -3538,6 +3549,7 @@ export default function ServicesSectorsPageV2() {
                     </svg>
                   </span>
                 </button>
+                </a>
               </div>
             ) : (
               <div
@@ -4935,7 +4947,20 @@ export default function ServicesSectorsPageV2() {
                       return (
                         <a
                           key={sector.key}
-                          href="#"
+                          href={({
+                            infra: "/sectors/infrastructure",
+                            fin: "/sectors/financial",
+                            health: "/sectors/health",
+                            tech: "/sectors/technology",
+                            edu: "/sectors/education",
+                            agri: "/sectors/agriculture",
+                            creative: "/sectors/sports",
+                            housing: "/sectors/housing",
+                            tourism: "/sectors/tourism",
+                            energy: "/sectors/energy",
+                            mfg: "/sectors/manufacturing",
+                            transport: "/sectors/transport",
+                          }[sector.key] ?? "/sectors")}
                           title={sector.label}
                           onMouseEnter={() => setFooterSectorHovered(i)}
                           onMouseLeave={() => setFooterSectorHovered(null)}

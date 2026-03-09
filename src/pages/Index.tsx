@@ -908,6 +908,7 @@ export default function BRIDGEHomePage() {
                 animation: "fadeUp 0.8s ease-out 0.2s both",
               }}
             >
+              <a href="/services" style={{ textDecoration: "none" }}>
               <button
                 className="cta-primary"
                 style={{
@@ -943,6 +944,7 @@ export default function BRIDGEHomePage() {
                   </svg>
                 </span>
               </button>
+              </a>
               <a href="/login" style={{ textDecoration: "none" }}>
                 <button
                   className="cta-secondary"
@@ -1588,6 +1590,7 @@ export default function BRIDGEHomePage() {
               connections that turn fragmented potential into shared prosperity.
             </p>
             {!isMobile && (
+              <a href="/methodology" style={{ textDecoration: "none" }}>
               <button
                 className="cta-approach"
                 style={{
@@ -1626,6 +1629,7 @@ export default function BRIDGEHomePage() {
                   </svg>
                 </span>
               </button>
+              </a>
             )}
           </div>
 
@@ -1909,6 +1913,7 @@ export default function BRIDGEHomePage() {
                   Opportunity to Impact
                 </h2>
               </div>
+              <a href="/methodology" style={{ textDecoration: "none" }}>
               <button
                 className="cta-learn-more"
                 style={{
@@ -1932,6 +1937,7 @@ export default function BRIDGEHomePage() {
                   <path d="M7 17L17 7M17 7H7M17 7V17" />
                 </svg>
               </button>
+              </a>
             </div>
             <div
               style={
@@ -2576,6 +2582,7 @@ export default function BRIDGEHomePage() {
               Connecting <span style={{ fontWeight: "700" }}>Resources</span>, Building Pathways —{" "}
               <span style={{ fontWeight: "700", color: colors.accent }}>Join Us!</span>
             </h3>
+            <a href="/services" style={{ textDecoration: "none" }}>
             <button
               style={{
                 backgroundColor: colors.accent,
@@ -2618,6 +2625,7 @@ export default function BRIDGEHomePage() {
                 </svg>
               </span>
             </button>
+            </a>
           </div>
         </div>
       </section>
@@ -3024,6 +3032,7 @@ export default function BRIDGEHomePage() {
                 >
                   A development engine — identifying opportunities, connecting resources, and initiating ventures.
                 </p>
+                <a href="/about" style={{ textDecoration: "none" }}>
                 <button
                   style={{
                     backgroundColor: colors.accent,
@@ -3046,6 +3055,7 @@ export default function BRIDGEHomePage() {
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </button>
+                </a>
               </div>
             </div>
           ) : (
@@ -3179,6 +3189,7 @@ export default function BRIDGEHomePage() {
                     BRIDGE is a development engine — identifying opportunities, connecting resources, and initiating
                     ventures. Let's work together to create a lasting impact.
                   </p>
+                  <a href="/about" style={{ textDecoration: "none" }}>
                   <button
                     style={{
                       backgroundColor: colors.primary,
@@ -3220,6 +3231,7 @@ export default function BRIDGEHomePage() {
                       </svg>
                     </span>
                   </button>
+                  </a>
                 </div>
               </div>
             </>
