@@ -2743,15 +2743,15 @@ export default function BRIDGEHomePage() {
               </div>
             )}
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "8px", ...(isMobile ? { maxHeight: "420px", overflowY: "auto", paddingRight: "4px" } : {}) }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                 {sectorData.slice(0, isMobile ? 12 : 6).map((sector, index) => {
                   const isOpen = openSector === index;
                   return (
                     <div
                       key={index}
                       style={{
-                        backgroundColor: isOpen ? colors.primary : colors.white,
-                        border: `1px solid ${isOpen ? "transparent" : colors.line}`,
+                        backgroundColor: isOpen ? colors.primary : colors.background,
+                        border: "none",
                         borderRadius: "14px",
                         overflow: "hidden",
                         transition: "background-color 0.3s ease",
