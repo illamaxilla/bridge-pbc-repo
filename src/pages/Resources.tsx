@@ -3024,6 +3024,15 @@ export default function ResourcesPage() {
       </section>
 
       <SiteFooter />
+      <BRIDGEAuthModal
+        isOpen={showAuth}
+        onClose={() => setShowAuth(false)}
+        defaultTab="signin"
+        onSignInSuccess={() => {
+          sessionStorage.setItem("bridge_authed", "1");
+          setShowAuth(false);
+        }}
+      />
     </div>
   );
 }
