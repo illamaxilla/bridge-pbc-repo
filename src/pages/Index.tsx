@@ -3752,7 +3752,42 @@ export default function BRIDGEHomePage() {
                       }}
                     />
                   </div>
+                  {contactSubmitted ? (
+                    <div
+                      style={{
+                        backgroundColor: colors.accent,
+                        borderRadius: "16px",
+                        padding: "32px 24px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <div style={{ fontSize: "32px", marginBottom: "12px" }}>✓</div>
+                      <p
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: "600",
+                          color: colors.primary,
+                          fontFamily: "Inter, sans-serif",
+                          margin: "0 0 8px 0",
+                        }}
+                      >
+                        Message sent!
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          color: colors.primary,
+                          fontFamily: "Inter, sans-serif",
+                          opacity: 0.7,
+                          margin: 0,
+                        }}
+                      >
+                        We'll be in touch within one business day.
+                      </p>
+                    </div>
+                  ) : (
                   <button
+                    onClick={() => setContactSubmitted(true)}
                     style={{
                       backgroundColor: colors.accent,
                       color: colors.primary,
@@ -3767,6 +3802,7 @@ export default function BRIDGEHomePage() {
                   >
                     Send Message
                   </button>
+                  )}
                 </div>
                 <div
                   style={{
