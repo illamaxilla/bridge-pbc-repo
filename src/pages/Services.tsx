@@ -2419,6 +2419,7 @@ export default function ServicesSectorsPageV2() {
 
             {/* CTA Button */}
             <div style={{ marginTop: isMobile ? "28px" : "40px" }}>
+              <a href="/contact" style={{ textDecoration: "none", width: isMobile ? "100%" : "auto" }}>
               <button
                 style={{
                   backgroundColor: colors.accent,
@@ -2455,6 +2456,7 @@ export default function ServicesSectorsPageV2() {
                   </svg>
                 </span>
               </button>
+              </a>
             </div>
           </div>
         </div>
