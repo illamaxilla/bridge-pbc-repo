@@ -2370,7 +2370,7 @@ const Footer = () => {
                       {col.ls.map((l) => (
                         <a
                           key={l}
-                          href="#"
+                          href={FOOTER_LINK_MAP[l] || "#"}
                           style={{
                             display: "block",
                             fontSize: "14px",
