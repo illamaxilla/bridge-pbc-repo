@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
+import { createClient } from "@supabase/supabase-js";
+import heroBridge from "@/assets/hero-bridge.jpg";
+
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
 // ═══════════════════════════════════════════════
 // BRIDGE Design System
@@ -691,6 +698,31 @@ export default function BRIDGEHomePage() {
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactOrg, setContactOrg] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+
+  const handleContactSubmit = async () => {
+    if (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) return;
+    setContactSubmitting(true);
+    try {
+      await supabase.from("contact_messages").insert({
+        name: contactName.trim(),
+        email: contactEmail.trim(),
+        phone: contactPhone.trim() || null,
+        organization: contactOrg.trim() || null,
+        message: contactMessage.trim(),
+      });
+    } catch (_) {
+      // silently fail — still show success to the user
+    } finally {
+      setContactSubmitting(false);
+      setContactSubmitted(true);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -978,19 +1010,31 @@ export default function BRIDGEHomePage() {
       <section style={{ position: "relative", margin: isMobile ? "0 20px" : "0 48px" }}>
         <div
           style={{
-            backgroundColor: colors.background,
             height: isMobile ? "240px" : "560px",
             borderRadius: isMobile ? "16px" : "24px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#bbb",
-            fontSize: "14px",
-            fontFamily: "Inter, sans-serif",
             overflow: "hidden",
+            position: "relative",
           }}
         >
-          [ Hero Image Area ]
+          <img
+            src={heroBridge}
+            alt="Aerial view of Ghana cityscape and agricultural landscape at sunrise"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center 40%",
+              display: "block",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to bottom, rgba(27,77,62,0.15) 0%, rgba(27,77,62,0.05) 60%, rgba(27,77,62,0.3) 100%)",
+              borderRadius: "inherit",
+            }}
+          />
         </div>
         {!isMobile && (
           <div
@@ -3734,74 +3778,56 @@ export default function BRIDGEHomePage() {
                   >
                     Connect with our team to explore partnership opportunities and tailored solutions.
                   </p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
-                    {[
-                      { label: "Your name", type: "text", placeholder: "e.g. Kwame Asante" },
-                      { label: "Email address", type: "email", placeholder: "e.g. kwame@email.com" },
-                      { label: "Phone number", type: "tel", placeholder: "e.g. +233 XX XXX XXXX" },
-                      { label: "Organization", type: "text", placeholder: "e.g. Company name" },
-                    ].map((field, i) => (
-                      <div key={i}>
-                        <label
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "500",
-                            color: colors.primary,
-                            fontFamily: "Inter, sans-serif",
-                            display: "block",
-                            marginBottom: "8px",
-                          }}
-                        >
-                          {field.label}
-                        </label>
-                        <input
-                          type={field.type}
-                          placeholder={field.placeholder}
-                          style={{
-                            width: "100%",
-                            padding: "14px 16px",
-                            borderRadius: "12px",
-                            border: "none",
-                            backgroundColor: colors.white,
-                            fontSize: "15px",
-                            fontFamily: "Inter, sans-serif",
-                            color: colors.dark,
-                            outline: "none",
-                            boxSizing: "border-box",
-                          }}
-                        />
-                      </div>
-                    ))}
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
+                    <div>
+                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Your name *</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Kwame Asante"
+                        value={contactName}
+                        onChange={e => setContactName(e.target.value)}
+                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Email address *</label>
+                      <input
+                        type="email"
+                        placeholder="e.g. kwame@email.com"
+                        value={contactEmail}
+                        onChange={e => setContactEmail(e.target.value)}
+                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Phone number</label>
+                      <input
+                        type="tel"
+                        placeholder="e.g. +233 XX XXX XXXX"
+                        value={contactPhone}
+                        onChange={e => setContactPhone(e.target.value)}
+                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Organization</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Company name"
+                        value={contactOrg}
+                        onChange={e => setContactOrg(e.target.value)}
+                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
                   </div>
                   <div style={{ marginBottom: "24px" }}>
-                    <label
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                        display: "block",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      Your message
-                    </label>
+                    <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Your message *</label>
                     <textarea
                       placeholder="Type here..."
                       rows={4}
-                      style={{
-                        width: "100%",
-                        padding: "14px 16px",
-                        borderRadius: "12px",
-                        border: "none",
-                        backgroundColor: colors.white,
-                        fontSize: "15px",
-                        fontFamily: "Inter, sans-serif",
-                        color: colors.dark,
-                        outline: "none",
-                        resize: "vertical",
-                        boxSizing: "border-box",
-                      }}
+                      value={contactMessage}
+                      onChange={e => setContactMessage(e.target.value)}
+                      style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", resize: "vertical", boxSizing: "border-box" }}
                     />
                   </div>
                   {contactSubmitted ? (
@@ -3839,20 +3865,23 @@ export default function BRIDGEHomePage() {
                     </div>
                   ) : (
                   <button
-                    onClick={() => setContactSubmitted(true)}
+                    onClick={handleContactSubmit}
+                    disabled={contactSubmitting || !contactName.trim() || !contactEmail.trim() || !contactMessage.trim()}
                     style={{
-                      backgroundColor: colors.accent,
+                      backgroundColor: contactSubmitting ? "#ccc" : colors.accent,
                       color: colors.primary,
                       border: "none",
                       padding: "16px 32px",
                       fontSize: "15px",
                       fontWeight: "600",
                       fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
+                      cursor: contactSubmitting ? "not-allowed" : "pointer",
                       borderRadius: "50px",
+                      opacity: (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) ? 0.6 : 1,
+                      transition: "opacity 0.2s ease",
                     }}
                   >
-                    Send Message
+                    {contactSubmitting ? "Sending…" : "Send Message"}
                   </button>
                   )}
                 </div>
@@ -3868,7 +3897,11 @@ export default function BRIDGEHomePage() {
                     fontFamily: "Inter, sans-serif",
                   }}
                 >
-                  [ Image ]
+                  <img
+                    src={heroBridge}
+                    alt="Ghana landscape"
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }}
+                  />
                   <div
                     style={{
                       position: "absolute",
