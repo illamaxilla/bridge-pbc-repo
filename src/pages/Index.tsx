@@ -2129,7 +2129,7 @@ export default function BRIDGEHomePage() {
                       )}
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
