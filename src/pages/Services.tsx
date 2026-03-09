@@ -3137,6 +3137,7 @@ export default function ServicesSectorsPageV2() {
                       </div>
 
                       {/* View Full Analysis Button */}
+                      <a href="/login" style={{ textDecoration: "none", width: "100%" }}>
                       <button
                         style={{
                           backgroundColor: colors.accent,
@@ -3168,6 +3169,7 @@ export default function ServicesSectorsPageV2() {
                           <path d="M7 17L17 7M17 7H7M17 7V17" />
                         </svg>
                       </button>
+                      </a>
                     </div>
                   )}
                 </div>
