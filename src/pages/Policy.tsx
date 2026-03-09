@@ -434,7 +434,7 @@ function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: bool
       {/* Content */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "5px", flexWrap: "wrap" as const }}>
-          <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "20px", color: typeCfg.color, background: typeCfg.bg }}>
+          <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "20px", color: C.primary, background: C.background, border: `1px solid ${C.line}` }}>
             {typeCfg.label}
           </span>
           <span style={{ fontSize: "11px", color: C.muted }}>{ev.sector}</span>
