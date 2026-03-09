@@ -2472,8 +2472,6 @@ export default function BRIDGESectorsLanding() {
         .cta-primary { transition: all 0.3s ease; }
         .cta-primary:hover { background-color: #B8D935 !important; color: #1B4D3E !important; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(184,217,53,0.3); }
         .cta-primary:hover .cta-btn-arrow { background-color: rgba(27,77,62,0.15) !important; }
-        .cta-lime-swap { transition: all 0.3s ease; }
-        .cta-lime-swap:hover { background-color: #1B4D3E !important; color: #FFFFFF !important; transform: translateY(-1px); }
         .value-card { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s cubic-bezier(0.4,0,0.2,1), border-color 0.35s ease; }
         .header-icon { transition: all 0.25s ease; cursor: pointer; }
         .header-icon:hover { color: #1B4D3E !important; }
