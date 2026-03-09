@@ -33,6 +33,7 @@ import Education from "./pages/sectors/Education";
 import Agriculture from "./pages/sectors/Agriculture";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
+import ContactMessages from "./pages/admin/ContactMessages";
 import Sectors from "./pages/Sectors";
 import Policy from "./pages/Policy";
 
@@ -85,6 +86,7 @@ const App = () => (
           <Route path="/community/resources" element={<CommunityHome />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin/messages" element={<ContactMessages />} />
           <Route path="/sectors" element={<Sectors />} />
           <Route path="/policy" element={<Policy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
