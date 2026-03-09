@@ -687,6 +687,18 @@ export default function BRIDGEHomePage() {
   const [tabTransition, setTabTransition] = useState(false);
   const [openSector, setOpenSector] = useState(null);
   const [insightIndex, setInsightIndex] = useState(0);
+  const insightScrollRef = useRef<HTMLDivElement>(null);
+
+  const handleInsightScroll = () => {
+    if (!insightScrollRef.current) return;
+    const { scrollLeft, clientWidth } = insightScrollRef.current;
+    setInsightIndex(Math.round(scrollLeft / clientWidth));
+  };
+
+  const scrollToInsight = (i: number) => {
+    if (!insightScrollRef.current) return;
+    insightScrollRef.current.scrollTo({ left: i * insightScrollRef.current.clientWidth, behavior: "smooth" });
+  };
   const [hoveredInsight, setHoveredInsight] = useState(null);
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
