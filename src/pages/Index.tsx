@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
-import { supabase } from "@/integrations/supabase/client";
-import heroBridge from "@/assets/hero-bridge.jpg";
-import heroPeople from "@/assets/hero-people.jpg";
 
 // ═══════════════════════════════════════════════
 // BRIDGE Design System
@@ -693,44 +690,6 @@ export default function BRIDGEHomePage() {
   const [hoveredInsight, setHoveredInsight] = useState(null);
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
-  const [contactSubmitted, setContactSubmitted] = useState(false);
-  const [contactName, setContactName] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [contactPhone, setContactPhone] = useState("");
-  const [contactOrg, setContactOrg] = useState("");
-  const [contactMessage, setContactMessage] = useState("");
-  const [contactSubmitting, setContactSubmitting] = useState(false);
-
-  const handleContactSubmit = async () => {
-    if (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) return;
-    setContactSubmitting(true);
-    try {
-      const { data, error } = await supabase.from("contact_messages").insert({
-        name: contactName.trim(),
-        email: contactEmail.trim(),
-        phone: contactPhone.trim() || null,
-        organization: contactOrg.trim() || null,
-        message: contactMessage.trim(),
-      }).select().single();
-      if (!error && data) {
-        // Fire-and-forget email notification via edge function
-        supabase.functions.invoke("send-contact-notification", {
-          body: {
-            name: data.name,
-            email: data.email,
-            phone: data.phone,
-            organization: data.organization,
-            message: data.message,
-          },
-        }).catch(() => {}); // ignore errors — email is best-effort
-      }
-    } catch (_) {
-      // silently fail — still show success to the user
-    } finally {
-      setContactSubmitting(false);
-      setContactSubmitted(true);
-    }
-  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -856,18 +815,6 @@ export default function BRIDGEHomePage() {
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes govScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        @keyframes heroCrossfade {
-          0%, 40% { opacity: 1; }
-          50%, 90% { opacity: 0; }
-          100% { opacity: 1; }
-        }
-        @keyframes heroCrossfade2 {
-          0%, 40% { opacity: 0; }
-          50%, 90% { opacity: 1; }
-          100% { opacity: 0; }
-        }
-        .hero-img-1 { animation: heroCrossfade 10s ease-in-out infinite; }
-        .hero-img-2 { animation: heroCrossfade2 10s ease-in-out infinite; }
         .stat-card { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
         .stat-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(27, 77, 62, 0.14) !important; }
         .cta-primary { transition: all 0.3s ease; }
@@ -961,8 +908,7 @@ export default function BRIDGEHomePage() {
                 animation: "fadeUp 0.8s ease-out 0.2s both",
               }}
             >
-              <Link
-                to="/about"
+              <button
                 className="cta-primary"
                 style={{
                   backgroundColor: colors.primary,
@@ -977,7 +923,6 @@ export default function BRIDGEHomePage() {
                   display: "flex",
                   alignItems: "center",
                   gap: "8px",
-                  textDecoration: "none",
                 }}
               >
                 Explore Our Work
@@ -997,7 +942,7 @@ export default function BRIDGEHomePage() {
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </span>
-              </Link>
+              </button>
               <a href="/login" style={{ textDecoration: "none" }}>
                 <button
                   className="cta-secondary"
@@ -1030,50 +975,19 @@ export default function BRIDGEHomePage() {
       <section style={{ position: "relative", margin: isMobile ? "0 20px" : "0 48px" }}>
         <div
           style={{
+            backgroundColor: colors.background,
             height: isMobile ? "240px" : "560px",
             borderRadius: isMobile ? "16px" : "24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#bbb",
+            fontSize: "14px",
+            fontFamily: "Inter, sans-serif",
             overflow: "hidden",
-            position: "relative",
           }}
         >
-          {/* Crossfade: aerial cityscape */}
-          <img
-            src={heroBridge}
-            alt="Aerial view of Ghana cityscape and agricultural landscape at sunrise"
-            className="hero-img-1"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center 40%",
-            }}
-          />
-          {/* Crossfade: people in community setting */}
-          <img
-            src={heroPeople}
-            alt="Diverse business professionals collaborating in Accra, Ghana"
-            className="hero-img-2"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center 30%",
-              opacity: 0,
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(to bottom, rgba(27,77,62,0.15) 0%, rgba(27,77,62,0.05) 60%, rgba(27,77,62,0.3) 100%)",
-              borderRadius: "inherit",
-              zIndex: 1,
-            }}
-          />
+          [ Hero Image Area ]
         </div>
         {!isMobile && (
           <div
@@ -1209,8 +1123,7 @@ export default function BRIDGEHomePage() {
                   +6
                 </div>
                 <div style={{ marginLeft: "auto" }}>
-                  <Link
-                    to="/sectors"
+                  <div
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -1220,7 +1133,6 @@ export default function BRIDGEHomePage() {
                       fontWeight: "600",
                       fontFamily: "Inter, sans-serif",
                       cursor: "pointer",
-                      textDecoration: "none",
                     }}
                   >
                     Explore
@@ -1246,7 +1158,7 @@ export default function BRIDGEHomePage() {
                         <path d="M7 17L17 7M17 7H7M17 7V17" />
                       </svg>
                     </span>
-                  </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1676,8 +1588,7 @@ export default function BRIDGEHomePage() {
               connections that turn fragmented potential into shared prosperity.
             </p>
             {!isMobile && (
-              <Link
-                to="/methodology"
+              <button
                 className="cta-approach"
                 style={{
                   backgroundColor: colors.primary,
@@ -1694,7 +1605,6 @@ export default function BRIDGEHomePage() {
                   gap: "10px",
                   marginTop: "auto",
                   alignSelf: "flex-start",
-                  textDecoration: "none",
                 }}
               >
                 See How It Works
@@ -1715,7 +1625,7 @@ export default function BRIDGEHomePage() {
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </span>
-              </Link>
+              </button>
             )}
           </div>
 
@@ -1999,8 +1909,7 @@ export default function BRIDGEHomePage() {
                   Opportunity to Impact
                 </h2>
               </div>
-              <Link
-                to="/services"
+              <button
                 className="cta-learn-more"
                 style={{
                   backgroundColor: colors.white,
@@ -2016,28 +1925,29 @@ export default function BRIDGEHomePage() {
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
-                  textDecoration: "none",
                 }}
               >
                 Learn more
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M7 17L17 7M17 7H7M17 7V17" />
                 </svg>
-              </Link>
+              </button>
             </div>
-            {isMobile ? (
-              <div style={{ position: "relative" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "12px",
-                    overflowX: "auto",
-                    WebkitOverflowScrolling: "touch",
-                    scrollSnapType: "x mandatory",
-                    paddingBottom: "4px",
-                  }}
-                >
-                  {[
+            <div
+              style={
+                isMobile
+                  ? {
+                      display: "flex",
+                      gap: "12px",
+                      overflowX: "auto",
+                      WebkitOverflowScrolling: "touch",
+                      scrollSnapType: "x mandatory",
+                      paddingBottom: "4px",
+                    }
+                  : { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }
+              }
+            >
+              {[
                 {
                   name: "Research",
                   description: "Deep market analysis and evidence-based diagnostics across all 12 sectors.",
@@ -2056,15 +1966,12 @@ export default function BRIDGEHomePage() {
                     "Strategic alliances with government, traditional authorities, and development partners.",
                 },
               ].map((service, index) => (
-                <Link
+                <div
                   key={index}
-                  to="/services"
                   className="service-card"
                   style={{
                     minHeight: isMobile ? "260px" : "360px",
                     ...(isMobile ? { flex: "0 0 70%", scrollSnapAlign: "start" } : {}),
-                    textDecoration: "none",
-                    display: "block",
                   }}
                 >
                   <div className="service-card-inner">
@@ -2210,63 +2117,9 @@ export default function BRIDGEHomePage() {
                       )}
                     </div>
                   </div>
-                </Link>
-              ))}
                 </div>
-                {/* swipe hint gradient */}
-                <div
-                  style={{
-                    position: "absolute",
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: "48px",
-                    background: `linear-gradient(to left, ${colors.dark}, transparent)`,
-                    pointerEvents: "none",
-                    borderRadius: "0 24px 24px 0",
-                  }}
-                />
-              </div>
-            ) : (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }}>
-                {[
-                  { name: "Research", description: "Deep market analysis and evidence-based diagnostics across all 12 sectors." },
-                  { name: "Ventures", description: "174+ designed initiatives spanning infrastructure to creative industries." },
-                  { name: "Investment", description: "$135M–$259M in indicative capital across diversified deployment strategies." },
-                  { name: "Partnerships", description: "Strategic alliances with government, traditional authorities, and development partners." },
-                ].map((service, index) => (
-                  <Link
-                    key={`d-${index}`}
-                    to="/services"
-                    className="service-card"
-                    style={{ minHeight: "360px", textDecoration: "none", display: "block" }}
-                  >
-                    <div className="service-card-inner">
-                      <div className="service-card-front" style={{ backgroundColor: colors.accent }}>
-                        <div style={{ position: "relative", height: "200px" }}>
-                          <div style={{ position: "absolute", top: "10px", left: "10px", width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(27,77,62,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <span style={{ fontSize: "14px", fontWeight: "700", color: colors.primary }}>{`0${index + 1}`}</span>
-                          </div>
-                        </div>
-                        <h3 style={{ fontSize: "22px", fontWeight: "700", color: colors.primary, fontFamily: "Inter, sans-serif", margin: "0 0 8px 0" }}>{service.name}</h3>
-                      </div>
-                      <div className="service-card-back" style={{ backgroundColor: colors.primary }}>
-                        <div>
-                          <span style={{ fontSize: "12px", fontWeight: "600", color: colors.accent, fontFamily: "Inter, sans-serif", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "12px" }}>{`0${index + 1}`}</span>
-                          <h3 style={{ fontSize: "24px", fontWeight: "700", color: colors.white, fontFamily: "Inter, sans-serif", margin: "0 0 12px 0" }}>{service.name}</h3>
-                          <p style={{ fontSize: "15px", lineHeight: "1.7", color: "rgba(255,255,255,0.7)", fontFamily: "Inter, sans-serif", margin: 0 }}>{service.description}</p>
-                        </div>
-                        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                          <div style={{ width: "44px", height: "44px", borderRadius: "50%", backgroundColor: colors.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2"><path d="M7 17L17 7M17 7H7M17 7V17" /></svg>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -3745,78 +3598,7 @@ export default function BRIDGEHomePage() {
 
       {/* CONTACT + FOOTER */}
       <section style={{ marginTop: isMobile ? "0" : "400px" }}>
-        <div style={{ backgroundColor: colors.primary, paddingTop: isMobile ? "40px" : "90px" }}>
-          {/* Mobile contact form */}
-          {isMobile && (
-            <div style={{ padding: "0 20px 48px" }}>
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "10px 20px",
-                  border: "1px solid rgba(255,255,255,0.3)",
-                  borderRadius: "50px",
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  letterSpacing: "1.5px",
-                  color: colors.white,
-                  fontFamily: "Inter, sans-serif",
-                  textTransform: "uppercase" as const,
-                  marginBottom: "20px",
-                }}
-              >
-                <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: colors.accent, display: "inline-block" }} />
-                Get In Touch
-              </div>
-              <h2 style={{ fontFamily: "Inter, sans-serif", fontSize: "28px", fontWeight: "300", lineHeight: "1.2", color: colors.white, margin: "0 0 16px 0" }}>
-                <span style={{ fontWeight: "700" }}>Let's</span> Connect
-              </h2>
-              <p style={{ fontSize: "15px", lineHeight: "1.6", color: "rgba(255,255,255,0.7)", fontFamily: "Inter, sans-serif", margin: "0 0 24px 0" }}>
-                Connect with our team to explore partnership opportunities and tailored solutions.
-              </p>
-              {contactSubmitted ? (
-                <div style={{ backgroundColor: colors.accent, borderRadius: "16px", padding: "32px 24px", textAlign: "center" as const }}>
-                  <div style={{ fontSize: "32px", marginBottom: "12px" }}>✓</div>
-                  <p style={{ fontSize: "16px", fontWeight: "600", color: colors.primary, fontFamily: "Inter, sans-serif", margin: "0 0 8px 0" }}>Message sent!</p>
-                  <p style={{ fontSize: "14px", color: colors.primary, fontFamily: "Inter, sans-serif", opacity: 0.7, margin: 0 }}>We'll be in touch within one business day.</p>
-                </div>
-              ) : (
-                <div style={{ display: "flex", flexDirection: "column" as const, gap: "12px" }}>
-                  <input type="text" placeholder="Your name *" value={contactName} onChange={e => setContactName(e.target.value)}
-                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", boxSizing: "border-box" as const }} />
-                  <input type="email" placeholder="Email address *" value={contactEmail} onChange={e => setContactEmail(e.target.value)}
-                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", boxSizing: "border-box" as const }} />
-                  <input type="tel" placeholder="Phone number" value={contactPhone} onChange={e => setContactPhone(e.target.value)}
-                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", boxSizing: "border-box" as const }} />
-                  <input type="text" placeholder="Organization" value={contactOrg} onChange={e => setContactOrg(e.target.value)}
-                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", boxSizing: "border-box" as const }} />
-                  <textarea placeholder="Your message *" rows={4} value={contactMessage} onChange={e => setContactMessage(e.target.value)}
-                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", resize: "vertical" as const, boxSizing: "border-box" as const }} />
-                  <button
-                    onClick={handleContactSubmit}
-                    disabled={contactSubmitting || !contactName.trim() || !contactEmail.trim() || !contactMessage.trim()}
-                    style={{
-                      backgroundColor: contactSubmitting ? "#ccc" : colors.accent,
-                      color: colors.primary,
-                      border: "none",
-                      padding: "16px 32px",
-                      fontSize: "15px",
-                      fontWeight: "600",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: contactSubmitting ? "not-allowed" : "pointer",
-                      borderRadius: "50px",
-                      opacity: (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) ? 0.6 : 1,
-                      transition: "opacity 0.2s ease",
-                      alignSelf: "flex-start" as const,
-                    }}
-                  >
-                    {contactSubmitting ? "Sending…" : "Send Message"}
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+        <div style={{ backgroundColor: colors.primary, paddingTop: isMobile ? "0" : "90px" }}>
           {!isMobile && (
             <div
               style={{
@@ -3888,112 +3670,91 @@ export default function BRIDGEHomePage() {
                   >
                     Connect with our team to explore partnership opportunities and tailored solutions.
                   </p>
-                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
-                    <div>
-                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Your name *</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Kwame Asante"
-                        value={contactName}
-                        onChange={e => setContactName(e.target.value)}
-                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Email address *</label>
-                      <input
-                        type="email"
-                        placeholder="e.g. kwame@email.com"
-                        value={contactEmail}
-                        onChange={e => setContactEmail(e.target.value)}
-                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Phone number</label>
-                      <input
-                        type="tel"
-                        placeholder="e.g. +233 XX XXX XXXX"
-                        value={contactPhone}
-                        onChange={e => setContactPhone(e.target.value)}
-                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Organization</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Company name"
-                        value={contactOrg}
-                        onChange={e => setContactOrg(e.target.value)}
-                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
-                      />
-                    </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
+                    {[
+                      { label: "Your name", type: "text", placeholder: "e.g. Kwame Asante" },
+                      { label: "Email address", type: "email", placeholder: "e.g. kwame@email.com" },
+                      { label: "Phone number", type: "tel", placeholder: "e.g. +233 XX XXX XXXX" },
+                      { label: "Organization", type: "text", placeholder: "e.g. Company name" },
+                    ].map((field, i) => (
+                      <div key={i}>
+                        <label
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            color: colors.primary,
+                            fontFamily: "Inter, sans-serif",
+                            display: "block",
+                            marginBottom: "8px",
+                          }}
+                        >
+                          {field.label}
+                        </label>
+                        <input
+                          type={field.type}
+                          placeholder={field.placeholder}
+                          style={{
+                            width: "100%",
+                            padding: "14px 16px",
+                            borderRadius: "12px",
+                            border: "none",
+                            backgroundColor: colors.white,
+                            fontSize: "15px",
+                            fontFamily: "Inter, sans-serif",
+                            color: colors.dark,
+                            outline: "none",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                      </div>
+                    ))}
                   </div>
                   <div style={{ marginBottom: "24px" }}>
-                    <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Your message *</label>
+                    <label
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        color: colors.primary,
+                        fontFamily: "Inter, sans-serif",
+                        display: "block",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      Your message
+                    </label>
                     <textarea
                       placeholder="Type here..."
                       rows={4}
-                      value={contactMessage}
-                      onChange={e => setContactMessage(e.target.value)}
-                      style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", resize: "vertical", boxSizing: "border-box" }}
+                      style={{
+                        width: "100%",
+                        padding: "14px 16px",
+                        borderRadius: "12px",
+                        border: "none",
+                        backgroundColor: colors.white,
+                        fontSize: "15px",
+                        fontFamily: "Inter, sans-serif",
+                        color: colors.dark,
+                        outline: "none",
+                        resize: "vertical",
+                        boxSizing: "border-box",
+                      }}
                     />
                   </div>
-                  {contactSubmitted ? (
-                    <div
-                      style={{
-                        backgroundColor: colors.accent,
-                        borderRadius: "16px",
-                        padding: "32px 24px",
-                        textAlign: "center",
-                      }}
-                    >
-                      <div style={{ fontSize: "32px", marginBottom: "12px" }}>✓</div>
-                      <p
-                        style={{
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          color: colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                          margin: "0 0 8px 0",
-                        }}
-                      >
-                        Message sent!
-                      </p>
-                      <p
-                        style={{
-                          fontSize: "14px",
-                          color: colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                          opacity: 0.7,
-                          margin: 0,
-                        }}
-                      >
-                        We'll be in touch within one business day.
-                      </p>
-                    </div>
-                  ) : (
                   <button
-                    onClick={handleContactSubmit}
-                    disabled={contactSubmitting || !contactName.trim() || !contactEmail.trim() || !contactMessage.trim()}
                     style={{
-                      backgroundColor: contactSubmitting ? "#ccc" : colors.accent,
+                      backgroundColor: colors.accent,
                       color: colors.primary,
                       border: "none",
                       padding: "16px 32px",
                       fontSize: "15px",
                       fontWeight: "600",
                       fontFamily: "Inter, sans-serif",
-                      cursor: contactSubmitting ? "not-allowed" : "pointer",
+                      cursor: "pointer",
                       borderRadius: "50px",
-                      opacity: (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) ? 0.6 : 1,
-                      transition: "opacity 0.2s ease",
                     }}
                   >
-                    {contactSubmitting ? "Sending…" : "Send Message"}
+                    Send Message
                   </button>
-                  )}
                 </div>
                 <div
                   style={{
@@ -4007,11 +3768,7 @@ export default function BRIDGEHomePage() {
                     fontFamily: "Inter, sans-serif",
                   }}
                 >
-                  <img
-                    src={heroBridge}
-                    alt="Ghana landscape"
-                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }}
-                  />
+                  [ Image ]
                   <div
                     style={{
                       position: "absolute",
