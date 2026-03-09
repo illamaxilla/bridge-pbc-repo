@@ -3314,18 +3314,23 @@ export default function BRIDGEHomePage() {
               Deep sector analysis, strategic frameworks, and evidence-based research for those building Ghana's future.
             </p>
           </div>
-          <div style={{ overflow: "hidden" }}>
-            <div
-              style={{
-                display: "flex",
-                gap: isMobile ? "16px" : "24px",
-                transform: isMobile
-                  ? `translateX(-${insightIndex * (100 + 5)}%)`
-                  : `translateX(-${insightIndex * (50 + 12)}%)`,
-                transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-              }}
-            >
-              {insights.map((insight, index) => (
+          {isMobile ? (
+            <>
+              <style>{`.insight-snap::-webkit-scrollbar{display:none}`}</style>
+              <div
+                ref={insightScrollRef}
+                onScroll={handleInsightScroll}
+                className="insight-snap"
+                style={{
+                  display: "flex",
+                  gap: "16px",
+                  overflowX: "auto",
+                  scrollSnapType: "x mandatory",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                }}
+              >
+                {insights.map((insight, index) => (
                 <div
                   key={index}
                   style={{
