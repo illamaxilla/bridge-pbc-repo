@@ -72,7 +72,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "BRIDGE Contact Form <noreply@bridgepbc.com>",
+        from: "BRIDGE Contact Form <onboarding@resend.dev>",
         to: ["info@bridgepbc.com"],
         reply_to: email,
         subject: `New contact from ${name}${organization ? ` — ${organization}` : ""}`,
