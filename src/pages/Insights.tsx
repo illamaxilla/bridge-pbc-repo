@@ -98,7 +98,7 @@ const process = [
     num: "06",
     icon: TrendingUp,
     label: "Ongoing Intelligence",
-    title: "The analysis stays alive",
+    title: "The analysis is continuous and progressive.",
     body: "Ghana's landscape moves fast. Policy shifts, budget reallocations, and market entries all change the calculus. BRIDGE analysts maintain live sector models — scores are updated, ventures are revised, and subscribers see every change as it happens.",
     outputs: ["Quarterly score updates", "Policy impact assessments", "Venture status tracking"],
     highlight: "Live intelligence means the BRIDGE portfolio reflects Ghana's real conditions — not last year's data.",

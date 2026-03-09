@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
@@ -687,6 +687,18 @@ export default function BRIDGEHomePage() {
   const [tabTransition, setTabTransition] = useState(false);
   const [openSector, setOpenSector] = useState(null);
   const [insightIndex, setInsightIndex] = useState(0);
+  const insightScrollRef = useRef<HTMLDivElement>(null);
+
+  const handleInsightScroll = () => {
+    if (!insightScrollRef.current) return;
+    const { scrollLeft, clientWidth } = insightScrollRef.current;
+    setInsightIndex(Math.round(scrollLeft / clientWidth));
+  };
+
+  const scrollToInsight = (i: number) => {
+    if (!insightScrollRef.current) return;
+    insightScrollRef.current.scrollTo({ left: i * insightScrollRef.current.clientWidth, behavior: "smooth" });
+  };
   const [hoveredInsight, setHoveredInsight] = useState(null);
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
@@ -3302,155 +3314,314 @@ export default function BRIDGEHomePage() {
               Deep sector analysis, strategic frameworks, and evidence-based research for those building Ghana's future.
             </p>
           </div>
-          <div style={{ overflow: "hidden" }}>
-            <div
-              style={{
-                display: "flex",
-                gap: isMobile ? "16px" : "24px",
-                transform: isMobile
-                  ? `translateX(-${insightIndex * (100 + 5)}%)`
-                  : `translateX(-${insightIndex * (50 + 12)}%)`,
-                transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-              }}
-            >
-              {insights.map((insight, index) => (
-                <div
-                  key={index}
-                  style={{
-                    flex: isMobile ? "0 0 100%" : "0 0 calc(50% - 12px)",
-                    backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
-                    borderRadius: isMobile ? "20px" : "24px",
-                    display: "grid",
-                    gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                    overflow: "hidden",
-                    cursor: "pointer",
-                    transition: "background-color 0.3s ease",
-                  }}
-                  onMouseEnter={() => setHoveredInsight(index)}
-                  onMouseLeave={() => setHoveredInsight(null)}
-                >
+          {/* Mobile: native swipe scroll-snap */}
+          {isMobile ? (
+            <>
+              <style>{`.insight-snap::-webkit-scrollbar{display:none}`}</style>
+              <div
+                ref={insightScrollRef}
+                onScroll={handleInsightScroll}
+                className="insight-snap"
+                style={{
+                  display: "flex",
+                  gap: "16px",
+                  overflowX: "auto",
+                  scrollSnapType: "x mandatory",
+                  scrollbarWidth: "none",
+                }}
+              >
+                {insights.map((insight, index) => (
                   <div
+                    key={index}
                     style={{
-                      backgroundColor: "#3D4F4F",
-                      minHeight: isMobile ? "180px" : "320px",
-                      borderRadius: isMobile ? "16px" : "20px",
-                      margin: isMobile ? "12px 12px 0" : "16px 0 16px 16px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "rgba(255,255,255,0.3)",
-                      fontSize: "12px",
-                      fontFamily: "Inter, sans-serif",
+                      flex: "0 0 100%",
+                      minWidth: "100%",
+                      scrollSnapAlign: "start",
+                      backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
+                      borderRadius: "20px",
+                      display: "grid",
+                      gridTemplateColumns: "1fr",
+                      overflow: "hidden",
+                      cursor: "pointer",
+                      transition: "background-color 0.3s ease",
                     }}
+                    onMouseEnter={() => setHoveredInsight(index)}
+                    onMouseLeave={() => setHoveredInsight(null)}
                   >
-                    [ Image ]
-                  </div>
-                  <div
-                    style={{
-                      padding: isMobile ? "20px" : "32px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      position: "relative",
-                    }}
-                  >
-                    <div style={{ position: "absolute", top: 0, right: 0, width: "60px", height: "60px" }}>
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          right: 0,
-                          width: "60px",
-                          height: "60px",
-                          backgroundColor: colors.background,
-                          borderBottomLeftRadius: "60px",
-                        }}
-                      />
+                    <div
+                      style={{
+                        backgroundColor: "#3D4F4F",
+                        minHeight: "180px",
+                        borderRadius: "16px",
+                        margin: "12px 12px 0",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "rgba(255,255,255,0.3)",
+                        fontSize: "12px",
+                        fontFamily: "Inter, sans-serif",
+                      }}
+                    >
+                      [ Image ]
                     </div>
-                    <div>
-                      <span
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "600",
-                          letterSpacing: "1.5px",
-                          color: hoveredInsight === index ? colors.primary : colors.accent,
-                          textTransform: "uppercase",
-                          display: "block",
-                          marginBottom: "16px",
-                          transition: "color 0.3s ease",
-                        }}
-                      >
-                        {insight.category}
-                      </span>
-                      <h3
-                        style={{
-                          fontSize: isMobile ? "18px" : "22px",
-                          fontWeight: "600",
-                          lineHeight: "1.3",
-                          color: colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                          margin: 0,
-                        }}
-                      >
-                        {insight.title}
-                      </h3>
-                    </div>
-                    <div style={{ alignSelf: "flex-end" }}>
-                      <div
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          borderRadius: "50%",
-                          backgroundColor: hoveredInsight === index ? colors.primary : colors.white,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          transition: "background-color 0.3s ease",
-                        }}
-                      >
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke={hoveredInsight === index ? colors.white : colors.primary}
-                          strokeWidth="2"
-                          style={{ transition: "stroke 0.3s ease" }}
+                    <div
+                      style={{
+                        padding: "20px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        position: "relative",
+                      }}
+                    >
+                      <div style={{ position: "absolute", top: 0, right: 0, width: "60px", height: "60px" }}>
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            right: 0,
+                            width: "60px",
+                            height: "60px",
+                            backgroundColor: colors.background,
+                            borderBottomLeftRadius: "60px",
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: "600",
+                            letterSpacing: "1.5px",
+                            color: hoveredInsight === index ? colors.primary : colors.accent,
+                            textTransform: "uppercase",
+                            display: "block",
+                            marginBottom: "16px",
+                            transition: "color 0.3s ease",
+                          }}
                         >
-                          <path d="M7 17L17 7M17 7H7M17 7V17" />
-                        </svg>
+                          {insight.category}
+                        </span>
+                        <h3
+                          style={{
+                            fontSize: "18px",
+                            fontWeight: "600",
+                            lineHeight: "1.3",
+                            color: colors.primary,
+                            fontFamily: "Inter, sans-serif",
+                            margin: 0,
+                          }}
+                        >
+                          {insight.title}
+                        </h3>
+                      </div>
+                      <div style={{ alignSelf: "flex-end", marginTop: "16px" }}>
+                        <div
+                          style={{
+                            width: "48px",
+                            height: "48px",
+                            borderRadius: "50%",
+                            backgroundColor: hoveredInsight === index ? colors.primary : colors.white,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            transition: "background-color 0.3s ease",
+                          }}
+                        >
+                          <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke={hoveredInsight === index ? colors.white : colors.primary}
+                            strokeWidth="2"
+                            style={{ transition: "stroke 0.3s ease" }}
+                          >
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Dot scroll indicators */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "8px",
-              marginTop: isMobile ? "24px" : "36px",
-            }}
-          >
-            {Array.from({ length: isMobile ? insights.length : insights.length - 1 }).map((_, i) => (
+                ))}
+              </div>
+              {/* Mobile dots */}
               <div
-                key={i}
-                onClick={() => setInsightIndex(i)}
                 style={{
-                  width: insightIndex === i ? "24px" : "8px",
-                  height: "8px",
-                  borderRadius: "4px",
-                  backgroundColor: insightIndex === i ? colors.accent : colors.line,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "8px",
+                  marginTop: "24px",
                 }}
-              />
-            ))}
-          </div>
+              >
+                {insights.map((_, i) => (
+                  <div
+                    key={i}
+                    onClick={() => scrollToInsight(i)}
+                    style={{
+                      width: insightIndex === i ? "24px" : "8px",
+                      height: "8px",
+                      borderRadius: "4px",
+                      backgroundColor: insightIndex === i ? colors.accent : colors.line,
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Desktop: transform carousel */}
+              <div style={{ overflow: "hidden" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "24px",
+                    transform: `translateX(-${insightIndex * (50 + 12)}%)`,
+                    transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                >
+                  {insights.map((insight, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        flex: "0 0 calc(50% - 12px)",
+                        backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
+                        borderRadius: "24px",
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        overflow: "hidden",
+                        cursor: "pointer",
+                        transition: "background-color 0.3s ease",
+                      }}
+                      onMouseEnter={() => setHoveredInsight(index)}
+                      onMouseLeave={() => setHoveredInsight(null)}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: "#3D4F4F",
+                          minHeight: "320px",
+                          borderRadius: "20px",
+                          margin: "16px 0 16px 16px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "rgba(255,255,255,0.3)",
+                          fontSize: "12px",
+                          fontFamily: "Inter, sans-serif",
+                        }}
+                      >
+                        [ Image ]
+                      </div>
+                      <div
+                        style={{
+                          padding: "32px",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          position: "relative",
+                        }}
+                      >
+                        <div style={{ position: "absolute", top: 0, right: 0, width: "60px", height: "60px" }}>
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: 0,
+                              right: 0,
+                              width: "60px",
+                              height: "60px",
+                              backgroundColor: colors.background,
+                              borderBottomLeftRadius: "60px",
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <span
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: "600",
+                              letterSpacing: "1.5px",
+                              color: hoveredInsight === index ? colors.primary : colors.accent,
+                              textTransform: "uppercase",
+                              display: "block",
+                              marginBottom: "16px",
+                              transition: "color 0.3s ease",
+                            }}
+                          >
+                            {insight.category}
+                          </span>
+                          <h3
+                            style={{
+                              fontSize: "22px",
+                              fontWeight: "600",
+                              lineHeight: "1.3",
+                              color: colors.primary,
+                              fontFamily: "Inter, sans-serif",
+                              margin: 0,
+                            }}
+                          >
+                            {insight.title}
+                          </h3>
+                        </div>
+                        <div style={{ alignSelf: "flex-end" }}>
+                          <div
+                            style={{
+                              width: "48px",
+                              height: "48px",
+                              borderRadius: "50%",
+                              backgroundColor: hoveredInsight === index ? colors.primary : colors.white,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              transition: "background-color 0.3s ease",
+                            }}
+                          >
+                            <svg
+                              width="18"
+                              height="18"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke={hoveredInsight === index ? colors.white : colors.primary}
+                              strokeWidth="2"
+                              style={{ transition: "stroke 0.3s ease" }}
+                            >
+                              <path d="M7 17L17 7M17 7H7M17 7V17" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Desktop dots */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "8px",
+                  marginTop: "36px",
+                }}
+              >
+                {Array.from({ length: insights.length - 1 }).map((_, i) => (
+                  <div
+                    key={i}
+                    onClick={() => setInsightIndex(i)}
+                    style={{
+                      width: insightIndex === i ? "24px" : "8px",
+                      height: "8px",
+                      borderRadius: "4px",
+                      backgroundColor: insightIndex === i ? colors.accent : colors.line,
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          )}
           <div style={{ textAlign: "center", marginTop: "48px" }}>
             <a href="/insights" style={{ textDecoration: "none" }}>
               <button
