@@ -3897,7 +3897,11 @@ export default function BRIDGEHomePage() {
                     fontFamily: "Inter, sans-serif",
                   }}
                 >
-                  [ Image ]
+                  <img
+                    src={heroBridge}
+                    alt="Ghana landscape"
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }}
+                  />
                   <div
                     style={{
                       position: "absolute",
