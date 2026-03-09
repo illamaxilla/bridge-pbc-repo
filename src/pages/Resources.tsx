@@ -2796,24 +2796,29 @@ export default function ResourcesPage() {
                 Sector intelligence, official GIPC investment profiles, and the complete BRIDGE research archive — in
                 one place.
               </p>
-              <button
+              <a
+                href="/intelligence/dashboard"
+                onClick={(e) => { e.preventDefault(); navigate("/intelligence/dashboard"); }}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "8px",
                   background: C.accent,
                   color: C.primary,
-                  border: "none",
+                  textDecoration: "none",
                   padding: "12px 24px",
                   borderRadius: "50px",
                   fontSize: "14px",
                   fontWeight: "700",
                   fontFamily: "Inter,sans-serif",
                   cursor: "pointer",
+                  width: mobile ? "100%" : "auto",
+                  justifyContent: mobile ? "center" : "flex-start",
+                  boxSizing: "border-box",
                 }}
               >
                 Access Dashboard <ArrowUpRight size={15} />
-              </button>
+              </a>
             </div>
           </div>
         </div>
