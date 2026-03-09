@@ -2744,7 +2744,7 @@ export default function BRIDGEHomePage() {
             )}
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                {sectorData.slice(0, isMobile ? 12 : 6).map((sector, index) => {
+                {sectorData.slice(0, 6).map((sector, index) => {
                   const isOpen = openSector === index;
                   return (
                     <div
