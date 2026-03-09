@@ -945,31 +945,6 @@ export default function PolicyPage() {
         </div>
       </section>
 
-      {/* ── EXPLORE CTA ─────────────────────────────────────────── */}
-      <section style={{ backgroundColor: C.background, padding: `${isMobile ? "48px" : "64px"} ${HP}` }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", textAlign: "center" }}>
-          <h3 style={{ fontSize: "20px", fontWeight: "600", color: C.primary, margin: "0 0 10px", fontFamily: "Inter, sans-serif" }}>
-            Explore the full sector landscape
-          </h3>
-          <p style={{ fontSize: "14px", color: C.text, lineHeight: "1.6", margin: "0 0 24px" }}>
-            Policy shapes investment. Understand the full picture across all 12 sectors.
-          </p>
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" as const }}>
-            <button
-              onClick={() => navigate("/sectors")}
-              style={{ padding: "13px 28px", borderRadius: "50px", border: "none", backgroundColor: C.primary, color: C.white, fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}
-            >
-              View All 12 Sectors →
-            </button>
-            <button
-              onClick={() => navigate("/resources")}
-              style={{ padding: "13px 28px", borderRadius: "50px", border: `1px solid ${C.line}`, backgroundColor: C.white, color: C.primary, fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}
-            >
-              Annual Review & Reports
-            </button>
-          </div>
-        </div>
-      </section>
 
       <SiteFooter />
     </div>
