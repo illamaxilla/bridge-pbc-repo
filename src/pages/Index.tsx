@@ -909,7 +909,8 @@ export default function BRIDGEHomePage() {
                 animation: "fadeUp 0.8s ease-out 0.2s both",
               }}
             >
-              <button
+              <Link
+                to="/about"
                 className="cta-primary"
                 style={{
                   backgroundColor: colors.primary,
@@ -924,6 +925,7 @@ export default function BRIDGEHomePage() {
                   display: "flex",
                   alignItems: "center",
                   gap: "8px",
+                  textDecoration: "none",
                 }}
               >
                 Explore Our Work
@@ -943,7 +945,7 @@ export default function BRIDGEHomePage() {
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </span>
-              </button>
+              </Link>
               <a href="/login" style={{ textDecoration: "none" }}>
                 <button
                   className="cta-secondary"
