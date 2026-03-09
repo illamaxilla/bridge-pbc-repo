@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+
+// Slug → route map (handles creative→sports, transportation→transport)
+const sectorRoute = (slug: string): string => {
+  const overrides: Record<string, string> = {
+    creative: "/sectors/sports",
+    transportation: "/sectors/transport",
+  };
+  return overrides[slug] ?? `/sectors/${slug}`;
+};
 import SiteFooter from "@/components/SiteFooter";
 
 const colors = {
@@ -1483,11 +1492,14 @@ const HeroSection = () => {
 const SectorCard = ({ s, hov, onE, onL }) => {
   const Icon = icons[s.ik];
   const mb = useIsMobile();
+  const navigate = useNavigate();
+  const href = sectorRoute(s.slug);
   return (
     <div
       className="value-card"
       onMouseEnter={onE}
       onMouseLeave={onL}
+      onClick={() => navigate(href)}
       style={{
         backgroundColor: colors.white,
         borderRadius: mb ? "16px" : "20px",
@@ -1639,7 +1651,8 @@ const SectorCard = ({ s, hov, onE, onL }) => {
         </span>
       </div>
       <a
-        href="#"
+        href={href}
+        onClick={(e) => { e.preventDefault(); navigate(href); }}
         style={{
           display: "flex",
           alignItems: "center",
@@ -2047,6 +2060,51 @@ const fLabels = [
   "Transportation",
 ];
 
+const FOOTER_SECTOR_ROUTES: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  creative: "/sectors/sports",
+  housing: "/sectors/housing",
+  tourism: "/sectors/tourism",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  transport: "/sectors/transport",
+};
+
+const FOOTER_LINK_MAP: Record<string, string> = {
+  "About BRIDGE": "/about",
+  "Our Approach": "/methodology",
+  "Sectors": "/sectors",
+  "Contact Us": "/contact",
+  "Research & Guidance": "/services",
+  "Venture Development": "/services",
+  "Direct Investment": "/services",
+  "Strategic Partnerships": "/services",
+  "White Paper": "/resources",
+  "Case Studies": "/resources",
+  "Research Library": "/resources",
+  "Data & Reports": "/resources",
+  "Insights & Analysis": "/insights",
+  "Sector Briefs": "/sectors",
+  "Policy Updates": "/policy",
+  "Annual Review": "/resources",
+  // Mobile top-level labels
+  "Company": "/about",
+  "Services": "/services",
+  "Resources": "/resources",
+  "Insights": "/insights",
+};
+
+const SOCIAL_URLS = [
+  "https://linkedin.com/company/bridgepbc",
+  "https://x.com/bridgepbc",
+  "https://facebook.com/bridgepbc",
+];
+
 const FooterSectorGrid = () => {
   const [h, setH] = useState(null);
   return (
@@ -2073,7 +2131,7 @@ const FooterSectorGrid = () => {
           return (
             <a
               key={k}
-              href="#"
+              href={FOOTER_SECTOR_ROUTES[k]}
               title={fLabels[i]}
               onMouseEnter={() => setH(i)}
               onMouseLeave={() => setH(null)}
@@ -2132,7 +2190,7 @@ const Footer = () => {
               {["Company", "Services", "Resources", "Insights"].map((l) => (
                 <a
                   key={l}
-                  href="#"
+                  href={FOOTER_LINK_MAP[l] || "#"}
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "13px",
@@ -2209,7 +2267,9 @@ const Footer = () => {
               {socialIcons.map((icon, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={SOCIAL_URLS[i]}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     width: "34px",
                     height: "34px",
@@ -2310,7 +2370,7 @@ const Footer = () => {
                       {col.ls.map((l) => (
                         <a
                           key={l}
-                          href="#"
+                          href={FOOTER_LINK_MAP[l] || "#"}
                           style={{
                             display: "block",
                             fontSize: "14px",
@@ -2395,7 +2455,9 @@ const Footer = () => {
                   {socialIcons.map((icon, i) => (
                     <a
                       key={i}
-                      href="#"
+                      href={SOCIAL_URLS[i]}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{
                         width: "34px",
                         height: "34px",
@@ -2438,7 +2500,7 @@ const Footer = () => {
             {["Terms", "Privacy", "Accessibility"].map((l) => (
               <a
                 key={l}
-                href="#"
+                href="/policy"
                 style={{
                   fontSize: "11px",
                   color: "rgba(255,255,255,0.25)",
