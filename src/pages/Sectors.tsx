@@ -2500,7 +2500,7 @@ const Footer = () => {
             {["Terms", "Privacy", "Accessibility"].map((l) => (
               <a
                 key={l}
-                href="#"
+                href="/policy"
                 style={{
                   fontSize: "11px",
                   color: "rgba(255,255,255,0.25)",
