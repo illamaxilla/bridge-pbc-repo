@@ -578,7 +578,7 @@ export default function PolicyPage() {
                 fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px",
                 color: C.primary, marginBottom: "10px", textTransform: "uppercase" as const,
               }}>
-                📅 Upcoming
+                Upcoming
               </div>
               <h2 style={{
                 fontSize: "clamp(22px, 3.5vw, 34px)", fontWeight: "300", color: C.primary,
