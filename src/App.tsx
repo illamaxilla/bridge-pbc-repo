@@ -33,6 +33,7 @@ import Education from "./pages/sectors/Education";
 import Agriculture from "./pages/sectors/Agriculture";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
+import ContactMessages from "./pages/admin/ContactMessages";
 import Sectors from "./pages/Sectors";
 import Policy from "./pages/Policy";
 
