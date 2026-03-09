@@ -2935,7 +2935,7 @@ export default function ResourcesPage() {
 
             {/* Tab content */}
             <div style={{ padding: mobile ? "20px 16px" : "40px 32px", minHeight: "500px" }}>
-              {tab === "intelligence" && <BridgeTab mobile={mobile} filter={filter} setFilter={setFilter} />}
+              {tab === "intelligence" && <BridgeTab mobile={mobile} filter={filter} setFilter={setFilter} onUnlock={() => setShowAuth(true)} />}
               {tab === "gipc" && <GIPCTab mobile={mobile} />}
               {tab === "library" && <LibraryTab mobile={mobile} />}
             </div>
