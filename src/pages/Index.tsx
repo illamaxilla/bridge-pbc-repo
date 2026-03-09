@@ -844,6 +844,18 @@ export default function BRIDGEHomePage() {
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes govScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes heroCrossfade {
+          0%, 40% { opacity: 1; }
+          50%, 90% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes heroCrossfade2 {
+          0%, 40% { opacity: 0; }
+          50%, 90% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+        .hero-img-1 { animation: heroCrossfade 10s ease-in-out infinite; }
+        .hero-img-2 { animation: heroCrossfade2 10s ease-in-out infinite; }
         .stat-card { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
         .stat-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(27, 77, 62, 0.14) !important; }
         .cta-primary { transition: all 0.3s ease; }
