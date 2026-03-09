@@ -329,13 +329,19 @@ function Pill({ label }: { label: string }) {
 
 function StatusBadge({ status }: { status: "enacted" | "pending" | "under-review" }) {
   const cfg = STATUS_CONFIG[status];
+  const dotEl = cfg.dot === "filled"
+    ? <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: C.accent, display: "inline-block", flexShrink: 0 }} />
+    : cfg.dot === "empty"
+    ? <span style={{ width: "6px", height: "6px", borderRadius: "50%", border: `1.5px solid ${C.muted}`, display: "inline-block", flexShrink: 0 }} />
+    : <span style={{ width: "8px", height: "1.5px", backgroundColor: C.muted, display: "inline-block", flexShrink: 0 }} />;
   return (
     <span style={{
+      display: "inline-flex", alignItems: "center", gap: "5px",
       fontSize: "11px", fontWeight: "600", padding: "3px 10px",
-      borderRadius: "20px", color: cfg.color, backgroundColor: cfg.bg,
-      letterSpacing: "0.3px", flexShrink: 0,
+      borderRadius: "20px", color: C.primary, backgroundColor: C.background,
+      border: `1px solid ${C.line}`, letterSpacing: "0.3px", flexShrink: 0,
     }}>
-      {cfg.label}
+      {dotEl}{cfg.label}
     </span>
   );
 }
