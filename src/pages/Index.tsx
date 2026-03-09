@@ -3189,6 +3189,7 @@ export default function BRIDGEHomePage() {
                     BRIDGE is a development engine — identifying opportunities, connecting resources, and initiating
                     ventures. Let's work together to create a lasting impact.
                   </p>
+                  <a href="/about" style={{ textDecoration: "none" }}>
                   <button
                     style={{
                       backgroundColor: colors.primary,
@@ -3230,6 +3231,7 @@ export default function BRIDGEHomePage() {
                       </svg>
                     </span>
                   </button>
+                  </a>
                 </div>
               </div>
             </>
