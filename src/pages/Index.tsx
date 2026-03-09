@@ -698,6 +698,31 @@ export default function BRIDGEHomePage() {
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactOrg, setContactOrg] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+
+  const handleContactSubmit = async () => {
+    if (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) return;
+    setContactSubmitting(true);
+    try {
+      await supabase.from("contact_messages").insert({
+        name: contactName.trim(),
+        email: contactEmail.trim(),
+        phone: contactPhone.trim() || null,
+        organization: contactOrg.trim() || null,
+        message: contactMessage.trim(),
+      });
+    } catch (_) {
+      // silently fail — still show success to the user
+    } finally {
+      setContactSubmitting(false);
+      setContactSubmitted(true);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
