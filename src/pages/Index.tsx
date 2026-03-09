@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
+import { createClient } from "@supabase/supabase-js";
+import heroBridge from "@/assets/hero-bridge.jpg";
+
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
 // ═══════════════════════════════════════════════
 // BRIDGE Design System
