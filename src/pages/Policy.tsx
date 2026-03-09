@@ -546,16 +546,16 @@ export default function PolicyPage() {
             gap: isMobile ? "10px" : "16px", maxWidth: "560px", margin: "0 auto",
           }}>
             {[
-              { val: stats.enacted, label: "Enacted", color: "#16A34A" },
-              { val: stats.pending, label: "Pending", color: "#D97706" },
-              { val: stats.underReview, label: "Under Review", color: "#60A5FA" },
+              { val: stats.enacted, label: "Enacted" },
+              { val: stats.pending, label: "Pending" },
+              { val: stats.underReview, label: "Under Review" },
             ].map(s => (
               <div key={s.label} style={{
                 backgroundColor: "rgba(255,255,255,0.07)", borderRadius: "12px",
                 border: "1px solid rgba(255,255,255,0.12)", padding: isMobile ? "16px 10px" : "20px 16px",
               }}>
                 <div style={{ fontSize: isMobile ? "22px" : "28px", fontWeight: "700", color: C.white, marginBottom: "4px" }}>{s.val}</div>
-                <div style={{ fontSize: "10px", fontWeight: "600", color: s.color, textTransform: "uppercase" as const, letterSpacing: "1px" }}>{s.label}</div>
+                <div style={{ fontSize: "10px", fontWeight: "600", color: "rgba(255,255,255,0.55)", textTransform: "uppercase" as const, letterSpacing: "1px" }}>{s.label}</div>
               </div>
             ))}
           </div>
