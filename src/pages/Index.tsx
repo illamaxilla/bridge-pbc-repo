@@ -3733,7 +3733,78 @@ export default function BRIDGEHomePage() {
 
       {/* CONTACT + FOOTER */}
       <section style={{ marginTop: isMobile ? "0" : "400px" }}>
-        <div style={{ backgroundColor: colors.primary, paddingTop: isMobile ? "0" : "90px" }}>
+        <div style={{ backgroundColor: colors.primary, paddingTop: isMobile ? "40px" : "90px" }}>
+          {/* Mobile contact form */}
+          {isMobile && (
+            <div style={{ padding: "0 20px 48px" }}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "10px 20px",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  borderRadius: "50px",
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  letterSpacing: "1.5px",
+                  color: colors.white,
+                  fontFamily: "Inter, sans-serif",
+                  textTransform: "uppercase" as const,
+                  marginBottom: "20px",
+                }}
+              >
+                <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: colors.accent, display: "inline-block" }} />
+                Get In Touch
+              </div>
+              <h2 style={{ fontFamily: "Inter, sans-serif", fontSize: "28px", fontWeight: "300", lineHeight: "1.2", color: colors.white, margin: "0 0 16px 0" }}>
+                <span style={{ fontWeight: "700" }}>Let's</span> Connect
+              </h2>
+              <p style={{ fontSize: "15px", lineHeight: "1.6", color: "rgba(255,255,255,0.7)", fontFamily: "Inter, sans-serif", margin: "0 0 24px 0" }}>
+                Connect with our team to explore partnership opportunities and tailored solutions.
+              </p>
+              {contactSubmitted ? (
+                <div style={{ backgroundColor: colors.accent, borderRadius: "16px", padding: "32px 24px", textAlign: "center" as const }}>
+                  <div style={{ fontSize: "32px", marginBottom: "12px" }}>✓</div>
+                  <p style={{ fontSize: "16px", fontWeight: "600", color: colors.primary, fontFamily: "Inter, sans-serif", margin: "0 0 8px 0" }}>Message sent!</p>
+                  <p style={{ fontSize: "14px", color: colors.primary, fontFamily: "Inter, sans-serif", opacity: 0.7, margin: 0 }}>We'll be in touch within one business day.</p>
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column" as const, gap: "12px" }}>
+                  <input type="text" placeholder="Your name *" value={contactName} onChange={e => setContactName(e.target.value)}
+                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", boxSizing: "border-box" as const }} />
+                  <input type="email" placeholder="Email address *" value={contactEmail} onChange={e => setContactEmail(e.target.value)}
+                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", boxSizing: "border-box" as const }} />
+                  <input type="tel" placeholder="Phone number" value={contactPhone} onChange={e => setContactPhone(e.target.value)}
+                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", boxSizing: "border-box" as const }} />
+                  <input type="text" placeholder="Organization" value={contactOrg} onChange={e => setContactOrg(e.target.value)}
+                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", boxSizing: "border-box" as const }} />
+                  <textarea placeholder="Your message *" rows={4} value={contactMessage} onChange={e => setContactMessage(e.target.value)}
+                    style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.12)", fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.white, outline: "none", resize: "vertical" as const, boxSizing: "border-box" as const }} />
+                  <button
+                    onClick={handleContactSubmit}
+                    disabled={contactSubmitting || !contactName.trim() || !contactEmail.trim() || !contactMessage.trim()}
+                    style={{
+                      backgroundColor: contactSubmitting ? "#ccc" : colors.accent,
+                      color: colors.primary,
+                      border: "none",
+                      padding: "16px 32px",
+                      fontSize: "15px",
+                      fontWeight: "600",
+                      fontFamily: "Inter, sans-serif",
+                      cursor: contactSubmitting ? "not-allowed" : "pointer",
+                      borderRadius: "50px",
+                      opacity: (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) ? 0.6 : 1,
+                      transition: "opacity 0.2s ease",
+                      alignSelf: "flex-start" as const,
+                    }}
+                  >
+                    {contactSubmitting ? "Sending…" : "Send Message"}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
           {!isMobile && (
             <div
               style={{
