@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
+import { BRIDGEAuthModal } from "@/components/AuthModal";
 import {
   Box,
   CreditCard,
@@ -972,7 +973,7 @@ function SectorIconBtn({ svgIcon, label, active, onClick }) {
   );
 }
 
-function BridgeTab({ mobile, filter, setFilter }) {
+function BridgeTab({ mobile, filter, setFilter, onUnlock }) {
   const [expanded, setExpanded] = useState(null);
   const tags = ["All", "Foundation", "Human Capital", "Economic Engine", "Growth Engine"];
   const shown = filter === "All" ? sectors : sectors.filter((s) => s.full === filter || s.tag === filter);
@@ -1147,6 +1148,7 @@ function BridgeTab({ mobile, filter, setFilter }) {
           </div>
         </div>
         <button
+          onClick={onUnlock}
           style={{
             display: "flex",
             alignItems: "center",
@@ -2705,6 +2707,7 @@ export default function ResourcesPage() {
   const [tab, setTab] = useState("intelligence");
   const [mobile, setMobile] = useState(false);
   const [filter, setFilter] = useState("All");
+  const [showAuth, setShowAuth] = useState(false);
   useEffect(() => {
     const c = () => setMobile(window.innerWidth < 900);
     c();
@@ -2932,7 +2935,7 @@ export default function ResourcesPage() {
 
             {/* Tab content */}
             <div style={{ padding: mobile ? "20px 16px" : "40px 32px", minHeight: "500px" }}>
-              {tab === "intelligence" && <BridgeTab mobile={mobile} filter={filter} setFilter={setFilter} />}
+              {tab === "intelligence" && <BridgeTab mobile={mobile} filter={filter} setFilter={setFilter} onUnlock={() => setShowAuth(true)} />}
               {tab === "gipc" && <GIPCTab mobile={mobile} />}
               {tab === "library" && <LibraryTab mobile={mobile} />}
             </div>
@@ -3021,6 +3024,15 @@ export default function ResourcesPage() {
       </section>
 
       <SiteFooter />
+      <BRIDGEAuthModal
+        isOpen={showAuth}
+        onClose={() => setShowAuth(false)}
+        defaultTab="signin"
+        onSignInSuccess={() => {
+          sessionStorage.setItem("bridge_authed", "1");
+          setShowAuth(false);
+        }}
+      />
     </div>
   );
 }
