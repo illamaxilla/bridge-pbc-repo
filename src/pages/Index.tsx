@@ -1916,7 +1916,8 @@ export default function BRIDGEHomePage() {
                   Opportunity to Impact
                 </h2>
               </div>
-              <button
+              <Link
+                to="/services"
                 className="cta-learn-more"
                 style={{
                   backgroundColor: colors.white,
@@ -1932,13 +1933,14 @@ export default function BRIDGEHomePage() {
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
+                  textDecoration: "none",
                 }}
               >
                 Learn more
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M7 17L17 7M17 7H7M17 7V17" />
                 </svg>
-              </button>
+              </Link>
             </div>
             <div
               style={
