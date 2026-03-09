@@ -3865,20 +3865,23 @@ export default function BRIDGEHomePage() {
                     </div>
                   ) : (
                   <button
-                    onClick={() => setContactSubmitted(true)}
+                    onClick={handleContactSubmit}
+                    disabled={contactSubmitting || !contactName.trim() || !contactEmail.trim() || !contactMessage.trim()}
                     style={{
-                      backgroundColor: colors.accent,
+                      backgroundColor: contactSubmitting ? "#ccc" : colors.accent,
                       color: colors.primary,
                       border: "none",
                       padding: "16px 32px",
                       fontSize: "15px",
                       fontWeight: "600",
                       fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
+                      cursor: contactSubmitting ? "not-allowed" : "pointer",
                       borderRadius: "50px",
+                      opacity: (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) ? 0.6 : 1,
+                      transition: "opacity 0.2s ease",
                     }}
                   >
-                    Send Message
+                    {contactSubmitting ? "Sending…" : "Send Message"}
                   </button>
                   )}
                 </div>
