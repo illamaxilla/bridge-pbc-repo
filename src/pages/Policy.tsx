@@ -418,7 +418,6 @@ function BriefTableRow({ brief }: { brief: PolicyBrief }) {
 // ── Calendar Event Card ──────────────────────────────────────────────────────
 function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: boolean }) {
   const typeCfg = EVENT_TYPE_CONFIG[ev.type];
-  const urgencyCfg = URGENCY_CONFIG[ev.urgency];
   return (
     <div style={{
       backgroundColor: C.background, borderRadius: "14px",
