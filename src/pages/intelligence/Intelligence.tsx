@@ -320,7 +320,7 @@ export default function Intelligence() {
           backgroundColor: C.sidebar,
           borderRight: "1px solid rgba(255,255,255,0.06)",
           position: isMobile ? "fixed" : "relative",
-          zIndex: isMobile ? 45 : "auto",
+          zIndex: isMobile ? 60 : "auto",
           top: isMobile ? 56 : "auto",
           bottom: isMobile ? 0 : "auto",
           left: isMobile ? 0 : "auto",
