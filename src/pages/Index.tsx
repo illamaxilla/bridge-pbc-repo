@@ -705,13 +705,25 @@ export default function BRIDGEHomePage() {
     if (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) return;
     setContactSubmitting(true);
     try {
-      await supabase.from("contact_messages").insert({
+      const { data, error } = await supabase.from("contact_messages").insert({
         name: contactName.trim(),
         email: contactEmail.trim(),
         phone: contactPhone.trim() || null,
         organization: contactOrg.trim() || null,
         message: contactMessage.trim(),
-      });
+      }).select().single();
+      if (!error && data) {
+        // Fire-and-forget email notification via edge function
+        supabase.functions.invoke("send-contact-notification", {
+          body: {
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            organization: data.organization,
+            message: data.message,
+          },
+        }).catch(() => {}); // ignore errors — email is best-effort
+      }
     } catch (_) {
       // silently fail — still show success to the user
     } finally {
