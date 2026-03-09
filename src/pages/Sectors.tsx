@@ -2190,7 +2190,7 @@ const Footer = () => {
               {["Company", "Services", "Resources", "Insights"].map((l) => (
                 <a
                   key={l}
-                  href="#"
+                  href={FOOTER_LINK_MAP[l] || "#"}
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "13px",
