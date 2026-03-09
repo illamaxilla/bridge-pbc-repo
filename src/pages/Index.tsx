@@ -908,6 +908,7 @@ export default function BRIDGEHomePage() {
                 animation: "fadeUp 0.8s ease-out 0.2s both",
               }}
             >
+              <a href="/services" style={{ textDecoration: "none" }}>
               <button
                 className="cta-primary"
                 style={{
@@ -943,6 +944,7 @@ export default function BRIDGEHomePage() {
                   </svg>
                 </span>
               </button>
+              </a>
               <a href="/login" style={{ textDecoration: "none" }}>
                 <button
                   className="cta-secondary"
