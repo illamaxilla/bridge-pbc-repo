@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+
+// Slug → route map (handles creative→sports, transportation→transport)
+const sectorRoute = (slug: string): string => {
+  const overrides: Record<string, string> = {
+    creative: "/sectors/sports",
+    transportation: "/sectors/transport",
+  };
+  return overrides[slug] ?? `/sectors/${slug}`;
+};
 import SiteFooter from "@/components/SiteFooter";
 
 const colors = {
