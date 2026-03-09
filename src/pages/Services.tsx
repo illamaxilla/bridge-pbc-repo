@@ -3286,6 +3286,7 @@ export default function ServicesSectorsPageV2() {
 
               {/* CTA - hidden on mobile, shown after pathways */}
               {!isMobile && (
+                <a href="/methodology" style={{ textDecoration: "none" }}>
                 <button
                   style={{
                     backgroundColor: colors.primary,
@@ -3319,6 +3320,7 @@ export default function ServicesSectorsPageV2() {
                     </svg>
                   </span>
                 </button>
+                </a>
               )}
             </div>
 
