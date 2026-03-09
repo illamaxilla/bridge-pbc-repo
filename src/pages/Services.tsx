@@ -3512,6 +3512,7 @@ export default function ServicesSectorsPageV2() {
                 )}
 
                 {/* Mobile CTA - below pathways */}
+                <a href="/contact" style={{ textDecoration: "none", width: "100%" }}>
                 <button
                   style={{
                     backgroundColor: colors.primary,
@@ -3548,6 +3549,7 @@ export default function ServicesSectorsPageV2() {
                     </svg>
                   </span>
                 </button>
+                </a>
               </div>
             ) : (
               <div
