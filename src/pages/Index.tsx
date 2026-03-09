@@ -1010,19 +1010,31 @@ export default function BRIDGEHomePage() {
       <section style={{ position: "relative", margin: isMobile ? "0 20px" : "0 48px" }}>
         <div
           style={{
-            backgroundColor: colors.background,
             height: isMobile ? "240px" : "560px",
             borderRadius: isMobile ? "16px" : "24px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#bbb",
-            fontSize: "14px",
-            fontFamily: "Inter, sans-serif",
             overflow: "hidden",
+            position: "relative",
           }}
         >
-          [ Hero Image Area ]
+          <img
+            src={heroBridge}
+            alt="Aerial view of Ghana cityscape and agricultural landscape at sunrise"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center 40%",
+              display: "block",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to bottom, rgba(27,77,62,0.15) 0%, rgba(27,77,62,0.05) 60%, rgba(27,77,62,0.3) 100%)",
+              borderRadius: "inherit",
+            }}
+          />
         </div>
         {!isMobile && (
           <div
