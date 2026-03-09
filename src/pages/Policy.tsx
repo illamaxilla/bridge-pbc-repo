@@ -785,7 +785,6 @@ export default function PolicyPage() {
 
           {filtered.length === 0 ? (
             <div style={{ textAlign: "center", padding: "64px 24px", backgroundColor: C.white, borderRadius: "16px", border: `1px solid ${C.line}` }}>
-              <div style={{ fontSize: "32px", marginBottom: "12px" }}>📋</div>
               <h3 style={{ fontSize: "18px", fontWeight: "600", color: C.primary, margin: "0 0 8px" }}>No briefs match your filters</h3>
               <p style={{ fontSize: "14px", color: C.muted, margin: 0 }}>Try adjusting your sector filter or search query.</p>
             </div>
