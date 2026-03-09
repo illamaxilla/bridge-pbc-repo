@@ -291,23 +291,23 @@ function downloadICS(ev: CalendarEvent) {
 }
 
 const STATUS_CONFIG = {
-  enacted: { label: "Enacted", color: "#16A34A", bg: "#DCFCE7" },
-  pending: { label: "Pending", color: "#D97706", bg: "#FEF3C7" },
-  "under-review": { label: "Under Review", color: "#2563EB", bg: "#DBEAFE" },
+  enacted: { label: "Enacted", dot: "filled" },
+  pending: { label: "Pending", dot: "empty" },
+  "under-review": { label: "Under Review", dot: "dash" },
 };
 
 const EVENT_TYPE_CONFIG = {
-  reading: { label: "Reading", color: "#7C3AED", bg: "#EDE9FE" },
-  consultation: { label: "Consultation", color: "#0891B2", bg: "#CFFAFE" },
-  deadline: { label: "Deadline", color: "#DC2626", bg: "#FEE2E2" },
-  review: { label: "Review", color: "#D97706", bg: "#FEF3C7" },
-  implementation: { label: "Implementation", color: "#16A34A", bg: "#DCFCE7" },
+  reading: { label: "Reading" },
+  consultation: { label: "Consultation" },
+  deadline: { label: "Deadline" },
+  review: { label: "Review" },
+  implementation: { label: "Implementation" },
 };
 
 const URGENCY_CONFIG = {
-  high: { color: "#DC2626" },
-  medium: { color: "#D97706" },
-  low: { color: "#6B7280" },
+  high: { color: C.line },
+  medium: { color: C.line },
+  low: { color: C.line },
 };
 
 const BRIEFS_PER_PAGE = 6;
