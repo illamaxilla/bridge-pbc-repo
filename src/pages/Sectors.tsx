@@ -2060,6 +2060,51 @@ const fLabels = [
   "Transportation",
 ];
 
+const FOOTER_SECTOR_ROUTES: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  creative: "/sectors/sports",
+  housing: "/sectors/housing",
+  tourism: "/sectors/tourism",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  transport: "/sectors/transport",
+};
+
+const FOOTER_LINK_MAP: Record<string, string> = {
+  "About BRIDGE": "/about",
+  "Our Approach": "/methodology",
+  "Sectors": "/sectors",
+  "Contact Us": "/contact",
+  "Research & Guidance": "/services",
+  "Venture Development": "/services",
+  "Direct Investment": "/services",
+  "Strategic Partnerships": "/services",
+  "White Paper": "/resources",
+  "Case Studies": "/resources",
+  "Research Library": "/resources",
+  "Data & Reports": "/resources",
+  "Insights & Analysis": "/insights",
+  "Sector Briefs": "/sectors",
+  "Policy Updates": "/policy",
+  "Annual Review": "/resources",
+  // Mobile top-level labels
+  "Company": "/about",
+  "Services": "/services",
+  "Resources": "/resources",
+  "Insights": "/insights",
+};
+
+const SOCIAL_URLS = [
+  "https://linkedin.com/company/bridgepbc",
+  "https://x.com/bridgepbc",
+  "https://facebook.com/bridgepbc",
+];
+
 const FooterSectorGrid = () => {
   const [h, setH] = useState(null);
   return (
@@ -2086,7 +2131,7 @@ const FooterSectorGrid = () => {
           return (
             <a
               key={k}
-              href="#"
+              href={FOOTER_SECTOR_ROUTES[k]}
               title={fLabels[i]}
               onMouseEnter={() => setH(i)}
               onMouseLeave={() => setH(null)}
