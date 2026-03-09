@@ -2967,7 +2967,7 @@ export default function BRIDGEHomePage() {
                 minHeight: "360px",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "flex-end",
+                justifyContent: "flex-start",
               }}
             >
               <div
@@ -2988,74 +2988,77 @@ export default function BRIDGEHomePage() {
               >
                 [ Background Image ]
               </div>
-              <div style={{ position: "relative", zIndex: 1, padding: "24px" }}>
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "8px 16px",
-                    backgroundColor: "rgba(255,255,255,0.15)",
-                    backdropFilter: "blur(8px)",
-                    borderRadius: "50px",
-                    fontSize: "11px",
-                    fontWeight: "600",
-                    letterSpacing: "1.5px",
-                    color: colors.white,
-                    fontFamily: "Inter, sans-serif",
-                    textTransform: "uppercase",
-                    marginBottom: "16px",
-                  }}
-                >
-                  Trusted Partner
+              <div style={{ position: "relative", zIndex: 1, padding: "24px", display: "flex", flexDirection: "column", height: "100%", flex: 1, minHeight: "360px" }}>
+                <div style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "8px 16px",
+                      backgroundColor: "rgba(255,255,255,0.15)",
+                      backdropFilter: "blur(8px)",
+                      borderRadius: "50px",
+                      fontSize: "11px",
+                      fontWeight: "600",
+                      letterSpacing: "1.5px",
+                      color: colors.white,
+                      fontFamily: "Inter, sans-serif",
+                      textTransform: "uppercase",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    Trusted Partner
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "28px",
+                      fontWeight: "300",
+                      lineHeight: "1.2",
+                      color: colors.white,
+                      margin: "0 0 12px",
+                    }}
+                  >
+                    <span style={{ fontWeight: "700" }}>Public Benefit</span> Corporation
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      lineHeight: "1.6",
+                      color: "rgba(255,255,255,0.75)",
+                      fontFamily: "Inter, sans-serif",
+                      margin: 0,
+                    }}
+                  >
+                    A development engine — identifying opportunities, connecting resources, and initiating ventures.
+                  </p>
                 </div>
-                <h3
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "28px",
-                    fontWeight: "300",
-                    lineHeight: "1.2",
-                    color: colors.white,
-                    margin: "0 0 12px",
-                  }}
-                >
-                  <span style={{ fontWeight: "700" }}>Public Benefit</span> Corporation
-                </h3>
-                <p
-                  style={{
-                    fontSize: "14px",
-                    lineHeight: "1.6",
-                    color: "rgba(255,255,255,0.75)",
-                    fontFamily: "Inter, sans-serif",
-                    margin: "0 0 20px",
-                  }}
-                >
-                  A development engine — identifying opportunities, connecting resources, and initiating ventures.
-                </p>
-                <a href="/about" style={{ textDecoration: "none" }}>
-                <button
-                  style={{
-                    backgroundColor: colors.accent,
-                    color: colors.primary,
-                    border: "none",
-                    padding: "10px 20px",
-                    fontSize: "12px",
-                    fontWeight: "700",
-                    fontFamily: "Inter, sans-serif",
-                    cursor: "pointer",
-                    borderRadius: "50px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    alignSelf: "flex-start",
-                  }}
-                >
-                  Learn More
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </button>
-                </a>
+                <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
+                  <a href="/services" style={{ textDecoration: "none" }}>
+                    <button
+                      style={{
+                        backgroundColor: colors.accent,
+                        color: colors.primary,
+                        border: "none",
+                        padding: "10px 20px",
+                        fontSize: "12px",
+                        fontWeight: "700",
+                        fontFamily: "Inter, sans-serif",
+                        cursor: "pointer",
+                        borderRadius: "50px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      Learn More
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" />
+                      </svg>
+                    </button>
+                  </a>
+                </div>
               </div>
             </div>
           ) : (
@@ -3189,7 +3192,7 @@ export default function BRIDGEHomePage() {
                     BRIDGE is a development engine — identifying opportunities, connecting resources, and initiating
                     ventures. Let's work together to create a lasting impact.
                   </p>
-                  <a href="/about" style={{ textDecoration: "none" }}>
+                  <a href="/services" style={{ textDecoration: "none" }}>
                   <button
                     style={{
                       backgroundColor: colors.primary,
