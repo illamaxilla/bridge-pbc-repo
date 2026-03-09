@@ -291,23 +291,23 @@ function downloadICS(ev: CalendarEvent) {
 }
 
 const STATUS_CONFIG = {
-  enacted: { label: "Enacted", color: "#16A34A", bg: "#DCFCE7" },
-  pending: { label: "Pending", color: "#D97706", bg: "#FEF3C7" },
-  "under-review": { label: "Under Review", color: "#2563EB", bg: "#DBEAFE" },
+  enacted: { label: "Enacted", dot: "filled" },
+  pending: { label: "Pending", dot: "empty" },
+  "under-review": { label: "Under Review", dot: "dash" },
 };
 
 const EVENT_TYPE_CONFIG = {
-  reading: { label: "Reading", color: "#7C3AED", bg: "#EDE9FE" },
-  consultation: { label: "Consultation", color: "#0891B2", bg: "#CFFAFE" },
-  deadline: { label: "Deadline", color: "#DC2626", bg: "#FEE2E2" },
-  review: { label: "Review", color: "#D97706", bg: "#FEF3C7" },
-  implementation: { label: "Implementation", color: "#16A34A", bg: "#DCFCE7" },
+  reading: { label: "Reading" },
+  consultation: { label: "Consultation" },
+  deadline: { label: "Deadline" },
+  review: { label: "Review" },
+  implementation: { label: "Implementation" },
 };
 
 const URGENCY_CONFIG = {
-  high: { color: "#DC2626" },
-  medium: { color: "#D97706" },
-  low: { color: "#6B7280" },
+  high: { color: C.line },
+  medium: { color: C.line },
+  low: { color: C.line },
 };
 
 const BRIEFS_PER_PAGE = 6;
@@ -329,13 +329,19 @@ function Pill({ label }: { label: string }) {
 
 function StatusBadge({ status }: { status: "enacted" | "pending" | "under-review" }) {
   const cfg = STATUS_CONFIG[status];
+  const dotEl = cfg.dot === "filled"
+    ? <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: C.accent, display: "inline-block", flexShrink: 0 }} />
+    : cfg.dot === "empty"
+    ? <span style={{ width: "6px", height: "6px", borderRadius: "50%", border: `1.5px solid ${C.muted}`, display: "inline-block", flexShrink: 0 }} />
+    : <span style={{ width: "8px", height: "1.5px", backgroundColor: C.muted, display: "inline-block", flexShrink: 0 }} />;
   return (
     <span style={{
+      display: "inline-flex", alignItems: "center", gap: "5px",
       fontSize: "11px", fontWeight: "600", padding: "3px 10px",
-      borderRadius: "20px", color: cfg.color, backgroundColor: cfg.bg,
-      letterSpacing: "0.3px", flexShrink: 0,
+      borderRadius: "20px", color: C.primary, backgroundColor: C.background,
+      border: `1px solid ${C.line}`, letterSpacing: "0.3px", flexShrink: 0,
     }}>
-      {cfg.label}
+      {dotEl}{cfg.label}
     </span>
   );
 }
@@ -412,11 +418,10 @@ function BriefTableRow({ brief }: { brief: PolicyBrief }) {
 // ── Calendar Event Card ──────────────────────────────────────────────────────
 function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: boolean }) {
   const typeCfg = EVENT_TYPE_CONFIG[ev.type];
-  const urgencyCfg = URGENCY_CONFIG[ev.urgency];
   return (
     <div style={{
       backgroundColor: C.background, borderRadius: "14px",
-      border: `1px solid ${C.line}`, borderLeft: `4px solid ${urgencyCfg.color}`,
+      border: `1px solid ${C.line}`,
       padding: isMobile ? "16px" : "20px", display: "flex", gap: "14px",
     }}>
       {/* Date badge */}
@@ -428,7 +433,7 @@ function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: bool
       {/* Content */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "5px", flexWrap: "wrap" as const }}>
-          <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "20px", color: typeCfg.color, background: typeCfg.bg }}>
+          <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "20px", color: C.primary, background: C.background, border: `1px solid ${C.line}` }}>
             {typeCfg.label}
           </span>
           <span style={{ fontSize: "11px", color: C.muted }}>{ev.sector}</span>
@@ -540,16 +545,16 @@ export default function PolicyPage() {
             gap: isMobile ? "10px" : "16px", maxWidth: "560px", margin: "0 auto",
           }}>
             {[
-              { val: stats.enacted, label: "Enacted", color: "#16A34A" },
-              { val: stats.pending, label: "Pending", color: "#D97706" },
-              { val: stats.underReview, label: "Under Review", color: "#60A5FA" },
+              { val: stats.enacted, label: "Enacted" },
+              { val: stats.pending, label: "Pending" },
+              { val: stats.underReview, label: "Under Review" },
             ].map(s => (
               <div key={s.label} style={{
                 backgroundColor: "rgba(255,255,255,0.07)", borderRadius: "12px",
                 border: "1px solid rgba(255,255,255,0.12)", padding: isMobile ? "16px 10px" : "20px 16px",
               }}>
                 <div style={{ fontSize: isMobile ? "22px" : "28px", fontWeight: "700", color: C.white, marginBottom: "4px" }}>{s.val}</div>
-                <div style={{ fontSize: "10px", fontWeight: "600", color: s.color, textTransform: "uppercase" as const, letterSpacing: "1px" }}>{s.label}</div>
+                <div style={{ fontSize: "10px", fontWeight: "600", color: "rgba(255,255,255,0.55)", textTransform: "uppercase" as const, letterSpacing: "1px" }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -572,7 +577,7 @@ export default function PolicyPage() {
                 fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px",
                 color: C.primary, marginBottom: "10px", textTransform: "uppercase" as const,
               }}>
-                📅 Upcoming
+                Upcoming
               </div>
               <h2 style={{
                 fontSize: "clamp(22px, 3.5vw, 34px)", fontWeight: "300", color: C.primary,
@@ -615,7 +620,7 @@ export default function PolicyPage() {
               {/* Legend pills */}
               <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" as const, justifyContent: isMobile ? "flex-start" : "flex-end" }}>
                 {Object.entries(EVENT_TYPE_CONFIG).map(([key, cfg]) => (
-                  <span key={key} style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "3px 9px", borderRadius: "20px", fontSize: "10px", fontWeight: "600", color: cfg.color, background: cfg.bg }}>
+                  <span key={key} style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "3px 9px", borderRadius: "20px", fontSize: "10px", fontWeight: "600", color: C.primary, background: C.background, border: `1px solid ${C.line}` }}>
                     {cfg.label}
                   </span>
                 ))}
@@ -779,7 +784,6 @@ export default function PolicyPage() {
 
           {filtered.length === 0 ? (
             <div style={{ textAlign: "center", padding: "64px 24px", backgroundColor: C.white, borderRadius: "16px", border: `1px solid ${C.line}` }}>
-              <div style={{ fontSize: "32px", marginBottom: "12px" }}>📋</div>
               <h3 style={{ fontSize: "18px", fontWeight: "600", color: C.primary, margin: "0 0 8px" }}>No briefs match your filters</h3>
               <p style={{ fontSize: "14px", color: C.muted, margin: 0 }}>Try adjusting your sector filter or search query.</p>
             </div>
