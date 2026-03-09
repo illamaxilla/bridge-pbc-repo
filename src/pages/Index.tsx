@@ -1975,12 +1975,15 @@ export default function BRIDGEHomePage() {
                     "Strategic alliances with government, traditional authorities, and development partners.",
                 },
               ].map((service, index) => (
-                <div
+                <Link
                   key={index}
+                  to="/services"
                   className="service-card"
                   style={{
                     minHeight: isMobile ? "260px" : "360px",
                     ...(isMobile ? { flex: "0 0 70%", scrollSnapAlign: "start" } : {}),
+                    textDecoration: "none",
+                    display: "block",
                   }}
                 >
                   <div className="service-card-inner">
