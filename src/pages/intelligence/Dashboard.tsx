@@ -2010,6 +2010,211 @@ function SubTabs({ tabs, active, onChange }) {
     </div>
   );
 }
+/* ── Sector Bottom-Sheet Drawer ── */
+function DashMSectorDrawer({ s, setS, open, onClose }) {
+  const sorted = [...SECTORS].sort((a, b) => b.score - a.score);
+  if (!open) return null;
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.65)" }} onClick={onClose}>
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: "#0F1A12",
+          borderRadius: "20px 20px 0 0",
+          maxHeight: "82vh",
+          display: "flex",
+          flexDirection: "column",
+          paddingBottom: "env(safe-area-inset-bottom,16px)",
+          border: "1px solid rgba(184,217,53,0.15)",
+          borderBottom: "none",
+          animation: "slideUp 0.25s ease",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div
+          style={{
+            width: 36,
+            height: 4,
+            borderRadius: 2,
+            background: "rgba(255,255,255,0.15)",
+            margin: "12px auto 0",
+            flexShrink: 0,
+          }}
+        />
+        <div
+          style={{
+            padding: "12px 20px 8px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexShrink: 0,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              color: "#6B7280",
+              fontFamily: "Inter,sans-serif",
+              letterSpacing: "0.8px",
+              textTransform: "uppercase",
+            }}
+          >
+            Select Sector
+          </span>
+          <button
+            onClick={onClose}
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              border: "none",
+              borderRadius: 7,
+              padding: "4px 10px",
+              fontSize: 11,
+              color: "rgba(255,255,255,0.4)",
+              cursor: "pointer",
+              fontFamily: "Inter,sans-serif",
+            }}
+          >
+            Done
+          </button>
+        </div>
+        <div style={{ overflowY: "auto", flex: 1, scrollbarWidth: "none" }}>
+          {sorted.map((sec, i) => {
+            const act = sec.id === s.id;
+            const SIcon = sec.icon;
+            const totalV = (sec.t1?.length || 0) + (sec.t2?.length || 0) + (sec.t3?.length || 0);
+            return (
+              <div
+                key={sec.id}
+                onClick={() => { setS(sec); onClose(); }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  padding: "13px 20px",
+                  borderTop: i > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                  background: act ? "rgba(184,217,53,0.07)" : "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                <div
+                  style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: 11,
+                    flexShrink: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: act ? "rgba(184,217,53,0.15)" : "rgba(255,255,255,0.06)",
+                  }}
+                >
+                  <SIcon size={16} color={act ? "#B8D935" : "rgba(255,255,255,0.35)"} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: act ? 700 : 500, color: act ? "#fff" : "rgba(255,255,255,0.7)", fontFamily: "DM Sans,sans-serif" }}>
+                    {sec.short}
+                  </div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                    {totalV} ventures · ${sec.capLow}–{sec.capHigh}M
+                  </div>
+                </div>
+                <div style={{ textAlign: "right", flexShrink: 0 }}>
+                  <div style={{ fontSize: 16, fontWeight: 800, fontFamily: "Inter,sans-serif", color: act ? "#B8D935" : "rgba(255,255,255,0.28)" }}>
+                    {sec.score}
+                  </div>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", fontFamily: "Inter,sans-serif" }}>score</div>
+                </div>
+                {act && <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#B8D935", flexShrink: 0 }} />}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Sticky Active Sector Header ── */
+function DashMobileSectorHeader({ s, setS }) {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const SIcon = s.icon;
+  return (
+    <>
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          height: 52,
+          background: "rgba(8,14,9,0.97)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          backdropFilter: "blur(16px)",
+          display: "flex",
+          alignItems: "center",
+          padding: "0 14px",
+          flexShrink: 0,
+        }}
+      >
+        <div
+          onClick={() => setDrawerOpen(true)}
+          style={{
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            cursor: "pointer",
+            background: "rgba(255,255,255,0.06)",
+            borderRadius: 12,
+            padding: "8px 12px",
+          }}
+        >
+          <div
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 8,
+              background: "rgba(184,217,53,0.15)",
+              border: "1px solid rgba(184,217,53,0.2)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <SIcon size={14} color="#B8D935" />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.8px", textTransform: "uppercase", fontFamily: "Inter,sans-serif" }}>
+              Active Sector
+            </div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", fontFamily: "DM Sans,sans-serif", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", lineHeight: 1.2, marginTop: 1 }}>
+              {s.short}
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontSize: 18, fontWeight: 800, color: "#B8D935", fontFamily: "Inter,sans-serif", lineHeight: 1, letterSpacing: "-0.5px" }}>
+                {s.score}
+              </div>
+              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.25)", fontFamily: "Inter,sans-serif", letterSpacing: "0.3px" }}>
+                SCORE
+              </div>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(184,217,53,0.6)" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <DashMSectorDrawer s={s} setS={setS} open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+    </>
+  );
+}
+
 /* ─── MAIN MOBILE DASHBOARD ─── */
 function MobileDashboard({ s, setS }) {
   const [dashSub, setDashSub] = useState("overview");
@@ -2051,94 +2256,8 @@ function MobileDashboard({ s, setS }) {
       .mscroll{-ms-overflow-style:none;scrollbar-width:none}
     `}</style>
 
-      {/* ═══ SECTOR HEADER CARD ═══ */}
-      <div style={{ padding: "8px 16px 0" }}>
-        <div
-          style={{
-            fontSize: 11,
-            fontWeight: 700,
-            color: "#6B7280",
-            letterSpacing: "0.8px",
-            textTransform: "uppercase",
-            fontFamily: "Inter,sans-serif",
-            marginBottom: 10,
-          }}
-        >
-          Dashboard
-        </div>
-        <div
-          style={{
-            background: M.card,
-            borderRadius: 16,
-            border: `1px solid ${M.accentBorder}`,
-            padding: "13px 14px",
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-          }}
-        >
-          <ScoreRing score={s.score} size={62} stroke={5} />
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div
-              style={{
-                fontSize: 9,
-                fontWeight: 700,
-                color: M.accent,
-                letterSpacing: "1.3px",
-                textTransform: "uppercase",
-                fontFamily: "Inter,sans-serif",
-                marginBottom: 2,
-              }}
-            >
-              Analytics · {s.tag}
-            </div>
-            <div
-              style={{
-                fontSize: 14,
-                fontWeight: 700,
-                color: M.white,
-                lineHeight: 1.2,
-                letterSpacing: "-.2px",
-                marginBottom: 7,
-              }}
-            >
-              {s.full}
-            </div>
-            <div style={{ display: "flex", gap: 6 }}>
-              {[
-                { l: "Cap", v: `$${s.capLow}–${s.capHigh}M` },
-                { l: "IRR", v: `${s.irrHigh}%` },
-                { l: "Score", v: `${s.score}` },
-              ].map((m, i) => (
-                <div
-                  key={i}
-                  style={{
-                    padding: "3px 8px",
-                    borderRadius: 6,
-                    background: "rgba(255,255,255,0.05)",
-                    border: `1px solid ${M.divider}`,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                  }}
-                >
-                  <span style={{ fontSize: 9, color: M.muted, fontFamily: "Inter,sans-serif" }}>{m.l}</span>
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: i === 1 ? M.accent : M.white,
-                      fontFamily: "Inter,sans-serif",
-                    }}
-                  >
-                    {m.v}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* ═══ ACTIVE SECTOR STICKY HEADER ═══ */}
+      <DashMobileSectorHeader s={s} setS={setS} />
 
       {/* ═══ SCROLLABLE CONTENT ═══ */}
       <div className="mscroll" style={{ flex: 1, overflowY: "auto", padding: "10px 12px 80px" }}>
