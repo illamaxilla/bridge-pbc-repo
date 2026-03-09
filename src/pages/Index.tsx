@@ -1590,6 +1590,7 @@ export default function BRIDGEHomePage() {
               connections that turn fragmented potential into shared prosperity.
             </p>
             {!isMobile && (
+              <a href="/methodology" style={{ textDecoration: "none" }}>
               <button
                 className="cta-approach"
                 style={{
@@ -1628,6 +1629,7 @@ export default function BRIDGEHomePage() {
                   </svg>
                 </span>
               </button>
+              </a>
             )}
           </div>
 
