@@ -1148,6 +1148,7 @@ function BridgeTab({ mobile, filter, setFilter, onUnlock }) {
           </div>
         </div>
         <button
+          onClick={onUnlock}
           style={{
             display: "flex",
             alignItems: "center",
