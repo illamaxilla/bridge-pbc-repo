@@ -422,7 +422,7 @@ function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: bool
   return (
     <div style={{
       backgroundColor: C.background, borderRadius: "14px",
-      border: `1px solid ${C.line}`, borderLeft: `4px solid ${urgencyCfg.color}`,
+      border: `1px solid ${C.line}`,
       padding: isMobile ? "16px" : "20px", display: "flex", gap: "14px",
     }}>
       {/* Date badge */}
