@@ -621,7 +621,7 @@ export default function PolicyPage() {
               {/* Legend pills */}
               <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" as const, justifyContent: isMobile ? "flex-start" : "flex-end" }}>
                 {Object.entries(EVENT_TYPE_CONFIG).map(([key, cfg]) => (
-                  <span key={key} style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "3px 9px", borderRadius: "20px", fontSize: "10px", fontWeight: "600", color: cfg.color, background: cfg.bg }}>
+                  <span key={key} style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "3px 9px", borderRadius: "20px", fontSize: "10px", fontWeight: "600", color: C.primary, background: C.background, border: `1px solid ${C.line}` }}>
                     {cfg.label}
                   </span>
                 ))}
