@@ -690,6 +690,7 @@ export default function BRIDGEHomePage() {
   const [hoveredInsight, setHoveredInsight] = useState(null);
   const [valueIndex, setValueIndex] = useState(0);
   const [contactStep, setContactStep] = useState(0);
+  const [contactSubmitted, setContactSubmitted] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -908,7 +909,8 @@ export default function BRIDGEHomePage() {
                 animation: "fadeUp 0.8s ease-out 0.2s both",
               }}
             >
-              <button
+              <Link
+                to="/about"
                 className="cta-primary"
                 style={{
                   backgroundColor: colors.primary,
@@ -923,6 +925,7 @@ export default function BRIDGEHomePage() {
                   display: "flex",
                   alignItems: "center",
                   gap: "8px",
+                  textDecoration: "none",
                 }}
               >
                 Explore Our Work
@@ -942,7 +945,7 @@ export default function BRIDGEHomePage() {
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </span>
-              </button>
+              </Link>
               <a href="/login" style={{ textDecoration: "none" }}>
                 <button
                   className="cta-secondary"
@@ -1123,7 +1126,8 @@ export default function BRIDGEHomePage() {
                   +6
                 </div>
                 <div style={{ marginLeft: "auto" }}>
-                  <div
+                  <Link
+                    to="/sectors"
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -1133,6 +1137,7 @@ export default function BRIDGEHomePage() {
                       fontWeight: "600",
                       fontFamily: "Inter, sans-serif",
                       cursor: "pointer",
+                      textDecoration: "none",
                     }}
                   >
                     Explore
@@ -1158,7 +1163,7 @@ export default function BRIDGEHomePage() {
                         <path d="M7 17L17 7M17 7H7M17 7V17" />
                       </svg>
                     </span>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -1588,7 +1593,8 @@ export default function BRIDGEHomePage() {
               connections that turn fragmented potential into shared prosperity.
             </p>
             {!isMobile && (
-              <button
+              <Link
+                to="/methodology"
                 className="cta-approach"
                 style={{
                   backgroundColor: colors.primary,
@@ -1605,6 +1611,7 @@ export default function BRIDGEHomePage() {
                   gap: "10px",
                   marginTop: "auto",
                   alignSelf: "flex-start",
+                  textDecoration: "none",
                 }}
               >
                 See How It Works
@@ -1625,7 +1632,7 @@ export default function BRIDGEHomePage() {
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </span>
-              </button>
+              </Link>
             )}
           </div>
 
@@ -1909,7 +1916,8 @@ export default function BRIDGEHomePage() {
                   Opportunity to Impact
                 </h2>
               </div>
-              <button
+              <Link
+                to="/services"
                 className="cta-learn-more"
                 style={{
                   backgroundColor: colors.white,
@@ -1925,29 +1933,28 @@ export default function BRIDGEHomePage() {
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
+                  textDecoration: "none",
                 }}
               >
                 Learn more
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M7 17L17 7M17 7H7M17 7V17" />
                 </svg>
-              </button>
+              </Link>
             </div>
-            <div
-              style={
-                isMobile
-                  ? {
-                      display: "flex",
-                      gap: "12px",
-                      overflowX: "auto",
-                      WebkitOverflowScrolling: "touch",
-                      scrollSnapType: "x mandatory",
-                      paddingBottom: "4px",
-                    }
-                  : { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }
-              }
-            >
-              {[
+            {isMobile ? (
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "12px",
+                    overflowX: "auto",
+                    WebkitOverflowScrolling: "touch",
+                    scrollSnapType: "x mandatory",
+                    paddingBottom: "4px",
+                  }}
+                >
+                  {[
                 {
                   name: "Research",
                   description: "Deep market analysis and evidence-based diagnostics across all 12 sectors.",
@@ -1966,12 +1973,15 @@ export default function BRIDGEHomePage() {
                     "Strategic alliances with government, traditional authorities, and development partners.",
                 },
               ].map((service, index) => (
-                <div
+                <Link
                   key={index}
+                  to="/services"
                   className="service-card"
                   style={{
                     minHeight: isMobile ? "260px" : "360px",
                     ...(isMobile ? { flex: "0 0 70%", scrollSnapAlign: "start" } : {}),
+                    textDecoration: "none",
+                    display: "block",
                   }}
                 >
                   <div className="service-card-inner">
@@ -2117,9 +2127,63 @@ export default function BRIDGEHomePage() {
                       )}
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
-            </div>
+                </div>
+                {/* swipe hint gradient */}
+                <div
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "48px",
+                    background: `linear-gradient(to left, ${colors.dark}, transparent)`,
+                    pointerEvents: "none",
+                    borderRadius: "0 24px 24px 0",
+                  }}
+                />
+              </div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }}>
+                {[
+                  { name: "Research", description: "Deep market analysis and evidence-based diagnostics across all 12 sectors." },
+                  { name: "Ventures", description: "174+ designed initiatives spanning infrastructure to creative industries." },
+                  { name: "Investment", description: "$135M–$259M in indicative capital across diversified deployment strategies." },
+                  { name: "Partnerships", description: "Strategic alliances with government, traditional authorities, and development partners." },
+                ].map((service, index) => (
+                  <Link
+                    key={`d-${index}`}
+                    to="/services"
+                    className="service-card"
+                    style={{ minHeight: "360px", textDecoration: "none", display: "block" }}
+                  >
+                    <div className="service-card-inner">
+                      <div className="service-card-front" style={{ backgroundColor: colors.accent }}>
+                        <div style={{ position: "relative", height: "200px" }}>
+                          <div style={{ position: "absolute", top: "10px", left: "10px", width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(27,77,62,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <span style={{ fontSize: "14px", fontWeight: "700", color: colors.primary }}>{`0${index + 1}`}</span>
+                          </div>
+                        </div>
+                        <h3 style={{ fontSize: "22px", fontWeight: "700", color: colors.primary, fontFamily: "Inter, sans-serif", margin: "0 0 8px 0" }}>{service.name}</h3>
+                      </div>
+                      <div className="service-card-back" style={{ backgroundColor: colors.primary }}>
+                        <div>
+                          <span style={{ fontSize: "12px", fontWeight: "600", color: colors.accent, fontFamily: "Inter, sans-serif", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "12px" }}>{`0${index + 1}`}</span>
+                          <h3 style={{ fontSize: "24px", fontWeight: "700", color: colors.white, fontFamily: "Inter, sans-serif", margin: "0 0 12px 0" }}>{service.name}</h3>
+                          <p style={{ fontSize: "15px", lineHeight: "1.7", color: "rgba(255,255,255,0.7)", fontFamily: "Inter, sans-serif", margin: 0 }}>{service.description}</p>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                          <div style={{ width: "44px", height: "44px", borderRadius: "50%", backgroundColor: colors.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2"><path d="M7 17L17 7M17 7H7M17 7V17" /></svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -3740,7 +3804,42 @@ export default function BRIDGEHomePage() {
                       }}
                     />
                   </div>
+                  {contactSubmitted ? (
+                    <div
+                      style={{
+                        backgroundColor: colors.accent,
+                        borderRadius: "16px",
+                        padding: "32px 24px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <div style={{ fontSize: "32px", marginBottom: "12px" }}>✓</div>
+                      <p
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: "600",
+                          color: colors.primary,
+                          fontFamily: "Inter, sans-serif",
+                          margin: "0 0 8px 0",
+                        }}
+                      >
+                        Message sent!
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          color: colors.primary,
+                          fontFamily: "Inter, sans-serif",
+                          opacity: 0.7,
+                          margin: 0,
+                        }}
+                      >
+                        We'll be in touch within one business day.
+                      </p>
+                    </div>
+                  ) : (
                   <button
+                    onClick={() => setContactSubmitted(true)}
                     style={{
                       backgroundColor: colors.accent,
                       color: colors.primary,
@@ -3755,6 +3854,7 @@ export default function BRIDGEHomePage() {
                   >
                     Send Message
                   </button>
+                  )}
                 </div>
                 <div
                   style={{
