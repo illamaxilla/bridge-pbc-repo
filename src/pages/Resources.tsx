@@ -2707,6 +2707,7 @@ export default function ResourcesPage() {
   const [tab, setTab] = useState("intelligence");
   const [mobile, setMobile] = useState(false);
   const [filter, setFilter] = useState("All");
+  const [showAuth, setShowAuth] = useState(false);
   useEffect(() => {
     const c = () => setMobile(window.innerWidth < 900);
     c();
