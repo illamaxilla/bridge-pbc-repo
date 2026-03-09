@@ -3778,74 +3778,56 @@ export default function BRIDGEHomePage() {
                   >
                     Connect with our team to explore partnership opportunities and tailored solutions.
                   </p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
-                    {[
-                      { label: "Your name", type: "text", placeholder: "e.g. Kwame Asante" },
-                      { label: "Email address", type: "email", placeholder: "e.g. kwame@email.com" },
-                      { label: "Phone number", type: "tel", placeholder: "e.g. +233 XX XXX XXXX" },
-                      { label: "Organization", type: "text", placeholder: "e.g. Company name" },
-                    ].map((field, i) => (
-                      <div key={i}>
-                        <label
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "500",
-                            color: colors.primary,
-                            fontFamily: "Inter, sans-serif",
-                            display: "block",
-                            marginBottom: "8px",
-                          }}
-                        >
-                          {field.label}
-                        </label>
-                        <input
-                          type={field.type}
-                          placeholder={field.placeholder}
-                          style={{
-                            width: "100%",
-                            padding: "14px 16px",
-                            borderRadius: "12px",
-                            border: "none",
-                            backgroundColor: colors.white,
-                            fontSize: "15px",
-                            fontFamily: "Inter, sans-serif",
-                            color: colors.dark,
-                            outline: "none",
-                            boxSizing: "border-box",
-                          }}
-                        />
-                      </div>
-                    ))}
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
+                    <div>
+                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Your name *</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Kwame Asante"
+                        value={contactName}
+                        onChange={e => setContactName(e.target.value)}
+                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Email address *</label>
+                      <input
+                        type="email"
+                        placeholder="e.g. kwame@email.com"
+                        value={contactEmail}
+                        onChange={e => setContactEmail(e.target.value)}
+                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Phone number</label>
+                      <input
+                        type="tel"
+                        placeholder="e.g. +233 XX XXX XXXX"
+                        value={contactPhone}
+                        onChange={e => setContactPhone(e.target.value)}
+                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Organization</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Company name"
+                        value={contactOrg}
+                        onChange={e => setContactOrg(e.target.value)}
+                        style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
                   </div>
                   <div style={{ marginBottom: "24px" }}>
-                    <label
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                        display: "block",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      Your message
-                    </label>
+                    <label style={{ fontSize: "14px", fontWeight: "500", color: colors.primary, fontFamily: "Inter, sans-serif", display: "block", marginBottom: "8px" }}>Your message *</label>
                     <textarea
                       placeholder="Type here..."
                       rows={4}
-                      style={{
-                        width: "100%",
-                        padding: "14px 16px",
-                        borderRadius: "12px",
-                        border: "none",
-                        backgroundColor: colors.white,
-                        fontSize: "15px",
-                        fontFamily: "Inter, sans-serif",
-                        color: colors.dark,
-                        outline: "none",
-                        resize: "vertical",
-                        boxSizing: "border-box",
-                      }}
+                      value={contactMessage}
+                      onChange={e => setContactMessage(e.target.value)}
+                      style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "none", backgroundColor: colors.white, fontSize: "15px", fontFamily: "Inter, sans-serif", color: colors.dark, outline: "none", resize: "vertical", boxSizing: "border-box" }}
                     />
                   </div>
                   {contactSubmitted ? (
