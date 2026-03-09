@@ -1913,6 +1913,7 @@ export default function BRIDGEHomePage() {
                   Opportunity to Impact
                 </h2>
               </div>
+              <a href="/methodology" style={{ textDecoration: "none" }}>
               <button
                 className="cta-learn-more"
                 style={{
@@ -1936,6 +1937,7 @@ export default function BRIDGEHomePage() {
                   <path d="M7 17L17 7M17 7H7M17 7V17" />
                 </svg>
               </button>
+              </a>
             </div>
             <div
               style={
