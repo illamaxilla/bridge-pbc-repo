@@ -3986,18 +3986,9 @@ const Footer = () => {
                 {footerSocialIcons.map((icon, i) => (
                   <a
                     key={i}
-                    href="#"
-                    style={{
-                      width: "34px",
-                      height: "34px",
-                      borderRadius: "8px",
-                      backgroundColor: "rgba(255,255,255,0.06)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "rgba(255,255,255,0.45)",
-                    }}
+                    href={SOCIAL_HREFS[i]}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     {icon}
                   </a>
