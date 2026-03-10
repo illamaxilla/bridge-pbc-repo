@@ -373,36 +373,55 @@ export default function SiteFooter() {
             </div>
           </div>
           {/* Row 2: Subscribe inline */}
-          <div style={{ display: "flex", gap: "8px" }}>
-            <input
-              placeholder="Subscribe to insights"
-              style={{
-                flex: 1,
-                padding: "11px 14px",
-                borderRadius: "8px",
-                border: "1px solid rgba(255,255,255,0.12)",
-                backgroundColor: "rgba(255,255,255,0.05)",
-                color: WHITE,
-                fontSize: "12px",
-                fontFamily: "'DM Sans', sans-serif",
-                outline: "none",
-              }}
-            />
-            <button
-              style={{
-                backgroundColor: ACCENT,
-                color: PRIMARY,
-                border: "none",
-                padding: "11px 18px",
-                fontSize: "12px",
-                fontWeight: "700",
-                fontFamily: "'DM Sans', sans-serif",
-                cursor: "pointer",
-                borderRadius: "8px",
-              }}
-            >
-              →
-            </button>
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <input
+                placeholder="Subscribe to insights"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setSubStatus("idle"); }}
+                onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
+                style={{
+                  flex: 1,
+                  padding: "11px 14px",
+                  borderRadius: "8px",
+                  border: `1px solid ${subStatus === "error" ? "rgba(255,80,80,0.5)" : "rgba(255,255,255,0.12)"}`,
+                  backgroundColor: "rgba(255,255,255,0.05)",
+                  color: WHITE,
+                  fontSize: "12px",
+                  fontFamily: "'DM Sans', sans-serif",
+                  outline: "none",
+                }}
+              />
+              <button
+                onClick={handleSubscribe}
+                disabled={subStatus === "loading" || subStatus === "success"}
+                style={{
+                  backgroundColor: subStatus === "success" ? "#4caf50" : ACCENT,
+                  color: PRIMARY,
+                  border: "none",
+                  padding: "11px 18px",
+                  fontSize: "12px",
+                  fontWeight: "700",
+                  fontFamily: "'DM Sans', sans-serif",
+                  cursor: subStatus === "loading" || subStatus === "success" ? "default" : "pointer",
+                  borderRadius: "8px",
+                  opacity: subStatus === "loading" ? 0.7 : 1,
+                  transition: "background-color 0.2s ease",
+                }}
+              >
+                {subStatus === "loading" ? "..." : subStatus === "success" ? "✓" : "→"}
+              </button>
+            </div>
+            {subStatus === "success" && (
+              <span style={{ fontSize: "11px", color: "#8dc63f", fontFamily: "'DM Sans', sans-serif" }}>
+                You're subscribed! Thanks.
+              </span>
+            )}
+            {subStatus === "error" && (
+              <span style={{ fontSize: "11px", color: "rgba(255,100,100,0.9)", fontFamily: "'DM Sans', sans-serif" }}>
+                Please enter a valid email address.
+              </span>
+            )}
           </div>
           {/* Row 3: Contact + Social */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
