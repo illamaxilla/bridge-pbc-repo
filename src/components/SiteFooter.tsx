@@ -307,6 +307,26 @@ function SectorGrid() {
 // ─── Main SiteFooter export ───────────────────────────────────────────────────
 export default function SiteFooter() {
   const isMobile = useIsMobile();
+  const [email, setEmail] = useState("");
+  const [subStatus, setSubStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubscribe = async () => {
+    const trimmed = trimEmail(email);
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      setSubStatus("error");
+      return;
+    }
+    setSubStatus("loading");
+    const { error } = await supabase.from("subscribers").insert({ email: trimmed });
+    if (error && error.code !== "23505") {
+      setSubStatus("error");
+    } else {
+      setSubStatus("success");
+      setEmail("");
+    }
+  };
+
+  const trimEmail = (v: string) => v.trim().toLowerCase();
 
   return (
     <footer style={{ backgroundColor: PRIMARY, padding: "0" }}>
