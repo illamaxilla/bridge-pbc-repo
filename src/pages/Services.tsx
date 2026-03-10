@@ -193,6 +193,7 @@ const footerSectorIcons = [
   },
   {
     key: "tourism",
+    to: "/sectors/tourism",
     label: "Tourism & Hospitality",
     icon: (c) => (
       <svg
