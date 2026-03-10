@@ -971,7 +971,7 @@ function LoginPage({ onLogin }) {
 
         <div style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: C.muted }}>
           Don't have an account?{" "}
-          <a href="#" style={{ color: C.primary, fontWeight: 700, textDecoration: "none" }}>
+          <a href="/login" style={{ color: C.primary, fontWeight: 700, textDecoration: "none" }}>
             Request Access
           </a>
         </div>

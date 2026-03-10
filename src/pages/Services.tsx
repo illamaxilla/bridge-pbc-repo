@@ -4772,11 +4772,9 @@ export default function ServicesSectorsPageV2() {
                     {socialIcons.map((icon, i) => (
                       <a
                         key={i}
-                        href="#"
-                        style={{
-                          width: "34px",
-                          height: "34px",
-                          borderRadius: "8px",
+                        href={SOCIAL_HREFS[i]}
+                        target="_blank"
+                        rel="noopener noreferrer"
                           backgroundColor: "rgba(255,255,255,0.06)",
                           display: "flex",
                           alignItems: "center",
