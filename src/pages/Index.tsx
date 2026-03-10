@@ -701,6 +701,7 @@ export default function BRIDGEHomePage() {
   };
   const [hoveredInsight, setHoveredInsight] = useState(null);
   const [valueIndex, setValueIndex] = useState(0);
+  const valueTouchStartX = useRef<number | null>(null);
   const [contactStep, setContactStep] = useState(0);
 
   useEffect(() => {
