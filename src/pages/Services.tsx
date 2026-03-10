@@ -42,6 +42,7 @@ const footerSectorIcons = [
   },
   {
     key: "fin",
+    to: "/sectors/financial",
     label: "Financial Inclusion & Economic Security",
     icon: (c) => (
       <svg
