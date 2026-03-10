@@ -2250,7 +2250,6 @@ export default function BRIDGEHomePage() {
                   ].map((value, index) => (
                     <div key={index} style={{ flex: "0 0 100%", paddingRight: "16px", boxSizing: "border-box" }}>
                       <div
-                        className="value-card"
                         style={{
                           backgroundColor: value.highlighted ? colors.accent : colors.white,
                           borderRadius: "24px",
