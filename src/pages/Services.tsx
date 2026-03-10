@@ -238,6 +238,7 @@ const footerSectorIcons = [
   },
   {
     key: "mfg",
+    to: "/sectors/manufacturing",
     label: "Manufacturing & Light Industry",
     icon: (c) => (
       <svg
