@@ -1,97 +1,85 @@
 
-## Plan: 3 surgical fixes, 4 files
+## Audit Summary: What's Working vs. What Needs Fixing
 
----
+### ✅ Working correctly
+- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
+- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
+- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
+- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
 
-### Fix 1 — Sports.tsx: Remove `\u2014` from process section description (line 1886)
+### ❌ Issues to fix
 
-**Problem:** Line 1886 renders as:
-> "Two distinct pathways where Ghanaian talent meets global opportunity \u2014 each with unique value chains..."
+**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
+- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
+- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
 
-The `\u2014` (em dash) is rendering as a literal string in the browser (visible in the screenshot as `\u2014`).
+**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
+- Line 6934 has `href="#"` instead of the object-lookup pattern
+- Fix: same object-lookup pattern as other pages
 
-**Fix:** Replace the JSX text on line 1886 to use an actual em dash character or a JSX expression:
+**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
+- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
+- Fix: apply the object-lookup href pattern
 
-```tsx
-Two distinct pathways where Ghanaian talent meets global opportunity — each with unique value chains,
-```
+**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
+- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
+- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
+- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
 
-Change `\u2014` → `—` (actual em dash character).
+**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
+- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
+- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
 
-**Lines changed:** 1886 only. Nothing else in Sports.tsx touched.
+**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
+- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
+- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
+- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
 
----
+**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
+- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
+- Minor cleanup
 
-### Fix 2 — Add "Services" to nav & search in both headers (SiteHeader.tsx + SiteHeaderMinimal.tsx)
+### Implementation Plan
 
-**Problem:** `ALL_NAV` in both header files has 10 items. "Services" (`/services`) is missing from both the hamburger menu and the search overlay.
+**Files to fix: 4 real fixes + 1 cleanup**
 
-**Current ALL_NAV order:**
-Home, About, Methodology, Sectors, Insight, BRIDGE Intelligence, Community, Resources, Contact, Policy Updates
+1. **`Tourism.tsx`** (2 fixes):
+   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
+   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
 
-**New ALL_NAV order** — insert Services after Methodology (logical position, it's a core offering page):
-Home, About, Methodology, **Services**, Sectors, Insight, BRIDGE Intelligence, Community, Resources, Contact, Policy Updates
+2. **`Infrastructure.tsx`** (1 fix):
+   - Line 6952: `href="#"` → object-lookup href
 
-This makes it 11 items in both menu and search.
+3. **`Education.tsx`** (1 fix):
+   - Line 6947: `href="#"` → object-lookup href
 
-**Lines changed in each file:**
-- `SiteHeader.tsx` — insert one line after line 19 (Methodology entry)
-- `SiteHeaderMinimal.tsx` — insert one line after line 19 (Methodology entry)
+4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
+   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
+   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
 
-**No other changes to either header file.**
+5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
+   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
+   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
 
----
+6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
 
-### Fix 3 — Services.tsx hero sector widget: text change + double-click navigation
-
-**Sub-fix 3a — Text change (line 1859):**
-```
-"Hover a sector to see how it connects to your goals"
-→
-"Hover to see how it connects to your goals"
-```
-
-**Sub-fix 3b — Add `useNavigate` import (line 1):**
-```tsx
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeaderMinimal";
-```
-
-**Sub-fix 3c — Add `navigate` hook in the component:**
-The main page component function needs `const navigate = useNavigate()` added at the top.
-
-**Sub-fix 3d — Add `onDoubleClick` to each sector icon cell (lines 1808–1841):**
-
-The `footerSectorIcons` array is ordered at positions 0–11. The route map by index:
-```
-0: infra    → /sectors/infrastructure
-1: fin      → /sectors/financial
-2: health   → /sectors/health
-3: tech     → /sectors/technology
-4: edu      → /sectors/education
-5: agri     → /sectors/agriculture
-6: creative → /sectors/sports
-7: housing  → /sectors/housing
-8: tourism  → /sectors/tourism
-9: energy   → /sectors/energy
-10: mfg     → /sectors/manufacturing
-11: transport → /sectors/transport
-```
-
-Add a `to` field to each `footerSectorIcons` entry, then add `onDoubleClick={() => navigate(sector.to)}` to the icon `<div>`.
-
-**Lines changed:** Line 1 (add import), ~line 730 (add `navigate` hook), lines 21–271 (add `to` field to each of the 12 icon entries), lines 1808–1826 (add `onDoubleClick` to the sector icon div).
-
----
-
-### Edit table
-
-| File | Change | Lines |
-|---|---|---|
-| `Sports.tsx` | `\u2014` → `—` in JSX text | 1886 |
-| `SiteHeader.tsx` | Add `{ label: "Services", to: "/services" }` to ALL_NAV | after line 19 |
-| `SiteHeaderMinimal.tsx` | Add `{ label: "Services", to: "/services" }` to ALL_NAV | after line 19 |
-| `Services.tsx` | Add `useNavigate` import; add `to` routes to icon data; `onDoubleClick` on icons; fix hover text | 1, ~730, 21–271, 1808–1840, 1859 |
-
-**Total: 4 files, ~20 line edits. Zero layout changes, zero styling changes.**
+### Files to edit
+| File | Change |
+|---|---|
+| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
+| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
+| `Education.tsx` | Fix mobile labels `href="#"` |
+| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
+| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |

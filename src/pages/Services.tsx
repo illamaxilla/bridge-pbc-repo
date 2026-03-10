@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 
 // BRIDGE Design System - Consistent with Homepage
@@ -21,6 +22,7 @@ const CONTENT_MAX_WIDTH = "1200px";
 const footerSectorIcons = [
   {
     key: "infra",
+    to: "/sectors/infrastructure",
     label: "Infrastructure & Basic Services",
     icon: (c) => (
       <svg
@@ -40,6 +42,7 @@ const footerSectorIcons = [
   },
   {
     key: "fin",
+    to: "/sectors/financial",
     label: "Financial Inclusion & Economic Security",
     icon: (c) => (
       <svg
@@ -60,6 +63,7 @@ const footerSectorIcons = [
   },
   {
     key: "health",
+    to: "/sectors/health",
     label: "Health Systems & Wellbeing",
     icon: (c) => (
       <svg
@@ -78,6 +82,7 @@ const footerSectorIcons = [
   },
   {
     key: "tech",
+    to: "/sectors/technology",
     label: "Technology & Innovation",
     icon: (c) => (
       <svg
@@ -105,6 +110,7 @@ const footerSectorIcons = [
   },
   {
     key: "edu",
+    to: "/sectors/education",
     label: "Education & Skills",
     icon: (c) => (
       <svg
@@ -125,6 +131,7 @@ const footerSectorIcons = [
   },
   {
     key: "agri",
+    to: "/sectors/agriculture",
     label: "Agriculture & Value Chains",
     icon: (c) => (
       <svg
@@ -146,6 +153,7 @@ const footerSectorIcons = [
   },
   {
     key: "creative",
+    to: "/sectors/sports",
     label: "Sports, Entertainment & Creative",
     icon: (c) => (
       <svg
@@ -165,6 +173,7 @@ const footerSectorIcons = [
   },
   {
     key: "housing",
+    to: "/sectors/housing",
     label: "Housing & Real Estate",
     icon: (c) => (
       <svg
@@ -184,6 +193,7 @@ const footerSectorIcons = [
   },
   {
     key: "tourism",
+    to: "/sectors/tourism",
     label: "Tourism & Hospitality",
     icon: (c) => (
       <svg
@@ -206,6 +216,7 @@ const footerSectorIcons = [
   },
   {
     key: "energy",
+    to: "/sectors/energy",
     label: "Energy & Renewable Resources",
     icon: (c) => (
       <svg
@@ -227,6 +238,7 @@ const footerSectorIcons = [
   },
   {
     key: "mfg",
+    to: "/sectors/manufacturing",
     label: "Manufacturing & Light Industry",
     icon: (c) => (
       <svg
@@ -248,6 +260,7 @@ const footerSectorIcons = [
   },
   {
     key: "transport",
+    to: "/sectors/transport",
     label: "Transportation & Logistics",
     icon: (c) => (
       <svg
@@ -1244,6 +1257,7 @@ const footerLinkHref = (link: string): string => {
 };
 
 export default function ServicesSectorsPageV2() {
+  const navigate = useNavigate();
   const [activeService, setActiveService] = useState("research");
   const [selectedSector, setSelectedSector] = useState(null);
   const [filterCategory, setFilterCategory] = useState("all");
@@ -1809,6 +1823,7 @@ export default function ServicesSectorsPageV2() {
                         key={sector.key}
                         onMouseEnter={() => setHeroSectorHovered(i)}
                         onMouseLeave={() => setHeroSectorHovered(null)}
+                        onDoubleClick={() => navigate(sector.to)}
                         style={{
                           display: "flex",
                           alignItems: "center",
@@ -1856,7 +1871,7 @@ export default function ServicesSectorsPageV2() {
                 >
                   {heroSectorHovered !== null
                     ? sectorAudienceText[activeAudience][heroSectorHovered]
-                    : "Hover a sector to see how it connects to your goals"}
+                    : "Hover to see how it connects to your goals"}
                 </div>
               </div>
             </div>

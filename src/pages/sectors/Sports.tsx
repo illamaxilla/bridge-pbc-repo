@@ -1883,7 +1883,7 @@ const ValueChainSection = () => {
               lineHeight: "1.7",
             }}
           >
-            Two distinct pathways where Ghanaian talent meets global opportunity \u2014 each with unique value chains,
+            Two distinct pathways where Ghanaian talent meets global opportunity — each with unique value chains,
             challenges, and BRIDGE interventions.
           </p>
 

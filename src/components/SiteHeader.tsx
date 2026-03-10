@@ -16,6 +16,7 @@ const ALL_NAV = [
   { label: "Home",               to: "/" },
   { label: "About",              to: "/about" },
   { label: "Methodology",        to: "/methodology" },
+  { label: "Services",           to: "/services" },
   { label: "Sectors",            to: "/sectors" },
   { label: "Insight",            to: "/insights" },
   { label: "BRIDGE Intelligence", to: "/intelligence/dashboard" },
