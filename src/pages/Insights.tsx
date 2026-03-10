@@ -1724,7 +1724,7 @@ export default function InsightsPage() {
                 every BRIDGE deployment decision.
               </p>
               <a
-                href="/dashboard"
+                href="/login"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",

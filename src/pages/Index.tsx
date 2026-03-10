@@ -1866,7 +1866,7 @@ export default function BRIDGEHomePage() {
             style={{
               maxWidth: CONTENT_MAX_WIDTH,
               margin: "0 auto",
-              padding: isMobile ? "0 24px" : "0 80px",
+              padding: isMobile ? "0 24px" : "0 48px",
               boxSizing: "border-box",
             }}
           >
