@@ -1360,6 +1360,14 @@ const Footer = () => {
                 <a
                   key={label}
                   href={INSIGHTS_NAV_HREFS[label] ?? "#"}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "11px",
+                    fontWeight: "600",
+                    color: "rgba(255,255,255,0.5)",
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                  }}
                 >
                   {label}
                 </a>
