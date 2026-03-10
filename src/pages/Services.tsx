@@ -1257,6 +1257,7 @@ const footerLinkHref = (link: string): string => {
 };
 
 export default function ServicesSectorsPageV2() {
+  const navigate = useNavigate();
   const [activeService, setActiveService] = useState("research");
   const [selectedSector, setSelectedSector] = useState(null);
   const [filterCategory, setFilterCategory] = useState("all");
