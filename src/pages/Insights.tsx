@@ -1285,6 +1285,17 @@ const BridgeLogoWhite = () => (
   </div>
 );
 
+function useIsMobile(bp = 768) {
+  const [m, setM] = React.useState(false);
+  useEffect(() => {
+    const c = () => setM(window.innerWidth <= bp);
+    c();
+    window.addEventListener("resize", c);
+    return () => window.removeEventListener("resize", c);
+  }, [bp]);
+  return m;
+}
+
 const Footer = () => {
   const isMobile = useIsMobile();
   return (
