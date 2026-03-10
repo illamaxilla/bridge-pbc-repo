@@ -6472,7 +6472,7 @@ const FinalCTASection = () => {
           }}
         >
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/contact")}
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,

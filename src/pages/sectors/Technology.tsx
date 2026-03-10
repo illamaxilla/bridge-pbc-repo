@@ -6673,7 +6673,7 @@ const FinalCTASection = () => {
           style={{ display: "flex", gap: "16px", justifyContent: "center", flexDirection: isMobile ? "column" : "row" }}
         >
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/contact")}
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
