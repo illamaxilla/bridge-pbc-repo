@@ -173,6 +173,7 @@ const footerSectorIcons = [
   },
   {
     key: "housing",
+    to: "/sectors/housing",
     label: "Housing & Real Estate",
     icon: (c) => (
       <svg
