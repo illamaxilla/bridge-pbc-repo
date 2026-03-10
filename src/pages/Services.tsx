@@ -216,6 +216,7 @@ const footerSectorIcons = [
   },
   {
     key: "energy",
+    to: "/sectors/energy",
     label: "Energy & Renewable Resources",
     icon: (c) => (
       <svg
