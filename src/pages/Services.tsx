@@ -4567,20 +4567,24 @@ export default function ServicesSectorsPageV2() {
               </div>
               <div style={{ display: "flex", gap: "6px" }}>
                 {socialIcons.map((icon, i) => (
-                  <a
-                    key={i}
-                    href={SOCIAL_HREFS[i]}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                      backgroundColor: "rgba(255,255,255,0.06)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "rgba(255,255,255,0.4)",
-                      textDecoration: "none",
-                    }}
-                  >
+                    <a
+                      key={i}
+                      href={SOCIAL_HREFS[i]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        width: "28px",
+                        height: "28px",
+                        borderRadius: "6px",
+                        backgroundColor: "rgba(255,255,255,0.06)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        color: "rgba(255,255,255,0.4)",
+                        textDecoration: "none",
+                      }}
+                    >
                     <span style={{ transform: "scale(0.8125)", display: "flex" }}>{icon}</span>
                   </a>
                 ))}
