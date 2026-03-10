@@ -1870,7 +1870,7 @@ export default function ServicesSectorsPageV2() {
                 >
                   {heroSectorHovered !== null
                     ? sectorAudienceText[activeAudience][heroSectorHovered]
-                    : "Hover a sector to see how it connects to your goals"}
+                    : "Hover to see how it connects to your goals"}
                 </div>
               </div>
             </div>
