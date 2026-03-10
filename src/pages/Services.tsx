@@ -153,6 +153,7 @@ const footerSectorIcons = [
   },
   {
     key: "creative",
+    to: "/sectors/sports",
     label: "Sports, Entertainment & Creative",
     icon: (c) => (
       <svg
