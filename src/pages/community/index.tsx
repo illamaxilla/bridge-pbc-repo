@@ -920,7 +920,7 @@ function LoginPage({ onLogin }) {
             </div>
             <span style={{ fontSize: 13, color: C.text }}>Remember me</span>
           </label>
-          <a href="#" style={{ fontSize: 13, color: C.primary, textDecoration: "none", fontWeight: 600 }}>
+          <a href="/login" style={{ fontSize: 13, color: C.primary, textDecoration: "none", fontWeight: 600 }}>
             Forgot password?
           </a>
         </div>
