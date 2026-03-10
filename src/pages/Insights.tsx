@@ -1215,10 +1215,7 @@ const SectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href="#"
-              title={sector.label}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
+              href={INSIGHTS_SECTOR_ROUTES[sector.key] ?? "#"}
               style={{
                 display: "flex",
                 alignItems: "center",
