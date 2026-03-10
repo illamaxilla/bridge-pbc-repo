@@ -6375,6 +6375,7 @@ const FinalCTASection = () => {
           }}
         >
           <button
+            onClick={() => navigate("/login")}
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
@@ -6409,6 +6410,7 @@ const FinalCTASection = () => {
             </span>
           </button>
           <button
+            onClick={() => navigate("/login")}
             style={{
               backgroundColor: "transparent",
               color: colors.white,

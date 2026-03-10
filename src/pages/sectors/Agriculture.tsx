@@ -7103,6 +7103,7 @@ const FinalCTASection = () => {
         >
           <button
             className="cta-lime-swap"
+            onClick={() => navigate("/login")}
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
@@ -7141,6 +7142,7 @@ const FinalCTASection = () => {
 
           <button
             className="cta-secondary"
+            onClick={() => navigate("/login")}
             style={{
               backgroundColor: "transparent",
               color: "rgba(255,255,255,0.7)",
