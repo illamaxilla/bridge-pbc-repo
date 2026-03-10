@@ -1008,8 +1008,8 @@ export default function BRIDGEHomePage() {
             style={{
               position: "absolute",
               bottom: "-90px",
-              left: "40px",
-              right: "40px",
+              left: "32px",
+              right: "32px",
               display: "grid",
               gridTemplateColumns: "1.3fr 1fr 1fr",
               gap: "20px",
