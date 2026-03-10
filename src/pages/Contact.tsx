@@ -3629,10 +3629,7 @@ const FooterSectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href="#"
-              title={sector.label}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
+              href={SECTOR_ROUTES_LOCAL[sector.key] ?? "#"}
               style={{
                 display: "flex",
                 alignItems: "center",
