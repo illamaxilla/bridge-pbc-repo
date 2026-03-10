@@ -82,6 +82,7 @@ const footerSectorIcons = [
   },
   {
     key: "tech",
+    to: "/sectors/technology",
     label: "Technology & Innovation",
     icon: (c) => (
       <svg
