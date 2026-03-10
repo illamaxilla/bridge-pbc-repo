@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Search, X } from "lucide-react";
 
 // ── Design tokens (match every page in the site) ──────────────────────────────
 const clr = {
@@ -23,8 +24,26 @@ const ALL_NAV = [
   { label: "Contact",            to: "/contact" },
   { label: "Policy Updates",     to: "/policy", badge: true },
 ];
+
 // Policy pages that show a badge dot
 const BADGE_ITEMS = new Set(["/policy"]);
+
+// ── Search items (nav + all 12 sector pages) ──────────────────────────────────
+const SEARCH_ITEMS = [
+  ...ALL_NAV,
+  { label: "Energy & Renewables",         to: "/sectors/energy" },
+  { label: "Technology & Innovation",     to: "/sectors/technology" },
+  { label: "Agriculture & Value Chains",  to: "/sectors/agriculture" },
+  { label: "Education & Skills",          to: "/sectors/education" },
+  { label: "Financial Inclusion",         to: "/sectors/financial" },
+  { label: "Health Systems",             to: "/sectors/health" },
+  { label: "Housing & Real Estate",       to: "/sectors/housing" },
+  { label: "Infrastructure",             to: "/sectors/infrastructure" },
+  { label: "Manufacturing",              to: "/sectors/manufacturing" },
+  { label: "Sports & Creative",          to: "/sectors/sports" },
+  { label: "Tourism & Hospitality",      to: "/sectors/tourism" },
+  { label: "Transportation",             to: "/sectors/transport" },
+];
 
 // ── BRIDGE logo (dark, header variant) ────────────────────────────────────────
 const BridgeLogo = ({ height = 40 }: { height?: number }) => (
@@ -66,8 +85,10 @@ export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  
   const [mobile, setMobile] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const check = () => setMobile(window.innerWidth <= 768);
@@ -82,20 +103,50 @@ export default function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile menu or search is open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    document.body.style.overflow = (mobileOpen || searchOpen) ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
+  }, [mobileOpen, searchOpen]);
 
-  // Active-page exclusion: filter out the nav item whose route matches current path
-  const visibleNav = ALL_NAV.filter((item) => {
-    if (item.to === "/") return location.pathname !== "/";
-    return !location.pathname.startsWith(item.to);
-  });
+  // Auto-focus search input when opened
+  useEffect(() => {
+    if (searchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 50);
+    } else {
+      setSearchQuery("");
+    }
+  }, [searchOpen]);
+
+  // ESC closes search or menu
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (searchOpen) setSearchOpen(false);
+        else if (mobileOpen) setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [searchOpen, mobileOpen]);
+
+  // Active-page detection (no exclusion — show all 10 items)
+  const isActive = (item: typeof ALL_NAV[0]) =>
+    item.to === "/" ? location.pathname === "/" : location.pathname.startsWith(item.to);
 
   const goLogin = () => { setMobileOpen(false); navigate("/login"); };
   const handleNavClick = (to: string) => { setMobileOpen(false); navigate(to); };
+
+  const handleSearchSelect = (to: string) => {
+    setSearchOpen(false);
+    navigate(to);
+  };
+
+  const filteredSearch = searchQuery.trim().length > 0
+    ? SEARCH_ITEMS.filter(item =>
+        item.label.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : SEARCH_ITEMS;
 
   return (
     <>
@@ -134,115 +185,292 @@ export default function SiteHeader() {
               left: "50%",
               transform: "translateX(-50%)",
               display: "flex",
-              gap: "36px",
+              gap: "32px",
               alignItems: "center",
               opacity: scrolled ? 0 : 1,
               pointerEvents: scrolled ? "none" : "auto",
               transition: "opacity 0.3s ease",
             }}
           >
-            {visibleNav.map((item, i) => (
-              <a
-                key={item.label}
-                href={item.to}
-                onClick={(e) => { e.preventDefault(); handleNavClick(item.to); }}
-                onMouseEnter={() => setHoveredIdx(i)}
-                onMouseLeave={() => setHoveredIdx(null)}
-                style={{
-                  color: hoveredIdx === i ? clr.primary : clr.dark,
-                  textDecoration: "none",
-                  fontSize: "15px",
-                  fontWeight: "500",
-                  fontFamily: "Inter, sans-serif",
-                  letterSpacing: "0.3px",
-                  transition: "color 0.2s ease",
-                  position: "relative" as const,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-              >
-                {item.label}
-                {BADGE_ITEMS.has(item.to) && (
-                  <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
-                    <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
-                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
-                  </span>
-                )}
-              </a>
-            ))}
+            {ALL_NAV.map((item, i) => {
+              const active = isActive(item);
+              return (
+                <a
+                  key={item.label}
+                  href={item.to}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(item.to); }}
+                  onMouseEnter={() => setHoveredIdx(i)}
+                  onMouseLeave={() => setHoveredIdx(null)}
+                  style={{
+                    color: active ? clr.primary : hoveredIdx === i ? clr.primary : clr.dark,
+                    textDecoration: "none",
+                    fontSize: "14px",
+                    fontWeight: active ? "700" : "500",
+                    fontFamily: "Inter, sans-serif",
+                    letterSpacing: "0.3px",
+                    transition: "color 0.2s ease",
+                    position: "relative" as const,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    paddingBottom: "4px",
+                  }}
+                >
+                  {item.label}
+                  {BADGE_ITEMS.has(item.to) && (
+                    <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
+                      <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
+                    </span>
+                  )}
+                  {/* Active underline bar */}
+                  {active && (
+                    <span style={{
+                      position: "absolute",
+                      bottom: "-4px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: "20px",
+                      height: "3px",
+                      backgroundColor: clr.accent,
+                      borderRadius: "2px",
+                    }} />
+                  )}
+                </a>
+              );
+            })}
           </nav>
         )}
 
         {/* Right side */}
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           {mobile ? (
-            /* Hamburger/X button on mobile */
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
-              style={{
-                background: mobileOpen ? clr.dark : "transparent",
-                border: `1.5px solid ${mobileOpen ? clr.dark : clr.line}`,
-                borderRadius: "10px",
-                cursor: "pointer",
-                padding: "8px",
-                width: "40px",
-                height: "40px",
-                display: "flex",
-                flexDirection: "column" as const,
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "4px",
-                transition: "all 0.3s ease",
-              }}
-            >
-              <span style={{ width: "18px", height: "1.5px", backgroundColor: mobileOpen ? clr.white : clr.primary, borderRadius: "1px", transition: "all 0.3s ease", transform: mobileOpen ? "rotate(45deg) translateY(5.5px)" : "none" }} />
-              <span style={{ width: "18px", height: "1.5px", backgroundColor: mobileOpen ? clr.white : clr.primary, borderRadius: "1px", transition: "all 0.3s ease", opacity: mobileOpen ? 0 : 1 }} />
-              <span style={{ width: "18px", height: "1.5px", backgroundColor: mobileOpen ? clr.white : clr.primary, borderRadius: "1px", transition: "all 0.3s ease", transform: mobileOpen ? "rotate(-45deg) translateY(-5.5px)" : "none" }} />
-            </button>
-          ) : (
-            /* Desktop "Request Access" button */
-            <button
-              onClick={goLogin}
-              style={{
-                backgroundColor: clr.primary,
-                color: clr.white,
-                border: "none",
-                padding: "12px 24px",
-                borderRadius: "50px",
-                fontSize: "14px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                height: "46px",
-                transition: "background-color 0.2s ease",
-              }}
-            >
-              Request Access
-              <span
+            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              {/* Search icon on mobile */}
+              <button
+                onClick={() => { setMobileOpen(false); setSearchOpen(true); }}
+                aria-label="Search"
                 style={{
-                  width: "24px",
-                  height: "24px",
-                  backgroundColor: clr.accent,
-                  borderRadius: "50%",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "8px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  borderRadius: "8px",
                   color: clr.dark,
                 }}
               >
-                <ArrowRight />
-              </span>
-            </button>
+                <Search size={20} strokeWidth={1.75} />
+              </button>
+
+              {/* Hamburger/X button on mobile */}
+              <button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label="Toggle menu"
+                style={{
+                  background: mobileOpen ? clr.dark : "transparent",
+                  border: `1.5px solid ${mobileOpen ? clr.dark : clr.line}`,
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                  padding: "8px",
+                  width: "40px",
+                  height: "40px",
+                  display: "flex",
+                  flexDirection: "column" as const,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "4px",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <span style={{ width: "18px", height: "1.5px", backgroundColor: mobileOpen ? clr.white : clr.primary, borderRadius: "1px", transition: "all 0.3s ease", transform: mobileOpen ? "rotate(45deg) translateY(5.5px)" : "none" }} />
+                <span style={{ width: "18px", height: "1.5px", backgroundColor: mobileOpen ? clr.white : clr.primary, borderRadius: "1px", transition: "all 0.3s ease", opacity: mobileOpen ? 0 : 1 }} />
+                <span style={{ width: "18px", height: "1.5px", backgroundColor: mobileOpen ? clr.white : clr.primary, borderRadius: "1px", transition: "all 0.3s ease", transform: mobileOpen ? "rotate(-45deg) translateY(-5.5px)" : "none" }} />
+              </button>
+            </div>
+          ) : (
+            /* Desktop right side: Search icon + "Request Access" button */
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <button
+                onClick={() => setSearchOpen(true)}
+                aria-label="Search"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                  color: clr.dark,
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = clr.primary; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = clr.dark; }}
+              >
+                <Search size={20} strokeWidth={1.75} />
+              </button>
+
+              <button
+                onClick={goLogin}
+                style={{
+                  backgroundColor: clr.primary,
+                  color: clr.white,
+                  border: "none",
+                  padding: "12px 24px",
+                  borderRadius: "50px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  fontFamily: "Inter, sans-serif",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  height: "46px",
+                  transition: "background-color 0.2s ease",
+                }}
+              >
+                Request Access
+                <span
+                  style={{
+                    width: "24px",
+                    height: "24px",
+                    backgroundColor: clr.accent,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: clr.dark,
+                  }}
+                >
+                  <ArrowRight />
+                </span>
+              </button>
+            </div>
           )}
         </div>
       </header>
 
-      {/* Mobile overlay menu */}
+      {/* ── Full-screen SEARCH overlay ─────────────────────────────────────────── */}
+      {searchOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "#191919",
+            zIndex: 1001,
+            display: "flex",
+            flexDirection: "column",
+            animation: "fadeIn 0.2s ease",
+          }}
+        >
+          <style>{`@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}@keyframes pulseBadge{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(2.2);opacity:0}}`}</style>
+
+          {/* Search header row */}
+          <div
+            style={{
+              padding: mobile ? "0 20px" : "0 80px",
+              height: "72px",
+              display: "flex",
+              alignItems: "center",
+              gap: "16px",
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              flexShrink: 0,
+            }}
+          >
+            <Search size={22} color="rgba(255,255,255,0.4)" strokeWidth={1.75} style={{ flexShrink: 0 }} />
+            <input
+              ref={searchInputRef}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search pages and sectors..."
+              style={{
+                flex: 1,
+                background: "transparent",
+                border: "none",
+                outline: "none",
+                color: "#FFFFFF",
+                fontSize: mobile ? "18px" : "28px",
+                fontWeight: "300",
+                fontFamily: "Inter, sans-serif",
+                letterSpacing: "-0.3px",
+              }}
+            />
+            <button
+              onClick={() => setSearchOpen(false)}
+              aria-label="Close search"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                width: "36px",
+                height: "36px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "rgba(255,255,255,0.6)",
+                flexShrink: 0,
+              }}
+            >
+              <X size={18} strokeWidth={2} />
+            </button>
+          </div>
+
+          {/* Results */}
+          <div style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
+            {filteredSearch.length === 0 ? (
+              <div style={{ padding: `48px ${mobile ? "20px" : "80px"}`, color: "rgba(255,255,255,0.3)", fontSize: "16px", fontFamily: "Inter, sans-serif" }}>
+                No results for "{searchQuery}"
+              </div>
+            ) : (
+              filteredSearch.map((item) => (
+                <button
+                  key={item.to}
+                  onClick={() => handleSearchSelect(item.to)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    padding: `16px ${mobile ? "20px" : "80px"}`,
+                    background: "transparent",
+                    border: "none",
+                    borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    transition: "background-color 0.15s ease",
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(255,255,255,0.04)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; }}
+                >
+                  <span style={{ color: "#FFFFFF", fontSize: mobile ? "16px" : "22px", fontWeight: "400", fontFamily: "Inter, sans-serif", letterSpacing: "-0.2px" }}>
+                    {item.label}
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </button>
+              ))
+            )}
+          </div>
+
+          {/* Footer hint */}
+          <div style={{ padding: `16px ${mobile ? "20px" : "80px"}`, borderTop: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
+            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)", fontFamily: "Inter, sans-serif" }}>
+              Press ESC to close
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* ── Mobile overlay menu ─────────────────────────────────────────────────── */}
       {mobile && mobileOpen && (
         <div
           style={{
@@ -260,43 +488,48 @@ export default function SiteHeader() {
             overflowY: "auto" as const,
           }}
         >
-          <style>{`@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}@keyframes pulseBadge{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(2.2);opacity:0}}`}</style>
           <nav style={{ display: "flex", flexDirection: "column" as const, flex: 1 }}>
-            {visibleNav.map((item) => (
-              <a
-                key={item.label}
-                href={item.to}
-                onClick={(e) => { e.preventDefault(); handleNavClick(item.to); }}
-                style={{
-                  color: "rgba(255,255,255,0.85)",
-                  textDecoration: "none",
-                  fontSize: "24px",
-                  fontWeight: "400",
-                  fontFamily: "Inter, sans-serif",
-                  padding: "20px 0",
-                  borderBottom: "1px solid rgba(255,255,255,0.08)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  letterSpacing: "-0.3px",
-                  minHeight: "48px",
-                  boxSizing: "border-box" as const,
-                }}
-              >
-                <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  {item.label}
-                  {BADGE_ITEMS.has(item.to) && (
-                    <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
-                      <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
-                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
-                    </span>
-                  )}
-                </span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </a>
-            ))}
+            {ALL_NAV.map((item) => {
+              const active = isActive(item);
+              return (
+                <a
+                  key={item.label}
+                  href={item.to}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(item.to); }}
+                  style={{
+                    color: active ? "#FFFFFF" : "rgba(255,255,255,0.6)",
+                    textDecoration: "none",
+                    fontSize: "24px",
+                    fontWeight: active ? "600" : "300",
+                    fontFamily: "Inter, sans-serif",
+                    padding: "20px 0",
+                    borderBottom: "1px solid rgba(255,255,255,0.08)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    letterSpacing: "-0.3px",
+                    minHeight: "48px",
+                    boxSizing: "border-box" as const,
+                  }}
+                >
+                  <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    {active && (
+                      <span style={{ color: "#B8D935", fontSize: "0.5em", lineHeight: 1, flexShrink: 0 }}>●</span>
+                    )}
+                    {item.label}
+                    {BADGE_ITEMS.has(item.to) && (
+                      <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
+                        <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
+                        <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
+                      </span>
+                    )}
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.3)"} strokeWidth="2" strokeLinecap="round">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </a>
+              );
+            })}
           </nav>
 
           {/* CTA at bottom */}
