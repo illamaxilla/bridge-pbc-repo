@@ -2204,7 +2204,17 @@ export default function BRIDGEHomePage() {
           </div>
           {isMobile ? (
             <>
-              <div style={{ overflow: "hidden" }}>
+              <div
+                style={{ overflow: "hidden" }}
+                onTouchStart={(e) => { valueTouchStartX.current = e.touches[0].clientX; }}
+                onTouchEnd={(e) => {
+                  if (valueTouchStartX.current === null) return;
+                  const delta = valueTouchStartX.current - e.changedTouches[0].clientX;
+                  if (delta > 40) setValueIndex((v) => Math.min(v + 1, 3));
+                  else if (delta < -40) setValueIndex((v) => Math.max(v - 1, 0));
+                  valueTouchStartX.current = null;
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
