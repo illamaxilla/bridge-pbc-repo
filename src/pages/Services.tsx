@@ -110,6 +110,7 @@ const footerSectorIcons = [
   },
   {
     key: "edu",
+    to: "/sectors/education",
     label: "Education & Skills",
     icon: (c) => (
       <svg
