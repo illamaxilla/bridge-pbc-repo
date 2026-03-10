@@ -4779,6 +4779,10 @@ export default function ServicesSectorsPageV2() {
                         href={SOCIAL_HREFS[i]}
                         target="_blank"
                         rel="noopener noreferrer"
+                        style={{
+                          width: "34px",
+                          height: "34px",
+                          borderRadius: "8px",
                           backgroundColor: "rgba(255,255,255,0.06)",
                           display: "flex",
                           alignItems: "center",
