@@ -398,13 +398,7 @@ export default function SiteFooter() {
               {socialIcons.map((icon, i) => (
                 <a
                   key={i}
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    borderRadius: "6px",
+                  href={SOCIAL_HREFS[i]}
                     backgroundColor: "rgba(255,255,255,0.06)",
                     display: "flex",
                     alignItems: "center",
