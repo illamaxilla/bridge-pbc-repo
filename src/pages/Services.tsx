@@ -260,6 +260,7 @@ const footerSectorIcons = [
   },
   {
     key: "transport",
+    to: "/sectors/transport",
     label: "Transportation & Logistics",
     icon: (c) => (
       <svg
