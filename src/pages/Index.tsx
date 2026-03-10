@@ -1008,8 +1008,8 @@ export default function BRIDGEHomePage() {
             style={{
               position: "absolute",
               bottom: "-90px",
-              left: "40px",
-              right: "40px",
+              left: "32px",
+              right: "32px",
               display: "grid",
               gridTemplateColumns: "1.3fr 1fr 1fr",
               gap: "20px",
@@ -1866,7 +1866,7 @@ export default function BRIDGEHomePage() {
             style={{
               maxWidth: CONTENT_MAX_WIDTH,
               margin: "0 auto",
-              padding: isMobile ? "0 24px" : "0 80px",
+              padding: isMobile ? "0 24px" : "0 48px",
               boxSizing: "border-box",
             }}
           >
