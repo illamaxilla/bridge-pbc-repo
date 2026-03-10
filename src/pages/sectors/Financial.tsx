@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -6566,6 +6567,7 @@ const ImpactSection = () => {
 
 const FinalCTASection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section
       style={{
@@ -6633,6 +6635,7 @@ const FinalCTASection = () => {
           }}
         >
           <button
+            onClick={() => navigate("/login")}
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
@@ -6668,6 +6671,7 @@ const FinalCTASection = () => {
           </button>
 
           <button
+            onClick={() => navigate("/login")}
             style={{
               backgroundColor: "transparent",
               color: colors.white,

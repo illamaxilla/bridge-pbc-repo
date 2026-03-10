@@ -5834,6 +5834,7 @@ const ImpactSection = ({ sector }) => {
 
 const FinalCTASection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section
       style={{
@@ -5900,6 +5901,7 @@ const FinalCTASection = () => {
           style={{ display: "flex", gap: "12px", justifyContent: "center", flexDirection: isMobile ? "column" : "row" }}
         >
           <button
+            onClick={() => navigate("/login")}
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
@@ -5934,6 +5936,7 @@ const FinalCTASection = () => {
             </span>
           </button>
           <button
+            onClick={() => navigate("/login")}
             style={{
               backgroundColor: "transparent",
               color: colors.white,
