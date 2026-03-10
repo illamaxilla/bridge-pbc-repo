@@ -1504,15 +1504,7 @@ const Footer = () => {
                     {col.links.map((link) => (
                       <a
                         key={link}
-                        href="#"
-                        style={{
-                          display: "block",
-                          fontSize: "14px",
-                          color: "rgba(255,255,255,0.6)",
-                          fontFamily: "'DM Sans',sans-serif",
-                          textDecoration: "none",
-                          marginBottom: "14px",
-                        }}
+                        href={INSIGHTS_FOOTER_LINKS[link] ?? "#"}
                       >
                         {link}
                       </a>
