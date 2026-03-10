@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SiteHeaderShared from "@/components/SiteHeaderMinimal";
 import {
   ArrowUpRight,
   ChevronRight,
