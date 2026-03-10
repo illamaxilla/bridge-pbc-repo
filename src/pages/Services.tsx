@@ -63,6 +63,7 @@ const footerSectorIcons = [
   },
   {
     key: "health",
+    to: "/sectors/health",
     label: "Health Systems & Wellbeing",
     icon: (c) => (
       <svg
