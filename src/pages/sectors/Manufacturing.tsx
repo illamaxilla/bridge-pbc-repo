@@ -6315,6 +6315,7 @@ const InvestmentCTASection = () => {
 
 const FinalCTASection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section
       style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px", textAlign: "center" }}
