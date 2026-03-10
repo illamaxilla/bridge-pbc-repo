@@ -701,6 +701,7 @@ export default function BRIDGEHomePage() {
   };
   const [hoveredInsight, setHoveredInsight] = useState(null);
   const [valueIndex, setValueIndex] = useState(0);
+  const valueTouchStartX = useRef<number | null>(null);
   const [contactStep, setContactStep] = useState(0);
 
   useEffect(() => {
@@ -2203,7 +2204,17 @@ export default function BRIDGEHomePage() {
           </div>
           {isMobile ? (
             <>
-              <div style={{ overflow: "hidden" }}>
+              <div
+                style={{ overflow: "hidden" }}
+                onTouchStart={(e) => { valueTouchStartX.current = e.touches[0].clientX; }}
+                onTouchEnd={(e) => {
+                  if (valueTouchStartX.current === null) return;
+                  const delta = valueTouchStartX.current - e.changedTouches[0].clientX;
+                  if (delta > 40) setValueIndex((v) => Math.min(v + 1, 3));
+                  else if (delta < -40) setValueIndex((v) => Math.max(v - 1, 0));
+                  valueTouchStartX.current = null;
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
@@ -2239,7 +2250,6 @@ export default function BRIDGEHomePage() {
                   ].map((value, index) => (
                     <div key={index} style={{ flex: "0 0 100%", paddingRight: "16px", boxSizing: "border-box" }}>
                       <div
-                        className="value-card"
                         style={{
                           backgroundColor: value.highlighted ? colors.accent : colors.white,
                           borderRadius: "24px",

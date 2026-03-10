@@ -1360,6 +1360,14 @@ const Footer = () => {
                 <a
                   key={label}
                   href={INSIGHTS_NAV_HREFS[label] ?? "#"}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "11px",
+                    fontWeight: "600",
+                    color: "rgba(255,255,255,0.5)",
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                  }}
                 >
                   {label}
                 </a>
@@ -1416,6 +1424,18 @@ const Footer = () => {
                   href={SOCIAL_HREFS[i]}
                   target="_blank"
                   rel="noopener noreferrer"
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    borderRadius: "6px",
+                    backgroundColor: "rgba(255,255,255,0.06)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    color: "rgba(255,255,255,0.4)",
+                    textDecoration: "none",
+                  }}
                 >
                   <span style={{ transform: "scale(0.8125)", display: "flex" }}>{icon}</span>
                 </a>
@@ -3516,7 +3536,7 @@ export default function InsightsPage() {
                 <ArrowUpRight size={14} />
               </a>
               <a
-                href="/resources"
+                href="/login"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",

@@ -1,130 +1,85 @@
 
-## Plan: 4 surgical fixes across 3 files
+## Audit Summary: What's Working vs. What Needs Fixing
 
----
+### ✅ Working correctly
+- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
+- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
+- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
+- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
 
-### Fix 1 — "Our Values" mobile carousel: remove hover + add swipe (Index.tsx)
+### ❌ Issues to fix
 
-**Problem:** The `.value-card:hover` CSS applies on mobile too, causing a card lift on tap. Also no swipe support — only dot-tap navigation.
+**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
+- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
+- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
 
-**Two sub-changes:**
+**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
+- Line 6934 has `href="#"` instead of the object-lookup pattern
+- Fix: same object-lookup pattern as other pages
 
-**1a — Remove hover on mobile cards:**
-The `.value-card:hover` CSS at line 855-856 fires on touch devices. The mobile cards already have `className="value-card"`. Change the mobile cards to remove this class name — use a different class like `"value-card-mobile"` with no hover rule, OR just remove `className="value-card"` from the mobile cards (lines 2241-2252).
+**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
+- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
+- Fix: apply the object-lookup href pattern
 
-**Line targeted:** Line 2242 — remove `className="value-card"` from the mobile card `<div>`.
+**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
+- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
+- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
+- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
 
-**1b — Add touch swipe:**
-The carousel `<div>` at line 2206 has `overflow: "hidden"`. Convert this to `overflowX: "auto"` with CSS scroll-snap so the user can swipe natively. This is the same pattern used in the Insights section.
+**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
+- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
+- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
 
-Change the container (line 2206) from `overflow: "hidden"` to `overflowX: "auto", scrollbarWidth: "none"` with a scroll listener, OR simpler: add `onTouchStart`/`onTouchEnd` handlers to the wrapper div to update `valueIndex` on swipe.
+**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
+- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
+- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
+- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
 
-Approach: Add `touchStartX` ref + `onTouchStart`/`onTouchEnd` to the wrapper div at line 2206. When swipe delta > 40px, advance/retreat `valueIndex`.
+**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
+- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
+- Minor cleanup
 
-**Lines changed:** Line 2206 (add touch handlers to wrapper), add 2 `useRef` declarations in the component (~line 703).
+### Implementation Plan
 
----
+**Files to fix: 4 real fixes + 1 cleanup**
 
-### Fix 2 — CTA button routing in sector pages (9 files)
+1. **`Tourism.tsx`** (2 fixes):
+   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
+   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
 
-**Current state after previous session:**
-- "Start a Conversation" → `navigate("/login")` — **WRONG, needs `/contact`**
-- "Download Sector Brief" (Agriculture.tsx, Technology.tsx) → `navigate("/login")` — **WRONG, needs `/resources`**
-- "Explore the Full Analysis" (Health, Education, Infrastructure, Financial, Manufacturing, Sports, Energy) → `navigate("/login")` — **WRONG, needs `/resources`**
-- "Request Full Access" (Health.tsx) → `navigate("/login")` — **CORRECT, keep**
+2. **`Infrastructure.tsx`** (1 fix):
+   - Line 6952: `href="#"` → object-lookup href
 
-Also in non-sector pages:
-- Services.tsx "Start a Conversation" → `<a href="/contact">` wrapper — **already correct** (line 4325-4365)
-- Insights.tsx "Get Full Access" → `href="/resources"` (line 3519) — **WRONG, needs `/login`**
-- Insights.tsx "View Resources" → `href="/resources"` (line 3498) — **CORRECT, keep**
+3. **`Education.tsx`** (1 fix):
+   - Line 6947: `href="#"` → object-lookup href
 
-**Changes per file:**
+4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
+   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
+   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
 
-| File | Button | Change |
-|---|---|---|
-| Energy.tsx | "Start a Conversation" (line 5904) | `navigate("/login")` → `navigate("/contact")` |
-| Energy.tsx | "Explore the Full Analysis" (line 5939) | `navigate("/login")` → `navigate("/resources")` |
-| Agriculture.tsx | "Start a Conversation" (line 7106) | `navigate("/login")` → `navigate("/contact")` |
-| Agriculture.tsx | "Download Sector Brief" (line 7145) | `navigate("/login")` → `navigate("/resources")` |
-| Technology.tsx | "Start a Conversation" (line 6676) | `navigate("/login")` → `navigate("/contact")` |
-| Technology.tsx | "Download Sector Brief" (line 6711) | `navigate("/login")` → `navigate("/resources")` |
-| Health.tsx | "Request Full Access" (line 6184) | keep `/login` |
-| Health.tsx | "Explore the Full Analysis" (line 6219) | `navigate("/login")` → `navigate("/resources")` |
-| Financial.tsx | "Start a Conversation" (line 6638) | `navigate("/login")` → `navigate("/contact")` |
-| Financial.tsx | "Explore the Full Analysis" (line 6674) | `navigate("/login")` → `navigate("/resources")` |
-| Manufacturing.tsx | "Start a Conversation" (line 6378) | `navigate("/login")` → `navigate("/contact")` |
-| Manufacturing.tsx | "Explore the Full Analysis" (line 6413) | `navigate("/login")` → `navigate("/resources")` |
-| Sports.tsx | "Start a Conversation" (line 6475) | `navigate("/login")` → `navigate("/contact")` |
-| Sports.tsx | "Explore the Full Analysis" (line 6511) | `navigate("/login")` → `navigate("/resources")` |
-| Education.tsx | "Start a Conversation" (line 6474) | `navigate("/login")` → `navigate("/contact")` |
-| Education.tsx | "Explore the Full Analysis" (line 6509) | `navigate("/login")` → `navigate("/resources")` |
-| Infrastructure.tsx | "Start a Conversation" (line 6471) | `navigate("/login")` → `navigate("/contact")` |
-| Infrastructure.tsx | "Explore the Full Analysis" (line 6506) | `navigate("/login")` → `navigate("/resources")` |
-| Insights.tsx | "Get Full Access" (line 3519, `href="/resources"`) | `href="/resources"` → `href="/login"` |
+5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
+   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
+   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
 
-**Transport, Housing, Tourism** already use `<a href="/contact">` — no changes needed.
-
-**Total: 1 line per button in 9 sector files + 1 line in Insights.tsx = 19 surgical one-word changes.**
-
----
-
-### Fix 3 — "Explore all 12 Sectors" button in Index.tsx (if scrolling to footer widget)
-
-**Confirmed:** The "View all 12 sectors" link (Index.tsx line 2919-2953) already uses `<Link to="/sectors">` — it correctly navigates to the `/sectors` page. **No change needed here.**
-
-However, if the user is seeing it scroll to the footer sector grid instead (triggered by hash routing), this is already working correctly.
-
-**No code change for this item — will confirm with user.**
-
-Wait — re-reading the user's message: *"'Explore all 12 Sectors' button should navigate to the Sectors page (at the top) - NOT the widget on the bottom of the page."*
-
-This implies there's a button labeled "Explore all 12 Sectors" that scrolls to the SiteFooter sector grid widget (the "Explore 12 Sectors" icon row). Let me check if there's a section-level CTA with this exact label...
-
-Actually looking at SiteFooter line 259: `"Explore 12 Sectors"` is just a hover-state text label above the footer icon grid. There's no button linking to it.
-
-The most likely candidate is the sector accordion section's "View all 12 sectors" link (line 2940) — which already links to `/sectors`. Since it already works, this may be user confirmation that it's working. OR the user is referring to a specific button in another context.
-
-**Plan:** No code change for item 2 — the "View all 12 sectors" link already navigates to `/sectors`.
-
----
-
-### Fix 4 — Insights.tsx footer mobile styling (Insights.tsx)
-
-**Problem:** The local `Footer` component's mobile layout (lines 1359-1366) renders nav labels as bare `<a>` tags with no inline styles — no font, no color, no size. The `SiteFooter`'s mobile layout (SiteFooter.tsx lines 347-373) has full styled `<a>` tags.
-
-**Fix:** Add the same inline styles to the `<a>` tags in `Footer` mobile (lines 1359-1366 of Insights.tsx):
-
-```tsx
-style={{
-  fontFamily: "'DM Sans', sans-serif",
-  fontSize: "11px",
-  fontWeight: "600",
-  color: "rgba(255,255,255,0.5)",
-  textDecoration: "none",
-  whiteSpace: "nowrap",
-}}
-```
-
-Also fix: the social icon `<a>` tags (lines 1413-1422) are missing the size/border styling from SiteFooter. Add matching styled wrapper.
-
-**Lines changed:** 1359-1366 in Insights.tsx (the mobile nav label `<a>` tags).
-
----
+6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
 
 ### Files to edit
-
-| File | Changes | Lines |
-|---|---|---|
-| `src/pages/Index.tsx` | Remove hover class from mobile cards; add touch swipe | ~2242, ~2206, ~703 |
-| `src/pages/sectors/Energy.tsx` | 2x `navigate` target | 5904, 5939 |
-| `src/pages/sectors/Agriculture.tsx` | 2x `navigate` target | 7106, 7145 |
-| `src/pages/sectors/Technology.tsx` | 2x `navigate` target | 6676, 6711 |
-| `src/pages/sectors/Health.tsx` | 1x `navigate` target (keep primary) | 6219 |
-| `src/pages/sectors/Financial.tsx` | 2x `navigate` target | 6638, 6674 |
-| `src/pages/sectors/Manufacturing.tsx` | 2x `navigate` target | 6378, 6413 |
-| `src/pages/sectors/Sports.tsx` | 2x `navigate` target | 6475, 6511 |
-| `src/pages/sectors/Education.tsx` | 2x `navigate` target | 6474, 6509 |
-| `src/pages/sectors/Infrastructure.tsx` | 2x `navigate` target | 6471, 6506 |
-| `src/pages/Insights.tsx` | Fix "Get Full Access" route + mobile footer nav styling | 3519, 1359-1366 |
-
-**Total: 11 files, ~22 line edits. Zero layout changes anywhere.**
+| File | Change |
+|---|---|
+| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
+| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
+| `Education.tsx` | Fix mobile labels `href="#"` |
+| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
+| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
