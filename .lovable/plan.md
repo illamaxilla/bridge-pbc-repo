@@ -1,85 +1,44 @@
 
-## Audit Summary: What's Working vs. What Needs Fixing
+## Surgical plan: Wire FinalCTASection buttons in 9 sector pages
 
-### ✅ Working correctly
-- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
-- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
-- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
-- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
+### Problem confirmed
+The `FinalCTASection` component in 9 sector pages contains plain `<button>` elements with **no `onClick`, no `navigate`, no `href`** — they do nothing when clicked.
 
-### ❌ Issues to fix
+**Affected files:** Energy, Agriculture, Technology, Health, Financial, Manufacturing, Sports, Education, Infrastructure  
+**Not affected (already working):** Transport, Housing, Tourism (already use `href="/contact"`)
 
-**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
-- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
-- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
+### Buttons and their targets
+- "Start a Conversation" / "Request Full Access" → `/login`
+- "Explore the Full Analysis" / "Download Sector Brief" → `/login`
 
-**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
-- Line 6934 has `href="#"` instead of the object-lookup pattern
-- Fix: same object-lookup pattern as other pages
+Both buttons go to `/login`. Once logged in, the user lands on `/intelligence/dashboard` (already wired in `ProtectedRoute`).
 
-**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
-- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
-- Fix: apply the object-lookup href pattern
+### The fix — per file
 
-**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
-- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
-- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
-- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
+#### Files where `useNavigate` is already imported (6 files):
+Energy, Agriculture, Health, Education, Infrastructure, Manufacturing
 
-**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
-- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
-- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
+Just add `onClick={() => navigate("/login")}` to each button inside `FinalCTASection`. The `FinalCTASection` component needs `const navigate = useNavigate()` added at the top of that function.
 
-**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
-- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
-- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
-- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
+#### Files where `useNavigate` is NOT yet imported (3 files):
+Technology, Financial, Sports
 
-**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
-- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
-- Minor cleanup
+1. Add `useNavigate` to the existing react-router-dom import on line 1 (e.g. `import { useNavigate } from "react-router-dom"` as a new line 2, shifting nothing else)
+2. Add `const navigate = useNavigate()` inside `FinalCTASection`
+3. Add `onClick={() => navigate("/login")}` to each button
 
-### Implementation Plan
+### Edit table (all surgical — only `FinalCTASection` functions touched)
 
-**Files to fix: 4 real fixes + 1 cleanup**
+| File | Lines changed | Action |
+|---|---|---|
+| `Energy.tsx` | Line 1 → add import; lines 5836, 5902, 5936 | Add navigate import + hook + onClick |
+| `Agriculture.tsx` | Lines 7029, 7103, 7141 | Add hook + onClick (import already present) |
+| `Technology.tsx` | Line 1 → add import; lines 6611, 6673, 6707 | Add import + hook + onClick |
+| `Health.tsx` | Lines 6122, 6182, 6216 | Add hook + onClick |
+| `Financial.tsx` | Line 1 → add import; lines 6567, 6635, 6670 | Add import + hook + onClick |
+| `Manufacturing.tsx` | Lines 6316, 6376, 6410 | Add hook + onClick |
+| `Sports.tsx` | Line 1 → add import; lines ~6395, 6471, 6506 | Add import + hook + onClick |
+| `Education.tsx` | Lines 6403, 6472, 6506 | Add hook + onClick |
+| `Infrastructure.tsx` | Lines 6402, 6469, 6503 | Add hook + onClick |
 
-1. **`Tourism.tsx`** (2 fixes):
-   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
-   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
-
-2. **`Infrastructure.tsx`** (1 fix):
-   - Line 6952: `href="#"` → object-lookup href
-
-3. **`Education.tsx`** (1 fix):
-   - Line 6947: `href="#"` → object-lookup href
-
-4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
-   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
-   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
-
-5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
-   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
-   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
-
-6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
-
-### Files to edit
-| File | Change |
-|---|---|
-| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
-| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
-| `Education.tsx` | Fix mobile labels `href="#"` |
-| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
-| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
+**Total: 9 files, ~3 line changes each. Zero layout changes, zero styling changes, nothing outside `FinalCTASection` touched.**
