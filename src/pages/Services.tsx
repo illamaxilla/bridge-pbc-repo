@@ -131,6 +131,7 @@ const footerSectorIcons = [
   },
   {
     key: "agri",
+    to: "/sectors/agriculture",
     label: "Agriculture & Value Chains",
     icon: (c) => (
       <svg
