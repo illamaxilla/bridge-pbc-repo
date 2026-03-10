@@ -885,6 +885,53 @@ function WhyInsightSection({ mobile }) {
 
 // ─── Footer (exact production — BRIDGE_Footer_Exact_Build_Handoff.md) ──────
 
+const SOCIAL_HREFS = [
+  "https://www.linkedin.com/company/bridge-pbc",
+  "https://twitter.com/bridgepbc",
+  "https://www.facebook.com/bridgepbc",
+];
+
+const INSIGHTS_SECTOR_ROUTES: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  creative: "/sectors/sports",
+  housing: "/sectors/housing",
+  tourism: "/sectors/tourism",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  transport: "/sectors/transport",
+};
+
+const INSIGHTS_NAV_HREFS: Record<string, string> = {
+  Company: "/about",
+  Services: "/services",
+  Resources: "/resources",
+  Insights: "/insights",
+};
+
+const INSIGHTS_FOOTER_LINKS: Record<string, string> = {
+  "About BRIDGE": "/about",
+  "Our Approach": "/methodology",
+  "Sectors": "/sectors",
+  "Contact Us": "/contact",
+  "Research & Guidance": "/services",
+  "Venture Development": "/services",
+  "Direct Investment": "/services",
+  "Strategic Partnerships": "/services",
+  "White Paper": "/resources",
+  "Case Studies": "/resources",
+  "Research Library": "/resources",
+  "Data & Reports": "/resources",
+  "Insights & Analysis": "/insights",
+  "Sector Briefs": "/sectors",
+  "Policy Updates": "/policy",
+  "Annual Review": "/resources",
+};
+
 const socialIcons = [
   <svg key="li" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
