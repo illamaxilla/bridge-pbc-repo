@@ -187,6 +187,12 @@ const footerSectorIcons: { key: string; label: string; icon: IconFn }[] = [
   },
 ];
 
+const SOCIAL_HREFS = [
+  "https://www.linkedin.com/company/bridge-pbc",
+  "https://twitter.com/bridgepbc",
+  "https://www.facebook.com/bridgepbc",
+];
+
 // ─── Social icons ─────────────────────────────────────────────────────────────
 const socialIcons = [
   <svg key="li" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -392,7 +398,7 @@ export default function SiteFooter() {
               {socialIcons.map((icon, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={SOCIAL_HREFS[i]}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -587,7 +593,7 @@ export default function SiteFooter() {
                 {socialIcons.map((icon, i) => (
                   <a
                     key={i}
-                    href="#"
+                    href={SOCIAL_HREFS[i]}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{

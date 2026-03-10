@@ -1,183 +1,85 @@
 
-## Full scope: Nav unification + search overlay + dead link audit
+## Audit Summary: What's Working vs. What Needs Fixing
 
-### Exact current state confirmed
+### ✅ Working correctly
+- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
+- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
+- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
+- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
 
-**`SiteHeaderMinimal.tsx` (lines 74–77)**: Still has `visibleNav` filter — excludes current page from menu. Mobile overlay uses `visibleNav.map`. No search wired. 7 pages use this.
+### ❌ Issues to fix
 
-**`SiteHeader.tsx` (lines 92–95)**: Still has `visibleNav` filter — excludes current page. Desktop nav AND mobile overlay both use `visibleNav.map`. No search wired. 13 sector pages use this.
+**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
+- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
+- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
 
-**`Insights.tsx` (lines 883–1183)**: Private `BridgeLogo` + private `SiteHeader` function with only 6 items, all `href="#"`, broken. Used at line 1926.
+**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
+- Line 6934 has `href="#"` instead of the object-lookup pattern
+- Fix: same object-lookup pattern as other pages
 
-**Dead `href="#"` confirmed in**:
-- `Insights.tsx` — sector grid icons (line 1470), footer nav labels (line 1606), social icons mobile (line 1668) + desktop (line 1850), Terms/Privacy (line 1890)
-- `SiteFooter.tsx` — social icons mobile (line 395) + desktop (line 589), Terms/Privacy (line 433, 633)
-- `Contact.tsx` — sector grid (line 3632), social icons (lines 3790, 3980), Terms/Privacy (line 4024)
-- `Resources.tsx` — sector grid (line 2258), social icons (lines 2466, 2648), Terms/Privacy (line 2688)
-- `Services.tsx` — social icons (lines 4566, 4771), Terms/Privacy (line 5022)
-- `community/index.tsx` — "Forgot password?" (line 923), "Request Access" (line 974)
+**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
+- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
+- Fix: apply the object-lookup href pattern
 
----
+**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
+- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
+- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
+- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
 
-### Plan — 6 files, 3 categories
+**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
+- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
+- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
 
----
+**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
+- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
+- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
+- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
 
-#### Category 1: `SiteHeaderMinimal.tsx` — full rewrite of state/nav/search (lines 55–264)
+**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
+- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
+- Minor cleanup
 
-**Changes:**
-1. Add `searchOpen` + `searchQuery` state
-2. Replace `visibleNav` filter (lines 74–77) with `isActive` helper:
-   ```ts
-   const isActive = (item: typeof ALL_NAV[0]) =>
-     item.to === "/" ? location.pathname === "/" : location.pathname.startsWith(item.to);
-   ```
-3. Wire Search button `onClick={() => setSearchOpen(true)}`
-4. Mobile overlay: change `visibleNav.map` → `ALL_NAV.map`, add per-item active styling:
-   - Active: `color: "#FFFFFF"`, `fontWeight: "600"`, lime `•` dot before label, arrow dimmed to `rgba(255,255,255,0.12)`
-   - Inactive: `color: "rgba(255,255,255,0.6)"`, `fontWeight: "300"`, arrow normal
-5. Add search overlay (full-screen, `position: fixed`, `top: 0`, `z-index: 1001`, dark `#191919` bg):
-   - Auto-focused input, large font (32px), white on dark
-   - ESC key + X button closes it
-   - Filters `SEARCH_ITEMS` array (10 nav pages + 12 sectors) by label substring match
-   - Clicking a result: `navigate(item.to)`, close overlay
-   - `SEARCH_ITEMS` added as a module-level const
+### Implementation Plan
 
-**`SEARCH_ITEMS` constant** (added at module top):
-```ts
-const SEARCH_ITEMS = [
-  ...ALL_NAV,
-  { label: "Energy", to: "/sectors/energy" },
-  { label: "Technology", to: "/sectors/technology" },
-  { label: "Agriculture", to: "/sectors/agriculture" },
-  { label: "Education", to: "/sectors/education" },
-  { label: "Financial", to: "/sectors/financial" },
-  { label: "Health", to: "/sectors/health" },
-  { label: "Housing", to: "/sectors/housing" },
-  { label: "Infrastructure", to: "/sectors/infrastructure" },
-  { label: "Manufacturing", to: "/sectors/manufacturing" },
-  { label: "Sports", to: "/sectors/sports" },
-  { label: "Tourism", to: "/sectors/tourism" },
-  { label: "Transport", to: "/sectors/transport" },
-];
-```
+**Files to fix: 4 real fixes + 1 cleanup**
 
----
+1. **`Tourism.tsx`** (2 fixes):
+   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
+   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
 
-#### Category 2: `SiteHeader.tsx` — same changes (lines 63–339)
+2. **`Infrastructure.tsx`** (1 fix):
+   - Line 6952: `href="#"` → object-lookup href
 
-**Changes:**
-1. Same `isActive` helper, replace `visibleNav` (lines 92–95)
-2. Same `SEARCH_ITEMS` + `searchOpen`/`searchQuery` state
-3. Wire Search icon — but `SiteHeader` currently has NO search icon in desktop right side. Add a Search icon button before "Request Access" on desktop; add search icon next to hamburger on mobile.
-4. Desktop nav: per-item active styling — active: `color: clr.primary`, `fontWeight: "700"`, 3px lime underline bar; inactive: unchanged hover behavior
-5. Mobile overlay: `visibleNav.map` → `ALL_NAV.map`, same active styling as SiteHeaderMinimal
-6. Same full-screen search overlay component
+3. **`Education.tsx`** (1 fix):
+   - Line 6947: `href="#"` → object-lookup href
 
----
+4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
+   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
+   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
 
-#### Category 3: `Insights.tsx` — remove private header, fix all dead links
+5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
+   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
+   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
 
-**Lines 883–1183 (private `BridgeLogo` + private `SiteHeader` function)**: DELETE entirely.
+6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
 
-**Line 1 imports**: Add `import SiteHeaderMinimal from "@/components/SiteHeaderMinimal";`
-
-**Line 950–958 (`useIsMobile` private hook)**: DELETE (already imported from `@/hooks/use-mobile` in many other places, but Insights uses its own. After removing the private SiteHeader, check if `useIsMobile` is still used elsewhere in Insights — it IS used by `Footer` at line 1588. Keep the private `useIsMobile` hook OR import from `@/hooks/use-mobile`. Will use the existing import path).
-
-Actually: `Insights.tsx` does NOT import from `@/hooks/use-mobile`. It has its own at line 950. The Footer at line 1588 uses `useIsMobile`. Keep the hook, just delete the SiteHeader + BridgeLogo. But `BridgeLogo` is also used inside the private `SiteHeader` and also inside the second `BridgeLogoWhite` component at line ~1510. Need to check.
-
-**Line 1926**: Change `<SiteHeader activePage="Insight" />` → `<SiteHeaderMinimal />`
-
-**Dead links in Insights.tsx footer:**
-- Sector grid `href="#"` (line 1470) → `href={sectorRoutes[sector.key]}` using inline route map
-- Footer nav labels `href="#"` (line 1606) — map `{Company→/about, Services→/services, Resources→/resources, Insights→/insights}`
-- Social icons `href="#"` (lines 1668, 1850) → `[0]=LinkedIn, [1]=Twitter, [2]=Facebook` → correct hrefs
-- Terms/Privacy/Accessibility `href="#"` (lines 1768, 1890) → keep `href="#"` (no pages exist)
-
----
-
-#### Category 4: `SiteFooter.tsx` — fix social icons
-
-- Social icons mobile (line 395): index 0=LinkedIn, 1=Twitter, 2=Facebook → add `href` per icon using an `SOCIAL_HREFS` array
-- Social icons desktop (line 589): same
-- Terms/Privacy/Accessibility (lines 433, 633): keep `href="#"` — no pages for these
-
-**`SOCIAL_HREFS`** added at top of `SiteFooter.tsx`:
-```ts
-const SOCIAL_HREFS = [
-  "https://www.linkedin.com/company/bridge-pbc",
-  "https://twitter.com/bridgepbc",
-  "https://www.facebook.com/bridgepbc",
-];
-```
-Change: `href="#"` → `href={SOCIAL_HREFS[i]}`
-
----
-
-#### Category 5: `Contact.tsx` — fix sector grid + social icons
-
-- Sector grid (line 3632): `href="#"` → `href={SECTOR_ROUTES[sector.key] ?? "#"}` (add route map at local scope matching the one in SiteFooter)
-- Social icons mobile (line 3790): → `href={SOCIAL_HREFS[i]}`
-- Social icons desktop (line 3980): → `href={SOCIAL_HREFS[i]}`
-- Terms/Privacy (line 4024): keep `href="#"`
-
----
-
-#### Category 6: `Resources.tsx` + `Services.tsx` — same social icon fix
-
-Same pattern: replace `href="#"` with `href={SOCIAL_HREFS[i]}` and sector grid with proper routes.
-
----
-
-#### Category 7: `community/index.tsx`
-
-- Line 923 "Forgot password?" → `onClick={() => navigate("/login")}` (or just keep as `href="/login"` — simpler)
-- Line 974 "Request Access" → `href="/login"` or `onClick={() => navigate("/login")}`
-
----
-
-### Active indicator visual summary
-
-**Mobile overlay (both header components):**
-```
-• BRIDGE Intelligence    →   ← white #FFF, 600 weight, lime dot
-  Home                   →   ← rgba(255,255,255,0.6), 300 weight
-  About                  →
-  Methodology            →
-  Sectors                →
-  ...
-```
-
-**Desktop nav (SiteHeader.tsx — sector pages only):**
-```
-Home  About  [Sectors]  Insight  BRIDGE Intelligence  ...
-             ————
-             3px lime underline bar, centered
-```
-
-### Search overlay visual
-
-```
-[X]  ___________________________________
-     | Search pages and sectors...     |
-     ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-     
-     Home                            →
-     About                           →
-     Sectors                         →
-     Energy                          →
-     Technology                      →
-     ...
-```
-
-Dark `#191919` background, `position: fixed`, `top: 0`, full height, `z-index: 1001` (above menu overlay). Input autofocused. Results are large clickable rows. ESC to close.
-
-### Files changed — 6 total
-1. `src/components/SiteHeaderMinimal.tsx`
-2. `src/components/SiteHeader.tsx`
-3. `src/pages/Insights.tsx`
-4. `src/components/SiteFooter.tsx`
-5. `src/pages/Contact.tsx`
-6. `src/pages/Resources.tsx`
-7. `src/pages/Services.tsx`
-8. `src/pages/community/index.tsx`
+### Files to edit
+| File | Change |
+|---|---|
+| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
+| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
+| `Education.tsx` | Fix mobile labels `href="#"` |
+| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
+| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |

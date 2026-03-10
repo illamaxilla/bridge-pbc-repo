@@ -3629,10 +3629,7 @@ const FooterSectorGrid = () => {
           return (
             <a
               key={sector.key}
-              href="#"
-              title={sector.label}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
+              href={SECTOR_ROUTES_LOCAL[sector.key] ?? "#"}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -3667,6 +3664,27 @@ const FooterSectorGrid = () => {
       </div>
     </div>
   );
+};
+
+const SOCIAL_HREFS = [
+  "https://www.linkedin.com/company/bridge-pbc",
+  "https://twitter.com/bridgepbc",
+  "https://www.facebook.com/bridgepbc",
+];
+
+const SECTOR_ROUTES_LOCAL: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  creative: "/sectors/sports",
+  housing: "/sectors/housing",
+  tourism: "/sectors/tourism",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  transport: "/sectors/transport",
 };
 
 const footerSocialIcons = [
@@ -3787,18 +3805,9 @@ const Footer = () => {
               {footerSocialIcons.map((icon, i) => (
                 <a
                   key={i}
-                  href="#"
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    borderRadius: "6px",
-                    backgroundColor: "rgba(255,255,255,0.06)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    color: "rgba(255,255,255,0.4)",
-                  }}
+                  href={SOCIAL_HREFS[i]}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span style={{ transform: "scale(0.8125)", display: "flex" }}>{icon}</span>
                 </a>
@@ -3977,18 +3986,9 @@ const Footer = () => {
                 {footerSocialIcons.map((icon, i) => (
                   <a
                     key={i}
-                    href="#"
-                    style={{
-                      width: "34px",
-                      height: "34px",
-                      borderRadius: "8px",
-                      backgroundColor: "rgba(255,255,255,0.06)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "rgba(255,255,255,0.45)",
-                    }}
+                    href={SOCIAL_HREFS[i]}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     {icon}
                   </a>

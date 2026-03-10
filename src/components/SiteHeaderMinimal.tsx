@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Search, User, Menu, X } from "lucide-react";
 
@@ -25,6 +25,22 @@ const ALL_NAV = [
   { label: "Policy Updates",     to: "/policy", badge: true },
 ];
 
+// ── Search items (nav + all 12 sector pages) ──────────────────────────────────
+const SEARCH_ITEMS = [
+  ...ALL_NAV,
+  { label: "Energy & Renewables",         to: "/sectors/energy" },
+  { label: "Technology & Innovation",     to: "/sectors/technology" },
+  { label: "Agriculture & Value Chains",  to: "/sectors/agriculture" },
+  { label: "Education & Skills",          to: "/sectors/education" },
+  { label: "Financial Inclusion",         to: "/sectors/financial" },
+  { label: "Health Systems",             to: "/sectors/health" },
+  { label: "Housing & Real Estate",       to: "/sectors/housing" },
+  { label: "Infrastructure",             to: "/sectors/infrastructure" },
+  { label: "Manufacturing",              to: "/sectors/manufacturing" },
+  { label: "Sports & Creative",          to: "/sectors/sports" },
+  { label: "Tourism & Hospitality",      to: "/sectors/tourism" },
+  { label: "Transportation",             to: "/sectors/transport" },
+];
 
 // ── BRIDGE logo (dark, header variant) ────────────────────────────────────────
 const BridgeLogo = ({ height = 40 }: { height?: number }) => (
@@ -57,6 +73,9 @@ export default function SiteHeaderMinimal() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -64,20 +83,50 @@ export default function SiteHeaderMinimal() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when menu is open
+  // Lock body scroll when menu or search is open
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.style.overflow = (menuOpen || searchOpen) ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+  }, [menuOpen, searchOpen]);
 
-  // Active-page exclusion
-  const visibleNav = ALL_NAV.filter((item) => {
-    if (item.to === "/") return location.pathname !== "/";
-    return !location.pathname.startsWith(item.to);
-  });
+  // Auto-focus search input when opened
+  useEffect(() => {
+    if (searchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 50);
+    } else {
+      setSearchQuery("");
+    }
+  }, [searchOpen]);
+
+  // ESC closes search or menu
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (searchOpen) setSearchOpen(false);
+        else if (menuOpen) setMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [searchOpen, menuOpen]);
+
+  // Active-page detection (no exclusion — show all 10 items)
+  const isActive = (item: typeof ALL_NAV[0]) =>
+    item.to === "/" ? location.pathname === "/" : location.pathname.startsWith(item.to);
 
   const handleNavClick = (to: string) => { setMenuOpen(false); navigate(to); };
   const goLogin = () => { setMenuOpen(false); navigate("/login"); };
+
+  const handleSearchSelect = (to: string) => {
+    setSearchOpen(false);
+    navigate(to);
+  };
+
+  const filteredSearch = searchQuery.trim().length > 0
+    ? SEARCH_ITEMS.filter(item =>
+        item.label.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : SEARCH_ITEMS;
 
   const iconStyle: React.CSSProperties = {
     background: "transparent",
@@ -126,6 +175,7 @@ export default function SiteHeaderMinimal() {
           {/* Search */}
           <button
             aria-label="Search"
+            onClick={() => { setMenuOpen(false); setSearchOpen(true); }}
             style={iconStyle}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = clr.primary; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = clr.dark; }}
@@ -166,7 +216,123 @@ export default function SiteHeaderMinimal() {
         </div>
       </header>
 
-      {/* Full-screen overlay menu */}
+      {/* ── Full-screen SEARCH overlay ─────────────────────────────────────────── */}
+      {searchOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "#191919",
+            zIndex: 1001,
+            display: "flex",
+            flexDirection: "column",
+            animation: "fadeInMenu 0.2s ease",
+          }}
+        >
+          <style>{`@keyframes fadeInMenu{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}`}</style>
+
+          {/* Search header row */}
+          <div
+            style={{
+              padding: "0 clamp(20px, 5vw, 80px)",
+              height: "72px",
+              display: "flex",
+              alignItems: "center",
+              gap: "16px",
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              flexShrink: 0,
+            }}
+          >
+            <Search size={22} color="rgba(255,255,255,0.4)" strokeWidth={1.75} style={{ flexShrink: 0 }} />
+            <input
+              ref={searchInputRef}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search pages and sectors..."
+              style={{
+                flex: 1,
+                background: "transparent",
+                border: "none",
+                outline: "none",
+                color: "#FFFFFF",
+                fontSize: "clamp(18px, 3vw, 28px)",
+                fontWeight: "300",
+                fontFamily: "DM Sans, sans-serif",
+                letterSpacing: "-0.3px",
+              }}
+            />
+            <button
+              onClick={() => setSearchOpen(false)}
+              aria-label="Close search"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                width: "36px",
+                height: "36px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "rgba(255,255,255,0.6)",
+                flexShrink: 0,
+              }}
+            >
+              <X size={18} strokeWidth={2} />
+            </button>
+          </div>
+
+          {/* Results */}
+          <div style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
+            {filteredSearch.length === 0 ? (
+              <div style={{ padding: "48px clamp(20px, 5vw, 80px)", color: "rgba(255,255,255,0.3)", fontSize: "16px", fontFamily: "DM Sans, sans-serif" }}>
+                No results for "{searchQuery}"
+              </div>
+            ) : (
+              filteredSearch.map((item) => (
+                <button
+                  key={item.to}
+                  onClick={() => handleSearchSelect(item.to)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    padding: "16px clamp(20px, 5vw, 80px)",
+                    background: "transparent",
+                    border: "none",
+                    borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    transition: "background-color 0.15s ease",
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(255,255,255,0.04)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; }}
+                >
+                  <span style={{ color: "#FFFFFF", fontSize: "clamp(16px, 2.5vw, 22px)", fontWeight: "400", fontFamily: "DM Sans, sans-serif", letterSpacing: "-0.2px" }}>
+                    {item.label}
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </button>
+              ))
+            )}
+          </div>
+
+          {/* Footer hint */}
+          <div style={{ padding: "16px clamp(20px, 5vw, 80px)", borderTop: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
+            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)", fontFamily: "DM Sans, sans-serif" }}>
+              Press ESC to close
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* ── Full-screen NAV overlay ─────────────────────────────────────────────── */}
       {menuOpen && (
         <div
           style={{
@@ -187,41 +353,47 @@ export default function SiteHeaderMinimal() {
           <style>{`@keyframes fadeInMenu{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}@keyframes pulseBadge{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(2.2);opacity:0}}`}</style>
 
           <nav style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-            {visibleNav.map((item) => (
-              <a
-                key={item.label}
-                href={item.to}
-                onClick={(e) => { e.preventDefault(); handleNavClick(item.to); }}
-                style={{
-                  color: "rgba(255,255,255,0.85)",
-                  textDecoration: "none",
-                  fontSize: "clamp(22px, 4vw, 32px)",
-                  fontWeight: "300",
-                  fontFamily: "DM Sans, sans-serif",
-                  padding: "20px 0",
-                  borderBottom: "1px solid rgba(255,255,255,0.08)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  letterSpacing: "-0.5px",
-                  minHeight: "48px",
-                  boxSizing: "border-box",
-                }}
-              >
-                <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  {item.label}
-                  {item.badge && (
-                    <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
-                      <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
-                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
-                    </span>
-                  )}
-                </span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeLinecap="round">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </a>
-            ))}
+            {ALL_NAV.map((item) => {
+              const active = isActive(item);
+              return (
+                <a
+                  key={item.label}
+                  href={item.to}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(item.to); }}
+                  style={{
+                    color: active ? "#FFFFFF" : "rgba(255,255,255,0.6)",
+                    textDecoration: "none",
+                    fontSize: "clamp(22px, 4vw, 32px)",
+                    fontWeight: active ? "600" : "300",
+                    fontFamily: "DM Sans, sans-serif",
+                    padding: "20px 0",
+                    borderBottom: "1px solid rgba(255,255,255,0.08)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    letterSpacing: "-0.5px",
+                    minHeight: "48px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    {active && (
+                      <span style={{ color: "#B8D935", fontSize: "0.6em", lineHeight: 1, flexShrink: 0 }}>●</span>
+                    )}
+                    {item.label}
+                    {item.badge && (
+                      <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "8px", height: "8px", flexShrink: 0 }}>
+                        <span style={{ position: "absolute", width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#B8D935", animation: "pulseBadge 2s ease-in-out infinite", opacity: 0.6 }} />
+                        <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#B8D935", position: "relative", zIndex: 1 }} />
+                      </span>
+                    )}
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.3)"} strokeWidth="1.5" strokeLinecap="round">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </a>
+              );
+            })}
           </nav>
 
           {/* CTA at bottom */}
