@@ -1823,6 +1823,7 @@ export default function ServicesSectorsPageV2() {
                         key={sector.key}
                         onMouseEnter={() => setHeroSectorHovered(i)}
                         onMouseLeave={() => setHeroSectorHovered(null)}
+                        onDoubleClick={() => navigate(sector.to)}
                         style={{
                           display: "flex",
                           alignItems: "center",
