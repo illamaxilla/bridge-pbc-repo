@@ -3516,7 +3516,7 @@ export default function InsightsPage() {
                 <ArrowUpRight size={14} />
               </a>
               <a
-                href="/resources"
+                href="/login"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
