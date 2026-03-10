@@ -22,6 +22,7 @@ const CONTENT_MAX_WIDTH = "1200px";
 const footerSectorIcons = [
   {
     key: "infra",
+    to: "/sectors/infrastructure",
     label: "Infrastructure & Basic Services",
     icon: (c) => (
       <svg
