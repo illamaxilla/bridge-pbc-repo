@@ -1200,6 +1200,12 @@ const audienceServicesData = [
   },
 ];
 
+const SOCIAL_HREFS = [
+  "https://www.linkedin.com/company/bridge-pbc",
+  "https://twitter.com/bridgepbc",
+  "https://www.facebook.com/bridgepbc",
+];
+
 // Social Icons for Footer
 const socialIcons = [
   <svg key="li" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

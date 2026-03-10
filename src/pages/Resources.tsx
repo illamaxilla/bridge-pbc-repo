@@ -1970,6 +1970,27 @@ function useIsMobile(bp = 900) {
 
 // ── Header is now shared (SiteHeader from @/components/SiteHeader)
 
+const SOCIAL_HREFS = [
+  "https://www.linkedin.com/company/bridge-pbc",
+  "https://twitter.com/bridgepbc",
+  "https://www.facebook.com/bridgepbc",
+];
+
+const SECTOR_ROUTES_LOCAL: Record<string, string> = {
+  infra: "/sectors/infrastructure",
+  fin: "/sectors/financial",
+  health: "/sectors/health",
+  tech: "/sectors/technology",
+  edu: "/sectors/education",
+  agri: "/sectors/agriculture",
+  creative: "/sectors/sports",
+  housing: "/sectors/housing",
+  tourism: "/sectors/tourism",
+  energy: "/sectors/energy",
+  mfg: "/sectors/manufacturing",
+  transport: "/sectors/transport",
+};
+
 // ─── Footer (exact production — BRIDGE_Footer_Exact_Build_Handoff.md) ──────
 
 const socialIcons = [
