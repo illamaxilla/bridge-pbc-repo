@@ -593,40 +593,59 @@ export default function SiteFooter() {
               >
                 Subscribe to Insights
               </span>
-              <div style={{ display: "flex", gap: "8px" }}>
-                <input
-                  placeholder="Your email address"
-                  style={{
-                    flex: 1,
-                    padding: "12px 16px",
-                    borderRadius: "8px",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    backgroundColor: "rgba(255,255,255,0.05)",
-                    color: WHITE,
-                    fontSize: "13px",
-                    fontFamily: "'DM Sans', sans-serif",
-                    outline: "none",
-                    height: "44px",
-                    boxSizing: "border-box",
-                  }}
-                />
-                <button
-                  style={{
-                    backgroundColor: ACCENT,
-                    color: PRIMARY,
-                    border: "none",
-                    padding: "12px 20px",
-                    fontSize: "13px",
-                    fontWeight: "700",
-                    fontFamily: "'DM Sans', sans-serif",
-                    cursor: "pointer",
-                    borderRadius: "8px",
-                    height: "44px",
-                    boxSizing: "border-box",
-                  }}
-                >
-                  →
-                </button>
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <input
+                    placeholder="Your email address"
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value); setSubStatus("idle"); }}
+                    onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
+                    style={{
+                      flex: 1,
+                      padding: "12px 16px",
+                      borderRadius: "8px",
+                      border: `1px solid ${subStatus === "error" ? "rgba(255,80,80,0.5)" : "rgba(255,255,255,0.12)"}`,
+                      backgroundColor: "rgba(255,255,255,0.05)",
+                      color: WHITE,
+                      fontSize: "13px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      outline: "none",
+                      height: "44px",
+                      boxSizing: "border-box",
+                    }}
+                  />
+                  <button
+                    onClick={handleSubscribe}
+                    disabled={subStatus === "loading" || subStatus === "success"}
+                    style={{
+                      backgroundColor: subStatus === "success" ? "#4caf50" : ACCENT,
+                      color: PRIMARY,
+                      border: "none",
+                      padding: "12px 20px",
+                      fontSize: "13px",
+                      fontWeight: "700",
+                      fontFamily: "'DM Sans', sans-serif",
+                      cursor: subStatus === "loading" || subStatus === "success" ? "default" : "pointer",
+                      borderRadius: "8px",
+                      height: "44px",
+                      boxSizing: "border-box",
+                      opacity: subStatus === "loading" ? 0.7 : 1,
+                      transition: "background-color 0.2s ease",
+                    }}
+                  >
+                    {subStatus === "loading" ? "..." : subStatus === "success" ? "✓" : "→"}
+                  </button>
+                </div>
+                {subStatus === "success" && (
+                  <span style={{ fontSize: "11px", color: "#8dc63f", fontFamily: "'DM Sans', sans-serif" }}>
+                    You're subscribed! Thanks.
+                  </span>
+                )}
+                {subStatus === "error" && (
+                  <span style={{ fontSize: "11px", color: "rgba(255,100,100,0.9)", fontFamily: "'DM Sans', sans-serif" }}>
+                    Please enter a valid email address.
+                  </span>
+                )}
               </div>
               {/* Social icons */}
               <div style={{ display: "flex", gap: "10px", marginTop: "16px" }}>
