@@ -6506,7 +6506,7 @@ const FinalCTASection = () => {
             </button>
 
             <button
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/resources")}
               style={{
                 backgroundColor: "transparent",
                 color: colors.white,
