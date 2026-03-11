@@ -6506,12 +6506,13 @@ const FinalCTASection = () => {
           <button
             onClick={() => navigate("/contact")}
             style={{
+              backgroundColor: colors.accent,
               color: colors.primary,
               border: "none",
               padding: isMobile ? "16px 24px" : "16px 32px",
               borderRadius: "50px",
               fontSize: "15px",
-              fontWeight: "600",
+              fontWeight: "700",
               fontFamily: "Inter, sans-serif",
               cursor: "pointer",
               display: "flex",
@@ -6541,6 +6542,9 @@ const FinalCTASection = () => {
           <button
             onClick={() => navigate("/resources")}
             style={{
+              backgroundColor: "transparent",
+              color: colors.white,
+              border: "1.5px solid rgba(255,255,255,0.25)",
               padding: isMobile ? "16px 24px" : "16px 32px",
               borderRadius: "50px",
               fontSize: "15px",
