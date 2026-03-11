@@ -1,85 +1,75 @@
 
-## Audit Summary: What's Working vs. What Needs Fixing
+## Plan: Fix build errors + replace private headers/footers + wire CTAs in Housing, Tourism, Transport
 
-### ✅ Working correctly
-- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
-- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
-- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
-- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
+### Build errors to fix first
 
-### ❌ Issues to fix
+**Error 1 — Housing.tsx line 2824:** `setActiveTier(tier.id)` fails because `useState("all")` infers type `string`, but `tier.id` can be `1 | 2 | "all"`.
+- Fix: change `useState("all")` → `useState<string | number>("all")` at line 2722.
 
-**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
-- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
-- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
+**Error 2 — Tourism.tsx line 2818:** Duplicate `border` property in one style object (line 2815 `border: "none"` + line 2818 `border: activeStage === i ? ...`).
+- Fix: remove line 2815 `border: "none"` — keep only the conditional border on line 2818.
 
-**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
-- Line 6934 has `href="#"` instead of the object-lookup pattern
-- Fix: same object-lookup pattern as other pages
+---
 
-**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
-- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
-- Fix: apply the object-lookup href pattern
+### Replace private Header with `SiteHeaderMinimal` (3 files)
 
-**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
-- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
-- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
-- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
+Each file has a private `Header` component spanning ~235 lines. Replace it entirely by:
+1. Adding `import { useNavigate } from "react-router-dom"` and `import SiteHeader from "@/components/SiteHeaderMinimal"` and `import SiteFooter from "@/components/SiteFooter"` at the top of each file (line 1, after the existing React import).
+2. Deleting the entire `const Header = () => { ... }` block in each file.
+3. Replacing `<Header />` with `<SiteHeader />` in the main export component.
 
-**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
-- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
-- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
+**Housing.tsx:** `Header` spans lines 1030–1316. Delete those lines.
+**Tourism.tsx:** `Header` spans lines 1340–1628 (needs confirmed). Delete those lines.
+**Transport.tsx:** `Header` spans lines 1077–1370 (needs confirmed). Delete those lines.
 
-**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
-- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
-- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
-- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
+In Housing's main export: replace `<Header />` with `<SiteHeader />` and remove the `<div style={{ height: "72px" }} />` spacer (Transport has one, Housing's hero already has 112px top padding so no spacer needed; Transport's hero needs checking).
 
-**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
-- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
-- Minor cleanup
+---
 
-### Implementation Plan
+### Replace private Footer with `SiteFooter` (3 files)
 
-**Files to fix: 4 real fixes + 1 cleanup**
+Each file has a private `Footer` component spanning ~340 lines plus a `footerSectorIcons` array and `SectorGrid` component that are only used by that private footer. Replace all of this by:
+1. Deleting `const footerSectorIcons = [...]`, `const SectorGrid = ...`, and `const Footer = () => { ... }` in each file.
+2. Replacing `<Footer />` with `<SiteFooter />` in the main export.
+3. Also removing the pre-footer separator divs that precede `<Footer />` in Housing (lines 7004–7007) — `SiteFooter` has its own internal separator.
 
-1. **`Tourism.tsx`** (2 fixes):
-   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
-   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
+**Housing.tsx:**
+- `footerSectorIcons` + `SectorGrid` + `Footer`: lines 6320–6978
+- Pre-footer separator: lines 7004–7007
+- In main export: replace `<Footer />` with `<SiteFooter />`
 
-2. **`Infrastructure.tsx`** (1 fix):
-   - Line 6952: `href="#"` → object-lookup href
+**Tourism.tsx:**
+- `footerSectorIcons` + `SectorGrid` + `Footer`: lines 1013–1339 (before Header) + 7178–7515
+- In main export: replace `<Footer />` with `<SiteFooter />`
 
-3. **`Education.tsx`** (1 fix):
-   - Line 6947: `href="#"` → object-lookup href
+**Transport.tsx:**
+- `footerSectorIcons` + `SectorGrid` + `Footer`: lines 6290–6956
+- `CTAFooterSeparator`: lines 6280–6284 (keep or replace with SiteFooter internal separator)
+- In main export: replace `<CTAFooterSeparator /><Footer />` with `<SiteFooter />`
 
-4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
-   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
-   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
+---
 
-5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
-   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
-   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
+### Wire CTA buttons with `useNavigate` (3 files)
 
-6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
+All three FinalCTASections use plain `<button>` with no `onClick`. Add `const navigate = useNavigate()` inside each `FinalCTASection` and wire:
 
-### Files to edit
-| File | Change |
+| File | Button label | Target |
+|---|---|---|
+| Housing.tsx | "Start a Conversation" | `navigate("/contact")` |
+| Housing.tsx | "Explore the Full Analysis" | `navigate("/resources")` |
+| Tourism.tsx | "Start a Conversation" | `navigate("/contact")` |
+| Tourism.tsx | "Explore the Full Analysis" | `navigate("/resources")` |
+| Transport.tsx | "Start a Conversation" | `navigate("/contact")` |
+| Transport.tsx | "Explore the Full Analysis" | `navigate("/resources")` |
+
+---
+
+### Files changed
+
+| File | Changes |
 |---|---|
-| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
-| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
-| `Education.tsx` | Fix mobile labels `href="#"` |
-| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
-| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
-| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |
+| `Housing.tsx` | Add imports (line 1); fix `useState` type (line 2722); delete private `Header` (~286 lines); delete private `Footer`+`footerSectorIcons`+`SectorGrid` (~660 lines); add `navigate` + `onClick` in `FinalCTASection`; update main export |
+| `Tourism.tsx` | Add imports (line 1); fix duplicate `border` (line 2815); delete `footerSectorIcons`+`SectorGrid` (lines 1013–1339 before Header); delete private `Header` (~290 lines); delete private `Footer` (~340 lines); add `navigate` + `onClick` in `FinalCTASection`; update main export |
+| `Transport.tsx` | Add imports (line 1); delete private `Header` (~295 lines); delete private `Footer`+`footerSectorIcons`+`SectorGrid`+`CTAFooterSeparator` (~680 lines); add `navigate` + `onClick` in `FinalCTASection`; update main export |
+
+**Zero changes to section content, data, or section components.**
