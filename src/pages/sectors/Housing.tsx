@@ -6221,7 +6221,7 @@ const FinalCTASection = () => {
             margin: "0 0 24px 0",
           }}
         >
-          Ready to Build Ghana's <span style={{ color: colors.accent }}>Housing Future?</span>
+          Let's Build Ghana's <span style={{ color: colors.accent, fontWeight: "600" }}>Housing Future</span>
         </h2>
         <p
           style={{
