@@ -257,6 +257,7 @@ const sectors = [
     id: 1,
     icon: Box,
     svgIcon: sectorSvgIcons[0],
+    slug: "infrastructure",
     full: "Infrastructure & Basic Services",
     tag: "Foundation",
     score: 87,
@@ -271,6 +272,7 @@ const sectors = [
     id: 2,
     icon: CreditCard,
     svgIcon: sectorSvgIcons[1],
+    slug: "financial",
     full: "Financial Inclusion & Economic Security",
     tag: "Foundation",
     score: 91,
@@ -285,6 +287,7 @@ const sectors = [
     id: 3,
     icon: Heart,
     svgIcon: sectorSvgIcons[2],
+    slug: "health",
     full: "Health Systems & Wellbeing",
     tag: "Human Capital",
     score: 83,
@@ -299,6 +302,7 @@ const sectors = [
     id: 4,
     icon: Cpu,
     svgIcon: sectorSvgIcons[3],
+    slug: "technology",
     full: "Technology & Innovation",
     tag: "Growth Engine",
     score: 89,
@@ -313,6 +317,7 @@ const sectors = [
     id: 5,
     icon: GraduationCap,
     svgIcon: sectorSvgIcons[4],
+    slug: "education",
     full: "Education & Skills",
     tag: "Human Capital",
     score: 85,
@@ -326,6 +331,7 @@ const sectors = [
     id: 6,
     icon: Leaf,
     svgIcon: sectorSvgIcons[5],
+    slug: "agriculture",
     full: "Agriculture & Value Chains",
     tag: "Economic Engine",
     score: 90,
@@ -340,6 +346,7 @@ const sectors = [
     id: 7,
     icon: Video,
     svgIcon: sectorSvgIcons[6],
+    slug: "sports",
     full: "Sports, Entertainment & Creative",
     tag: "Growth Engine",
     score: 78,
@@ -354,6 +361,7 @@ const sectors = [
     id: 8,
     icon: Home,
     svgIcon: sectorSvgIcons[7],
+    slug: "housing",
     full: "Housing & Real Estate",
     tag: "Foundation",
     score: 82,
@@ -369,6 +377,7 @@ const sectors = [
     id: 9,
     icon: Map,
     svgIcon: sectorSvgIcons[8],
+    slug: "tourism",
     full: "Tourism & Hospitality",
     tag: "Growth Engine",
     score: 76,
@@ -383,6 +392,7 @@ const sectors = [
     id: 10,
     icon: Zap,
     svgIcon: sectorSvgIcons[9],
+    slug: "energy",
     full: "Energy & Renewable Resources",
     tag: "Foundation",
     score: 88,
@@ -397,6 +407,7 @@ const sectors = [
     id: 11,
     icon: Settings,
     svgIcon: sectorSvgIcons[10],
+    slug: "manufacturing",
     full: "Manufacturing & Light Industry",
     tag: "Economic Engine",
     score: 81,
@@ -412,6 +423,7 @@ const sectors = [
     id: 12,
     icon: Truck,
     svgIcon: sectorSvgIcons[11],
+    slug: "transport",
     full: "Transportation & Logistics",
     tag: "Foundation",
     score: 79,
@@ -611,7 +623,7 @@ function ScoreBar({ score }) {
   );
 }
 
-function SectorRow({ s, expanded, onToggle, mobile }) {
+function SectorRow({ s, expanded, onToggle, mobile, onNavigate }) {
   if (mobile) {
     return (
       <div style={{ borderBottom: `1px solid ${C.line}` }}>
@@ -741,6 +753,7 @@ function SectorRow({ s, expanded, onToggle, mobile }) {
               {s.teaser}
             </p>
             <button
+              onClick={(e) => { e.stopPropagation(); onNavigate(s.slug); }}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -876,6 +889,7 @@ function SectorRow({ s, expanded, onToggle, mobile }) {
             </p>
           </div>
           <button
+            onClick={(e) => { e.stopPropagation(); onNavigate(s.slug); }}
             style={{
               display: "flex",
               alignItems: "center",
@@ -970,7 +984,7 @@ function SectorIconBtn({ svgIcon, label, active, onClick }) {
   );
 }
 
-function BridgeTab({ mobile, filter, setFilter, onUnlock }) {
+function BridgeTab({ mobile, filter, setFilter, onUnlock, onNavigate }) {
   const [expanded, setExpanded] = useState(null);
   const tags = ["All", "Foundation", "Human Capital", "Economic Engine", "Growth Engine"];
   const shown = filter === "All" ? sectors : sectors.filter((s) => s.full === filter || s.tag === filter);
@@ -1114,6 +1128,7 @@ function BridgeTab({ mobile, filter, setFilter, onUnlock }) {
             expanded={expanded === s.id}
             onToggle={() => setExpanded(expanded === s.id ? null : s.id)}
             mobile={mobile}
+            onNavigate={onNavigate}
           />
         ))}
       </div>
@@ -2956,7 +2971,7 @@ export default function ResourcesPage() {
 
             {/* Tab content */}
             <div style={{ padding: mobile ? "20px 16px" : "40px 32px", minHeight: "500px" }}>
-              {tab === "intelligence" && <BridgeTab mobile={mobile} filter={filter} setFilter={setFilter} onUnlock={() => setShowAuth(true)} />}
+              {tab === "intelligence" && <BridgeTab mobile={mobile} filter={filter} setFilter={setFilter} onUnlock={() => setShowAuth(true)} onNavigate={(slug: string) => navigate(`/reports/${slug}`)} />}
               {tab === "gipc" && <GIPCTab mobile={mobile} />}
               {tab === "library" && <LibraryTab mobile={mobile} />}
             </div>

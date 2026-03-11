@@ -31,6 +31,9 @@ const IntelResources = lazy(() => import("./pages/intelligence/Resources"));
 // Community
 const CommunityHome = lazy(() => import("./pages/community/index"));
 
+// Reports
+const SectorReport = lazy(() => import("./pages/reports/SectorReport"));
+
 // Sectors
 const Energy = lazy(() => import("./pages/sectors/Energy"));
 const Technology = lazy(() => import("./pages/sectors/Technology"));
@@ -73,6 +76,7 @@ const App = () => (
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="resources" element={<IntelResources />} />
               </Route>
+              <Route path="/reports/:slug" element={<SectorReport />} />
               <Route path="/sectors/energy" element={<Energy />} />
               <Route path="/sectors/technology" element={<Technology />} />
               <Route path="/sectors/sports" element={<Sports />} />
