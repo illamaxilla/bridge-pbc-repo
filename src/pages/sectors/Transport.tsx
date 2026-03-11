@@ -5960,9 +5960,8 @@ const FinalCTASection = () => {
           </button>
           <button
             className="cta-secondary"
+            onClick={() => navigate("/resources")}
             style={{
-              backgroundColor: "transparent",
-              color: "rgba(255,255,255,0.7)",
               border: "1.5px solid rgba(255,255,255,0.2)",
               padding: "14px 28px",
               borderRadius: "50px",
