@@ -6007,6 +6007,8 @@ const FinalCTASection = () => {
           <button
             onClick={() => navigate("/resources")}
             style={{
+              backgroundColor: "transparent",
+              color: colors.white,
               border: "1.5px solid rgba(255,255,255,0.25)",
               padding: isMobile ? "16px 28px" : "14px 28px",
               borderRadius: "50px",
