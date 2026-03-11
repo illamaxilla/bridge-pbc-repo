@@ -6432,6 +6432,7 @@ const InvestmentCTASection = () => {
 
 const FinalCTASection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section
       style={{
