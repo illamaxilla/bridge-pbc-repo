@@ -5927,11 +5927,8 @@ const FinalCTASection = () => {
         >
           <button
             className="cta-lime-swap"
+            onClick={() => navigate("/contact")}
             style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              border: "none",
-              padding: isMobile ? "16px 24px" : "16px 28px",
               borderRadius: "50px",
               fontSize: "15px",
               fontWeight: "600",

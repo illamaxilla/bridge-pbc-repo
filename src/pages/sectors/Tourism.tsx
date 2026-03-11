@@ -6501,8 +6501,8 @@ const FinalCTASection = () => {
           }}
         >
           <button
+            onClick={() => navigate("/contact")}
             style={{
-              backgroundColor: colors.accent,
               color: colors.primary,
               border: "none",
               padding: isMobile ? "16px 24px" : "16px 32px",
