@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BridgeLogo } from "@/components/BridgeLogo";
-import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
+import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
+import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Infrastructure & Basic Services
@@ -5538,32 +5539,8 @@ const ImpactSection = () => {
   const [activeStakeholder, setActiveStakeholder] = useState(0);
   const [animate, setAnimate] = useState(true);
 
-  // Animated counter hook
-  const useCounter = (target, duration = 1200) => {
-    const [count, setCount] = useState(0);
-    useEffect(() => {
-      if (!animate) {
-        setCount(0);
-        return;
-      }
-      let start = 0;
-      const increment = target / (duration / 16);
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-          setCount(target);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(start * 10) / 10);
-        }
-      }, 16);
-      return () => clearInterval(timer);
-    }, [target, animate, duration]);
-    return count;
-  };
-
   const CounterCell = ({ item }) => {
-    const val = useCounter(item.value);
+    const val = useCounter(item.value, 1200, animate);
     const display = Number.isInteger(item.value) ? Math.round(val) : val.toFixed(1);
     return (
       <span

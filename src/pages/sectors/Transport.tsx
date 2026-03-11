@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
 // SECTOR DATA - Transportation & Logistics (Tone & Voice Aligned)
@@ -4823,30 +4824,6 @@ const InvestmentThesisSection = () => {
 // METRIC ROW COMPONENT (extracted to avoid hook-in-loop violation)
 // ============================================================================
 
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    const num = parseFloat(String(target).replace(/[^0-9.]/g, ""));
-    if (isNaN(num)) {
-      setCount(target);
-      return;
-    }
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const p = Math.min((ts - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      setCount(num * ease);
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, active]);
-  return count;
-};
 
 const formatValue = (val, item) => {
   const num = typeof val === "number" ? val : parseFloat(val);

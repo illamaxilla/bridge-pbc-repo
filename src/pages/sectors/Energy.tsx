@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BridgeLogo } from "@/components/BridgeLogo";
 import { FOOTER_SECTOR_ICONS } from "@/data/sectorIcons";
+import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Energy & Renewable Resources
@@ -5036,26 +5037,6 @@ const InvestmentCTASection = ({ sector }) => {
 // ============================================================================
 // IMPACT SECTION
 // ============================================================================
-
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      setCount(ease * target);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, duration, active]);
-  return count;
-};
 
 const ImpactSection = ({ sector }) => {
   const isMobile = useIsMobile();

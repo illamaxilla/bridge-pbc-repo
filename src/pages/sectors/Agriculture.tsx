@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BridgeLogo } from "@/components/BridgeLogo";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
+import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Agriculture & Value Chains
@@ -4672,32 +4673,6 @@ const impactStakeholders = [
     highlight: "First-loss protected structure",
   },
 ];
-
-// Animated counter hook
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    let start = null;
-    const numVal = typeof target === "number" ? target : parseFloat(target);
-    if (isNaN(numVal)) {
-      setCount(0);
-      return;
-    }
-    const step = (ts) => {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      setCount(ease * numVal);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, duration, active]);
-  return count;
-};
 
 const formatCounter = (count, item) => {
   const val = item.value;

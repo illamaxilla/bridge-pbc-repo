@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useCounter } from "@/hooks/useCounter";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -4398,26 +4399,6 @@ const impactStakeholders = [
     highlight: "1.29M arrivals as built-in demand validation",
   },
 ];
-
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(eased * target);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, active, duration]);
-  return count;
-};
 
 const MetricRow = ({ item, index, animate, isMobile }) => {
   const raw = useCounter(item.value, 1200, animate);

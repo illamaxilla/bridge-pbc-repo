@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BridgeLogo } from "@/components/BridgeLogo";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
+import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Manufacturing & Light Industry
@@ -3295,31 +3296,6 @@ const PolicyAlignmentSection = () => {
 // ============================================================================
 // IMPACT SECTION — Dual-Lens Dashboard (By Metric / By Stakeholder)
 // ============================================================================
-
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    const num = typeof target === "number" ? target : parseFloat(target);
-    if (isNaN(num)) {
-      setCount(0);
-      return;
-    }
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const p = Math.min((ts - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      setCount(ease * num);
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, duration, active]);
-  return count;
-};
 
 const formatMetric = (count, item) => {
   const p = item.prefix || "";

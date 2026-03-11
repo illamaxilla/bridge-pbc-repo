@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BridgeLogo } from "@/components/BridgeLogo";
 import { SECTOR_ROUTES } from "@/data/sectorIcons";
+import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Health Systems & Wellbeing
@@ -5272,31 +5273,6 @@ const InvestmentCTASection = () => {
 // ============================================================================
 // IMPACT SECTION — Dual-lens dashboard (By Metric / By Stakeholder)
 // ============================================================================
-
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    const num = typeof target === "number" ? target : parseFloat(String(target).replace(/[^0-9.]/g, ""));
-    if (isNaN(num)) {
-      setCount(target);
-      return;
-    }
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const p = Math.min((ts - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      setCount(num * ease);
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, active, duration]);
-  return count;
-};
 
 const formatMetricValue = (raw, prefix, suffix) => {
   const v = typeof raw === "number" ? raw : parseFloat(raw);

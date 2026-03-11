@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BridgeLogo } from "@/components/BridgeLogo";
+import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Technology & Innovation
@@ -5736,34 +5737,6 @@ const InvestmentCTASection = () => {
 // ============================================================================
 // IMPACT SECTION — Dual-Lens Dashboard
 // ============================================================================
-
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    const num = typeof target === "number" ? target : parseFloat(target);
-    if (isNaN(num)) {
-      setCount(0);
-      return;
-    }
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      setCount(ease * num);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-    return () => {
-      start = null;
-    };
-  }, [target, duration, active]);
-  return count;
-};
 
 const formatMetric = (count, item) => {
   const val = item.value;

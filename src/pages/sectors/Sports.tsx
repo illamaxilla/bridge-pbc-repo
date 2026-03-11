@@ -13,29 +13,9 @@ import { BridgeLogo } from "@/components/BridgeLogo";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useCounter } from "@/hooks/useCounter";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
-
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  const numTarget = parseFloat(String(target).replace(/[^0-9.]/g, "")) || 0;
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    let start = 0;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * numTarget * 10) / 10);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [numTarget, duration, active]);
-  return count;
-};
 
 // ============================================================================
 // SECTOR DATA - Sports, Entertainment & Creative Industries

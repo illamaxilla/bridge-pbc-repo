@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useCounter } from "@/hooks/useCounter";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -4974,35 +4975,6 @@ const InvestmentCTASection = ({ sector }) => {
 // ============================================================================
 // SECTION 9: IMPACT — Dual-Lens Dashboard (Handoff v1)
 // ============================================================================
-
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    const num = parseFloat(target);
-    if (isNaN(num)) {
-      setCount(target);
-      return;
-    }
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(eased * num);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, active]);
-  const num = parseFloat(target);
-  if (isNaN(num)) return target;
-  if (num >= 1000) return Math.round(count).toLocaleString();
-  if (num % 1 !== 0) return count.toFixed(1);
-  return Math.round(count);
-};
 
 const ImpactSection = () => {
   const isMobile = useIsMobile();

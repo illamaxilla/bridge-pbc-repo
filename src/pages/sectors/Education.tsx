@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BridgeLogo } from "@/components/BridgeLogo";
-import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
+import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
+import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Education & Skills
@@ -5763,31 +5764,6 @@ const impactStakeholders = [
   },
 ];
 
-// ── Animated Counter Hook ──
-const useCounter = (target, duration = 1200, active = true) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    const numericTarget = typeof target === "number" ? target : parseFloat(target);
-    if (isNaN(numericTarget)) {
-      setCount(0);
-      return;
-    }
-    let startTime = null;
-    const animate = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(eased * numericTarget);
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [target, duration, active]);
-  return count;
-};
 
 const MetricRow = ({ item, index, animate }) => {
   const isMobile = useIsMobile();
