@@ -635,6 +635,82 @@ const IconDollar = () => (
   </svg>
 );
 
+const IconStorefront = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M2 7l1.5-4h17L22 7" />
+    <path d="M2 7h20v4c0 0-1.5 2-5 2s-5-2-5-2-1.5 2-5 2-5-2-5-2V7z" />
+    <path d="M4 13v8h16v-8" />
+    <path d="M10 21v-6h4v6" />
+  </svg>
+);
+
+const IconOfficeBuilding = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+    <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+    <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+    <path d="M10 6h4" />
+    <path d="M10 10h4" />
+    <path d="M10 14h4" />
+    <path d="M10 18h4" />
+  </svg>
+);
+
+const IconTrendingUp = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+    <polyline points="16 7 22 7 22 13" />
+  </svg>
+);
+
+const IconLandmark = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="3" y1="22" x2="21" y2="22" />
+    <line x1="6" y1="18" x2="6" y2="11" />
+    <line x1="10" y1="18" x2="10" y2="11" />
+    <line x1="14" y1="18" x2="14" y2="11" />
+    <line x1="18" y1="18" x2="18" y2="11" />
+    <polygon points="12 2 20 8 4 8" />
+    <line x1="2" y1="18" x2="22" y2="18" />
+  </svg>
+);
+
 const solutionIcons = {
   snowflake: <IconSnowflake />,
   graduation: <IconGraduation />,
