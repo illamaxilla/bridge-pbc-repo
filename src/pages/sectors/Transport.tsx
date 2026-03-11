@@ -6017,8 +6017,7 @@ export default function TransportationLogisticsSectorPage() {
         .cta-lime-swap { transition: none; }
         .cta-secondary { transition: none; }
       `}</style>
-      <Header />
-      <div style={{ height: "72px" }} />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <OpportunitySection />
       <ProcessSection />
@@ -6029,8 +6028,7 @@ export default function TransportationLogisticsSectorPage() {
       <InvestmentThesisSection />
       <ImpactSection />
       <FinalCTASection />
-      <CTAFooterSeparator />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

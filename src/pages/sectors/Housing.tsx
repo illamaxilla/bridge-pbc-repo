@@ -6037,7 +6037,7 @@ export default function HousingRealEstateSectorPage() {
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
         rel="stylesheet"
       />
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection sector={sectorData} />
       <ValueChainSectionPremium />
@@ -6048,11 +6048,7 @@ export default function HousingRealEstateSectorPage() {
       <InvestmentCTASection sector={sectorData} />
       <ImpactSection />
       <FinalCTASection />
-      {/* Pre-footer separator — NOT part of the Footer component itself */}
-      <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
-      </div>
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

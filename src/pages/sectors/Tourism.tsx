@@ -6569,7 +6569,7 @@ export default function TourismHospitalitySectorPage() {
         rel="stylesheet"
       />
 
-      <Header />
+      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection />
       <ValueChainSectionPremium />
@@ -6580,7 +6580,7 @@ export default function TourismHospitalitySectorPage() {
       <CrossSectorSection />
       <InvestmentCTASection />
       <FinalCTASection />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
