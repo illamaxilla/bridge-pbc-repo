@@ -5962,6 +5962,10 @@ const FinalCTASection = () => {
           <button
             onClick={() => navigate("/contact")}
             style={{
+              backgroundColor: colors.accent,
+              color: colors.primary,
+              border: "none",
+              padding: isMobile ? "16px 24px" : "16px 32px",
               borderRadius: "50px",
               fontSize: "15px",
               fontWeight: "700",
@@ -5979,7 +5983,7 @@ const FinalCTASection = () => {
               style={{
                 width: "28px",
                 height: "28px",
-                backgroundColor: colors.white,
+                backgroundColor: colors.primary,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
@@ -5991,7 +5995,7 @@ const FinalCTASection = () => {
                 height="14"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke={colors.primary}
+                stroke={colors.white}
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
