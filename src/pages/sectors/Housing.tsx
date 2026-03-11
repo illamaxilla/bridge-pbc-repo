@@ -2820,7 +2820,7 @@ const MarketEcosystemSection = ({ sector }) => {
                       fontWeight: "700",
                       textTransform: "uppercase",
                       letterSpacing: "1px",
-                      color: colors.primary,
+                      color: colors.accent,
                       marginBottom: "6px",
                     }}
                   >
@@ -2830,7 +2830,7 @@ const MarketEcosystemSection = ({ sector }) => {
                     style={{
                       fontFamily: "Inter, sans-serif",
                       fontSize: "14px",
-                      color: "#444",
+                      color: colors.white,
                       lineHeight: "1.6",
                       margin: 0,
                     }}
