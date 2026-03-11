@@ -3353,6 +3353,7 @@ const MarketEcosystemSection = ({ sector }) => {
 
 const PolicyAlignmentSection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("all");
   const [expandedCard, setExpandedCard] = useState(null);
 
@@ -3968,7 +3969,8 @@ const PolicyAlignmentSection = () => {
             </div>
           </div>
           <a
-            href="#"
+            href="/contact"
+            onClick={(e) => { e.preventDefault(); navigate("/contact"); }}
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "13px",
@@ -3997,8 +3999,26 @@ const PolicyAlignmentSection = () => {
 
 const CrossSectorSection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeNode, setActiveNode] = useState(null);
   const [showMoreRipple, setShowMoreRipple] = useState(false);
+
+  const SECTOR_ROUTES: Record<string, string> = {
+    "Financial Inclusion": "/sectors/financial",
+    "Infrastructure & Basic Services": "/sectors/infrastructure",
+    "Infrastructure": "/sectors/infrastructure",
+    "Education & Skills": "/sectors/education",
+    "Technology & Innovation": "/sectors/technology",
+    "Technology": "/sectors/technology",
+    "Energy": "/sectors/energy",
+    "Agriculture": "/sectors/agriculture",
+    "Manufacturing": "/sectors/manufacturing",
+    "Transportation": "/sectors/transport",
+    "Housing & Real Estate": "/sectors/housing",
+    "Tourism & Hospitality": "/sectors/tourism",
+    "Creative Industries": "/sectors/sports",
+    "Health Systems": "/sectors/health",
+  };
 
   const crossSectorIcons = {
     8: <IconHome />,
@@ -4634,7 +4654,8 @@ const CrossSectorSection = () => {
                       ))}
                     </div>
                     <a
-                      href="#"
+                      href={SECTOR_ROUTES[active.name] || "/sectors"}
+                      onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[active.name] || "/sectors"); }}
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
@@ -4705,6 +4726,7 @@ const CrossSectorSection = () => {
 
 const InvestmentCTASection = ({ sector }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("returns");
   const [activeAudience, setActiveAudience] = useState(0);
   const [showInvestmentDetails, setShowInvestmentDetails] = useState(false);
@@ -5357,7 +5379,8 @@ const InvestmentCTASection = ({ sector }) => {
                   Full financial model available
                 </span>
                 <a
-                  href="#"
+                  href="/resources"
+                  onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
