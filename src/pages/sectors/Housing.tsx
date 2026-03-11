@@ -1032,6 +1032,7 @@ const BridgeLogoWhite = () => (
 
 const HeroSection = ({ sector }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section
       style={{
@@ -1120,6 +1121,7 @@ const HeroSection = ({ sector }) => {
             {/* CTA Buttons */}
             <div style={{ display: "flex", gap: "12px", flexWrap: isMobile ? "wrap" : "nowrap" }}>
               <button
+                onClick={() => navigate("/login")}
                 style={{
                   backgroundColor: colors.accent,
                   color: colors.primary,
@@ -1154,6 +1156,7 @@ const HeroSection = ({ sector }) => {
                 </span>
               </button>
               <button
+                onClick={() => navigate("/resources")}
                 style={{
                   backgroundColor: "transparent",
                   color: colors.primary,
@@ -5962,6 +5965,10 @@ const FinalCTASection = () => {
           <button
             onClick={() => navigate("/contact")}
             style={{
+              backgroundColor: colors.accent,
+              color: colors.primary,
+              border: "none",
+              padding: isMobile ? "16px 24px" : "16px 32px",
               borderRadius: "50px",
               fontSize: "15px",
               fontWeight: "700",
@@ -5979,7 +5986,7 @@ const FinalCTASection = () => {
               style={{
                 width: "28px",
                 height: "28px",
-                backgroundColor: colors.white,
+                backgroundColor: colors.primary,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
@@ -5991,7 +5998,7 @@ const FinalCTASection = () => {
                 height="14"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke={colors.primary}
+                stroke={colors.white}
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -6003,6 +6010,8 @@ const FinalCTASection = () => {
           <button
             onClick={() => navigate("/resources")}
             style={{
+              backgroundColor: "transparent",
+              color: colors.white,
               border: "1.5px solid rgba(255,255,255,0.25)",
               padding: isMobile ? "16px 28px" : "14px 28px",
               borderRadius: "50px",

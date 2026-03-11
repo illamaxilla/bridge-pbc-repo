@@ -1079,6 +1079,7 @@ const IconOfficeBuilding = () => (
 
 const HeroSection = ({ sector }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section
       style={{
@@ -1167,6 +1168,7 @@ const HeroSection = ({ sector }) => {
             {/* CTA Buttons */}
             <div style={{ display: "flex", gap: "12px", flexWrap: isMobile ? "wrap" : "nowrap" }}>
               <button
+                onClick={() => navigate("/login")}
                 className="cta-lime-swap"
                 style={{
                   backgroundColor: colors.accent,
@@ -1204,6 +1206,7 @@ const HeroSection = ({ sector }) => {
                 </span>
               </button>
               <button
+                onClick={() => navigate("/resources")}
                 className="cta-secondary"
                 style={{
                   backgroundColor: "transparent",
@@ -1211,7 +1214,7 @@ const HeroSection = ({ sector }) => {
                   border: `1.5px solid ${colors.line}`,
                   padding: isMobile ? "14px 20px" : "14px 28px",
                   borderRadius: "50px",
-                  fontSize: isMobile ? "14px" : "14px",
+                  fontSize: "14px",
                   fontWeight: "500",
                   fontFamily: "Inter, sans-serif",
                   cursor: "pointer",
@@ -5929,15 +5932,20 @@ const FinalCTASection = () => {
             className="cta-lime-swap"
             onClick={() => navigate("/contact")}
             style={{
+              backgroundColor: colors.accent,
+              color: colors.primary,
+              border: "none",
+              padding: isMobile ? "16px 24px" : "16px 32px",
               borderRadius: "50px",
               fontSize: "15px",
-              fontWeight: "600",
+              fontWeight: "700",
               fontFamily: "Inter, sans-serif",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "12px",
+              width: isMobile ? "100%" : "auto",
             }}
           >
             Start a Conversation
@@ -5946,14 +5954,14 @@ const FinalCTASection = () => {
               style={{
                 width: "36px",
                 height: "36px",
-                backgroundColor: colors.white,
+                backgroundColor: colors.primary,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={colors.white} strokeWidth="2.5">
                 <path d="M7 17L17 7M17 7H7M17 7V17" />
               </svg>
             </span>
@@ -5962,13 +5970,16 @@ const FinalCTASection = () => {
             className="cta-secondary"
             onClick={() => navigate("/resources")}
             style={{
+              backgroundColor: "transparent",
+              color: colors.white,
               border: "1.5px solid rgba(255,255,255,0.2)",
-              padding: "14px 28px",
+              padding: isMobile ? "16px 24px" : "14px 28px",
               borderRadius: "50px",
               fontSize: "14px",
               fontWeight: "600",
               fontFamily: "Inter, sans-serif",
               cursor: "pointer",
+              width: isMobile ? "100%" : "auto",
             }}
           >
             Explore the Full Analysis
@@ -5991,7 +6002,6 @@ export default function TransportationLogisticsSectorPage() {
         margin: 0,
         padding: 0,
         backgroundColor: colors.white,
-        overflowX: "hidden",
         width: "100%",
         boxSizing: "border-box",
       }}

@@ -1,95 +1,85 @@
 
-## Diagnosis of all 3 issues across Housing, Tourism, Transport
+## Audit Summary: What's Working vs. What Needs Fixing
 
-### Issue 1 — Sticky header broken (Transport only)
+### ✅ Working correctly
+- `SiteHeader.tsx` — active-page exclusion, all 6 nav items, mobile overlay with body scroll lock, Request Access → `/login`, hamburger animation. All 20 pages import it.
+- `footerLinkHref` defined AND applied at render site in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Education`, `Infrastructure`, `Housing`, `Health`, `Transport`, `Agriculture`, `Manufacturing`, `Energy`
+- Mobile footer category labels (Company/Services/Resources/Insights) wired in: `About`, `Contact`, `Insights`, `Methodology`, `Resources`, `Services`, `Index`, `Technology`, `Financial`, `Sports`, `Agriculture`, `Transport`, `Health`, `Housing`, `Manufacturing`, `Energy`
+- `/sectors` route exists in `App.tsx`, `Sectors.tsx` created, SiteHeader Sectors → `/sectors`
 
-**Root cause:** Transport's outer `<div>` has `overflowX: "hidden"` (line 5994). In CSS, any `overflow` value other than `visible` (including `overflow-x: hidden`) on an ancestor creates a new **scroll container**, which breaks `position: sticky` on all descendants. The `SiteHeaderMinimal` uses `position: sticky; top: 0` — so inside Transport's wrapper, it can no longer stick.
+### ❌ Issues to fix
 
-Housing and Tourism don't have this — their headers sticky correctly. Only Transport is broken.
+**Issue 1 — Tourism.tsx: desktop footer links still use `href="#"`**
+- `footerLinkHref` is defined (line 1337) but NOT used at the render site (line 7104 still says `href="#"`)
+- Fix: change `href="#"` → `href={footerLinkHref(link)}` at line 7104
 
-**Fix:** Remove `overflowX: "hidden"` from the Transport outer wrapper div (line 5994). The horizontal overflow guard is already set globally in the `<style>` tag below it (`html, body { overflow-x: hidden; }`) so removing it from the div is safe.
+**Issue 2 — Tourism.tsx: mobile footer category labels still use `href="#"`**
+- Line 6934 has `href="#"` instead of the object-lookup pattern
+- Fix: same object-lookup pattern as other pages
 
----
+**Issue 3 — Infrastructure.tsx and Education.tsx: mobile footer category labels still use `href="#"`**
+- Infrastructure line ~6952, Education line ~6947 both have `href="#"` 
+- Fix: apply the object-lookup href pattern
 
-### Issue 2 — FinalCTA button styling is wrong (Housing + Tourism + Transport)
+**Issue 4 — `footerLinkHref` maps "Sectors" → `/services` in 14 sector page files**
+- Now that `/sectors` route exists, the "Sectors" key should map to `/sectors` not `/services`
+- Affects: `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx` — but NOT `About`, `Contact`, `Insights`, `Methodology`, `Resources` which already have `/sectors`
+- Fix: update the "Sectors" mapping in those 13 files from `/services` to `/sectors`
 
-**Root cause:** The buttons were given incomplete styles — missing `backgroundColor`, `color`, and `padding` on the primary "Start a Conversation" button in Housing and Tourism. They rely on browser-default button appearance (grey).
+**Issue 5 — Ghost `SiteFooter.tsx` HMR error**
+- Console log shows `Failed to reload /src/components/SiteFooter.tsx` — this file does NOT exist in the filesystem (search returns 0 matches) 
+- This is a stale Vite HMR cache entry from a previous edit session. It resolves on hard reload. No actual file to fix — but we can verify by checking if it persists.
 
-**Housing FinalCTASection (lines 5962–6002):** The "Start a Conversation" button is missing:
-- `backgroundColor: colors.accent` (lime)
-- `color: colors.primary` (dark green text)  
-- `padding: "16px 32px"`
-- `border: "none"`
+**Issue 6 — Resources.tsx sector icon grid: `href="#"` not wired to sector routes**
+- The 12 sector icon buttons in the footer sector grid use `href="#"` (line 2254)
+- Each should link to the corresponding sector page (e.g., `/sectors/infrastructure`, `/sectors/financial`, etc.)
+- The `footerSectorIcons` array has a `key` property per icon — fix: use a sectorRoutes lookup
 
-The arrow `<span>` has `backgroundColor: colors.white` but uses the SVG with `stroke={colors.primary}` — that's fine. But the outer button has no background so it renders as browser-default grey.
+**Issue 7 — `Index.tsx` has a dead `navHref` function (line 752-753)**
+- `const navHref = ...` pointing to `/services` for "Sectors" — this is unused dead code now that SiteHeader handles nav
+- Minor cleanup
 
-**Tourism FinalCTASection (lines 6503–6536):** 
-- "Start a Conversation" button: has `color: colors.primary` and `border: "none"` and `padding` — BUT is missing `backgroundColor`. It renders grey.
-- The arrow span has `backgroundColor: colors.primary` (dark green circle on dark green section background) — invisible arrow. Should be `backgroundColor: colors.white` with the SVG stroke in `colors.primary`.
+### Implementation Plan
 
-**Transport FinalCTASection (lines 5928–5975):**
-- Primary button: has `backgroundColor: colors.accent` and `color: colors.primary` ✓ but no explicit `border: "none"` — browser adds 1px border. Small but fixable.
-- Secondary "Explore the Full Analysis" button has no `color` style — defaults to browser black, which is invisible on the dark green section background.
+**Files to fix: 4 real fixes + 1 cleanup**
 
-**The canonical correct style (from Energy.tsx which works):**
-- Primary: `backgroundColor: colors.accent, color: colors.primary, border: "none", padding: "16px 32px", borderRadius: "50px", fontSize: "15px", fontWeight: "700", width: isMobile ? "100%" : "auto"`
-- Arrow span: `backgroundColor: colors.primary, borderRadius: "50%", width: 28, height: 28` + white arrow SVG
-- Secondary: `backgroundColor: "transparent", color: colors.white, border: "2px solid rgba(255,255,255,0.2)", padding: "16px 32px", borderRadius: "50px", width: isMobile ? "100%" : "auto"`
+1. **`Tourism.tsx`** (2 fixes):
+   - Line 7104: `href="#"` → `href={footerLinkHref(link)}`
+   - Line 6934: `href="#"` → `href={{ Company: "/about", Services: "/services", Resources: "/resources", Insights: "/insights" }[label] || "#"}`
 
----
+2. **`Infrastructure.tsx`** (1 fix):
+   - Line 6952: `href="#"` → object-lookup href
 
-### Issue 3 — Hero CTA buttons "Request Full Analysis" / "Download Summary" missing `onClick` handlers
+3. **`Education.tsx`** (1 fix):
+   - Line 6947: `href="#"` → object-lookup href
 
-**Root cause:** The Hero section buttons in all three files have the correct visual styling (lime button, outline button) but no `onClick` handlers wired up.
+4. **13 files — update "Sectors" in `footerLinkHref` map from `/services` → `/sectors`**:
+   - `Services.tsx`, `Sports.tsx`, `Tourism.tsx`, `Index.tsx`, `Manufacturing.tsx`, `Infrastructure.tsx`, `Housing.tsx`, `Transport.tsx`, `Health.tsx`, `Energy.tsx`, `Education.tsx`, `Agriculture.tsx`, `Financial.tsx`
+   - Simple single-line change per file: `"Sectors": "/services"` → `"Sectors": "/sectors"`
 
-Per CTA linking logic: 
-- "Request Full Analysis" → `navigate("/login")`
-- "Download Summary" → `navigate("/resources")`
+5. **`Resources.tsx`** — wire sector icon grid to real sector routes:
+   - Replace `href="#"` in the sector icon map with `href={sectorRoutes[sector.key] || "#"}`
+   - Add a `sectorRoutes` lookup near the footer (same as other pages already have it)
 
-The `HeroSection` components in Housing (line 1122), Tourism (line 1105), and Transport (line 1169) need `useNavigate` added and the two buttons wired.
+6. **`Index.tsx`** — remove dead `navHref` function (lines 752-753)
 
----
-
-## Exact fixes
-
-### Transport.tsx — 3 changes
-
-**Fix A (sticky header):** Line 5994 — remove `overflowX: "hidden"` from the outer wrapper style object.
-
-**Fix B (FinalCTA primary button):** Lines 5928–5960 — add `border: "none"` to the primary button style.
-
-**Fix C (FinalCTA secondary text color):** Line 5964 — add `color: colors.white` to the secondary button style.
-
-**Fix D (Hero buttons — onClick):** Lines 1169–1222 — add `const navigate = useNavigate()` at top of HeroSection and wire:
-- "Request Full Analysis" button → `onClick={() => navigate("/login")}`  
-- "Download Summary" button → `onClick={() => navigate("/resources")}`
-
-### Housing.tsx — 2 changes
-
-**Fix A (FinalCTA primary button):** Lines 5962–6002 — add missing styles: `backgroundColor: colors.accent`, `color: colors.primary`, `border: "none"`, `padding: isMobile ? "16px 24px" : "16px 32px"`.
-
-**Fix B (Hero buttons — onClick):** Lines 1122–1172 — add `const navigate = useNavigate()` at top of HeroSection and wire buttons.
-
-### Tourism.tsx — 2 changes
-
-**Fix A (FinalCTA primary + arrow):** Lines 6503–6536 — add `backgroundColor: colors.accent` to primary button; change arrow span `backgroundColor` from `colors.primary` to `colors.white` (with SVG stroke in `colors.primary`).
-
-**Fix B (Hero buttons — onClick):** Lines 1105–1155 — add `const navigate = useNavigate()` at top of HeroSection and wire buttons.
-
----
-
-## Edit table
-
-| File | Issue | Lines |
-|---|---|---|
-| `Transport.tsx` | Remove `overflowX: "hidden"` from wrapper (fixes sticky header) | 5994 |
-| `Transport.tsx` | FinalCTA primary button: add `border: "none"` | ~5931 |
-| `Transport.tsx` | FinalCTA secondary button: add `color: colors.white` | ~5965 |
-| `Transport.tsx` | Hero buttons: wire `onClick` for Request/Download | 1169–1222 |
-| `Housing.tsx` | FinalCTA primary button: add `backgroundColor`, `color`, `border`, `padding` | 5962–5975 |
-| `Housing.tsx` | Hero buttons: wire `onClick` for Request/Download | 1122–1172 |
-| `Tourism.tsx` | FinalCTA primary button: add `backgroundColor: colors.accent` | 6503–6518 |
-| `Tourism.tsx` | FinalCTA arrow span: change `backgroundColor` to `colors.white` | 6522–6531 |
-| `Tourism.tsx` | Hero buttons: wire `onClick` for Request/Download | 1105–1155 |
-
-**Zero layout or content changes. Only fixing incomplete styles and missing onClick handlers.**
+### Files to edit
+| File | Change |
+|---|---|
+| `Tourism.tsx` | Fix desktop `href="#"` → `footerLinkHref(link)`; fix mobile labels |
+| `Infrastructure.tsx` | Fix mobile labels `href="#"` |
+| `Education.tsx` | Fix mobile labels `href="#"` |
+| `Services.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Sports.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Manufacturing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Housing.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Transport.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Health.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Energy.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Education.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Agriculture.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Financial.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Tourism.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Infrastructure.tsx` | "Sectors" map `/services` → `/sectors` |
+| `Resources.tsx` | Wire sector icon grid to real `/sectors/X` routes |
+| `Index.tsx` | Remove dead `navHref` function; update "Sectors" map |

@@ -1015,6 +1015,7 @@ const BridgeLogoWhite = () => (
 
 const HeroSection = ({ sector }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section
       style={{
@@ -1103,6 +1104,7 @@ const HeroSection = ({ sector }) => {
             {/* CTA Buttons */}
             <div style={{ display: "flex", gap: "12px", flexWrap: isMobile ? "wrap" : "nowrap" }}>
               <button
+                onClick={() => navigate("/login")}
                 style={{
                   backgroundColor: colors.accent,
                   color: colors.primary,
@@ -1137,6 +1139,7 @@ const HeroSection = ({ sector }) => {
                 </span>
               </button>
               <button
+                onClick={() => navigate("/resources")}
                 style={{
                   backgroundColor: "transparent",
                   color: colors.primary,
@@ -6503,12 +6506,13 @@ const FinalCTASection = () => {
           <button
             onClick={() => navigate("/contact")}
             style={{
+              backgroundColor: colors.accent,
               color: colors.primary,
               border: "none",
               padding: isMobile ? "16px 24px" : "16px 32px",
               borderRadius: "50px",
               fontSize: "15px",
-              fontWeight: "600",
+              fontWeight: "700",
               fontFamily: "Inter, sans-serif",
               cursor: "pointer",
               display: "flex",
@@ -6538,6 +6542,9 @@ const FinalCTASection = () => {
           <button
             onClick={() => navigate("/resources")}
             style={{
+              backgroundColor: "transparent",
+              color: colors.white,
+              border: "1.5px solid rgba(255,255,255,0.25)",
               padding: isMobile ? "16px 24px" : "16px 32px",
               borderRadius: "50px",
               fontSize: "15px",
