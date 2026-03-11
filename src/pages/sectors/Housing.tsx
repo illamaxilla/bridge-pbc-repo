@@ -2722,7 +2722,7 @@ const ValueChainSectionPremium = () => {
 
 const SolutionsSection = ({ sector }) => {
   const isMobile = useIsMobile();
-  const [activeTier, setActiveTier] = useState("all");
+  const [activeTier, setActiveTier] = useState<string | number>("all");
   const tiers = [
     { id: "all", label: "All Ventures" },
     { id: 1, label: "Flagship" },
