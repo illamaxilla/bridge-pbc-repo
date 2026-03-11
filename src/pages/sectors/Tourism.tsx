@@ -5117,8 +5117,24 @@ const ripplePathLabels = [
 
 const CrossSectorSection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeNode, setActiveNode] = useState(null);
   const [showMoreRipple, setShowMoreRipple] = useState(false);
+
+  const SECTOR_ROUTES: Record<string, string> = {
+    "Creative Industries": "/sectors/sports",
+    "Infrastructure": "/sectors/infrastructure",
+    "Education & Skills": "/sectors/education",
+    "Agriculture": "/sectors/agriculture",
+    "Transportation": "/sectors/transport",
+    "Financial Inclusion": "/sectors/financial",
+    "Health Systems": "/sectors/health",
+    "Technology & Innovation": "/sectors/technology",
+    "Energy": "/sectors/energy",
+    "Manufacturing": "/sectors/manufacturing",
+    "Housing & Real Estate": "/sectors/housing",
+    "Tourism & Hospitality": "/sectors/tourism",
+  };
 
   const pathways = rippleSectorData.map((sector, i) => ({
     ...sector,
@@ -5651,7 +5667,8 @@ const CrossSectorSection = () => {
                       ))}
                     </div>
                     <a
-                      href="#"
+                      href={SECTOR_ROUTES[pathways[activeNode].name] || "/sectors"}
+                      onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[pathways[activeNode].name] || "/sectors"); }}
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
@@ -5929,6 +5946,7 @@ const IconCheckSmall = () => (
 
 const InvestmentCTASection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("returns");
   const [activeAudience, setActiveAudience] = useState(0);
   const [showInvestmentDetails, setShowInvestmentDetails] = useState(false);
@@ -6368,7 +6386,8 @@ const InvestmentCTASection = () => {
                   Full financial model available
                 </span>
                 <a
-                  href="#"
+                  href="/resources"
+                  onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",

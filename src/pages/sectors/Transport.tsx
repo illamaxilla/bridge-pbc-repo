@@ -3021,6 +3021,7 @@ const LandscapeSection = ({ sector }) => {
 // ============================================================================
 
 const GovernanceSection = () => {
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [activeCategory, setActiveCategory] = useState("all");
   const [expandedCard, setExpandedCard] = useState(null);
@@ -3601,7 +3602,8 @@ const GovernanceSection = () => {
             </div>
           </div>
           <a
-            href="#"
+            href="/contact"
+            onClick={(e) => { e.preventDefault(); navigate("/contact"); }}
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "13px",
@@ -3629,9 +3631,29 @@ const GovernanceSection = () => {
 // ============================================================================
 
 const RippleEffectSection = () => {
+  const navigate = useNavigate();
   const [activeNode, setActiveNode] = useState(null);
   const [showMoreRipple, setShowMoreRipple] = useState(false);
   const isMobile = useIsMobile();
+
+  const SECTOR_ROUTES: Record<string, string> = {
+    "Agriculture": "/sectors/agriculture",
+    "Agriculture & Value Chains": "/sectors/agriculture",
+    "Health Systems": "/sectors/health",
+    "Health": "/sectors/health",
+    "Manufacturing": "/sectors/manufacturing",
+    "Energy": "/sectors/energy",
+    "Energy & Renewables": "/sectors/energy",
+    "Financial Inclusion": "/sectors/financial",
+    "Finance": "/sectors/financial",
+    "Infrastructure": "/sectors/infrastructure",
+    "Technology": "/sectors/technology",
+    "Education & Skills": "/sectors/education",
+    "Transportation": "/sectors/transport",
+    "Housing & Real Estate": "/sectors/housing",
+    "Tourism & Hospitality": "/sectors/tourism",
+    "Creative Industries": "/sectors/sports",
+  };
 
   const crossSectorIcons = {
     6: (c) => (
@@ -4324,7 +4346,12 @@ const RippleEffectSection = () => {
                       ))}
                     </div>
                     <a
-                      href="#"
+                      href={SECTOR_ROUTES[pathways[activeNode].name] || "#"}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const route = SECTOR_ROUTES[pathways[activeNode].name];
+                        if (route) navigate(route);
+                      }}
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
@@ -4430,6 +4457,7 @@ const RippleEffectSection = () => {
 // ============================================================================
 
 const InvestmentThesisSection = () => {
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("returns");
   const [activeAudience, setActiveAudience] = useState(0);
@@ -5072,7 +5100,8 @@ const InvestmentThesisSection = () => {
                   Full financial model available
                 </span>
                 <a
-                  href="#"
+                  href="/resources"
+                  onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "14px",
