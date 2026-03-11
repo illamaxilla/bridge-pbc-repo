@@ -1136,8 +1136,8 @@ const HeroSection = ({ sector }) => {
                   flex: isMobile ? "1 1 100%" : "none",
                   justifyContent: isMobile ? "center" : "flex-start",
                 }}
-              >
-                Request Full Analysis
+              onClick={() => navigate("/login")}
+
                 <span
                   style={{
                     width: "28px",
