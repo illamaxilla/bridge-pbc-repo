@@ -8,19 +8,8 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 // BRIDGE Design System
 // ═══════════════════════════════════════════════
 import { colors, layout } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 const CONTENT_MAX_WIDTH = layout.maxWidth;
-const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 // BRIDGE 12 Sectors data
 const sectorData = [
@@ -812,13 +801,9 @@ export default function BRIDGEHomePage() {
 
   return (
     <div style={{ fontFamily: "Helvetica, Arial, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-      />
+
 
       <style>{`
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes govScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .stat-card { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
         .stat-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(27, 77, 62, 0.14) !important; }

@@ -1,23 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { colors } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-
-// ============================================================
-// MOBILE HOOK
-// ============================================================
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(() =>
-    typeof window !== "undefined" ? window.innerWidth <= 480 : false
-  );
-  useEffect(() => {
-    const fn = () => setIsMobile(window.innerWidth <= 480);
-    window.addEventListener("resize", fn);
-    return () => window.removeEventListener("resize", fn);
-  }, []);
-  return isMobile;
-};
 
 // ============================================================
 // BRIDGE LOGO (dark variant)

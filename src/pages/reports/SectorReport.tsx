@@ -4,24 +4,12 @@ import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/context/AuthContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { colors, layout } from "@/lib/theme";
 import {
   ArrowLeft, Download, Lock, ArrowUpRight, CheckCircle2, ChevronRight,
   FileText, BarChart3, TrendingUp, Shield, Zap, Users,
 } from "lucide-react";
-
-const MOBILE_BP = Number(layout.mobileBreakpoint);
-
-function useIsMobile() {
-  const [m, setM] = useState(false);
-  useEffect(() => {
-    const c = () => setM(window.innerWidth <= MOBILE_BP);
-    c();
-    window.addEventListener("resize", c);
-    return () => window.removeEventListener("resize", c);
-  }, []);
-  return m;
-}
 
 // ────────────────────────────────────────────────────────────
 // Sector report data

@@ -52,6 +52,7 @@ import {
 
 /* ─── DESIGN TOKENS ─────────────────────────────────────────────── */
 import { colors } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 const C = {
   ...colors,
   accentDim: "rgba(184,217,53,0.15)",
@@ -461,18 +462,6 @@ const SEGMENTS = [
 ];
 
 /* ─── LOGO ──────────────────────────────────────────────────────── */
-/* ─── RESPONSIVE HOOK ────────────────────────────────────────────── */
-const MOBILE_BREAKPOINT = 768;
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 /* ─── ICON ARROW RIGHT ───────────────────────────────────────────── */
 const IconArrowRight = () => (
@@ -2687,7 +2676,7 @@ function CTASection({ seg }) {
 /* ─── FOOTER ─────────────────────────────────────────────────────── */
 /* ─── GLOBAL STYLES ──────────────────────────────────────────────── */
 const GLOBAL_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;600;700;800&display=swap');
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #F3F5F2; -webkit-text-size-adjust: 100%; }
   @keyframes fadeSlideUp {
@@ -2696,8 +2685,6 @@ const GLOBAL_CSS = `
   }
   button:focus { outline: none; }
   button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-  .hide-scrollbar::-webkit-scrollbar { display: none; }
-  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: #F3F5F2; }
   ::-webkit-scrollbar-thumb { background: #D4DDD8; border-radius: 3px; }

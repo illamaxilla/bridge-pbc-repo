@@ -1021,7 +1021,6 @@ function LoginPage({ onLogin }) {
       </div>
 
       <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
         * { box-sizing: border-box; }
         body { margin: 0; }
         input { -webkit-appearance: none; }

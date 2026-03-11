@@ -10,19 +10,8 @@ import SiteFooter from "@/components/SiteFooter";
 // ============================================================================
 
 import { colors, layout } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 const CONTENT_MAX_WIDTH = layout.maxWidth;
-const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 // ── Header is now shared (SiteHeader)
 
@@ -2815,18 +2804,13 @@ export default function BRIDGEAboutPage() {
 
   return (
     <div style={{ fontFamily: "DM Sans, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
-        rel="stylesheet"
-      />
+
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .header-icon { transition: all 0.25s ease; cursor: pointer; }
         .header-icon:hover { color: #1B4D3E !important; }
         .header-icon:hover svg { stroke: #1B4D3E !important; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
       `}</style>
 
       <SiteHeader />

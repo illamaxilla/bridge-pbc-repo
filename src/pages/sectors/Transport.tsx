@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import { colors, layout } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // ============================================================================
 // SECTOR DATA - Transportation & Logistics (Tone & Voice Aligned)
@@ -5689,17 +5690,9 @@ export default function TransportationLogisticsSectorPage() {
         boxSizing: "border-box",
       }}
     >
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap"
-        rel="stylesheet"
-      />
+
       <style>{`
         *, *::before, *::after { box-sizing: border-box; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; height: 0; }
         .cta-btn-arrow { transition: none; }
         .cta-btn-arrow svg { transition: none; }
         .cta-primary { transition: none; }

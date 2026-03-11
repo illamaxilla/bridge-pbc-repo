@@ -2397,7 +2397,7 @@ export default function BridgeReportsPage() {
         fontFamily: "'DM Sans',sans-serif",
       }}
     >
-      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.spin{animation:spin 1s linear infinite}`}</style>
+      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}`}</style>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} activeSector={s} setActiveSector={setS} />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
         {/* Top Nav */}
@@ -4711,7 +4711,7 @@ function MobileDashboard({ s, setS }) {
         fontFamily: "'DM Sans',sans-serif",
       }}
     >
-      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{display:none;}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.spin{animation:spin 1s linear infinite}@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}.drawer{animation:slideUp .25s ease}`}</style>
+      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{display:none;}.drawer{animation:slideUp .25s ease}`}</style>
 
       {/* ── Mobile Header — sector selector only ── */}
       <div

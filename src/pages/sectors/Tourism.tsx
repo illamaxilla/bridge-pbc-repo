@@ -3,20 +3,9 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 import { colors, layout } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
-const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 // ============================================================================
 // SECTOR DATA - Tourism & Hospitality
@@ -1794,7 +1783,6 @@ const AnimatedFlowArrow = ({ isActive, delay = 0 }) => (
       </>
     )}
     <style>{`
-      @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.1; } }
       @keyframes flowParticle { 0% { left: 0; opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { left: 50px; opacity: 0; } }
     `}</style>
   </div>
@@ -6430,11 +6418,6 @@ const FinalCTASection = () => {
 export default function TourismHospitalitySectorPage() {
   return (
     <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
-      <style>{`@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } .hide-scrollbar::-webkit-scrollbar{display:none} .hide-scrollbar{scrollbar-width:none;-ms-overflow-style:none}`}</style>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
-        rel="stylesheet"
-      />
 
       <SiteHeader />
       <HeroSection sector={sectorData} />

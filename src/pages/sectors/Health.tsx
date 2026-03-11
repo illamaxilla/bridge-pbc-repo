@@ -12,19 +12,7 @@ import SiteFooter from "@/components/SiteFooter";
 // ============================================================================
 
 import { colors, layout } from "@/lib/theme";
-
-const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // ============================================================================
 // SECTOR DATA
@@ -6227,11 +6215,7 @@ const FinalCTASection = () => {
 export default function HealthSystemsSectorPage() {
   return (
     <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
-        rel="stylesheet"
-      />
-      <style>{`@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } .hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }`}</style>
+
       <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection />

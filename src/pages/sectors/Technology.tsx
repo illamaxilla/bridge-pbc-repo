@@ -11,20 +11,9 @@ import SiteFooter from "@/components/SiteFooter";
 // ============================================================================
 
 import { colors, layout } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
-const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 // ============================================================================
 // SECTOR DATA - Technology & Innovation
@@ -1959,11 +1948,7 @@ const ValueChainSectionPremium = () => {
           </p>
         </div>
 
-        {/* Google Fonts for widget */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
+
 
         {/* Pipeline */}
         <div style={{ marginBottom: 24 }}>
@@ -6729,12 +6714,6 @@ const CTAFooterSeparator = () => {
 export default function TechnologyInnovationSectorPage() {
   return (
     <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
-      {/* Google Fonts */}
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
-        rel="stylesheet"
-      />
-      <style>{`@keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}60%{transform:translateY(-4px)}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
 
       <SiteHeader />
       <HeroSection sector={sectorData} />

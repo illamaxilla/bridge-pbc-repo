@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Blocks,
   Wallet,
@@ -10465,7 +10466,7 @@ function MobileApp() {
         overflowX: "hidden",
       }}
     >
-      <style>{`*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}::-webkit-scrollbar{display:none;}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}`}</style>
+      <style>{`*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}::-webkit-scrollbar{display:none;}`}</style>
 
       {/* Top header — sector selector only */}
       <div
@@ -11044,15 +11045,6 @@ function MobileApp() {
   );
 }
 
-function useIsMobile() {
-  const [mob, setMob] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
-  useEffect(() => {
-    const h = () => setMob(window.innerWidth < 768);
-    window.addEventListener("resize", h);
-    return () => window.removeEventListener("resize", h);
-  }, []);
-  return mob;
-}
 
 export default function BridgeAnalyticsPage() {
   const isMobile = useIsMobile();
@@ -11074,7 +11066,7 @@ export default function BridgeAnalyticsPage() {
         fontFamily: "'DM Sans',sans-serif",
       }}
     >
-      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.aspin{animation:spin 1s linear infinite}`}</style>
+      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}.aspin{animation:spin 1s linear infinite}`}</style>
       <Sidebar
         collapsed={collapsed}
         setCollapsed={setCollapsed}

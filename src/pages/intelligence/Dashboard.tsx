@@ -2251,7 +2251,6 @@ function MobileDashboard({ s, setS }) {
       }}
     >
       <style>{`
-      @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
       .mscroll::-webkit-scrollbar{display:none}
       .mscroll{-ms-overflow-style:none;scrollbar-width:none}
     `}</style>

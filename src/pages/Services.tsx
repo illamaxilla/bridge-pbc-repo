@@ -1530,11 +1530,7 @@ export default function ServicesSectorsPageV2() {
     <div
       style={{ fontFamily: "Helvetica, Arial, sans-serif", margin: 0, padding: 0, backgroundColor: colors.background }}
     >
-      {/* Google Fonts - DM Sans + Inter */}
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
-        rel="stylesheet"
-      />
+
       <style>{`
         .header-icon { transition: all 0.25s ease; cursor: pointer; }
         .header-icon:hover { color: #1B4D3E !important; }

@@ -11,21 +11,9 @@ import SiteFooter from "@/components/SiteFooter";
 // ============================================================================
 
 import { colors, layout } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
-const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
-
-// Responsive hook used by all section components
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 // ============================================================================
 // SECTOR DATA - Infrastructure & Basic Services
@@ -6850,23 +6838,10 @@ export default function InfrastructureSectorPage() {
   const isMobile = useIsMobile();
   return (
     <div style={{ fontFamily: "Helvetica, Arial, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
-      {/* Google Fonts */}
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800&display=swap"
-        rel="stylesheet"
-      />
+
 
       {/* Production CSS: Animations & Hover States */}
       <style>{`
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-          40% { transform: translateY(-8px); }
-          60% { transform: translateY(-4px); }
-        }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
         .cta-primary {
           transition: all 0.3s ease;
         }
