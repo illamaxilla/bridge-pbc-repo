@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 // ============================================================================

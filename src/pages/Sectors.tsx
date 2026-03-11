@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteHeader from "@/components/SiteHeader";
 
 // Slug → route map (handles creative→sports, transportation→transport)
 const sectorRoute = (slug: string): string => {

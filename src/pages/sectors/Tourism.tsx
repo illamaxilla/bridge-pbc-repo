@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/use-mobile";

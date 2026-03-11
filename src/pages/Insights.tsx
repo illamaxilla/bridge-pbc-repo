@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SiteHeaderShared from "@/components/SiteHeaderMinimal";
+import SiteHeaderShared from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import {
   ArrowUpRight,

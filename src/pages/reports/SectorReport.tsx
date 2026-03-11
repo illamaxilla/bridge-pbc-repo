@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/context/AuthContext";

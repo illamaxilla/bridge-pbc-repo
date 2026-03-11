@@ -1,4 +1,4 @@
-import SiteHeader from "./SiteHeaderMinimal";
+import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
 
 interface LayoutProps {
