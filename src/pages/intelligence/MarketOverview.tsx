@@ -6799,7 +6799,7 @@ function DesktopDashboard() {
         fontFamily: "'DM Sans',sans-serif",
       }}
     >
-      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.spin{animation:spin 1s linear infinite}`}</style>
+      <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}`}</style>
       <Sidebar
         collapsed={collapsed}
         setCollapsed={setCollapsed}

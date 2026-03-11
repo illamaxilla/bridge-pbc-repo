@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   TrendingUp,
   TrendingDown,
@@ -787,16 +788,6 @@ const HMAP_COLORS = [
 ];
 const SUB_COLORS = ["#2A5E42", "#3D8B62", "#4DAF82", "#1E5242", "#163A2A"];
 
-/* ─── MOBILE DETECTION ────────────────────────────────────────────────────── */
-function useIsMobile() {
-  const [m, setM] = useState(typeof window !== "undefined" && window.innerWidth < 768);
-  useEffect(() => {
-    const h = () => setM(window.innerWidth < 768);
-    window.addEventListener("resize", h);
-    return () => window.removeEventListener("resize", h);
-  }, []);
-  return m;
-}
 
 /* ─── MODULE CARD ─────────────────────────────────────────────────────────── */
 function ModuleCard({ icon, title, badge, badgeStyle, defaultOpen = false, noPad = false, children }) {
@@ -3019,7 +3010,6 @@ function MobileResourcesPage() {
       <style>{`
         *{box-sizing:border-box}
         ::-webkit-scrollbar{display:none}
-        @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
         .drawer{animation:slideUp 0.25s ease}
       `}</style>
 
@@ -4564,7 +4554,7 @@ function DesktopResourcesPage() {
         overflow: "hidden",
       }}
     >
-      <style>{`*{box-sizing:border-box} ::-webkit-scrollbar{display:none} @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}} .spin{animation:spin 1s linear infinite}`}</style>
+      <style>{`*{box-sizing:border-box} ::-webkit-scrollbar{display:none}`}</style>
 
       {/* Left nav sidebar */}
       <Sidebar

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeaderMinimal";
+import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 import { colors } from "@/lib/theme";
+import { useIsMobile } from "@/hooks/use-mobile";
 const C = {
   ...colors,
   accentBg: "#EBF5B0",
@@ -13,17 +14,6 @@ const C = {
   teal: colors.ctaGreen,
 };
 
-// ── Responsive hook ──────────────────────────────────────────────────
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 // ── Data ────────────────────────────────────────────────────────────
 

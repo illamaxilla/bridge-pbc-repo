@@ -2491,7 +2491,7 @@ function TopNav({ sector, syncing, setSyncing }) {
         boxShadow: "0 1px 0 rgba(0,0,0,0.04)",
       }}
     >
-      <style>{`@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}.sp{animation:spin 1s linear infinite}`}</style>
+      <style>{`.sp{animation:spin 1s linear infinite}`}</style>
 
       {/* LEFT — Title + Divider + Sector Pill */}
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
@@ -5767,8 +5767,6 @@ function MobileApp() {
       }}
     >
       <style>{`
-      @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-      @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
       .sp{animation:spin 1s linear infinite}
       .drawer{animation:slideUp 0.25s ease}
       .hs::-webkit-scrollbar{display:none}.hs{scrollbar-width:none}
