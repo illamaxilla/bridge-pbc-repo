@@ -12,18 +12,8 @@ const sectorRoute = (slug: string): string => {
 };
 import SiteFooter from "@/components/SiteFooter";
 
-const colors = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
-  accentText: "#5C7A1F",
-  background: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
-  ctaGreen: "#2E5A4D",
-};
-
-const MAX_W = "1200px";
+import { colors, layout } from "@/lib/theme";
+const MAX_W = layout.maxWidth;
 
 function useIsMobile() {
   const [m, setM] = useState(false);

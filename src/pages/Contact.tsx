@@ -6,21 +6,9 @@ import SiteFooter from "@/components/SiteFooter";
 // BRIDGE PBC — Contact Page (Integrated with Guided Widget)
 // ============================================================================
 
-const colors = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
-  accentText: "#5C7A1F",
-  accentLight: "#E8F5E0",
-  background: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
-  muted: "#8A9E98",
-  ctaGreen: "#2E5A4D",
-};
-
-const CONTENT_MAX_WIDTH = "1200px";
-const MOBILE_BREAKPOINT = 768;
+import { colors, layout } from "@/lib/theme";
+const CONTENT_MAX_WIDTH = layout.maxWidth;
+const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);

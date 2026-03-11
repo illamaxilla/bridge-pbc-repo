@@ -1,26 +1,20 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { BRIDGEAuthModal } from "@/components/AuthModal";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
-  const [authed, setAuthed] = useState(
-    () => sessionStorage.getItem("bridge_authed") === "1"
-  );
+  const { user, loading } = useAuth();
 
-  return (
-    <>
-      {children}
-      <BRIDGEAuthModal
-        isOpen={!authed}
-        onClose={() => navigate("/")}
-        defaultTab="signin"
-        onSignInSuccess={() => {
-          sessionStorage.setItem("bridge_authed", "1");
-          setAuthed(true);
-          navigate("/intelligence/dashboard");
-        }}
-      />
-    </>
-  );
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        Loading...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 }

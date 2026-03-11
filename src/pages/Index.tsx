@@ -7,17 +7,9 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 // ═══════════════════════════════════════════════
 // BRIDGE Design System
 // ═══════════════════════════════════════════════
-const colors = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
-  background: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
-};
-
-const CONTENT_MAX_WIDTH = "1200px";
-const MOBILE_BREAKPOINT = 768;
+import { colors, layout } from "@/lib/theme";
+const CONTENT_MAX_WIDTH = layout.maxWidth;
+const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);

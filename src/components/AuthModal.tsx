@@ -1,18 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
-
-// ============================================================
-// BRIDGE DESIGN TOKENS
-// ============================================================
-const colors = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
-  accentLight: "#E8F5E0",
-  background: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
-};
+import { colors } from "@/lib/theme";
 
 // ============================================================
 // MOBILE HOOK

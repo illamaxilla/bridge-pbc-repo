@@ -43,19 +43,16 @@ import {
 } from "lucide-react";
 
 // ─── Design System ────────────────────────────────────────
+import { colors, layout } from "@/lib/theme";
 const C = {
-  primary: "#1B4D3E",
-  teal: "#2E5A4D",
-  accent: "#B8D935",
+  ...colors,
+  teal: colors.ctaGreen,
   accentBg: "#EBF5B0",
-  bg: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
+  bg: colors.background,
   muted: "#6B7280",
   mutedDark: "#4B5563",
 };
-const MAX = "1200px";
+const MAX = layout.maxWidth;
 const PAD = "80px";
 
 // ─── Sector SVG Icons (matches footer icons exactly) ─────
@@ -3053,7 +3050,6 @@ export default function ResourcesPage() {
         onClose={() => setShowAuth(false)}
         defaultTab="signin"
         onSignInSuccess={() => {
-          sessionStorage.setItem("bridge_authed", "1");
           setShowAuth(false);
         }}
       />

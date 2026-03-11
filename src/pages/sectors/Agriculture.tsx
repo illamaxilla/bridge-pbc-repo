@@ -10,29 +10,10 @@ import SiteFooter from "@/components/SiteFooter";
 // Design System: Dark Green #1B4D3E, Lime #B8D935, Off-white #F3F5F2
 // ============================================================================
 
-const colors = {
-  primary: "#1B4D3E", // Dark green — headers, text, dark backgrounds
-  accent: "#B8D935", // Lime green — accent keywords, stats, progress bars
-  background: "#F3F5F2", // Off-white — alternating section backgrounds
-  white: "#FFFFFF", // White — alternating section backgrounds
-  dark: "#191919", // Near-black — body headings (hero sub-header)
-  line: "#DEDEDE", // Light grey — borders, dividers, card outlines
-  lightGreen: "#E8F5E0", // Pale green — hero pill background
-  accentLight: "#E8F5E0", // Same as lightGreen (alias)
-  accentText: "#5C7A1F", // Muted olive — accent-colored body text
-  warning: "#F59E0B", // Orange — hazard icons, recapture opportunity bars
-  warningBg: "#FEF3C7", // Light amber — warning badge backgrounds
-  warningText: "#92400E", // Dark amber — warning badge text
-  critical: "#EF4444", // Red — critical severity badges
-  criticalBg: "#FEE2E2", // Light red — critical badge backgrounds
-  ctaGreen: "#2E5A4D", // Medium green (CTA section)
-};
+import { colors, layout } from "@/lib/theme";
 
-// Global constant for content max-width
-const CONTENT_MAX_WIDTH = "1200px";
-
-// Mobile breakpoint and responsive hook
-const MOBILE_BREAKPOINT = 768;
+const CONTENT_MAX_WIDTH = layout.maxWidth;
+const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);

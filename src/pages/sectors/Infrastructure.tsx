@@ -10,26 +10,10 @@ import SiteFooter from "@/components/SiteFooter";
 // Design System: Dark Green #1B4D3E, Lime #B8D935, Off-white #F3F5F2
 // ============================================================================
 
-const colors = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
-  accentText: "#5C7A1F",
-  background: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
-  lightGreen: "#E8F5E0",
-  accentLight: "#E8F5E0",
-  warning: "#F59E0B",
-  warningBg: "#FEF3C7",
-  warningText: "#92400E",
-  critical: "#EF4444",
-  criticalBg: "#FEE2E2",
-  ctaGreen: "#2E5A4D",
-};
+import { colors, layout } from "@/lib/theme";
 
-const CONTENT_MAX_WIDTH = "1200px";
-const MOBILE_BREAKPOINT = 768;
+const CONTENT_MAX_WIDTH = layout.maxWidth;
+const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
 
 // Responsive hook used by all section components
 function useIsMobile() {

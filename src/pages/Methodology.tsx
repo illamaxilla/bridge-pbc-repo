@@ -51,14 +51,13 @@ import {
 } from "lucide-react";
 
 /* ─── DESIGN TOKENS ─────────────────────────────────────────────── */
+import { colors } from "@/lib/theme";
 const C = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
+  ...colors,
   accentDim: "rgba(184,217,53,0.15)",
-  bg: "#F3F5F2",
-  teal: "#2E5A4D",
+  bg: colors.background,
+  teal: colors.ctaGreen,
   mid: "#2A6B56",
-  white: "#FFFFFF",
   line: "#D4DDD8",
   textDark: "#0F2A22",
   textMid: "#4A6A5E",

@@ -12,21 +12,7 @@ import SiteFooter from "@/components/SiteFooter";
 // Reference: BRIDGE_Design_System_Handoff.md
 // ============================================================================
 
-const colors = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
-  accentText: "#5C7A1F",
-  accentLight: "#E8F5E0",
-  background: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
-  lightGreen: "#E8F5E0",
-  ctaGreen: "#2E5A4D",
-  warning: "#F59E0B",
-  warningBg: "#FEF3C7",
-  warningText: "#92400E",
-};
+import { colors, layout } from "@/lib/theme";
 
 // ============================================================================
 // SECTOR DATA - Transportation & Logistics (Tone & Voice Aligned)
@@ -929,8 +915,8 @@ const BridgeLogoWhite = () => (
 // ============================================================================
 // GLOBAL CONSTANTS
 // ============================================================================
-const CONTENT_MAX_WIDTH = "1200px";
-const MOBILE_BREAKPOINT = 768;
+const CONTENT_MAX_WIDTH = layout.maxWidth;
+const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
