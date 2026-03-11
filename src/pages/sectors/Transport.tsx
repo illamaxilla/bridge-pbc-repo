@@ -5998,7 +5998,10 @@ export default function TransportationLogisticsSectorPage() {
   return (
     <div
       style={{
-      backgroundColor: colors.white,
+        fontFamily: "Inter, sans-serif",
+        margin: 0,
+        padding: 0,
+        backgroundColor: colors.white,
         width: "100%",
         boxSizing: "border-box",
       }}
