@@ -6,6 +6,8 @@ import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useCounter } from "@/hooks/useCounter";
 
+const CONTENT_MAX_WIDTH = layout.maxWidth;
+
 // ============================================================================
 // SECTOR DATA - Transportation & Logistics (Tone & Voice Aligned)
 // ============================================================================
