@@ -1168,6 +1168,7 @@ const HeroSection = ({ sector }) => {
             {/* CTA Buttons */}
             <div style={{ display: "flex", gap: "12px", flexWrap: isMobile ? "wrap" : "nowrap" }}>
               <button
+                onClick={() => navigate("/login")}
                 className="cta-lime-swap"
                 style={{
                   backgroundColor: colors.accent,
@@ -1205,6 +1206,7 @@ const HeroSection = ({ sector }) => {
                 </span>
               </button>
               <button
+                onClick={() => navigate("/resources")}
                 className="cta-secondary"
                 style={{
                   backgroundColor: "transparent",
@@ -1212,7 +1214,7 @@ const HeroSection = ({ sector }) => {
                   border: `1.5px solid ${colors.line}`,
                   padding: isMobile ? "14px 20px" : "14px 28px",
                   borderRadius: "50px",
-                  fontSize: isMobile ? "14px" : "14px",
+                  fontSize: "14px",
                   fontWeight: "500",
                   fontFamily: "Inter, sans-serif",
                   cursor: "pointer",

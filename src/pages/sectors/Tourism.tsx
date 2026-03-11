@@ -1104,6 +1104,7 @@ const HeroSection = ({ sector }) => {
             {/* CTA Buttons */}
             <div style={{ display: "flex", gap: "12px", flexWrap: isMobile ? "wrap" : "nowrap" }}>
               <button
+                onClick={() => navigate("/login")}
                 style={{
                   backgroundColor: colors.accent,
                   color: colors.primary,
@@ -1138,6 +1139,7 @@ const HeroSection = ({ sector }) => {
                 </span>
               </button>
               <button
+                onClick={() => navigate("/resources")}
                 style={{
                   backgroundColor: "transparent",
                   color: colors.primary,
