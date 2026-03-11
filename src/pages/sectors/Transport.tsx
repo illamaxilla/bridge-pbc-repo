@@ -37,7 +37,6 @@ const sectorData = {
   category: "Enabling Infrastructure",
   categoryColor: "#1B4D3E",
   capitalRange: "$14-26M",
-
   ventures: 19,
   jobsImpact: "100K+ operators",
   gdpContribution: "~6%",
@@ -6979,6 +6978,7 @@ export default function TransportationLogisticsSectorPage() {
       />
       <style>{`
         *, *::before, *::after { box-sizing: border-box; }
+        html, body { overflow-x: hidden; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
