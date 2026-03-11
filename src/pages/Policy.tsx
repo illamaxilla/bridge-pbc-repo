@@ -3,17 +3,14 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 import SiteFooter from "@/components/SiteFooter";
 
+import { colors } from "@/lib/theme";
 const C = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
+  ...colors,
   accentBg: "#EBF5B0",
-  background: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
+  bg: colors.background,
   text: "#4A5A52",
   muted: "#7A8C83",
-  teal: "#2E5A4D",
+  teal: colors.ctaGreen,
 };
 
 // ── Responsive hook ──────────────────────────────────────────────────

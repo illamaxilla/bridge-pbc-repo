@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
+import { colors } from "@/lib/theme";
 
 // ============================================================================
 // BRIDGE SHARED FOOTER COMPONENT
 // Single source of truth for all footer links, routing, and layout.
 // ============================================================================
 
-const PRIMARY = "#1B4D3E";
-const ACCENT = "#B8D935";
-const WHITE = "#FFFFFF";
+const PRIMARY = colors.primary;
+const ACCENT = colors.accent;
+const WHITE = colors.white;
 
 // ─── Correct link map ───────────────────────────────────────────────────────
 const FOOTER_LINKS: Record<string, string> = {

@@ -3,18 +3,8 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeaderMinimal";
 
 // BRIDGE Design System - Consistent with Homepage
-const colors = {
-  primary: "#1B4D3E", // Dark Green
-  accent: "#B8D935", // Lime
-  background: "#F3F5F2", // Off-white
-  white: "#FFFFFF",
-  dark: "#191919", // Near black
-  line: "#DEDEDE",
-  lightGreen: "#3D4F4F", // Gray-green (image placeholder bg)
-};
-
-// Layout Constants
-const CONTENT_MAX_WIDTH = "1200px";
+import { colors, layout } from "@/lib/theme";
+const CONTENT_MAX_WIDTH = layout.maxWidth;
 
 // ═══════════════════════════════════════════════
 // SECTOR ICONS DATA FOR FOOTER WIDGET

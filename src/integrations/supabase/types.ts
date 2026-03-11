@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_requests: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          country: string
+          organization: string | null
+          role: string | null
+          primary_interest: string
+          connection: string
+          description: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          email: string
+          country: string
+          organization?: string | null
+          role?: string | null
+          primary_interest: string
+          connection: string
+          description?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          email?: string
+          country?: string
+          organization?: string | null
+          role?: string | null
+          primary_interest?: string
+          connection?: string
+          description?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string

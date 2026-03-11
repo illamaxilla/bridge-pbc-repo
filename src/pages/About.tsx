@@ -9,19 +9,9 @@ import SiteFooter from "@/components/SiteFooter";
 // investors, and government agencies. Every stat is about the ecosystem.
 // ============================================================================
 
-const colors = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
-  accentText: "#5C7A1F",
-  background: "#F3F5F2",
-  white: "#FFFFFF",
-  dark: "#191919",
-  line: "#DEDEDE",
-  ctaGreen: "#2E5A4D",
-};
-
-const CONTENT_MAX_WIDTH = "1200px";
-const MOBILE_BREAKPOINT = 768;
+import { colors, layout } from "@/lib/theme";
+const CONTENT_MAX_WIDTH = layout.maxWidth;
+const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);

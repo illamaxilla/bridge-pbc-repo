@@ -1,15 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Search, X } from "lucide-react";
-
-// ── Design tokens (match every page in the site) ──────────────────────────────
-const clr = {
-  primary: "#1B4D3E",
-  accent: "#B8D935",
-  dark: "#191919",
-  white: "#FFFFFF",
-  line: "#DEDEDE",
-};
+import { colors as clr } from "@/lib/theme";
 
 // ── Nav items with route mapping ──────────────────────────────────────────────
 const ALL_NAV = [

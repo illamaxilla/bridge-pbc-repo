@@ -271,8 +271,9 @@ export default function Intelligence() {
             ) : null;
           })()}
           <button
-            onClick={() => {
-              sessionStorage.removeItem("bridge_authed");
+            onClick={async () => {
+              const { supabase } = await import("@/integrations/supabase/client");
+              await supabase.auth.signOut();
               navigate("/");
             }}
             title="Sign out"
