@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
+import { useAuth } from "@/context/AuthContext";
 import {
   Box,
   CreditCard,
@@ -17,6 +18,7 @@ import {
   Settings,
   Truck,
   Lock,
+  Unlock,
   ChevronRight,
   ArrowUpRight,
   BookOpen,
@@ -536,6 +538,7 @@ const updates = [
     date: "March 2026",
     read: "8 min",
     free: true,
+    path: "/resources/policy-brief",
   },
   {
     id: 2,
@@ -544,6 +547,7 @@ const updates = [
     date: "Feb 2026",
     read: "12 min",
     free: false,
+    path: "/resources/sector-brief",
   },
   {
     id: 3,
@@ -552,6 +556,7 @@ const updates = [
     date: "Jan 2026",
     read: "20 min",
     free: false,
+    path: "/resources/annual-review",
   },
 ];
 
@@ -1689,7 +1694,7 @@ function LibraryTab({ mobile }) {
 }
 
 // ─── What's New Strip ─────────────────────────────────────
-function WhatsNew({ mobile }) {
+function WhatsNew({ mobile, onCardClick, isLoggedIn }) {
   const [hov, setHov] = React.useState(null);
   return (
     <div
@@ -1758,6 +1763,7 @@ function WhatsNew({ mobile }) {
                 key={u.id}
                 onMouseEnter={() => setHov(i)}
                 onMouseLeave={() => setHov(null)}
+                onClick={() => onCardClick(u)}
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -1855,17 +1861,21 @@ function WhatsNew({ mobile }) {
                           display: "flex",
                           alignItems: "center",
                           gap: "4px",
-                          background: "rgba(0,0,0,0.04)",
+                          background: isLoggedIn ? `${C.primary}10` : "rgba(0,0,0,0.04)",
                           padding: "4px 9px",
                           borderRadius: "5px",
                         }}
                       >
-                        <Lock size={10} color={C.muted} />
+                        {isLoggedIn ? (
+                          <Unlock size={10} color={C.primary} />
+                        ) : (
+                          <Lock size={10} color={C.muted} />
+                        )}
                         <span
                           style={{
                             fontSize: "10px",
                             fontWeight: "600",
-                            color: C.muted,
+                            color: isLoggedIn ? C.primary : C.muted,
                             fontFamily: "Inter,sans-serif",
                           }}
                         >
@@ -1896,10 +1906,21 @@ function WhatsNew({ mobile }) {
 
 export default function ResourcesPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [tab, setTab] = useState("intelligence");
   const [mobile, setMobile] = useState(false);
   const [filter, setFilter] = useState("All");
   const [showAuth, setShowAuth] = useState(false);
+
+  const handleCardClick = (update: typeof updates[number]) => {
+    if (update.free) {
+      navigate(update.path);
+    } else if (user) {
+      navigate(update.path);
+    } else {
+      navigate(`/login?redirect=${encodeURIComponent(update.path)}`);
+    }
+  };
   useEffect(() => {
     const c = () => setMobile(window.innerWidth < 900);
     c();
@@ -2020,7 +2041,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* ── WHAT'S NEW ── */}
-      <WhatsNew mobile={mobile} />
+      <WhatsNew mobile={mobile} onCardClick={handleCardClick} isLoggedIn={!!user} />
 
       {/* ── TAB CONTAINER ── */}
       <section style={{ background: C.bg, padding: mobile ? "24px 20px 48px" : `32px ${PAD} 64px` }}>

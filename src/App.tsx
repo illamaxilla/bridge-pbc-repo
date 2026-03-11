@@ -35,6 +35,11 @@ const CommunityHome = lazy(() => import("./pages/community/index"));
 // Reports
 const SectorReport = lazy(() => import("./pages/reports/SectorReport"));
 
+// Resource teasers
+const PolicyBriefTeaser = lazy(() => import("./pages/resources/PolicyBriefTeaser"));
+const SectorBriefTeaser = lazy(() => import("./pages/resources/SectorBriefTeaser"));
+const AnnualReviewTeaser = lazy(() => import("./pages/resources/AnnualReviewTeaser"));
+
 // Sectors
 const Energy = lazy(() => import("./pages/sectors/Energy"));
 const Technology = lazy(() => import("./pages/sectors/Technology"));
@@ -103,6 +108,9 @@ const App = () => (
               <Route path="/community/forum/members" element={<CommunityHome />} />
               <Route path="/community/members" element={<CommunityHome />} />
               <Route path="/community/resources" element={<CommunityHome />} />
+              <Route path="/resources/policy-brief" element={<PolicyBriefTeaser />} />
+              <Route path="/resources/sector-brief" element={<ProtectedRoute><SectorBriefTeaser /></ProtectedRoute>} />
+              <Route path="/resources/annual-review" element={<ProtectedRoute><AnnualReviewTeaser /></ProtectedRoute>} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/sectors" element={<Sectors />} />
