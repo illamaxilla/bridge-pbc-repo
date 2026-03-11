@@ -1015,6 +1015,7 @@ const BridgeLogoWhite = () => (
 
 const HeroSection = ({ sector }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   return (
     <section
       style={{
