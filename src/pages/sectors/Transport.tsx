@@ -3315,11 +3315,11 @@ const GovernanceSection = () => {
   const [showAllPolicies, setShowAllPolicies] = useState(false);
 
   const categories = [
-    { id: "all", label: "All" },
-    { id: "funding", label: "Direct Funding" },
-    { id: "tax", label: "Tax Incentives" },
-    { id: "infrastructure", label: "Infrastructure" },
-    { id: "partnerships", label: "Partnerships" },
+    { id: "all", label: "All", shortLabel: "All" },
+    { id: "funding", label: "Direct Funding", shortLabel: "Funding" },
+    { id: "tax", label: "Tax Incentives", shortLabel: "Tax" },
+    { id: "infrastructure", label: "Infrastructure", shortLabel: "Infra" },
+    { id: "partnerships", label: "Partnerships", shortLabel: "Partners" },
   ];
 
   const catBadge = {
@@ -3541,36 +3541,45 @@ const GovernanceSection = () => {
             work for ordinary Ghanaians.
           </p>
           <div
-            style={{
-              display: "flex",
-              gap: "8px",
-              justifyContent: isMobile ? "flex-start" : "center",
-              flexWrap: "nowrap",
-              overflowX: "auto",
-              WebkitOverflowScrolling: "touch",
-              ...(isMobile ? { margin: "0 -20px", padding: "0 20px" } : {}),
-            }}
+            style={
+              isMobile
+                ? {
+                    display: "inline-flex",
+                    gap: "4px",
+                    border: `1px solid ${colors.line}`,
+                    borderRadius: "50px",
+                    backgroundColor: colors.background,
+                    padding: "4px",
+                  }
+                : { display: "flex", gap: "8px", justifyContent: "center", flexWrap: "nowrap" }
+            }
           >
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => handleCategoryChange(cat.id)}
                 style={{
-                  padding: isMobile ? "6px 12px" : "6px 16px",
+                  padding: isMobile ? "5px 10px" : "6px 16px",
                   borderRadius: "50px",
                   cursor: "pointer",
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: isMobile ? "11px" : "12px",
                   fontWeight: activeCategory === cat.id ? "700" : "500",
                   backgroundColor: activeCategory === cat.id ? colors.accentLight : "transparent",
-                  border: activeCategory === cat.id ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
+                  border: isMobile
+                    ? activeCategory === cat.id
+                      ? `1.5px solid ${colors.accent}`
+                      : "none"
+                    : activeCategory === cat.id
+                      ? `1.5px solid ${colors.accent}`
+                      : `1px solid ${colors.line}`,
                   color: activeCategory === cat.id ? colors.primary : "#999",
                   transition: "all 0.2s ease",
                   whiteSpace: "nowrap",
                   flexShrink: 0,
                 }}
               >
-                {cat.label}
+                {isMobile ? cat.shortLabel : cat.label}
               </button>
             ))}
           </div>
@@ -5905,11 +5914,14 @@ const ImpactSection = () => {
         {/* Controls Bar */}
         <div
           style={{
-            display: "flex",
+            display: "inline-flex",
             alignItems: "center",
-            gap: isMobile ? "6px" : "16px",
+            gap: "4px",
             marginBottom: "24px",
-            flexWrap: "nowrap",
+            border: `1px solid ${colors.line}`,
+            borderRadius: "50px",
+            backgroundColor: "transparent",
+            padding: "4px",
             overflowX: "auto",
             WebkitOverflowScrolling: "touch",
           }}
@@ -5917,11 +5929,10 @@ const ImpactSection = () => {
           <div
             style={{
               display: "inline-flex",
-              border: `1px solid ${colors.line}`,
               borderRadius: "50px",
               backgroundColor: colors.background,
-              padding: "4px",
-              flexShrink: 0,
+              padding: "3px",
+              gap: "2px",
             }}
           >
             {["metrics", "stakeholder"].map((v) => (
@@ -5938,7 +5949,7 @@ const ImpactSection = () => {
                   fontWeight: view === v ? "700" : "500",
                   backgroundColor: view === v ? colors.white : "transparent",
                   color: view === v ? colors.primary : "#999",
-                  boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+                  boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
                   transition: "all 0.2s ease",
                   whiteSpace: "nowrap",
                 }}
@@ -5947,54 +5958,52 @@ const ImpactSection = () => {
               </button>
             ))}
           </div>
-          {!isMobile && <div style={{ width: "1px", height: "24px", backgroundColor: colors.line }} />}
-          <div style={{ display: "flex", gap: isMobile ? "6px" : "8px", flexShrink: 0 }}>
-            {view === "metrics"
-              ? metrics.map((m, i) => (
-                  <button
-                    key={m.category}
-                    onClick={() => switchCategory(i)}
-                    style={{
-                      padding: isMobile ? "5px 10px" : "6px 16px",
-                      borderRadius: "50px",
-                      cursor: "pointer",
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: isMobile ? "11px" : "12px",
-                      fontWeight: activeCategory === i ? "700" : "500",
-                      backgroundColor: activeCategory === i ? colors.accentLight : "transparent",
-                      border: activeCategory === i ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
-                      color: activeCategory === i ? colors.primary : "#999",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {m.category}
-                  </button>
-                ))
-              : stakeholders.map((s, i) => (
-                  <button
-                    key={s.title}
-                    onClick={() => setActiveStakeholder(i)}
-                    style={{
-                      padding: isMobile ? "5px 10px" : "6px 16px",
-                      borderRadius: "50px",
-                      cursor: "pointer",
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: isMobile ? "11px" : "12px",
-                      fontWeight: activeStakeholder === i ? "700" : "500",
-                      backgroundColor: activeStakeholder === i ? colors.accentLight : "transparent",
-                      border: activeStakeholder === i ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
-                      color: activeStakeholder === i ? colors.primary : "#999",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {s.title.split(" ")[1]}
-                  </button>
-                ))}
-          </div>
+          <div style={{ width: "1px", height: "20px", backgroundColor: colors.line, flexShrink: 0 }} />
+          {view === "metrics"
+            ? metrics.map((m, i) => (
+                <button
+                  key={m.category}
+                  onClick={() => switchCategory(i)}
+                  style={{
+                    padding: isMobile ? "5px 10px" : "6px 16px",
+                    borderRadius: "50px",
+                    cursor: "pointer",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: isMobile ? "11px" : "12px",
+                    fontWeight: activeCategory === i ? "700" : "500",
+                    backgroundColor: activeCategory === i ? colors.accentLight : "transparent",
+                    border: activeCategory === i ? `1.5px solid ${colors.accent}` : "none",
+                    color: activeCategory === i ? colors.primary : "#999",
+                    transition: "all 0.2s ease",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                  }}
+                >
+                  {m.category}
+                </button>
+              ))
+            : stakeholders.map((s, i) => (
+                <button
+                  key={s.title}
+                  onClick={() => setActiveStakeholder(i)}
+                  style={{
+                    padding: isMobile ? "5px 10px" : "6px 16px",
+                    borderRadius: "50px",
+                    cursor: "pointer",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: isMobile ? "11px" : "12px",
+                    fontWeight: activeStakeholder === i ? "700" : "500",
+                    backgroundColor: activeStakeholder === i ? colors.accentLight : "transparent",
+                    border: activeStakeholder === i ? `1.5px solid ${colors.accent}` : "none",
+                    color: activeStakeholder === i ? colors.primary : "#999",
+                    transition: "all 0.2s ease",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                  }}
+                >
+                  {s.title.split(" ")[1]}
+                </button>
+              ))}
         </div>
 
         {/* Content */}
