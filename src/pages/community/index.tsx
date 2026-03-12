@@ -1858,19 +1858,16 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                               )}
                             </div>
                             <div
+                              className="h-[9px] rounded-md overflow-hidden"
                               style={{
-                                height: 9,
-                                borderRadius: 6,
                                 background: C.bg,
-                                overflow: "hidden",
                                 border: `1px solid ${isVoted ? C.primary + "40" : C.line}`,
                               }}
                             >
                               <div
+                                className="h-full rounded-md"
                                 style={{
                                   width: voted !== null ? `${pct}%` : "0%",
-                                  height: "100%",
-                                  borderRadius: 6,
                                   background: isVoted
                                     ? `linear-gradient(90deg, ${C.primary}, #2E7D5E)`
                                     : isLeading
@@ -1883,12 +1880,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           </button>
                         );
                       })}
-                      <div
-                        style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}
-                      >
-                        <span style={{ fontSize: 12, color: C.muted }}>{total} votes</span>
+                      <div className="flex justify-between items-center mt-1">
+                        <span className="text-[12px]" style={{ color: C.muted }}>{total} votes</span>
                         {voted !== null && (
-                          <span style={{ fontSize: 11, fontWeight: 700, color: "#27AE60" }}>✓ Your vote recorded</span>
+                          <span className="text-[11px] font-bold text-[#27AE60]">✓ Your vote recorded</span>
                         )}
                       </div>
                     </div>
@@ -1896,7 +1891,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                 );
               };
               return (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                <div className="grid grid-cols-2 gap-4">
                   {POLLS.map((p) => (
                     <PollCard key={p.id} poll={p} />
                   ))}
@@ -1905,7 +1900,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
             })()}
 
           {forumView === "Groups" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div className="grid grid-cols-2 gap-4">
               {[
                 {
                   name: "Kejetia Market Digitization",

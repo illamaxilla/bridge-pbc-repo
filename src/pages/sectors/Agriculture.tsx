@@ -3746,7 +3746,7 @@ const RippleEffectSection = () => {
               </span>
             </div>
             {/* 5 sector icons */}
-            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+            <div className="flex justify-center gap-3">
               {ripplePathways.map((pathway, idx) => {
                 const isActive = activeNode === idx;
                 const Icon = rippleSectorIcons[idx];
@@ -3800,18 +3800,10 @@ const RippleEffectSection = () => {
           </div>
         ) : (
           /* Desktop: Horizontal row */
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              gap: "32px",
-              marginBottom: "48px",
-            }}
-          >
+          <div className="flex items-start justify-center gap-8 mb-12">
             {/* Hub icon */}
             <div
-              style={{ width: "120px", display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}
+              className="w-[120px] flex flex-col items-center shrink-0"
             >
               <div
                 style={{
@@ -3930,14 +3922,7 @@ const RippleEffectSection = () => {
               </div>
             ) : (
               <div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "20px",
-                  }}
-                >
+                <div className="flex justify-between items-center mb-5">
                   <span
                     style={{
                       fontFamily: "Inter, sans-serif",
@@ -3948,11 +3933,11 @@ const RippleEffectSection = () => {
                   >
                     Cross-Sector Integration Opportunities
                   </span>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                  <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                     Click a sector above to explore
                   </span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px" }}>
+                <div className="grid grid-cols-5 gap-3">
                   {ripplePathways.map((p, i) => (
                     <div
                       key={i}

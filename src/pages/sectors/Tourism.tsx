@@ -4450,117 +4450,71 @@ const FinalCTASection = () => {
   const isMobile = useIsMobile();
   return (
     <section
+      className="text-center"
       style={{
         backgroundColor: colors.primary,
         padding: isMobile ? "60px 20px" : "100px 80px",
-        textAlign: "center",
       }}
     >
-      <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+      <div className="max-w-[900px] mx-auto text-center">
         <span
+          className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
           style={{
-            display: "inline-block",
             backgroundColor: "rgba(184, 217, 53, 0.15)",
             color: colors.accent,
-            padding: "10px 20px",
-            borderRadius: "50px",
-            fontSize: "11px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            fontFamily: "Inter, sans-serif",
-            marginBottom: "24px",
           }}
         >
           Be Part of the Journey
         </span>
 
         <h2
+          className="font-[Inter,sans-serif] font-light leading-[1.2] mt-0 mb-6"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "32px" : "48px",
-            fontWeight: "300",
-            lineHeight: "1.2",
             color: colors.white,
-            margin: "0 0 24px 0",
           }}
         >
-          Let's <span style={{ fontWeight: "700" }}>Welcome</span> the World{" "}
-          <span style={{ fontWeight: "700" }}>to</span>{" "}
-          <span style={{ color: colors.accent, fontWeight: "700" }}>Ghana</span>
+          Let's <span className="font-bold">Welcome</span> the World{" "}
+          <span className="font-bold">to</span>{" "}
+          <span className="font-bold" style={{ color: colors.accent }}>Ghana</span>
         </h2>
 
         <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "16px" : "18px",
-            lineHeight: "1.7",
-            color: "rgba(255,255,255,0.6)",
-            margin: "0 0 40px 0",
-            maxWidth: "680px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+          className="font-[Inter,sans-serif] leading-[1.7] text-white/60 mt-0 mb-10 max-w-[680px] mx-auto"
+          style={{ fontSize: isMobile ? "16px" : "18px" }}
         >
           Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
           Ghana's tourism future.
         </p>
 
         <div
-          style={{
-            display: "flex",
-            gap: "16px",
-            justifyContent: "center",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: "center",
-          }}
+          className="flex gap-4 justify-center items-center"
+          style={{ flexDirection: isMobile ? "column" : "row" }}
         >
           <button
+            className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center gap-[10px] justify-center"
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
-              border: "none",
               padding: isMobile ? "16px 24px" : "16px 32px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              justifyContent: "center",
               ...(isMobile ? { width: "100%" } : {}),
             }}
           >
             Start a Conversation
             <span
-              style={{
-                width: "28px",
-                height: "28px",
-                backgroundColor: colors.primary,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: colors.white,
-              }}
+              className="w-7 h-7 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: colors.primary, color: colors.white }}
             >
               <IconArrowRight />
             </span>
           </button>
 
           <button
+            className="bg-transparent rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer"
             style={{
-              backgroundColor: "transparent",
               color: colors.white,
               border: "1px solid rgba(255,255,255,0.3)",
               padding: isMobile ? "16px 24px" : "16px 32px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
               ...(isMobile ? { width: "100%", textAlign: "center" } : {}),
             }}
           >

@@ -792,8 +792,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
                 <span
                   className="font-[Inter,sans-serif] text-[12px] font-bold py-[4px] px-[10px] rounded-[20px]" style={{
                   color: problem.severity === "High Priority" ? colors.primary : colors.accentText,
-                  backgroundColor:
-                      problem.severity === "High Priority" ? colors.accentLight : "rgba(184,217,53,0.12)"
+                  backgroundColor: problem.severity === "High Priority" ? colors.accentLight : "rgba(184,217,53,0.12)",
                 }}
                 >
                   {problem.severity}

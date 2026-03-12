@@ -3267,59 +3267,40 @@ const InvestmentCTASection = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
         <div
           style={{
             textAlign: isMobile ? "center" : "left",
             marginBottom: isMobile ? "32px" : "60px",
-            padding: isMobile ? "0" : 0,
           }}
         >
           <span
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Investment Thesis
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[900px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
               margin: isMobile ? "0 auto 16px" : "0 0 16px",
-              maxWidth: "900px",
             }}
           >
             Every Stakeholder Has a Role in Building{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Ghana's Talent</span>
+            <span className="font-semibold" style={{ color: colors.accent }}>Ghana's Talent</span>
           </h2>
 
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "16px",
-              color: "#666",
-              lineHeight: "1.65",
-              margin: isMobile ? "0 auto" : 0,
-              maxWidth: "680px",
-            }}
+            className="font-[Inter,sans-serif] text-[16px] text-[#666] leading-[1.65] max-w-[680px]"
+            style={{ margin: isMobile ? "0 auto" : 0 }}
           >
             Investment isn't only capital — it's expertise, partnerships, policy, and vision. See how your role
             contributes to 19 ventures across $16.5-33.5M in opportunity.

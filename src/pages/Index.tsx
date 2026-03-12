@@ -1863,12 +1863,10 @@ export default function BRIDGEHomePage() {
                           fill="none"
                           stroke={isOpen ? colors.white : colors.primary}
                           strokeWidth="1.5"
+                          className="shrink-0 transition-[transform,opacity,stroke] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
                           style={{
                             opacity: isOpen ? 1 : 0.3,
-                            flexShrink: 0,
                             transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                            transition:
-                              "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, stroke 0.3s ease",
                           }}
                         >
                           <path d="M6 9l6 6 6-6" />
