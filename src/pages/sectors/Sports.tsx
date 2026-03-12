@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { IconWheat, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconWarning, IconUsers, IconLightbulb, IconPlane, IconMusic, IconGraduationCap, IconCpu } from "@/components/icons/SectorIcons";
-import { ArrowRight, Globe, GraduationCap, Lock, Music, Palette, Search, Shield, Star, Trophy, Users } from "lucide-react";
+import { AlertTriangle, ArrowRight, Check, Globe, GraduationCap, Lock, Music, Palette, Search, Shield, Star, Trophy, Users } from "lucide-react";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Sports, Entertainment & Creative Industries
@@ -1487,19 +1487,7 @@ const ValueChainSection = () => {
                             border: "1px solid rgba(184,217,53,0.25)",
                           }}
                         >
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#D97706"
-                            strokeWidth="2"
-                            style={{ flexShrink: 0 }}
-                          >
-                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-                            <path d="M12 9v4" />
-                            <path d="M12 17h.01" />
-                          </svg>
+                          <AlertTriangle size={14} stroke="#D97706" strokeWidth={2} style={{ flexShrink: 0 }} />
                           <span style={{ fontSize: "13px", color: colors.primary, lineHeight: "1.4" }}>{p}</span>
                         </div>
                       ))}
@@ -2134,19 +2122,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flex: 1 }}>
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.accent}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ flexShrink: 0 }}
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Check size={18} stroke={colors.accent} strokeWidth={2.5} style={{ flexShrink: 0 }} />
               <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#888", flexShrink: 0 }}>
                 BRIDGE Solution:
               </span>

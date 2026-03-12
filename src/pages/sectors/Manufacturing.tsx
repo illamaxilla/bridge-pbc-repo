@@ -4434,23 +4434,7 @@ const CrossSectorSection = () => {
       impact:
         "Enables domestic value addition to agricultural commodities, keeping processing revenue in Ghana and creating industrial jobs.",
       pathLabel: "Manufacturing → Agro-Processing → Agricultural Markets",
-      icon: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M7 20h10" />
-          <path d="M10 20c5.5-2.5.8-6.4 3-10" />
-          <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z" />
-          <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z" />
-        </svg>
-      ),
+      icon: <Sprout size={24} strokeWidth={1.5} />,
     },
     {
       name: "Financial Inclusion",
@@ -4466,22 +4450,7 @@ const CrossSectorSection = () => {
       impact:
         "Creates specialized lending products that understand manufacturing cash flows, enabling SME manufacturers to access growth capital.",
       pathLabel: "Manufacturing → Supply Chain Finance → Financial Access",
-      icon: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-          <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-          <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
-        </svg>
-      ),
+      icon: <Wallet size={24} strokeWidth={1.5} />,
     },
     {
       name: "Education & Skills",
@@ -4497,22 +4466,7 @@ const CrossSectorSection = () => {
       impact:
         "Builds a workforce pipeline where training directly matches industry demand, reducing skills mismatch and youth unemployment.",
       pathLabel: "Manufacturing → Skills Training → Workforce Pipeline",
-      icon: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
-          <path d="M22 10v6" />
-          <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
-        </svg>
-      ),
+      icon: <GraduationCap size={24} strokeWidth={1.5} />,
     },
     {
       name: "Energy & Renewables",
@@ -4528,23 +4482,7 @@ const CrossSectorSection = () => {
       impact:
         "Ensures stable, affordable power supply that makes manufacturing operations viable and cost-competitive at industrial scale.",
       pathLabel: "Manufacturing → Industrial Energy → Reliable Power",
-      icon: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2" />
-          <path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1" />
-          <path d="m11 7-3 5h4l-3 5" />
-          <line x1="22" x2="22" y1="11" y2="13" />
-        </svg>
-      ),
+      icon: <BatteryCharging size={24} strokeWidth={1.5} />,
     },
     {
       name: "Infrastructure",
@@ -4560,21 +4498,7 @@ const CrossSectorSection = () => {
       impact:
         "Provides the physical foundation — roads, utilities, industrial zones — that manufacturing requires to operate at competitive scale.",
       pathLabel: "Manufacturing → Industrial Estates → Market Access",
-      icon: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect width="7" height="7" x="14" y="3" rx="1" />
-          <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />
-        </svg>
-      ),
+      icon: <Blocks size={24} strokeWidth={1.5} />,
     },
   ];
 
@@ -4650,19 +4574,7 @@ const CrossSectorSection = () => {
                     boxShadow: "0 0 24px rgba(184, 217, 53, 0.3)",
                   }}
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-                    <path d="M17 18h1M12 18h1M7 18h1" />
-                  </svg>
+                  <Factory size={24} strokeWidth={1.5} />
                 </div>
                 <span
                   style={{
@@ -4759,19 +4671,7 @@ const CrossSectorSection = () => {
                   marginBottom: "10px",
                 }}
               >
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-                  <path d="M17 18h1M12 18h1M7 18h1" />
-                </svg>
+                <Factory size={32} strokeWidth={1.5} />
               </div>
             </div>
             {pathways.map((p, i) => {
