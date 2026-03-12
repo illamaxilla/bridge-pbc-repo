@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { cn } from "@/lib/utils";
 
 // Slug → route map (handles creative→sports, transportation→transport)
 const sectorRoute = (slug: string): string => {
@@ -502,7 +503,7 @@ const CSChevron = ({ open }) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={`transition-transform duration-300 ease-in-out ${open ? "rotate-180" : "rotate-0"}`}
+    className={cn("transition-transform duration-300 ease-in-out", open ? "rotate-180" : "rotate-0")}
   >
     <polyline points="6 9 12 15 18 9" />
   </svg>
@@ -546,7 +547,7 @@ const CrossSector = () => {
   ];
 
   return (
-    <section className={`bg-[#1B4D3E] ${mb ? "px-5 pt-[60px] pb-20" : "px-20 py-[100px]"}`}>
+    <section className={cn("bg-[#1B4D3E]", mb ? "px-5 pt-[60px] pb-20" : "px-20 py-[100px]")}>
       <style>{`
         .cs-scroll::-webkit-scrollbar { display: none; }
         .cs-scroll { -ms-overflow-style: none; scrollbar-width: none; }
@@ -556,7 +557,10 @@ const CrossSector = () => {
         <div className="text-center mb-12">
           <Pill dark>Cross-Sector Integration</Pill>
           <h2
-            className={`font-['Inter',sans-serif] font-light text-white tracking-[-0.5px] leading-[1.15] mb-4 mt-0 ${mb ? "text-[32px]" : "text-[42px]"}`}
+            className={cn(
+              "font-['Inter',sans-serif] font-light text-white tracking-[-0.5px] leading-[1.15] mb-4 mt-0",
+              mb ? "text-[32px]" : "text-[42px]"
+            )}
           >
             {"Ready to Explore the "}
             <span className="font-bold text-[#B8D935]">Full Analysis?</span>
@@ -570,27 +574,42 @@ const CrossSector = () => {
         </div>
 
         {/* Hub Display */}
-        <div className={`text-center ${mb ? "mb-5" : "mb-7"}`}>
+        <div className={cn("text-center", mb ? "mb-5" : "mb-7")}>
           <div className="inline-flex items-center justify-center relative">
             <div
-              className={`absolute rounded-full bg-[radial-gradient(circle,rgba(184,217,53,0.12)_0%,transparent_70%)] ${mb ? "w-[100px] h-[100px]" : "w-[140px] h-[140px]"}`}
+              className={cn(
+                "absolute rounded-full bg-[radial-gradient(circle,rgba(184,217,53,0.12)_0%,transparent_70%)]",
+                mb ? "w-[100px] h-[100px]" : "w-[140px] h-[140px]"
+              )}
             />
             <div
-              className={`absolute rounded-full bg-[radial-gradient(circle,rgba(184,217,53,0.18)_0%,transparent_70%)] ${mb ? "w-20 h-20" : "w-[110px] h-[110px]"}`}
+              className={cn(
+                "absolute rounded-full bg-[radial-gradient(circle,rgba(184,217,53,0.18)_0%,transparent_70%)]",
+                mb ? "w-20 h-20" : "w-[110px] h-[110px]"
+              )}
             />
             <div
-              className={`rounded-full bg-[#1B4D3E] border-[3px] border-[#B8D935] flex items-center justify-center relative z-[1] shadow-[0_0_24px_rgba(184,217,53,0.2)] ${mb ? "w-16 h-16" : "w-20 h-20"}`}
+              className={cn(
+                "rounded-full bg-[#1B4D3E] border-[3px] border-[#B8D935] flex items-center justify-center relative z-[1] shadow-[0_0_24px_rgba(184,217,53,0.2)]",
+                mb ? "w-16 h-16" : "w-20 h-20"
+              )}
             >
               {icons[sel.key](colors.accent, mb ? 24 : 32)}
             </div>
           </div>
           <p
-            className={`font-bold text-white font-['Inter',sans-serif] mt-4 mb-1 ${mb ? "text-base" : "text-xl"}`}
+            className={cn(
+              "font-bold text-white font-['Inter',sans-serif] mt-4 mb-1",
+              mb ? "text-base" : "text-xl"
+            )}
           >
             {sel.short}
           </p>
           <p
-            className={`text-white/40 font-['Inter',sans-serif] m-0 ${mb ? "text-[11px] leading-[1.8]" : "text-[13px] leading-none"}`}
+            className={cn(
+              "text-white/40 font-['Inter',sans-serif] m-0",
+              mb ? "text-[11px] leading-[1.8]" : "text-[13px] leading-none"
+            )}
           >
             Integration Score: <span className="text-[#B8D935] font-bold">{totalScore}</span>
             {mb ? <br /> : <span className="mx-3 text-white/[0.15]">|</span>}
@@ -603,7 +622,12 @@ const CrossSector = () => {
 
         {/* Icon Row */}
         <div
-          className={`cs-scroll flex ${mb ? "gap-2 justify-start flex-nowrap overflow-x-auto pb-1" : "gap-3 justify-center flex-wrap overflow-visible pb-0"} mb-2`}
+          className={cn(
+            "cs-scroll flex mb-2",
+            mb
+              ? "gap-2 justify-start flex-nowrap overflow-x-auto pb-1"
+              : "gap-3 justify-center flex-wrap overflow-visible pb-0"
+          )}
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {sectorList.map((s) => {
@@ -625,7 +649,15 @@ const CrossSector = () => {
                   onMouseLeave={() => {
                     if (!mb) setHovered(null);
                   }}
-                  className={`flex items-center justify-center transition-all duration-[250ms] ease-in-out ${mb ? "rounded-xl" : "rounded-2xl"} ${isHub ? "w-12 h-12 cursor-default opacity-40" : mb ? "w-11 h-11 cursor-pointer opacity-100" : "w-14 h-14 cursor-pointer opacity-100"}`}
+                  className={cn(
+                    "flex items-center justify-center transition-all duration-[250ms] ease-in-out",
+                    mb ? "rounded-xl" : "rounded-2xl",
+                    isHub
+                      ? "w-12 h-12 cursor-default opacity-40"
+                      : mb
+                        ? "w-11 h-11 cursor-pointer opacity-100"
+                        : "w-14 h-14 cursor-pointer opacity-100"
+                  )}
                   style={{
                     border: isHub
                       ? "2px solid rgba(184,217,53,0.3)"
@@ -685,20 +717,25 @@ const CrossSector = () => {
 
         {/* Detail Panel — always visible */}
         <div
-          className={`items-stretch ${mb ? "flex flex-col gap-4" : "grid gap-6"}`}
-          style={!mb ? { gridTemplateColumns: "320px 1fr" } : undefined}
+          className={cn(
+            "items-stretch",
+            mb ? "flex flex-col gap-4" : "grid gap-6 grid-cols-[320px_1fr]"
+          )}
         >
           {/* LEFT: Detail Panel */}
-          <div className={`flex flex-col ${mb ? "mb-2" : "mb-0"}`}>
+          <div className={cn("flex flex-col", mb ? "mb-2" : "mb-0")}>
             {displayTarget !== null ? (
               (() => {
                 const t = sectorList[displayTarget];
-                const cn = getConn(selected, displayTarget);
+                const connInfo = getConn(selected, displayTarget);
                 const st = csMatrix[selected][displayTarget];
                 const isL = locked !== null && hovered === null;
                 return (
                   <div
-                    className={`bg-white/5 transition-all duration-[250ms] ease-in-out flex flex-col ${mb ? "rounded-[14px] p-5 flex-none" : "rounded-2xl p-6 flex-1"}`}
+                    className={cn(
+                      "bg-white/5 transition-all duration-[250ms] ease-in-out flex flex-col",
+                      mb ? "rounded-[14px] p-5 flex-none" : "rounded-2xl p-6 flex-1"
+                    )}
                     style={{
                       border: `1px solid ${isL ? "rgba(184,217,53,0.3)" : "rgba(184,217,53,0.2)"}`,
                     }}
@@ -734,11 +771,11 @@ const CrossSector = () => {
                       </span>
                     </div>
                     <p className="text-sm text-white/50 leading-[1.6] font-['Inter',sans-serif] flex-1 mt-0 mb-4 mx-0">
-                      {cn.mech}
+                      {connInfo.mech}
                     </p>
                     <div className="bg-[rgba(184,217,53,0.06)] rounded-xl p-4 border border-[rgba(184,217,53,0.12)]">
                       <p className="text-[22px] font-bold text-[#B8D935] leading-[1.2] font-['Inter',sans-serif] mt-0 mb-1 mx-0">
-                        {cn.met}
+                        {connInfo.met}
                       </p>
                       <p className="text-[11px] text-white/30 uppercase tracking-[0.5px] font-semibold font-['Inter',sans-serif] m-0">
                         Impact Metric
@@ -766,10 +803,18 @@ const CrossSector = () => {
               })()
             ) : (
               <div
-                className={`bg-white/[0.03] border border-dashed border-white/10 text-center flex items-center justify-center ${mb ? "rounded-[14px] px-5 py-6 flex-none flex-row gap-4" : "rounded-2xl px-6 py-10 flex-1 flex-col gap-0"}`}
+                className={cn(
+                  "bg-white/[0.03] border border-dashed border-white/10 text-center flex items-center justify-center",
+                  mb
+                    ? "rounded-[14px] px-5 py-6 flex-none flex-row gap-4"
+                    : "rounded-2xl px-6 py-10 flex-1 flex-col gap-0"
+                )}
               >
                 <div
-                  className={`bg-white/5 inline-flex items-center justify-center shrink-0 ${mb ? "w-10 h-10 rounded-xl mb-0" : "w-12 h-12 rounded-[14px] mb-4"}`}
+                  className={cn(
+                    "bg-white/5 inline-flex items-center justify-center shrink-0",
+                    mb ? "w-10 h-10 rounded-xl mb-0" : "w-12 h-12 rounded-[14px] mb-4"
+                  )}
                 >
                   <svg
                     width="20"
@@ -787,7 +832,10 @@ const CrossSector = () => {
                 </div>
                 <div className={mb ? "text-left" : "text-center"}>
                   <p
-                    className={`font-semibold text-white/30 font-['Inter',sans-serif] mb-1.5 mt-0 mx-0 ${mb ? "text-[13px]" : "text-sm"}`}
+                    className={cn(
+                      "font-semibold text-white/30 font-['Inter',sans-serif] mb-1.5 mt-0 mx-0",
+                      mb ? "text-[13px]" : "text-sm"
+                    )}
                   >
                     Explore Connections
                   </p>
@@ -862,10 +910,12 @@ const CrossSector = () => {
                 return (
                   <div
                     key={ring.key}
-                    className="rounded-2xl overflow-hidden transition-all duration-300 ease-in-out"
+                    className={cn(
+                      "rounded-2xl overflow-hidden transition-all duration-300 ease-in-out",
+                      isOpen ? "bg-white/[0.03]" : "bg-transparent"
+                    )}
                     style={{
                       border: `1px solid ${isOpen ? strBorder[ring.level] : "rgba(255,255,255,0.08)"}`,
-                      backgroundColor: isOpen ? "rgba(255,255,255,0.03)" : "transparent",
                     }}
                   >
                     <button
@@ -877,30 +927,40 @@ const CrossSector = () => {
                         });
                         setScrollPage(0);
                       }}
-                      className={`flex items-center gap-2.5 w-full bg-none border-none cursor-pointer m-0 ${mb ? "px-4 py-[18px]" : "px-5 py-4"}`}
+                      className={cn(
+                        "flex items-center gap-2.5 w-full bg-none border-none cursor-pointer m-0",
+                        mb ? "px-4 py-[18px]" : "px-5 py-4"
+                      )}
                     >
                       <span
                         className="w-2 h-2 rounded-full bg-[#B8D935]"
                         style={{ opacity: strDot[ring.level] }}
                       />
                       <span
-                        className={`text-xs font-bold uppercase tracking-[1.5px] flex-1 text-left transition-colors duration-200 ease-in-out font-['Inter',sans-serif] ${isOpen ? "text-white/60" : "text-white/[0.35]"}`}
+                        className={cn(
+                          "text-xs font-bold uppercase tracking-[1.5px] flex-1 text-left transition-colors duration-200 ease-in-out font-['Inter',sans-serif]",
+                          isOpen ? "text-white/60" : "text-white/[0.35]"
+                        )}
                       >
                         {ring.label} Connections ({ring.items.length})
                       </span>
                       <CSChevron open={isOpen} />
                     </button>
                     <div
-                      className="overflow-hidden"
+                      className="overflow-hidden transition-[max-height,opacity] duration-[450ms,300ms] ease-[cubic-bezier(0.4,0,0.2,1),ease]"
                       style={{
                         maxHeight: isOpen ? "1000px" : "0",
                         opacity: isOpen ? 1 : 0,
-                        transition: "max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease",
                         padding: isOpen ? (mb ? "0 12px 16px" : "0 20px 20px") : mb ? "0 12px" : "0 20px",
                       }}
                     >
                       <div
-                        className="cs-scroll flex gap-3"
+                        className={cn(
+                          "cs-scroll flex gap-3 snap-x snap-mandatory",
+                          (mb || ring.items.length > 3)
+                            ? "overflow-x-auto pb-2"
+                            : "overflow-x-hidden pb-0"
+                        )}
                         ref={isOpen ? scrollRef : null}
                         onScroll={(e) => {
                           const el = e.target as HTMLElement;
@@ -908,15 +968,10 @@ const CrossSector = () => {
                           const cw = el.scrollWidth / ring.items.length;
                           setScrollPage(Math.round(el.scrollLeft / (cw * cardsVis)));
                         }}
-                        style={{
-                          overflowX: mb || ring.items.length > 3 ? "auto" : "hidden",
-                          scrollSnapType: "x mandatory",
-                          paddingBottom: mb || ring.items.length > 3 ? "8px" : "0",
-                          WebkitOverflowScrolling: "touch",
-                        }}
+                        style={{ WebkitOverflowScrolling: "touch" }}
                       >
                         {ring.items.map((s, i) => {
-                          const cn = getConn(selected, s.id);
+                          const connInfo = getConn(selected, s.id);
                           const isAc = s.id === displayTarget;
                           return (
                             <div
@@ -928,7 +983,10 @@ const CrossSector = () => {
                               onMouseLeave={() => {
                                 if (!mb) setHovered(null);
                               }}
-                              className={`min-w-0 flex flex-col cursor-pointer snap-start ${mb ? "h-[180px] p-4 rounded-xl" : "h-[200px] p-5 rounded-[14px]"}`}
+                              className={cn(
+                                "min-w-0 flex flex-col cursor-pointer snap-start",
+                                mb ? "h-[180px] p-4 rounded-xl" : "h-[200px] p-5 rounded-[14px]"
+                              )}
                               style={{
                                 flex: mb ? "0 0 85%" : ring.items.length <= 3 ? "1 1 0" : "0 0 calc((100% - 24px) / 3)",
                                 backgroundColor: isAc ? "rgba(184,217,53,0.08)" : "rgba(255,255,255,0.05)",
@@ -953,10 +1011,10 @@ const CrossSector = () => {
                                 </p>
                               </div>
                               <p className="text-[13px] text-white/40 leading-normal flex-1 overflow-hidden font-['Inter',sans-serif] m-0">
-                                {cn.mech}
+                                {connInfo.mech}
                               </p>
                               <p className="text-sm font-bold text-[#B8D935] font-['Inter',sans-serif] mt-3 mb-0 mx-0">
-                                {cn.met}
+                                {connInfo.met}
                               </p>
                             </div>
                           );
@@ -1006,7 +1064,10 @@ const Arr = ({ s = 12, c = "currentColor" }) => (
 
 const Pill = ({ children, dark }) => (
   <div
-    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-[50px] text-[11px] font-bold tracking-[2px] font-['Inter',sans-serif] uppercase mb-6 ${dark ? "border border-white/25 text-white" : "border border-[#DEDEDE] text-[#1B4D3E]"}`}
+    className={cn(
+      "inline-flex items-center gap-2 px-5 py-2.5 rounded-[50px] text-[11px] font-bold tracking-[2px] font-['Inter',sans-serif] uppercase mb-6",
+      dark ? "border border-white/25 text-white" : "border border-[#DEDEDE] text-[#1B4D3E]"
+    )}
   >
     <span className="w-1.5 h-1.5 rounded-full bg-[#B8D935] inline-block" />
     {children}
@@ -1026,43 +1087,57 @@ const HeroSection = () => {
     { v: "$192B", l: "Mobile Money Volume (2024)" },
   ];
   return (
-    <section className={`bg-white ${mb ? "px-5 pt-[60px] pb-12" : "px-20 pt-20 pb-[60px]"}`}>
+    <section className={cn("bg-white", mb ? "px-5 pt-[60px] pb-12" : "px-20 pt-20 pb-[60px]")}>
       <div className="max-w-[1200px] mx-auto">
         <Pill dark={false}>Analysis</Pill>
         <h1
-          className={`font-['Inter',sans-serif] font-light leading-[1.1] text-[#1B4D3E] tracking-[-1px] max-w-[800px] mb-6 mt-0 ${mb ? "text-4xl" : "text-[56px]"}`}
+          className={cn(
+            "font-['Inter',sans-serif] font-light leading-[1.1] text-[#1B4D3E] tracking-[-1px] max-w-[800px] mb-6 mt-0",
+            mb ? "text-4xl" : "text-[56px]"
+          )}
         >
           <span className="font-bold">Twelve Integrated Sectors</span>
           <br />
           One Unified <span className="font-bold text-[#B8D935]">Approach</span>
         </h1>
         <p
-          className={`leading-[1.7] text-[#666] font-['Inter',sans-serif] max-w-[600px] mb-12 mt-0 ${mb ? "text-[15px]" : "text-[17px]"}`}
+          className={cn(
+            "leading-[1.7] text-[#666] font-['Inter',sans-serif] max-w-[600px] mb-12 mt-0",
+            mb ? "text-[15px]" : "text-[17px]"
+          )}
         >
           {
             "A trader\u2019s success depends on credit, market infrastructure, cold storage, and supply chains working together. BRIDGE aligns the systems, institutions, and resources that make that possible"
           }
         </p>
         <div
-          className={`grid border-t border-b border-[#DEDEDE] py-7 ${mb ? "grid-cols-2 gap-y-6 gap-x-0" : "grid-cols-4 gap-0"}`}
+          className={cn(
+            "grid border-t border-b border-[#DEDEDE] py-7",
+            mb ? "grid-cols-2 gap-y-6 gap-x-0" : "grid-cols-4 gap-0"
+          )}
         >
           {st.map((s, i) => (
             <div
               key={i}
-              className="text-center"
-              style={{
-                borderRight: !mb && i < 3 ? `1px solid ${colors.line}` : "none",
-                borderBottom: mb && i < 2 ? `1px solid ${colors.line}` : "none",
-                paddingBottom: mb && i < 2 ? "24px" : "0",
-              }}
+              className={cn(
+                "text-center",
+                !mb && i < 3 && "border-r border-[#DEDEDE]",
+                mb && i < 2 && "border-b border-[#DEDEDE] pb-6"
+              )}
             >
               <p
-                className={`font-bold text-[#1B4D3E] font-['Inter',sans-serif] mb-1 mt-0 ${mb ? "text-[26px]" : "text-4xl"}`}
+                className={cn(
+                  "font-bold text-[#1B4D3E] font-['Inter',sans-serif] mb-1 mt-0",
+                  mb ? "text-[26px]" : "text-4xl"
+                )}
               >
                 {s.v}
               </p>
               <p
-                className={`font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[1px] m-0 ${mb ? "text-[10px]" : "text-xs"}`}
+                className={cn(
+                  "font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[1px] m-0",
+                  mb ? "text-[10px]" : "text-xs"
+                )}
               >
                 {s.l}
               </p>
@@ -1083,20 +1158,24 @@ const SectorCard = ({ s, hov, onE, onL }) => {
   const href = sectorRoute(s.slug);
   return (
     <div
-      className={`value-card flex flex-col cursor-pointer h-full box-border ${mb ? "rounded-2xl p-5 gap-3" : "rounded-[20px] p-7 gap-4"}`}
+      className={cn(
+        "value-card flex flex-col cursor-pointer h-full box-border bg-white",
+        mb ? "rounded-2xl p-5 gap-3" : "rounded-[20px] p-7 gap-4",
+        hov
+          ? "border border-[#B8D935] shadow-[0_16px_40px_rgba(27,77,62,0.1)]"
+          : "border border-[#DEDEDE] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+      )}
       onMouseEnter={onE}
       onMouseLeave={onL}
       onClick={() => navigate(href)}
-      style={{
-        backgroundColor: colors.white,
-        border: `1px solid ${hov ? colors.accent : colors.line}`,
-        boxShadow: hov ? "0 16px 40px rgba(27,77,62,0.1)" : "0 2px 8px rgba(0,0,0,0.04)",
-      }}
     >
       <div className="flex justify-between items-start">
         <div
-          className={`flex items-center justify-center transition-colors duration-300 ease-in-out ${mb ? "w-10 h-10 rounded-xl" : "w-12 h-12 rounded-[14px]"}`}
-          style={{ backgroundColor: hov ? colors.primary : colors.background }}
+          className={cn(
+            "flex items-center justify-center transition-colors duration-300 ease-in-out",
+            mb ? "w-10 h-10 rounded-xl" : "w-12 h-12 rounded-[14px]",
+            hov ? "bg-[#1B4D3E]" : "bg-[#F3F5F2]"
+          )}
         >
           {Icon(hov ? colors.accent : colors.primary, mb ? 18 : 20)}
         </div>
@@ -1105,21 +1184,33 @@ const SectorCard = ({ s, hov, onE, onL }) => {
         </span>
       </div>
       <h3
-        className={`font-['Inter',sans-serif] font-bold text-[#1B4D3E] leading-[1.3] m-0 ${mb ? "text-[15px]" : "text-base"}`}
+        className={cn(
+          "font-['Inter',sans-serif] font-bold text-[#1B4D3E] leading-[1.3] m-0",
+          mb ? "text-[15px]" : "text-base"
+        )}
       >
         {s.name}
       </h3>
       <p
-        className={`font-['Inter',sans-serif] text-[#666] leading-[1.6] flex-1 m-0 ${mb ? "text-[13px]" : "text-[13.5px]"}`}
+        className={cn(
+          "font-['Inter',sans-serif] text-[#666] leading-[1.6] flex-1 m-0",
+          mb ? "text-[13px]" : "text-[13.5px]"
+        )}
       >
         {s.problem}
       </p>
       <div
-        className={`bg-[#F3F5F2] flex justify-between items-center ${mb ? "rounded-[10px] px-3.5 py-2.5" : "rounded-xl px-4 py-3"}`}
+        className={cn(
+          "bg-[#F3F5F2] flex justify-between items-center",
+          mb ? "rounded-[10px] px-3.5 py-2.5" : "rounded-xl px-4 py-3"
+        )}
       >
         <div>
           <p
-            className={`font-bold text-[#1B4D3E] font-['Inter',sans-serif] mb-0.5 mt-0 ${mb ? "text-lg" : "text-xl"}`}
+            className={cn(
+              "font-bold text-[#1B4D3E] font-['Inter',sans-serif] mb-0.5 mt-0",
+              mb ? "text-lg" : "text-xl"
+            )}
           >
             {s.metric}
           </p>
@@ -1137,18 +1228,22 @@ const SectorCard = ({ s, hov, onE, onL }) => {
         </div>
       </div>
       <div
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[50px] self-start"
-        style={{
-          backgroundColor: hov ? "rgba(184,217,53,0.12)" : "rgba(27,77,62,0.04)",
-        }}
+        className={cn(
+          "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[50px] self-start",
+          hov ? "bg-[rgba(184,217,53,0.12)]" : "bg-[rgba(27,77,62,0.04)]"
+        )}
       >
         <span
-          className="w-[5px] h-[5px] rounded-full"
-          style={{ backgroundColor: hov ? colors.accent : colors.primary }}
+          className={cn(
+            "w-[5px] h-[5px] rounded-full",
+            hov ? "bg-[#B8D935]" : "bg-[#1B4D3E]"
+          )}
         />
         <span
-          className="text-[11px] font-semibold font-['Inter',sans-serif]"
-          style={{ color: hov ? colors.accentText : "#888" }}
+          className={cn(
+            "text-[11px] font-semibold font-['Inter',sans-serif]",
+            hov ? "text-[#5C7A1F]" : "text-[#888]"
+          )}
         >
           {s.tag}
         </span>
@@ -1162,8 +1257,10 @@ const SectorCard = ({ s, hov, onE, onL }) => {
           Explore Full Analysis
         </span>
         <span
-          className="w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out"
-          style={{ backgroundColor: hov ? colors.accent : colors.background }}
+          className={cn(
+            "w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out",
+            hov ? "bg-[#B8D935]" : "bg-[#F3F5F2]"
+          )}
         >
           <Arr s={10} c={hov ? colors.primary : "#999"} />
         </span>
@@ -1202,18 +1299,24 @@ const SectorGrid = () => {
   };
 
   return (
-    <section className={`bg-[#F3F5F2] ${mb ? "px-5 pt-[60px] pb-20" : "px-20 py-[100px]"}`}>
+    <section className={cn("bg-[#F3F5F2]", mb ? "px-5 pt-[60px] pb-20" : "px-20 py-[100px]")}>
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-12">
           <Pill dark={false}>12 Integrated Sectors</Pill>
           <h2
-            className={`font-['Inter',sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] leading-[1.15] mb-4 mt-0 ${mb ? "text-[32px]" : "text-[42px]"}`}
+            className={cn(
+              "font-['Inter',sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] leading-[1.15] mb-4 mt-0",
+              mb ? "text-[32px]" : "text-[42px]"
+            )}
           >
             Comprehensive <span className="font-bold">Analysis</span>
             {" \u00B7 "}Targeted <span className="font-bold text-[#B8D935]">Solutions</span>
           </h2>
           <p
-            className={`leading-[1.7] text-[#666] font-['Inter',sans-serif] mx-auto ${mb ? "text-sm max-w-full" : "text-base max-w-[560px]"} m-0`}
+            className={cn(
+              "leading-[1.7] text-[#666] font-['Inter',sans-serif] mx-auto m-0",
+              mb ? "text-sm max-w-full" : "text-base max-w-[560px]"
+            )}
           >
             {mb
               ? "Each sector maps the full ecosystem to identify where alignment creates the greatest impact"
@@ -1221,7 +1324,12 @@ const SectorGrid = () => {
           </p>
         </div>
         <div
-          className={`cs-scroll flex flex-nowrap mb-12 ${mb ? "gap-2 justify-start overflow-x-auto pb-1" : "gap-3 justify-center overflow-visible pb-0"}`}
+          className={cn(
+            "cs-scroll flex flex-nowrap mb-12",
+            mb
+              ? "gap-2 justify-start overflow-x-auto pb-1"
+              : "gap-3 justify-center overflow-visible pb-0"
+          )}
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {cats.map((c) => {
@@ -1230,21 +1338,22 @@ const SectorGrid = () => {
               <button
                 key={c.id}
                 onClick={() => switchCat(c.id)}
-                className={`inline-flex items-center gap-1.5 rounded-[50px] cursor-pointer font-semibold font-['Inter',sans-serif] transition-all duration-[250ms] ease-in-out whitespace-nowrap shrink-0 ${mb ? "px-4 py-2.5 text-xs" : "px-6 py-3 text-[13px]"}`}
-                style={{
-                  border: on ? `2px solid ${colors.primary}` : `1.5px solid ${colors.line}`,
-                  backgroundColor: on ? colors.primary : colors.white,
-                  color: on ? colors.white : colors.primary,
-                  boxShadow: on ? "0 4px 12px rgba(27,77,62,0.15)" : "none",
-                }}
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-[50px] cursor-pointer font-semibold font-['Inter',sans-serif] transition-all duration-[250ms] ease-in-out whitespace-nowrap shrink-0",
+                  mb ? "px-4 py-2.5 text-xs" : "px-6 py-3 text-[13px]",
+                  on
+                    ? "border-2 border-[#1B4D3E] bg-[#1B4D3E] text-white shadow-[0_4px_12px_rgba(27,77,62,0.15)]"
+                    : "border-[1.5px] border-[#DEDEDE] bg-white text-[#1B4D3E] shadow-none"
+                )}
               >
                 {c.label}
                 <span
-                  className="text-[11px] font-bold px-2 py-0.5 rounded-[50px]"
-                  style={{
-                    backgroundColor: on ? "rgba(184,217,53,0.25)" : colors.background,
-                    color: on ? colors.accent : "#999",
-                  }}
+                  className={cn(
+                    "text-[11px] font-bold px-2 py-0.5 rounded-[50px]",
+                    on
+                      ? "bg-[rgba(184,217,53,0.25)] text-[#B8D935]"
+                      : "bg-[#F3F5F2] text-[#999]"
+                  )}
                 >
                   {c.n}
                 </span>
@@ -1260,16 +1369,18 @@ const SectorGrid = () => {
         <div
           ref={ref}
           onScroll={onScroll}
-          className="sector-scroll-track flex overflow-x-auto overflow-y-visible snap-x snap-mandatory pt-2 pb-4 -mt-2"
-          style={{
-            gap: mb ? "16px" : "24px",
-            WebkitOverflowScrolling: "touch",
-            msOverflowStyle: "none",
-            scrollbarWidth: "none",
-          }}
+          className={cn(
+            "sector-scroll-track flex overflow-x-auto overflow-y-visible snap-x snap-mandatory pt-2 pb-4 -mt-2 [scrollbar-width:none] [-ms-overflow-style:none]",
+            mb ? "gap-4" : "gap-6"
+          )}
+          style={{ WebkitOverflowScrolling: "touch" }}
         >
           {fl.map((s) => (
-            <div key={s.id} className="snap-start" style={{ flex: mb ? "0 0 80%" : "0 0 calc((100% - 48px) / 3)" }}>
+            <div
+              key={s.id}
+              className="snap-start"
+              style={{ flex: mb ? "0 0 80%" : "0 0 calc((100% - 48px) / 3)" }}
+            >
               <SectorCard s={s} hov={hov === s.id} onE={() => setHov(s.id)} onL={() => setHov(null)} />
             </div>
           ))}
@@ -1279,11 +1390,10 @@ const SectorGrid = () => {
             <span
               key={i}
               onClick={() => goTo(i)}
-              className="h-2 rounded cursor-pointer transition-all duration-300 ease-in-out"
-              style={{
-                width: idx === i ? "24px" : "8px",
-                backgroundColor: idx === i ? colors.accent : colors.line,
-              }}
+              className={cn(
+                "h-2 rounded cursor-pointer transition-all duration-300 ease-in-out",
+                idx === i ? "w-6 bg-[#B8D935]" : "w-2 bg-[#DEDEDE]"
+              )}
             />
           ))}
         </div>
@@ -1298,14 +1408,20 @@ const CTA = () => {
   const mb = useIsMobile();
   const navigate = useNavigate();
   return (
-    <section className={`bg-[#1B4D3E] ${mb ? "px-5 pt-4 pb-14" : "px-20 pt-[19px] pb-[67px]"}`}>
+    <section className={cn("bg-[#1B4D3E]", mb ? "px-5 pt-4 pb-14" : "px-20 pt-[19px] pb-[67px]")}>
       <div className="max-w-[900px] mx-auto text-center">
         <div
-          className={`flex justify-center ${mb ? "gap-3 flex-col items-stretch" : "gap-4 flex-row items-center"}`}
+          className={cn(
+            "flex justify-center",
+            mb ? "gap-3 flex-col items-stretch" : "gap-4 flex-row items-center"
+          )}
         >
           <a href="/login" onClick={(e) => { e.preventDefault(); navigate("/login"); }} className="no-underline">
             <button
-              className={`bg-[#B8D935] text-[#1B4D3E] border-none font-semibold font-['Inter',sans-serif] cursor-pointer rounded-[50px] flex items-center justify-center gap-2.5 ${mb ? "px-6 py-3.5 text-sm w-full" : "px-7 py-4 text-[15px] w-auto"}`}
+              className={cn(
+                "bg-[#B8D935] text-[#1B4D3E] border-none font-semibold font-['Inter',sans-serif] cursor-pointer rounded-[50px] flex items-center justify-center gap-2.5",
+                mb ? "px-6 py-3.5 text-sm w-full" : "px-7 py-4 text-[15px] w-auto"
+              )}
             >
               Request Full Access
               <span className="cta-btn-arrow w-8 h-8 bg-[#1B4D3E] rounded-full flex items-center justify-center">
@@ -1315,7 +1431,10 @@ const CTA = () => {
           </a>
           <a href="/contact" onClick={(e) => { e.preventDefault(); navigate("/contact"); }} className="no-underline">
             <button
-              className={`bg-transparent text-white border-2 border-white/30 font-semibold font-['Inter',sans-serif] cursor-pointer rounded-[50px] ${mb ? "px-6 py-3.5 text-sm w-full" : "px-7 py-4 text-[15px] w-auto"}`}
+              className={cn(
+                "bg-transparent text-white border-2 border-white/30 font-semibold font-['Inter',sans-serif] cursor-pointer rounded-[50px]",
+                mb ? "px-6 py-3.5 text-sm w-full" : "px-7 py-4 text-[15px] w-auto"
+              )}
             >
               Schedule a Briefing
             </button>
