@@ -1287,37 +1287,13 @@ export default function ServicesSectorsPageV2() {
                 </div>
 
                 {/* CTA Button - pushed to bottom */}
-                <a href="/contact" style={{ textDecoration: "none" }}>
+                <a href="/contact" className="no-underline">
                 <button
-                  className="cta-lime"
-                  style={{
-                    backgroundColor: colors.accent,
-                    color: colors.primary,
-                    border: "none",
-                    padding: "16px 28px",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    fontFamily: "Inter, sans-serif",
-                    cursor: "pointer",
-                    borderRadius: "50px",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    alignSelf: "flex-start",
-                    transition: "all 0.3s ease",
-                  }}
+                  className="cta-lime bg-[#B8D935] text-[#1B4D3E] border-none px-7 py-4 text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full inline-flex items-center gap-2.5 self-start transition-all duration-300 ease-in-out"
                 >
                   Explore Opportunities
                   <span
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      backgroundColor: "rgba(27,77,62,0.15)",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="w-7 h-7 bg-[rgba(27,77,62,0.15)] rounded-full flex items-center justify-center"
                   >
                     <svg
                       width="14"
@@ -1336,39 +1312,18 @@ export default function ServicesSectorsPageV2() {
 
               {/* Right - Sector Icons Grid + Highlight Tags */}
               <div
-                style={{
-                  backgroundColor: colors.primary,
-                  padding: isMobile ? "20px 16px 16px 16px" : "76px 40px 40px 40px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                }}
+                className={`bg-[#1B4D3E] ${isMobile ? "px-4 pt-5 pb-4" : "px-10 pt-[76px] pb-10"} flex flex-col justify-start`}
               >
                 {/* Section Label - Shows sector name on hover */}
                 <div
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: "700",
-                    fontFamily: "DM Sans, sans-serif",
-                    color: heroSectorHovered !== null ? colors.accent : "rgba(255,255,255,0.4)",
-                    letterSpacing: "2px",
-                    textTransform: "uppercase",
-                    marginBottom: isMobile ? "10px" : "16px",
-                    transition: "color 0.25s ease",
-                    minHeight: "15px",
-                  }}
+                  className={`text-[10px] font-bold font-['DM_Sans',sans-serif] ${heroSectorHovered !== null ? "text-[#B8D935]" : "text-white/40"} tracking-[2px] uppercase ${isMobile ? "mb-2.5" : "mb-4"} transition-colors duration-[250ms] ease-in-out min-h-[15px]`}
                 >
                   {heroSectorHovered !== null ? FOOTER_SECTOR_ICONS[heroSectorHovered].label : "12 Integrated Sectors"}
                 </div>
 
                 {/* Sector Icons Grid - responsive layout */}
                 <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: isMobile ? "repeat(4, 1fr)" : "repeat(6, 1fr)",
-                    gap: isMobile ? "6px" : "10px",
-                    marginBottom: isMobile ? "14px" : "20px",
-                  }}
+                  className={`grid ${isMobile ? "grid-cols-4 gap-1.5 mb-3.5" : "grid-cols-6 gap-2.5 mb-5"}`}
                 >
                   {FOOTER_SECTOR_ICONS.map((sector, i) => {
                     const isHovered = heroSectorHovered === i;
@@ -1378,30 +1333,10 @@ export default function ServicesSectorsPageV2() {
                         onMouseEnter={() => setHeroSectorHovered(i)}
                         onMouseLeave={() => setHeroSectorHovered(null)}
                         onDoubleClick={() => navigate(sector.to)}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          aspectRatio: isMobile ? "auto" : "1",
-                          height: isMobile ? "56px" : "auto",
-                          borderRadius: isMobile ? "10px" : "12px",
-                          backgroundColor: isHovered ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.05)",
-                          border: `1px solid ${isHovered ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.08)"}`,
-                          cursor: "pointer",
-                          transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                          transform: isHovered ? "translateY(-2px)" : "none",
-                          boxShadow: isHovered ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
-                        }}
+                        className={`flex items-center justify-center ${isMobile ? "aspect-auto h-14 rounded-[10px]" : "aspect-square rounded-xl"} ${isHovered ? "bg-[rgba(184,217,53,0.12)] border-[rgba(184,217,53,0.35)] -translate-y-0.5 shadow-[0_6px_16px_rgba(0,0,0,0.2),0_0_0_1px_rgba(184,217,53,0.15)]" : "bg-white/5 border-white/[0.08] translate-y-0 shadow-none"} border cursor-pointer transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]`}
                       >
                         <div
-                          style={{
-                            opacity: isHovered ? 1 : 0.6,
-                            transition: "opacity 0.25s ease",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            transform: isMobile ? "scale(1.2)" : "scale(1.25)",
-                          }}
+                          className={`${isHovered ? "opacity-100" : "opacity-60"} transition-opacity duration-[250ms] ease-in-out flex items-center justify-center ${isMobile ? "scale-[1.2]" : "scale-125"}`}
                         >
                           {sector.icon(isHovered ? colors.accent : "rgba(255,255,255,0.9)")}
                         </div>
@@ -1410,18 +1345,9 @@ export default function ServicesSectorsPageV2() {
                   })}
                 </div>
 
-                {/* Dynamic audience × sector hover text */}
+                {/* Dynamic audience x sector hover text */}
                 <div
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    fontFamily: "Inter, sans-serif",
-                    color: heroSectorHovered !== null ? colors.accent : "rgba(255,255,255,0.3)",
-                    transition: "all 0.3s ease",
-                    minHeight: "20px",
-                    lineHeight: "1.4",
-                    textAlign: "center",
-                  }}
+                  className={`text-sm font-medium font-['Inter',sans-serif] ${heroSectorHovered !== null ? "text-[#B8D935]" : "text-white/30"} transition-all duration-300 ease-in-out min-h-[20px] leading-[1.4] text-center`}
                 >
                   {heroSectorHovered !== null
                     ? sectorAudienceText[activeAudience][heroSectorHovered]
@@ -1437,42 +1363,18 @@ export default function ServicesSectorsPageV2() {
       {/* SECTION 2: What We Do */}
       {/* ============================================ */}
       <section
-        style={{
-          backgroundColor: colors.white,
-          padding: isMobile ? "60px 20px" : "100px 80px",
-        }}
+        className={`bg-white ${isMobile ? "px-5 py-[60px]" : "px-20 py-[100px]"}`}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div className="max-w-[1200px] mx-auto">
           {/* Pill Badge - Variant A (Light Background) */}
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px 20px",
-              borderRadius: "50px",
-              marginBottom: "24px",
-              border: `1px solid ${colors.line}`,
-            }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6 border border-[#DEDEDE]"
           >
             <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                backgroundColor: colors.accent,
-                display: "inline-block",
-              }}
+              className="w-1.5 h-1.5 rounded-full bg-[#B8D935] inline-block"
             />
             <span
-              style={{
-                fontSize: "12px",
-                fontWeight: "600",
-                letterSpacing: "1.5px",
-                color: colors.primary,
-                fontFamily: "Inter, sans-serif",
-                textTransform: "uppercase",
-              }}
+              className="text-xs font-semibold tracking-[1.5px] text-[#1B4D3E] font-['Inter',sans-serif] uppercase"
             >
               What We Do
             </span>
@@ -1480,56 +1382,29 @@ export default function ServicesSectorsPageV2() {
 
           {/* Two Column: Headline + Description */}
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: isMobile ? "24px" : "80px",
-              alignItems: "flex-start",
-            }}
+            className={`grid ${isMobile ? "grid-cols-1 gap-6" : "grid-cols-2 gap-20"} items-start`}
           >
             {/* Left - Headline */}
             <h2
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "28px" : "44px",
-                fontWeight: "300",
-                lineHeight: "1.2",
-                color: colors.primary,
-                margin: 0,
-                letterSpacing: "-0.5px",
-              }}
+              className={`font-['Inter',sans-serif] ${isMobile ? "text-[28px]" : "text-[44px]"} font-light leading-[1.2] text-[#1B4D3E] m-0 tracking-[-0.5px]`}
             >
-              We <span style={{ fontWeight: "700" }}>Bridge</span> the Gaps Between{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Insight</span>,{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Opportunity</span>, and{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Impact</span>
+              We <span className="font-bold">Bridge</span> the Gaps Between{" "}
+              <span className="font-bold text-[#B8D935]">Insight</span>,{" "}
+              <span className="font-bold text-[#B8D935]">Opportunity</span>, and{" "}
+              <span className="font-bold text-[#B8D935]">Impact</span>
             </h2>
 
             {/* Right - Description Paragraphs */}
-            <div style={{ maxWidth: "480px" }}>
+            <div className="max-w-[480px]">
               <p
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "1.7",
-                  color: "#666",
-                  fontFamily: "Inter, sans-serif",
-                  fontWeight: "400",
-                  margin: "0 0 20px 0",
-                }}
+                className="text-base leading-[1.7] text-[#666] font-['Inter',sans-serif] font-normal mb-5 mt-0"
               >
                 Different stakeholders, same mission. We connect investors to vetted opportunities. We help businesses
                 navigate new markets. We mobilize private capital toward government priorities. We give entrepreneurs
                 the resources to build what's missing.
               </p>
               <p
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "1.7",
-                  color: "#666",
-                  fontFamily: "Inter, sans-serif",
-                  fontWeight: "400",
-                  margin: 0,
-                }}
+                className="text-base leading-[1.7] text-[#666] font-['Inter',sans-serif] font-normal m-0"
               >
                 It all starts with understanding—12 sectors mapped, gaps quantified, opportunities identified. Then we
                 act: incubating ventures, deploying capital, and building partnerships that turn analysis into outcomes.

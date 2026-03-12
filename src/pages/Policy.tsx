@@ -566,7 +566,7 @@ export default function PolicyPage() {
       </section>
 
       {/* ── FILTERS + VIEW TOGGLE ──────────────────────────────────── */}
-      <section className="bg-white pt-8 pb-0 border-b border-[#DEDEDE]" style={{ paddingLeft: HP, paddingRight: HP }}>
+      <section className={`bg-white pt-8 pb-0 border-b border-[#DEDEDE] ${isMobile ? "px-5" : "px-12"}`}>
         <div className="max-w-[1100px] mx-auto">
           {/* Top row: search + view toggle */}
           <div className="flex items-center gap-2.5 mb-5 flex-wrap">
@@ -609,7 +609,7 @@ export default function PolicyPage() {
           </div>
 
           {/* Category filters */}
-          <div className="flex gap-1.5 overflow-x-auto scrollbar-none mb-4 pb-1" style={{ scrollbarWidth: "none" }}>
+          <div className="flex gap-1.5 overflow-x-auto scrollbar-none [scrollbar-width:none] mb-4 pb-1">
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
@@ -626,7 +626,7 @@ export default function PolicyPage() {
           </div>
 
           {/* Sector scroll tabs */}
-          <div className="flex overflow-x-auto border-b border-[#DEDEDE]" style={{ scrollbarWidth: "none" }}>
+          <div className="flex overflow-x-auto scrollbar-none [scrollbar-width:none] border-b border-[#DEDEDE]">
             {SECTORS.map(s => (
               <button
                 key={s.key}
@@ -645,7 +645,7 @@ export default function PolicyPage() {
       </section>
 
       {/* ── BRIEFS LIST / TABLE ──────────────────────────────────── */}
-      <section className="bg-white pt-8 pb-[72px]" style={{ paddingLeft: HP, paddingRight: HP }}>
+      <section className={`bg-white pt-8 pb-[72px] ${isMobile ? "px-5" : "px-12"}`}>
         <div className="max-w-[1100px] mx-auto">
           <div className="text-xs text-[#7A8C83] mb-5 font-['Inter',sans-serif]">
             Showing <strong className="text-[#1B4D3E]">{Math.min(visibleCount, filtered.length)}</strong> of{" "}
@@ -722,7 +722,7 @@ export default function PolicyPage() {
       </section>
 
       {/* ── CATEGORIES PREVIEW ──────────────────────────────────── */}
-      <section className={`bg-[#F3F5F2] ${isMobile ? "py-12" : "py-[72px]"}`} style={{ paddingLeft: HP, paddingRight: HP }}>
+      <section className={`bg-[#F3F5F2] ${isMobile ? "py-12 px-5" : "py-[72px] px-12"}`}>
         <div className="max-w-[1100px] mx-auto">
           <div className="mb-8">
             <h2 className="text-[clamp(20px,3vw,28px)] font-light text-[#1B4D3E] mb-2 mt-0 font-['Inter',sans-serif]">
@@ -751,7 +751,7 @@ export default function PolicyPage() {
       </section>
 
       {/* ── NEWSLETTER ──────────────────────────────────────────── */}
-      <section className={`bg-[#1B4D3E] ${isMobile ? "py-14" : "py-20"}`} style={{ paddingLeft: HP, paddingRight: HP }}>
+      <section className={`bg-[#1B4D3E] ${isMobile ? "py-14 px-5" : "py-20 px-12"}`}>
         <div className="max-w-[640px] mx-auto text-center">
           <div className="mb-[18px]">
             <Pill label="Stay Informed" />
