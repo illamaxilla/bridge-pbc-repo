@@ -2426,18 +2426,14 @@ const RippleEffectSection = () => {
                   >
                     {pathways[activeNode].impact}
                   </p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <div className="flex items-baseline gap-2">
                     <span
-                      style={{
-                        fontFamily: "Poppins, sans-serif",
-                        fontSize: "32px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                      }}
+                      className="font-[Poppins,sans-serif] text-[32px] font-bold"
+                      style={{ color: colors.accent }}
                     >
                       {pathways[activeNode].multiplier}
                     </span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                    <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                       value multiplier
                     </span>
                   </div>

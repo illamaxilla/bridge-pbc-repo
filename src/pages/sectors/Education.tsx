@@ -3988,19 +3988,14 @@ const ImpactSection = () => {
                       setActiveCategory(i);
                       triggerAnimate();
                     }}
+                    className="rounded-full font-[Inter,sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap shrink-0"
                     style={{
                       backgroundColor: activeCategory === i ? colors.accentLight : "transparent",
                       color: activeCategory === i ? colors.primary : "#999",
                       fontWeight: activeCategory === i ? "700" : "500",
                       border: activeCategory === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                      borderRadius: "50px",
                       padding: isMobile ? "5px 8px" : "6px 14px",
                       fontSize: isMobile ? "10px" : "12px",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
                     }}
                   >
                     {cat.category}
@@ -4012,19 +4007,14 @@ const ImpactSection = () => {
                     onClick={() => {
                       setActiveStakeholder(i);
                     }}
+                    className="rounded-full font-[Inter,sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap shrink-0"
                     style={{
                       backgroundColor: activeStakeholder === i ? colors.accentLight : "transparent",
                       color: activeStakeholder === i ? colors.primary : "#999",
                       fontWeight: activeStakeholder === i ? "700" : "500",
                       border: activeStakeholder === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                      borderRadius: "50px",
                       padding: isMobile ? "5px 8px" : "6px 14px",
                       fontSize: isMobile ? "10px" : "12px",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
                     }}
                   >
                     {s.title.split(" ")[1]}

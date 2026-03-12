@@ -3066,20 +3066,19 @@ function MembersPage({ isMobile }) {
 
       {/* Member grid */}
       <div
-        style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 12 : 14 }}
+        className="grid"
+        style={{ gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 12 : 14 }}
       >
         {filtered.map((m, idx) => {
           const sColor = SECTOR_COLORS[m.sector] || C.primary;
           return (
             <div
               key={m.id}
+              className="rounded-2xl overflow-hidden transition-all duration-200"
               style={{
                 background: C.white,
-                borderRadius: 16,
-                overflow: "hidden",
                 boxShadow: C.cardShadow,
                 border: `1.5px solid transparent`,
-                transition: "all 0.2s",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = sColor + "60";
