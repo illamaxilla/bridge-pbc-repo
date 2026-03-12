@@ -1293,16 +1293,13 @@ const buildMessage = ({ who, sectors, goal, details }) => {
 // ============================================================================
 
 const ProgressBar = ({ step, total }) => (
-  <div style={{ display: "flex", gap: "5px", flex: 1 }}>
+  <div className="flex gap-[5px] flex-1">
     {Array.from({ length: total }).map((_, i) => (
       <div
         key={i}
+        className="h-[3px] flex-1 rounded-sm transition-colors duration-[400ms] ease-in-out"
         style={{
-          height: "3px",
-          flex: 1,
-          borderRadius: "2px",
           backgroundColor: i <= step ? colors.accent : colors.line,
-          transition: "background-color 0.4s ease",
         }}
       />
     ))}
@@ -1319,39 +1316,22 @@ const StepWho = ({ value, onChange, freeText, onFreeText }) => {
   return (
     <div>
       <div style={{ marginBottom: isMobile ? "16px" : "28px" }}>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "11px",
-            fontWeight: "700",
-            color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            margin: "0 0 8px",
-          }}
-        >
+        <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mb-2 mt-0 mx-0">
           Step 1 of 4
         </p>
         <h2
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "20px" : "26px",
-            fontWeight: "300",
-            color: colors.primary,
-            letterSpacing: "-0.5px",
-            margin: "0 0 4px",
-            lineHeight: "1.2",
-          }}
+          className="font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]"
+          style={{ fontSize: isMobile ? "20px" : "26px" }}
         >
-          Who are you reaching out <strong style={{ fontWeight: "700" }}>as?</strong>
+          Who are you reaching out <strong className="font-bold">as?</strong>
         </h2>
-        <p style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: colors.muted, margin: 0 }}>
+        <p className="font-[Inter,sans-serif] text-xs text-[#8A9E98] m-0">
           This routes your message to the right BRIDGE team.
         </p>
       </div>
       <div
+        className="grid"
         style={{
-          display: "grid",
           gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
           gap: isMobile ? "6px" : "8px",
           marginBottom: isMobile ? "8px" : "10px",
@@ -1366,58 +1346,33 @@ const StepWho = ({ value, onChange, freeText, onFreeText }) => {
               onClick={() => onChange(opt.id)}
               onMouseEnter={() => setHov(opt.id)}
               onMouseLeave={() => setHov(null)}
+              className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl cursor-pointer text-left transition-all duration-200 ease-in-out"
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "10px",
-                padding: "14px 14px",
-                borderRadius: "12px",
                 border: `1.5px solid ${sel ? colors.primary : hovered ? "rgba(27,77,62,0.3)" : colors.line}`,
                 backgroundColor: sel ? colors.primary : hovered ? "rgba(27,77,62,0.02)" : colors.white,
-                cursor: "pointer",
-                textAlign: "left",
-                transition: "all 0.2s ease",
                 transform: !sel && hovered ? "translateY(-1px)" : "none",
                 boxShadow: sel ? "0 8px 24px rgba(27,77,62,0.15)" : hovered ? "0 4px 12px rgba(27,77,62,0.06)" : "none",
               }}
             >
               <div
+                className="w-8 h-8 rounded-lg shrink-0 flex items-center justify-center transition-all duration-200 ease-in-out"
                 style={{
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "8px",
-                  flexShrink: 0,
                   backgroundColor: sel ? "rgba(184,217,53,0.18)" : colors.background,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   color: sel ? colors.accent : colors.primary,
-                  transition: "all 0.2s ease",
                 }}
               >
                 {opt.icon(sel ? colors.accent : colors.primary)}
               </div>
               <div>
                 <div
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                    color: sel ? colors.white : colors.primary,
-                    marginBottom: "3px",
-                    lineHeight: "1.3",
-                  }}
+                  className="font-[Inter,sans-serif] text-xs font-semibold mb-[3px] leading-[1.3]"
+                  style={{ color: sel ? colors.white : colors.primary }}
                 >
                   {opt.title}
                 </div>
                 <div
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "10px",
-                    color: sel ? "rgba(255,255,255,0.6)" : colors.muted,
-                    lineHeight: "1.45",
-                  }}
+                  className="font-[Inter,sans-serif] text-[10px] leading-[1.45]"
+                  style={{ color: sel ? "rgba(255,255,255,0.6)" : colors.muted }}
                 >
                   {opt.subtitle}
                 </div>
@@ -1431,21 +1386,8 @@ const StepWho = ({ value, onChange, freeText, onFreeText }) => {
         value={freeText || ""}
         onChange={(e) => onFreeText && onFreeText(e.target.value)}
         rows={2}
-        style={{
-          width: "100%",
-          boxSizing: "border-box",
-          padding: "14px 16px",
-          borderRadius: "12px",
-          border: `1.5px solid ${colors.line}`,
-          backgroundColor: colors.white,
-          fontFamily: "Inter, sans-serif",
-          fontSize: "13px",
-          color: colors.primary,
-          outline: "none",
-          transition: "border-color 0.2s ease",
-          resize: "none",
-          lineHeight: "1.6",
-        }}
+        className="w-full box-border py-3.5 px-4 rounded-xl font-[Inter,sans-serif] text-[13px] text-[#1B4D3E] outline-none transition-[border-color] duration-200 ease-in-out resize-none leading-[1.6] bg-white"
+        style={{ border: `1.5px solid ${colors.line}` }}
         onFocus={(e) => (e.target.style.borderColor = colors.primary)}
         onBlur={(e) => (e.target.style.borderColor = colors.line)}
       />
@@ -1467,43 +1409,22 @@ const StepSectors = ({ values, onChange, freeText, onFreeText }) => {
   return (
     <div>
       <div style={{ marginBottom: isMobile ? "14px" : "28px" }}>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "11px",
-            fontWeight: "700",
-            color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            margin: "0 0 8px",
-          }}
-        >
+        <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mb-2 mt-0 mx-0">
           Step 2 of 4
         </p>
         <h2
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "20px" : "26px",
-            fontWeight: "300",
-            color: colors.primary,
-            letterSpacing: "-0.5px",
-            margin: "0 0 4px",
-            lineHeight: "1.2",
-          }}
+          className="font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]"
+          style={{ fontSize: isMobile ? "20px" : "26px" }}
         >
-          Which sectors are you <strong style={{ fontWeight: "700" }}>focused on?</strong>
+          Which sectors are you <strong className="font-bold">focused on?</strong>
         </h2>
-        <p style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: colors.muted, margin: 0 }}>
+        <p className="font-[Inter,sans-serif] text-xs text-[#8A9E98] m-0">
           Select up to 4 — or skip if you're not sure yet.
         </p>
       </div>
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
-          gap: "6px",
-          marginBottom: "8px",
-        }}
+        className="grid gap-1.5 mb-2"
+        style={{ gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)" }}
       >
         {SECTOR_OPTIONS.map((opt, i) => {
           const sel = values.includes(opt.id);
@@ -1513,34 +1434,23 @@ const StepSectors = ({ values, onChange, freeText, onFreeText }) => {
             <button
               key={opt.id}
               onClick={() => !disabled && toggle(opt.id)}
+              className="flex flex-col items-center justify-center gap-1.5 py-2 px-1.5 h-16 rounded-[10px] text-center transition-all duration-[250ms] ease-in-out"
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                padding: "8px 6px",
-                height: "64px",
-                borderRadius: "10px",
                 border: `1.5px solid ${sel ? colors.primary : colors.line}`,
                 backgroundColor: sel ? colors.primary : disabled ? "rgba(243,245,242,0.4)" : colors.white,
                 cursor: disabled ? "not-allowed" : "pointer",
                 opacity: disabled ? 0.4 : 1,
-                transition: "all 0.25s ease",
                 animation: mounted ? `chipIn 0.35s cubic-bezier(0.175,0.885,0.32,1.275) ${i * 30}ms both` : "none",
-                textAlign: "center",
               }}
             >
-              <span style={{ color: sel ? colors.accent : colors.primary, display: "flex", flexShrink: 0 }}>
+              <span className="flex shrink-0" style={{ color: sel ? colors.accent : colors.primary }}>
                 {iconFn ? iconFn(sel ? colors.accent : colors.primary, 14) : null}
               </span>
               <span
+                className="font-[Inter,sans-serif] text-[10px] leading-[1.2]"
                 style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "10px",
                   fontWeight: sel ? "600" : "500",
                   color: sel ? colors.white : colors.primary,
-                  lineHeight: "1.2",
                 }}
               >
                 {opt.label}
@@ -1550,36 +1460,21 @@ const StepSectors = ({ values, onChange, freeText, onFreeText }) => {
         })}
       </div>
       {values.length > 0 && (
-        <div style={{ display: "flex", alignItems: "center", gap: "7px", marginTop: "4px", marginBottom: "10px" }}>
-          <span style={{ width: "5px", height: "5px", borderRadius: "50%", backgroundColor: colors.accent }} />
-          <span
-            style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: colors.accentText, fontWeight: "600" }}
-          >
+        <div className="flex items-center gap-[7px] mt-1 mb-2.5">
+          <span className="w-[5px] h-[5px] rounded-full bg-[#B8D935]" />
+          <span className="font-[Inter,sans-serif] text-[11px] text-[#5C7A1F] font-semibold">
             {values.length} sector{values.length > 1 ? "s" : ""} selected
           </span>
         </div>
       )}
-      {!values.length && <div style={{ marginTop: "10px" }} />}
+      {!values.length && <div className="mt-2.5" />}
       <textarea
         placeholder="Or describe the sectors or topics you care about…"
         value={freeText || ""}
         onChange={(e) => onFreeText && onFreeText(e.target.value)}
         rows={2}
-        style={{
-          width: "100%",
-          boxSizing: "border-box",
-          padding: "14px 16px",
-          borderRadius: "12px",
-          border: `1.5px solid ${colors.line}`,
-          backgroundColor: colors.white,
-          fontFamily: "Inter, sans-serif",
-          fontSize: "13px",
-          color: colors.primary,
-          outline: "none",
-          transition: "border-color 0.2s ease",
-          resize: "none",
-          lineHeight: "1.6",
-        }}
+        className="w-full box-border py-3.5 px-4 rounded-xl font-[Inter,sans-serif] text-[13px] text-[#1B4D3E] outline-none transition-[border-color] duration-200 ease-in-out resize-none leading-[1.6] bg-white"
+        style={{ border: `1.5px solid ${colors.line}` }}
         onFocus={(e) => (e.target.style.borderColor = colors.primary)}
         onBlur={(e) => (e.target.style.borderColor = colors.line)}
       />
@@ -1594,37 +1489,20 @@ const StepGoal = ({ whoId, value, onChange, freeText, onFreeText }) => {
   return (
     <div>
       <div style={{ marginBottom: isMobile ? "14px" : "28px" }}>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "11px",
-            fontWeight: "700",
-            color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            margin: "0 0 8px",
-          }}
-        >
+        <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mb-2 mt-0 mx-0">
           Step 3 of 4
         </p>
         <h2
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "20px" : "26px",
-            fontWeight: "300",
-            color: colors.primary,
-            letterSpacing: "-0.5px",
-            margin: "0 0 4px",
-            lineHeight: "1.2",
-          }}
+          className="font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]"
+          style={{ fontSize: isMobile ? "20px" : "26px" }}
         >
-          What's your <strong style={{ fontWeight: "700" }}>primary goal?</strong>
+          What's your <strong className="font-bold">primary goal?</strong>
         </h2>
-        <p style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: colors.muted, margin: 0 }}>
+        <p className="font-[Inter,sans-serif] text-xs text-[#8A9E98] m-0">
           Pick the one that best describes what you're here for.
         </p>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "8px" }}>
+      <div className="grid gap-2" style={{ gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)" }}>
         {options.map((opt) => {
           const sel = value === opt.id;
           const hovered = hov === opt.id;
@@ -1634,31 +1512,21 @@ const StepGoal = ({ whoId, value, onChange, freeText, onFreeText }) => {
               onClick={() => onChange(opt.id)}
               onMouseEnter={() => setHov(opt.id)}
               onMouseLeave={() => setHov(null)}
+              className="flex items-center gap-2.5 py-3 px-3.5 rounded-[10px] cursor-pointer text-left transition-all duration-200 ease-in-out"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                padding: "12px 14px",
-                borderRadius: "10px",
                 border: `1.5px solid ${sel ? colors.primary : hovered ? "rgba(27,77,62,0.25)" : colors.line}`,
                 backgroundColor: sel ? colors.primary : hovered ? "rgba(27,77,62,0.02)" : colors.white,
-                cursor: "pointer",
-                textAlign: "left",
-                transition: "all 0.2s ease",
                 boxShadow: sel ? "0 6px 20px rgba(27,77,62,0.12)" : "none",
               }}
             >
-              <span style={{ color: sel ? colors.accent : colors.primary, display: "flex", flexShrink: 0 }}>
+              <span className="flex shrink-0" style={{ color: sel ? colors.accent : colors.primary }}>
                 {typeof opt.icon === "function" ? opt.icon(sel ? colors.accent : colors.primary) : opt.icon}
               </span>
               <span
+                className="font-[Inter,sans-serif] text-xs flex-1 leading-[1.35]"
                 style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "12px",
                   fontWeight: sel ? "600" : "500",
                   color: sel ? colors.white : colors.primary,
-                  flex: 1,
-                  lineHeight: "1.35",
                 }}
               >
                 {opt.label}
@@ -1672,22 +1540,8 @@ const StepGoal = ({ whoId, value, onChange, freeText, onFreeText }) => {
         value={freeText || ""}
         onChange={(e) => onFreeText && onFreeText(e.target.value)}
         rows={3}
-        style={{
-          width: "100%",
-          boxSizing: "border-box",
-          marginTop: "10px",
-          padding: "14px 16px",
-          borderRadius: "12px",
-          border: `1.5px solid ${colors.line}`,
-          backgroundColor: colors.white,
-          fontFamily: "Inter, sans-serif",
-          fontSize: "13px",
-          color: colors.primary,
-          outline: "none",
-          transition: "border-color 0.2s ease",
-          resize: "none",
-          lineHeight: "1.6",
-        }}
+        className="w-full box-border mt-2.5 py-3.5 px-4 rounded-xl font-[Inter,sans-serif] text-[13px] text-[#1B4D3E] outline-none transition-[border-color] duration-200 ease-in-out resize-none leading-[1.6] bg-white"
+        style={{ border: `1.5px solid ${colors.line}` }}
         onFocus={(e) => (e.target.style.borderColor = colors.primary)}
         onBlur={(e) => (e.target.style.borderColor = colors.line)}
       />
@@ -1723,38 +1577,21 @@ const StepDetails = ({ values, onChange }) => {
   return (
     <div>
       <div style={{ marginBottom: isMobile ? "16px" : "28px" }}>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "11px",
-            fontWeight: "700",
-            color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            margin: "0 0 8px",
-          }}
-        >
+        <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mb-2 mt-0 mx-0">
           Step 4 of 4
         </p>
         <h2
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "20px" : "26px",
-            fontWeight: "300",
-            color: colors.primary,
-            letterSpacing: "-0.5px",
-            margin: "0 0 4px",
-            lineHeight: "1.2",
-          }}
+          className="font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]"
+          style={{ fontSize: isMobile ? "20px" : "26px" }}
         >
-          Almost there — <strong style={{ fontWeight: "700" }}>your details</strong>
+          Almost there — <strong className="font-bold">your details</strong>
         </h2>
-        <p style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: colors.muted, margin: 0 }}>
+        <p className="font-[Inter,sans-serif] text-xs text-[#8A9E98] m-0">
           We'll use this to send you a tailored follow-up.
         </p>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "12px" }}>
+      <div className="flex flex-col gap-3">
+        <div className="grid gap-3" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}>
           <div>
             <label style={lbl}>Full Name *</label>
             <input
@@ -1778,7 +1615,7 @@ const StepDetails = ({ values, onChange }) => {
         </div>
         <div>
           <label style={lbl}>
-            Organization <span style={{ fontWeight: "400", textTransform: "none", opacity: 0.6 }}>— optional</span>
+            Organization <span className="font-normal normal-case opacity-60">— optional</span>
           </label>
           <input
             type="text"
@@ -1791,7 +1628,7 @@ const StepDetails = ({ values, onChange }) => {
         <div>
           <label style={lbl}>
             Additional context{" "}
-            <span style={{ fontWeight: "400", textTransform: "none", opacity: 0.6 }}>— optional</span>
+            <span className="font-normal normal-case opacity-60">— optional</span>
           </label>
           <textarea
             placeholder="Any context, constraints, or questions for BRIDGE..."
@@ -1818,77 +1655,39 @@ const EmailPreview = ({ who, sectors, goal, details }) => {
 
   return (
     <div>
-      <div style={{ marginBottom: "24px" }}>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "11px",
-            fontWeight: "700",
-            color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            margin: "0 0 10px",
-          }}
-        >
+      <div className="mb-6">
+        <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mt-0 mx-0 mb-2.5">
           Email Preview
         </p>
-        <h2
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "26px",
-            fontWeight: "300",
-            color: colors.primary,
-            letterSpacing: "-0.5px",
-            margin: "0 0 6px",
-            lineHeight: "1.2",
-          }}
-        >
-          Here's exactly <strong style={{ fontWeight: "700" }}>what we'll send</strong>
+        <h2 className="font-[Inter,sans-serif] text-[26px] font-light text-[#1B4D3E] tracking-[-0.5px] mt-0 mb-1.5 leading-[1.2]">
+          Here's exactly <strong className="font-bold">what we'll send</strong>
         </h2>
-        <p style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: colors.muted, margin: 0 }}>
-          Auto-routed to <span style={{ color: colors.primary, fontWeight: "600" }}>{routing.team}</span> at BRIDGE.
+        <p className="font-[Inter,sans-serif] text-[13px] text-[#8A9E98] m-0">
+          Auto-routed to <span className="text-[#1B4D3E] font-semibold">{routing.team}</span> at BRIDGE.
           Review before sending.
         </p>
       </div>
 
       {/* Mock email client */}
       <div
-        style={{
-          borderRadius: "16px",
-          border: `1.5px solid ${colors.line}`,
-          overflow: "hidden",
-          boxShadow: "0 4px 20px rgba(27,77,62,0.07)",
-        }}
+        className="rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(27,77,62,0.07)]"
+        style={{ border: `1.5px solid ${colors.line}` }}
       >
         {/* Email toolbar */}
         <div
-          style={{
-            backgroundColor: "#f6f6f6",
-            borderBottom: `1px solid ${colors.line}`,
-            padding: "10px 16px",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-          }}
+          className="bg-[#f6f6f6] py-2.5 px-4 flex items-center gap-1.5"
+          style={{ borderBottom: `1px solid ${colors.line}` }}
         >
-          <div style={{ width: "10px", height: "10px", borderRadius: "50%", backgroundColor: "#FF5F57" }} />
-          <div style={{ width: "10px", height: "10px", borderRadius: "50%", backgroundColor: "#FEBC2E" }} />
-          <div style={{ width: "10px", height: "10px", borderRadius: "50%", backgroundColor: "#28C840" }} />
-          <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "11px",
-              color: colors.muted,
-              marginLeft: "10px",
-              letterSpacing: "0.3px",
-            }}
-          >
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
+          <span className="font-[Inter,sans-serif] text-[11px] text-[#8A9E98] ml-2.5 tracking-[0.3px]">
             New Message — BRIDGE PBC
           </span>
         </div>
 
         {/* Email metadata */}
-        <div style={{ backgroundColor: colors.white, borderBottom: `1px solid ${colors.line}`, padding: "16px 20px" }}>
+        <div className="bg-white py-4 px-5" style={{ borderBottom: `1px solid ${colors.line}` }}>
           {[
             { label: "To", value: `${routing.team} <${routing.email}>` },
             {
@@ -1897,28 +1696,13 @@ const EmailPreview = ({ who, sectors, goal, details }) => {
             },
             { label: "Subject", value: routing.subject },
           ].map((row) => (
-            <div key={row.label} style={{ display: "flex", alignItems: "baseline", gap: "12px", marginBottom: "6px" }}>
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  color: colors.muted,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  width: "52px",
-                  flexShrink: 0,
-                }}
-              >
+            <div key={row.label} className="flex items-baseline gap-3 mb-1.5">
+              <span className="font-[Inter,sans-serif] text-[11px] font-bold text-[#8A9E98] uppercase tracking-[0.5px] w-[52px] shrink-0">
                 {row.label}
               </span>
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  color: colors.primary,
-                  fontWeight: row.label === "Subject" ? "600" : "400",
-                }}
+                className="font-[Inter,sans-serif] text-[13px] text-[#1B4D3E]"
+                style={{ fontWeight: row.label === "Subject" ? "600" : "400" }}
               >
                 {row.value}
               </span>
@@ -1927,75 +1711,42 @@ const EmailPreview = ({ who, sectors, goal, details }) => {
         </div>
 
         {/* Email body */}
-        <div style={{ backgroundColor: colors.white, padding: "24px 20px" }}>
+        <div className="bg-white p-5 pt-6">
           {/* BRIDGE letterhead */}
           <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              marginBottom: "20px",
-              paddingBottom: "16px",
-              borderBottom: `1px solid ${colors.line}`,
-            }}
+            className="flex items-center gap-2.5 mb-5 pb-4"
+            style={{ borderBottom: `1px solid ${colors.line}` }}
           >
             <BridgeMarkSmall />
             <div>
-              <div
-                style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", fontWeight: "700", color: colors.primary }}
-              >
+              <div className="font-[Inter,sans-serif] text-xs font-bold text-[#1B4D3E]">
                 BRIDGE PBC — Inquiry
               </div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: colors.muted }}>
+              <div className="font-[Inter,sans-serif] text-[11px] text-[#8A9E98]">
                 Blending Resources and Innovation to Drive Ghana's Empowerment
               </div>
             </div>
           </div>
 
           {/* Profile tags */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "16px" }}>
+          <div className="flex flex-wrap gap-1.5 mb-4">
             {whoOption && (
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  padding: "3px 10px",
-                  borderRadius: "50px",
-                  backgroundColor: colors.primary,
-                  color: colors.white,
-                }}
-              >
+              <span className="font-[Inter,sans-serif] text-[11px] font-bold py-[3px] px-2.5 rounded-full bg-[#1B4D3E] text-white">
                 {whoOption.title}
               </span>
             )}
             {sectorLabels.map((s) => (
               <span
                 key={s}
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "600",
-                  padding: "3px 10px",
-                  borderRadius: "50px",
-                  backgroundColor: colors.accentLight,
-                  color: colors.accentText,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-semibold py-[3px] px-2.5 rounded-full bg-[#E8F5E0] text-[#5C7A1F]"
               >
                 {s}
               </span>
             ))}
             {goalOption && (
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "600",
-                  padding: "3px 10px",
-                  borderRadius: "50px",
-                  border: `1px solid ${colors.line}`,
-                  color: colors.primary,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-semibold py-[3px] px-2.5 rounded-full text-[#1B4D3E]"
+                style={{ border: `1px solid ${colors.line}` }}
               >
                 {goalOption.icon}{" "}
                 {goalOption.label.length > 30 ? goalOption.label.slice(0, 30) + "…" : goalOption.label}
@@ -2004,44 +1755,24 @@ const EmailPreview = ({ who, sectors, goal, details }) => {
           </div>
 
           {/* Message body */}
-          <div
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "13px",
-              color: "#3a4e48",
-              lineHeight: "1.8",
-              whiteSpace: "pre-line",
-            }}
-          >
+          <div className="font-[Inter,sans-serif] text-[13px] text-[#3a4e48] leading-[1.8] whitespace-pre-line">
             {message}
           </div>
 
           {/* Org line */}
           {details.organization && (
             <div
-              style={{
-                marginTop: "16px",
-                paddingTop: "14px",
-                borderTop: `1px solid ${colors.line}`,
-                fontFamily: "Inter, sans-serif",
-                fontSize: "12px",
-                color: colors.muted,
-              }}
+              className="mt-4 pt-3.5 font-[Inter,sans-serif] text-xs text-[#8A9E98]"
+              style={{ borderTop: `1px solid ${colors.line}` }}
             >
-              Organization: <span style={{ color: colors.primary, fontWeight: "600" }}>{details.organization}</span>
+              Organization: <span className="text-[#1B4D3E] font-semibold">{details.organization}</span>
             </div>
           )}
 
           {/* Footer */}
           <div
-            style={{
-              marginTop: "20px",
-              paddingTop: "14px",
-              borderTop: `1px solid ${colors.line}`,
-              fontFamily: "Inter, sans-serif",
-              fontSize: "11px",
-              color: colors.muted,
-            }}
+            className="mt-5 pt-3.5 font-[Inter,sans-serif] text-[11px] text-[#8A9E98]"
+            style={{ borderTop: `1px solid ${colors.line}` }}
           >
             Submitted via bridgepbc.com/contact ·{" "}
             {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
@@ -2085,20 +1816,13 @@ const WhatHappensNext = ({ name, who }) => {
   ];
 
   return (
-    <div style={{ paddingTop: "8px" }}>
+    <div className="pt-2">
       {/* Success header */}
-      <div style={{ textAlign: "center", marginBottom: "36px" }}>
+      <div className="text-center mb-9">
         <div
+          className="w-[72px] h-[72px] rounded-full bg-[#E8F5E0] flex items-center justify-center mx-auto mb-5"
           style={{
-            width: "72px",
-            height: "72px",
-            borderRadius: "50%",
-            backgroundColor: colors.accentLight,
             border: `2.5px solid ${colors.accent}`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto 20px",
             animation: "popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
           }}
         >
@@ -2115,55 +1839,27 @@ const WhatHappensNext = ({ name, who }) => {
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
-        <h2
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "26px",
-            fontWeight: "700",
-            color: colors.primary,
-            margin: "0 0 8px",
-            letterSpacing: "-0.5px",
-          }}
-        >
+        <h2 className="font-[Inter,sans-serif] text-[26px] font-bold text-[#1B4D3E] mt-0 mb-2 tracking-[-0.5px]">
           Message sent, {firstName}.
         </h2>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "14px",
-            color: colors.muted,
-            margin: 0,
-            lineHeight: "1.6",
-            maxWidth: "320px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
+        <p className="font-[Inter,sans-serif] text-sm text-[#8A9E98] m-0 leading-[1.6] max-w-[320px] mx-auto">
           Your inquiry is now with the {routing.team} team. Here's what to expect next.
         </p>
       </div>
 
       {/* Timeline */}
-      <div style={{ position: "relative" }}>
+      <div className="relative">
         {/* Vertical line */}
         <div
-          style={{
-            position: "absolute",
-            left: "19px",
-            top: "24px",
-            width: "2px",
-            bottom: "24px",
-            background: `linear-gradient(to bottom, ${colors.accent}, rgba(184,217,53,0.1))`,
-            borderRadius: "2px",
-          }}
+          className="absolute left-[19px] top-6 w-0.5 bottom-6 rounded-sm"
+          style={{ background: `linear-gradient(to bottom, ${colors.accent}, rgba(184,217,53,0.1))` }}
         />
 
         {steps.map((step, i) => (
           <div
             key={i}
+            className="flex gap-4"
             style={{
-              display: "flex",
-              gap: "16px",
               marginBottom: i < steps.length - 1 ? "24px" : "0",
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(12px)",
@@ -2172,19 +1868,9 @@ const WhatHappensNext = ({ name, who }) => {
           >
             {/* Node */}
             <div
+              className="w-10 h-10 rounded-full shrink-0 bg-white flex items-center justify-center text-base leading-none z-[1]"
               style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                flexShrink: 0,
-                backgroundColor: colors.white,
                 border: `2px solid ${colors.accent}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "16px",
-                lineHeight: 1,
-                zIndex: 1,
                 boxShadow: `0 0 0 4px ${colors.accentLight}`,
               }}
             >
@@ -2192,50 +1878,18 @@ const WhatHappensNext = ({ name, who }) => {
             </div>
             {/* Content */}
             <div
-              style={{
-                flex: 1,
-                backgroundColor: colors.background,
-                borderRadius: "14px",
-                padding: "14px 18px",
-                border: `1px solid ${colors.line}`,
-              }}
+              className="flex-1 bg-[#F3F5F2] rounded-[14px] py-3.5 px-[18px]"
+              style={{ border: `1px solid ${colors.line}` }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
-                    fontWeight: "700",
-                    color: colors.primary,
-                  }}
-                >
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-[Inter,sans-serif] text-[13px] font-bold text-[#1B4D3E]">
                   {step.title}
                 </span>
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "10px",
-                    fontWeight: "700",
-                    color: colors.accentText,
-                    backgroundColor: colors.accentLight,
-                    padding: "2px 8px",
-                    borderRadius: "50px",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
-                >
+                <span className="font-[Inter,sans-serif] text-[10px] font-bold text-[#5C7A1F] bg-[#E8F5E0] py-0.5 px-2 rounded-full uppercase tracking-[0.5px]">
                   {step.time}
                 </span>
               </div>
-              <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  color: "#5a6a64",
-                  lineHeight: "1.6",
-                  margin: 0,
-                }}
-              >
+              <p className="font-[Inter,sans-serif] text-[13px] text-[#5a6a64] leading-[1.6] m-0">
                 {step.body}
               </p>
             </div>
@@ -2300,25 +1954,21 @@ const GuidedWidget = () => {
 
   const leftPanel = (
     <div
+      className="bg-[#F3F5F2] flex flex-col"
       style={{
-        backgroundColor: colors.background,
         padding: isMobile ? "22px 18px" : "44px 44px 32px",
-        display: "flex",
-        flexDirection: "column",
         minHeight: isMobile ? "480px" : "560px",
       }}
     >
       {/* Top bar */}
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
+      <div className="flex items-center gap-3 mb-7">
         <BridgeMarkSmall />
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "5px" }}>
-            <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", fontWeight: "600", color: colors.muted }}>
+        <div className="flex-1">
+          <div className="flex justify-between items-center mb-[5px]">
+            <span className="font-[Inter,sans-serif] text-[11px] font-semibold text-[#8A9E98]">
               {submitted ? "Complete" : step < 5 ? stepLabels[step] : "Done"}
             </span>
-            <span
-              style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", fontWeight: "700", color: colors.primary }}
-            >
+            <span className="font-[Inter,sans-serif] text-[11px] font-bold text-[#1B4D3E]">
               {Math.min(step + 1, 5)}/5
             </span>
           </div>
@@ -2328,8 +1978,8 @@ const GuidedWidget = () => {
 
       {/* Step content */}
       <div
+        className="flex-1"
         style={{
-          flex: 1,
           animation: anim
             ? dir === "fwd"
               ? "slideOutFwd 0.2s ease forwards"
@@ -2362,33 +2012,14 @@ const GuidedWidget = () => {
       {/* Navigation */}
       {!submitted && (
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "10px",
-            marginTop: "28px",
-            paddingTop: "20px",
-            borderTop: `1px solid ${colors.line}`,
-          }}
+          className="flex items-center justify-between gap-2.5 mt-7 pt-5"
+          style={{ borderTop: `1px solid ${colors.line}` }}
         >
           {step > 0 ? (
             <button
               onClick={() => go("bk")}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                padding: "11px 18px",
-                borderRadius: "50px",
-                border: `1.5px solid ${colors.line}`,
-                backgroundColor: "transparent",
-                color: colors.primary,
-                fontFamily: "Inter, sans-serif",
-                fontSize: "13px",
-                fontWeight: "600",
-                cursor: "pointer",
-              }}
+              className="flex items-center gap-1.5 py-[11px] px-[18px] rounded-full bg-transparent text-[#1B4D3E] font-[Inter,sans-serif] text-[13px] font-semibold cursor-pointer"
+              style={{ border: `1.5px solid ${colors.line}` }}
             >
               <IconArrowLeft /> Back
             </button>
@@ -2396,41 +2027,25 @@ const GuidedWidget = () => {
             <div />
           )}
 
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div className="flex items-center gap-2.5">
             {step < 4 ? (
               <button
                 onClick={() => canNext() && go("fwd")}
                 onMouseEnter={() => setHovBtn(true)}
                 onMouseLeave={() => setHovBtn(false)}
+                className="flex items-center gap-[9px] py-[13px] px-6 rounded-full border-none font-[Inter,sans-serif] text-[13px] font-semibold transition-all duration-[250ms] ease-in-out"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "9px",
-                  padding: "13px 24px",
-                  borderRadius: "50px",
-                  border: "none",
                   backgroundColor: canNext() ? colors.primary : colors.line,
                   color: canNext() ? colors.white : colors.muted,
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  fontWeight: "600",
                   cursor: canNext() ? "pointer" : "not-allowed",
-                  transition: "all 0.25s ease",
                   transform: canNext() && hovBtn ? "translateY(-1px)" : "none",
                   boxShadow: canNext() && hovBtn ? "0 6px 18px rgba(27,77,62,0.2)" : "none",
                 }}
               >
                 {step === 3 ? "Preview Email" : "Continue"}
                 <span
-                  style={{
-                    width: "24px",
-                    height: "24px",
-                    borderRadius: "50%",
-                    backgroundColor: canNext() ? colors.accent : "rgba(255,255,255,0.2)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
+                  className="w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{ backgroundColor: canNext() ? colors.accent : "rgba(255,255,255,0.2)" }}
                 >
                   <IconArrowRight size={11} />
                 </span>
@@ -2440,36 +2055,18 @@ const GuidedWidget = () => {
                 onClick={() => setSubmitted(true)}
                 onMouseEnter={() => setHovBtn(true)}
                 onMouseLeave={() => setHovBtn(false)}
+                className="flex items-center gap-[9px] py-[13px] px-6 rounded-full border-none font-[Inter,sans-serif] text-[13px] font-bold cursor-pointer transition-all duration-[250ms] ease-in-out"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "9px",
-                  padding: "13px 24px",
-                  borderRadius: "50px",
-                  border: "none",
                   backgroundColor: hovBtn ? colors.accent : colors.primary,
                   color: hovBtn ? colors.primary : colors.white,
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                  transition: "all 0.25s ease",
                   transform: hovBtn ? "translateY(-1px)" : "none",
                   boxShadow: hovBtn ? "0 8px 24px rgba(184,217,53,0.3)" : "0 4px 14px rgba(27,77,62,0.15)",
                 }}
               >
                 Send to BRIDGE
                 <span
-                  style={{
-                    width: "24px",
-                    height: "24px",
-                    borderRadius: "50%",
-                    backgroundColor: hovBtn ? colors.primary : colors.accent,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transition: "background-color 0.25s",
-                  }}
+                  className="w-6 h-6 rounded-full flex items-center justify-center transition-colors duration-[250ms]"
+                  style={{ backgroundColor: hovBtn ? colors.primary : colors.accent }}
                 >
                   <svg
                     width="11"
@@ -2536,53 +2133,18 @@ const GuidedWidget = () => {
 
   const rightPanel = (
     <div
-      style={{
-        backgroundColor: colors.ctaGreen,
-        padding: isMobile ? "28px 22px" : "44px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
+      className="bg-[#2E5A4D] flex flex-col justify-between"
+      style={{ padding: isMobile ? "28px 22px" : "44px" }}
     >
       {/* Top: contact info — original style */}
       <div>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "7px",
-            border: "1px solid rgba(255,255,255,0.15)",
-            borderRadius: "50px",
-            padding: "7px 14px",
-            marginBottom: "24px",
-            backgroundColor: "rgba(255,255,255,0.07)",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "10px",
-              fontWeight: "700",
-              color: colors.accent,
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-            }}
-          >
+        <div className="inline-flex items-center gap-[7px] border border-white/15 rounded-full py-[7px] px-3.5 mb-6 bg-white/[0.07]">
+          <span className="font-[Inter,sans-serif] text-[10px] font-bold text-[#B8D935] uppercase tracking-[2px]">
             Contact Information
           </span>
         </div>
-        <h3
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "22px",
-            fontWeight: "300",
-            color: colors.white,
-            lineHeight: "1.3",
-            letterSpacing: "-0.3px",
-            margin: "0 0 28px",
-          }}
-        >
-          Reach us <strong style={{ fontWeight: "700" }}>directly</strong>
+        <h3 className="font-[Inter,sans-serif] text-[22px] font-light text-white leading-[1.3] tracking-[-0.3px] mt-0 mb-7">
+          Reach us <strong className="font-bold">directly</strong>
         </h3>
 
         {[
@@ -2592,61 +2154,27 @@ const GuidedWidget = () => {
         ].map((item) => (
           <div
             key={item.label}
-            style={{ display: "flex", alignItems: "flex-start", gap: "14px", marginBottom: "20px" }}
+            className="flex items-start gap-3.5 mb-5"
           >
-            <div
-              style={{
-                width: "36px",
-                height: "36px",
-                borderRadius: "9px",
-                backgroundColor: "rgba(255,255,255,0.1)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                color: colors.accent,
-              }}
-            >
+            <div className="w-9 h-9 rounded-[9px] bg-white/10 flex items-center justify-center shrink-0 text-[#B8D935]">
               {item.icon}
             </div>
             <div>
-              <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  color: "rgba(255,255,255,0.45)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  marginBottom: "2px",
-                }}
-              >
+              <div className="font-[Inter,sans-serif] text-[10px] font-bold text-white/45 uppercase tracking-[0.5px] mb-0.5">
                 {item.label}
               </div>
-              <div
-                style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", fontWeight: "500", color: colors.white }}
-              >
+              <div className="font-[Inter,sans-serif] text-[13px] font-medium text-white">
                 {item.value}
               </div>
             </div>
           </div>
         ))}
 
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.1)", margin: "24px 0" }} />
+        <div className="h-px bg-white/10 my-6" />
 
         {/* What to expect */}
         <div>
-          <div
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "10px",
-              fontWeight: "700",
-              color: colors.accent,
-              textTransform: "uppercase",
-              letterSpacing: "1.5px",
-              marginBottom: "14px",
-            }}
-          >
+          <div className="font-[Inter,sans-serif] text-[10px] font-bold text-[#B8D935] uppercase tracking-[1.5px] mb-3.5">
             What to Expect
           </div>
           {[
@@ -2654,32 +2182,14 @@ const GuidedWidget = () => {
             "A focused 30-min alignment call",
             "Tailored proposal or pathway within 2 weeks",
           ].map((item, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", marginBottom: "10px" }}>
+            <div key={i} className="flex items-start gap-2.5 mb-2.5">
               <div
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: "50%",
-                  flexShrink: 0,
-                  marginTop: "1px",
-                  backgroundColor: "rgba(184,217,53,0.18)",
-                  border: `1.5px solid ${colors.accent}`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: colors.accent,
-                }}
+                className="w-5 h-5 rounded-full shrink-0 mt-px bg-[rgba(184,217,53,0.18)] flex items-center justify-center text-[#B8D935]"
+                style={{ border: `1.5px solid ${colors.accent}` }}
               >
                 <IconCheck size={9} />
               </div>
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  color: "rgba(255,255,255,0.72)",
-                  lineHeight: "1.55",
-                }}
-              >
+              <span className="font-[Inter,sans-serif] text-[13px] text-white/[0.72] leading-[1.55]">
                 {item}
               </span>
             </div>
@@ -2688,11 +2198,12 @@ const GuidedWidget = () => {
       </div>
 
       {/* Bottom: inquiry card carousel */}
-      <div style={{ marginTop: "28px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.1)", marginBottom: "20px" }} />
+      <div className="mt-7">
+        <div className="h-px bg-white/10 mb-5" />
 
         {/* Card content */}
         <div
+          className="mb-4 min-h-[88px]"
           style={{
             animation: cardAnim
               ? cardDir === "fwd"
@@ -2701,41 +2212,22 @@ const GuidedWidget = () => {
               : cardDir === "fwd"
                 ? "slideInFwd 0.22s ease forwards"
                 : "slideInBk 0.22s ease forwards",
-            marginBottom: "16px",
-            minHeight: "88px",
           }}
         >
-          <div
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "14px",
-              fontWeight: "700",
-              color: colors.white,
-              marginBottom: "7px",
-              lineHeight: "1.3",
-            }}
-          >
+          <div className="font-[Inter,sans-serif] text-sm font-bold text-white mb-[7px] leading-[1.3]">
             {INQUIRY_CARDS[cardIndex].title}
           </div>
-          <div
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "13px",
-              color: "rgba(255,255,255,0.55)",
-              lineHeight: "1.65",
-              marginBottom: "10px",
-            }}
-          >
+          <div className="font-[Inter,sans-serif] text-[13px] text-white/55 leading-[1.65] mb-2.5">
             {INQUIRY_CARDS[cardIndex].description}
           </div>
-          <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", fontWeight: "600", color: colors.accent }}>
+          <div className="font-[Inter,sans-serif] text-xs font-semibold text-[#B8D935]">
             {INQUIRY_CARDS[cardIndex].email}
           </div>
         </div>
 
         {/* Nav row */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+        <div className="flex items-center justify-between">
+          <div className="flex gap-[5px] items-center">
             {INQUIRY_CARDS.map((_, i) => (
               <button
                 key={i}
@@ -2749,20 +2241,15 @@ const GuidedWidget = () => {
                     }, 180);
                   }
                 }}
+                className="h-[5px] rounded-[3px] border-none cursor-pointer p-0 transition-all duration-300 ease-in-out"
                 style={{
                   width: i === cardIndex ? "16px" : "5px",
-                  height: "5px",
-                  borderRadius: "3px",
                   backgroundColor: i === cardIndex ? colors.accent : "rgba(255,255,255,0.25)",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                  transition: "all 0.3s ease",
                 }}
               />
             ))}
           </div>
-          <div style={{ display: "flex", gap: "6px" }}>
+          <div className="flex gap-1.5">
             {[
               { d: "bk", path: "M19 12H5M12 5l-7 7 7 7" },
               { d: "fwd", path: "M5 12h14M12 5l7 7-7 7" },
@@ -2770,19 +2257,7 @@ const GuidedWidget = () => {
               <button
                 key={btn.d}
                 onClick={() => cycleCard(btn.d)}
-                style={{
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  backgroundColor: "rgba(255,255,255,0.07)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  color: "rgba(255,255,255,0.7)",
-                  transition: "all 0.2s ease",
-                }}
+                className="w-7 h-7 rounded-full border border-white/20 bg-white/[0.07] flex items-center justify-center cursor-pointer text-white/70 transition-all duration-200 ease-in-out"
               >
                 <svg
                   width="11"
@@ -2806,38 +2281,19 @@ const GuidedWidget = () => {
 
   return (
     <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: isMobile ? "1fr" : "1.15fr 0.85fr",
-        borderRadius: "28px",
-        overflow: "hidden",
-        boxShadow: "0 24px 80px rgba(0,0,0,0.14)",
-      }}
+      className="grid rounded-[28px] overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.14)]"
+      style={{ gridTemplateColumns: isMobile ? "1fr" : "1.15fr 0.85fr" }}
     >
       {leftPanel}
       {!isMobile && rightPanel}
       {isMobile && (
-        <div
-          style={{
-            backgroundColor: colors.ctaGreen,
-            padding: "18px 20px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <span style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.7)" }}>
+        <div className="bg-[#2E5A4D] py-[18px] px-5 flex items-center justify-between">
+          <span className="font-[Inter,sans-serif] text-xs text-white/70">
             Questions?
           </span>
           <a
             href="mailto:info@bridgepbc.com"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "13px",
-              fontWeight: "600",
-              color: colors.accent,
-              textDecoration: "none",
-            }}
+            className="font-[Inter,sans-serif] text-[13px] font-semibold text-[#B8D935] no-underline"
           >
             info@bridgepbc.com
           </a>
@@ -2857,74 +2313,33 @@ const HeroSection = () => {
   const isMobile = useIsMobile();
   return (
     <section
-      style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "64px 20px 40px" : "100px 80px 120px",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      className="bg-white relative overflow-hidden"
+      style={{ padding: isMobile ? "64px 20px 40px" : "100px 80px 120px" }}
     >
       <div
-        style={{
-          position: "absolute",
-          top: "-60px",
-          right: "-60px",
-          width: "480px",
-          height: "480px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(184,217,53,0.08) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
+        className="absolute -top-[60px] -right-[60px] w-[480px] h-[480px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(184,217,53,0.08) 0%, transparent 70%)" }}
       />
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto", position: "relative" }}>
+      <div className="relative mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            backgroundColor: colors.white,
-            border: `1px solid ${colors.line}`,
-            borderRadius: "50px",
-            padding: "10px 20px",
-            marginBottom: "32px",
-          }}
+          className="inline-flex items-center gap-2 bg-white rounded-full py-2.5 px-5 mb-8"
+          style={{ border: `1px solid ${colors.line}` }}
         >
-          <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: colors.accent }} />
-          <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "11px",
-              fontWeight: "700",
-              color: colors.primary,
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-            }}
-          >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#B8D935]" />
+          <span className="font-[Inter,sans-serif] text-[11px] font-bold text-[#1B4D3E] uppercase tracking-[2px]">
             Contact Us
           </span>
         </div>
         <div style={{ maxWidth: isMobile ? "100%" : "680px" }}>
           <h1
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "36px" : "60px",
-              fontWeight: "300",
-              color: colors.primary,
-              lineHeight: "1.1",
-              letterSpacing: "-1px",
-              margin: "0 0 24px",
-            }}
+            className="font-[Inter,sans-serif] font-light text-[#1B4D3E] leading-[1.1] tracking-[-1px] mt-0 mb-6"
+            style={{ fontSize: isMobile ? "36px" : "60px" }}
           >
-            Let's build something <strong style={{ fontWeight: "700" }}>meaningful</strong> together
+            Let's build something <strong className="font-bold">meaningful</strong> together
           </h1>
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "16px" : "18px",
-              color: "#5a6a64",
-              lineHeight: "1.75",
-              margin: 0,
-            }}
+            className="font-[Inter,sans-serif] text-[#5a6a64] leading-[1.75] m-0"
+            style={{ fontSize: isMobile ? "16px" : "18px" }}
           >
             Whether you're a government partner, investor, practitioner, or community leader — BRIDGE is built for
             collaboration. Tell us who you are and we'll route you to exactly the right team.
