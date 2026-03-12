@@ -3971,7 +3971,7 @@ const RippleEffectSection = () => {
             <div>
               {/* Breadcrumb */}
               <div
-                style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "28px", alignItems: "center" }}
+                className="flex flex-wrap gap-2 mb-7 items-center"
               >
                 {ripplePathways[activeNode].pathLabel.split(" → ").map((seg, si, arr) => (
                   <React.Fragment key={si}>
@@ -4038,7 +4038,7 @@ const RippleEffectSection = () => {
                     >
                       {ripplePathways[activeNode].multiplier}
                     </span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                    <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                       value multiplier
                     </span>
                   </div>

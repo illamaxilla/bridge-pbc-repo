@@ -2389,7 +2389,7 @@ const PolicyAlignmentSection = () => {
                       {p.bridgeRole}
                     </p>
                     {p.pillars && (
-                      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "10px" }}>
+                      <div className="flex gap-[6px] flex-wrap mb-[10px]">
                         {p.pillars.map((pill, pi) => (
                           <span
                             key={pi}
@@ -2436,7 +2436,7 @@ const PolicyAlignmentSection = () => {
         </div>
 
         {isMobile && (
-          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "16px" }}>
+          <div className="flex justify-center gap-2 mb-4">
             {filtered.map((_, i) => (
               <div
                 key={i}

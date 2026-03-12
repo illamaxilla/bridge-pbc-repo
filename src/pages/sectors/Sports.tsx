@@ -2347,7 +2347,7 @@ const MarketEcosystemSection = () => {
         >
           {/* Left Sidebar — desktop only */}
           {!isMobile && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div className="flex flex-col gap-2">
               {landscapeEntities.map((entity, i) => {
                 const isActive = activeEntity === i;
                 return (
@@ -2433,7 +2433,7 @@ const MarketEcosystemSection = () => {
                   {active.description}
                 </div>
               </div>
-              <div style={{ display: "flex", gap: "8px", flexShrink: 0 }}>
+              <div className="flex gap-2 shrink-0">
                 <span
                   style={{
                     padding: "8px 16px",

@@ -1996,34 +1996,23 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                         {g.sector}
                       </span>
                       <span
+                        className="text-[10px] font-bold py-[3px] px-[9px] rounded-[20px] flex items-center gap-1"
                         style={{
-                          fontSize: 10,
-                          fontWeight: 700,
                           color: g.active ? "#27AE60" : C.muted,
                           background: g.active ? "#27AE6012" : C.bg,
-                          padding: "3px 9px",
-                          borderRadius: 20,
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
                         }}
                       >
                         <span
-                          style={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: "50%",
-                            background: g.active ? "#27AE60" : C.muted,
-                            display: "inline-block",
-                          }}
+                          className="w-[6px] h-[6px] rounded-full inline-block"
+                          style={{ background: g.active ? "#27AE60" : C.muted }}
                         />
                         {g.active ? "Active" : "Inactive"}
                       </span>
                     </div>
-                    <h3 style={{ fontSize: 15, fontWeight: 700, color: C.dark, margin: "0 0 8px", lineHeight: 1.3 }}>
+                    <h3 className="text-[15px] font-bold leading-[1.3]" style={{ color: C.dark, margin: "0 0 8px" }}>
                       {g.name}
                     </h3>
-                    <p style={{ fontSize: 12, color: C.muted, margin: "0 0 16px", lineHeight: 1.55 }}>{g.desc}</p>
+                    <p className="text-[12px] leading-[1.55]" style={{ color: C.muted, margin: "0 0 16px" }}>{g.desc}</p>
 
                     {/* Member avatars + stats */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
