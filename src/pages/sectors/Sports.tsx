@@ -3697,31 +3697,17 @@ const MetricRow = ({ item, animate, delay, index, isMobile }) => {
           transition: "opacity 0.4s ease",
         }}
       >
-        <div
-          style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}
-        >
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+        <div className="flex justify-between items-start mb-[10px]">
+          <div className="flex items-start gap-[10px]">
             <div
-              style={{
-                fontSize: "28px",
-                fontWeight: "700",
-                color: colors.primary,
-                fontFamily: "Poppins, sans-serif",
-                letterSpacing: "-1px",
-                lineHeight: "1",
-              }}
+              className="text-[28px] font-bold font-[Poppins,sans-serif] -tracking-[1px] leading-none"
+              style={{ color: colors.primary }}
             >
               {formatValue()}
             </div>
             <div
-              style={{
-                fontSize: "10px",
-                fontWeight: "700",
-                color: colors.accent,
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                marginTop: "4px",
-              }}
+              className="text-[10px] font-bold uppercase tracking-[0.5px] mt-1"
+              style={{ color: colors.accent }}
             >
               {item.trend}
             </div>
@@ -3734,19 +3720,10 @@ const MetricRow = ({ item, animate, delay, index, isMobile }) => {
               maxWidth: "40%",
             }}
           >
-            <div
-              style={{
-                fontSize: "9px",
-                fontWeight: "700",
-                color: "#aaa",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                marginBottom: "2px",
-              }}
-            >
+            <div className="text-[9px] font-bold text-[#aaa] uppercase tracking-[1px] mb-[2px]">
               Ventures
             </div>
-            <div style={{ fontSize: "10px", fontWeight: "500", color: colors.primary, lineHeight: "1.4" }}>
+            <div className="text-[10px] font-medium leading-[1.4]" style={{ color: colors.primary }}>
               {item.ventures}
             </div>
           </div>
@@ -5188,7 +5165,7 @@ export default function SportsEntertainmentSectorPage() {
       <ImpactSection />
       <FinalCTASection />
       <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+        <div className="h-px bg-white/[0.08]" />
       </div>
     </div>
     </Layout>

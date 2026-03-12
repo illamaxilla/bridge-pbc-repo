@@ -3665,13 +3665,10 @@ const ImpactSection = ({ sector }) => {
       item.value >= 1000 ? Math.round(val).toLocaleString() : item.value % 1 !== 0 ? val.toFixed(1) : Math.round(val);
     return (
       <span
+        className="font-[Poppins,sans-serif] font-bold tracking-[-1px] leading-none"
         style={{
-          fontFamily: "Poppins, sans-serif",
           fontSize: isMobile ? "28px" : "36px",
-          fontWeight: "700",
           color: colors.primary,
-          letterSpacing: "-1px",
-          lineHeight: "1",
         }}
       >
         {item.prefix}

@@ -3365,51 +3365,30 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
     >
       {isMobile ? (
         <>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "4px", flexWrap: "nowrap" }}>
+          <div className="flex justify-between items-start">
+            <div className="flex items-baseline gap-1 flex-nowrap">
               <span
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "24px",
-                  fontWeight: "700",
-                  color: colors.primary,
-                  letterSpacing: "-1px",
-                  whiteSpace: "nowrap",
-                }}
+                className="font-[Poppins,sans-serif] text-[24px] font-bold tracking-[-1px] whitespace-nowrap"
+                style={{ color: colors.primary }}
               >
                 {formatValue(count, item)}
               </span>
               {item.context && (
-                <span
-                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", fontWeight: "500", color: "#888" }}
-                >
+                <span className="font-['DM_Sans',sans-serif] text-[12px] font-medium text-[#888]">
                   {item.context}
                 </span>
               )}
             </div>
-            <div
-              style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0 }}
-            >
+            <div className="flex flex-col items-end gap-1 shrink-0">
               <div
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "9px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                }}
+                className="font-['DM_Sans',sans-serif] text-[9px] font-bold uppercase tracking-[0.5px]"
+                style={{ color: colors.accent }}
               >
                 {item.trend}
               </div>
               <div
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "10px",
-                  fontWeight: "600",
-                  color: colors.primary,
-                  whiteSpace: "nowrap",
-                }}
+                className="font-['DM_Sans',sans-serif] text-[10px] font-semibold whitespace-nowrap"
+                style={{ color: colors.primary }}
               >
                 {item.ventures}
               </div>
@@ -3417,17 +3396,12 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
           </div>
           <div>
             <div
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "14px",
-                fontWeight: "700",
-                color: colors.primary,
-                marginBottom: "2px",
-              }}
+              className="font-['DM_Sans',sans-serif] text-[14px] font-bold mb-[2px]"
+              style={{ color: colors.primary }}
             >
               {item.label}
             </div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "#666", lineHeight: "1.45" }}>
+            <div className="font-['DM_Sans',sans-serif] text-[12px] text-[#666] leading-[1.45]">
               {item.description}
             </div>
           </div>
@@ -3435,88 +3409,47 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
       ) : (
         <>
           <div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "4px", flexWrap: "nowrap" }}>
+            <div className="flex items-baseline gap-1 flex-nowrap">
               <span
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "28px",
-                  fontWeight: "700",
-                  color: colors.primary,
-                  letterSpacing: "-1px",
-                  whiteSpace: "nowrap",
-                }}
+                className="font-[Poppins,sans-serif] text-[28px] font-bold tracking-[-1px] whitespace-nowrap"
+                style={{ color: colors.primary }}
               >
                 {formatValue(count, item)}
               </span>
               {item.context && (
-                <span
-                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: "500", color: "#888" }}
-                >
+                <span className="font-['DM_Sans',sans-serif] text-[13px] font-medium text-[#888]">
                   {item.context}
                 </span>
               )}
             </div>
             <div
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "10px",
-                fontWeight: "700",
-                color: colors.accent,
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                marginTop: "4px",
-              }}
+              className="font-['DM_Sans',sans-serif] text-[10px] font-bold uppercase tracking-[0.5px] mt-1"
+              style={{ color: colors.accent }}
             >
               {item.trend}
             </div>
           </div>
           <div>
             <div
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "15px",
-                fontWeight: "700",
-                color: colors.primary,
-                marginBottom: "4px",
-              }}
+              className="font-['DM_Sans',sans-serif] text-[15px] font-bold mb-1"
+              style={{ color: colors.primary }}
             >
               {item.label}
             </div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "#666", lineHeight: "1.5" }}>
+            <div className="font-['DM_Sans',sans-serif] text-[13px] text-[#666] leading-[1.5]">
               {item.description}
             </div>
           </div>
           <div
-            style={{
-              backgroundColor: idx % 2 === 0 ? colors.background : "rgba(27,77,62,0.04)",
-              borderRadius: "10px",
-              padding: "10px 16px",
-              overflow: "hidden",
-            }}
+            className="rounded-[10px] overflow-hidden px-4 py-[10px]"
+            style={{ backgroundColor: idx % 2 === 0 ? colors.background : "rgba(27,77,62,0.04)" }}
           >
-            <div
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "9px",
-                fontWeight: "700",
-                color: "#aaa",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                marginBottom: "4px",
-              }}
-            >
+            <div className="font-['DM_Sans',sans-serif] text-[9px] font-bold text-[#aaa] uppercase tracking-[1px] mb-1">
               LINKED VENTURES
             </div>
             <div
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "11px",
-                fontWeight: "500",
-                color: colors.primary,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
+              className="font-['DM_Sans',sans-serif] text-[11px] font-medium whitespace-nowrap overflow-hidden text-ellipsis"
+              style={{ color: colors.primary }}
             >
               {item.ventures}
             </div>

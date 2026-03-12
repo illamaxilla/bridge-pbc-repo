@@ -3022,48 +3022,17 @@ const CrossSectorSection = () => {
               >
                 {/* Column 1: Why It Matters (always visible) */}
                 <div>
-                  <h4
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      textTransform: "uppercase",
-                      letterSpacing: "1px",
-                      color: colors.accent,
-                      margin: "0 0 16px 0",
-                    }}
-                  >
+                  <h4 className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mt-0 mb-4" style={{ color: colors.accent }}>
                     Why It Matters
                   </h4>
-                  <p
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "15px",
-                      color: "rgba(255,255,255,0.7)",
-                      lineHeight: "1.6",
-                      margin: "0 0 20px 0",
-                    }}
-                  >
+                  <p className="font-[Inter,sans-serif] text-[15px] text-white/70 leading-[1.6] mt-0 mb-5">
                     {pathways[activeNode].impact}
                   </p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
-                    <span
-                      style={{
-                        fontFamily: "Poppins, sans-serif",
-                        fontSize: "32px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                      }}
-                    >
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-[Poppins,sans-serif] text-[32px] font-bold" style={{ color: colors.accent }}>
                       {pathways[activeNode].multiplier}
                     </span>
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
-                        color: "rgba(255,255,255,0.4)",
-                      }}
-                    >
+                    <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                       value multiplier
                     </span>
                   </div>
@@ -3072,45 +3041,22 @@ const CrossSectorSection = () => {
                 {/* Column 2: Synergy Pathways (collapsible on mobile) */}
                 {(!isMobile || showMoreRipple) && (
                   <div>
-                    <h4
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        textTransform: "uppercase",
-                        letterSpacing: "1px",
-                        color: colors.accent,
-                        margin: "0 0 16px 0",
-                      }}
-                    >
+                    <h4 className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mt-0 mb-4" style={{ color: colors.accent }}>
                       Synergy Pathways
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {pathways[activeNode].synergies.map((syn, i) => (
                         <div
                           key={i}
+                          className="flex items-center gap-3 rounded-[10px]"
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "12px",
                             padding: "12px 16px",
-                            borderRadius: "10px",
                             backgroundColor: "rgba(255,255,255,0.05)",
                             border: "1px solid rgba(255,255,255,0.06)",
                           }}
                         >
-                          <span style={{ color: colors.accent, fontSize: "8px", flexShrink: 0 }}>●</span>
-                          <span
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "14px",
-                              color: "rgba(255,255,255,0.75)",
-                              lineHeight: "1.3",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
+                          <span className="text-[8px] shrink-0" style={{ color: colors.accent }}>●</span>
+                          <span className="font-[Inter,sans-serif] text-[14px] text-white/75 leading-[1.3] whitespace-nowrap overflow-hidden text-ellipsis">
                             {syn}
                           </span>
                         </div>

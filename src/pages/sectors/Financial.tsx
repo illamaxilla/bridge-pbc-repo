@@ -4330,7 +4330,7 @@ const ImpactSection = () => {
           </div>
 
           {/* Divider */}
-          {!isMobile && <div style={{ width: "1px", height: "24px", backgroundColor: colors.line }} />}
+          {!isMobile && <div className="w-px h-6" style={{ backgroundColor: colors.line }} />}
 
           {/* Sub-filters */}
           <div

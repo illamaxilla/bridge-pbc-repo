@@ -4024,7 +4024,7 @@ export default function HousingRealEstateSectorPage() {
   const isMobile = useIsMobile();
   return (
     <Layout>
-      <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
+      <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
         <HeroSection sector={sectorData} />
         <ProblemSection sector={sectorData} />
         <ValueChainSectionPremium />

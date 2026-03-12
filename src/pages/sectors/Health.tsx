@@ -446,82 +446,73 @@ const HeroSection = ({ sector }) => {
   const isMobile = useIsMobile();
   return (
     <section
-      className="relative flex flex-col"
-      style={{
+      className="relative flex flex-col" style={{
         backgroundColor: colors.white,
         padding: isMobile ? "80px 20px 20px" : "112px 80px 20px",
-        minHeight: isMobile ? "auto" : "calc(100vh - 100px)",
-      }}
+        minHeight: isMobile ? "auto" : "calc(100vh - 100px)"
+                }}
     >
       <div
-        className="max-w-[1200px] mx-auto w-full grid items-start flex-1"
-        style={{
+        className="max-w-[1200px] mx-auto w-full grid items-start flex-1" style={{
           gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
-          gap: isMobile ? "32px" : "60px",
-        }}
+          gap: isMobile ? "32px" : "60px"
+                }}
       >
         {/* Left Column */}
         <div>
           <span
-            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif] px-4 py-2"
-            style={{
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif] px-4 py-2" style={{
               backgroundColor: colors.accentLight,
               color: colors.primary,
-              marginBottom: isMobile ? "16px" : "24px",
-            }}
+              marginBottom: isMobile ? "16px" : "24px"
+                }}
           >
             {sector.category}
           </span>
           <h1
-            className="font-[Inter,sans-serif] font-normal leading-[1.1] mb-5 mt-0 ml-0 mr-0 tracking-[-1px]"
-            style={{
+            className="font-[Inter,sans-serif] font-normal leading-[1.1] mb-5 mt-0 ml-0 mr-0 tracking-[-1px]" style={{
               fontSize: isMobile ? "36px" : "52px",
-              color: colors.primary,
-            }}
+              color: colors.primary
+                }}
           >
             <span className="font-bold">Health</span> Systems &{isMobile ? " " : <br />}Wellbeing
           </h1>
           <h2
-            className="font-[Inter,sans-serif] font-semibold leading-[1.3] mt-0 ml-0 mr-0 mb-4"
-            style={{
+            className="font-[Inter,sans-serif] font-semibold leading-[1.3] mt-0 ml-0 mr-0 mb-4" style={{
               fontSize: isMobile ? "20px" : "24px",
-              color: colors.dark,
-            }}
+              color: colors.dark
+                }}
           >
             {sector.problemHeadline}
           </h2>
           <p
-            className="font-[Inter,sans-serif] text-[#555] leading-[1.7] mt-0 ml-0 mr-0 mb-8 max-w-[540px]"
-            style={{
-              fontSize: isMobile ? "15px" : "16px",
-            }}
+            className="font-[Inter,sans-serif] text-[#555] leading-[1.7] mt-0 ml-0 mr-0 mb-8 max-w-[540px]" style={{
+              fontSize: isMobile ? "15px" : "16px"
+                }}
           >
             {sector.problemSubheadline}
           </p>
           <div className="flex gap-3 items-center flex-wrap">
             <button
-              className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer inline-flex items-center gap-[10px] px-6 py-4"
-              style={{
+              className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer inline-flex items-center gap-[10px] px-6 py-4" style={{
                 backgroundColor: colors.accent,
                 color: colors.primary,
-                ...(isMobile ? { width: "100%", justifyContent: "center" } : {}),
-              }}
+                ...(isMobile ? { width: "100%", justifyContent: "center" } : {})
+                }}
             >
               Request Full Analysis
               <span
-                className="w-7 h-7 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: colors.primary }}
+                className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: colors.primary }}
               >
                 <ArrowRight size={14} strokeWidth={2.5} color="white" />
               </span>
             </button>
             <button
-              className="bg-transparent rounded-full text-[15px] font-medium font-[Inter,sans-serif] cursor-pointer px-6 py-4"
-              style={{
+              className="bg-transparent rounded-full text-[15px] font-medium font-[Inter,sans-serif] cursor-pointer px-6 py-4" style={{
                 color: colors.dark,
                 border: `2px solid ${colors.line}`,
-                ...(isMobile ? { width: "100%", textAlign: "center" } : {}),
-              }}
+                ...(isMobile ? { width: "100%", textAlign: "center" } : {})
+                }}
             >
               Download Summary
             </button>
@@ -533,8 +524,8 @@ const HeroSection = ({ sector }) => {
           style={{
             backgroundColor: colors.primary,
             borderRadius: isMobile ? "16px" : "20px",
-            padding: isMobile ? "24px" : "32px",
-          }}
+            padding: isMobile ? "24px" : "32px"
+                }}
         >
           <div className="flex justify-between items-center">
             <span
@@ -714,13 +705,11 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
   return (
     <div
       onClick={onToggle}
-      className="cursor-pointer" style={{
+      className="cursor-pointer transition-all duration-300 ease-in-out" style={{
                   backgroundColor: colors.white,
                   borderRadius: isMobile ? "16px" : "20px",
                   padding: isMobile ? "20px" : "28px",
-                  border: isExpanded ? `2px solid ${colors.accent}` : `1px solid ${colors.line}`,
-                  transition: "all 0.3s ease"
-                }}
+                  border: isExpanded ? `2px solid ${colors.accent}` : `1px solid ${colors.line}`                }}
     >
       <div
         className="flex items-start justify-between mb-3"
@@ -745,8 +734,8 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
               display: "-webkit-box",
               WebkitLineClamp: isMobile ? 2 : 3,
               WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-            }}
+              overflow: "hidden"
+                }}
           >
             {problem.description}
           </p>
@@ -811,14 +800,12 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
                 </span>
               </div>
               <div
-                className="h-[8px] rounded-[4px] overflow-hidden" style={{ backgroundColor: colors.line }}
+                className="h-[8px] rounded-[4px] overflow-hidden transition-[width] duration-500 ease-in-out" style={{ backgroundColor: colors.line }}
               >
                 <div
                   className="h-full rounded-[4px]" style={{
                   width: `${problem.severityScore}%`,
-                  backgroundColor: problem.severity === "High Priority" ? colors.primary : colors.accentText,
-                  transition: "width 0.5s ease"
-                }}
+                  backgroundColor: problem.severity === "High Priority" ? colors.primary : colors.accentText                }}
                 />
               </div>
             </div>
@@ -1011,16 +998,14 @@ const ProblemSection = () => {
         </div>
 
         {isMobile && (
-          <div className="flex justify-center gap-[6px] mt-4">
+          <div className="flex justify-center gap-[6px] mt-4 transition-all duration-300 ease-in-out">
             {problemSectionData.map((_, i) => (
               <div
                 key={i}
                 className="h-[8px]" style={{
                   width: i === 0 ? "24px" : "8px",
                   borderRadius: i === 0 ? "4px" : "50%",
-                  backgroundColor: i === 0 ? colors.accent : "#ddd",
-                  transition: "all 0.3s ease"
-                }}
+                  backgroundColor: i === 0 ? colors.accent : "#ddd"                }}
               />
             ))}
           </div>
@@ -1128,14 +1113,13 @@ const ValueChainSectionPremium = () => {
             ))}
           </div>
         ) : (
-          <div className="flex gap-[10px] items-stretch" style={{ marginBottom: "34px" }}>
+          <div className="flex gap-[10px] items-stretch transition-all duration-300 ease-in-out" style={{ marginBottom: "34px" }}>
             {valueChainStages.map((s, i) => (
               <div
                 key={s.id}
                 onClick={() => setActiveStage(i)}
                 className="flex-1 min-h-[200px] rounded-[16px] p-[20px] cursor-pointer flex flex-col" style={{
-                  backgroundColor: activeStage === i ? "rgba(184, 217, 53, 0.1)" : colors.background,
-                  transition: "all 0.3s ease",
+                  backgroundColor: activeStage === i ? "rgba(184, 217, 53, 0.1)" : colors.background
                   border: activeStage === i ? `2px solid ${colors.accent}` : `2px solid ${colors.primary}`
                 }}
               >
@@ -1148,11 +1132,9 @@ const ValueChainSectionPremium = () => {
                     {s.stage}
                   </div>
                   <div
-                    className="w-[28px] h-[28px] rounded-[8px] flex items-center justify-center shrink-0" style={{
+                    className="w-[28px] h-[28px] rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-300 ease-in-out" style={{
                   backgroundColor: activeStage === i ? colors.accent : "rgba(0,0,0,0.04)",
-                  color: activeStage === i ? colors.primary : "#999",
-                  transition: "all 0.3s ease"
-                }}
+                  color: activeStage === i ? colors.primary : "#999"                }}
                   >
                     <span className="scale-[0.7] flex">{valueChainIcons[s.icon]}</span>
                   </div>
@@ -1187,8 +1169,8 @@ const ValueChainSectionPremium = () => {
             display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
             ...(isMobile ? {} : { height: "460px" }),
-            border: `2px solid ${colors.primary}`,
-          }}
+            border: `2px solid ${colors.primary}`
+                }}
         >
           {/* LEFT — Dark Green */}
           <div
@@ -1243,14 +1225,12 @@ const ValueChainSectionPremium = () => {
                 </div>
               </div>
               <div
-                className="h-[4px] rounded-[2px] overflow-hidden" style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
+                className="h-[4px] rounded-[2px] overflow-hidden transition-[width] duration-500 ease-in-out" style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
               >
                 <div
                   className="h-full rounded-[2px]" style={{
                   width: `${stage.valueRetained}%`,
-                  backgroundColor: colors.accent,
-                  transition: "width 0.5s ease"
-                }}
+                  backgroundColor: colors.accent                }}
                 />
               </div>
             </div>
@@ -1280,8 +1260,8 @@ const ValueChainSectionPremium = () => {
                       fontSize: isMobile ? "13px" : "14px",
                       color: "rgba(255,255,255,0.75)",
                       lineHeight: isMobile ? "1.3" : "1.5",
-                      ...(isMobile ? { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } : {}),
-                    }}
+                      ...(isMobile ? { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } : {})
+                }}
                   >
                     {point}
                   </span>
@@ -1343,36 +1323,30 @@ const ValueChainSectionPremium = () => {
                   {valueChainStages.map((s, i) => (
                     <div
                       key={i}
-                      className="flex-1 flex flex-col items-center h-full justify-end gap-1"
+                      className="flex-1 flex flex-col items-center h-full justify-end gap-1 transition-all duration-300 ease-in-out"
                     >
                       <span
                         className="font-[Poppins,sans-serif] text-[10px] font-bold" style={{
-                  color: i === activeStage ? getBarColor(s.valueRetained) : "#CCC",
-                  transition: "all 0.3s ease"
-                }}
+                  color: i === activeStage ? getBarColor(s.valueRetained) : "#CCC"                }}
                       >
                         {s.valueRetained}%
                       </span>
                       <div
-                        className="w-full min-h-[4px]" style={{
+                        className="w-full min-h-[4px] transition-all duration-500 ease-in-out" style={{
                   height: `${(s.valueRetained / 100) * 100}%`,
                   backgroundColor: i === activeStage ? getBarColor(s.valueRetained) : "#E5E7EB",
-                  borderRadius: "4px 4px 2px 2px",
-                  transition: "all 0.5s ease"
-                }}
+                  borderRadius: "4px 4px 2px 2px"                }}
                       />
                     </div>
                   ))}
                 </div>
-                <div className="flex gap-[6px] mt-[6px]">
+                <div className="flex gap-[6px] mt-[6px] transition-all duration-300 ease-in-out">
                   {valueChainStages.map((s, i) => (
                     <div
                       key={i}
                       className="flex-1 text-center font-[Inter,sans-serif] text-[9px] tracking-[0.3px]" style={{
                   color: i === activeStage ? colors.primary : "#BBB",
-                  fontWeight: i === activeStage ? "600" : "400",
-                  transition: "all 0.3s ease"
-                }}
+                  fontWeight: i === activeStage ? "600" : "400"                }}
                     >
                       {s.stage.split(" ")[0]}
                     </div>
@@ -1390,7 +1364,7 @@ const ValueChainSectionPremium = () => {
                 }}
               >
                 {showMore ? "Show less" : "Show more details"}
-                <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} style={{ transform: showMore ? "rotate(180deg)" : "none", transition: "transform 0.3s ease" }} />
+                <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} className="transition-transform duration-300 ease-in-out" style={{ transform: showMore ? "rotate(180deg)" : "none" }} />
               </button>
             )}
           </div>
@@ -1472,13 +1446,11 @@ const SolutionsSection = ({ sector }) => {
               <button
                 key={key}
                 onClick={() => setActiveTier(key)}
-                className="border-none rounded-full text-[12px] font-[Inter,sans-serif] cursor-pointer" style={{
+                className="border-none rounded-full text-[12px] font-[Inter,sans-serif] cursor-pointer transition-all duration-200 ease-in-out" style={{
                   backgroundColor: activeTier === key ? colors.accent : "transparent",
                   color: activeTier === key ? colors.primary : "rgba(255,255,255,0.6)",
                   padding: isMobile ? "6px 14px" : "6px 16px",
-                  fontWeight: activeTier === key ? "700" : "500",
-                  transition: "all 0.2s ease"
-                }}
+                  fontWeight: activeTier === key ? "700" : "500"                }}
               >
                 {label}
               </button>
@@ -1518,8 +1490,8 @@ const SolutionsSection = ({ sector }) => {
                 display: "flex",
                 flexDirection: "column",
                 minHeight: isMobile ? "300px" : "340px",
-                ...(isMobile ? { minWidth: "80%", maxWidth: "80%", flexShrink: 0, scrollSnapAlign: "start" } : {}),
-              }}
+                ...(isMobile ? { minWidth: "80%", maxWidth: "80%", flexShrink: 0, scrollSnapAlign: "start" } : {})
+                }}
             >
               <div
                 className="flex justify-between items-center mb-5"
@@ -1597,16 +1569,14 @@ const SolutionsSection = ({ sector }) => {
 
         {/* Dot indicators — mobile */}
         {isMobile && (
-          <div className="flex justify-center gap-[6px] mt-4">
+          <div className="flex justify-center gap-[6px] mt-4 transition-all duration-300 ease-in-out">
             {filteredSolutions.map((_, i) => (
               <div
                 key={i}
                 className="h-[8px]" style={{
                   width: i === 0 ? "24px" : "8px",
                   borderRadius: i === 0 ? "4px" : "50%",
-                  backgroundColor: i === 0 ? colors.accent : "rgba(255,255,255,0.2)",
-                  transition: "all 0.3s ease"
-                }}
+                  backgroundColor: i === 0 ? colors.accent : "rgba(255,255,255,0.2)"                }}
               />
             ))}
           </div>
@@ -1625,8 +1595,7 @@ const StrengthBar = ({ rating }) => (
     {[1, 2, 3, 4, 5].map((i) => (
       <div
         key={i}
-        className="w-4 h-[6px] rounded-[3px]"
-                style={{ backgroundColor: i <= rating ? colors.accent : colors.line }}
+        className="w-4 h-[6px] rounded-[3px]" style={{ backgroundColor: i <= rating ? colors.accent : colors.line }}
       />
     ))}
   </div>
@@ -1644,11 +1613,10 @@ const CompetitorAnalysisCard = ({ competitors, currentIndex, setCurrentIndex, hi
 
   return (
     <div
-      className="rounded-[20px] p-7 flex flex-col"
-      style={{
+      className="rounded-[20px] p-7 flex flex-col" style={{
         backgroundColor: colors.white,
-        border: `1px solid ${colors.line}`,
-      }}
+        border: `1px solid ${colors.line}`
+                }}
     >
       {/* Header */}
       <div className="flex justify-between items-start mb-3">
@@ -1903,8 +1871,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                   padding: "0 20px"
                 }}>
             <div
-              className="hide-scrollbar inline-flex items-center gap-[6px] rounded-full p-[4px]"
-              style={{
+              className="hide-scrollbar inline-flex items-center gap-[6px] rounded-full p-[4px]" style={{
                   border: `1px solid ${colors.line}`,
                   backgroundColor: colors.white,
                   overflowX: "auto",
@@ -1916,13 +1883,11 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                 <button
                   key={i}
                   onClick={() => handleCompetitorChange(i)}
-                  className="py-[5px] px-[8px] rounded-full text-[10px] font-[Inter,sans-serif] cursor-pointer whitespace-nowrap shrink-0" style={{
+                  className="py-[5px] px-[8px] rounded-full text-[10px] font-[Inter,sans-serif] cursor-pointer whitespace-nowrap shrink-0 transition-all duration-200 ease-in-out" style={{
                   backgroundColor: activeCompetitorIndex === i ? colors.accentLight : "transparent",
                   color: activeCompetitorIndex === i ? colors.primary : "#999",
                   border: activeCompetitorIndex === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                  fontWeight: activeCompetitorIndex === i ? "700" : "500",
-                  transition: "all 0.2s ease"
-                }}
+                  fontWeight: activeCompetitorIndex === i ? "700" : "500"                }}
                 >
                   {shortNames[i]}
                 </button>
@@ -1967,7 +1932,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                 style={{
                   backgroundColor: colors.primary,
                   borderRadius: isMobile ? "16px" : "20px",
-                  padding: isMobile ? "20px" : "28px",
+                  padding: isMobile ? "20px" : "28px"
                 }}
               >
                 {/* Position header */}
@@ -2036,16 +2001,14 @@ const CompetitiveLandscapeSection = ({ sector }) => {
 
           {/* RIGHT COLUMN: Summary Grid (desktop only) */}
           {!isMobile && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 transition-all duration-200 ease-in-out">
               {competitors.map((c, i) => (
                 <div
                   key={i}
                   onClick={() => handleCompetitorChange(i)}
                   className="rounded-[16px] p-[24px] cursor-pointer flex flex-col min-h-[210px]" style={{
                   backgroundColor: colors.white,
-                  border: activeCompetitorIndex === i ? `2px solid ${colors.primary}` : `1px solid ${colors.line}`,
-                  transition: "all 0.2s ease"
-                }}
+                  border: activeCompetitorIndex === i ? `2px solid ${colors.primary}` : `1px solid ${colors.line}`                }}
                 >
                   {/* Name + funding badge */}
                   <div
@@ -2285,8 +2248,8 @@ const PolicyAlignmentSection = () => {
             style={{
               display: "flex",
               justifyContent: isMobile ? "flex-start" : "center",
-              ...(isMobile ? { margin: "0 -20px", padding: "0 20px" } : {}),
-            }}
+              ...(isMobile ? { margin: "0 -20px", padding: "0 20px" } : {})
+                }}
           >
             <div
               className="inline-flex items-center rounded-full" style={{
@@ -2300,15 +2263,13 @@ const PolicyAlignmentSection = () => {
                 <button
                   key={cat.id}
                   onClick={() => handleCategoryChange(cat.id)}
-                  className="rounded-full font-[Inter,sans-serif] cursor-pointer whitespace-nowrap shrink-0" style={{
+                  className="rounded-full font-[Inter,sans-serif] cursor-pointer whitespace-nowrap shrink-0 transition-all duration-200 ease-in-out" style={{
                   backgroundColor: activeCategory === cat.id ? colors.accentLight : "transparent",
                   color: activeCategory === cat.id ? colors.primary : "#999",
                   border: activeCategory === cat.id ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
                   padding: isMobile ? "5px 8px" : "6px 14px",
                   fontSize: isMobile ? "10px" : "12px",
-                  fontWeight: activeCategory === cat.id ? "700" : "500",
-                  transition: "all 0.2s ease"
-                }}
+                  fontWeight: activeCategory === cat.id ? "700" : "500"                }}
                 >
                   {cat.label}
                 </button>
@@ -2319,8 +2280,7 @@ const PolicyAlignmentSection = () => {
 
         {/* Scrollable Card Row */}
         <div
-          className="hide-scrollbar"
-          style={{
+          className="hide-scrollbar" style={{
             display: "flex",
             gap: isMobile ? "12px" : "16px",
             overflowX: "auto",
@@ -2328,8 +2288,8 @@ const PolicyAlignmentSection = () => {
             alignItems: "flex-start",
             scrollSnapType: isMobile ? "x mandatory" : "none",
             WebkitOverflowScrolling: "touch",
-            ...(isMobile ? { margin: "0 -20px 16px", padding: "0 20px" } : {}),
-          }}
+            ...(isMobile ? { margin: "0 -20px 16px", padding: "0 20px" } : {})
+                }}
         >
           {filteredPolicies.map((p, idx) => {
             const isExpanded = expandedCard === idx;
@@ -2338,7 +2298,7 @@ const PolicyAlignmentSection = () => {
               <div
                 key={idx}
                 onClick={() => handleCardClick(idx)}
-                style={{
+                className="transition-all duration-300 ease-in-out" style={{
                   minWidth: isMobile ? "calc(100vw - 56px)" : isExpanded ? "420px" : "280px",
                   maxWidth: isMobile ? "calc(100vw - 56px)" : isExpanded ? "420px" : "280px",
                   backgroundColor: colors.background,
@@ -2348,10 +2308,9 @@ const PolicyAlignmentSection = () => {
                   cursor: "pointer",
                   flexShrink: 0,
                   display: "flex",
-                  flexDirection: "column",
-                  transition: "all 0.3s ease",
+                  flexDirection: "column"
                   scrollSnapAlign: isMobile ? "start" : "none",
-                  ...(!isExpanded && !isMobile ? { minHeight: "280px" } : {}),
+                  ...(!isExpanded && !isMobile ? { minHeight: "280px" } : {})
                 }}
               >
                 {/* Top row: category badge + relevance pills */}
@@ -2419,10 +2378,8 @@ const PolicyAlignmentSection = () => {
                 {/* Expanded content */}
                 {isExpanded && (
                   <div
-                    className="mt-4 pt-4 overflow-hidden" style={{
-                  borderTop: `1px solid ${colors.line}`,
-                  transition: "all 0.3s ease"
-                }}
+                    className="mt-4 pt-4 overflow-hidden transition-all duration-300 ease-in-out" style={{
+                  borderTop: `1px solid ${colors.line}`                }}
                   >
                     {/* Governing body */}
                     <div
@@ -2480,16 +2437,14 @@ const PolicyAlignmentSection = () => {
 
         {/* Scroll indicator dots — mobile only */}
         {isMobile && (
-          <div className="flex justify-center gap-[6px] mb-8">
+          <div className="flex justify-center gap-[6px] mb-8 transition-all duration-300 ease-in-out">
             {filteredPolicies.map((_, i) => (
               <div
                 key={i}
                 className="h-[8px]" style={{
                   width: i === 0 ? "24px" : "8px",
                   borderRadius: i === 0 ? "4px" : "50%",
-                  backgroundColor: i === 0 ? colors.accent : "#ddd",
-                  transition: "all 0.3s ease"
-                }}
+                  backgroundColor: i === 0 ? colors.accent : "#ddd"                }}
               />
             ))}
           </div>
@@ -2708,26 +2663,20 @@ const CrossSectorSection = () => {
                       setActiveNode(isActive ? null : i);
                       setShowMoreRipple(false);
                     }}
-                    className="flex flex-col items-center gap-[6px] bg-none border-none cursor-pointer p-[4px]" style={{
-                  opacity: isDimmed ? 0.4 : 1,
-                  transition: "all 0.3s ease"
-                }}
+                    className="flex flex-col items-center gap-[6px] bg-none border-none cursor-pointer p-[4px] transition-all duration-300 ease-in-out" style={{
+                  opacity: isDimmed ? 0.4 : 1                }}
                   >
                     <div
-                      className="w-[44px] h-[44px] rounded-[12px] flex items-center justify-center" style={{
+                      className="w-[44px] h-[44px] rounded-[12px] flex items-center justify-center transition-all duration-300 ease-in-out" style={{
                   backgroundColor: isActive ? colors.accent : "rgba(255,255,255,0.08)",
                   border: isActive ? "none" : "1px solid rgba(255,255,255,0.1)",
-                  color: isActive ? colors.primary : "rgba(255,255,255,0.6)",
-                  transition: "all 0.3s ease"
-                }}
+                  color: isActive ? colors.primary : "rgba(255,255,255,0.6)"                }}
                     >
-                      <span className="scale-[0.85] flex">{crossSectorIcons[s.sectorId]}</span>
+                      <span className="scale-[0.85] flex transition-all duration-300 ease-in-out">{crossSectorIcons[s.sectorId]}</span>
                     </div>
                     <span
                       className="font-[Inter,sans-serif] text-[10px] font-semibold max-w-[58px] leading-[1.2] text-center" style={{
-                  color: isActive ? colors.white : "rgba(255,255,255,0.5)",
-                  transition: "all 0.3s ease"
-                }}
+                  color: isActive ? colors.white : "rgba(255,255,255,0.5)"                }}
                     >
                       {s.shortLabel}
                     </span>
@@ -2763,34 +2712,26 @@ const CrossSectorSection = () => {
                 <div
                   key={s.sectorId}
                   onClick={() => setActiveNode(isActive ? null : i)}
-                  className="w-[120px] flex flex-col items-center cursor-pointer" style={{
-                  opacity: isDimmed ? 0.4 : 1,
-                  transition: "all 0.3s ease"
-                }}
+                  className="w-[120px] flex flex-col items-center cursor-pointer transition-all duration-300 ease-in-out" style={{
+                  opacity: isDimmed ? 0.4 : 1                }}
                 >
                   <div
-                    className="w-[56px] h-[56px] rounded-[16px] flex items-center justify-center mb-[10px]" style={{
+                    className="w-[56px] h-[56px] rounded-[16px] flex items-center justify-center mb-[10px] transition-all duration-300 ease-in-out" style={{
                   backgroundColor: isActive ? colors.accent : "rgba(255,255,255,0.08)",
                   border: isActive ? "none" : "1px solid rgba(255,255,255,0.1)",
-                  color: isActive ? colors.primary : "rgba(255,255,255,0.6)",
-                  transition: "all 0.3s ease"
-                }}
+                  color: isActive ? colors.primary : "rgba(255,255,255,0.6)"                }}
                   >
                     {crossSectorIcons[s.sectorId]}
                   </div>
                   <span
-                    className="font-[Inter,sans-serif] text-[13px] font-semibold text-center" style={{
-                  color: isActive ? colors.white : "rgba(255,255,255,0.5)",
-                  transition: "all 0.3s ease"
-                }}
+                    className="font-[Inter,sans-serif] text-[13px] font-semibold text-center transition-all duration-300 ease-in-out" style={{
+                  color: isActive ? colors.white : "rgba(255,255,255,0.5)"                }}
                   >
                     {s.name}
                   </span>
                   <span
-                    className="font-[Poppins,sans-serif] text-xl font-bold mt-1" style={{
-                  color: isActive ? colors.accent : "rgba(255,255,255,0.3)",
-                  transition: "all 0.3s ease"
-                }}
+                    className="font-[Poppins,sans-serif] text-xl font-bold mt-1 transition-all duration-300 ease-in-out" style={{
+                  color: isActive ? colors.accent : "rgba(255,255,255,0.3)"                }}
                   >
                     {s.multiplier}
                   </span>
@@ -2802,13 +2743,11 @@ const CrossSectorSection = () => {
 
         {/* DETAIL PANEL */}
         <div
-          className="bg-white/5" style={{
+          className="bg-white/5 transition-all duration-300 ease-in-out" style={{
                   borderRadius: isMobile ? "16px" : "24px",
                   border: "1px solid rgba(255,255,255,0.08)",
                   padding: isMobile ? "24px" : "40px",
-                  minHeight: isMobile ? "auto" : "280px",
-                  transition: "all 0.3s ease"
-                }}
+                  minHeight: isMobile ? "auto" : "280px"                }}
         >
           {activeNode === null ? (
             isMobile ? (
@@ -2833,12 +2772,12 @@ const CrossSectorSection = () => {
                     Click a sector above to explore
                   </span>
                 </div>
-                <div className="grid grid-cols-5 gap-4">
+                <div className="grid grid-cols-5 gap-4 transition-all duration-200 ease-in-out">
                   {crossSectorData.map((sector, i) => (
                     <div
                       key={sector.sectorId}
                       onClick={() => setActiveNode(i)}
-                      className="cursor-pointer py-[24px] px-[20px] rounded-[16px] bg-white/5" style={{ transition: "all 0.2s ease" }}
+                      className="cursor-pointer py-[24px] px-[20px] rounded-[16px] bg-white/5" 
                     >
                       <div
                         className="font-[Inter,sans-serif] text-sm font-semibold mb-2" style={{ color: colors.white }}
@@ -2997,7 +2936,7 @@ const CrossSectorSection = () => {
                 }}
                 >
                   {showMoreRipple ? "Show less" : "Show more details"}
-                  <ChevronDown size={14} strokeWidth={2.5} color={colors.white} style={{ transform: showMoreRipple ? "rotate(180deg)" : "none", transition: "transform 0.3s ease" }} />
+                  <ChevronDown size={14} strokeWidth={2.5} color={colors.white} className="transition-transform duration-300 ease-in-out" style={{ transform: showMoreRipple ? "rotate(180deg)" : "none" }} />
                 </button>
               )}
             </div>
@@ -3207,8 +3146,8 @@ const InvestmentCTASection = () => {
     <section
       style={{
         backgroundColor: colors.background,
-        padding: isMobile ? "60px 0" : "100px 80px",
-      }}
+        padding: isMobile ? "60px 0" : "100px 80px"
+                }}
     >
       <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
         {/* Section Header */}
@@ -3216,8 +3155,8 @@ const InvestmentCTASection = () => {
           style={{
             textAlign: isMobile ? "center" : "left",
             marginBottom: isMobile ? "32px" : "48px",
-            padding: isMobile ? "0 20px" : 0,
-          }}
+            padding: isMobile ? "0 20px" : 0
+                }}
         >
           <span
             className="inline-block py-[10px] px-[20px] rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6" style={{
@@ -3257,18 +3196,14 @@ const InvestmentCTASection = () => {
                 <button
                   key={aud.key}
                   onClick={() => setActiveAudience(idx)}
-                  className="flex flex-col items-center gap-[6px] bg-none border-none p-[8px] cursor-pointer" style={{
-                  opacity: isActive ? 1 : 0.4,
-                  transition: "all 0.2s ease"
-                }}
+                  className="flex flex-col items-center gap-[6px] bg-none border-none p-[8px] cursor-pointer transition-all duration-200 ease-in-out" style={{
+                  opacity: isActive ? 1 : 0.4                }}
                 >
                   <div
-                    className="w-[44px] h-[44px] rounded-[12px] flex items-center justify-center" style={{
+                    className="w-[44px] h-[44px] rounded-[12px] flex items-center justify-center transition-all duration-200 ease-in-out" style={{
                   backgroundColor: isActive ? colors.primary : colors.background,
                   border: isActive ? "none" : `1px solid ${colors.line}`,
-                  color: isActive ? colors.accent : colors.primary,
-                  transition: "all 0.2s ease"
-                }}
+                  color: isActive ? colors.accent : colors.primary                }}
                   >
                     {aud.icon}
                   </div>
@@ -3289,19 +3224,15 @@ const InvestmentCTASection = () => {
                 <button
                   key={aud.key}
                   onClick={() => setActiveAudience(idx)}
-                  className="flex items-center gap-2 py-[6px] px-[16px] rounded-full font-[Inter,sans-serif] text-[12px] cursor-pointer shrink-0" style={{
+                  className="flex items-center gap-2 py-[6px] px-[16px] rounded-full font-[Inter,sans-serif] text-[12px] cursor-pointer shrink-0 transition-all duration-200 ease-in-out" style={{
                   border: isActive ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
                   backgroundColor: isActive ? colors.accentLight : "transparent",
                   color: isActive ? colors.primary : "#999",
-                  fontWeight: isActive ? "700" : "500",
-                  transition: "all 0.2s ease"
-                }}
+                  fontWeight: isActive ? "700" : "500"                }}
                 >
                   <span
-                    className="flex" style={{
-                  color: isActive ? colors.primary : "#999",
-                  transition: "all 0.2s ease"
-                }}
+                    className="flex transition-all duration-200 ease-in-out" style={{
+                  color: isActive ? colors.primary : "#999"                }}
                   >
                     {aud.icon}
                   </span>
@@ -3434,12 +3365,10 @@ const InvestmentCTASection = () => {
                   <button
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
-                    className="flex-1 border-none py-[12px] px-[20px] rounded-[10px] text-sm font-[Inter,sans-serif] cursor-pointer" style={{
+                    className="flex-1 border-none py-[12px] px-[20px] rounded-[10px] text-sm font-[Inter,sans-serif] cursor-pointer transition-all duration-200 ease-in-out" style={{
                   backgroundColor: activeTab === tab.key ? colors.accent : "transparent",
                   color: activeTab === tab.key ? colors.primary : "rgba(255,255,255,0.5)",
-                  fontWeight: activeTab === tab.key ? "700" : "500",
-                  transition: "all 0.2s ease"
-                }}
+                  fontWeight: activeTab === tab.key ? "700" : "500"                }}
                   >
                     {tab.label}
                   </button>
@@ -3905,15 +3834,13 @@ const ImpactSection = () => {
                 <button
                   key={v}
                   onClick={() => switchView(v)}
-                  className="rounded-full border-none cursor-pointer font-[Inter,sans-serif]" style={{
+                  className="rounded-full border-none cursor-pointer font-[Inter,sans-serif] transition-all duration-200 ease-in-out" style={{
                   padding: isMobile ? "5px 10px" : "6px 14px",
                   fontSize: isMobile ? "11px" : "12px",
                   backgroundColor: view === v ? colors.white : "transparent",
                   color: view === v ? colors.primary : "#999",
                   fontWeight: view === v ? "700" : "500",
-                  boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
-                  transition: "all 0.2s ease"
-                }}
+                  boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.1)" : "none"                }}
                 >
                   {v === "metrics" ? (isMobile ? "Metric" : "By Metric") : isMobile ? "Stakeholder" : "By Stakeholder"}
                 </button>
@@ -3927,15 +3854,13 @@ const ImpactSection = () => {
                   <button
                     key={i}
                     onClick={() => switchCategory(i)}
-                    className="rounded-full cursor-pointer font-[Inter,sans-serif] whitespace-nowrap shrink-0" style={{
+                    className="rounded-full cursor-pointer font-[Inter,sans-serif] whitespace-nowrap shrink-0 transition-all duration-200 ease-in-out" style={{
                   padding: isMobile ? "5px 8px" : "6px 14px",
                   fontSize: isMobile ? "10px" : "12px",
                   fontWeight: activeCategory === i ? "700" : "500",
                   color: activeCategory === i ? colors.primary : "#999",
                   backgroundColor: activeCategory === i ? colors.accentLight : "transparent",
-                  border: activeCategory === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                  transition: "all 0.2s ease"
-                }}
+                  border: activeCategory === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent"                }}
                   >
                     {cat.category}
                   </button>
@@ -3944,15 +3869,13 @@ const ImpactSection = () => {
                   <button
                     key={i}
                     onClick={() => switchStakeholder(i)}
-                    className="rounded-full cursor-pointer font-[Inter,sans-serif] whitespace-nowrap shrink-0" style={{
+                    className="rounded-full cursor-pointer font-[Inter,sans-serif] whitespace-nowrap shrink-0 transition-all duration-200 ease-in-out" style={{
                   padding: isMobile ? "5px 8px" : "6px 14px",
                   fontSize: isMobile ? "10px" : "12px",
                   fontWeight: activeStakeholder === i ? "700" : "500",
                   color: activeStakeholder === i ? colors.primary : "#999",
                   backgroundColor: activeStakeholder === i ? colors.accentLight : "transparent",
-                  border: activeStakeholder === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                  transition: "all 0.2s ease"
-                }}
+                  border: activeStakeholder === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent"                }}
                   >
                     {s.title.split(" ")[1]}
                   </button>
@@ -4103,8 +4026,7 @@ const FinalCTASection = () => {
           access to explore the complete research.
         </p>
         <div
-          className="flex justify-center items-center gap-4"
-          style={{ flexDirection: isMobile ? "column" : "row" }}
+          className="flex justify-center items-center gap-4" style={{ flexDirection: isMobile ? "column" : "row" }}
         >
           <button
             onClick={() => navigate("/login")}
@@ -4122,8 +4044,8 @@ const FinalCTASection = () => {
               alignItems: "center",
               gap: "10px",
               justifyContent: "center",
-              ...(isMobile ? { width: "100%" } : {}),
-            }}
+              ...(isMobile ? { width: "100%" } : {})
+                }}
           >
             Request Full Access
             <span
@@ -4147,8 +4069,8 @@ const FinalCTASection = () => {
               fontWeight: "600",
               fontFamily: "Inter, sans-serif",
               cursor: "pointer",
-              ...(isMobile ? { width: "100%" } : {}),
-            }}
+              ...(isMobile ? { width: "100%" } : {})
+                }}
           >
             Explore the Full Analysis
           </button>

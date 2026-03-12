@@ -3998,97 +3998,58 @@ const FinalCTASection = () => {
   const navigate = useNavigate();
   return (
     <section
+      className="text-center"
       style={{
         backgroundColor: colors.primary,
         padding: isMobile ? "60px 20px" : "100px 80px",
-        textAlign: "center",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
+        <div className="max-w-[900px] mx-auto text-center">
           <span
+            className="inline-block py-[10px] px-5 rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
             style={{
-              display: "inline-block",
               backgroundColor: "rgba(184, 217, 53, 0.15)",
               color: colors.accent,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             Be Part of the Journey
           </span>
 
           <h2
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "32px" : "48px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              color: colors.white,
-              margin: "0 auto 24px",
-              maxWidth: "900px",
-            }}
+            className="font-[Inter,sans-serif] font-light leading-[1.2] text-white mx-auto mb-6 max-w-[900px] mt-0"
+            style={{ fontSize: isMobile ? "32px" : "48px" }}
           >
-            Let's <span style={{ fontWeight: "600" }}>Build</span> Ghana's{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Infrastructure</span>
+            Let's <span className="font-semibold">Build</span> Ghana's{" "}
+            <span style={{ color: colors.accent }} className="font-semibold">Infrastructure</span>
           </h2>
 
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "16px" : "18px",
-              lineHeight: "1.65",
-              color: "rgba(255,255,255,0.7)",
-              margin: "0 auto 40px",
-              maxWidth: "680px",
-            }}
+            className="font-[Inter,sans-serif] leading-[1.65] text-white/70 mx-auto mt-0 mb-10 max-w-[680px]"
+            style={{ fontSize: isMobile ? "16px" : "18px" }}
           >
             Whether you're an investor, institutional partner, or government stakeholder — there's a seat at the table
             in building Ghana's infrastructure future.
           </p>
 
           <div
-            style={{
-              display: "flex",
-              gap: "16px",
-              justifyContent: "center",
-              flexDirection: isMobile ? "column" : "row",
-            }}
+            className="flex gap-4 justify-center"
+            style={{ flexDirection: isMobile ? "column" : "row" }}
           >
             <button
               onClick={() => navigate("/contact")}
+              className="border-none rounded-full text-[16px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center justify-center gap-[10px]"
               style={{
                 backgroundColor: colors.accent,
                 color: colors.primary,
-                border: "none",
                 padding: isMobile ? "16px 24px" : "18px 32px",
-                borderRadius: "50px",
-                fontSize: "16px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
               }}
             >
               Start a Conversation
               <span
+                className="w-7 h-7 rounded-full flex items-center justify-center"
                 style={{
-                  width: "28px",
-                  height: "28px",
                   backgroundColor: colors.primary,
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   color: colors.white,
                 }}
               >
@@ -4098,16 +4059,10 @@ const FinalCTASection = () => {
 
             <button
               onClick={() => navigate("/resources")}
+              className="bg-transparent text-white rounded-full text-[16px] font-semibold font-[Inter,sans-serif] cursor-pointer"
               style={{
-                backgroundColor: "transparent",
-                color: colors.white,
                 border: `2px solid rgba(255,255,255,0.3)`,
                 padding: isMobile ? "16px 24px" : "18px 32px",
-                borderRadius: "50px",
-                fontSize: "16px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
               }}
             >
               Explore the Full Analysis
@@ -4129,22 +4084,12 @@ const SectorGrid = () => {
   return (
     <div>
       <div
-        style={{
-          fontSize: "12px",
-          fontWeight: "600",
-          color: hovered !== null ? colors.accent : "rgba(255,255,255,0.4)",
-          fontFamily: "'DM Sans', sans-serif",
-          textTransform: "uppercase",
-          letterSpacing: "1.5px",
-          marginBottom: "12px",
-          transition: "color 0.25s ease",
-          lineHeight: "1",
-          minHeight: "12px",
-        }}
+        className="text-[12px] font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-3 transition-colors duration-[250ms] leading-none min-h-3"
+        style={{ color: hovered !== null ? colors.accent : "rgba(255,255,255,0.4)" }}
       >
         {hovered !== null ? FOOTER_SECTOR_ICONS[hovered].label : "Explore 12 Sectors"}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="flex justify-between items-center">
         {FOOTER_SECTOR_ICONS.map((sector, i) => {
           const isH = hovered === i;
           return (
@@ -4154,31 +4099,18 @@ const SectorGrid = () => {
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
+              className="flex items-center justify-center w-11 h-11 rounded-[10px] cursor-pointer no-underline box-border"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "44px",
-                height: "44px",
-                borderRadius: "10px",
                 backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)",
                 border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`,
-                cursor: "pointer",
-                textDecoration: "none",
                 transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
                 transform: isH ? "translateY(-2px)" : "none",
                 boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
-                boxSizing: "border-box",
               }}
             >
               <div
-                style={{
-                  opacity: isH ? 1 : 0.5,
-                  transition: "opacity 0.25s ease",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className="flex items-center justify-center transition-opacity duration-[250ms]"
+                style={{ opacity: isH ? 1 : 0.5 }}
               >
                 {sector.icon(isH ? colors.accent : "rgba(255,255,255,0.85)")}
               </div>

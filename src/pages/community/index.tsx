@@ -1687,14 +1687,12 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           <ThumbsDown size={12} color={q.userVote === "down" ? C.white : C.muted} />
                         </button>
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <div
-                          style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}
-                        >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
                           <Avatar initials={q.avatar} size={24} />
-                          <span style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{q.author}</span>
-                          <span style={{ fontSize: 11, color: C.muted }}>· Asked {q.time}</span>
-                          <span style={{ fontSize: 11, color: C.muted }}>· {q.views} views</span>
+                          <span className="text-[12px] font-semibold" style={{ color: C.dark }}>{q.author}</span>
+                          <span className="text-[11px]" style={{ color: C.muted }}>· Asked {q.time}</span>
+                          <span className="text-[11px]" style={{ color: C.muted }}>· {q.views} views</span>
                           <Pill color={C.primary} small>
                             {q.tag}
                           </Pill>
@@ -1705,78 +1703,40 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           )}
                         </div>
                         <h3
-                          style={{ fontSize: 14, fontWeight: 700, color: C.dark, margin: "0 0 6px", lineHeight: 1.4 }}
+                          className="text-[14px] font-bold leading-[1.4]"
+                          style={{ color: C.dark, margin: "0 0 6px" }}
                         >
                           {q.title}
                         </h3>
-                        <p style={{ fontSize: 12, color: C.muted, margin: "0 0 12px", lineHeight: 1.5 }}>{q.preview}</p>
-                        <div style={{ display: "flex", gap: 8 }}>
+                        <p className="text-[12px] leading-[1.5]" style={{ color: C.muted, margin: "0 0 12px" }}>{q.preview}</p>
+                        <div className="flex gap-2">
                           <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
+                            className="flex items-center gap-1 py-[5px] px-3 rounded-md bg-transparent cursor-pointer text-[11px] font-[Inter,sans-serif]"
+                            style={{ border: `1px solid ${C.line}`, color: C.muted }}
                           >
                             <MessageSquare size={11} />
                             {q.answers} Answers
                           </button>
                           <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
+                            className="flex items-center gap-1 py-[5px] px-3 rounded-md bg-transparent cursor-pointer text-[11px] font-[Inter,sans-serif]"
+                            style={{ border: `1px solid ${C.line}`, color: C.muted }}
                           >
                             <Bookmark size={11} />
                             Follow
                           </button>
                           <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
+                            className="flex items-center gap-1 py-[5px] px-3 rounded-md bg-transparent cursor-pointer text-[11px] font-[Inter,sans-serif]"
+                            style={{ border: `1px solid ${C.line}`, color: C.muted }}
                           >
                             <Share2 size={11} />
                             Share
                           </button>
                           <button
+                            className="ml-auto py-[5px] px-[14px] rounded-md cursor-pointer text-[11px] font-bold font-[Inter,sans-serif]"
                             style={{
-                              marginLeft: "auto",
-                              padding: "5px 14px",
-                              borderRadius: 6,
                               border: `1.5px solid ${C.accent}`,
                               background: C.accent,
-                              cursor: "pointer",
-                              fontSize: 11,
-                              fontWeight: 700,
                               color: C.primary,
-                              fontFamily: font.body,
                             }}
                           >
                             Answer

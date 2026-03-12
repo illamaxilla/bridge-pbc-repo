@@ -3279,50 +3279,28 @@ const CrossSectorSection = () => {
 
   return (
     <section style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "48px" }}>
+        <div className="text-center" style={{ marginBottom: isMobile ? "32px" : "48px" }}>
           <span
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
             style={{
-              display: "inline-block",
               backgroundColor: "rgba(184,217,53,0.15)",
               color: colors.accent,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Ripple Effect
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light tracking-[-0.5px] leading-[1.2] mx-auto max-w-[820px] mb-4 mt-0"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              letterSpacing: "-0.5px",
-              lineHeight: "1.2",
               color: colors.white,
-              margin: "0 auto 16px",
-              maxWidth: "820px",
             }}
           >
-            How Tourism <span style={{ color: colors.accent, fontWeight: "600" }}>Amplifies Impact</span>
+            How Tourism <span className="font-semibold" style={{ color: colors.accent }}>Amplifies Impact</span>
           </h2>
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "16px",
-              color: "rgba(255,255,255,0.6)",
-              maxWidth: "680px",
-              margin: "0 auto",
-              lineHeight: "1.65",
-            }}
-          >
+          <p className="font-[Inter,sans-serif] text-[16px] text-white/60 max-w-[680px] mx-auto leading-[1.65]">
             Tourism doesn't operate in isolation — every visitor journey activates infrastructure, education,
             agriculture, and creative industries simultaneously.
           </p>
@@ -3331,40 +3309,28 @@ const CrossSectorSection = () => {
         {/* Pathway Visual */}
         {isMobile ? (
           /* Mobile: Hub on top, 5 icons below */
-          <div style={{ marginBottom: "24px" }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div className="mb-6">
+            <div className="flex justify-center mb-4">
+              <div className="flex flex-col items-center">
                 <div
+                  className="w-14 h-14 rounded-[14px] flex items-center justify-center mb-1.5"
                   style={{
-                    width: "56px",
-                    height: "56px",
-                    borderRadius: "14px",
                     backgroundColor: colors.accent,
                     color: colors.primary,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                     boxShadow: "0 0 24px rgba(184, 217, 53, 0.3)",
-                    marginBottom: "6px",
                   }}
                 >
                   <IconLuggage />
                 </div>
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "10px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
+                  className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px]"
+                  style={{ color: colors.accent }}
                 >
                   TOURISM
                 </span>
               </div>
             </div>
-            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+            <div className="flex justify-center gap-3">
               {pathways.map((p, i) => {
                 const isActive = activeNode === i;
                 return (
