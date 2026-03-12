@@ -3935,21 +3935,13 @@ const ImpactSection = () => {
         </div>
 
         {/* Controls Bar */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            marginBottom: "24px",
-          }}
-        >
+        <div className="flex justify-start mb-6">
           {/* Container — outlined pill bar */}
           <div
+            className="inline-flex items-center rounded-full"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
               gap: isMobile ? "6px" : "12px",
               border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
               padding: isMobile ? "4px" : "5px",
               backgroundColor: colors.white,
             }}

@@ -2938,36 +2938,28 @@ function MembersPage({ isMobile }) {
 
       {/* Filter bar */}
       <div
+        className="rounded-[14px] flex flex-col gap-3 mb-5"
         style={{
           background: C.white,
-          borderRadius: 14,
           padding: isMobile ? "14px 16px" : "16px 20px",
           boxShadow: C.cardShadow,
-          marginBottom: 20,
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
         }}
       >
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <div style={{ position: "relative", flex: 1 }}>
+        <div className="flex gap-3 items-center">
+          <div className="relative flex-1">
             <Search
               size={14}
-              style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+              className="absolute left-3 top-1/2 -translate-y-1/2"
+              style={{ color: C.muted }}
             />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or role..."
+              className="w-full rounded-[10px] font-[Inter,sans-serif] text-[13px] outline-none box-border"
               style={{
-                width: "100%",
                 padding: "9px 12px 9px 36px",
-                borderRadius: 10,
                 border: `1.5px solid ${C.line}`,
-                fontFamily: font.body,
-                fontSize: 13,
-                outline: "none",
-                boxSizing: "border-box",
               }}
               onFocus={(e) => (e.target.style.borderColor = C.primary)}
               onBlur={(e) => (e.target.style.borderColor = C.line)}
