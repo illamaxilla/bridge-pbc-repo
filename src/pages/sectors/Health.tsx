@@ -534,7 +534,7 @@ const HeroSection = ({ sector }) => {
               Sector Overview
             </span>
             <span
-              className="py-[6px] px-[14px] rounded-full text-[11px] font-bold uppercase tracking-[1px]" className="bg-[rgba(184,217,53,0.15)]" style={{ color: colors.accent }}
+              className="py-[6px] px-[14px] rounded-full text-[11px] font-bold uppercase tracking-[1px] bg-[rgba(184,217,53,0.15)]" style={{ color: colors.accent }}
             >
               Active
             </span>
@@ -606,7 +606,7 @@ const HeroSection = ({ sector }) => {
       {/* Scroll Indicator — desktop only */}
       {!isMobile && (
         <div
-          className="mt-auto pt-10 relative flex flex-col items-center gap-2 text-[#999]" className="left-1/2 -translate-x-1/2"
+          className="mt-auto pt-10 relative flex flex-col items-center gap-2 text-[#999] left-1/2 -translate-x-1/2"
         >
           <span className="font-[Inter,sans-serif] text-[13px] text-[#999] mb-0">
             Explore Analysis
@@ -1078,7 +1078,7 @@ const ValueChainSectionPremium = () => {
           </h2>
           {!isMobile && (
             <p
-              className="font-[Inter,sans-serif] text-base text-[#666] max-w-[750px] leading-[1.65]" style={{ margin: "0 auto" }}
+              className="font-[Inter,sans-serif] text-base text-[#666] max-w-[750px] leading-[1.65] mx-auto"
             >
               Tracing how care reaches communities — and where strategic resources and innovation create compounding
               value at every stage.
@@ -1112,7 +1112,7 @@ const ValueChainSectionPremium = () => {
             ))}
           </div>
         ) : (
-          <div className="flex gap-[10px] items-stretch transition-all duration-300 ease-in-out" style={{ marginBottom: "34px" }}>
+          <div className="flex gap-[10px] items-stretch transition-all duration-300 ease-in-out mb-[34px]">
             {valueChainStages.map((s, i) => (
               <div
                 key={s.id}
@@ -2621,7 +2621,7 @@ const CrossSectorSection = () => {
           </h2>
           {!isMobile && (
             <p
-              className="font-[Inter,sans-serif] text-base text-white/[0.55] max-w-[700px] leading-[1.65]" style={{ margin: "0 auto" }}
+              className="font-[Inter,sans-serif] text-base text-white/[0.55] max-w-[700px] leading-[1.65] mx-auto"
             >
               Health connects to every sector in the BRIDGE portfolio. Select a connected sector to explore how
               investment in wellbeing creates compounding value.

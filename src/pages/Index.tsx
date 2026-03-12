@@ -2105,7 +2105,7 @@ export default function BRIDGEHomePage() {
       {/* INSIGHTS */}
       <section style={{ padding: isMobile ? "60px 20px" : "100px 48px", backgroundColor: colors.background }}>
         <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-          <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "60px" }}>
+          <div className="text-center" style={{ marginBottom: isMobile ? "32px" : "60px" }}>
             <div
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[50px] text-xs font-semibold tracking-[1.5px] font-[Inter,sans-serif] uppercase mb-6"
               style={{ border: `1px solid ${colors.line}`, color: colors.primary }}

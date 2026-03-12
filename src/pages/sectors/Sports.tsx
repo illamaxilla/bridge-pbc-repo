@@ -2068,9 +2068,7 @@ const SolutionsSection = () => {
               }}
             >
               {/* Tier + Score */}
-              <div
-                style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}
-              >
+              <div className="flex justify-between items-center mb-4">
                 <span
                   style={{
                     fontSize: "11px",
@@ -3380,56 +3378,30 @@ const CrossSectorSection = () => {
                     Click a sector above to explore
                   </span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "16px" }}>
+                <div className="grid grid-cols-5 gap-4">
                   {pathways.map((p, idx) => (
                     <div
                       key={idx}
                       onClick={() => setActiveNode(idx)}
-                      style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        borderRadius: "16px",
-                        padding: "24px 20px",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                      }}
+                      className="bg-white/5 rounded-2xl p-[24px_20px] cursor-pointer transition-all duration-200"
                     >
                       <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: colors.white,
-                          marginBottom: "8px",
-                        }}
+                        className="font-[Inter,sans-serif] text-[14px] font-semibold mb-2"
+                        style={{ color: colors.white }}
                       >
                         {p.name}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.45)",
-                          height: "40px",
-                          overflow: "hidden",
-                          marginBottom: "16px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-white/45 h-10 overflow-hidden mb-4">
                         {p.connection}
                       </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+                      <div className="flex items-baseline gap-1">
                         <span
-                          style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "18px",
-                            fontWeight: "700",
-                            color: colors.accent,
-                          }}
+                          className="font-[Poppins,sans-serif] text-[18px] font-bold"
+                          style={{ color: colors.accent }}
                         >
                           {p.multiplier}
                         </span>
-                        <span
-                          style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.4)" }}
-                        >
+                        <span className="font-[Inter,sans-serif] text-[11px] text-white/40">
                           multiplier
                         </span>
                       </div>
@@ -3438,8 +3410,8 @@ const CrossSectorSection = () => {
                 </div>
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.5)" }}>
+              <div className="text-center py-5">
+                <p className="font-[Inter,sans-serif] text-[15px] text-white/50">
                   Tap a sector above to explore how creative industries amplify its impact
                 </p>
               </div>
@@ -3448,9 +3420,7 @@ const CrossSectorSection = () => {
             /* Active State */
             <div>
               {/* Breadcrumb */}
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "28px" }}
-              >
+              <div className="flex items-center gap-2 flex-wrap mb-7">
                 {activePathway.pathLabel.split(" \u2192 ").map((step, i, arr) => (
                   <React.Fragment key={i}>
                     <span
@@ -3505,18 +3475,14 @@ const CrossSectorSection = () => {
                   >
                     {activePathway.impact}
                   </p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <div className="flex items-baseline gap-2">
                     <span
-                      style={{
-                        fontFamily: "Poppins, sans-serif",
-                        fontSize: "32px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                      }}
+                      className="font-[Poppins,sans-serif] text-[32px] font-bold"
+                      style={{ color: colors.accent }}
                     >
                       {activePathway.multiplier}
                     </span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                    <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                       value multiplier
                     </span>
                   </div>
@@ -3538,21 +3504,13 @@ const CrossSectorSection = () => {
                     >
                       Synergy Pathways
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {activePathway.synergies.map((syn, i) => (
                         <div
                           key={i}
-                          style={{
-                            display: "flex",
-                            alignItems: "flex-start",
-                            gap: "12px",
-                            padding: "12px 16px",
-                            borderRadius: "10px",
-                            backgroundColor: "rgba(255,255,255,0.05)",
-                            border: "1px solid rgba(255,255,255,0.06)",
-                          }}
+                          className="flex items-start gap-3 px-4 py-3 rounded-[10px] bg-white/5 border border-white/[0.06]"
                         >
-                          <span style={{ color: colors.accent, fontSize: "8px", marginTop: "5px" }}>{"\u25CF"}</span>
+                          <span className="text-[8px] mt-[5px]" style={{ color: colors.accent }}>{"\u25CF"}</span>
                           <span
                             style={{
                               fontFamily: "Inter, sans-serif",
@@ -3584,19 +3542,11 @@ const CrossSectorSection = () => {
                     >
                       Linked Ventures
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {activePathway.bridgeVentures.map((v, i) => (
                         <div
                           key={i}
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "14px 18px",
-                            borderRadius: "12px",
-                            backgroundColor: "rgba(184, 217, 53, 0.1)",
-                            border: "1px solid rgba(184, 217, 53, 0.15)",
-                          }}
+                          className="flex justify-between items-center px-[18px] py-[14px] rounded-xl bg-[rgba(184,217,53,0.1)] border border-[rgba(184,217,53,0.15)]"
                         >
                           <span
                             style={{
@@ -3614,17 +3564,8 @@ const CrossSectorSection = () => {
                     </div>
                     <a
                       href="/services"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        color: colors.accent,
-                        textDecoration: "none",
-                        marginTop: "20px",
-                      }}
+                      className="inline-flex items-center gap-2 font-[Inter,sans-serif] text-[14px] font-semibold no-underline mt-5"
+                      style={{ color: colors.accent }}
                     >
                       Explore {activePathway.name} Sector <span>{"\u2192"}</span>
                     </a>

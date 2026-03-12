@@ -1775,11 +1775,7 @@ const ValueChainSectionPremium = () => {
                         {stage.insights.map((insight, i) => (
                           <div
                             key={i}
-                            className="rounded-[10px] flex items-center gap-3 overflow-hidden"
-                            style={{
-                              backgroundColor: "rgba(255,255,255,0.05)",
-                              padding: "10px 14px",
-                            }}
+                            className="rounded-[10px] flex items-center gap-3 overflow-hidden bg-white/5 py-2.5 px-3.5"
                           >
                             <span
                               className="font-[Inter,sans-serif] text-[9px] font-bold uppercase tracking-[0.5px] text-white/30 shrink-0 whitespace-nowrap"
@@ -2383,11 +2379,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                   {current.bridgePosition.synergies.map((syn, i) => (
                     <div
                       key={i}
-                      className="rounded-[10px] flex items-center gap-3"
-                      style={{
-                        backgroundColor: "rgba(255,255,255,0.06)",
-                        padding: "12px 16px",
-                      }}
+                      className="rounded-[10px] flex items-center gap-3 bg-white/[0.06] py-3 px-4"
                     >
                       <span
                         className="w-1.5 h-1.5 rounded-full shrink-0"
@@ -3715,32 +3707,19 @@ const RippleEffectSection = () => {
             }}
           >
             {/* Hub icon */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "16px" }}>
+            <div className="flex flex-col items-center mb-4">
               <div
+                className="w-14 h-14 rounded-[14px] flex items-center justify-center shadow-[0_0_24px_rgba(184,217,53,0.3)]"
                 style={{
-                  width: "56px",
-                  height: "56px",
-                  borderRadius: "14px",
                   backgroundColor: colors.accent,
                   color: colors.primary,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: "0 0 24px rgba(184, 217, 53, 0.3)",
                 }}
               >
                 <IconSproutHub />
               </div>
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  marginTop: "6px",
-                }}
+                className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px] mt-1.5"
+                style={{ color: colors.accent }}
               >
                 AGRICULTURE
               </span>
@@ -3806,30 +3785,18 @@ const RippleEffectSection = () => {
               className="w-[120px] flex flex-col items-center shrink-0"
             >
               <div
+                className="w-20 h-20 rounded-[20px] flex items-center justify-center shadow-[0_0_30px_rgba(184,217,53,0.3)] mb-2.5"
                 style={{
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "20px",
                   backgroundColor: colors.accent,
                   color: colors.primary,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: "0 0 30px rgba(184, 217, 53, 0.3)",
-                  marginBottom: "10px",
                 }}
               >
                 <IconSproutHub />
               </div>
               {isMobile && (
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    color: colors.white,
-                    textAlign: "center",
-                  }}
+                  className="font-[Inter,sans-serif] text-[13px] font-semibold text-center"
+                  style={{ color: colors.white }}
                 >
                   Agriculture
                 </span>
@@ -3915,8 +3882,8 @@ const RippleEffectSection = () => {
           {activeNode === null ? (
             /* Default state */
             isMobile ? (
-              <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.5)" }}>
+              <div className="text-center py-5">
+                <p className="font-[Inter,sans-serif] text-[15px] text-white/50">
                   Tap a sector above to explore how agriculture amplifies its impact
                 </p>
               </div>
@@ -4004,30 +3971,15 @@ const RippleEffectSection = () => {
                 {/* Column 1: Why It Matters */}
                 <div>
                   <div
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      textTransform: "uppercase",
-                      letterSpacing: "1px",
-                      color: colors.accent,
-                      marginBottom: "16px",
-                    }}
+                    className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mb-4"
+                    style={{ color: colors.accent }}
                   >
                     Why It Matters
                   </div>
-                  <p
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "15px",
-                      color: "rgba(255,255,255,0.7)",
-                      lineHeight: "1.6",
-                      marginBottom: "20px",
-                    }}
-                  >
+                  <p className="font-[Inter,sans-serif] text-[15px] text-white/70 leading-[1.6] mb-5">
                     {ripplePathways[activeNode].impact}
                   </p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <div className="flex items-baseline gap-2">
                     <span
                       style={{
                         fontFamily: "Poppins, sans-serif",
@@ -4107,23 +4059,7 @@ const RippleEffectSection = () => {
               {isMobile && activeNode !== null && (
                 <button
                   onClick={() => setShowMoreRipple(!showMoreRipple)}
-                  style={{
-                    width: "100%",
-                    padding: "14px",
-                    backgroundColor: "transparent",
-                    border: "1px solid rgba(255,255,255,0.15)",
-                    borderRadius: "12px",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    color: colors.white,
-                    cursor: "pointer",
-                    marginTop: "16px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                  }}
+                  className="w-full p-3.5 bg-transparent border border-white/15 rounded-xl font-[Inter,sans-serif] text-sm font-semibold text-white cursor-pointer mt-4 flex items-center justify-center gap-2"
                 >
                   {showMoreRipple ? "Show less" : "Show more details"}
                   <ChevronDown size={14} strokeWidth={2} color="white" style={{ transform: showMoreRipple ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease" }} />
@@ -4474,15 +4410,7 @@ const InvestmentThesisSection = () => {
               })}
             </div>
           ) : (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                gap: "12px",
-                marginBottom: "40px",
-                flexWrap: "wrap",
-              }}
-            >
+            <div className="flex justify-start gap-3 mb-10 flex-wrap">
               {investmentAudiences.map((a, idx) => {
                 const isActive = activeAudience === idx;
                 return (

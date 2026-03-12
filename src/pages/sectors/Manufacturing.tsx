@@ -2703,8 +2703,8 @@ const MetricRow = ({ item, index, animate, isMobile, darkMode }) => {
         transition: `opacity 0.4s ease ${index * 80}ms`,
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+      <div className="flex justify-between items-start mb-[6px]">
+        <div className="flex items-center gap-3">
           <div
             style={{
               fontFamily: "'Poppins', sans-serif",
@@ -2841,7 +2841,7 @@ const ImpactSection = () => {
         </p>
 
         {/* Controls Bar — Outlined pill container, left-aligned */}
-        <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "24px" }}>
+        <div className="flex justify-start mb-6">
           <div
             style={{
               display: "inline-flex",
@@ -3381,7 +3381,7 @@ function CompetitiveLandscapeSection({ sector }) {
         </div>
 
         {isMobile && (
-          <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "16px" }}>
+          <div className="flex justify-start mb-4">
             <div
               style={{
                 display: "inline-flex",
@@ -3430,7 +3430,7 @@ function CompetitiveLandscapeSection({ sector }) {
             isMobile ? {} : { display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "24px", alignItems: "stretch" }
           }
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div className="flex flex-col gap-4">
             <CompetitorAnalysisCard
               competitors={competitors}
               currentIndex={activeCompetitorIndex}
@@ -3525,7 +3525,7 @@ function CompetitiveLandscapeSection({ sector }) {
                 >
                   {pos.headline}
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                <div className="flex flex-col gap-2">
                   {pos.bullets.map((b, bi) => (
                     <div
                       key={bi}
@@ -3856,7 +3856,7 @@ const CrossSectorSection = () => {
                 </span>
               </div>
             </div>
-            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+            <div className="flex justify-center gap-3">
               {pathways.map((p, i) => {
                 const isActive = activeNode === i;
                 return (
@@ -4089,7 +4089,7 @@ const CrossSectorSection = () => {
             <div>
               {/* Breadcrumb */}
               <div
-                style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "28px", alignItems: "center" }}
+                className="flex gap-2 flex-wrap mb-7 items-center"
               >
                 {activePath.pathLabel.split(" → ").map((seg, si, arr) => (
                   <React.Fragment key={si}>
@@ -4138,7 +4138,7 @@ const CrossSectorSection = () => {
                   >
                     {activePath.impact}
                   </p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <div className="flex items-baseline gap-2">
                     <span
                       style={{
                         fontFamily: "Poppins, sans-serif",
@@ -4164,7 +4164,7 @@ const CrossSectorSection = () => {
                     >
                       Synergy Pathways
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {activePath.synergies.map((s, si) => (
                         <div
                           key={si}
@@ -4206,7 +4206,7 @@ const CrossSectorSection = () => {
                     >
                       Linked Ventures
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {activePath.bridgeVentures.map((v, vi) => (
                         <div
                           key={vi}
@@ -4531,7 +4531,7 @@ const InvestmentCTASection = () => {
         {/* Audience Selector */}
         {isMobile ? (
           <div
-            style={{ display: "flex", justifyContent: "center", gap: "12px", marginBottom: "24px", padding: "0 20px" }}
+            className="flex justify-center gap-3 mb-6 px-5"
           >
             {investmentAudiences.map((a, idx) => {
               const isActive = activeAudience === idx;
@@ -4624,7 +4624,7 @@ const InvestmentCTASection = () => {
           }}
         >
           {/* LEFT: Audience */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="flex flex-col">
             {!isMobile && (
               <h3
                 style={{
@@ -4728,7 +4728,7 @@ const InvestmentCTASection = () => {
                     border: `1px solid ${colors.line}`,
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+                  <div className="flex flex-col gap-1 flex-1">
                     <div
                       style={{
                         fontFamily: "Inter, sans-serif",
@@ -4829,7 +4829,7 @@ const InvestmentCTASection = () => {
                   </button>
                 ))}
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+              <div className="flex flex-col gap-[10px] flex-1">
                 {investmentTabContent[activeTab].map((item, idx) => (
                   <div
                     key={idx}

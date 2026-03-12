@@ -3664,19 +3664,14 @@ const ImpactSection = () => {
                   <button
                     key={cat.category}
                     onClick={() => switchCategory(i)}
+                    className="font-[Inter,sans-serif] rounded-full cursor-pointer transition-all duration-200 whitespace-nowrap shrink-0"
                     style={{
-                      fontFamily: "Inter, sans-serif",
                       fontSize: isMobile ? "10px" : "12px",
                       fontWeight: activeCategory === i ? "700" : "500",
                       color: activeCategory === i ? colors.primary : "#999",
                       backgroundColor: activeCategory === i ? colors.accentLight : "transparent",
                       border: activeCategory === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                      borderRadius: "50px",
                       padding: isMobile ? "5px 8px" : "6px 14px",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
                     }}
                   >
                     {cat.category}
@@ -3689,19 +3684,14 @@ const ImpactSection = () => {
                     <button
                       key={i}
                       onClick={() => setActiveStakeholder(i)}
+                      className="font-[Inter,sans-serif] rounded-full cursor-pointer transition-all duration-200 whitespace-nowrap shrink-0"
                       style={{
-                        fontFamily: "Inter, sans-serif",
                         fontSize: isMobile ? "10px" : "12px",
                         fontWeight: activeStakeholder === i ? "700" : "500",
                         color: activeStakeholder === i ? colors.primary : "#999",
                         backgroundColor: activeStakeholder === i ? colors.accentLight : "transparent",
                         border: activeStakeholder === i ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                        borderRadius: "50px",
                         padding: isMobile ? "5px 8px" : "6px 14px",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                        whiteSpace: "nowrap",
-                        flexShrink: 0,
                       }}
                     >
                       {isMobile ? mobileLabels[i] : desktopLabels[i]}
@@ -3714,163 +3704,83 @@ const ImpactSection = () => {
         {/* ========== METRICS VIEW ========== */}
         {view === "metrics" && (
           <div
+            className="rounded-2xl overflow-hidden transition-opacity duration-300"
             style={{
               border: `2px solid ${colors.primary}`,
-              borderRadius: "16px",
-              overflow: "hidden",
               opacity: animate ? 1 : 0,
-              transition: "opacity 0.3s ease",
             }}
           >
             {activeMetrics.items.map((item, i) => (
               <div
                 key={i}
+                className="relative"
                 style={{
                   padding: isMobile ? "16px 20px" : "20px 28px",
                   backgroundColor: i % 2 === 0 ? colors.white : colors.background,
                   borderBottom: i < activeMetrics.items.length - 1 ? `1px solid ${colors.line}` : "none",
-                  position: "relative",
                 }}
               >
                 {isMobile ? (
                   /* ── Mobile Layout ── */
                   <>
                     {/* Top row: Number + Trend/Ventures */}
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        marginBottom: "8px",
-                      }}
-                    >
+                    <div className="flex justify-between items-start mb-2">
+
                       <CounterCell item={item} />
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-end",
-                          gap: "4px",
-                          flexShrink: 0,
-                        }}
-                      >
+                      <div className="flex flex-col items-end gap-1 shrink-0">
+
                         <span
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "10px",
-                            fontWeight: "700",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.5px",
-                            color: colors.primary,
-                            backgroundColor: "rgba(27,77,62,0.08)",
-                            border: "1px solid rgba(27,77,62,0.15)",
-                            padding: "3px 8px",
-                            borderRadius: "50px",
-                          }}
+                          className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px] py-[3px] px-2 rounded-full border border-[rgba(27,77,62,0.15)] bg-[rgba(27,77,62,0.08)]"
+                          style={{ color: colors.primary }}
                         >
                           {item.trend}
                         </span>
-                        <span
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "10px",
-                            color: "#999",
-                          }}
-                        >
+                        <span className="font-[Inter,sans-serif] text-[10px] text-[#999]">
                           {item.ventures}
                         </span>
                       </div>
                     </div>
                     {/* Bottom: Label + Description */}
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        color: colors.dark,
-                        marginBottom: "2px",
-                      }}
+                      className="font-[Inter,sans-serif] text-[14px] font-semibold mb-[2px]"
+                      style={{ color: colors.dark }}
                     >
                       {item.label}
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#666",
-                        lineHeight: "1.5",
-                      }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[12px] text-[#666] leading-[1.5]">
                       {item.description}
                     </div>
                   </>
                 ) : (
                   /* ── Desktop Layout ── */
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div className="flex items-center">
                     {/* Metric Number */}
-                    <div style={{ minWidth: "200px" }}>
+                    <div className="min-w-[200px]">
                       <CounterCell item={item} />
                     </div>
 
                     {/* Label + Description */}
-                    <div style={{ flex: 1, minWidth: 0 }}>
+                    <div className="flex-1 min-w-0">
                       <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: "600",
-                          color: colors.dark,
-                          marginBottom: "2px",
-                        }}
+                        className="font-[Inter,sans-serif] text-[15px] font-semibold mb-[2px]"
+                        style={{ color: colors.dark }}
                       >
                         {item.label}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "#666",
-                          lineHeight: "1.5",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-[#666] leading-[1.5]">
                         {item.description}
                       </div>
                     </div>
 
                     {/* Trend + Ventures */}
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-end",
-                        gap: "6px",
-                        minWidth: "180px",
-                        flexShrink: 0,
-                      }}
-                    >
+                    <div className="flex flex-col items-end gap-1.5 min-w-[180px] shrink-0">
                       <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          fontWeight: "700",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                          color: colors.primary,
-                          backgroundColor: "rgba(27,77,62,0.08)",
-                          border: "1px solid rgba(27,77,62,0.15)",
-                          padding: "4px 10px",
-                          borderRadius: "50px",
-                        }}
+                        className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[0.5px] py-1 px-2.5 rounded-full border border-[rgba(27,77,62,0.15)] bg-[rgba(27,77,62,0.08)]"
+                        style={{ color: colors.primary }}
                       >
                         {item.trend}
                       </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#999",
-                        }}
-                      >
+                      <span className="font-[Inter,sans-serif] text-[11px] text-[#999]">
                         {item.ventures}
                       </span>
                     </div>

@@ -2202,28 +2202,14 @@ const RippleEffectSection = () => {
             </div>
           </div>
         ) : (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              gap: "32px",
-              marginBottom: "48px",
-            }}
-          >
-            <div
-              style={{ width: "120px", display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}
-            >
+          <div className="flex items-start justify-center gap-8 mb-12">
+
+            <div className="w-[120px] flex flex-col items-center shrink-0">
               <div
+                className="w-20 h-20 rounded-[20px] flex items-center justify-center mb-[10px]"
                 style={{
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "20px",
                   backgroundColor: colors.accent,
                   color: colors.primary,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   boxShadow: "0 0 30px rgba(184, 217, 53, 0.3)",
                   marginBottom: "10px",
                 }}
@@ -2361,28 +2347,15 @@ const RippleEffectSection = () => {
                       }}
                     >
                       <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: colors.white,
-                          marginBottom: "8px",
-                        }}
+                        className="font-[Inter,sans-serif] text-[14px] font-semibold mb-2"
+                        style={{ color: colors.white }}
                       >
                         {p.name}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.45)",
-                          height: "40px",
-                          overflow: "hidden",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-white/45 h-10 overflow-hidden">
                         {p.connection}
                       </div>
-                      <div style={{ marginTop: "12px" }}>
+                      <div className="mt-3">
                         <span
                           style={{
                             fontFamily: "Poppins, sans-serif",
@@ -2437,32 +2410,20 @@ const RippleEffectSection = () => {
 
               {/* 3-column grid */}
               <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr",
-                  gap: isMobile ? "24px" : "32px",
-                }}
+                className="grid"
+                style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: isMobile ? "24px" : "32px" }}
               >
                 {/* Col 1: Why It Matters */}
                 <div>
                   <h4
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      textTransform: "uppercase",
-                      letterSpacing: "1px",
-                      color: colors.accent,
-                      marginBottom: "16px",
-                    }}
+                    className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mb-4"
+                    style={{ color: colors.accent }}
                   >
                     Why It Matters
                   </h4>
                   <p
+                    className="font-[Inter,sans-serif] text-[15px] text-white/70"
                     style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "15px",
-                      color: "rgba(255,255,255,0.7)",
                       lineHeight: "1.6",
                       marginBottom: "20px",
                     }}

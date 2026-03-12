@@ -2035,19 +2035,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           ))}
                           {g.avatars.length > 4 && (
                             <div
+                              className="w-[26px] h-[26px] rounded-full text-[9px] font-bold font-[Inter,sans-serif] flex items-center justify-center -ml-2"
                               style={{
-                                width: 26,
-                                height: 26,
-                                borderRadius: "50%",
                                 background: C.bg,
                                 color: C.muted,
-                                fontSize: 9,
-                                fontWeight: 700,
-                                fontFamily: font.body,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginLeft: -8,
                                 border: `2px solid ${C.white}`,
                               }}
                             >
@@ -2055,24 +2046,18 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                             </div>
                           )}
                         </div>
-                        <span style={{ fontSize: 12, color: C.muted }}>{g.members} members</span>
+                        <span className="text-[12px]" style={{ color: C.muted }}>{g.members} members</span>
                       </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        <span style={{ fontSize: 11, color: C.muted }}>
-                          <MessageSquare size={10} style={{ display: "inline", marginRight: 3 }} />
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px]" style={{ color: C.muted }}>
+                          <MessageSquare size={10} className="inline mr-[3px]" />
                           {g.posts} this week
                         </span>
                         <button
+                          className="py-[6px] px-[14px] rounded-[20px] bg-transparent text-[12px] font-semibold cursor-pointer font-[Inter,sans-serif]"
                           style={{
-                            padding: "6px 14px",
-                            borderRadius: 20,
                             border: `1.5px solid ${g.sectorColor}`,
-                            background: "transparent",
                             color: g.sectorColor,
-                            fontSize: 12,
-                            fontWeight: 600,
-                            cursor: "pointer",
-                            fontFamily: font.body,
                           }}
                         >
                           Join
@@ -2177,30 +2162,20 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               return (
                 <div>
                   {/* Search */}
-                  <div style={{ position: "relative", marginBottom: 20 }}>
+                  <div className="relative mb-5">
                     <Search
                       size={14}
-                      style={{
-                        position: "absolute",
-                        left: 12,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        color: C.muted,
-                      }}
+                      className="absolute left-3 top-1/2 -translate-y-1/2"
+                      style={{ color: C.muted }}
                     />
                     <input
                       value={tagSearch}
                       onChange={(e) => setTagSearch(e.target.value)}
                       placeholder="Search tags..."
+                      className="w-full rounded-[10px] font-[Inter,sans-serif] text-[13px] outline-none box-border"
                       style={{
-                        width: "100%",
                         padding: "9px 12px 9px 36px",
-                        borderRadius: 10,
                         border: `1.5px solid ${C.line}`,
-                        fontFamily: font.body,
-                        fontSize: 13,
-                        outline: "none",
-                        boxSizing: "border-box",
                         background: C.bg,
                       }}
                       onFocus={(e) => (e.target.style.borderColor = C.primary)}
@@ -2220,32 +2195,19 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                       }}
                     >
                       <div
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          letterSpacing: "1.5px",
-                          textTransform: "uppercase",
-                          color: C.primary,
-                          marginBottom: 10,
-                        }}
+                        className="text-[10px] font-bold tracking-[1.5px] uppercase mb-[10px]"
+                        style={{ color: C.primary }}
                       >
                         🔥 Trending This Week
                       </div>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                      <div className="flex flex-wrap gap-2">
                         {trending.map((t, i) => (
                           <button
                             key={i}
+                            className="py-[6px] px-[14px] rounded-lg cursor-pointer font-[Inter,sans-serif] flex items-center gap-[7px] transition-all duration-200"
                             style={{
-                              padding: "6px 14px",
-                              borderRadius: 8,
                               border: `1.5px solid ${t.color}40`,
                               background: t.color + "10",
-                              cursor: "pointer",
-                              fontFamily: font.body,
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 7,
-                              transition: "all 0.2s",
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.background = t.color + "20";
@@ -2256,16 +2218,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                               e.currentTarget.style.borderColor = t.color + "40";
                             }}
                           >
-                            <span style={{ fontSize: 12, fontWeight: 600, color: t.color }}>{t.t}</span>
+                            <span className="text-[12px] font-semibold" style={{ color: t.color }}>{t.t}</span>
                             <span
-                              style={{
-                                fontSize: 10,
-                                fontWeight: 700,
-                                color: C.white,
-                                background: t.color,
-                                padding: "1px 6px",
-                                borderRadius: 4,
-                              }}
+                              className="text-[10px] font-bold py-px px-[6px] rounded"
+                              style={{ color: C.white, background: t.color }}
                             >
                               {t.n}
                             </span>
@@ -2276,45 +2232,33 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                   )}
 
                   {/* Grouped tags */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                  <div className="flex flex-col gap-5">
                     {filtered.map((group, gi) => (
                       <div key={gi}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                          <div style={{ width: 3, height: 16, borderRadius: 2, background: group.color }} />
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-[3px] h-4 rounded-sm" style={{ background: group.color }} />
                           <span
-                            style={{
-                              fontSize: 11,
-                              fontWeight: 700,
-                              letterSpacing: "1px",
-                              textTransform: "uppercase",
-                              color: group.color,
-                            }}
+                            className="text-[11px] font-bold tracking-[1px] uppercase"
+                            style={{ color: group.color }}
                           >
                             {group.sector}
                           </span>
-                          <span style={{ fontSize: 11, color: C.muted }}>— {group.tags.length} tags</span>
+                          <span className="text-[11px]" style={{ color: C.muted }}>— {group.tags.length} tags</span>
                         </div>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                        <div className="flex flex-wrap gap-2">
                           {group.tags.map((t, ti) => {
                             const intensity = Math.min(t.n / 50, 1);
                             return (
                               <button
                                 key={ti}
+                                className="py-[7px] px-[14px] rounded-lg cursor-pointer font-[Inter,sans-serif] flex items-center gap-2 transition-all duration-[180ms]"
                                 style={{
-                                  padding: "7px 14px",
-                                  borderRadius: 8,
                                   border: `1.5px solid ${group.color}${Math.round(30 + intensity * 60).toString(16)}`,
                                   background:
                                     group.color +
                                     Math.round(8 + intensity * 18)
                                       .toString(16)
                                       .padStart(2, "0"),
-                                  cursor: "pointer",
-                                  fontFamily: font.body,
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: 8,
-                                  transition: "all 0.18s",
                                 }}
                                 onMouseEnter={(e) => {
                                   e.currentTarget.style.background = group.color + "28";
@@ -2331,20 +2275,12 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                                   e.currentTarget.style.transform = "none";
                                 }}
                               >
-                                <span style={{ fontSize: 12, fontWeight: t.n > 25 ? 700 : 500, color: group.color }}>
+                                <span className="text-[12px]" style={{ fontWeight: t.n > 25 ? 700 : 500, color: group.color }}>
                                   {t.t}
                                 </span>
                                 <span
-                                  style={{
-                                    fontSize: 10,
-                                    fontWeight: 700,
-                                    color: C.white,
-                                    background: group.color + "cc",
-                                    padding: "1px 6px",
-                                    borderRadius: 4,
-                                    minWidth: 18,
-                                    textAlign: "center",
-                                  }}
+                                  className="text-[10px] font-bold py-px px-[6px] rounded min-w-[18px] text-center"
+                                  style={{ color: C.white, background: group.color + "cc" }}
                                 >
                                   {t.n}
                                 </span>
@@ -2664,37 +2600,32 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
 
         {/* Right Sidebar — hidden on mobile */}
         {!isMobile && (
-          <div style={{ borderLeft: `1px solid ${C.line}`, padding: "24px 16px" }}>
+          <div className="py-6 px-4" style={{ borderLeft: `1px solid ${C.line}` }}>
             <SectionLabel>All Sectors</SectionLabel>
             {CATEGORIES.map((cat) => (
               <div
                 key={cat.name}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "6px 0",
-                  borderBottom: `1px solid ${C.line}20`,
-                }}
+                className="flex justify-between items-center py-[6px]"
+                style={{ borderBottom: `1px solid ${C.line}20` }}
               >
-                <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.text }}>
+                <span className="flex items-center gap-[6px] text-[12px]" style={{ color: C.text }}>
                   <span style={{ color: C.primary }}>{cat.icon}</span>
                   {cat.name}
                 </span>
-                <span style={{ fontSize: 11, color: C.muted }}>{cat.count}</span>
+                <span className="text-[11px]" style={{ color: C.muted }}>{cat.count}</span>
               </div>
             ))}
-            <div style={{ marginTop: 24 }}>
+            <div className="mt-6">
               <SectionLabel>Top Members</SectionLabel>
               {MEMBERS.map((m, i) => (
-                <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: C.muted, minWidth: 16 }}>#{i + 1}</span>
+                <div key={m.id} className="flex items-center gap-2 mb-3">
+                  <span className="text-[12px] font-bold min-w-4" style={{ color: C.muted }}>#{i + 1}</span>
                   <Avatar initials={m.avatar} size={28} />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
-                    <div style={{ fontSize: 10, color: C.muted }}>{m.role}</div>
+                  <div className="flex-1">
+                    <div className="text-[12px] font-semibold" style={{ color: C.dark }}>{m.name}</div>
+                    <div className="text-[10px]" style={{ color: C.muted }}>{m.role}</div>
                   </div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
+                  <span className="text-[11px] font-bold" style={{ color: C.primary }}>{m.points.toLocaleString()}</span>
                 </div>
               ))}
             </div>
