@@ -93,7 +93,7 @@ export interface ActivityItem {
 
 export interface Sector {
   id: string;
-  icon: ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+  icon: any;
   short: string;
   full: string;
   tag: string;
