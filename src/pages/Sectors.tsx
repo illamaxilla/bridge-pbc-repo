@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 
@@ -11,9 +11,8 @@ const sectorRoute = (slug: string): string => {
   return overrides[slug] ?? `/sectors/${slug}`;
 };
 
-import { colors, layout } from "@/lib/theme";
+import { colors } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-const MAX_W = layout.maxWidth;
 
 const icons = {
   infra: (c, s = 20) => (
@@ -503,7 +502,7 @@ const CSChevron = ({ open }) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    style={{ transition: "transform 0.3s ease", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+    className={`transition-transform duration-300 ease-in-out ${open ? "rotate-180" : "rotate-0"}`}
   >
     <polyline points="6 9 12 15 18 9" />
   </svg>
@@ -547,40 +546,23 @@ const CrossSector = () => {
   ];
 
   return (
-    <section style={{ backgroundColor: colors.primary, padding: mb ? "60px 20px 80px" : "100px 80px" }}>
+    <section className={`bg-[#1B4D3E] ${mb ? "px-5 pt-[60px] pb-20" : "px-20 py-[100px]"}`}>
       <style>{`
         .cs-scroll::-webkit-scrollbar { display: none; }
         .cs-scroll { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
-      <div style={{ maxWidth: MAX_W, margin: "0 auto" }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "48px" }}>
+        <div className="text-center mb-12">
           <Pill dark>Cross-Sector Integration</Pill>
           <h2
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: mb ? "32px" : "42px",
-              fontWeight: "300",
-              color: colors.white,
-              margin: "0 0 16px 0",
-              letterSpacing: "-0.5px",
-              lineHeight: "1.15",
-            }}
+            className={`font-['Inter',sans-serif] font-light text-white tracking-[-0.5px] leading-[1.15] mb-4 mt-0 ${mb ? "text-[32px]" : "text-[42px]"}`}
           >
             {"Ready to Explore the "}
-            <span style={{ fontWeight: "700", color: colors.accent }}>Full Analysis?</span>
+            <span className="font-bold text-[#B8D935]">Full Analysis?</span>
           </h2>
           {!mb && (
-            <p
-              style={{
-                fontSize: "16px",
-                lineHeight: "1.7",
-                color: "rgba(255,255,255,0.5)",
-                fontFamily: "Inter, sans-serif",
-                margin: "0 auto",
-                maxWidth: "560px",
-              }}
-            >
+            <p className="text-base leading-[1.7] text-white/50 font-['Inter',sans-serif] mx-auto max-w-[560px] m-0">
               Select a hub sector, then hover or click connected sectors to explore integration pathways. Expand tiers
               for full detail
             </p>
@@ -588,86 +570,41 @@ const CrossSector = () => {
         </div>
 
         {/* Hub Display */}
-        <div style={{ textAlign: "center", marginBottom: mb ? "20px" : "28px" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+        <div className={`text-center ${mb ? "mb-5" : "mb-7"}`}>
+          <div className="inline-flex items-center justify-center relative">
             <div
-              style={{
-                position: "absolute",
-                width: mb ? "100px" : "140px",
-                height: mb ? "100px" : "140px",
-                borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(184,217,53,0.12) 0%, transparent 70%)",
-              }}
+              className={`absolute rounded-full bg-[radial-gradient(circle,rgba(184,217,53,0.12)_0%,transparent_70%)] ${mb ? "w-[100px] h-[100px]" : "w-[140px] h-[140px]"}`}
             />
             <div
-              style={{
-                position: "absolute",
-                width: mb ? "80px" : "110px",
-                height: mb ? "80px" : "110px",
-                borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(184,217,53,0.18) 0%, transparent 70%)",
-              }}
+              className={`absolute rounded-full bg-[radial-gradient(circle,rgba(184,217,53,0.18)_0%,transparent_70%)] ${mb ? "w-20 h-20" : "w-[110px] h-[110px]"}`}
             />
             <div
-              style={{
-                width: mb ? "64px" : "80px",
-                height: mb ? "64px" : "80px",
-                borderRadius: "50%",
-                backgroundColor: colors.primary,
-                border: `3px solid ${colors.accent}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-                zIndex: 1,
-                boxShadow: "0 0 24px rgba(184,217,53,0.2)",
-              }}
+              className={`rounded-full bg-[#1B4D3E] border-[3px] border-[#B8D935] flex items-center justify-center relative z-[1] shadow-[0_0_24px_rgba(184,217,53,0.2)] ${mb ? "w-16 h-16" : "w-20 h-20"}`}
             >
               {icons[sel.key](colors.accent, mb ? 24 : 32)}
             </div>
           </div>
           <p
-            style={{
-              fontSize: mb ? "16px" : "20px",
-              fontWeight: "700",
-              color: colors.white,
-              margin: "16px 0 4px 0",
-              fontFamily: "Inter, sans-serif",
-            }}
+            className={`font-bold text-white font-['Inter',sans-serif] mt-4 mb-1 ${mb ? "text-base" : "text-xl"}`}
           >
             {sel.short}
           </p>
           <p
-            style={{
-              fontSize: mb ? "11px" : "13px",
-              color: "rgba(255,255,255,0.4)",
-              margin: 0,
-              fontFamily: "Inter, sans-serif",
-              lineHeight: mb ? "1.8" : "1",
-            }}
+            className={`text-white/40 font-['Inter',sans-serif] m-0 ${mb ? "text-[11px] leading-[1.8]" : "text-[13px] leading-none"}`}
           >
-            Integration Score: <span style={{ color: colors.accent, fontWeight: "700" }}>{totalScore}</span>
-            {mb ? <br /> : <span style={{ margin: "0 12px", color: "rgba(255,255,255,0.15)" }}>|</span>}
-            {strong.length} strong<span style={{ margin: "0 6px", color: "rgba(255,255,255,0.15)" }}>{"\u00B7"}</span>
+            Integration Score: <span className="text-[#B8D935] font-bold">{totalScore}</span>
+            {mb ? <br /> : <span className="mx-3 text-white/[0.15]">|</span>}
+            {strong.length} strong<span className="mx-1.5 text-white/[0.15]">{"\u00B7"}</span>
             {moderate.length} moderate
-            <span style={{ margin: "0 6px", color: "rgba(255,255,255,0.15)" }}>{"\u00B7"}</span>
+            <span className="mx-1.5 text-white/[0.15]">{"\u00B7"}</span>
             {emerging.length} emerging
           </p>
         </div>
 
         {/* Icon Row */}
         <div
-          className="cs-scroll"
-          style={{
-            display: "flex",
-            justifyContent: mb ? "flex-start" : "center",
-            gap: mb ? "8px" : "12px",
-            marginBottom: "8px",
-            flexWrap: mb ? "nowrap" : "wrap",
-            overflowX: mb ? "auto" : "visible",
-            paddingBottom: mb ? "4px" : "0",
-            WebkitOverflowScrolling: "touch",
-          }}
+          className={`cs-scroll flex ${mb ? "gap-2 justify-start flex-nowrap overflow-x-auto pb-1" : "gap-3 justify-center flex-wrap overflow-visible pb-0"} mb-2`}
+          style={{ WebkitOverflowScrolling: "touch" }}
         >
           {sectorList.map((s) => {
             const isHub = selected === s.id;
@@ -677,7 +614,7 @@ const CrossSector = () => {
             return (
               <div
                 key={s.id}
-                style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flexShrink: 0 }}
+                className="flex flex-col items-center gap-1.5 shrink-0"
               >
                 <button
                   onClick={() => (isHub ? null : handleIconClick(s.id))}
@@ -688,11 +625,8 @@ const CrossSector = () => {
                   onMouseLeave={() => {
                     if (!mb) setHovered(null);
                   }}
+                  className={`flex items-center justify-center transition-all duration-[250ms] ease-in-out ${mb ? "rounded-xl" : "rounded-2xl"} ${isHub ? "w-12 h-12 cursor-default opacity-40" : mb ? "w-11 h-11 cursor-pointer opacity-100" : "w-14 h-14 cursor-pointer opacity-100"}`}
                   style={{
-                    width: isHub ? "48px" : mb ? "44px" : "56px",
-                    height: isHub ? "48px" : mb ? "44px" : "56px",
-                    borderRadius: mb ? "12px" : "16px",
-                    cursor: isHub ? "default" : "pointer",
                     border: isHub
                       ? "2px solid rgba(184,217,53,0.3)"
                       : isLk
@@ -707,12 +641,7 @@ const CrossSector = () => {
                         : isHov
                           ? "rgba(184,217,53,0.06)"
                           : "rgba(255,255,255,0.04)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transition: "all 0.25s ease",
                     boxShadow: isLk ? "0 0 0 3px rgba(184,217,53,0.12)" : "none",
-                    opacity: isHub ? 0.4 : 1,
                   }}
                 >
                   {icons[s.key](
@@ -727,21 +656,18 @@ const CrossSector = () => {
                   )}
                 </button>
                 {!isHub && (
-                  <div style={{ display: "flex", gap: "2px" }}>
+                  <div className="flex gap-0.5">
                     {[1, 2, 3].map((lv) => (
                       <div
                         key={lv}
+                        className="w-2 h-[3px] rounded-[1.5px] transition-all duration-[250ms] ease-in-out"
                         style={{
-                          width: "8px",
-                          height: "3px",
-                          borderRadius: "1.5px",
                           backgroundColor:
                             str >= lv
                               ? isHov || isLk
                                 ? colors.accent
                                 : "rgba(184,217,53,0.4)"
                               : "rgba(255,255,255,0.08)",
-                          transition: "all 0.25s ease",
                         }}
                       />
                     ))}
@@ -753,30 +679,17 @@ const CrossSector = () => {
         </div>
 
         {/* Hint */}
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "11px",
-            color: "rgba(255,255,255,0.15)",
-            margin: "0 0 40px 0",
-            fontFamily: "Inter, sans-serif",
-          }}
-        >
+        <p className="text-center text-[11px] text-white/[0.15] font-['Inter',sans-serif] mt-0 mb-10 mx-0">
           {mb ? "Tap to inspect \u00B7 Double-tap to switch hub" : "Click to inspect \u00B7 Double-click to switch hub"}
         </p>
 
         {/* Detail Panel — always visible */}
         <div
-          style={{
-            display: mb ? "flex" : "grid",
-            flexDirection: "column",
-            gridTemplateColumns: "320px 1fr",
-            gap: mb ? "16px" : "24px",
-            alignItems: "stretch",
-          }}
+          className={`items-stretch ${mb ? "flex flex-col gap-4" : "grid gap-6"}`}
+          style={!mb ? { gridTemplateColumns: "320px 1fr" } : undefined}
         >
           {/* LEFT: Detail Panel */}
-          <div style={{ display: "flex", flexDirection: "column", marginBottom: mb ? "8px" : 0 }}>
+          <div className={`flex flex-col ${mb ? "mb-2" : "mb-0"}`}>
             {displayTarget !== null ? (
               (() => {
                 const t = sectorList[displayTarget];
@@ -785,71 +698,26 @@ const CrossSector = () => {
                 const isL = locked !== null && hovered === null;
                 return (
                   <div
+                    className={`bg-white/5 transition-all duration-[250ms] ease-in-out flex flex-col ${mb ? "rounded-[14px] p-5 flex-none" : "rounded-2xl p-6 flex-1"}`}
                     style={{
-                      backgroundColor: "rgba(255,255,255,0.05)",
                       border: `1px solid ${isL ? "rgba(184,217,53,0.3)" : "rgba(184,217,53,0.2)"}`,
-                      borderRadius: mb ? "14px" : "16px",
-                      padding: mb ? "20px" : "24px",
-                      transition: "all 0.25s ease",
-                      flex: mb ? "none" : 1,
-                      display: "flex",
-                      flexDirection: "column",
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-                      <div
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          borderRadius: "14px",
-                          backgroundColor: "rgba(255,255,255,0.06)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
-                      >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-[14px] bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0">
                         {icons[t.key](colors.accent, 22)}
                       </div>
                       <div>
-                        <p
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: "700",
-                            color: colors.white,
-                            margin: "0 0 4px 0",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
+                        <p className="text-base font-bold text-white font-['Inter',sans-serif] mb-1 mt-0">
                           {t.short}
                         </p>
-                        <span
-                          style={{
-                            fontSize: "10px",
-                            fontWeight: "700",
-                            color: colors.accent,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.5px",
-                            padding: "3px 10px",
-                            borderRadius: "50px",
-                            backgroundColor: "rgba(184,217,53,0.12)",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
+                        <span className="text-[10px] font-bold text-[#B8D935] uppercase tracking-[0.5px] px-2.5 py-[3px] rounded-[50px] bg-[rgba(184,217,53,0.12)] font-['Inter',sans-serif]">
                           {strLabel[st]}
                         </span>
                       </div>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "12px" }}>
-                      <span
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "600",
-                          color: "rgba(255,255,255,0.3)",
-                          fontFamily: "Inter, sans-serif",
-                        }}
-                      >
+                    <div className="flex items-center gap-1.5 mb-3">
+                      <span className="text-[11px] font-semibold text-white/30 font-['Inter',sans-serif]">
                         {sel.short}
                       </span>
                       <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
@@ -861,89 +729,35 @@ const CrossSector = () => {
                           strokeLinejoin="round"
                         />
                       </svg>
-                      <span
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "600",
-                          color: "rgba(255,255,255,0.3)",
-                          fontFamily: "Inter, sans-serif",
-                        }}
-                      >
+                      <span className="text-[11px] font-semibold text-white/30 font-['Inter',sans-serif]">
                         {t.short}
                       </span>
                     </div>
-                    <p
-                      style={{
-                        fontSize: "14px",
-                        color: "rgba(255,255,255,0.5)",
-                        margin: "0 0 16px 0",
-                        lineHeight: "1.6",
-                        fontFamily: "Inter, sans-serif",
-                        flex: 1,
-                      }}
-                    >
+                    <p className="text-sm text-white/50 leading-[1.6] font-['Inter',sans-serif] flex-1 mt-0 mb-4 mx-0">
                       {cn.mech}
                     </p>
-                    <div
-                      style={{
-                        backgroundColor: "rgba(184,217,53,0.06)",
-                        borderRadius: "12px",
-                        padding: "16px",
-                        border: "1px solid rgba(184,217,53,0.12)",
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontSize: "22px",
-                          fontWeight: "700",
-                          color: colors.accent,
-                          margin: "0 0 4px 0",
-                          lineHeight: "1.2",
-                          fontFamily: "Inter, sans-serif",
-                        }}
-                      >
+                    <div className="bg-[rgba(184,217,53,0.06)] rounded-xl p-4 border border-[rgba(184,217,53,0.12)]">
+                      <p className="text-[22px] font-bold text-[#B8D935] leading-[1.2] font-['Inter',sans-serif] mt-0 mb-1 mx-0">
                         {cn.met}
                       </p>
-                      <p
-                        style={{
-                          fontSize: "11px",
-                          color: "rgba(255,255,255,0.3)",
-                          margin: 0,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                          fontWeight: "600",
-                          fontFamily: "Inter, sans-serif",
-                        }}
-                      >
+                      <p className="text-[11px] text-white/30 uppercase tracking-[0.5px] font-semibold font-['Inter',sans-serif] m-0">
                         Impact Metric
                       </p>
                     </div>
-                    <div style={{ marginTop: "16px", display: "flex", gap: "4px" }}>
+                    <div className="mt-4 flex gap-1">
                       {[1, 2, 3].map((lv) => (
                         <div
                           key={lv}
+                          className="flex-1 h-1 rounded-sm transition-all duration-300 ease-in-out"
                           style={{
-                            flex: 1,
-                            height: "4px",
-                            borderRadius: "2px",
                             backgroundColor: st >= lv ? colors.accent : "rgba(255,255,255,0.08)",
                             opacity: st >= lv ? (lv === 1 ? 0.4 : lv === 2 ? 0.7 : 1) : 1,
-                            transition: "all 0.3s ease",
                           }}
                         />
                       ))}
                     </div>
                     {isL && (
-                      <p
-                        style={{
-                          fontSize: "10px",
-                          color: "rgba(255,255,255,0.2)",
-                          margin: "12px 0 0 0",
-                          textAlign: "center",
-                          fontStyle: "italic",
-                          fontFamily: "Inter, sans-serif",
-                        }}
-                      >
+                      <p className="text-[10px] text-white/20 text-center italic font-['Inter',sans-serif] mt-3 mb-0 mx-0">
                         {mb ? "Tap other icons to compare" : "Hover other icons to compare \u00B7 Click to lock"}
                       </p>
                     )}
@@ -952,32 +766,10 @@ const CrossSector = () => {
               })()
             ) : (
               <div
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.03)",
-                  border: "1px dashed rgba(255,255,255,0.1)",
-                  borderRadius: mb ? "14px" : "16px",
-                  padding: mb ? "24px 20px" : "40px 24px",
-                  textAlign: "center",
-                  flex: mb ? "none" : 1,
-                  display: "flex",
-                  flexDirection: mb ? "row" : "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: mb ? "16px" : "0",
-                }}
+                className={`bg-white/[0.03] border border-dashed border-white/10 text-center flex items-center justify-center ${mb ? "rounded-[14px] px-5 py-6 flex-none flex-row gap-4" : "rounded-2xl px-6 py-10 flex-1 flex-col gap-0"}`}
               >
                 <div
-                  style={{
-                    width: mb ? "40px" : "48px",
-                    height: mb ? "40px" : "48px",
-                    borderRadius: mb ? "12px" : "14px",
-                    backgroundColor: "rgba(255,255,255,0.05)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: mb ? "0" : "16px",
-                    flexShrink: 0,
-                  }}
+                  className={`bg-white/5 inline-flex items-center justify-center shrink-0 ${mb ? "w-10 h-10 rounded-xl mb-0" : "w-12 h-12 rounded-[14px] mb-4"}`}
                 >
                   <svg
                     width="20"
@@ -993,27 +785,13 @@ const CrossSector = () => {
                     <path d="m21 21-4.3-4.3" />
                   </svg>
                 </div>
-                <div style={{ textAlign: mb ? "left" : "center" }}>
+                <div className={mb ? "text-left" : "text-center"}>
                   <p
-                    style={{
-                      fontSize: mb ? "13px" : "14px",
-                      fontWeight: "600",
-                      color: "rgba(255,255,255,0.3)",
-                      margin: "0 0 6px 0",
-                      fontFamily: "Inter, sans-serif",
-                    }}
+                    className={`font-semibold text-white/30 font-['Inter',sans-serif] mb-1.5 mt-0 mx-0 ${mb ? "text-[13px]" : "text-sm"}`}
                   >
                     Explore Connections
                   </p>
-                  <p
-                    style={{
-                      fontSize: "12px",
-                      color: "rgba(255,255,255,0.15)",
-                      margin: 0,
-                      lineHeight: "1.5",
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
+                  <p className="text-xs text-white/[0.15] leading-normal font-['Inter',sans-serif] m-0">
                     {mb
                       ? `Tap any sector icon above to see its connection with ${sel.short}`
                       : `Hover or click any sector icon above to preview its integration pathway with ${sel.short}`}
@@ -1030,29 +808,9 @@ const CrossSector = () => {
                 setShowAccordion(true);
                 setExpanded({ strong: false, moderate: false, emerging: false });
               }}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                width: "100%",
-                padding: "14px",
-                borderRadius: "12px",
-                border: "1px solid rgba(184,217,53,0.2)",
-                backgroundColor: "rgba(184,217,53,0.05)",
-                cursor: "pointer",
-                margin: 0,
-              }}
+              className="flex items-center justify-center gap-2.5 w-full p-3.5 rounded-xl border border-[rgba(184,217,53,0.2)] bg-[rgba(184,217,53,0.05)] cursor-pointer m-0"
             >
-              <span
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  fontFamily: "Inter, sans-serif",
-                  letterSpacing: "0.5px",
-                }}
-              >
+              <span className="text-xs font-bold text-[#B8D935] font-['Inter',sans-serif] tracking-[0.5px]">
                 View Connection Tiers
               </span>
               <svg
@@ -1072,35 +830,16 @@ const CrossSector = () => {
 
           {/* RIGHT: Accordion — always on desktop, toggled on mobile */}
           {(!mb || showAccordion) && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px", overflow: "hidden", minWidth: 0 }}>
+            <div className="flex flex-col gap-3 overflow-hidden min-w-0">
               {mb && (
                 <button
                   onClick={() => {
                     setShowAccordion(false);
                     setExpanded({ strong: false, moderate: false, emerging: false });
                   }}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "10px",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    backgroundColor: "transparent",
-                    cursor: "pointer",
-                    margin: 0,
-                  }}
+                  className="flex items-center justify-center gap-2 w-full p-2.5 rounded-[10px] border border-white/[0.08] bg-transparent cursor-pointer m-0"
                 >
-                  <span
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "600",
-                      color: "rgba(255,255,255,0.3)",
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
+                  <span className="text-[11px] font-semibold text-white/30 font-['Inter',sans-serif]">
                     Hide Tiers
                   </span>
                   <svg
@@ -1123,12 +862,10 @@ const CrossSector = () => {
                 return (
                   <div
                     key={ring.key}
+                    className="rounded-2xl overflow-hidden transition-all duration-300 ease-in-out"
                     style={{
-                      borderRadius: "16px",
                       border: `1px solid ${isOpen ? strBorder[ring.level] : "rgba(255,255,255,0.08)"}`,
                       backgroundColor: isOpen ? "rgba(255,255,255,0.03)" : "transparent",
-                      overflow: "hidden",
-                      transition: "all 0.3s ease",
                     }}
                   >
                     <button
@@ -1140,55 +877,30 @@ const CrossSector = () => {
                         });
                         setScrollPage(0);
                       }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                        width: "100%",
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: mb ? "18px 16px" : "16px 20px",
-                        margin: 0,
-                      }}
+                      className={`flex items-center gap-2.5 w-full bg-none border-none cursor-pointer m-0 ${mb ? "px-4 py-[18px]" : "px-5 py-4"}`}
                     >
                       <span
-                        style={{
-                          width: "8px",
-                          height: "8px",
-                          borderRadius: "50%",
-                          backgroundColor: colors.accent,
-                          opacity: strDot[ring.level],
-                        }}
+                        className="w-2 h-2 rounded-full bg-[#B8D935]"
+                        style={{ opacity: strDot[ring.level] }}
                       />
                       <span
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "700",
-                          color: isOpen ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.35)",
-                          textTransform: "uppercase",
-                          letterSpacing: "1.5px",
-                          flex: 1,
-                          textAlign: "left",
-                          transition: "color 0.2s ease",
-                          fontFamily: "Inter, sans-serif",
-                        }}
+                        className={`text-xs font-bold uppercase tracking-[1.5px] flex-1 text-left transition-colors duration-200 ease-in-out font-['Inter',sans-serif] ${isOpen ? "text-white/60" : "text-white/[0.35]"}`}
                       >
                         {ring.label} Connections ({ring.items.length})
                       </span>
                       <CSChevron open={isOpen} />
                     </button>
                     <div
+                      className="overflow-hidden"
                       style={{
                         maxHeight: isOpen ? "1000px" : "0",
                         opacity: isOpen ? 1 : 0,
-                        overflow: "hidden",
                         transition: "max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease",
                         padding: isOpen ? (mb ? "0 12px 16px" : "0 20px 20px") : mb ? "0 12px" : "0 20px",
                       }}
                     >
                       <div
-                        className="cs-scroll"
+                        className="cs-scroll flex gap-3"
                         ref={isOpen ? scrollRef : null}
                         onScroll={(e) => {
                           const el = e.target as HTMLElement;
@@ -1197,8 +909,6 @@ const CrossSector = () => {
                           setScrollPage(Math.round(el.scrollLeft / (cw * cardsVis)));
                         }}
                         style={{
-                          display: "flex",
-                          gap: mb ? "12px" : "12px",
                           overflowX: mb || ring.items.length > 3 ? "auto" : "hidden",
                           scrollSnapType: "x mandatory",
                           paddingBottom: mb || ring.items.length > 3 ? "8px" : "0",
@@ -1218,73 +928,34 @@ const CrossSector = () => {
                               onMouseLeave={() => {
                                 if (!mb) setHovered(null);
                               }}
+                              className={`min-w-0 flex flex-col cursor-pointer snap-start ${mb ? "h-[180px] p-4 rounded-xl" : "h-[200px] p-5 rounded-[14px]"}`}
                               style={{
                                 flex: mb ? "0 0 85%" : ring.items.length <= 3 ? "1 1 0" : "0 0 calc((100% - 24px) / 3)",
-                                minWidth: 0,
-                                height: mb ? "180px" : "200px",
-                                display: "flex",
-                                flexDirection: "column",
-                                padding: mb ? "16px" : "20px",
-                                borderRadius: mb ? "12px" : "14px",
                                 backgroundColor: isAc ? "rgba(184,217,53,0.08)" : "rgba(255,255,255,0.05)",
                                 border: `1px solid ${isAc ? "rgba(184,217,53,0.3)" : "rgba(255,255,255,0.08)"}`,
-                                cursor: "pointer",
-                                scrollSnapAlign: "start",
                                 opacity: isOpen ? 1 : 0,
                                 transform: isOpen ? "translateY(0)" : "translateY(8px)",
                                 transition: `all 0.35s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.05}s`,
                               }}
                             >
-                              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                              <div className="flex items-center gap-3 mb-3">
                                 <div
+                                  className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
                                   style={{
-                                    width: "36px",
-                                    height: "36px",
-                                    borderRadius: "10px",
                                     backgroundColor: isAc ? "rgba(184,217,53,0.1)" : "rgba(255,255,255,0.06)",
                                     border: `1px solid ${isAc ? "rgba(184,217,53,0.2)" : "rgba(255,255,255,0.1)"}`,
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    flexShrink: 0,
                                   }}
                                 >
                                   {icons[s.key](isAc ? colors.accent : "rgba(255,255,255,0.7)", 16)}
                                 </div>
-                                <p
-                                  style={{
-                                    fontSize: "15px",
-                                    fontWeight: "700",
-                                    color: colors.white,
-                                    margin: 0,
-                                    fontFamily: "Inter, sans-serif",
-                                  }}
-                                >
+                                <p className="text-[15px] font-bold text-white font-['Inter',sans-serif] m-0">
                                   {s.short}
                                 </p>
                               </div>
-                              <p
-                                style={{
-                                  fontSize: "13px",
-                                  color: "rgba(255,255,255,0.4)",
-                                  margin: 0,
-                                  lineHeight: "1.5",
-                                  flex: 1,
-                                  overflow: "hidden",
-                                  fontFamily: "Inter, sans-serif",
-                                }}
-                              >
+                              <p className="text-[13px] text-white/40 leading-normal flex-1 overflow-hidden font-['Inter',sans-serif] m-0">
                                 {cn.mech}
                               </p>
-                              <p
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: "700",
-                                  color: colors.accent,
-                                  margin: "12px 0 0 0",
-                                  fontFamily: "Inter, sans-serif",
-                                }}
-                              >
+                              <p className="text-sm font-bold text-[#B8D935] font-['Inter',sans-serif] mt-3 mb-0 mx-0">
                                 {cn.met}
                               </p>
                             </div>
@@ -1292,7 +963,7 @@ const CrossSector = () => {
                         })}
                       </div>
                       {(mb || ring.items.length > 3) && (
-                        <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginTop: "12px" }}>
+                        <div className="flex justify-center gap-1.5 mt-3">
                           {Array.from({ length: mb ? ring.items.length : Math.ceil(ring.items.length / 3) }).map(
                             (_, idx) => (
                               <div
@@ -1305,13 +976,10 @@ const CrossSector = () => {
                                   }
                                   setScrollPage(idx);
                                 }}
+                                className="h-2 rounded cursor-pointer transition-all duration-300 ease-in-out"
                                 style={{
                                   width: scrollPage === idx ? "24px" : "8px",
-                                  height: "8px",
-                                  borderRadius: "4px",
                                   backgroundColor: scrollPage === idx ? colors.accent : "rgba(255,255,255,0.2)",
-                                  cursor: "pointer",
-                                  transition: "all 0.3s ease",
                                 }}
                               />
                             ),
@@ -1338,31 +1006,9 @@ const Arr = ({ s = 12, c = "currentColor" }) => (
 
 const Pill = ({ children, dark }) => (
   <div
-    style={{
-      display: "inline-flex",
-      alignItems: "center",
-      gap: "8px",
-      padding: "10px 20px",
-      border: `1px solid ${dark ? "rgba(255,255,255,0.25)" : colors.line}`,
-      borderRadius: "50px",
-      fontSize: "11px",
-      fontWeight: "700",
-      letterSpacing: "2px",
-      color: dark ? colors.white : colors.primary,
-      fontFamily: "Inter, sans-serif",
-      textTransform: "uppercase",
-      marginBottom: "24px",
-    }}
+    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-[50px] text-[11px] font-bold tracking-[2px] font-['Inter',sans-serif] uppercase mb-6 ${dark ? "border border-white/25 text-white" : "border border-[#DEDEDE] text-[#1B4D3E]"}`}
   >
-    <span
-      style={{
-        width: "6px",
-        height: "6px",
-        borderRadius: "50%",
-        backgroundColor: colors.accent,
-        display: "inline-block",
-      }}
-    />
+    <span className="w-1.5 h-1.5 rounded-full bg-[#B8D935] inline-block" />
     {children}
   </div>
 );
@@ -1380,81 +1026,43 @@ const HeroSection = () => {
     { v: "$192B", l: "Mobile Money Volume (2024)" },
   ];
   return (
-    <section style={{ backgroundColor: colors.white, padding: mb ? "60px 20px 48px" : "80px 80px 60px" }}>
-      <div style={{ maxWidth: MAX_W, margin: "0 auto" }}>
+    <section className={`bg-white ${mb ? "px-5 pt-[60px] pb-12" : "px-20 pt-20 pb-[60px]"}`}>
+      <div className="max-w-[1200px] mx-auto">
         <Pill dark={false}>Analysis</Pill>
         <h1
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: mb ? "36px" : "56px",
-            fontWeight: "300",
-            lineHeight: "1.1",
-            color: colors.primary,
-            margin: "0 0 24px 0",
-            letterSpacing: "-1px",
-            maxWidth: "800px",
-          }}
+          className={`font-['Inter',sans-serif] font-light leading-[1.1] text-[#1B4D3E] tracking-[-1px] max-w-[800px] mb-6 mt-0 ${mb ? "text-4xl" : "text-[56px]"}`}
         >
-          <span style={{ fontWeight: "700" }}>Twelve Integrated Sectors</span>
+          <span className="font-bold">Twelve Integrated Sectors</span>
           <br />
-          One Unified <span style={{ fontWeight: "700", color: colors.accent }}>Approach</span>
+          One Unified <span className="font-bold text-[#B8D935]">Approach</span>
         </h1>
         <p
-          style={{
-            fontSize: mb ? "15px" : "17px",
-            lineHeight: "1.7",
-            color: "#666",
-            fontFamily: "Inter, sans-serif",
-            margin: "0 0 48px 0",
-            maxWidth: "600px",
-          }}
+          className={`leading-[1.7] text-[#666] font-['Inter',sans-serif] max-w-[600px] mb-12 mt-0 ${mb ? "text-[15px]" : "text-[17px]"}`}
         >
           {
             "A trader\u2019s success depends on credit, market infrastructure, cold storage, and supply chains working together. BRIDGE aligns the systems, institutions, and resources that make that possible"
           }
         </p>
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: mb ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
-            gap: mb ? "24px 0" : "0",
-            borderTop: `1px solid ${colors.line}`,
-            borderBottom: `1px solid ${colors.line}`,
-            padding: mb ? "28px 0" : "28px 0",
-          }}
+          className={`grid border-t border-b border-[#DEDEDE] py-7 ${mb ? "grid-cols-2 gap-y-6 gap-x-0" : "grid-cols-4 gap-0"}`}
         >
           {st.map((s, i) => (
             <div
               key={i}
+              className="text-center"
               style={{
-                textAlign: "center",
                 borderRight: !mb && i < 3 ? `1px solid ${colors.line}` : "none",
                 borderBottom: mb && i < 2 ? `1px solid ${colors.line}` : "none",
                 paddingBottom: mb && i < 2 ? "24px" : "0",
-                paddingTop: mb && i >= 2 ? "0" : "0",
               }}
             >
               <p
-                style={{
-                  fontSize: mb ? "26px" : "36px",
-                  fontWeight: "700",
-                  color: colors.primary,
-                  fontFamily: "Inter, sans-serif",
-                  margin: "0 0 4px 0",
-                }}
+                className={`font-bold text-[#1B4D3E] font-['Inter',sans-serif] mb-1 mt-0 ${mb ? "text-[26px]" : "text-4xl"}`}
               >
                 {s.v}
               </p>
               <p
-                style={{
-                  fontSize: mb ? "10px" : "12px",
-                  fontWeight: "600",
-                  color: "#999",
-                  fontFamily: "Inter, sans-serif",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  margin: 0,
-                }}
+                className={`font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[1px] m-0 ${mb ? "text-[10px]" : "text-xs"}`}
               >
                 {s.l}
               </p>
@@ -1475,156 +1083,72 @@ const SectorCard = ({ s, hov, onE, onL }) => {
   const href = sectorRoute(s.slug);
   return (
     <div
-      className="value-card"
+      className={`value-card flex flex-col cursor-pointer h-full box-border ${mb ? "rounded-2xl p-5 gap-3" : "rounded-[20px] p-7 gap-4"}`}
       onMouseEnter={onE}
       onMouseLeave={onL}
       onClick={() => navigate(href)}
       style={{
         backgroundColor: colors.white,
-        borderRadius: mb ? "16px" : "20px",
-        padding: mb ? "20px" : "28px",
-        display: "flex",
-        flexDirection: "column",
-        gap: mb ? "12px" : "16px",
-        cursor: "pointer",
         border: `1px solid ${hov ? colors.accent : colors.line}`,
         boxShadow: hov ? "0 16px 40px rgba(27,77,62,0.1)" : "0 2px 8px rgba(0,0,0,0.04)",
-        height: "100%",
-        boxSizing: "border-box",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div className="flex justify-between items-start">
         <div
-          style={{
-            width: mb ? "40px" : "48px",
-            height: mb ? "40px" : "48px",
-            borderRadius: mb ? "12px" : "14px",
-            backgroundColor: hov ? colors.primary : colors.background,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "background-color 0.3s ease",
-          }}
+          className={`flex items-center justify-center transition-colors duration-300 ease-in-out ${mb ? "w-10 h-10 rounded-xl" : "w-12 h-12 rounded-[14px]"}`}
+          style={{ backgroundColor: hov ? colors.primary : colors.background }}
         >
           {Icon(hov ? colors.accent : colors.primary, mb ? 18 : 20)}
         </div>
-        <span style={{ fontSize: "12px", fontWeight: "700", color: "#ccc", fontFamily: "Inter, sans-serif" }}>
+        <span className="text-xs font-bold text-[#ccc] font-['Inter',sans-serif]">
           {String(s.id).padStart(2, "0")}
         </span>
       </div>
       <h3
-        style={{
-          fontFamily: "Inter, sans-serif",
-          fontSize: mb ? "15px" : "16px",
-          fontWeight: "700",
-          color: colors.primary,
-          margin: 0,
-          lineHeight: "1.3",
-        }}
+        className={`font-['Inter',sans-serif] font-bold text-[#1B4D3E] leading-[1.3] m-0 ${mb ? "text-[15px]" : "text-base"}`}
       >
         {s.name}
       </h3>
       <p
-        style={{
-          fontFamily: "Inter, sans-serif",
-          fontSize: mb ? "13px" : "13.5px",
-          color: "#666",
-          margin: 0,
-          lineHeight: "1.6",
-          flex: 1,
-        }}
+        className={`font-['Inter',sans-serif] text-[#666] leading-[1.6] flex-1 m-0 ${mb ? "text-[13px]" : "text-[13.5px]"}`}
       >
         {s.problem}
       </p>
       <div
-        style={{
-          backgroundColor: colors.background,
-          borderRadius: mb ? "10px" : "12px",
-          padding: mb ? "10px 14px" : "12px 16px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        className={`bg-[#F3F5F2] flex justify-between items-center ${mb ? "rounded-[10px] px-3.5 py-2.5" : "rounded-xl px-4 py-3"}`}
       >
         <div>
           <p
-            style={{
-              fontSize: mb ? "18px" : "20px",
-              fontWeight: "700",
-              color: colors.primary,
-              fontFamily: "Inter, sans-serif",
-              margin: "0 0 2px 0",
-            }}
+            className={`font-bold text-[#1B4D3E] font-['Inter',sans-serif] mb-0.5 mt-0 ${mb ? "text-lg" : "text-xl"}`}
           >
             {s.metric}
           </p>
-          <p
-            style={{
-              fontSize: "10px",
-              fontWeight: "600",
-              color: "#999",
-              margin: 0,
-              fontFamily: "Inter, sans-serif",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-            }}
-          >
+          <p className="text-[10px] font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[0.5px] m-0">
             {s.mLabel}
           </p>
         </div>
-        <div style={{ textAlign: "right" }}>
-          <p
-            style={{
-              fontSize: "14px",
-              fontWeight: "700",
-              color: colors.accent,
-              fontFamily: "Inter, sans-serif",
-              margin: "0 0 2px 0",
-            }}
-          >
+        <div className="text-right">
+          <p className="text-sm font-bold text-[#B8D935] font-['Inter',sans-serif] mb-0.5 mt-0">
             {s.cap}
           </p>
-          <p
-            style={{
-              fontSize: "10px",
-              fontWeight: "600",
-              color: "#999",
-              margin: 0,
-              fontFamily: "Inter, sans-serif",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-            }}
-          >
+          <p className="text-[10px] font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[0.5px] m-0">
             {s.vent} Ventures
           </p>
         </div>
       </div>
       <div
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[50px] self-start"
         style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "6px",
-          padding: "6px 12px",
-          borderRadius: "50px",
           backgroundColor: hov ? "rgba(184,217,53,0.12)" : "rgba(27,77,62,0.04)",
-          alignSelf: "flex-start",
         }}
       >
         <span
-          style={{
-            width: "5px",
-            height: "5px",
-            borderRadius: "50%",
-            backgroundColor: hov ? colors.accent : colors.primary,
-          }}
+          className="w-[5px] h-[5px] rounded-full"
+          style={{ backgroundColor: hov ? colors.accent : colors.primary }}
         />
         <span
-          style={{
-            fontSize: "11px",
-            fontWeight: "600",
-            color: hov ? colors.accentText : "#888",
-            fontFamily: "Inter, sans-serif",
-          }}
+          className="text-[11px] font-semibold font-['Inter',sans-serif]"
+          style={{ color: hov ? colors.accentText : "#888" }}
         >
           {s.tag}
         </span>
@@ -1632,29 +1156,14 @@ const SectorCard = ({ s, hov, onE, onL }) => {
       <a
         href={href}
         onClick={(e) => { e.preventDefault(); navigate(href); }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          textDecoration: "none",
-          paddingTop: "8px",
-          borderTop: `1px solid ${colors.line}`,
-        }}
+        className="flex items-center justify-between no-underline pt-2 border-t border-[#DEDEDE]"
       >
-        <span style={{ fontSize: "13px", fontWeight: "600", color: colors.primary, fontFamily: "Inter, sans-serif" }}>
+        <span className="text-[13px] font-semibold text-[#1B4D3E] font-['Inter',sans-serif]">
           Explore Full Analysis
         </span>
         <span
-          style={{
-            width: "28px",
-            height: "28px",
-            borderRadius: "50%",
-            backgroundColor: hov ? colors.accent : colors.background,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "background-color 0.3s ease",
-          }}
+          className="w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out"
+          style={{ backgroundColor: hov ? colors.accent : colors.background }}
         >
           <Arr s={10} c={hov ? colors.primary : "#999"} />
         </span>
@@ -1693,33 +1202,18 @@ const SectorGrid = () => {
   };
 
   return (
-    <section style={{ backgroundColor: colors.background, padding: mb ? "60px 20px 80px" : "100px 80px" }}>
-      <div style={{ maxWidth: MAX_W, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: "48px" }}>
+    <section className={`bg-[#F3F5F2] ${mb ? "px-5 pt-[60px] pb-20" : "px-20 py-[100px]"}`}>
+      <div className="max-w-[1200px] mx-auto">
+        <div className="text-center mb-12">
           <Pill dark={false}>12 Integrated Sectors</Pill>
           <h2
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: mb ? "32px" : "42px",
-              fontWeight: "300",
-              color: colors.primary,
-              margin: "0 0 16px 0",
-              letterSpacing: "-0.5px",
-              lineHeight: "1.15",
-            }}
+            className={`font-['Inter',sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] leading-[1.15] mb-4 mt-0 ${mb ? "text-[32px]" : "text-[42px]"}`}
           >
-            Comprehensive <span style={{ fontWeight: "700" }}>Analysis</span>
-            {" \u00B7 "}Targeted <span style={{ fontWeight: "700", color: colors.accent }}>Solutions</span>
+            Comprehensive <span className="font-bold">Analysis</span>
+            {" \u00B7 "}Targeted <span className="font-bold text-[#B8D935]">Solutions</span>
           </h2>
           <p
-            style={{
-              fontSize: mb ? "14px" : "16px",
-              lineHeight: "1.7",
-              color: "#666",
-              fontFamily: "Inter, sans-serif",
-              margin: "0 auto",
-              maxWidth: mb ? "100%" : "560px",
-            }}
+            className={`leading-[1.7] text-[#666] font-['Inter',sans-serif] mx-auto ${mb ? "text-sm max-w-full" : "text-base max-w-[560px]"} m-0`}
           >
             {mb
               ? "Each sector maps the full ecosystem to identify where alignment creates the greatest impact"
@@ -1727,17 +1221,8 @@ const SectorGrid = () => {
           </p>
         </div>
         <div
-          className="cs-scroll"
-          style={{
-            display: "flex",
-            gap: mb ? "8px" : "12px",
-            justifyContent: mb ? "flex-start" : "center",
-            marginBottom: "48px",
-            flexWrap: "nowrap",
-            overflowX: mb ? "auto" : "visible",
-            paddingBottom: mb ? "4px" : "0",
-            WebkitOverflowScrolling: "touch",
-          }}
+          className={`cs-scroll flex flex-nowrap mb-12 ${mb ? "gap-2 justify-start overflow-x-auto pb-1" : "gap-3 justify-center overflow-visible pb-0"}`}
+          style={{ WebkitOverflowScrolling: "touch" }}
         >
           {cats.map((c) => {
             const on = ac === c.id;
@@ -1745,34 +1230,20 @@ const SectorGrid = () => {
               <button
                 key={c.id}
                 onClick={() => switchCat(c.id)}
+                className={`inline-flex items-center gap-1.5 rounded-[50px] cursor-pointer font-semibold font-['Inter',sans-serif] transition-all duration-[250ms] ease-in-out whitespace-nowrap shrink-0 ${mb ? "px-4 py-2.5 text-xs" : "px-6 py-3 text-[13px]"}`}
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  padding: mb ? "10px 16px" : "12px 24px",
-                  borderRadius: "50px",
-                  cursor: "pointer",
                   border: on ? `2px solid ${colors.primary}` : `1.5px solid ${colors.line}`,
                   backgroundColor: on ? colors.primary : colors.white,
                   color: on ? colors.white : colors.primary,
-                  fontSize: mb ? "12px" : "13px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  transition: "all 0.25s ease",
                   boxShadow: on ? "0 4px 12px rgba(27,77,62,0.15)" : "none",
-                  whiteSpace: "nowrap",
-                  flexShrink: 0,
                 }}
               >
                 {c.label}
                 <span
+                  className="text-[11px] font-bold px-2 py-0.5 rounded-[50px]"
                   style={{
-                    fontSize: "11px",
-                    fontWeight: "700",
                     backgroundColor: on ? "rgba(184,217,53,0.25)" : colors.background,
                     color: on ? colors.accent : "#999",
-                    padding: "2px 8px",
-                    borderRadius: "50px",
                   }}
                 >
                   {c.n}
@@ -1782,55 +1253,36 @@ const SectorGrid = () => {
           })}
         </div>
         {cd && (
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: "14px",
-              color: "#888",
-              fontFamily: "Inter, sans-serif",
-              fontStyle: "italic",
-              margin: "-24px auto 40px",
-              maxWidth: "400px",
-            }}
-          >
+          <p className="text-center text-sm text-[#888] font-['Inter',sans-serif] italic max-w-[400px] mx-auto -mt-6 mb-10">
             {cd.desc}
           </p>
         )}
         <div
           ref={ref}
           onScroll={onScroll}
-          className="sector-scroll-track"
+          className="sector-scroll-track flex overflow-x-auto overflow-y-visible snap-x snap-mandatory pt-2 pb-4 -mt-2"
           style={{
-            display: "flex",
             gap: mb ? "16px" : "24px",
-            overflowX: "auto",
-            overflowY: "visible",
-            scrollSnapType: "x mandatory",
-            padding: "8px 0 16px",
-            margin: "-8px 0 0",
             WebkitOverflowScrolling: "touch",
             msOverflowStyle: "none",
             scrollbarWidth: "none",
           }}
         >
           {fl.map((s) => (
-            <div key={s.id} style={{ flex: mb ? "0 0 80%" : "0 0 calc((100% - 48px) / 3)", scrollSnapAlign: "start" }}>
+            <div key={s.id} className="snap-start" style={{ flex: mb ? "0 0 80%" : "0 0 calc((100% - 48px) / 3)" }}>
               <SectorCard s={s} hov={hov === s.id} onE={() => setHov(s.id)} onL={() => setHov(null)} />
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", gap: "6px", justifyContent: "center", marginTop: "16px" }}>
+        <div className="flex gap-1.5 justify-center mt-4">
           {fl.map((_, i) => (
             <span
               key={i}
               onClick={() => goTo(i)}
+              className="h-2 rounded cursor-pointer transition-all duration-300 ease-in-out"
               style={{
                 width: idx === i ? "24px" : "8px",
-                height: "8px",
-                borderRadius: "4px",
                 backgroundColor: idx === i ? colors.accent : colors.line,
-                cursor: "pointer",
-                transition: "all 0.3s ease",
               }}
             />
           ))}
@@ -1846,67 +1298,24 @@ const CTA = () => {
   const mb = useIsMobile();
   const navigate = useNavigate();
   return (
-    <section style={{ backgroundColor: colors.primary, padding: mb ? "16px 20px 56px" : "19px 80px 67px" }}>
-      <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+    <section className={`bg-[#1B4D3E] ${mb ? "px-5 pt-4 pb-14" : "px-20 pt-[19px] pb-[67px]"}`}>
+      <div className="max-w-[900px] mx-auto text-center">
         <div
-          style={{
-            display: "flex",
-            gap: mb ? "12px" : "16px",
-            justifyContent: "center",
-            flexDirection: mb ? "column" : "row",
-            alignItems: mb ? "stretch" : "center",
-          }}
+          className={`flex justify-center ${mb ? "gap-3 flex-col items-stretch" : "gap-4 flex-row items-center"}`}
         >
-          <a href="/login" onClick={(e) => { e.preventDefault(); navigate("/login"); }} style={{ textDecoration: "none" }}>
+          <a href="/login" onClick={(e) => { e.preventDefault(); navigate("/login"); }} className="no-underline">
             <button
-              style={{
-                backgroundColor: colors.accent,
-                color: colors.primary,
-                border: "none",
-                padding: mb ? "14px 24px" : "16px 28px",
-                fontSize: mb ? "14px" : "15px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                width: mb ? "100%" : "auto",
-              }}
+              className={`bg-[#B8D935] text-[#1B4D3E] border-none font-semibold font-['Inter',sans-serif] cursor-pointer rounded-[50px] flex items-center justify-center gap-2.5 ${mb ? "px-6 py-3.5 text-sm w-full" : "px-7 py-4 text-[15px] w-auto"}`}
             >
               Request Full Access
-              <span
-                className="cta-btn-arrow"
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  backgroundColor: colors.primary,
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <span className="cta-btn-arrow w-8 h-8 bg-[#1B4D3E] rounded-full flex items-center justify-center">
                 <Arr s={12} c={colors.white} />
               </span>
             </button>
           </a>
-          <a href="/contact" onClick={(e) => { e.preventDefault(); navigate("/contact"); }} style={{ textDecoration: "none" }}>
+          <a href="/contact" onClick={(e) => { e.preventDefault(); navigate("/contact"); }} className="no-underline">
             <button
-              style={{
-                backgroundColor: "transparent",
-                color: colors.white,
-                border: "2px solid rgba(255,255,255,0.3)",
-                padding: mb ? "14px 24px" : "16px 28px",
-                fontSize: mb ? "14px" : "15px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-                width: mb ? "100%" : "auto",
-              }}
+              className={`bg-transparent text-white border-2 border-white/30 font-semibold font-['Inter',sans-serif] cursor-pointer rounded-[50px] ${mb ? "px-6 py-3.5 text-sm w-full" : "px-7 py-4 text-[15px] w-auto"}`}
             >
               Schedule a Briefing
             </button>
@@ -1922,7 +1331,7 @@ const CTA = () => {
 export default function BRIDGESectorsLanding() {
   return (
     <Layout>
-    <div style={{ fontFamily: "Inter, sans-serif", backgroundColor: colors.white, minHeight: "100vh" }}>
+    <div className="font-['Inter',sans-serif] bg-white min-h-screen">
 
       <style>{`
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
