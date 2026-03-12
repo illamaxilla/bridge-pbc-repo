@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { C, M } from "./constants";
+import { M } from "./constants";
 import type { ReactNode, CSSProperties } from "react";
 
 /* ─── Tag Badge ─── */

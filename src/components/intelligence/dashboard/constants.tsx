@@ -13,7 +13,7 @@ import {
   Factory,
   Truck,
 } from "lucide-react";
-import type { ComponentType } from "react";
+
 
 /** Dashboard-specific color palette (desktop) */
 export const C = {
