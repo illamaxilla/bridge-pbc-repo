@@ -373,10 +373,7 @@ function WhatWeDoSection({ isMobile }) {
                 {active.items.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-3.5 py-2.5"
-                    style={{
-                      borderBottom: i < active.items.length - 1 ? `1px solid ${colors.line}` : "none",
-                    }}
+                    className={`flex items-center gap-3.5 py-2.5 ${i < active.items.length - 1 ? "border-b border-[#DEDEDE]" : ""}`}
                   >
                     <div
                       className="w-2 h-2 rounded-full bg-[#B8D935] shrink-0"
@@ -497,10 +494,7 @@ function WhatWeDoSection({ isMobile }) {
                 {active.items.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-3.5 py-3"
-                    style={{
-                      borderBottom: i < active.items.length - 1 ? `1px solid ${colors.line}` : "none",
-                    }}
+                    className={`flex items-center gap-3.5 py-3 ${i < active.items.length - 1 ? "border-b border-[#DEDEDE]" : ""}`}
                   >
                     <div
                       className="w-2 h-2 rounded-full bg-[#B8D935] shrink-0"
@@ -958,17 +952,7 @@ function ThreeGapsSection({ isMobile }) {
             setActiveCard(idx);
           }
         }}
-        style={{
-          display: "flex",
-          overflowX: "auto",
-          scrollSnapType: "x mandatory",
-          WebkitOverflowScrolling: "touch",
-          gap: isMobile ? "12px" : "20px",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          paddingLeft: isMobile ? "20px" : "80px",
-          paddingRight: isMobile ? "20px" : "80px",
-        }}
+        className={`flex overflow-x-auto snap-x snap-mandatory [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none] ${isMobile ? "gap-3 px-5" : "gap-5 px-20"}`}
       >
         {filtered.map((s, i) => {
           const isDark = i === 0 && activeFilter !== "All";
