@@ -658,11 +658,10 @@ export default function BRIDGEHomePage() {
                   {[40, 65, 90, 55, 75, 60, 85].map((h, i) => (
                     <div
                       key={i}
+                      className="w-1.5 rounded-t-[3px]"
                       style={{
-                        width: "6px",
                         height: `${hoveredCard === 0 ? h : h * 0.6}%`,
                         backgroundColor: i === 2 || i === 6 ? colors.accent : "rgba(184,217,53,0.35)",
-                        borderRadius: "3px 3px 0 0",
                         transition: `height 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.05}s`,
                       }}
                     />
@@ -780,13 +779,11 @@ export default function BRIDGEHomePage() {
                   {[28, 42, 35, 55, 48, 65, 58, 78, 72, 90, 85, 100].map((h, i) => (
                     <div
                       key={i}
+                      className="w-2 rounded-sm transition-[height] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
                       style={{
-                        width: "8px",
                         height: `${(hoveredCard === 1 ? h : h * 0.55) * 0.4}px`,
-                        borderRadius: "2px",
                         backgroundColor: i >= 10 ? colors.accent : colors.primary,
                         opacity: i < 4 ? 0.3 : i < 8 ? 0.6 : 1,
-                        transition: "height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
                         transitionDelay: `${i * 40}ms`,
                       }}
                     />
@@ -889,21 +886,17 @@ export default function BRIDGEHomePage() {
                   className="h-2.5 bg-[rgba(27,77,62,0.1)] rounded-[5px] overflow-hidden relative flex"
                 >
                   <div
+                    className="h-full rounded-l-[5px] transition-[width] duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
                     style={{
                       width: hoveredCard === 2 ? "52%" : "42%",
-                      height: "100%",
                       backgroundColor: colors.primary,
-                      borderRadius: "5px 0 0 5px",
-                      transition: "width 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
                     }}
                   />
                   <div
+                    className="h-full rounded-r-[5px] transition-[width] duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
                     style={{
                       width: hoveredCard === 2 ? "28%" : "18%",
-                      height: "100%",
                       backgroundColor: colors.accent,
-                      borderRadius: "0 5px 5px 0",
-                      transition: "width 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
                     }}
                   />
                 </div>

@@ -4225,38 +4225,26 @@ const ImpactSection = () => {
             </div>
 
             {/* Outcomes */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div className="flex flex-col gap-[6px]">
               {impactStakeholders[activeStakeholder].outcomes.map((o, i) => (
                 <div
                   key={i}
+                  className="flex items-center rounded-xl"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
                     gap: isMobile ? "12px" : "16px",
                     padding: isMobile ? "12px 16px" : "14px 20px",
                     backgroundColor: i % 2 === 0 ? colors.background : "transparent",
-                    borderRadius: "12px",
                   }}
                 >
                   <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
                     style={{
-                      width: "28px",
-                      height: "28px",
-                      borderRadius: "50%",
                       backgroundColor: i % 2 === 0 ? colors.white : colors.background,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
                     }}
                   >
                     <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-bold"
+                      style={{ color: colors.primary }}
                     >
                       {i + 1}
                     </span>
@@ -4772,18 +4760,10 @@ const InvestmentCTASection = ({ sector }) => {
             </div>
 
             {/* Engagement Pathways */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
+            <div className="flex-1 flex flex-col gap-[10px] mb-5">
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.primary,
-                  marginBottom: "4px",
-                  opacity: 0.5,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1px] mb-1 opacity-50"
+                style={{ color: colors.primary }}
               >
                 Your Engagement
               </div>

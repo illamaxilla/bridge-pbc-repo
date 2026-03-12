@@ -1119,8 +1119,8 @@ const ValueChainSectionPremium = () => {
                 key={s.id}
                 onClick={() => setActiveStage(i)}
                 className="flex-1 min-h-[200px] rounded-[16px] p-[20px] cursor-pointer flex flex-col" style={{
-                  backgroundColor: activeStage === i ? "rgba(184, 217, 53, 0.1)" : colors.background
-                  border: activeStage === i ? `2px solid ${colors.accent}` : `2px solid ${colors.primary}`
+                  backgroundColor: activeStage === i ? "rgba(184, 217, 53, 0.1)" : colors.background,
+                  border: activeStage === i ? `2px solid ${colors.accent}` : `2px solid ${colors.primary}`,
                 }}
               >
                 <div

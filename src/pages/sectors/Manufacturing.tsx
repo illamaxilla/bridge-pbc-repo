@@ -4962,91 +4962,54 @@ const FinalCTASection = () => {
   const navigate = useNavigate();
   return (
     <section
-      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px", textAlign: "center" }}
+      className="text-center"
+      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}
     >
-      <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+      <div className="max-w-[900px] mx-auto text-center">
         <span
+          className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
           style={{
-            display: "inline-block",
             backgroundColor: "rgba(184, 217, 53, 0.15)",
             color: colors.accent,
-            padding: "10px 20px",
-            borderRadius: "50px",
-            fontSize: "11px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            fontFamily: "Inter, sans-serif",
-            marginBottom: "24px",
           }}
         >
           Let's Build Ghana's Industrial Future
         </span>
         <h2
+          className="font-[Inter,sans-serif] font-light leading-[1.2] mt-0 mb-6"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "32px" : "48px",
-            fontWeight: "300",
-            lineHeight: "1.2",
             color: colors.white,
-            margin: "0 0 24px 0",
           }}
         >
-          Let's Build Ghana's <span style={{ color: colors.accent, fontWeight: "600" }}>Industrial Future</span>
+          Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Industrial Future</span>
         </h2>
         <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "16px" : "18px",
-            lineHeight: "1.7",
-            color: "rgba(255,255,255,0.7)",
-            margin: "0 0 40px 0",
-            maxWidth: "680px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+          className="font-[Inter,sans-serif] leading-[1.7] text-white/70 max-w-[680px] mx-auto mt-0 mb-10"
+          style={{ fontSize: isMobile ? "16px" : "18px" }}
         >
           Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
           Ghana's local production capacity.
         </p>
         <div
-          style={{
-            display: "flex",
-            gap: "16px",
-            justifyContent: "center",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: "center",
-          }}
+          className="flex gap-4 justify-center items-center"
+          style={{ flexDirection: isMobile ? "column" : "row" }}
         >
           <button
             onClick={() => navigate("/contact")}
+            className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center justify-center gap-[10px]"
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
-              border: "none",
               padding: isMobile ? "16px 24px" : "16px 32px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
               width: isMobile ? "100%" : "auto",
             }}
           >
             Start a Conversation
             <span
+              className="w-7 h-7 rounded-full flex items-center justify-center"
               style={{
-                width: "28px",
-                height: "28px",
                 backgroundColor: colors.primary,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
                 color: colors.white,
               }}
             >
@@ -5055,16 +5018,11 @@ const FinalCTASection = () => {
           </button>
           <button
             onClick={() => navigate("/resources")}
+            className="bg-transparent rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer"
             style={{
-              backgroundColor: "transparent",
               color: colors.white,
               border: "1px solid rgba(255,255,255,0.3)",
               padding: isMobile ? "16px 24px" : "16px 32px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
               width: isMobile ? "100%" : "auto",
             }}
           >
@@ -5098,7 +5056,7 @@ const SectorGrid = () => {
       >
         {hovered !== null ? FOOTER_SECTOR_ICONS[hovered].label : "Explore 12 Sectors"}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="flex justify-between items-center">
         {FOOTER_SECTOR_ICONS.map((sector, i) => {
           const isH = hovered === i;
           return (

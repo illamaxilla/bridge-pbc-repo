@@ -1026,13 +1026,12 @@ const OpportunitySection = ({ sector }) => {
               <div
                 key={index}
                 onClick={() => setExpandedProblem(isExpanded ? null : index)}
+                className="cursor-pointer transition-all duration-300"
                 style={{
                   backgroundColor: colors.white,
                   borderRadius: isMobile ? "16px" : "20px",
                   padding: isMobile ? "20px" : "28px",
                   border: isExpanded ? `2px solid ${colors.accent}` : `1px solid ${colors.line}`,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
                   ...(isMobile
                     ? {
                         minWidth: "85%",

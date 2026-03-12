@@ -3231,7 +3231,7 @@ const ImpactDashboardSection = () => {
           {!isMobile && <div style={{ width: "1px", height: "24px", backgroundColor: colors.line }} />}
 
           {/* Sub-filter pills — FilterPill pattern */}
-          <div style={{ display: "flex", gap: "8px", flexWrap: "nowrap", flexShrink: 0 }}>
+          <div className="flex gap-2 flex-nowrap shrink-0">
             {view === "metrics"
               ? impactMetrics.map((cat, i) => (
                   <button
@@ -3387,9 +3387,7 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
         }}
       >
         {/* Top row: Number left, ventures+trend right */}
-        <div
-          style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}
-        >
+        <div className="flex justify-between items-start mb-1.5">
           <div
             style={{
               fontFamily: "Poppins, sans-serif",
@@ -3402,7 +3400,7 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
           >
             {display}
           </div>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px" }}>
+          <div className="flex flex-col items-end gap-1">
             <span
               style={{
                 fontSize: "9px",
@@ -3445,7 +3443,7 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
         >
           {item.label}
         </div>
-        <div style={{ fontSize: "12px", fontFamily: "Inter, sans-serif", color: "#666", lineHeight: "1.4" }}>
+        <div className="text-[12px] font-[Inter,sans-serif] text-[#666] leading-[1.4]">
           {item.description}
         </div>
       </div>
