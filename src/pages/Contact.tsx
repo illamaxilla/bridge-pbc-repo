@@ -2448,75 +2448,39 @@ const InquiryTypesSection = () => {
     },
   ];
   return (
-    <section style={{ backgroundColor: colors.background, padding: isMobile ? "40px 20px" : "56px 80px" }}>
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "12px" }}>
+    <section className="bg-[#F3F5F2]" style={{ padding: isMobile ? "40px 20px" : "56px 80px" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
+        <div className="grid gap-3" style={{ gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)" }}>
           {inquiryTypes.map((item, i) => (
             <div
               key={i}
               onMouseEnter={() => setHov(i)}
               onMouseLeave={() => setHov(null)}
+              className="bg-white rounded-2xl py-[22px] px-6 transition-all duration-200 ease-in-out cursor-default"
               style={{
-                backgroundColor: colors.white,
-                borderRadius: "16px",
-                padding: "22px 24px",
                 border: `1px solid ${hov === i ? "rgba(27,77,62,0.25)" : colors.line}`,
-                transition: "all 0.2s ease",
                 boxShadow: hov === i ? "0 6px 24px rgba(27,77,62,0.07)" : "none",
-                cursor: "default",
               }}
             >
               {/* Icon + Title inline */}
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                <div
-                  style={{
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "8px",
-                    flexShrink: 0,
-                    backgroundColor: colors.background,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: colors.primary,
-                  }}
-                >
+              <div className="flex items-center gap-2.5 mb-2.5">
+                <div className="w-8 h-8 rounded-lg shrink-0 bg-[#F3F5F2] flex items-center justify-center text-[#1B4D3E]">
                   {item.icon}
                 </div>
-                <h3
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "15px",
-                    fontWeight: "600",
-                    color: colors.primary,
-                    margin: 0,
-                    lineHeight: "1.2",
-                  }}
-                >
+                <h3 className="font-[Inter,sans-serif] text-[15px] font-semibold text-[#1B4D3E] m-0 leading-[1.2]">
                   {item.title}
                 </h3>
               </div>
               {/* Description */}
-              <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  color: "#6a7e78",
-                  lineHeight: "1.65",
-                  margin: "0 0 14px",
-                  paddingLeft: "42px",
-                }}
-              >
+              <p className="font-[Inter,sans-serif] text-[13px] text-[#6a7e78] leading-[1.65] mt-0 mb-3.5 mx-0 pl-[42px]">
                 {item.description}
               </p>
               {/* Email */}
-              <div style={{ display: "flex", alignItems: "center", gap: "7px", paddingLeft: "42px" }}>
-                <span style={{ color: colors.muted, display: "flex", opacity: 0.7 }}>
+              <div className="flex items-center gap-[7px] pl-[42px]">
+                <span className="text-[#8A9E98] flex opacity-70">
                   <IconMail size={14} />
                 </span>
-                <span
-                  style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", fontWeight: "600", color: colors.muted }}
-                >
+                <span className="font-[Inter,sans-serif] text-xs font-semibold text-[#8A9E98]">
                   {item.email}
                 </span>
               </div>
@@ -2533,14 +2497,12 @@ const InquiryTypesSection = () => {
 const WidgetSection = () => {
   const isMobile = useIsMobile();
   return (
-    <section style={{ backgroundColor: colors.white, paddingTop: isMobile ? "0" : "200px" }}>
+    <section className="bg-white" style={{ paddingTop: isMobile ? "0" : "200px" }}>
       <div
+        className="bg-[#1B4D3E] relative overflow-visible"
         style={{
-          backgroundColor: colors.primary,
           paddingTop: isMobile ? "32px" : "260px",
           paddingBottom: isMobile ? "48px" : "240px",
-          position: "relative",
-          overflow: isMobile ? "visible" : "visible",
         }}
       >
         {/* Floating widget card */}
@@ -2548,7 +2510,6 @@ const WidgetSection = () => {
           style={{
             position: isMobile ? "relative" : "absolute",
             top: isMobile ? undefined : "-180px",
-            marginTop: isMobile ? undefined : undefined,
             left: isMobile ? undefined : "50%",
             transform: isMobile ? undefined : "translateX(-50%)",
             width: isMobile ? "calc(100% - 32px)" : `min(${CONTENT_MAX_WIDTH}, calc(100% - 160px))`,
@@ -2560,12 +2521,10 @@ const WidgetSection = () => {
 
         {/* Stats row */}
         <div
+          className="mx-auto grid grid-cols-3 gap-8"
           style={{
             maxWidth: CONTENT_MAX_WIDTH,
-            margin: "0 auto",
             display: isMobile ? "none" : "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "32px",
           }}
         >
           {[
@@ -2573,31 +2532,14 @@ const WidgetSection = () => {
             { number: "174+", label: "Ventures in Pipeline", sub: "$135–259M potential capital" },
             { number: "48h", label: "Response Commitment", sub: "Every inquiry, every time" },
           ].map((stat) => (
-            <div key={stat.number} style={{ textAlign: "center" }}>
-              <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "48px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  lineHeight: "1",
-                  marginBottom: "8px",
-                }}
-              >
+            <div key={stat.number} className="text-center">
+              <div className="font-[Inter,sans-serif] text-[48px] font-bold text-[#B8D935] leading-none mb-2">
                 {stat.number}
               </div>
-              <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  color: colors.white,
-                  marginBottom: "4px",
-                }}
-              >
+              <div className="font-[Inter,sans-serif] text-sm font-semibold text-white mb-1">
                 {stat.label}
               </div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
+              <div className="font-[Inter,sans-serif] text-xs text-white/45">
                 {stat.sub}
               </div>
             </div>
@@ -2615,7 +2557,7 @@ const WidgetSection = () => {
 export default function ContactPage() {
   return (
     <Layout>
-    <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0 }}>
+    <div className="font-[Inter,sans-serif] m-0 p-0">
       <style>{`
 
         * { box-sizing: border-box; margin: 0; padding: 0; }

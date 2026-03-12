@@ -2555,30 +2555,12 @@ export default function BRIDGEHomePage() {
         <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
           <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "60px" }}>
             <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "10px 20px",
-                border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
-                fontSize: "12px",
-                fontWeight: "600",
-                letterSpacing: "1.5px",
-                color: colors.primary,
-                fontFamily: "Inter, sans-serif",
-                textTransform: "uppercase",
-                marginBottom: "24px",
-              }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[50px] text-xs font-semibold tracking-[1.5px] font-[Inter,sans-serif] uppercase mb-6"
+              style={{ border: `1px solid ${colors.line}`, color: colors.primary }}
             >
               <span
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                  display: "inline-block",
-                }}
+                className="w-1.5 h-1.5 rounded-full inline-block"
+                style={{ backgroundColor: colors.accent }}
               />
               Insights
             </div>
@@ -2596,16 +2578,7 @@ export default function BRIDGEHomePage() {
               Our Latest Insights
             </h2>
             <p
-              style={{
-                fontSize: "17px",
-                lineHeight: "1.6",
-                color: "#666",
-                fontFamily: "Inter, sans-serif",
-                margin: 0,
-                maxWidth: "600px",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
+              className="text-[17px] leading-[1.6] text-[#666] font-[Inter,sans-serif] m-0 max-w-[600px] mx-auto"
             >
               Deep sector analysis, strategic frameworks, and evidence-based research for those building Ghana's future.
             </p>
@@ -2710,7 +2683,7 @@ export default function BRIDGEHomePage() {
                           {insight.title}
                         </h3>
                       </div>
-                      <div style={{ alignSelf: "flex-end", marginTop: "16px" }}>
+                      <div className="self-end mt-4">
                         <div
                           style={{
                             width: "48px",
@@ -2742,13 +2715,7 @@ export default function BRIDGEHomePage() {
               </div>
               {/* Mobile dots */}
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "8px",
-                  marginTop: "24px",
-                }}
+                className="flex justify-center items-center gap-2 mt-6"
               >
                 {insights.map((_, i) => (
                   <div
@@ -2769,14 +2736,10 @@ export default function BRIDGEHomePage() {
           ) : (
             <>
               {/* Desktop: transform carousel */}
-              <div style={{ overflow: "hidden" }}>
+              <div className="overflow-hidden">
                 <div
-                  style={{
-                    display: "flex",
-                    gap: "24px",
-                    transform: `translateX(-${insightIndex * (50 + 12)}%)`,
-                    transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                  }}
+                  className="flex gap-6 transition-transform duration-[0.4s] ease-[cubic-bezier(0.4,0,0.2,1)]"
+                  style={{ transform: `translateX(-${insightIndex * (50 + 12)}%)` }}
                 >
                   {insights.map((insight, index) => (
                     <div
@@ -2860,7 +2823,7 @@ export default function BRIDGEHomePage() {
                             {insight.title}
                           </h3>
                         </div>
-                        <div style={{ alignSelf: "flex-end" }}>
+                        <div className="self-end">
                           <div
                             style={{
                               width: "48px",
@@ -2893,13 +2856,7 @@ export default function BRIDGEHomePage() {
               </div>
               {/* Desktop dots */}
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "8px",
-                  marginTop: "36px",
-                }}
+                className="flex justify-center items-center gap-2 mt-9"
               >
                 {Array.from({ length: insights.length - 1 }).map((_, i) => (
                   <div
@@ -2918,7 +2875,7 @@ export default function BRIDGEHomePage() {
               </div>
             </>
           )}
-          <div style={{ textAlign: "center", marginTop: "48px" }}>
+          <div className="text-center mt-12">
             <a href="/insights" className="no-underline">
               <button
                 style={{
@@ -2944,15 +2901,9 @@ export default function BRIDGEHomePage() {
       <section style={{ padding: isMobile ? "48px 20px 60px" : "80px 48px 120px", backgroundColor: colors.white }}>
         <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
           <div
-            style={{
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: "60px",
-            }}
+            className="relative flex items-center justify-center mb-[60px]"
           >
-            {!isMobile && <div style={{ flex: 1, height: "1px", backgroundColor: colors.line }} />}
+            {!isMobile && <div className="flex-1 h-px" style={{ backgroundColor: colors.line }} />}
             <div
               style={{
                 display: "inline-flex",
@@ -2973,50 +2924,23 @@ export default function BRIDGEHomePage() {
             >
               {!isMobile && (
                 <span
-                  style={{
-                    width: "6px",
-                    height: "6px",
-                    borderRadius: "50%",
-                    backgroundColor: colors.accent,
-                    display: "inline-block",
-                  }}
+                  className="w-1.5 h-1.5 rounded-full inline-block"
+                  style={{ backgroundColor: colors.accent }}
                 />
               )}
               Aligned With Government Priorities
             </div>
-            {!isMobile && <div style={{ flex: 1, height: "1px", backgroundColor: colors.line }} />}
+            {!isMobile && <div className="flex-1 h-px" style={{ backgroundColor: colors.line }} />}
           </div>
-          <div style={{ overflow: "hidden", position: "relative" }}>
+          <div className="overflow-hidden relative">
             <div
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: "80px",
-                background: "linear-gradient(to right, white, transparent)",
-                zIndex: 2,
-              }}
+              className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-[2]"
             />
             <div
-              style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                bottom: 0,
-                width: "80px",
-                background: "linear-gradient(to left, white, transparent)",
-                zIndex: 2,
-              }}
+              className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-[2]"
             />
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "48px",
-                whiteSpace: "nowrap",
-                animation: "govScroll 40s linear infinite",
-              }}
+              className="flex items-center gap-12 whitespace-nowrap animate-[govScroll_40s_linear_infinite]"
             >
               {[
                 "Ghana Investment Promotion Centre (GIPC)",
@@ -3052,26 +2976,16 @@ export default function BRIDGEHomePage() {
                 "Development Bank Ghana",
                 "Ghana Tourism Authority",
               ].map((name, index) => (
-                <span key={index} style={{ display: "flex", alignItems: "center", gap: "48px" }}>
+                <span key={index} className="flex items-center gap-12">
                   <span
-                    style={{
-                      fontSize: "15px",
-                      fontWeight: "500",
-                      color: colors.primary,
-                      fontFamily: "Inter, sans-serif",
-                      opacity: 0.6,
-                    }}
+                    className="text-[15px] font-medium font-[Inter,sans-serif] opacity-60"
+                    style={{ color: colors.primary }}
                   >
                     {name}
                   </span>
                   <span
-                    style={{
-                      width: "4px",
-                      height: "4px",
-                      borderRadius: "50%",
-                      backgroundColor: colors.accent,
-                      flexShrink: 0,
-                    }}
+                    className="w-1 h-1 rounded-full shrink-0"
+                    style={{ backgroundColor: colors.accent }}
                   />
                 </span>
               ))}
@@ -3144,17 +3058,11 @@ export default function BRIDGEHomePage() {
                     <span className="font-bold">Let's</span> Connect
                   </h2>
                   <p
-                    style={{
-                      fontSize: "16px",
-                      lineHeight: "1.6",
-                      color: "#666",
-                      fontFamily: "Inter, sans-serif",
-                      margin: "0 0 24px 0",
-                    }}
+                    className="text-base leading-[1.6] text-[#666] font-[Inter,sans-serif] mt-0 mr-0 mb-6 ml-0"
                   >
                     Connect with our team to explore partnership opportunities and tailored solutions.
                   </p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
                     {[
                       { label: "Your name", type: "text", placeholder: "e.g. Kwame Asante" },
                       { label: "Email address", type: "email", placeholder: "e.g. kwame@email.com" },
@@ -3163,94 +3071,43 @@ export default function BRIDGEHomePage() {
                     ].map((field, i) => (
                       <div key={i}>
                         <label
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "500",
-                            color: colors.primary,
-                            fontFamily: "Inter, sans-serif",
-                            display: "block",
-                            marginBottom: "8px",
-                          }}
+                          className="text-sm font-medium font-[Inter,sans-serif] block mb-2"
+                          style={{ color: colors.primary }}
                         >
                           {field.label}
                         </label>
                         <input
                           type={field.type}
                           placeholder={field.placeholder}
-                          style={{
-                            width: "100%",
-                            padding: "14px 16px",
-                            borderRadius: "12px",
-                            border: "none",
-                            backgroundColor: colors.white,
-                            fontSize: "15px",
-                            fontFamily: "Inter, sans-serif",
-                            color: colors.dark,
-                            outline: "none",
-                            boxSizing: "border-box",
-                          }}
+                          className="w-full px-4 py-3.5 rounded-xl border-none text-[15px] font-[Inter,sans-serif] outline-none box-border"
+                          style={{ backgroundColor: colors.white, color: colors.dark }}
                         />
                       </div>
                     ))}
                   </div>
-                  <div style={{ marginBottom: "24px" }}>
+                  <div className="mb-6">
                     <label
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                        display: "block",
-                        marginBottom: "8px",
-                      }}
+                      className="text-sm font-medium font-[Inter,sans-serif] block mb-2"
+                      style={{ color: colors.primary }}
                     >
                       Your message
                     </label>
                     <textarea
                       placeholder="Type here..."
                       rows={4}
-                      style={{
-                        width: "100%",
-                        padding: "14px 16px",
-                        borderRadius: "12px",
-                        border: "none",
-                        backgroundColor: colors.white,
-                        fontSize: "15px",
-                        fontFamily: "Inter, sans-serif",
-                        color: colors.dark,
-                        outline: "none",
-                        resize: "vertical",
-                        boxSizing: "border-box",
-                      }}
+                      className="w-full px-4 py-3.5 rounded-xl border-none text-[15px] font-[Inter,sans-serif] outline-none resize-y box-border"
+                      style={{ backgroundColor: colors.white, color: colors.dark }}
                     />
                   </div>
                   <button
-                    style={{
-                      backgroundColor: colors.accent,
-                      color: colors.primary,
-                      border: "none",
-                      padding: "16px 32px",
-                      fontSize: "15px",
-                      fontWeight: "600",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      borderRadius: "50px",
-                    }}
+                    className="border-none px-8 py-4 text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer rounded-[50px]"
+                    style={{ backgroundColor: colors.accent, color: colors.primary }}
                   >
                     Send Message
                   </button>
                 </div>
                 <div
-                  style={{
-                    backgroundColor: "#3D4F4F",
-                    position: "relative",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "rgba(255,255,255,0.3)",
-                    fontSize: "14px",
-                    fontFamily: "Inter, sans-serif",
-                  }}
+                  className="bg-[#3D4F4F] relative flex items-center justify-center text-white/30 text-sm font-[Inter,sans-serif]"
                 >
                   [ Image ]
                   <div
