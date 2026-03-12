@@ -90,16 +90,22 @@ const App = () => (
       <TooltipProvider>
         <Sonner />
         <BrowserRouter>
-          <ErrorBoundary>
           <Suspense fallback={<PageLoading />}>
             <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/insights" element={<Insights />} />
-              <Route path="/methodology" element={<Methodology />} />
-              <Route path="/intelligence/*" element={<ProtectedRoute><Intelligence /></ProtectedRoute>}>
+              {/* Public pages */}
+              <Route path="/" element={<ErrorBoundary><Index /></ErrorBoundary>} />
+              <Route path="/about" element={<ErrorBoundary><About /></ErrorBoundary>} />
+              <Route path="/services" element={<ErrorBoundary><Services /></ErrorBoundary>} />
+              <Route path="/resources" element={<ErrorBoundary><Resources /></ErrorBoundary>} />
+              <Route path="/insights" element={<ErrorBoundary><Insights /></ErrorBoundary>} />
+              <Route path="/methodology" element={<ErrorBoundary><Methodology /></ErrorBoundary>} />
+              <Route path="/contact" element={<ErrorBoundary><Contact /></ErrorBoundary>} />
+              <Route path="/login" element={<ErrorBoundary><Login /></ErrorBoundary>} />
+              <Route path="/sectors" element={<ErrorBoundary><Sectors /></ErrorBoundary>} />
+              <Route path="/policy" element={<ErrorBoundary><Policy /></ErrorBoundary>} />
+
+              {/* Intelligence (protected) */}
+              <Route path="/intelligence/*" element={<ErrorBoundary><ProtectedRoute><Intelligence /></ProtectedRoute></ErrorBoundary>}>
                 <Route path="dashboard" element={<IntelDashboard />} />
                 <Route path="market" element={<MarketOverview />} />
                 <Route path="reports" element={<Reports />} />
@@ -107,20 +113,26 @@ const App = () => (
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="resources" element={<IntelResources />} />
               </Route>
-              <Route path="/reports/:slug" element={<SectorReport />} />
-              <Route path="/sectors/energy" element={<Energy />} />
-              <Route path="/sectors/technology" element={<Technology />} />
-              <Route path="/sectors/sports" element={<Sports />} />
-              <Route path="/sectors/transport" element={<Transport />} />
-              <Route path="/sectors/manufacturing" element={<Manufacturing />} />
-              <Route path="/sectors/housing" element={<Housing />} />
-              <Route path="/sectors/financial" element={<Financial />} />
-              <Route path="/sectors/health" element={<Health />} />
-              <Route path="/sectors/infrastructure" element={<Infrastructure />} />
-              <Route path="/sectors/tourism" element={<Tourism />} />
-              <Route path="/sectors/education" element={<Education />} />
-              <Route path="/sectors/agriculture" element={<Agriculture />} />
-              <Route path="/community" element={<Community />}>
+
+              {/* Reports */}
+              <Route path="/reports/:slug" element={<ErrorBoundary><SectorReport /></ErrorBoundary>} />
+
+              {/* Sector pages */}
+              <Route path="/sectors/energy" element={<ErrorBoundary><Energy /></ErrorBoundary>} />
+              <Route path="/sectors/technology" element={<ErrorBoundary><Technology /></ErrorBoundary>} />
+              <Route path="/sectors/sports" element={<ErrorBoundary><Sports /></ErrorBoundary>} />
+              <Route path="/sectors/transport" element={<ErrorBoundary><Transport /></ErrorBoundary>} />
+              <Route path="/sectors/manufacturing" element={<ErrorBoundary><Manufacturing /></ErrorBoundary>} />
+              <Route path="/sectors/housing" element={<ErrorBoundary><Housing /></ErrorBoundary>} />
+              <Route path="/sectors/financial" element={<ErrorBoundary><Financial /></ErrorBoundary>} />
+              <Route path="/sectors/health" element={<ErrorBoundary><Health /></ErrorBoundary>} />
+              <Route path="/sectors/infrastructure" element={<ErrorBoundary><Infrastructure /></ErrorBoundary>} />
+              <Route path="/sectors/tourism" element={<ErrorBoundary><Tourism /></ErrorBoundary>} />
+              <Route path="/sectors/education" element={<ErrorBoundary><Education /></ErrorBoundary>} />
+              <Route path="/sectors/agriculture" element={<ErrorBoundary><Agriculture /></ErrorBoundary>} />
+
+              {/* Community */}
+              <Route path="/community" element={<ErrorBoundary><Community /></ErrorBoundary>}>
                 <Route index element={<CommunityHome />} />
                 <Route path="forum" element={<CommunityHome />} />
                 <Route path="forum/*" element={<CommunityHome />} />
@@ -129,66 +141,74 @@ const App = () => (
               </Route>
 
               {/* Resource viewer routes */}
-              {/* Policy brief: public (General Public) */}
-              <Route path="/resources/policy-brief" element={<PolicyBriefTeaser />} />
-              {/* Sector briefs: Free Membership (must sign in) */}
-              <Route path="/resources/sector-brief/:slug" element={<ProtectedRoute><SectorBriefViewer /></ProtectedRoute>} />
-              {/* Annual review: Free Membership (must sign in) */}
-              <Route path="/resources/annual-review" element={<ProtectedRoute><AnnualReviewTeaser /></ProtectedRoute>} />
+              <Route path="/resources/policy-brief" element={<ErrorBoundary><PolicyBriefTeaser /></ErrorBoundary>} />
+              <Route path="/resources/sector-brief/:slug" element={<ErrorBoundary><ProtectedRoute><SectorBriefViewer /></ProtectedRoute></ErrorBoundary>} />
+              <Route path="/resources/annual-review" element={<ErrorBoundary><ProtectedRoute><AnnualReviewTeaser /></ProtectedRoute></ErrorBoundary>} />
 
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/sectors" element={<Sectors />} />
-              <Route path="/policy" element={<Policy />} />
               {/* BRIDGE document pages — sector intelligence with wrapper */}
               <Route path="/resources/budget-alignment" element={
-                <SectorIntelligenceWrapper title="2026 Budget Alignment" freePreviewPath="/resources/policy-brief">
-                  <BudgetAlignment />
-                </SectorIntelligenceWrapper>
+                <ErrorBoundary>
+                  <SectorIntelligenceWrapper title="2026 Budget Alignment" freePreviewPath="/resources/policy-brief">
+                    <BudgetAlignment />
+                  </SectorIntelligenceWrapper>
+                </ErrorBoundary>
               } />
               <Route path="/resources/ghana-intelligence" element={
-                <SectorIntelligenceWrapper title="Ghana Intelligence Q1 2026" freePreviewPath="/resources/annual-review">
-                  <GhanaIntelligence />
-                </SectorIntelligenceWrapper>
+                <ErrorBoundary>
+                  <SectorIntelligenceWrapper title="Ghana Intelligence Q1 2026" freePreviewPath="/resources/annual-review">
+                    <GhanaIntelligence />
+                  </SectorIntelligenceWrapper>
+                </ErrorBoundary>
               } />
               <Route path="/resources/sector-briefs" element={
-                <SectorIntelligenceWrapper title="Sector Intelligence Briefs">
-                  <AllSectorsFree />
-                </SectorIntelligenceWrapper>
+                <ErrorBoundary>
+                  <SectorIntelligenceWrapper title="Sector Intelligence Briefs">
+                    <AllSectorsFree />
+                  </SectorIntelligenceWrapper>
+                </ErrorBoundary>
               } />
               <Route path="/resources/sector-briefs-full" element={
-                <ProtectedRoute>
-                  <SectorIntelligenceWrapper title="Sector Intelligence Briefs — Full">
-                    <AllSectorsPaid />
-                  </SectorIntelligenceWrapper>
-                </ProtectedRoute>
+                <ErrorBoundary>
+                  <ProtectedRoute>
+                    <SectorIntelligenceWrapper title="Sector Intelligence Briefs — Full">
+                      <AllSectorsPaid />
+                    </SectorIntelligenceWrapper>
+                  </ProtectedRoute>
+                </ErrorBoundary>
               } />
               <Route path="/resources/white-paper" element={
-                <SectorIntelligenceWrapper title="BRIDGE Foundational White Paper">
-                  <WhitePaper />
-                </SectorIntelligenceWrapper>
+                <ErrorBoundary>
+                  <SectorIntelligenceWrapper title="BRIDGE Foundational White Paper">
+                    <WhitePaper />
+                  </SectorIntelligenceWrapper>
+                </ErrorBoundary>
               } />
               <Route path="/resources/annual-review-2025" element={
-                <SectorIntelligenceWrapper title="BRIDGE 2025 Annual Review">
-                  <AnnualReview2025 />
-                </SectorIntelligenceWrapper>
+                <ErrorBoundary>
+                  <SectorIntelligenceWrapper title="BRIDGE 2025 Annual Review">
+                    <AnnualReview2025 />
+                  </SectorIntelligenceWrapper>
+                </ErrorBoundary>
               } />
               <Route path="/resources/policy-tracker" element={
-                <SectorIntelligenceWrapper title="Ghana Policy Tracker 2025–2026">
-                  <PolicyTracker />
-                </SectorIntelligenceWrapper>
+                <ErrorBoundary>
+                  <SectorIntelligenceWrapper title="Ghana Policy Tracker 2025–2026">
+                    <PolicyTracker />
+                  </SectorIntelligenceWrapper>
+                </ErrorBoundary>
               } />
               <Route path="/resources/monthly-dashboard" element={
-                <SectorIntelligenceWrapper title="Monthly Dashboard — March 2026">
-                  <MonthlyDashboard />
-                </SectorIntelligenceWrapper>
+                <ErrorBoundary>
+                  <SectorIntelligenceWrapper title="Monthly Dashboard — March 2026">
+                    <MonthlyDashboard />
+                  </SectorIntelligenceWrapper>
+                </ErrorBoundary>
               } />
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-          </ErrorBoundary>
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>

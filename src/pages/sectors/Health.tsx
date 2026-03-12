@@ -17,6 +17,7 @@ import { useCounter } from "@/hooks/useCounter";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
 
 // ============================================================================
 // SECTOR DATA
@@ -3985,99 +3986,8 @@ const ImpactSection = () => {
 };
 
 // ============================================================================
-// FINAL CTA SECTION — Stacked buttons on mobile
+// FINAL CTA SECTION
 // ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  return (
-    <section
-      className="text-center" style={{
-                  backgroundColor: colors.primary,
-                  padding: isMobile ? "60px 20px" : "100px 80px"
-                }}
-    >
-      <div className="max-w-[900px] mx-auto text-center">
-        <span
-          className="inline-block bg-white/[0.08] py-[10px] px-[20px] rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6" style={{
-                  color: colors.accent,
-                  border: "1px solid rgba(255,255,255,0.15)"
-                }}
-        >
-          Be Part of the Journey
-        </span>
-        <h2
-          className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] mt-0 ml-0 mr-0 mb-6" style={{
-                  fontSize: isMobile ? "32px" : "48px",
-                  color: colors.white
-                }}
-        >
-          From Understanding to <span className="font-bold" style={{ color: colors.accent }}>Action</span>
-        </h2>
-        <p
-          className="font-[Inter,sans-serif] text-white/60 max-w-[680px] leading-[1.6]" style={{
-                  fontSize: isMobile ? "15px" : "18px",
-                  margin: "0 auto 40px auto"
-                }}
-        >
-          Our health systems analysis maps every opportunity, every alignment, every pathway to wellbeing. Request
-          access to explore the complete research.
-        </p>
-        <div
-          className="flex justify-center items-center gap-4" style={{ flexDirection: isMobile ? "column" : "row" }}
-        >
-          <button
-            onClick={() => navigate("/login")}
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              border: "none",
-              padding: "16px 32px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "10px",
-              justifyContent: "center",
-              ...(isMobile ? { width: "100%" } : {})
-                }}
-          >
-            Request Full Access
-            <span
-              className="w-[28px] h-[28px] rounded-full flex items-center justify-center" style={{
-                  backgroundColor: colors.primary,
-                  color: colors.white
-                }}
-            >
-              <IconArrowRight />
-            </span>
-          </button>
-          <button
-            onClick={() => navigate("/resources")}
-            style={{
-              backgroundColor: "transparent",
-              color: colors.white,
-              border: "1px solid rgba(255,255,255,0.3)",
-              padding: "16px 32px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              ...(isMobile ? { width: "100%" } : {})
-                }}
-          >
-            Explore the Full Analysis
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 // ============================================================================
 // MAIN PAGE COMPONENT
@@ -4096,7 +4006,12 @@ export default function HealthSystemsSectorPage() {
         <CrossSectorSection />
         <InvestmentCTASection />
         <ImpactSection />
-        <FinalCTASection />
+        <SectorFinalCTA
+          heading={<>From Understanding to <span className="font-bold" style={{ color: colors.accent }}>Action</span></>}
+          description="Our health systems analysis maps every opportunity, every alignment, every pathway to wellbeing. Request access to explore the complete research."
+          primaryButtonText="Request Full Access"
+          primaryButtonLink="/login"
+        />
         <div className="px-20" style={{ backgroundColor: colors.primary }}>
           <div className="h-px bg-white/[0.08]" />
         </div>

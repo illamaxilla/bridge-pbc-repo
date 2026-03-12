@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Search, User, Menu, X } from "lucide-react";
 import { colors as clr } from "@/lib/theme";
@@ -39,7 +39,9 @@ const SEARCH_ITEMS = [
 ];
 
 // ── Site-wide header ─────────────────────────────────────────────────────────
-export default function SiteHeader() {
+// React.memo: SiteHeader receives no props and is rendered by Layout on every route
+// change. Memo prevents re-renders when Layout's children (page content) change.
+function SiteHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
@@ -276,3 +278,5 @@ export default function SiteHeader() {
     </>
   );
 }
+
+export default memo(SiteHeader);

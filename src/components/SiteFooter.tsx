@@ -371,3 +371,5 @@ function SiteFooter() {
     </footer>
   );
 }
+
+export default memo(SiteFooter);

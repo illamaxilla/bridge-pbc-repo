@@ -5,6 +5,7 @@ import { IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconWallet, Icon
 import { ArrowRight, ArrowUpRight, BatteryCharging, Building2, Check, ChevronRight, Clock, Cpu, Hammer, Home, Landmark, LayoutGrid } from "lucide-react";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
 

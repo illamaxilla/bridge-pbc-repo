@@ -13,6 +13,7 @@ import { AlertTriangle, ArrowRight, Check, Globe, GraduationCap, Lock, Music, Pa
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
 

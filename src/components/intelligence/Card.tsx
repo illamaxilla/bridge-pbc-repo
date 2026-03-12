@@ -1,11 +1,13 @@
-import { useState, ReactNode } from "react";
+import React, { useState, ReactNode, memo } from "react";
 
 interface CardProps {
   children: ReactNode;
   style?: React.CSSProperties;
 }
 
-export function Card({ children, style: ex = {} }: CardProps) {
+// React.memo: Card is a leaf component rendered repeatedly in dashboard lists/grids.
+// Memo prevents re-renders when sibling cards or parent dashboard state changes.
+export const Card = memo(function Card({ children, style: ex = {} }: CardProps) {
   const [h, sH] = useState(false);
   return (
     <div
@@ -25,4 +27,4 @@ export function Card({ children, style: ex = {} }: CardProps) {
       {children}
     </div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Bell, Search, RefreshCw, User, ChevronDown } from "lucide-react";
 import { C } from "./constants";
 import { Sector } from "./sectorData";
@@ -9,7 +9,9 @@ interface TopNavProps {
   setSyncing: (v: boolean) => void;
 }
 
-export function TopNav({ s, syncing, setSyncing }) {
+// React.memo: TopNav receives sector and syncing props from the dashboard parent.
+// Memo prevents re-renders when unrelated dashboard state (e.g. period, sidebar) changes.
+export const TopNav = memo(function TopNav({ s, syncing, setSyncing }) {
   const [notif, setNotif] = useState(false);
   const monthYear = new Date().toLocaleString("default", { month: "long", year: "numeric" });
   const handleSync = () => {

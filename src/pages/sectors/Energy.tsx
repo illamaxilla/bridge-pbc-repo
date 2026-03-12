@@ -15,6 +15,7 @@ import { energySector } from "@/data/sectors/energy";
 import { cn } from "@/lib/utils";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 

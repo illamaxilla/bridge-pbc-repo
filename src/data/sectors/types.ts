@@ -86,6 +86,10 @@ export interface SectorData {
   category: string;
   categoryColor: string;
 
+  heroTitleBold: string;
+  heroTitleRest: string;
+  problemHeadline: string;
+
   capitalRange: string;
   ventures: number;
   jobsImpact: string;
