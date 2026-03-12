@@ -3121,17 +3121,10 @@ function MembersPage({ isMobile }) {
 
                 {/* Meta details */}
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 5,
-                    marginBottom: 16,
-                    padding: "12px 14px",
-                    background: C.bg,
-                    borderRadius: 10,
-                  }}
+                  className="flex flex-col gap-[5px] mb-4 py-3 px-[14px] rounded-[10px]"
+                  style={{ background: C.bg }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                  <div className="flex items-center gap-[6px] text-[12px]" style={{ color: C.muted }}>
                     <MapPin size={11} color={sColor} />
                     <span>{m.location}</span>
                   </div>

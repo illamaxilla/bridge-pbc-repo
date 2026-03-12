@@ -4118,38 +4118,23 @@ const ImpactSection = () => {
 
             {/* Key Advantage Strip */}
             <div
+              className="mt-6 rounded-xl flex items-center"
               style={{
-                marginTop: "24px",
                 padding: isMobile ? "14px 16px" : "16px 24px",
                 backgroundColor: colors.primary,
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
                 flexDirection: isMobile ? "column" : "row",
                 gap: isMobile ? "8px" : "16px",
               }}
             >
               <span
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  flexShrink: 0,
-                }}
+                className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[1.5px] shrink-0"
+                style={{ color: colors.accent }}
               >
                 Key Advantage
               </span>
               <span
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  color: "rgba(255,255,255,0.85)",
-                  textAlign: isMobile ? "center" : "left",
-                }}
+                className="font-[Inter,sans-serif] text-sm font-medium text-white/85"
+                style={{ textAlign: isMobile ? "center" : "left" }}
               >
                 {currentStakeholder.highlight}
               </span>

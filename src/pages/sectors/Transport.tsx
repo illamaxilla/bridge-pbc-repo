@@ -2509,23 +2509,8 @@ const RippleEffectSection = () => {
               {isMobile && !showMoreRipple && (
                 <button
                   onClick={() => setShowMoreRipple(true)}
-                  style={{
-                    width: "100%",
-                    padding: "14px",
-                    marginTop: "16px",
-                    backgroundColor: "transparent",
-                    border: "1px solid rgba(255,255,255,0.15)",
-                    borderRadius: "12px",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    color: colors.white,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                  }}
+                  className="w-full p-[14px] mt-4 bg-transparent border border-white/15 rounded-xl font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer flex items-center justify-center gap-2"
+                  style={{ color: colors.white }}
                 >
                   Show more details
                   <ChevronDown size={14} strokeWidth={2} color="white" />
@@ -2534,23 +2519,8 @@ const RippleEffectSection = () => {
               {isMobile && showMoreRipple && (
                 <button
                   onClick={() => setShowMoreRipple(false)}
-                  style={{
-                    width: "100%",
-                    padding: "14px",
-                    marginTop: "16px",
-                    backgroundColor: "transparent",
-                    border: "1px solid rgba(255,255,255,0.15)",
-                    borderRadius: "12px",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    color: colors.white,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                  }}
+                  className="w-full p-[14px] mt-4 bg-transparent border border-white/15 rounded-xl font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer flex items-center justify-center gap-2"
+                  style={{ color: colors.white }}
                 >
                   Show less
                   <ChevronDown size={14} strokeWidth={2} color="white" style={{ transform: "rotate(180deg)" }} />
