@@ -572,8 +572,7 @@ const IconCircle = ({ icon, isFirst = false }) => (
 // ============================================
 const DottedLine = () => (
   <div
-    className="flex-1 min-w-[24px] max-w-[48px] h-0.5 bg-repeat-x mx-1 bg-[length:8px_2px]"
-    style={{ backgroundImage: "linear-gradient(to right, #1B4D3E40 50%, transparent 50%)" }}
+    className="flex-1 min-w-[24px] max-w-[48px] h-0.5 bg-repeat-x mx-1 bg-[length:8px_2px] bg-[linear-gradient(to_right,#1B4D3E40_50%,transparent_50%)]"
   />
 );
 

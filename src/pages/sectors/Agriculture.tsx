@@ -3942,54 +3942,22 @@ const RippleEffectSection = () => {
                     <div
                       key={i}
                       onClick={() => setActiveNode(i)}
-                      style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        borderRadius: "16px",
-                        padding: "24px 20px",
-                        cursor: "pointer",
-                      }}
+                      className="bg-white/5 rounded-2xl py-6 px-5 cursor-pointer"
                     >
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: colors.white,
-                          marginBottom: "8px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-sm font-semibold text-white mb-2">
                         {p.name}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.45)",
-                          height: "40px",
-                          overflow: "hidden",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-white/[0.45] h-10 overflow-hidden">
                         {p.connection}
                       </div>
-                      <div style={{ marginTop: "12px" }}>
+                      <div className="mt-3">
                         <span
-                          style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "18px",
-                            fontWeight: "700",
-                            color: colors.accent,
-                          }}
+                          className="font-[Poppins,sans-serif] text-[18px] font-bold"
+                          style={{ color: colors.accent }}
                         >
                           {p.multiplier}
                         </span>
-                        <span
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "11px",
-                            color: "rgba(255,255,255,0.4)",
-                            marginLeft: "6px",
-                          }}
-                        >
+                        <span className="font-[Inter,sans-serif] text-[11px] text-white/40 ml-1.5">
                           multiplier
                         </span>
                       </div>

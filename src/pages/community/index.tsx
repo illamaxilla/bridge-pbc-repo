@@ -1965,13 +1965,11 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               ].map((g, i) => (
                 <div
                   key={i}
+                  className="rounded-2xl overflow-hidden transition-[box-shadow,border-color] duration-200"
                   style={{
                     background: C.white,
                     border: `1.5px solid ${C.line}`,
-                    borderRadius: 16,
-                    overflow: "hidden",
                     boxShadow: C.cardShadow,
-                    transition: "box-shadow 0.2s, border-color 0.2s",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = g.sectorColor;
@@ -1986,25 +1984,13 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                   <div
                     style={{ height: 4, background: `linear-gradient(90deg, ${g.sectorColor}, ${g.sectorColor}80)` }}
                   />
-                  <div style={{ padding: "18px 20px 16px" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        marginBottom: 12,
-                      }}
-                    >
+                  <div className="py-[18px] px-5 pb-4">
+                    <div className="flex justify-between items-start mb-3">
                       <span
+                        className="text-[10px] font-bold tracking-[0.8px] uppercase py-[3px] px-[9px] rounded-md"
                         style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          letterSpacing: "0.8px",
-                          textTransform: "uppercase",
                           color: g.sectorColor,
                           background: g.sectorColor + "14",
-                          padding: "3px 9px",
-                          borderRadius: 6,
                         }}
                       >
                         {g.sector}
