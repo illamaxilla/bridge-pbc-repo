@@ -2296,7 +2296,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
             })()}
 
           {forumView === "Sectors" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+            <div className="grid grid-cols-3 gap-[14px]">
               {[
                 { ...CATEGORIES[0], members: 31, trending: "kejetia-market", hot: true },
                 { ...CATEGORIES[1], members: 24, trending: "mobile-money", hot: true },
@@ -2313,13 +2313,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               ].map((cat, i) => (
                 <div
                   key={i}
+                  className="rounded-[14px] p-5 transition-all duration-200 cursor-pointer"
                   style={{
                     background: C.white,
                     border: `1.5px solid ${C.line}`,
-                    borderRadius: 14,
-                    padding: 20,
-                    transition: "all 0.2s",
-                    cursor: "pointer",
                     boxShadow: C.cardShadow,
                   }}
                   onMouseEnter={(e) => {
@@ -2333,53 +2330,28 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                     e.currentTarget.style.transform = "none";
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      marginBottom: 12,
-                    }}
-                  >
+                  <div className="flex justify-between items-start mb-3">
                     <div
-                      style={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: 10,
-                        background: `${C.primary}10`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: C.primary,
-                      }}
+                      className="w-[38px] h-[38px] rounded-[10px] flex items-center justify-center"
+                      style={{ background: `${C.primary}10`, color: C.primary }}
                     >
                       {cat.icon}
                     </div>
                     {cat.hot && (
-                      <span
-                        style={{
-                          fontSize: 9,
-                          fontWeight: 700,
-                          letterSpacing: "0.5px",
-                          color: "#E07020",
-                          background: "#E0702012",
-                          padding: "2px 7px",
-                          borderRadius: 6,
-                        }}
-                      >
+                      <span className="text-[9px] font-bold tracking-[0.5px] py-[2px] px-[7px] rounded-[6px] text-[#E07020] bg-[#E0702012]">
                         🔥 HOT
                       </span>
                     )}
                   </div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: C.dark, marginBottom: 4 }}>{cat.name}</div>
-                  <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted, marginBottom: 10 }}>
+                  <div className="text-[14px] font-bold mb-1" style={{ color: C.dark }}>{cat.name}</div>
+                  <div className="flex gap-3 text-[11px] mb-[10px]" style={{ color: C.muted }}>
                     <span>{cat.count} posts</span>
                     <span>·</span>
                     <span>{cat.members} members</span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <div className="flex items-center gap-[6px]">
                     <Tag size={10} color={C.accent} />
-                    <span style={{ fontSize: 11, color: C.primary, fontWeight: 600 }}>{cat.trending}</span>
+                    <span className="text-[11px] font-semibold" style={{ color: C.primary }}>{cat.trending}</span>
                   </div>
                 </div>
               ))}
@@ -2489,33 +2461,27 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                 },
               ];
               return (
-                <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+                <div className="flex flex-col gap-7">
                   {TIERS.map((tier, ti) => (
                     <div key={ti}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-                        <div style={{ width: 4, height: 18, borderRadius: 2, background: tier.color }} />
+                      <div className="flex items-center gap-[10px] mb-[14px]">
+                        <div className="w-1 h-[18px] rounded-sm" style={{ background: tier.color }} />
                         <div>
-                          <span style={{ fontSize: 13, fontWeight: 700, color: tier.color }}>{tier.tier} Tier</span>
-                          <span style={{ fontSize: 12, color: C.muted, marginLeft: 8 }}>— {tier.desc}</span>
+                          <span className="text-[13px] font-bold" style={{ color: tier.color }}>{tier.tier} Tier</span>
+                          <span className="text-[12px] ml-2" style={{ color: C.muted }}>— {tier.desc}</span>
                         </div>
                       </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+                      <div className="grid grid-cols-4 gap-3">
                         {tier.badges.map((b, bi) => (
                           <div
                             key={bi}
+                            className="rounded-[14px] p-[18px] flex flex-col transition-all duration-200 relative overflow-hidden"
                             style={{
                               background: b.earned
                                 ? `linear-gradient(135deg, ${tier.color}0a, ${tier.color}18)`
                                 : C.white,
                               border: `1.5px solid ${b.earned ? tier.color + "50" : C.line}`,
-                              borderRadius: 14,
-                              padding: 18,
-                              display: "flex",
-                              flexDirection: "column",
                               opacity: b.earned ? 1 : 0.8,
-                              transition: "all 0.2s",
-                              position: "relative",
-                              overflow: "hidden",
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.borderColor = tier.color;
@@ -2527,56 +2493,29 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                             }}
                           >
                             {b.earned && (
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  top: 10,
-                                  right: 10,
-                                  width: 16,
-                                  height: 16,
-                                  borderRadius: "50%",
-                                  background: "#27AE60",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}
-                              >
+                              <div className="absolute top-[10px] right-[10px] w-4 h-4 rounded-full bg-[#27AE60] flex items-center justify-center">
                                 <Check size={9} color={C.white} strokeWidth={3} />
                               </div>
                             )}
-                            <div style={{ fontSize: 28, marginBottom: 10 }}>{b.icon}</div>
+                            <div className="text-[28px] mb-[10px]">{b.icon}</div>
                             <div
-                              style={{
-                                fontSize: 13,
-                                fontWeight: 700,
-                                color: b.earned ? tier.color : C.dark,
-                                marginBottom: 4,
-                                lineHeight: 1.2,
-                              }}
+                              className="text-[13px] font-bold mb-1 leading-[1.2]"
+                              style={{ color: b.earned ? tier.color : C.dark }}
                             >
                               {b.name}
                             </div>
-                            <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.4, flex: 1 }}>{b.desc}</div>
+                            <div className="text-[11px] leading-[1.4] flex-1" style={{ color: C.muted }}>{b.desc}</div>
                             {!b.earned && b.progress !== null && (
-                              <div style={{ marginTop: 12 }}>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontSize: 10,
-                                    color: C.muted,
-                                    marginBottom: 4,
-                                  }}
-                                >
+                              <div className="mt-3">
+                                <div className="flex justify-between text-[10px] mb-1" style={{ color: C.muted }}>
                                   <span>Progress</span>
-                                  <span style={{ fontWeight: 700, color: tier.color }}>{b.progress}%</span>
+                                  <span className="font-bold" style={{ color: tier.color }}>{b.progress}%</span>
                                 </div>
-                                <div style={{ height: 4, borderRadius: 4, background: C.bg }}>
+                                <div className="h-1 rounded-[4px]" style={{ background: C.bg }}>
                                   <div
+                                    className="h-full rounded-[4px]"
                                     style={{
                                       width: `${b.progress}%`,
-                                      height: "100%",
-                                      borderRadius: 4,
                                       background: tier.color,
                                     }}
                                   />
@@ -2584,7 +2523,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                               </div>
                             )}
                             {b.earned && (
-                              <div style={{ marginTop: 10, fontSize: 10, fontWeight: 700, color: "#27AE60" }}>
+                              <div className="mt-[10px] text-[10px] font-bold text-[#27AE60]">
                                 ✓ Earned
                               </div>
                             )}
@@ -3832,16 +3771,14 @@ function HomePageContent({
 
           {/* This Week's Impact */}
           <div
+            className="rounded-2xl p-6 flex-1"
             style={{
               background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
-              borderRadius: 16,
-              padding: 24,
               boxShadow: C.cardShadow,
-              flex: 1,
             }}
           >
-            <SectionLabel children={<span style={{ color: "rgba(255,255,255,0.5)" }}>This Week's Impact</span>} />
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <SectionLabel children={<span className="text-white/50">This Week's Impact</span>} />
+            <div className="flex flex-col gap-[14px]">
               {[
                 { val: "3", label: "Discussions joined", delta: "+1 from last week" },
                 { val: "1", label: "Insights submitted", delta: "On track" },
@@ -3849,33 +3786,25 @@ function HomePageContent({
               ].map((s, i) => (
                 <div
                   key={i}
+                  className="flex justify-between items-center"
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
                     paddingBottom: i < 2 ? 14 : 0,
                     borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.08)" : "none",
                   }}
                 >
                   <div>
                     <div
-                      style={{
-                        fontSize: 22,
-                        fontWeight: 800,
-                        color: C.accent,
-                        fontFamily: font.display,
-                        lineHeight: 1,
-                      }}
+                      className="text-[22px] font-extrabold font-[DM_Sans,sans-serif] leading-none"
+                      style={{ color: C.accent }}
                     >
                       {s.val}
                     </div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>{s.label}</div>
+                    <div className="text-[12px] text-white/50 mt-[3px]">{s.label}</div>
                   </div>
                   <span
+                    className="text-[11px] font-semibold"
                     style={{
-                      fontSize: 11,
                       color: s.delta.startsWith("+") ? C.accent : "rgba(255,255,255,0.35)",
-                      fontWeight: 600,
                     }}
                   >
                     {s.delta}
@@ -4108,9 +4037,8 @@ function HomePageContent({
 
         {/* Tabs — scroll horizontally on mobile */}
         <div
+          className="flex"
           style={{
-            display: "flex",
-            gap: 0,
             marginBottom: isMobile ? 16 : 24,
             borderBottom: `1px solid ${C.line}`,
             overflowX: isMobile ? "auto" : "visible",
@@ -4121,20 +4049,11 @@ function HomePageContent({
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
+              className="border-none cursor-pointer font-[Inter,sans-serif] text-[13px] font-semibold bg-transparent capitalize whitespace-nowrap shrink-0 transition-all duration-200"
               style={{
                 padding: isMobile ? "8px 16px" : "8px 20px",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: font.body,
-                fontSize: 13,
-                fontWeight: 600,
-                background: "transparent",
-                textTransform: "capitalize",
-                whiteSpace: "nowrap",
                 color: activeTab === tab ? C.primary : C.muted,
                 borderBottom: `2px solid ${activeTab === tab ? C.primary : "transparent"}`,
-                flexShrink: 0,
-                transition: "all 0.2s",
               }}
             >
               {tab}
@@ -4143,110 +4062,71 @@ function HomePageContent({
         </div>
 
         {activeTab === "active" ? (
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 16 }}>
+          <div className="grid" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 16 }}>
             {GOALS.map((goal) => (
               <div
                 key={goal.id}
-                style={{
-                  border: `1.5px solid ${C.line}`,
-                  borderRadius: 14,
-                  padding: 20,
-                  transition: "border-color 0.2s",
-                }}
+                className="rounded-[14px] p-5 transition-[border-color] duration-200"
+                style={{ border: `1.5px solid ${C.line}` }}
                 onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.primary)}
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    marginBottom: 12,
-                  }}
-                >
+                <div className="flex justify-between items-start mb-3">
                   <div>
                     <Pill color={C.primary} small border>
                       {goal.sector}
                     </Pill>
                     <h3
-                      style={{
-                        fontFamily: font.display,
-                        fontSize: 15,
-                        fontWeight: 700,
-                        color: C.dark,
-                        margin: "8px 0 4px",
-                        lineHeight: 1.3,
-                      }}
+                      className="font-[DM_Sans,sans-serif] text-[15px] font-bold leading-[1.3] m-0 mt-2 mb-1"
+                      style={{ color: C.dark }}
                     >
                       {goal.title}
                     </h3>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                    <div className="flex items-center gap-[6px] text-[12px]" style={{ color: C.muted }}>
                       <Calendar size={11} />
                       <span>{goal.deadline}</span>
-                      <span style={{ color: C.accent, fontWeight: 700 }}>· {goal.daysLeft} days left</span>
+                      <span className="font-bold" style={{ color: C.accent }}>· {goal.daysLeft} days left</span>
                     </div>
                   </div>
                 </div>
 
                 <ProgressBar value={goal.progress} />
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: 6,
-                    fontSize: 11,
-                    color: C.muted,
-                  }}
+                  className="flex justify-between mt-[6px] text-[11px]"
+                  style={{ color: C.muted }}
                 >
                   <span>
                     {goal.steps.filter((s) => s.done).length}/{goal.steps.length} steps
                   </span>
-                  <span style={{ fontWeight: 700, color: C.primary }}>{goal.progress}%</span>
+                  <span className="font-bold" style={{ color: C.primary }}>{goal.progress}%</span>
                 </div>
 
                 {/* Expandable Steps */}
                 <button
                   onClick={() => setExpandedGoal(expandedGoal === goal.id ? null : goal.id)}
-                  style={{
-                    marginTop: 12,
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                    fontSize: 12,
-                    fontWeight: 600,
-                    color: C.primary,
-                    padding: 0,
-                  }}
+                  className="mt-3 bg-none border-none cursor-pointer flex items-center gap-1 text-[12px] font-semibold p-0"
+                  style={{ color: C.primary }}
                 >
                   {expandedGoal === goal.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                   {expandedGoal === goal.id ? "Hide" : "View"} Micro-Steps
                 </button>
 
                 {expandedGoal === goal.id && (
-                  <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div className="mt-[10px] flex flex-col gap-2">
                     {goal.steps.map((step, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div key={i} className="flex items-center gap-2">
                         <div
+                          className="w-4 h-4 rounded-[3px] flex items-center justify-center shrink-0"
                           style={{
-                            width: 16,
-                            height: 16,
-                            borderRadius: 3,
                             border: `1.5px solid ${step.done ? C.primary : C.line}`,
                             background: step.done ? C.primary : "transparent",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexShrink: 0,
                           }}
                         >
                           {step.done && <Check size={9} color={C.white} strokeWidth={3} />}
                         </div>
                         <span
+                          className="text-[12px]"
                           style={{
-                            fontSize: 12,
                             color: step.done ? C.muted : C.dark,
                             textDecoration: step.done ? "line-through" : "none",
                           }}
@@ -4261,29 +4141,20 @@ function HomePageContent({
             ))}
           </div>
         ) : (
-          <div style={{ textAlign: "center", padding: "48px 0" }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🌱</div>
-            <h3 style={{ fontFamily: font.display, fontSize: 20, color: C.primary, margin: "0 0 8px" }}>
+          <div className="text-center py-12">
+            <div className="text-[48px] mb-4">🌱</div>
+            <h3 className="font-[DM_Sans,sans-serif] text-[20px] m-0 mb-2" style={{ color: C.primary }}>
               No {activeTab} goals yet
             </h3>
-            <p style={{ color: C.muted, fontSize: 14, margin: "0 0 24px" }}>
+            <p className="text-[14px] m-0 mb-6" style={{ color: C.muted }}>
               Start contributing and reach the BRIDGE Champion milestone
             </p>
             <button
               onClick={() => setShowGoalModal(true)}
+              className="py-3 px-7 rounded-[20px] bg-transparent font-[Inter,sans-serif] text-[14px] font-bold cursor-pointer inline-flex items-center gap-2"
               style={{
-                padding: "12px 28px",
-                borderRadius: 20,
                 border: `2px solid ${C.primary}`,
-                background: "transparent",
                 color: C.primary,
-                fontFamily: font.body,
-                fontSize: 14,
-                fontWeight: 700,
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
               }}
             >
               <Plus size={14} /> Create Goal
