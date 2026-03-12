@@ -27,6 +27,7 @@ import {
   X,
   Minus,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 import { colors, layout } from "@/lib/theme";
 const C = {
@@ -37,8 +38,6 @@ const C = {
   muted: "#6B7280",
   mutedDark: "#4B5563",
 };
-const MAX = layout.maxWidth;
-const PAD = "80px";
 
 // ─── Data ─────────────────────────────────────────────────
 
@@ -269,32 +268,39 @@ function SectionHeading({ children }) {
 
 function ProcessStep({ step, idx, active, onClick, last }) {
   return (
-    <div className={`flex gap-5 relative ${last ? "pb-0" : "pb-1"}`}>
+    <div className={cn("flex gap-5 relative", last ? "pb-0" : "pb-1")}>
       {!last && (
         <div
-          className="absolute left-[23px] top-[52px] w-0.5 bottom-0 transition-colors duration-300"
-          style={{ background: active ? C.accent : C.line }}
+          className={cn(
+            "absolute left-[23px] top-[52px] w-0.5 bottom-0 transition-colors duration-300",
+            active ? "bg-[#B8D935]" : "bg-[#DEDEDE]"
+          )}
         />
       )}
       <button
         onClick={onClick}
-        className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 cursor-pointer transition-all duration-200 z-[1]"
-        style={{
-          border: `2px solid ${active ? C.accent : C.line}`,
-          background: active ? C.accent : C.white,
-        }}
+        className={cn(
+          "w-12 h-12 rounded-full flex items-center justify-center shrink-0 cursor-pointer transition-all duration-200 z-[1] border-2",
+          active
+            ? "border-[#B8D935] bg-[#B8D935]"
+            : "border-[#DEDEDE] bg-white"
+        )}
       >
         <span
-          className="text-xs font-extrabold font-['Inter',sans-serif]"
-          style={{ color: active ? C.primary : C.muted }}
+          className={cn(
+            "text-xs font-extrabold font-['Inter',sans-serif]",
+            active ? "text-[#1B4D3E]" : "text-[#6B7280]"
+          )}
         >
           {step.num}
         </span>
       </button>
       <div className="pt-2.5 flex-1 pb-2.5">
         <div
-          className="text-sm font-bold font-['Inter',sans-serif] tracking-[0.4px] uppercase transition-colors duration-200"
-          style={{ color: active ? C.primary : C.muted }}
+          className={cn(
+            "text-sm font-bold font-['Inter',sans-serif] tracking-[0.4px] uppercase transition-colors duration-200",
+            active ? "text-[#1B4D3E]" : "text-[#6B7280]"
+          )}
         >
           {step.label}
         </div>
@@ -312,30 +318,37 @@ function ScoreDimension({ dim, idx, active, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="px-5 py-[18px] rounded-[10px] cursor-pointer transition-all duration-200 mb-2"
-      style={{
-        border: `1px solid ${active ? C.accent : C.line}`,
-        background: active ? C.accentBg : C.white,
-      }}
+      className={cn(
+        "px-5 py-[18px] rounded-[10px] cursor-pointer transition-all duration-200 mb-2 border",
+        active
+          ? "border-[#B8D935] bg-[#EBF5B0]"
+          : "border-[#DEDEDE] bg-white"
+      )}
     >
       <div
-        className={`flex items-center justify-between ${active ? "mb-2.5" : "mb-0"}`}
+        className={cn("flex items-center justify-between", active ? "mb-2.5" : "mb-0")}
       >
         <div className="flex items-center gap-2.5">
           <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-200"
-            style={{ background: active ? C.accent : C.bg }}
+            className={cn(
+              "w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-200",
+              active ? "bg-[#B8D935]" : "bg-[#F3F5F2]"
+            )}
           >
             <span
-              className="text-[11px] font-extrabold font-['Inter',sans-serif]"
-              style={{ color: active ? C.primary : C.muted }}
+              className={cn(
+                "text-[11px] font-extrabold font-['Inter',sans-serif]",
+                active ? "text-[#1B4D3E]" : "text-[#6B7280]"
+              )}
             >
               {dim.weight}
             </span>
           </div>
           <span
-            className="text-[13px] font-bold font-['Inter',sans-serif]"
-            style={{ color: active ? C.primary : C.mutedDark }}
+            className={cn(
+              "text-[13px] font-bold font-['Inter',sans-serif]",
+              active ? "text-[#1B4D3E]" : "text-[#4B5563]"
+            )}
           >
             {dim.label}
           </span>
@@ -343,7 +356,7 @@ function ScoreDimension({ dim, idx, active, onClick }) {
         <ChevronRight
           size={14}
           color={active ? C.primary : C.muted}
-          className={`transition-transform duration-200 ${active ? "rotate-90" : "rotate-0"}`}
+          className={cn("transition-transform duration-200", active ? "rotate-90" : "rotate-0")}
         />
       </div>
       {active && (
@@ -450,8 +463,7 @@ function WhyInsightSection({ mobile }) {
         <div
           ref={scrollRef}
           onScroll={handleMobileScroll}
-          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none pl-5 gap-3 box-border"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none pl-5 gap-3 box-border [scrollbar-width:none] [-ms-overflow-style:none]"
         >
           <style>{`.why-scroll::-webkit-scrollbar{display:none}`}</style>
           {whyItems.map((item, i) => (
@@ -477,11 +489,10 @@ function WhyInsightSection({ mobile }) {
             <button
               key={i}
               onClick={() => scrollToCard(i)}
-              className="h-2 rounded border-none cursor-pointer p-0 transition-all duration-300 ease-in-out"
-              style={{
-                width: i === mobileIdx ? "24px" : "8px",
-                background: i === mobileIdx ? C.accent : C.line,
-              }}
+              className={cn(
+                "h-2 rounded border-none cursor-pointer p-0 transition-all duration-300 ease-in-out",
+                i === mobileIdx ? "w-6 bg-[#B8D935]" : "w-2 bg-[#DEDEDE]"
+              )}
             />
           ))}
         </div>
@@ -490,8 +501,8 @@ function WhyInsightSection({ mobile }) {
   }
 
   return (
-    <section className="bg-white" style={{ padding: `80px ${PAD}` }}>
-      <div className="mx-auto" style={{ maxWidth: MAX }}>
+    <section className="bg-white px-20 py-20">
+      <div className="mx-auto max-w-[1200px]">
         <div className="grid grid-cols-2 gap-14 items-center">
           <div className="flex flex-col items-start">
             <SectionLabel>Why Insight</SectionLabel>
@@ -546,12 +557,12 @@ function WhyInsightSection({ mobile }) {
               <button
                 onClick={prev}
                 disabled={offset === 0}
-                className="w-8 h-8 rounded-full bg-transparent flex items-center justify-center transition-all duration-200"
-                style={{
-                  border: `1px solid ${offset === 0 ? C.line : C.primary}`,
-                  cursor: offset === 0 ? "default" : "pointer",
-                  opacity: offset === 0 ? 0.35 : 1,
-                }}
+                className={cn(
+                  "w-8 h-8 rounded-full bg-transparent flex items-center justify-center transition-all duration-200 border",
+                  offset === 0
+                    ? "border-[#DEDEDE] cursor-default opacity-35"
+                    : "border-[#1B4D3E] cursor-pointer opacity-100"
+                )}
               >
                 <ChevronRight size={14} color={C.primary} className="rotate-180" />
               </button>
@@ -560,23 +571,22 @@ function WhyInsightSection({ mobile }) {
                   <button
                     key={i}
                     onClick={() => setOffset(i)}
-                    className="h-2 rounded border-none cursor-pointer transition-all duration-300 ease-in-out p-0"
-                    style={{
-                      width: i === offset ? "24px" : "8px",
-                      background: i === offset ? C.accent : C.line,
-                    }}
+                    className={cn(
+                      "h-2 rounded border-none cursor-pointer transition-all duration-300 ease-in-out p-0",
+                      i === offset ? "w-6 bg-[#B8D935]" : "w-2 bg-[#DEDEDE]"
+                    )}
                   />
                 ))}
               </div>
               <button
                 onClick={next}
                 disabled={offset === pages - 1}
-                className="w-8 h-8 rounded-full bg-transparent flex items-center justify-center transition-all duration-200"
-                style={{
-                  border: `1px solid ${offset === pages - 1 ? C.line : C.primary}`,
-                  cursor: offset === pages - 1 ? "default" : "pointer",
-                  opacity: offset === pages - 1 ? 0.35 : 1,
-                }}
+                className={cn(
+                  "w-8 h-8 rounded-full bg-transparent flex items-center justify-center transition-all duration-200 border",
+                  offset === pages - 1
+                    ? "border-[#DEDEDE] cursor-default opacity-35"
+                    : "border-[#1B4D3E] cursor-pointer opacity-100"
+                )}
               >
                 <ChevronRight size={14} color={C.primary} />
               </button>
@@ -615,10 +625,12 @@ export default function InsightsPage() {
 
       {/* ── HERO ──────────────────────────────────────────── */}
       <section
-        className="bg-[#1B4D3E]"
-        style={{ padding: mobile ? "60px 20px 52px" : `80px ${PAD} 80px` }}
+        className={cn(
+          "bg-[#1B4D3E]",
+          mobile ? "px-5 pt-[60px] pb-[52px]" : "px-20 py-20"
+        )}
       >
-        <div className="mx-auto" style={{ maxWidth: MAX }}>
+        <div className="mx-auto max-w-[1200px]">
           <div className="inline-flex items-center gap-2 bg-transparent border border-[#B8D935] rounded-[50px] px-[18px] py-2 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B8D935] shrink-0" />
             <span className="font-['Inter',sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px]">
@@ -626,20 +638,17 @@ export default function InsightsPage() {
             </span>
           </div>
           <div
-            className="grid items-center"
-            style={{
-              gridTemplateColumns: mobile ? "1fr" : "2fr 1fr",
-              gap: "56px",
-            }}
+            className={cn(
+              "grid items-center gap-14",
+              mobile ? "grid-cols-1" : "grid-cols-[2fr_1fr]"
+            )}
           >
             <div>
               <h1
-                className="font-['DM_Sans',sans-serif] font-light text-white mt-0 mb-[18px] mx-0"
-                style={{
-                  fontSize: mobile ? "36px" : "58px",
-                  lineHeight: 1.15,
-                  letterSpacing: mobile ? "-0.8px" : "-1.5px",
-                }}
+                className={cn(
+                  "font-['DM_Sans',sans-serif] font-light text-white mt-0 mb-[18px] mx-0 leading-[1.15]",
+                  mobile ? "text-4xl tracking-[-0.8px]" : "text-[58px] tracking-[-1.5px]"
+                )}
               >
                 Empirical analysis
                 <br />
@@ -648,20 +657,20 @@ export default function InsightsPage() {
                 <strong className="font-bold">Investable outcomes.</strong>
               </h1>
               <p
-                className="mt-0 mb-7 mx-0 text-[rgba(255,255,255,0.6)] leading-[1.75] font-['Inter',sans-serif] max-w-[680px]"
-                style={{ fontSize: mobile ? "15px" : "17px" }}
+                className={cn(
+                  "mt-0 mb-7 mx-0 text-[rgba(255,255,255,0.6)] leading-[1.75] font-['Inter',sans-serif] max-w-[680px]",
+                  mobile ? "text-[15px]" : "text-[17px]"
+                )}
               >
                 Rigorous sector analysis, venture scoring, and policy intelligence — the research infrastructure behind
                 every BRIDGE deployment decision.
               </p>
               <a
                 href="/login"
-                className="inline-flex items-center gap-2 bg-[#B8D935] text-[#1B4D3E] no-underline rounded-[50px] text-sm font-bold font-['Inter',sans-serif] box-border"
-                style={{
-                  padding: mobile ? "12px 22px" : "13px 24px",
-                  width: mobile ? "100%" : "auto",
-                  justifyContent: mobile ? "center" : "flex-start",
-                }}
+                className={cn(
+                  "inline-flex items-center gap-2 bg-[#B8D935] text-[#1B4D3E] no-underline rounded-[50px] text-sm font-bold font-['Inter',sans-serif] box-border",
+                  mobile ? "py-3 px-[22px] w-full justify-center" : "py-[13px] px-6 w-auto justify-start"
+                )}
               >
                 Access Dashboard <ArrowUpRight size={14} />
               </a>
@@ -676,21 +685,27 @@ export default function InsightsPage() {
       {/* ── THE PROCESS ───────────────────────────────────── */}
       <section
         id="process"
-        className="bg-[#F3F5F2]"
-        style={{ padding: mobile ? "56px 0" : `80px ${PAD}` }}
+        className={cn(
+          "bg-[#F3F5F2]",
+          mobile ? "py-14 px-0" : "py-20 px-20"
+        )}
       >
-        <div style={{ maxWidth: MAX, margin: mobile ? "0" : "0 auto" }}>
+        <div className={cn("max-w-[1200px]", mobile ? "m-0" : "mx-auto")}>
           <div
-            className="text-center"
-            style={{ marginBottom: mobile ? "32px" : "52px", padding: mobile ? "0 20px" : 0 }}
+            className={cn(
+              "text-center",
+              mobile ? "mb-8 px-5" : "mb-[52px] px-0"
+            )}
           >
             <SectionLabel>The Process</SectionLabel>
             <SectionHeading>
               Six stages. One <strong className="font-bold">investment-grade</strong> output.
             </SectionHeading>
             <p
-              className="mx-auto max-w-[680px] text-[#6B7280] leading-[1.7] font-['Inter',sans-serif] mt-0 mb-0"
-              style={{ fontSize: mobile ? "15px" : "16px" }}
+              className={cn(
+                "mx-auto max-w-[680px] text-[#6B7280] leading-[1.7] font-['Inter',sans-serif] mt-0 mb-0",
+                mobile ? "text-[15px]" : "text-base"
+              )}
             >
               From citizen-level gap identification to a fully scored, portfolio-integrated venture — every BRIDGE
               analysis follows the same rigorous six-stage methodology.
@@ -702,34 +717,40 @@ export default function InsightsPage() {
             <div>
               {/* Step selector — horizontal scroll */}
               <div
-                className="overflow-x-auto pl-5 pb-1 mb-5"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                className="overflow-x-auto pl-5 pb-1 mb-5 [scrollbar-width:none] [-ms-overflow-style:none]"
               >
                 <div className="flex gap-2 w-max">
                   {process.map((step, idx) => (
                     <button
                       key={idx}
                       onClick={() => setActiveStep(idx)}
-                      className="flex items-center gap-2 px-4 py-[9px] rounded-[50px] border-none cursor-pointer transition-all duration-200 shrink-0"
-                      style={{
-                        background: activeStep === idx ? C.primary : C.white,
-                        boxShadow: activeStep === idx ? "none" : `0 0 0 1px ${C.line}`,
-                      }}
+                      className={cn(
+                        "flex items-center gap-2 px-4 py-[9px] rounded-[50px] border-none cursor-pointer transition-all duration-200 shrink-0",
+                        activeStep === idx
+                          ? "bg-[#1B4D3E] shadow-none"
+                          : "bg-white shadow-[0_0_0_1px_#DEDEDE]"
+                      )}
                     >
                       <span
-                        className="w-[22px] h-[22px] rounded-full flex items-center justify-center shrink-0"
-                        style={{ background: activeStep === idx ? C.accent : C.bg }}
+                        className={cn(
+                          "w-[22px] h-[22px] rounded-full flex items-center justify-center shrink-0",
+                          activeStep === idx ? "bg-[#B8D935]" : "bg-[#F3F5F2]"
+                        )}
                       >
                         <span
-                          className="text-[10px] font-extrabold font-['Inter',sans-serif]"
-                          style={{ color: activeStep === idx ? C.primary : C.muted }}
+                          className={cn(
+                            "text-[10px] font-extrabold font-['Inter',sans-serif]",
+                            activeStep === idx ? "text-[#1B4D3E]" : "text-[#6B7280]"
+                          )}
                         >
                           {step.num}
                         </span>
                       </span>
                       <span
-                        className="text-xs font-bold font-['Inter',sans-serif] whitespace-nowrap"
-                        style={{ color: activeStep === idx ? C.white : C.muted }}
+                        className={cn(
+                          "text-xs font-bold font-['Inter',sans-serif] whitespace-nowrap",
+                          activeStep === idx ? "text-white" : "text-[#6B7280]"
+                        )}
                       >
                         {step.label}
                       </span>
@@ -788,18 +809,17 @@ export default function InsightsPage() {
                   <button
                     key={i}
                     onClick={() => setActiveStep(i)}
-                    className="h-2 rounded border-none cursor-pointer p-0 transition-all duration-300 ease-in-out"
-                    style={{
-                      width: i === activeStep ? "24px" : "8px",
-                      background: i === activeStep ? C.accent : C.line,
-                    }}
+                    className={cn(
+                      "h-2 rounded border-none cursor-pointer p-0 transition-all duration-300 ease-in-out",
+                      i === activeStep ? "w-6 bg-[#B8D935]" : "w-2 bg-[#DEDEDE]"
+                    )}
                   />
                 ))}
               </div>
             </div>
           ) : (
             /* DESKTOP PROCESS: two-column */
-            <div className="grid items-stretch" style={{ gridTemplateColumns: "480px 1fr", gap: "56px" }}>
+            <div className="grid items-stretch grid-cols-[480px_1fr] gap-14">
               <div className="flex flex-col gap-0 justify-between h-full">
                 {process.map((step, idx) => (
                   <ProcessStep
@@ -862,18 +882,22 @@ export default function InsightsPage() {
 
       {/* ── IMPACT SCORE ──────────────────────────────────── */}
       <section
-        className="bg-white"
-        style={{ padding: mobile ? "56px 20px" : `80px ${PAD}` }}
+        className={cn(
+          "bg-white",
+          mobile ? "py-14 px-5" : "py-20 px-20"
+        )}
       >
-        <div className="mx-auto" style={{ maxWidth: MAX }}>
-          <div className="text-center" style={{ marginBottom: mobile ? "32px" : "52px" }}>
+        <div className="mx-auto max-w-[1200px]">
+          <div className={cn("text-center", mobile ? "mb-8" : "mb-[52px]")}>
             <SectionLabel>BRIDGE Impact Score™</SectionLabel>
             <SectionHeading>
               A framework built for a <strong className="font-bold">complex ecosystem.</strong>
             </SectionHeading>
             <p
-              className="mx-auto max-w-[740px] text-[#6B7280] leading-[1.7] font-['Inter',sans-serif] mt-0 mb-0"
-              style={{ fontSize: mobile ? "15px" : "16px" }}
+              className={cn(
+                "mx-auto max-w-[740px] text-[#6B7280] leading-[1.7] font-['Inter',sans-serif] mt-0 mb-0",
+                mobile ? "text-[15px]" : "text-base"
+              )}
             >
               Most frameworks collapse under complexity. The BRIDGE Impact Score™ was built for it — four weighted
               dimensions evaluated across 174+ ventures in 12 sectors, producing a single composite score that is
@@ -906,7 +930,7 @@ export default function InsightsPage() {
                   <ChevronRight
                     size={16}
                     color={C.muted}
-                    className={`transition-transform duration-200 ${openPanel === "tiers" ? "rotate-90" : "rotate-0"}`}
+                    className={cn("transition-transform duration-200", openPanel === "tiers" ? "rotate-90" : "rotate-0")}
                   />
                 </button>
                 {openPanel === "tiers" && (
@@ -918,8 +942,7 @@ export default function InsightsPage() {
                     ].map(([range, tier, desc]) => (
                       <div
                         key={range}
-                        className="grid items-start"
-                        style={{ gridTemplateColumns: "88px 1fr", gap: "12px" }}
+                        className="grid items-start grid-cols-[88px_1fr] gap-3"
                       >
                         <span className="text-[13px] font-extrabold text-[#1B4D3E] font-['Inter',sans-serif] pt-px">
                           {range}
@@ -948,7 +971,7 @@ export default function InsightsPage() {
                   <ChevronRight
                     size={16}
                     color={C.muted}
-                    className={`transition-transform duration-200 ${openPanel === "weights" ? "rotate-90" : "rotate-0"}`}
+                    className={cn("transition-transform duration-200", openPanel === "weights" ? "rotate-90" : "rotate-0")}
                   />
                 </button>
                 {openPanel === "weights" && (
@@ -959,25 +982,29 @@ export default function InsightsPage() {
                         <div key={i} className="mb-3">
                           <div className="flex justify-between mb-[5px]">
                             <span
-                              className="text-xs font-semibold font-['Inter',sans-serif]"
-                              style={{ color: activeDim === i ? C.primary : C.mutedDark }}
+                              className={cn(
+                                "text-xs font-semibold font-['Inter',sans-serif]",
+                                activeDim === i ? "text-[#1B4D3E]" : "text-[#4B5563]"
+                              )}
                             >
                               {dim.label}
                             </span>
                             <span
-                              className="text-xs font-extrabold font-['Inter',sans-serif]"
-                              style={{ color: activeDim === i ? C.primary : C.muted }}
+                              className={cn(
+                                "text-xs font-extrabold font-['Inter',sans-serif]",
+                                activeDim === i ? "text-[#1B4D3E]" : "text-[#6B7280]"
+                              )}
                             >
                               {dim.weight}
                             </span>
                           </div>
                           <div className="h-2 bg-[#DEDEDE] rounded overflow-hidden">
                             <div
-                              className="h-full rounded transition-colors duration-200"
-                              style={{
-                                width: `${pct * 3}%`,
-                                background: activeDim === i ? C.accent : C.primary,
-                              }}
+                              className={cn(
+                                "h-full rounded transition-colors duration-200",
+                                activeDim === i ? "bg-[#B8D935]" : "bg-[#1B4D3E]"
+                              )}
+                              style={{ width: `${pct * 3}%` }}
                             />
                           </div>
                         </div>
@@ -1004,7 +1031,7 @@ export default function InsightsPage() {
                   <ChevronRight
                     size={16}
                     color="rgba(255,255,255,0.4)"
-                    className={`transition-transform duration-200 shrink-0 ${openPanel === "portfolio" ? "rotate-90" : "rotate-0"}`}
+                    className={cn("transition-transform duration-200 shrink-0", openPanel === "portfolio" ? "rotate-90" : "rotate-0")}
                   />
                 </button>
                 {openPanel === "portfolio" && (
@@ -1029,8 +1056,7 @@ export default function InsightsPage() {
                       ].map(({ count, tier, label, bar, color }) => (
                         <div
                           key={tier}
-                          className="grid items-center"
-                          style={{ gridTemplateColumns: "48px 1fr", gap: "14px" }}
+                          className="grid items-center grid-cols-[48px_1fr] gap-3.5"
                         >
                           <div className="text-lg font-extrabold text-[rgba(255,255,255,0.9)] font-['Inter',sans-serif] leading-none">
                             {count}
@@ -1117,8 +1143,7 @@ export default function InsightsPage() {
                     ].map(([range, tier, desc]) => (
                       <div
                         key={range}
-                        className="grid items-start"
-                        style={{ gridTemplateColumns: "88px 1fr", gap: "16px" }}
+                        className="grid items-start grid-cols-[88px_1fr] gap-4"
                       >
                         <span className="text-[13px] font-extrabold text-[#1B4D3E] font-['Inter',sans-serif] pt-px">
                           {range}
@@ -1145,25 +1170,29 @@ export default function InsightsPage() {
                       <div key={i} className="mb-3.5">
                         <div className="flex justify-between mb-[5px]">
                           <span
-                            className="text-xs font-semibold font-['Inter',sans-serif] transition-colors duration-200"
-                            style={{ color: activeDim === i ? C.primary : C.mutedDark }}
+                            className={cn(
+                              "text-xs font-semibold font-['Inter',sans-serif] transition-colors duration-200",
+                              activeDim === i ? "text-[#1B4D3E]" : "text-[#4B5563]"
+                            )}
                           >
                             {dim.label}
                           </span>
                           <span
-                            className="text-xs font-extrabold font-['Inter',sans-serif]"
-                            style={{ color: activeDim === i ? C.primary : C.muted }}
+                            className={cn(
+                              "text-xs font-extrabold font-['Inter',sans-serif]",
+                              activeDim === i ? "text-[#1B4D3E]" : "text-[#6B7280]"
+                            )}
                           >
                             {dim.weight}
                           </span>
                         </div>
                         <div className="h-2 bg-[#DEDEDE] rounded overflow-hidden">
                           <div
-                            className="h-full rounded transition-colors duration-200"
-                            style={{
-                              width: `${pct * 3}%`,
-                              background: activeDim === i ? C.accent : C.primary,
-                            }}
+                            className={cn(
+                              "h-full rounded transition-colors duration-200",
+                              activeDim === i ? "bg-[#B8D935]" : "bg-[#1B4D3E]"
+                            )}
+                            style={{ width: `${pct * 3}%` }}
                           />
                         </div>
                       </div>
@@ -1198,8 +1227,7 @@ export default function InsightsPage() {
                       ].map(({ count, tier, label, bar, color }) => (
                         <div
                           key={tier}
-                          className="grid items-center"
-                          style={{ gridTemplateColumns: "48px 1fr", gap: "16px" }}
+                          className="grid items-center grid-cols-[48px_1fr] gap-4"
                         >
                           <div className="text-lg font-extrabold text-[rgba(255,255,255,0.9)] font-['Inter',sans-serif] leading-none">
                             {count}
@@ -1268,10 +1296,12 @@ export default function InsightsPage() {
       {/* ── BUILT ON GIPC ─────────────────────────────────── */}
       <section
         id="compare"
-        className="bg-[#F3F5F2]"
-        style={{ padding: mobile ? "56px 20px" : `80px ${PAD}` }}
+        className={cn(
+          "bg-[#F3F5F2]",
+          mobile ? "py-14 px-5" : "py-20 px-20"
+        )}
       >
-        <div className="mx-auto" style={{ maxWidth: MAX }}>
+        <div className="mx-auto max-w-[1200px]">
           {/* Header */}
           {mobile ? (
             <div className="mb-7">
@@ -1340,8 +1370,7 @@ export default function InsightsPage() {
           {mobile ? (
             /* Mobile: horizontally scrollable pills, no outer container */
             <div
-              className="overflow-x-auto mb-4 -mx-5 pl-5"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              className="overflow-x-auto mb-4 -mx-5 pl-5 [scrollbar-width:none] [-ms-overflow-style:none]"
             >
               <div className="flex gap-1.5 w-max pr-5">
                 {compCategories.map((cat) => (
@@ -1351,12 +1380,12 @@ export default function InsightsPage() {
                       setActiveComp(cat);
                       setShowAllRows(false);
                     }}
-                    className="px-4 py-[7px] rounded-[50px] text-xs font-bold font-['Inter',sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap shrink-0"
-                    style={{
-                      border: `1px solid ${activeComp === cat ? C.primary : C.line}`,
-                      background: activeComp === cat ? C.primary : C.white,
-                      color: activeComp === cat ? C.white : C.muted,
-                    }}
+                    className={cn(
+                      "px-4 py-[7px] rounded-[50px] text-xs font-bold font-['Inter',sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap shrink-0 border",
+                      activeComp === cat
+                        ? "border-[#1B4D3E] bg-[#1B4D3E] text-white"
+                        : "border-[#DEDEDE] bg-white text-[#6B7280]"
+                    )}
                   >
                     {cat}
                   </button>
@@ -1369,11 +1398,12 @@ export default function InsightsPage() {
                 <button
                   key={cat}
                   onClick={() => setActiveComp(cat)}
-                  className="px-[18px] py-[7px] rounded-[50px] border-none text-xs font-bold font-['Inter',sans-serif] cursor-pointer transition-all duration-200"
-                  style={{
-                    background: activeComp === cat ? C.primary : "transparent",
-                    color: activeComp === cat ? C.white : C.muted,
-                  }}
+                  className={cn(
+                    "px-[18px] py-[7px] rounded-[50px] border-none text-xs font-bold font-['Inter',sans-serif] cursor-pointer transition-all duration-200",
+                    activeComp === cat
+                      ? "bg-[#1B4D3E] text-white"
+                      : "bg-transparent text-[#6B7280]"
+                  )}
                 >
                   {cat}
                 </button>
@@ -1439,7 +1469,7 @@ export default function InsightsPage() {
                         <ChevronRight
                           size={14}
                           color={C.primary}
-                          className={`transition-transform duration-200 ${showAllRows ? "-rotate-90" : "rotate-90"}`}
+                          className={cn("transition-transform duration-200", showAllRows ? "-rotate-90" : "rotate-90")}
                         />
                       </button>
                     )}
@@ -1463,10 +1493,7 @@ export default function InsightsPage() {
           ) : (
             /* Desktop: table */
             <div className="bg-white rounded-[14px] border border-[#DEDEDE] overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
-              <div
-                className="grid border-b-2 border-[#DEDEDE]"
-                style={{ gridTemplateColumns: "200px 1fr 1fr" }}
-              >
+              <div className="grid border-b-2 border-[#DEDEDE] grid-cols-[200px_1fr_1fr]">
                 <div className="p-[16px_24px] text-[11px] font-bold text-[#6B7280] font-['Inter',sans-serif] uppercase tracking-[0.8px]">
                   Dimension
                 </div>
@@ -1498,11 +1525,10 @@ export default function InsightsPage() {
                 .map((row, i, arr) => (
                   <div
                     key={i}
-                    className="grid transition-colors duration-150 hover:bg-[#FAFCF7]"
-                    style={{
-                      gridTemplateColumns: "200px 1fr 1fr",
-                      borderBottom: i < arr.length - 1 ? `1px solid ${C.line}` : "none",
-                    }}
+                    className={cn(
+                      "grid transition-colors duration-150 hover:bg-[#FAFCF7] grid-cols-[200px_1fr_1fr]",
+                      i < arr.length - 1 ? "border-b border-[#DEDEDE]" : "border-b-0"
+                    )}
                   >
                     <div className="p-[14px_24px] flex flex-col justify-center border-r border-[#DEDEDE]">
                       <span className="text-[10px] font-bold text-[#B8D935] font-['Inter',sans-serif] uppercase tracking-[0.6px] mb-0.5">
@@ -1539,43 +1565,44 @@ export default function InsightsPage() {
 
       {/* ── CTA ───────────────────────────────────────────── */}
       <section
-        className="bg-[#F3F5F2]"
-        style={{ padding: mobile ? "0 20px 56px" : `0px ${PAD} 80px` }}
+        className={cn(
+          "bg-[#F3F5F2]",
+          mobile ? "px-5 pt-0 pb-14" : "px-20 pt-0 pb-20"
+        )}
       >
-        <div className="mx-auto" style={{ maxWidth: MAX }}>
+        <div className="mx-auto max-w-[1200px]">
           <div
-            className="bg-[#1B4D3E] rounded-2xl"
-            style={{
-              padding: mobile ? "32px 24px" : "40px 56px",
-              display: "flex",
-              flexDirection: mobile ? "column" : "row",
-              alignItems: mobile ? "stretch" : "center",
-              justifyContent: "space-between",
-              gap: mobile ? "24px" : "32px",
-            }}
+            className={cn(
+              "bg-[#1B4D3E] rounded-2xl flex justify-between",
+              mobile
+                ? "p-[32px_24px] flex-col items-stretch gap-6"
+                : "p-[40px_56px] flex-row items-center gap-8"
+            )}
           >
             <div>
               <div
-                className="font-bold text-white font-['DM_Sans',sans-serif] mb-2.5"
-                style={{ fontSize: mobile ? "24px" : "28px" }}
+                className={cn(
+                  "font-bold text-white font-['DM_Sans',sans-serif] mb-2.5",
+                  mobile ? "text-2xl" : "text-[28px]"
+                )}
               >
                 Explore the full research
               </div>
               <div
-                className="text-[rgba(255,255,255,0.55)] font-['Inter',sans-serif] leading-[1.7]"
-                style={{ fontSize: mobile ? "14px" : "15px" }}
+                className={cn(
+                  "text-[rgba(255,255,255,0.55)] font-['Inter',sans-serif] leading-[1.7]",
+                  mobile ? "text-sm" : "text-[15px]"
+                )}
               >
                 The complete sector analyses — including every scored venture, implementation framework, and capital
                 breakdown — are available in the BRIDGE Resource Library.
               </div>
             </div>
             <div
-              className="shrink-0"
-              style={{
-                display: "flex",
-                gap: "10px",
-                flexDirection: mobile ? "column" : "row",
-              }}
+              className={cn(
+                "shrink-0 flex gap-2.5",
+                mobile ? "flex-col" : "flex-row"
+              )}
             >
               <a
                 href="/resources"
