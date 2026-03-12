@@ -1188,7 +1188,7 @@ export default function ServicesSectorsPageV2() {
   return (
     <Layout hideFooter>
     <div
-      className="font-['Helvetica',Arial,sans-serif] m-0 p-0" className="bg-[#F3F5F2]"
+      className="font-['Helvetica',Arial,sans-serif] m-0 p-0 bg-[#F3F5F2]"
     >
 
       <style>{`
@@ -1208,16 +1208,16 @@ export default function ServicesSectorsPageV2() {
       <section
         className="bg-[#F3F5F2]" style={{ padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px" }}
       >
-        <div className="max-w-[1200px]" className="mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           {/* Pill Badge */}
           <div
-            className="inline-flex items-center gap-2 rounded-full mb-6" className="bg-white" style={{ padding: "10px 20px", border: `1px solid ${"#DEDEDE"}` }}
+            className="inline-flex items-center gap-2 rounded-full mb-6 bg-white" style={{ padding: "10px 20px", border: `1px solid ${"#DEDEDE"}` }}
           >
             <span
-              className="w-1.5 h-1.5 rounded-full inline-block" className="bg-[#B8D935]"
+              className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
             />
             <span
-              className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase" className="text-[#1B4D3E]"
+              className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
             >
               Your Bridge to Impact
             </span>
@@ -1225,7 +1225,7 @@ export default function ServicesSectorsPageV2() {
 
           {/* Main Headline - Static */}
           <h1
-            className="font-['Inter',sans-serif] font-light leading-[1.12] tracking-[-1px] max-w-[900px]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "32px" : "56px", margin: isMobile ? "0 0 32px 0" : "0 0 48px 0" }}
+            className="font-['Inter',sans-serif] font-light leading-[1.12] tracking-[-1px] max-w-[900px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "32px" : "56px", margin: isMobile ? "0 0 32px 0" : "0 0 48px 0" }}
           >
             We <span className="font-bold">connect</span> the people, capital, and expertise that create{" "}
             <span className="font-bold text-[#B8D935]">measurable, lasting impact.</span>
@@ -1233,7 +1233,7 @@ export default function ServicesSectorsPageV2() {
 
           {/* Audience Selector + Dynamic Content Container */}
           <div
-            className="rounded-3xl overflow-hidden" className="bg-white" style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}
+            className="rounded-3xl overflow-hidden bg-white" style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}
           >
             {/* Audience Tabs */}
             <div
@@ -1275,7 +1275,7 @@ export default function ServicesSectorsPageV2() {
                 {/* Top content */}
                 <div>
                   <h2
-                    className="font-['Inter',sans-serif] font-light leading-[1.2] tracking-[-0.5px]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "24px" : "36px", margin: "0 0 24px 0" }}
+                    className="font-['Inter',sans-serif] font-light leading-[1.2] tracking-[-0.5px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "24px" : "36px", margin: "0 0 24px 0" }}
                   >
                     {currentAudience.headline}
                   </h2>
@@ -1289,8 +1289,7 @@ export default function ServicesSectorsPageV2() {
                 {/* CTA Button - pushed to bottom */}
                 <a href="/contact" className="no-underline">
                 <button
-                  className="cta-lime"
-                  className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full inline-flex items-center gap-2.5 self-start transition-all duration-300 ease-in-out" className="bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "16px 28px" }}
+                  className="cta-lime border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full inline-flex items-center gap-2.5 self-start transition-all duration-300 ease-in-out bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "16px 28px" }}
                 >
                   Explore Opportunities
                   <span
@@ -1313,7 +1312,7 @@ export default function ServicesSectorsPageV2() {
 
               {/* Right - Sector Icons Grid + Highlight Tags */}
               <div
-                className="flex flex-col justify-start" className="bg-[#1B4D3E]" style={{ padding: isMobile ? "20px 16px 16px 16px" : "76px 40px 40px 40px" }}
+                className="flex flex-col justify-start bg-[#1B4D3E]" style={{ padding: isMobile ? "20px 16px 16px 16px" : "76px 40px 40px 40px" }}
               >
                 {/* Section Label - Shows sector name on hover */}
                 <div
@@ -1366,16 +1365,16 @@ export default function ServicesSectorsPageV2() {
       <section
         className="bg-white" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
-        <div className="max-w-[1200px]" className="mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           {/* Pill Badge - Variant A (Light Background) */}
           <div
             className="inline-flex items-center gap-2 rounded-full mb-6" style={{ padding: "10px 20px", border: `1px solid ${"#DEDEDE"}` }}
           >
             <span
-              className="w-1.5 h-1.5 rounded-full inline-block" className="bg-[#B8D935]"
+              className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
             />
             <span
-              className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase" className="text-[#1B4D3E]"
+              className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
             >
               What We Do
             </span>
@@ -1387,7 +1386,7 @@ export default function ServicesSectorsPageV2() {
           >
             {/* Left - Headline */}
             <h2
-              className="font-['Inter',sans-serif] font-light leading-[1.2] m-0 tracking-[-0.5px]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "28px" : "44px" }}
+              className="font-['Inter',sans-serif] font-light leading-[1.2] m-0 tracking-[-0.5px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "28px" : "44px" }}
             >
               We <span className="font-bold">Bridge</span> the Gaps Between{" "}
               <span className="font-bold text-[#B8D935]">Insight</span>,{" "}
@@ -1422,7 +1421,7 @@ export default function ServicesSectorsPageV2() {
         className="bg-[#1B4D3E]" style={{ padding: isMobile ? "0 20px" : "0 80px" }}
       >
         <div
-          className="max-w-[1200px] flex-col" className="mx-auto" style={{ display: isMobile ? "flex" : "grid", gridTemplateColumns: isMobile ? "1fr" : "280px 1fr", minHeight: isMobile ? "auto" : "680px", height: isMobile ? "auto" : "680px" }}
+          className="max-w-[1200px] flex-col mx-auto" style={{ display: isMobile ? "flex" : "grid", gridTemplateColumns: isMobile ? "1fr" : "280px 1fr", minHeight: isMobile ? "auto" : "680px", height: isMobile ? "auto" : "680px" }}
         >
           {/* Left Side - Service Navigation */}
           <div
@@ -1525,7 +1524,7 @@ export default function ServicesSectorsPageV2() {
           >
             {/* Headline - Dynamic with 300/700 weight pattern */}
             <h2
-              className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2]" className="text-white" style={{ fontSize: isMobile ? "26px" : "44px", margin: "0 0 24px 0" }}
+              className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2] text-white" style={{ fontSize: isMobile ? "26px" : "44px", margin: "0 0 24px 0" }}
             >
               {currentService.id === "research" && (
                 <>
@@ -1561,7 +1560,7 @@ export default function ServicesSectorsPageV2() {
 
             {/* Description */}
             <p
-              className="text-base leading-[1.7] font-['Inter',sans-serif] font-normal max-w-[580px]" className="text-white/50" style={{ margin: "0 0 36px 0" }}
+              className="text-base leading-[1.7] font-['Inter',sans-serif] font-normal max-w-[580px] text-white/50" style={{ margin: "0 0 36px 0" }}
             >
               {currentService.description}
             </p>
@@ -1580,12 +1579,12 @@ export default function ServicesSectorsPageV2() {
               {currentService.stats.map((stat, index) => (
                 <div key={index} style={{ textAlign: isMobile ? "center" : "left" }}>
                   <div
-                    className="font-bold font-['Inter',sans-serif] leading-none mb-2" className="text-[#B8D935]" style={{ fontSize: isMobile ? "22px" : "32px" }}
+                    className="font-bold font-['Inter',sans-serif] leading-none mb-2 text-[#B8D935]" style={{ fontSize: isMobile ? "22px" : "32px" }}
                   >
                     {stat.value}
                   </div>
                   <div
-                    className="font-['Inter',sans-serif] uppercase tracking-[0.5px]" className="text-white/50" style={{ fontSize: isMobile ? "10px" : "13px" }}
+                    className="font-['Inter',sans-serif] uppercase tracking-[0.5px] text-white/50" style={{ fontSize: isMobile ? "10px" : "13px" }}
                   >
                     {stat.label}
                   </div>
@@ -1601,7 +1600,7 @@ export default function ServicesSectorsPageV2() {
                   className="w-full bg-white/[0.06] rounded-[14px] cursor-pointer flex items-center justify-between" style={{ padding: "14px 20px", border: "1px solid rgba(255,255,255,0.12)" }}
                 >
                   <span
-                    className="text-sm font-semibold font-['Inter',sans-serif]" className="text-white"
+                    className="text-sm font-semibold font-['Inter',sans-serif] text-white"
                   >
                     Our Approach & Methodology
                   </span>
@@ -1646,12 +1645,12 @@ export default function ServicesSectorsPageV2() {
                         </div>
                         <div>
                           <div
-                            className="text-[15px] font-semibold font-['Inter',sans-serif] mb-1" className="text-white"
+                            className="text-[15px] font-semibold font-['Inter',sans-serif] mb-1 text-white"
                           >
                             {feature.label}
                           </div>
                           <div
-                            className="text-[13px] font-['Inter',sans-serif]" className="text-white/50"
+                            className="text-[13px] font-['Inter',sans-serif] text-white/50"
                           >
                             {feature.detail}
                           </div>
@@ -1686,12 +1685,12 @@ export default function ServicesSectorsPageV2() {
                     </div>
                     <div>
                       <div
-                        className="text-[15px] font-semibold font-['Inter',sans-serif] mb-1" className="text-white"
+                        className="text-[15px] font-semibold font-['Inter',sans-serif] mb-1 text-white"
                       >
                         {feature.label}
                       </div>
                       <div
-                        className="text-[13px] font-['Inter',sans-serif]" className="text-white/50"
+                        className="text-[13px] font-['Inter',sans-serif] text-white/50"
                       >
                         {feature.detail}
                       </div>
@@ -1705,7 +1704,7 @@ export default function ServicesSectorsPageV2() {
             <div style={{ marginTop: isMobile ? "28px" : "40px" }}>
               <a href="/contact" className="no-underline" style={{ width: isMobile ? "100%" : "auto" }}>
               <button
-                className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5" className="bg-[#B8D935] text-[#1B4D3E]" style={{ padding: isMobile ? "16px 24px" : "16px 28px", width: isMobile ? "100%" : "auto" }}
+                className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5 bg-[#B8D935] text-[#1B4D3E]" style={{ padding: isMobile ? "16px 24px" : "16px 28px", width: isMobile ? "100%" : "auto" }}
               >
                 Learn More About {currentService.title}
                 <span
@@ -1726,7 +1725,7 @@ export default function ServicesSectorsPageV2() {
       <section
         className="bg-white" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
-        <div className="max-w-[1200px]" className="mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           {/* Section Header */}
           <div
             className="text-center" style={{ marginBottom: isMobile ? "36px" : "60px" }}
@@ -1736,16 +1735,16 @@ export default function ServicesSectorsPageV2() {
               className="inline-flex items-center gap-2 rounded-full mb-6" style={{ padding: "10px 20px", border: `1px solid ${"#DEDEDE"}` }}
             >
               <span
-                className="w-1.5 h-1.5 rounded-full inline-block" className="bg-[#B8D935]"
+                className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
               />
               <span
-                className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase" className="text-[#1B4D3E]"
+                className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
               >
                 Where We Work
               </span>
             </div>
             <h2
-              className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.15]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "24px" : "48px", margin: isMobile ? "0 0 12px 0" : "0 0 24px 0" }}
+              className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.15] text-[#1B4D3E]" style={{ fontSize: isMobile ? "24px" : "48px", margin: isMobile ? "0 0 12px 0" : "0 0 24px 0" }}
             >
               <span className="font-bold">Opportunity</span> Across{" "}
               <span className="font-bold text-[#B8D935]">Every Sector</span>
@@ -1779,7 +1778,7 @@ export default function ServicesSectorsPageV2() {
             className="flex justify-center mb-6" style={{ overflowX: isMobile ? "auto" : "visible", WebkitOverflowScrolling: "touch" }}
           >
             <div
-              className="inline-flex gap-2 rounded-full shrink-0" className="bg-white" style={{ padding: "8px", border: `1px solid ${"#DEDEDE"}` }}
+              className="inline-flex gap-2 rounded-full shrink-0 bg-white" style={{ padding: "8px", border: `1px solid ${"#DEDEDE"}` }}
             >
               {categories.map((cat) => (
                 <button
@@ -1822,7 +1821,7 @@ export default function ServicesSectorsPageV2() {
             <>
               <div
                 ref={sectorScrollRef}
-                className="sector-scroll"
+                className="sector-scroll flex overflow-x-auto gap-0"
                 onScroll={() => {
                   const el = sectorScrollRef.current;
                   if (el) {
@@ -1830,7 +1829,7 @@ export default function ServicesSectorsPageV2() {
                     setSectorScrollIndex(idx);
                   }
                 }}
-                className="flex overflow-x-auto gap-0" style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
+                style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
                 <style>{`
                   .sector-scroll::-webkit-scrollbar { display: none; }
@@ -1839,18 +1838,18 @@ export default function ServicesSectorsPageV2() {
                   <div
                     key={sector.id}
                     onClick={() => setSelectedSector(selectedSector === sector.id ? null : sector.id)}
-                    className="rounded-[20px] cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col box-border" className="bg-[#F3F5F2]" style={{ flex: "0 0 100%", scrollSnapAlign: "start", padding: "24px", border: selectedSector === sector.id ? `2px solid ${"#B8D935"}` : "2px solid transparent", minHeight: "160px" }}
+                    className="rounded-[20px] cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col box-border bg-[#F3F5F2]" style={{ flex: "0 0 100%", scrollSnapAlign: "start", padding: "24px", border: selectedSector === sector.id ? `2px solid ${"#B8D935"}` : "2px solid transparent", minHeight: "160px" }}
                   >
                     {/* Sector Icon Badge */}
                     <div
-                      className="absolute w-10 h-10 rounded-full flex items-center justify-center" className="text-[#1B4D3E]" style={{ top: "20px", right: "20px", backgroundColor: selectedSector === sector.id ? "#B8D935" : "#FFFFFF" }}
+                      className="absolute w-10 h-10 rounded-full flex items-center justify-center text-[#1B4D3E]" style={{ top: "20px", right: "20px", backgroundColor: selectedSector === sector.id ? "#B8D935" : "#FFFFFF" }}
                     >
                       {FOOTER_SECTOR_ICONS[sector.id - 1]?.icon(colors.primary)}
                     </div>
 
                     {/* Sector Name */}
                     <h3
-                      className="text-lg font-semibold font-['Inter',sans-serif] m-0 leading-[1.3]" className="text-[#1B4D3E]" style={{ paddingRight: "56px" }}
+                      className="text-lg font-semibold font-['Inter',sans-serif] m-0 leading-[1.3] text-[#1B4D3E]" style={{ paddingRight: "56px" }}
                     >
                       {sector.name}
                     </h3>
@@ -1870,12 +1869,12 @@ export default function ServicesSectorsPageV2() {
                       className="flex justify-between items-center pt-4 mt-4" style={{ borderTop: `1px solid ${"#DEDEDE"}` }}
                     >
                       <span
-                        className="text-sm font-semibold font-['Inter',sans-serif]" className="text-[#1B4D3E]"
+                        className="text-sm font-semibold font-['Inter',sans-serif] text-[#1B4D3E]"
                       >
                         ${sector.capitalLow}-{sector.capitalHigh}M
                       </span>
                       <span
-                        className="text-[13px] font-['Inter',sans-serif] font-semibold" className="text-[#B8D935]"
+                        className="text-[13px] font-['Inter',sans-serif] font-semibold text-[#B8D935]"
                       >
                         {sector.ventures}+ solutions
                       </span>
@@ -1895,7 +1894,7 @@ export default function ServicesSectorsPageV2() {
                           {sector.keyStats.map((stat, idx) => (
                             <span
                               key={idx}
-                              className="rounded-full text-xs font-['Inter',sans-serif] font-medium" className="bg-white text-[#1B4D3E]" style={{ padding: "6px 12px" }}
+                              className="rounded-full text-xs font-['Inter',sans-serif] font-medium bg-white text-[#1B4D3E]" style={{ padding: "6px 12px" }}
                             >
                               {stat}
                             </span>
@@ -1903,7 +1902,7 @@ export default function ServicesSectorsPageV2() {
                         </div>
                         <a href="/login" className="no-underline w-full">
                         <button
-                          className="border-none text-[13px] font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full mt-4 flex items-center gap-2 w-full justify-center" className="bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "12px 20px" }}
+                          className="border-none text-[13px] font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full mt-4 flex items-center gap-2 w-full justify-center bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "12px 20px" }}
                         >
                           View Full Analysis
                           <svg
@@ -1951,18 +1950,18 @@ export default function ServicesSectorsPageV2() {
                 <div
                   key={sector.id}
                   onClick={() => setSelectedSector(selectedSector === sector.id ? null : sector.id)}
-                  className="cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col" className="bg-[#F3F5F2]" style={{ borderRadius: isMobile ? "16px" : "24px", padding: isMobile ? "16px" : filterCategory === "all" ? "24px" : "32px", border: selectedSector === sector.id ? `2px solid ${"#B8D935"}` : "2px solid transparent", minHeight: isMobile ? "130px" : filterCategory === "all" ? "160px" : "auto" }}
+                  className="cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col bg-[#F3F5F2]" style={{ borderRadius: isMobile ? "16px" : "24px", padding: isMobile ? "16px" : filterCategory === "all" ? "24px" : "32px", border: selectedSector === sector.id ? `2px solid ${"#B8D935"}` : "2px solid transparent", minHeight: isMobile ? "130px" : filterCategory === "all" ? "160px" : "auto" }}
                 >
                   {/* Sector Icon Badge */}
                   <div
-                    className="absolute rounded-full flex items-center justify-center" className="text-[#1B4D3E]" style={{ top: isMobile ? "14px" : "24px", right: isMobile ? "14px" : "24px", width: isMobile ? "32px" : "40px", height: isMobile ? "32px" : "40px", backgroundColor: selectedSector === sector.id ? "#B8D935" : "#FFFFFF" }}
+                    className="absolute rounded-full flex items-center justify-center text-[#1B4D3E]" style={{ top: isMobile ? "14px" : "24px", right: isMobile ? "14px" : "24px", width: isMobile ? "32px" : "40px", height: isMobile ? "32px" : "40px", backgroundColor: selectedSector === sector.id ? "#B8D935" : "#FFFFFF" }}
                   >
                     {FOOTER_SECTOR_ICONS[sector.id - 1]?.icon(colors.primary)}
                   </div>
 
                   {/* Sector Name */}
                   <h3
-                    className="font-semibold font-['Inter',sans-serif] m-0 leading-[1.3]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "13px" : filterCategory === "all" ? "16px" : "22px", paddingRight: isMobile ? "40px" : "56px", minHeight: isMobile ? "34px" : filterCategory === "all" ? "42px" : "auto" }}
+                    className="font-semibold font-['Inter',sans-serif] m-0 leading-[1.3] text-[#1B4D3E]" style={{ fontSize: isMobile ? "13px" : filterCategory === "all" ? "16px" : "22px", paddingRight: isMobile ? "40px" : "56px", minHeight: isMobile ? "34px" : filterCategory === "all" ? "42px" : "auto" }}
                   >
                     {sector.name}
                   </h3>
@@ -1985,12 +1984,12 @@ export default function ServicesSectorsPageV2() {
                       className="flex justify-between" style={{ alignItems: isMobile ? "flex-start" : "center", paddingTop: isMobile ? "12px" : "16px", borderTop: `1px solid ${"#DEDEDE"}`, marginTop: isMobile ? "12px" : "16px", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "4px" : "0" }}
                     >
                       <span
-                        className="font-semibold font-['Inter',sans-serif]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "12px" : "14px" }}
+                        className="font-semibold font-['Inter',sans-serif] text-[#1B4D3E]" style={{ fontSize: isMobile ? "12px" : "14px" }}
                       >
                         ${sector.capitalLow}-{sector.capitalHigh}M
                       </span>
                       <span
-                        className="font-['Inter',sans-serif] font-semibold" className="text-[#B8D935]" style={{ fontSize: isMobile ? "11px" : "13px" }}
+                        className="font-['Inter',sans-serif] font-semibold text-[#B8D935]" style={{ fontSize: isMobile ? "11px" : "13px" }}
                       >
                         {sector.ventures}+ solutions
                       </span>
@@ -1999,7 +1998,7 @@ export default function ServicesSectorsPageV2() {
                     <>
                       {/* Focus Areas - Full view */}
                       <div
-                        className="rounded-xl mb-5" className="bg-white" style={{ padding: "16px" }}
+                        className="rounded-xl mb-5 bg-white" style={{ padding: "16px" }}
                       >
                         <div
                           className="text-[11px] font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[1px] mb-2"
@@ -2007,7 +2006,7 @@ export default function ServicesSectorsPageV2() {
                           BRIDGE Focus
                         </div>
                         <div
-                          className="text-[13px] font-['Inter',sans-serif] leading-normal" className="text-[#1B4D3E]"
+                          className="text-[13px] font-['Inter',sans-serif] leading-normal text-[#1B4D3E]"
                         >
                           {sector.focus}
                         </div>
@@ -2019,7 +2018,7 @@ export default function ServicesSectorsPageV2() {
                       >
                         <div>
                           <div
-                            className="text-xl font-bold font-['Inter',sans-serif]" className="text-[#1B4D3E]"
+                            className="text-xl font-bold font-['Inter',sans-serif] text-[#1B4D3E]"
                           >
                             ${sector.capitalLow}-{sector.capitalHigh}M
                           </div>
@@ -2031,7 +2030,7 @@ export default function ServicesSectorsPageV2() {
                         </div>
                         <div className="text-right">
                           <div
-                            className="text-xl font-bold font-['Inter',sans-serif]" className="text-[#1B4D3E]"
+                            className="text-xl font-bold font-['Inter',sans-serif] text-[#1B4D3E]"
                           >
                             {sector.ventures}+
                           </div>
@@ -2068,7 +2067,7 @@ export default function ServicesSectorsPageV2() {
                         {sector.keyStats.map((stat, idx) => (
                           <span
                             key={idx}
-                            className="rounded-full text-xs font-['Inter',sans-serif] font-medium" className="bg-white text-[#1B4D3E]" style={{ padding: "6px 12px" }}
+                            className="rounded-full text-xs font-['Inter',sans-serif] font-medium bg-white text-[#1B4D3E]" style={{ padding: "6px 12px" }}
                           >
                             {stat}
                           </span>
@@ -2078,7 +2077,7 @@ export default function ServicesSectorsPageV2() {
                       {/* View Full Analysis Button */}
                       <a href="/login" className="no-underline w-full">
                       <button
-                        className="border-none text-[13px] font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full mt-4 flex items-center gap-2 w-full justify-center" className="bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "12px 20px" }}
+                        className="border-none text-[13px] font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full mt-4 flex items-center gap-2 w-full justify-center bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "12px 20px" }}
                       >
                         View Full Analysis
                         <svg
@@ -2106,7 +2105,7 @@ export default function ServicesSectorsPageV2() {
       <section
         className="bg-[#F3F5F2]" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
-        <div className="max-w-[1200px]" className="mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           <div
             className="grid items-start" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "40px" : "80px" }}
           >
@@ -2114,19 +2113,19 @@ export default function ServicesSectorsPageV2() {
             <div>
               {/* Pill Badge - Light Background Variant */}
               <div
-                className="inline-flex items-center gap-2 rounded-full mb-6" className="bg-white" style={{ padding: "10px 20px", border: `1px solid ${"#DEDEDE"}` }}
+                className="inline-flex items-center gap-2 rounded-full mb-6 bg-white" style={{ padding: "10px 20px", border: `1px solid ${"#DEDEDE"}` }}
               >
                 <span
-                  className="w-1.5 h-1.5 rounded-full inline-block" className="bg-[#B8D935]"
+                  className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
                 />
                 <span
-                  className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase" className="text-[#1B4D3E]"
+                  className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
                 >
                   Connected Solutions
                 </span>
               </div>
               <h2
-                className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "28px" : "44px", margin: "0 0 24px 0" }}
+                className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2] text-[#1B4D3E]" style={{ fontSize: isMobile ? "28px" : "44px", margin: "0 0 24px 0" }}
               >
                 <span className="font-bold">Progressive Systems</span>, Not{" "}
                 <span className="font-bold text-[#B8D935]">Silos</span>
@@ -2143,7 +2142,7 @@ export default function ServicesSectorsPageV2() {
                 className="pl-6" style={{ borderLeft: `4px solid ${"#B8D935"}`, marginBottom: isMobile ? "24px" : "52px" }}
               >
                 <p
-                  className="text-lg italic font-['Georgia',serif] m-0 leading-[1.6]" className="text-[#1B4D3E]"
+                  className="text-lg italic font-['Georgia',serif] m-0 leading-[1.6] text-[#1B4D3E]"
                 >
                   "A hospital means nothing without power, roads, trained staff, and pharmaceutical supply chains. Every
                   sector depends on others."
@@ -2154,7 +2153,7 @@ export default function ServicesSectorsPageV2() {
               {!isMobile && (
                 <a href="/methodology" className="no-underline">
                 <button
-                  className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center gap-2.5" className="bg-[#1B4D3E] text-white" style={{ padding: "16px 28px" }}
+                  className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center gap-2.5 bg-[#1B4D3E] text-white" style={{ padding: "16px 28px" }}
                 >
                   See How It Works
                   <span
@@ -2174,7 +2173,7 @@ export default function ServicesSectorsPageV2() {
               <div>
                 <button
                   onClick={() => setShowPathways(!showPathways)}
-                  className="w-full rounded-2xl cursor-pointer flex items-center justify-between" className="bg-white" style={{ padding: "16px 20px", border: `1px solid ${"#DEDEDE"}` }}
+                  className="w-full rounded-2xl cursor-pointer flex items-center justify-between bg-white" style={{ padding: "16px 20px", border: `1px solid ${"#DEDEDE"}` }}
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -2193,7 +2192,7 @@ export default function ServicesSectorsPageV2() {
                       </svg>
                     </div>
                     <span
-                      className="text-[15px] font-semibold font-['Inter',sans-serif]" className="text-[#1B4D3E]"
+                      className="text-[15px] font-semibold font-['Inter',sans-serif] text-[#1B4D3E]"
                     >
                       {showPathways ? "Hide" : "View"} Integration Pathways
                     </span>
@@ -2220,10 +2219,10 @@ export default function ServicesSectorsPageV2() {
                   >
                     {/* Farm to Fork */}
                     <div
-                      className="rounded-2xl" className="bg-white" style={{ padding: "20px", border: `1px solid ${"#DEDEDE"}` }}
+                      className="rounded-2xl bg-white" style={{ padding: "20px", border: `1px solid ${"#DEDEDE"}` }}
                     >
                       <div
-                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4" className="text-[#1B4D3E]"
+                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
                       >
                         Farm to Fork
                       </div>
@@ -2245,10 +2244,10 @@ export default function ServicesSectorsPageV2() {
 
                     {/* Healthcare Delivery */}
                     <div
-                      className="rounded-2xl" className="bg-white" style={{ padding: "20px", border: `1px solid ${"#DEDEDE"}` }}
+                      className="rounded-2xl bg-white" style={{ padding: "20px", border: `1px solid ${"#DEDEDE"}` }}
                     >
                       <div
-                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4" className="text-[#1B4D3E]"
+                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
                       >
                         Healthcare Delivery
                       </div>
@@ -2270,10 +2269,10 @@ export default function ServicesSectorsPageV2() {
 
                     {/* Skills to Jobs */}
                     <div
-                      className="rounded-2xl" className="bg-white" style={{ padding: "20px", border: `1px solid ${"#DEDEDE"}` }}
+                      className="rounded-2xl bg-white" style={{ padding: "20px", border: `1px solid ${"#DEDEDE"}` }}
                     >
                       <div
-                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4" className="text-[#1B4D3E]"
+                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
                       >
                         Skills to Jobs
                       </div>
@@ -2298,7 +2297,7 @@ export default function ServicesSectorsPageV2() {
                 {/* Mobile CTA - below pathways */}
                 <a href="/contact" className="no-underline w-full">
                 <button
-                  className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5 mt-6 w-full" className="bg-[#1B4D3E] text-white" style={{ padding: "16px 28px" }}
+                  className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5 mt-6 w-full bg-[#1B4D3E] text-white" style={{ padding: "16px 28px" }}
                 >
                   Let's Build Something Together
                   <span
@@ -2317,10 +2316,10 @@ export default function ServicesSectorsPageV2() {
               >
                 {/* Farm to Fork */}
                 <div
-                  className="rounded-[20px]" className="bg-white" style={{ padding: "28px", border: `1px solid ${"#DEDEDE"}` }}
+                  className="rounded-[20px] bg-white" style={{ padding: "28px", border: `1px solid ${"#DEDEDE"}` }}
                 >
                   <div
-                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5" className="text-[#1B4D3E]"
+                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
                   >
                     Farm to Fork
                   </div>
@@ -2349,10 +2348,10 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Healthcare Delivery */}
                 <div
-                  className="rounded-[20px]" className="bg-white" style={{ padding: "28px", border: `1px solid ${"#DEDEDE"}` }}
+                  className="rounded-[20px] bg-white" style={{ padding: "28px", border: `1px solid ${"#DEDEDE"}` }}
                 >
                   <div
-                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5" className="text-[#1B4D3E]"
+                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
                   >
                     Healthcare Delivery
                   </div>
@@ -2381,10 +2380,10 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Skills to Jobs */}
                 <div
-                  className="rounded-[20px]" className="bg-white" style={{ padding: "28px", border: `1px solid ${"#DEDEDE"}` }}
+                  className="rounded-[20px] bg-white" style={{ padding: "28px", border: `1px solid ${"#DEDEDE"}` }}
                 >
                   <div
-                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5" className="text-[#1B4D3E]"
+                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
                   >
                     Skills to Jobs
                   </div>
@@ -2422,7 +2421,7 @@ export default function ServicesSectorsPageV2() {
       <section
         className="bg-white" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
-        <div className="max-w-[1200px]" className="mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           {/* Section Header */}
           <div style={{ marginBottom: isMobile ? "32px" : "44px" }}>
             {/* Pill Badge */}
@@ -2430,10 +2429,10 @@ export default function ServicesSectorsPageV2() {
               className="inline-flex items-center gap-2 rounded-full mb-6" style={{ padding: "10px 20px", border: `1px solid ${"#DEDEDE"}` }}
             >
               <span
-                className="w-1.5 h-1.5 rounded-full inline-block" className="bg-[#B8D935]"
+                className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
               />
               <span
-                className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase" className="text-[#1B4D3E]"
+                className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
               >
                 BRIDGE
               </span>
@@ -2444,7 +2443,7 @@ export default function ServicesSectorsPageV2() {
               className="grid items-start" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "24px" : "80px" }}
             >
               <h2
-                className="font-['Inter',sans-serif] font-light leading-[1.2] m-0 tracking-[-0.5px]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "28px" : "44px" }}
+                className="font-['Inter',sans-serif] font-light leading-[1.2] m-0 tracking-[-0.5px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "28px" : "44px" }}
               >
                 Your <span className="font-bold">Tool</span>. Your{" "}
                 <span className="font-bold">Resource</span>.
@@ -2548,7 +2547,7 @@ export default function ServicesSectorsPageV2() {
               return (
                 <div className="text-center mb-6" style={{ marginTop: "-16px" }}>
                   <span
-                    className="text-[13px] font-bold font-['DM_Sans',sans-serif]" className="text-[#1B4D3E]"
+                    className="text-[13px] font-bold font-['DM_Sans',sans-serif] text-[#1B4D3E]"
                   >
                     {aud.label}
                   </span>
@@ -2574,12 +2573,12 @@ export default function ServicesSectorsPageV2() {
                 >
                   <div>
                     <div
-                      className="text-[11px] font-semibold uppercase tracking-[2px] font-['Inter',sans-serif] mb-1.5" className="text-[rgba(27,77,62,0.35)]"
+                      className="text-[11px] font-semibold uppercase tracking-[2px] font-['Inter',sans-serif] mb-1.5 text-[rgba(27,77,62,0.35)]"
                     >
                       How We Serve
                     </div>
                     <div
-                      className="font-light font-['Inter',sans-serif] leading-[1.2] tracking-[-0.3px]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "22px" : "26px" }}
+                      className="font-light font-['Inter',sans-serif] leading-[1.2] tracking-[-0.3px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "22px" : "26px" }}
                     >
                       {currentAudSvc.tagline}
                     </div>
@@ -2588,12 +2587,12 @@ export default function ServicesSectorsPageV2() {
                     className="flex items-center gap-2" style={{ textAlign: isMobile ? "left" : "right", flexDirection: isMobile ? "row" : "column" }}
                   >
                     <div
-                      className="font-bold font-['Inter',sans-serif] leading-none text-center" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "26px" : "34px" }}
+                      className="font-bold font-['Inter',sans-serif] leading-none text-center text-[#1B4D3E]" style={{ fontSize: isMobile ? "26px" : "34px" }}
                     >
                       {currentAudSvc.stat.value}
                     </div>
                     <div
-                      className="text-[11px] uppercase tracking-[1px] font-['Inter',sans-serif] text-center" className="text-[rgba(27,77,62,0.4)]" style={{ marginTop: isMobile ? "0" : "4px" }}
+                      className="text-[11px] uppercase tracking-[1px] font-['Inter',sans-serif] text-center text-[rgba(27,77,62,0.4)]" style={{ marginTop: isMobile ? "0" : "4px" }}
                     >
                       {currentAudSvc.stat.label}
                     </div>
@@ -2632,12 +2631,12 @@ export default function ServicesSectorsPageV2() {
                           className="flex justify-between items-start gap-3" style={{ marginBottom: isExpanded ? "12px" : "8px" }}
                         >
                           <div
-                            className="font-bold font-['DM_Sans',sans-serif] leading-[1.3]" className="text-[#191919]" style={{ fontSize: isExpanded ? (isMobile ? "20px" : "22px") : isMobile ? "16px" : "14px", whiteSpace: isExpanded ? "normal" : "pre-line", flex: 1 }}
+                            className="font-bold font-['DM_Sans',sans-serif] leading-[1.3] text-[#191919]" style={{ fontSize: isExpanded ? (isMobile ? "20px" : "22px") : isMobile ? "16px" : "14px", whiteSpace: isExpanded ? "normal" : "pre-line", flex: 1 }}
                           >
                             {isExpanded ? svc.title.replace("\n", " ") : svc.title}
                           </div>
                           <span
-                            className="text-[9px] font-semibold font-['Inter',sans-serif] uppercase tracking-[0.8px] rounded bg-[rgba(184,217,53,0.15)] whitespace-nowrap shrink-0" className="text-[#1B4D3E]" style={{ padding: "3px 8px", marginTop: isExpanded ? "6px" : "2px" }}
+                            className="text-[9px] font-semibold font-['Inter',sans-serif] uppercase tracking-[0.8px] rounded bg-[rgba(184,217,53,0.15)] whitespace-nowrap shrink-0 text-[#1B4D3E]" style={{ padding: "3px 8px", marginTop: isExpanded ? "6px" : "2px" }}
                           >
                             {svc.source}
                           </span>
@@ -2685,10 +2684,10 @@ export default function ServicesSectorsPageV2() {
                             {svc.detail.lines.map((line, li) => (
                               <div
                                 key={li}
-                                className="flex flex-col gap-2 rounded-[10px]" className="bg-white" style={{ padding: isMobile ? "16px" : "20px", border: `1px solid ${"#DEDEDE"}` }}
+                                className="flex flex-col gap-2 rounded-[10px] bg-white" style={{ padding: isMobile ? "16px" : "20px", border: `1px solid ${"#DEDEDE"}` }}
                               >
                                 <span
-                                  className="font-extrabold font-['Inter',sans-serif] leading-[1.2]" className="text-[#1B4D3E]" style={{ fontSize: isMobile ? "18px" : "22px" }}
+                                  className="font-extrabold font-['Inter',sans-serif] leading-[1.2] text-[#1B4D3E]" style={{ fontSize: isMobile ? "18px" : "22px" }}
                                 >
                                   {line.stat}
                                 </span>
@@ -2729,7 +2728,7 @@ export default function ServicesSectorsPageV2() {
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
                     <span
-                      className="text-[13px] font-semibold font-['Inter',sans-serif]" className="text-[#1B4D3E]"
+                      className="text-[13px] font-semibold font-['Inter',sans-serif] text-[#1B4D3E]"
                     >
                       {showAllAudSvc ? "Show less" : `View all ${currentAudSvc.services.length} services`}
                     </span>
@@ -2743,23 +2742,23 @@ export default function ServicesSectorsPageV2() {
 
       {/* CTA Section */}
       <section
-        className="relative overflow-hidden" className="bg-[#1B4D3E]" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
+        className="relative overflow-hidden bg-[#1B4D3E]" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
         {/* Background Pattern */}
         <div
           className="absolute" style={{ top: 0, left: 0, right: 0, bottom: 0, opacity: 0.05, backgroundImage: `radial-gradient(${"#B8D935"} 1px, transparent 1px)`, backgroundSize: "30px 30px" }}
         />
-        <div className="max-w-[1200px]" className="mx-auto">
+        <div className="max-w-[1200px] mx-auto">
 
-        <div className="max-w-[900px] text-center relative" className="mx-auto">
+        <div className="max-w-[900px] text-center relative mx-auto">
           <h2
-            className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2]" className="text-white" style={{ fontSize: isMobile ? "28px" : "48px", margin: "0 0 24px 0" }}
+            className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2] text-white" style={{ fontSize: isMobile ? "28px" : "48px", margin: "0 0 24px 0" }}
           >
             Let's <span className="font-bold">Build</span> Something{" "}
             <span className="font-bold text-[#B8D935]">Together</span>
           </h2>
           <p
-            className="text-base leading-[1.7] font-['Inter',sans-serif] font-normal max-w-[620px]" className="text-white/60" style={{ margin: "0 0 36px 0", marginLeft: "auto", marginRight: "auto" }}
+            className="text-base leading-[1.7] font-['Inter',sans-serif] font-normal max-w-[620px] text-white/60" style={{ margin: "0 0 36px 0", marginLeft: "auto", marginRight: "auto" }}
           >
             Whether you're deploying capital, entering markets, advancing policy, or building a venture—we're ready to
             connect.
@@ -2770,7 +2769,7 @@ export default function ServicesSectorsPageV2() {
           >
             <a href="/contact" className="no-underline" style={{ display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
               <button
-                className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5" className="bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "16px 28px", width: isMobile ? "100%" : "auto" }}
+                className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5 bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "16px 28px", width: isMobile ? "100%" : "auto" }}
               >
                 Start a Conversation
                 <span
@@ -2784,7 +2783,7 @@ export default function ServicesSectorsPageV2() {
             </a>
             <a href="/services" className="no-underline" style={{ display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
               <button
-                className="bg-transparent text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full text-center" className="text-white" style={{ border: `1.5px solid rgba(255,255,255,0.3)`, padding: "16px 28px", width: isMobile ? "100%" : "auto" }}
+                className="bg-transparent text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full text-center text-white" style={{ border: `1.5px solid rgba(255,255,255,0.3)`, padding: "16px 28px", width: isMobile ? "100%" : "auto" }}
               >
                 Explore Sectors
               </button>
@@ -2796,14 +2795,14 @@ export default function ServicesSectorsPageV2() {
 
       {/* Divider */}
       <div className="bg-[#1B4D3E]" style={{ padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div className="h-px" className="bg-white/[0.08]" />
+        <div className="h-px bg-white/[0.08]" />
       </div>
 
       {/* Footer — Exact match to BRIDGE_Footer_Exact_Build_Handoff.md */}
-      <footer className="p-0" className="bg-[#1B4D3E]">
+      <footer className="p-0 bg-[#1B4D3E]">
         {/* Section separator */}
         <div style={{ padding: "0 80px" }}>
-          <div className="h-[0.5px]" className="bg-white/[0.08]" />
+          <div className="h-[0.5px] bg-white/[0.08]" />
         </div>
 
         {isMobile ? (
@@ -2902,7 +2901,7 @@ export default function ServicesSectorsPageV2() {
                   <a
                     key={label}
                     href={label === "Company" ? "/about" : label === "Services" ? "/services" : label === "Resources" ? "/resources" : "/insights"}
-                    className="font-['DM_Sans',sans-serif] text-xs font-semibold tracking-[0.5px] no-underline" className="text-white/50"
+                    className="font-['DM_Sans',sans-serif] text-xs font-semibold tracking-[0.5px] no-underline text-white/50"
                   >
                     {label}
                   </a>
@@ -2913,10 +2912,10 @@ export default function ServicesSectorsPageV2() {
             <div className="flex gap-2">
               <input
                 placeholder="Subscribe to insights"
-                className="rounded-lg bg-white/5 text-xs font-['DM_Sans',sans-serif] outline-none" className="text-white" style={{ flex: 1, padding: "11px 14px", border: "1px solid rgba(255,255,255,0.12)" }}
+                className="rounded-lg bg-white/5 text-xs font-['DM_Sans',sans-serif] outline-none text-white" style={{ flex: 1, padding: "11px 14px", border: "1px solid rgba(255,255,255,0.12)" }}
               />
               <button
-                className="border-none text-xs font-bold font-['DM_Sans',sans-serif] cursor-pointer rounded-lg" className="bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "11px 18px" }}
+                className="border-none text-xs font-bold font-['DM_Sans',sans-serif] cursor-pointer rounded-lg bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "11px 18px" }}
               >
                 {"\u2192"}
               </button>
@@ -2924,12 +2923,12 @@ export default function ServicesSectorsPageV2() {
             {/* Row 3: Contact + Social */}
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <span className="text-xs font-['DM_Sans',sans-serif]" className="text-white/40">
+                <span className="text-xs font-['DM_Sans',sans-serif] text-white/40">
                   Accra, Ghana
                 </span>
-                <span className="text-xs" className="text-white/[0.15]">{"\u00B7"}</span>
+                <span className="text-xs text-white/[0.15]">{"\u00B7"}</span>
                 <span
-                  className="text-xs font-semibold font-['DM_Sans',sans-serif]" className="text-[#B8D935]"
+                  className="text-xs font-semibold font-['DM_Sans',sans-serif] text-[#B8D935]"
                 >
                   info@bridgepbc.com
                 </span>
@@ -2941,7 +2940,7 @@ export default function ServicesSectorsPageV2() {
                       href={SOCIAL_HREFS[i]}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-7 h-7 rounded-md bg-white/[0.06] flex items-center justify-center cursor-pointer no-underline" className="text-white/40"
+                      className="w-7 h-7 rounded-md bg-white/[0.06] flex items-center justify-center cursor-pointer no-underline text-white/40"
                     >
                     <span className="scale-[0.8125] flex">{icon}</span>
                   </a>
@@ -3040,19 +3039,19 @@ export default function ServicesSectorsPageV2() {
                   </div>
 
                   <p
-                    className="text-sm font-['DM_Sans',sans-serif] leading-[1.8] max-w-[325px]" className="text-white/50" style={{ margin: "0 0 28px" }}
+                    className="text-sm font-['DM_Sans',sans-serif] leading-[1.8] max-w-[325px] text-white/50" style={{ margin: "0 0 28px" }}
                   >
                     Blending resources and innovation across the integrated sectors for development, growth, and
                     empowerment.
                   </p>
 
                   <p
-                    className="text-sm font-['DM_Sans',sans-serif] leading-[1.7]" className="text-white/[0.55]" style={{ margin: "0 0 4px" }}
+                    className="text-sm font-['DM_Sans',sans-serif] leading-[1.7] text-white/[0.55]" style={{ margin: "0 0 4px" }}
                   >
                     Accra, Ghana
                   </p>
                   <p
-                    className="text-sm font-['DM_Sans',sans-serif] m-0 font-semibold" className="text-[#B8D935]"
+                    className="text-sm font-['DM_Sans',sans-serif] m-0 font-semibold text-[#B8D935]"
                   >
                     info@bridgepbc.com
                   </p>
@@ -3062,17 +3061,17 @@ export default function ServicesSectorsPageV2() {
                 <div>
                   <div className="mb-4 max-w-[325px]">
                     <span
-                      className="text-xs font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] block mb-3" className="text-white/40"
+                      className="text-xs font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] block mb-3 text-white/40"
                     >
                       Subscribe to Insights
                     </span>
                     <div className="flex gap-2">
                       <input
                         placeholder="Your email address"
-                        className="rounded-lg bg-white/5 text-[13px] font-['DM_Sans',sans-serif] outline-none h-11 box-border" className="text-white" style={{ flex: 1, padding: "12px 16px", border: "1px solid rgba(255,255,255,0.12)" }}
+                        className="rounded-lg bg-white/5 text-[13px] font-['DM_Sans',sans-serif] outline-none h-11 box-border text-white" style={{ flex: 1, padding: "12px 16px", border: "1px solid rgba(255,255,255,0.12)" }}
                       />
                       <button
-                        className="border-none text-[13px] font-bold font-['DM_Sans',sans-serif] cursor-pointer rounded-lg h-11 box-border" className="bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "12px 20px" }}
+                        className="border-none text-[13px] font-bold font-['DM_Sans',sans-serif] cursor-pointer rounded-lg h-11 box-border bg-[#B8D935] text-[#1B4D3E]" style={{ padding: "12px 20px" }}
                       >
                         {"\u2192"}
                       </button>
@@ -3085,7 +3084,7 @@ export default function ServicesSectorsPageV2() {
                         href={SOCIAL_HREFS[i]}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-[34px] h-[34px] rounded-lg bg-white/[0.06] flex items-center justify-center cursor-pointer no-underline" className="text-white/[0.45]"
+                        className="w-[34px] h-[34px] rounded-lg bg-white/[0.06] flex items-center justify-center cursor-pointer no-underline text-white/[0.45]"
                       >
                         {icon}
                       </a>
@@ -3102,7 +3101,7 @@ export default function ServicesSectorsPageV2() {
                 <div className="grid" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
                   <div>
                     <h4
-                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6" className="text-[#B8D935]"
+                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6 text-[#B8D935]"
                     >
                       Company
                     </h4>
@@ -3110,7 +3109,7 @@ export default function ServicesSectorsPageV2() {
                       <a
                         key={link}
                         href={footerLinkHref(link)}
-                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5" className="text-white/60"
+                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5 text-white/60"
                       >
                         {link}
                       </a>
@@ -3118,7 +3117,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
                   <div>
                     <h4
-                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6" className="text-[#B8D935]"
+                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6 text-[#B8D935]"
                     >
                       Services
                     </h4>
@@ -3127,7 +3126,7 @@ export default function ServicesSectorsPageV2() {
                         <a
                           key={link}
                           href={footerLinkHref(link)}
-                          className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5" className="text-white/60"
+                          className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5 text-white/60"
                         >
                           {link}
                         </a>
@@ -3136,7 +3135,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
                   <div>
                     <h4
-                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6" className="text-[#B8D935]"
+                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6 text-[#B8D935]"
                     >
                       Resources
                     </h4>
@@ -3144,7 +3143,7 @@ export default function ServicesSectorsPageV2() {
                       <a
                         key={link}
                         href={footerLinkHref(link)}
-                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5" className="text-white/60"
+                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5 text-white/60"
                       >
                         {link}
                       </a>
@@ -3152,7 +3151,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
                   <div>
                     <h4
-                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6" className="text-[#B8D935]"
+                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6 text-[#B8D935]"
                     >
                       Insights
                     </h4>
@@ -3160,7 +3159,7 @@ export default function ServicesSectorsPageV2() {
                       <a
                         key={link}
                         href={footerLinkHref(link)}
-                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5" className="text-white/60"
+                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5 text-white/60"
                       >
                         {link}
                       </a>
@@ -3219,7 +3218,7 @@ export default function ServicesSectorsPageV2() {
         <div
           className="flex justify-between items-center" style={{ padding: isMobile ? "16px 20px" : "20px 80px", borderTop: "1px solid rgba(255,255,255,0.06)" }}
         >
-          <span className="text-[11px] font-['DM_Sans',sans-serif]" className="text-white/25">
+          <span className="text-[11px] font-['DM_Sans',sans-serif] text-white/25">
             {"\u00A9"} 2026 BRIDGE PBC
           </span>
           <div className="flex" style={{ gap: isMobile ? "12px" : "20px" }}>
@@ -3227,7 +3226,7 @@ export default function ServicesSectorsPageV2() {
               <a
                 key={link}
                 href="#"
-                className="text-[11px] font-['DM_Sans',sans-serif] no-underline" className="text-white/25"
+                className="text-[11px] font-['DM_Sans',sans-serif] no-underline text-white/25"
               >
                 {link}
               </a>
