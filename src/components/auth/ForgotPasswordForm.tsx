@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { colors } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
 import { Field } from "./FormField";
@@ -6,23 +9,33 @@ import { Field } from "./FormField";
 // ============================================================
 // FORGOT PASSWORD FORM
 // ============================================================
+
+const forgotPasswordSchema = z.object({
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+});
+
+type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+
 export interface ForgotPasswordFormProps {
   onBack: () => void;
 }
 
 export const ForgotPasswordForm = ({ onBack }: ForgotPasswordFormProps) => {
-  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [btnHover, setBtnHover] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const { control, handleSubmit, formState: { errors }, getValues } = useForm<ForgotPasswordFormData>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: { email: "" },
+  });
+
+  const onSubmit = async (data: ForgotPasswordFormData) => {
     setError(null);
     setLoading(true);
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
         redirectTo: `${window.location.origin}/login`,
       });
       if (error) throw error;
@@ -53,7 +66,7 @@ export const ForgotPasswordForm = ({ onBack }: ForgotPasswordFormProps) => {
             Check your email
           </h2>
           <p style={{ fontSize: "14px", color: "#555", fontFamily: "Inter, sans-serif", lineHeight: "1.6", margin: 0, maxWidth: "320px" }}>
-            If an account exists for <strong>{email}</strong>, we've sent a password reset link. Please check your inbox and spam folder.
+            If an account exists for <strong>{getValues("email")}</strong>, we've sent a password reset link. Please check your inbox and spam folder.
           </p>
         </div>
         <button
@@ -72,7 +85,7 @@ export const ForgotPasswordForm = ({ onBack }: ForgotPasswordFormProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "4px" }}>
         <h2 style={{ fontSize: "22px", fontWeight: "700", color: colors.dark, fontFamily: "Inter, sans-serif", margin: 0 }}>
           Reset your password
@@ -93,10 +106,23 @@ export const ForgotPasswordForm = ({ onBack }: ForgotPasswordFormProps) => {
         </div>
       )}
 
-      <Field
-        label="Email Address" type="email" placeholder="your@email.com"
-        value={email} onChange={e => setEmail(e.target.value)} required
-      />
+      <div>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <Field
+              label="Email Address" type="email" placeholder="your@email.com"
+              value={field.value} onChange={field.onChange} required
+            />
+          )}
+        />
+        {errors.email && (
+          <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
+            {errors.email.message}
+          </span>
+        )}
+      </div>
 
       <button
         type="submit"

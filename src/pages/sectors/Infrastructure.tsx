@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { IconBuilding, IconBlocks, IconWallet, IconCross, IconCpu, IconGraduationCap, IconSprout, IconCamera, IconHome, IconLuggage, IconBatteryCharging, IconFactory, IconTruck, IconWheat, IconZap, IconDroplet, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconShield, IconSun, IconDollar, IconTarget, IconStorefront, IconOfficeBuilding, IconLandmark, IconTrendingUp } from "@/components/icons/SectorIcons";
+import { ArrowRight, Building2, Check, ChevronDown, Clock, DollarSign, Settings, Users, Wrench } from "lucide-react";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
 
@@ -586,31 +587,11 @@ const valueChainStages = [
 
 // Value Chain Icons - Enhanced with filled style
 const valueChainIcons = {
-  building: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19 2H9c-1.1 0-2 .9-2 2v6H5c-1.1 0-2 .9-2 2v9c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-1.1-.9-2-2-2zM6 20H4v-8h2v8zm5 0H8v-2h3v2zm0-4H8v-2h3v2zm0-4H8V9.99L11 10v2zm6 8h-4v-2h4v2zm0-4h-4v-2h4v2zm0-4h-4V9.99L17 10v2zm0-4h-4V6h4v2z" />
-    </svg>
-  ),
-  tool: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z" />
-    </svg>
-  ),
-  gear: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
-    </svg>
-  ),
-  dollar: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09v.58c0 .73-.6 1.33-1.33 1.33h-.16c-.73 0-1.33-.6-1.33-1.33v-.6c-1.33-.28-2.51-1.01-3.03-2.25-.24-.56.16-1.15.76-1.15h.27c.35 0 .63.22.76.54.36.88 1.2 1.46 2.57 1.46 1.76 0 2.15-.9 2.15-1.46 0-.76-.36-1.46-2.32-1.97-2.18-.57-4.41-1.54-4.41-4.06 0-1.9 1.54-3.14 3.25-3.51v-.58c0-.73.6-1.33 1.33-1.33h.16c.73 0 1.33.6 1.33 1.33v.6c1.06.28 2.03.89 2.56 2.02.26.55-.14 1.17-.75 1.17h-.28c-.34 0-.63-.21-.78-.52-.37-.77-1.06-1.27-2.08-1.27-1.47 0-2.15.76-2.15 1.5 0 .77.67 1.28 2.32 1.79 2.18.57 4.41 1.5 4.41 4.24 0 2.07-1.59 3.19-3.25 3.47z" />
-    </svg>
-  ),
-  users: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-    </svg>
-  ),
+  building: <Building2 size={28} fill="currentColor" strokeWidth={0} />,
+  tool: <Wrench size={28} fill="currentColor" strokeWidth={0} />,
+  gear: <Settings size={28} fill="currentColor" strokeWidth={0} />,
+  dollar: <DollarSign size={28} fill="currentColor" strokeWidth={0} />,
+  users: <Users size={28} fill="currentColor" strokeWidth={0} />,
 };
 
 
@@ -1202,10 +1183,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
                 marginBottom: "12px",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 6v6l4 2" />
-              </svg>
+              <Clock size={16} strokeWidth={2} color="#888" />
               <span
                 style={{
                   fontFamily: "Inter, sans-serif",
@@ -1299,9 +1277,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.accent} strokeWidth="2.5">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Check size={18} strokeWidth={2.5} color={colors.accent} />
               <span
                 style={{
                   fontFamily: "Inter, sans-serif",
@@ -1339,9 +1315,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
                 }}
               >
                 View
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                <ArrowRight size={14} strokeWidth={2} />
               </span>
             </div>
           </div>
@@ -2075,19 +2049,7 @@ const ValueChainSectionPremium = () => {
               }}
             >
               {showMoreDetail ? "Show less" : "Show more details"}
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.primary}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ transform: showMoreDetail ? "rotate(180deg)" : "none", transition: "transform 0.3s ease" }}
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+              <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} style={{ transform: showMoreDetail ? "rotate(180deg)" : "none", transition: "transform 0.3s ease" }} />
             </button>
           )}
         </div>
@@ -3011,22 +2973,10 @@ const MarketEcosystemSection = ({ sector }) => {
                 }}
               >
                 {showMoreLandscape ? "Show less" : "Show more details"}
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke={colors.primary}
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{
+                <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} style={{
                     transform: showMoreLandscape ? "rotate(180deg)" : "none",
                     transition: "transform 0.3s ease",
-                  }}
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
+                  }} />
               </button>
             )}
           </div>
@@ -3347,22 +3297,10 @@ const PolicyAlignmentSection = () => {
                   >
                     BRIDGE alignment
                   </span>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={colors.primary}
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{
+                  <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} style={{
                       transform: isExpanded ? "rotate(180deg)" : "rotate(0)",
                       transition: "transform 0.3s ease",
-                    }}
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                    }} />
                 </div>
 
                 {/* EXPANDED CONTENT */}
@@ -3552,18 +3490,7 @@ const PolicyAlignmentSection = () => {
             }}
           >
             View Partnership Strategy
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+            <ArrowRight size={14} strokeWidth={2.5} color="currentColor" />
           </a>
         </div>
       </div>
@@ -4239,19 +4166,7 @@ const CrossSectorSection = () => {
                   }}
                 >
                   {showMoreRipple ? "Show less" : "Show more details"}
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={colors.white}
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{ transform: showMoreRipple ? "rotate(180deg)" : "none", transition: "transform 0.3s ease" }}
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                  <ChevronDown size={14} strokeWidth={2.5} color={colors.white} style={{ transform: showMoreRipple ? "rotate(180deg)" : "none", transition: "transform 0.3s ease" }} />
                 </button>
               )}
             </div>
@@ -5031,18 +4946,7 @@ const InvestmentCTASection = ({ sector }) => {
               }}
             >
               View returns, timeline & impact
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.primary}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+              <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} />
             </button>
           )}
         </div>

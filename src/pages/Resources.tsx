@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -2247,8 +2246,8 @@ export default function ResourcesPage() {
   ];
 
   return (
+    <Layout>
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "DM Sans,sans-serif" }}>
-      <SiteHeader />
 
       {/* ── HERO ── */}
       <section style={{ background: C.primary, padding: mobile ? "52px 20px 40px" : `72px ${PAD} 52px` }}>
@@ -2555,7 +2554,6 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <SiteFooter />
       <BRIDGEAuthModal
         isOpen={showAuth}
         onClose={() => setShowAuth(false)}
@@ -2571,5 +2569,6 @@ export default function ResourcesPage() {
         isLoggedIn={!!user}
       />
     </div>
+    </Layout>
   );
 }

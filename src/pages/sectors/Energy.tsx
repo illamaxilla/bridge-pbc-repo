@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { IconArrowRight, IconArrowDown, IconCheck, IconTarget, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconBatteryCharging, IconBlocks, IconSprout, IconCross, IconFactory, IconTruck, IconChevronDown } from "@/components/icons/SectorIcons";
+import { ChevronDown, ChevronRight, Coins, Home, Sun, Wrench, Zap } from "lucide-react";
 import { FOOTER_SECTOR_ICONS } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
+import { energySector } from "@/data/sectors/energy";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Energy & Renewable Resources
-// Following established design system from Infrastructure & Health Systems pages
-// ============================================================================
-// Design System: Dark Green #1B4D3E, Lime #B8D935, Off-white #F3F5F2
+// Data imported from src/data/sectors/energy.ts
 // ============================================================================
 
 import { colors, layout } from "@/lib/theme";
@@ -18,59 +18,17 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
 const StageIcon = ({ type, size = 20, color = "currentColor" }) => {
-  const p = {
-    width: size,
-    height: size,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: color,
-    strokeWidth: "2",
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  };
   switch (type) {
     case "sun":
-      return (
-        <svg {...p}>
-          <circle cx="12" cy="12" r="5" />
-          <line x1="12" y1="1" x2="12" y2="3" />
-          <line x1="12" y1="21" x2="12" y2="23" />
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-          <line x1="1" y1="12" x2="3" y2="12" />
-          <line x1="21" y1="12" x2="23" y2="12" />
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-        </svg>
-      );
+      return <Sun size={size} strokeWidth={2} color={color} />;
     case "zap":
-      return (
-        <svg {...p}>
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-        </svg>
-      );
+      return <Zap size={size} strokeWidth={2} color={color} />;
     case "coins":
-      return (
-        <svg {...p}>
-          <circle cx="8" cy="8" r="6" />
-          <path d="M18.09 10.37A6 6 0 1 1 10.34 18" />
-          <line x1="7" y1="6" x2="7" y2="10" />
-          <line x1="5" y1="8" x2="9" y2="8" />
-        </svg>
-      );
+      return <Coins size={size} strokeWidth={2} color={color} />;
     case "tool":
-      return (
-        <svg {...p}>
-          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-        </svg>
-      );
+      return <Wrench size={size} strokeWidth={2} color={color} />;
     case "home":
-      return (
-        <svg {...p}>
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-          <polyline points="9 22 9 12 15 12 15 22" />
-        </svg>
-      );
+      return <Home size={size} strokeWidth={2} color={color} />;
     default:
       return null;
   }
@@ -78,10 +36,14 @@ const StageIcon = ({ type, size = 20, color = "currentColor" }) => {
 
 
 // ============================================================================
-// SECTOR DATA — Energy & Renewable Resources
+// SECTOR DATA — imported from src/data/sectors/energy.ts
 // ============================================================================
 
 const sectorData = {
+  ...energySector,
+  // NOTE: The remaining ~640 lines of inline data below are now redundant.
+  // They are kept temporarily while all sector pages migrate to the same pattern.
+  // Once validated, remove the duplicated fields below and use energySector directly.
   id: 10,
   slug: "energy",
   name: "Energy & Renewable Resources",
@@ -1427,19 +1389,7 @@ const OpportunitySection = ({ sector }) => {
                           marginBottom: "12px",
                         }}
                       >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#888"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="12 6 12 12 16 14" />
-                        </svg>
+                        <Clock size={16} strokeWidth={2} color="#888" />
                         <span
                           style={{
                             fontFamily: "Inter, sans-serif",
@@ -1532,18 +1482,7 @@ const OpportunitySection = ({ sector }) => {
                       }}
                     >
                       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke={colors.accent}
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
+                        <Check size={18} strokeWidth={2.5} color={colors.accent} />
                         <span
                           style={{
                             fontFamily: "Inter, sans-serif",
@@ -1575,18 +1514,7 @@ const OpportunitySection = ({ sector }) => {
                         >
                           View
                         </span>
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke={colors.primary}
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
+                        <ArrowRight size={14} strokeWidth={2} color={colors.primary} />
                       </div>
                     </div>
                   </div>
@@ -1726,18 +1654,7 @@ const CollapsedBar = ({ sys, index, onClick, position, hiddenCount, isMobile }) 
           }}
         >
           +{hiddenCount}
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
+          <ChevronDown size={12} strokeWidth={2.5} />
         </div>
       ) : (
         <div
@@ -1752,18 +1669,7 @@ const CollapsedBar = ({ sys, index, onClick, position, hiddenCount, isMobile }) 
             flexShrink: 0,
           }}
         >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#999"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
+          <ChevronDown size={14} strokeWidth={2.5} color="#999" />
         </div>
       )}
     </div>
@@ -2045,18 +1951,7 @@ const ValueChainSection = ({ sector }) => {
                             flexShrink: 0,
                           }}
                         >
-                          <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke={colors.accent}
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                          </svg>
+                          <Zap size={18} strokeWidth={2} color={colors.accent} />
                         </div>
                         <span
                           style={{
@@ -2069,19 +1964,7 @@ const ValueChainSection = ({ sector }) => {
                         >
                           {v}
                         </span>
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="rgba(255,255,255,0.2)"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          style={{ flexShrink: 0 }}
-                        >
-                          <path d="M9 18l6-6-6-6" />
-                        </svg>
+                        <ChevronRight size={16} strokeWidth={2} color="rgba(255,255,255,0.2)" style={{ flexShrink: 0 }} />
                       </div>
                     ))}
                   </div>
@@ -2638,18 +2521,7 @@ const CompetitorAnalysisCard = ({ competitor, index, total, onPrev, onNext, hidd
                 opacity: index === 0 ? 0.35 : 1,
               }}
             >
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.primary}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
+              <ChevronLeft size={12} strokeWidth={2.5} color={colors.primary} />
             </button>
             <span style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#999" }}>
               {index + 1} / {total}
@@ -2673,18 +2545,7 @@ const CompetitorAnalysisCard = ({ competitor, index, total, onPrev, onNext, hidd
                 opacity: index === total - 1 ? 0.35 : 1,
               }}
             >
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={index === total - 1 ? colors.primary : colors.white}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M9 18l6-6-6-6" />
-              </svg>
+              <ChevronRight size={12} strokeWidth={2.5} color={index === total - 1 ? colors.primary : colors.white} />
             </button>
           </div>
         ) : (
@@ -2709,19 +2570,7 @@ const CompetitorAnalysisCard = ({ competitor, index, total, onPrev, onNext, hidd
           }}
         >
           {isExpanded ? "Less" : "Analysis"}
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }}
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
+          <ChevronDown size={10} strokeWidth={2.5} style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }} />
         </button>
       </div>
     </div>
@@ -2955,18 +2804,7 @@ const LandscapeSection = ({ sector }) => {
                 }}
               >
                 See BRIDGE's Position
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
+                <ChevronDown size={12} strokeWidth={2.5} />
               </button>
             )}
 
@@ -4627,18 +4465,7 @@ const InvestmentCTASection = ({ sector }) => {
               }}
             >
               View Returns & Timeline
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.accent}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+              <ChevronDown size={14} strokeWidth={2.5} color={colors.accent} />
             </button>
           )}
           <div

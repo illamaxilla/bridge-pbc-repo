@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { IconWheat, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconSproutHub, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark } from "@/components/icons/SectorIcons";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
+import { ArrowUpRight, Clock, Check, ArrowRight, ArrowUp, ChevronLeft, ChevronRight, ChevronDown, Pause, Play, Sprout, Warehouse, Factory, Truck, Users, Blocks, Wallet, BatteryCharging, X } from "lucide-react";
 import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
@@ -510,90 +511,11 @@ const valueChainStages = [
 
 // Premium Value Chain Icons
 const valueChainIcons = {
-  seed: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22c6-6 6-12 0-18C6 10 6 16 12 22z" />
-      <path d="M12 22V10" />
-      <path d="M8 14c1.5-1.5 3.5-2 4-2" />
-      <path d="M16 14c-1.5-1.5-3.5-2-4-2" />
-    </svg>
-  ),
-  warehouse: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z" />
-      <path d="M6 18h12" />
-      <path d="M6 14h12" />
-      <rect x="6" y="10" width="12" height="12" />
-    </svg>
-  ),
-  factory: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-      <path d="M17 18h1M12 18h1M7 18h1" />
-    </svg>
-  ),
-  truck: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
-      <path d="M15 18H9" />
-      <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
-      <circle cx="17" cy="18" r="2" />
-      <circle cx="7" cy="18" r="2" />
-    </svg>
-  ),
-  users: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  ),
+  seed: <Sprout size={24} strokeWidth={1.5} />,
+  warehouse: <Warehouse size={24} strokeWidth={1.5} />,
+  factory: <Factory size={24} strokeWidth={1.5} />,
+  truck: <Truck size={24} strokeWidth={1.5} />,
+  users: <Users size={24} strokeWidth={1.5} />,
 };
 
 
@@ -735,9 +657,7 @@ const HeroSection = ({ sector }) => {
                     justifyContent: "center",
                   }}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
+                  <ArrowUpRight size={16} strokeWidth={2.5} color={colors.primary} />
                 </span>
               </button>
               <button
@@ -1293,10 +1213,7 @@ const OpportunityCard = ({ opportunity, isExpanded, isCollapsed, onToggle }) => 
                 marginBottom: "12px",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
+              <Clock size={16} strokeWidth={2} color="#888" />
               <span
                 style={{
                   fontFamily: "Inter, sans-serif",
@@ -1397,9 +1314,7 @@ const OpportunityCard = ({ opportunity, isExpanded, isCollapsed, onToggle }) => 
                 flexShrink: 0,
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.accent} strokeWidth="2.5">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Check size={18} strokeWidth={2.5} color={colors.accent} />
               <span
                 style={{
                   fontFamily: "Inter, sans-serif",
@@ -1434,9 +1349,7 @@ const OpportunityCard = ({ opportunity, isExpanded, isCollapsed, onToggle }) => 
               }}
             >
               View
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <ArrowRight size={14} strokeWidth={2} />
             </span>
           </div>
         </div>
@@ -1624,24 +1537,15 @@ const AnimatedFlowArrow = ({ isActive, delay = 0 }) => {
         }}
       />
 
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
+      <ArrowRight
+        size={24}
+        strokeWidth={2}
+        color={isActive ? colors.accent : colors.line}
         style={{
           transform: isActive ? "translateX(3px)" : "translateX(0)",
           transition: "transform 0.3s ease",
         }}
-      >
-        <path
-          d="M5 12h14M12 5l7 7-7 7"
-          stroke={isActive ? colors.accent : colors.line}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      />
 
       {isActive && (
         <>
@@ -2010,9 +1914,7 @@ const ValueLeakageBar = ({ isAnimating }) => {
               gap: "4px",
             }}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 19V5M5 12l7-7 7 7" />
-            </svg>
+            <ArrowUp size={12} strokeWidth={2} />
             +25%
           </div>
           <div
@@ -2029,9 +1931,7 @@ const ValueLeakageBar = ({ isAnimating }) => {
               gap: "4px",
             }}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 19V5M5 12l7-7 7 7" />
-            </svg>
+            <ArrowUp size={12} strokeWidth={2} />
             +20%
           </div>
         </div>
@@ -2254,18 +2154,7 @@ const ValueChainSectionPremium = () => {
             }}
           >
             Explore Stage Details
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={colors.accent}
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M6 9l6 6 6-6" />
-            </svg>
+            <ChevronDown size={14} strokeWidth={2.5} color={colors.accent} />
           </button>
         ) : (
           <>
@@ -2371,14 +2260,9 @@ const ValueChainSectionPremium = () => {
                           }}
                         >
                           {isPlaying ? (
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill={colors.primary}>
-                              <rect x="6" y="4" width="4" height="16" />
-                              <rect x="14" y="4" width="4" height="16" />
-                            </svg>
+                            <Pause size={10} fill={colors.primary} color={colors.primary} />
                           ) : (
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill={colors.white}>
-                              <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
+                            <Play size={10} fill={colors.white} color={colors.white} />
                           )}
                         </div>
                         <span
@@ -2446,18 +2330,7 @@ const ValueChainSectionPremium = () => {
                           flexShrink: 0,
                         }}
                       >
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="rgba(255,255,255,0.5)"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                        >
-                          <path d="M18 6L6 18" />
-                          <path d="M6 6l12 12" />
-                        </svg>
+                        <X size={12} strokeWidth={2.5} color="rgba(255,255,255,0.5)" />
                       </button>
                     </div>
                   </div>
@@ -2500,19 +2373,7 @@ const ValueChainSectionPremium = () => {
                               gap: "10px",
                             }}
                           >
-                            <svg
-                              width="14"
-                              height="14"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke={colors.accent}
-                              strokeWidth="2.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              style={{ flexShrink: 0 }}
-                            >
-                              <polyline points="20 6 9 17 4 12" />
-                            </svg>
+                            <Check size={14} strokeWidth={2.5} color={colors.accent} style={{ flexShrink: 0 }} />
                             <span
                               style={{
                                 fontFamily: "Inter, sans-serif",
@@ -3394,9 +3255,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                       color: colors.primary,
                     }}
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M15 18l-6-6 6-6" />
-                    </svg>
+                    <ChevronLeft size={14} strokeWidth={2} />
                   </button>
                   <span style={{ fontSize: "12px", fontFamily: "Inter, sans-serif", color: "#888" }}>
                     {currentIndex + 1} / {allies.length}
@@ -3416,9 +3275,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                       color: colors.primary,
                     }}
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M9 18l6-6-6-6" />
-                    </svg>
+                    <ChevronRight size={14} strokeWidth={2} />
                   </button>
                 </div>
                 <button
@@ -3439,17 +3296,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                   }}
                 >
                   {isExpanded ? "Less" : "Analysis"}
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    style={{ transform: isExpanded ? "rotate(180deg)" : "none" }}
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                  <ChevronDown size={12} strokeWidth={2} style={{ transform: isExpanded ? "rotate(180deg)" : "none" }} />
                 </button>
               </div>
             </div>
@@ -3476,18 +3323,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                 }}
               >
                 BRIDGE's Position
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke={colors.accent}
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
+                <ChevronDown size={14} strokeWidth={2.5} color={colors.accent} />
               </button>
             ) : (
               <div
@@ -3519,18 +3355,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                       zIndex: 1,
                     }}
                   >
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="rgba(255,255,255,0.5)"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    >
-                      <path d="M18 6L6 18" />
-                      <path d="M6 6l12 12" />
-                    </svg>
+                    <X size={12} strokeWidth={2.5} color="rgba(255,255,255,0.5)" />
                   </button>
                 )}
                 {/* Header: label + vs pill */}
@@ -4111,20 +3936,7 @@ const GovernancePolicySection = () => {
                     }}
                   >
                     BRIDGE alignment
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      style={{
-                        transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
-                        transition: "transform 0.3s ease",
-                      }}
-                    >
-                      <path d="M6 9l6 6 6-6" />
-                    </svg>
+                    <ChevronDown size={14} strokeWidth={2} style={{ transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease" }} />
                   </div>
 
                   {/* Expanded content */}
@@ -5011,87 +4823,11 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
 // ============================================================================
 
 // Connected sector icons
-const RippleIconBlocks = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect width="7" height="7" x="14" y="3" rx="1" />
-    <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />
-  </svg>
-);
-const RippleIconWallet = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-    <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-    <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
-  </svg>
-);
-const RippleIconBattery = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2" />
-    <path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1" />
-    <path d="m11 7-3 5h4l-3 5" />
-    <line x1="22" x2="22" y1="11" y2="13" />
-  </svg>
-);
-const RippleIconFactory = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-    <path d="M17 18h1M12 18h1M7 18h1" />
-  </svg>
-);
-const RippleIconTruck = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
-    <path d="M15 18H9" />
-    <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
-    <circle cx="17" cy="18" r="2" />
-    <circle cx="7" cy="18" r="2" />
-  </svg>
-);
+const RippleIconBlocks = () => <Blocks size={20} strokeWidth={1.5} />;
+const RippleIconWallet = () => <Wallet size={20} strokeWidth={1.5} />;
+const RippleIconBattery = () => <BatteryCharging size={20} strokeWidth={1.5} />;
+const RippleIconFactory = () => <Factory size={20} strokeWidth={1.5} />;
+const RippleIconTruck = () => <Truck size={20} strokeWidth={1.5} />;
 
 const rippleSectorIcons = [RippleIconBlocks, RippleIconWallet, RippleIconBattery, RippleIconFactory, RippleIconTruck];
 const rippleShortNames = ["Infra", "Financial", "Energy", "Mfg", "Transport"];
@@ -5793,20 +5529,7 @@ const RippleEffectSection = () => {
                   }}
                 >
                   {showMoreRipple ? "Show less" : "Show more details"}
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2"
-                    style={{
-                      transform: showMoreRipple ? "rotate(180deg)" : "rotate(0deg)",
-                      transition: "transform 0.3s ease",
-                    }}
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                  <ChevronDown size={14} strokeWidth={2} color="white" style={{ transform: showMoreRipple ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease" }} />
                 </button>
               )}
             </div>
@@ -6586,18 +6309,7 @@ const InvestmentThesisSection = () => {
               }}
             >
               View returns, timeline & impact
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.primary}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+              <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} />
             </button>
           )}
         </div>
@@ -6717,9 +6429,7 @@ const FinalCTASection = () => {
                 justifyContent: "center",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg>
+              <ArrowUpRight size={16} strokeWidth={2.5} color={colors.primary} />
             </span>
           </button>
 

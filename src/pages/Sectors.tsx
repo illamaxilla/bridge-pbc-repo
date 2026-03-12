@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
+import { Layout } from "@/components/Layout";
 
 // Slug → route map (handles creative→sports, transportation→transport)
 const sectorRoute = (slug: string): string => {
@@ -10,7 +10,6 @@ const sectorRoute = (slug: string): string => {
   };
   return overrides[slug] ?? `/sectors/${slug}`;
 };
-import SiteFooter from "@/components/SiteFooter";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -1922,6 +1921,7 @@ const CTA = () => {
 
 export default function BRIDGESectorsLanding() {
   return (
+    <Layout>
     <div style={{ fontFamily: "Inter, sans-serif", backgroundColor: colors.white, minHeight: "100vh" }}>
 
       <style>{`
@@ -1943,12 +1943,11 @@ export default function BRIDGESectorsLanding() {
         }
         input::placeholder { color: rgba(255,255,255,0.3); }
       `}</style>
-      <SiteHeader />
       <HeroSection />
       <SectorGrid />
       <CrossSector />
       <CTA />
-      <SiteFooter />
     </div>
+    </Layout>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { colors } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { BridgeLogo } from "@/components/BridgeLogo";
 
 import { SignInForm } from "./auth/SignInForm";
@@ -49,14 +50,7 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
   }, [isOpen, onClose]);
 
   // Lock body scroll when open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   if (!isOpen && !visible) return null;
 
@@ -75,6 +69,9 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
 
       {/* Backdrop */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auth-modal-title"
         onClick={handleBackdrop}
         style={{
           position: "fixed", inset: 0, zIndex: 9998,
@@ -183,7 +180,7 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
             ) : tab === "signin" ? (
               <>
                 <div style={{ marginBottom: "24px", display: "flex", flexDirection: "column", gap: "6px" }}>
-                  <h2 style={{ fontSize: "22px", fontWeight: "700", color: colors.dark, fontFamily: "Inter, sans-serif", margin: 0 }}>
+                  <h2 id="auth-modal-title" style={{ fontSize: "22px", fontWeight: "700", color: colors.dark, fontFamily: "Inter, sans-serif", margin: 0 }}>
                     Welcome back
                   </h2>
                   <p style={{ fontSize: "14px", color: "#666", fontFamily: "Inter, sans-serif", margin: 0 }}>
@@ -211,7 +208,7 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
             ) : (
               <>
                 <div style={{ marginBottom: "24px", display: "flex", flexDirection: "column", gap: "6px" }}>
-                  <h2 style={{ fontSize: "22px", fontWeight: "700", color: colors.dark, fontFamily: "Inter, sans-serif", margin: 0 }}>
+                  <h2 id="auth-modal-title" style={{ fontSize: "22px", fontWeight: "700", color: colors.dark, fontFamily: "Inter, sans-serif", margin: 0 }}>
                     Access the full BRIDGE research{" "}
                     <span style={{ color: colors.primary }}>library</span>
                   </h2>

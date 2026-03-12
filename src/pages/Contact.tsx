@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 
 // ============================================================================
 // BRIDGE PBC — Contact Page (Integrated with Guided Widget)
@@ -3200,6 +3199,7 @@ const WidgetSection = () => {
 
 export default function ContactPage() {
   return (
+    <Layout>
     <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0 }}>
       <style>{`
 
@@ -3240,10 +3240,9 @@ export default function ContactPage() {
         }
       `}</style>
 
-      <SiteHeader />
       <HeroSection />
       <WidgetSection />
-      <SiteFooter />
     </div>
+    </Layout>
   );
 }

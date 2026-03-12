@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { IconPlane, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconPalette, IconGraduation, IconSprout, IconLuggage, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconCheckSmall } from "@/components/icons/SectorIcons";
+import { ArrowRight, BarChart3, Building2, Check, ChevronDown, Clock, Compass, Globe, Plane, Users } from "lucide-react";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useCounter } from "@/hooks/useCounter";
@@ -436,83 +437,11 @@ const valueChainStages = [
 
 // Premium Value Chain Icons
 const valueChainIcons = {
-  globe: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    </svg>
-  ),
-  plane: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
-    </svg>
-  ),
-  hotel: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z" />
-      <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01" />
-    </svg>
-  ),
-  compass: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-    </svg>
-  ),
-  users: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  ),
+  globe: <Globe size={24} strokeWidth={1.5} />,
+  plane: <Plane size={24} strokeWidth={1.5} />,
+  hotel: <Building2 size={24} strokeWidth={1.5} />,
+  compass: <Compass size={24} strokeWidth={1.5} />,
+  users: <Users size={24} strokeWidth={1.5} />,
 };
 
 
@@ -1126,10 +1055,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
 
           <div style={{ marginBottom: "16px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 6v6l4 2" />
-              </svg>
+              <Clock size={16} strokeWidth={2} color="#888" />
               <span
                 style={{
                   fontFamily: "Inter, sans-serif",
@@ -1210,9 +1136,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.accent} strokeWidth="2.5">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Check size={18} strokeWidth={2.5} color={colors.accent} />
               <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#888" }}>BRIDGE Solution:</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flex: 1 }}>
@@ -1245,9 +1169,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
                 }}
               >
                 View{" "}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                <ArrowRight size={14} strokeWidth={2} />
               </a>
             </div>
           </div>
@@ -1412,21 +1334,12 @@ const AnimatedFlowArrow = ({ isActive, delay = 0 }) => (
         animationDelay: `${delay}ms`,
       }}
     />
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
+    <ArrowRight
+      size={24}
+      strokeWidth={2}
+      color={isActive ? colors.accent : colors.line}
       style={{ transform: isActive ? "translateX(3px)" : "translateX(0)", transition: "transform 0.3s ease" }}
-    >
-      <path
-        d="M5 12h14M12 5l7 7-7 7"
-        stroke={isActive ? colors.accent : colors.line}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    />
     {isActive && (
       <>
         <div
@@ -1569,9 +1482,7 @@ const SelectCard = ({ stage, index, isActive, onSelect }) => {
 const ValueLeakageBar = ({ isAnimating }) => (
   <div style={{ marginTop: "48px", padding: "0 20px" }}>
     <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2">
-        <path d="M12 20V10M18 20V4M6 20v-4" />
-      </svg>
+      <BarChart3 size={18} strokeWidth={2} color={colors.primary} />
       <span
         style={{
           fontFamily: "Inter, sans-serif",
@@ -2449,9 +2360,7 @@ const SolutionCard = ({ solution }) => {
           borderTop: `1px solid ${colors.line}`,
         }}
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.accent} strokeWidth="2.5">
-          <polyline points="20 6 9 17 4 12" />
-        </svg>
+        <Check size={14} strokeWidth={2.5} color={colors.accent} />
         <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#888" }}>{solution.impact}</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "12px" }}>
@@ -2848,17 +2757,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                   }}
                 >
                   Show more details
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={colors.primary}
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                  <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} />
                 </button>
               </div>
             )}
@@ -3047,18 +2946,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                       fontFamily: "Inter, sans-serif",
                     }}
                   >
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke={colors.accent}
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
+                    <Check size={12} strokeWidth={2.5} color={colors.accent} />
                     {g}
                   </span>
                 ))}
@@ -3088,18 +2976,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                   }}
                 >
                   Show less
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={colors.primary}
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    style={{ transform: "rotate(180deg)" }}
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                  <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} style={{ transform: "rotate(180deg)" }} />
                 </button>
               </div>
             )}
@@ -5195,21 +5072,10 @@ const CrossSectorSection = () => {
                   }}
                 >
                   {showMoreRipple ? "Show less" : "Show more details"}
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    style={{
+                  <ChevronDown size={14} strokeWidth={2.5} color="white" style={{
                       transform: showMoreRipple ? "rotate(180deg)" : "rotate(0)",
                       transition: "transform 0.3s ease",
-                    }}
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                    }} />
                 </button>
               )}
             </div>
@@ -5899,18 +5765,7 @@ const InvestmentCTASection = () => {
               }}
             >
               View returns, timeline & impact
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.primary}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+              <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} />
             </button>
           )}
         </div>

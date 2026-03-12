@@ -30,6 +30,7 @@ const Analytics = lazy(() => import("./pages/intelligence/Analytics"));
 const IntelResources = lazy(() => import("./pages/intelligence/Resources"));
 
 // Community
+const Community = lazy(() => import("./pages/community/Community"));
 const CommunityHome = lazy(() => import("./pages/community/index"));
 
 // Reports
@@ -119,18 +120,13 @@ const App = () => (
               <Route path="/sectors/tourism" element={<Tourism />} />
               <Route path="/sectors/education" element={<Education />} />
               <Route path="/sectors/agriculture" element={<Agriculture />} />
-              <Route path="/community" element={<CommunityHome />} />
-              <Route path="/community/forum" element={<CommunityHome />} />
-              <Route path="/community/forum/questions" element={<CommunityHome />} />
-              <Route path="/community/forum/most-answered" element={<CommunityHome />} />
-              <Route path="/community/forum/polls" element={<CommunityHome />} />
-              <Route path="/community/forum/groups" element={<CommunityHome />} />
-              <Route path="/community/forum/tags" element={<CommunityHome />} />
-              <Route path="/community/forum/sectors" element={<CommunityHome />} />
-              <Route path="/community/forum/badges" element={<CommunityHome />} />
-              <Route path="/community/forum/members" element={<CommunityHome />} />
-              <Route path="/community/members" element={<CommunityHome />} />
-              <Route path="/community/resources" element={<CommunityHome />} />
+              <Route path="/community" element={<Community />}>
+                <Route index element={<CommunityHome />} />
+                <Route path="forum" element={<CommunityHome />} />
+                <Route path="forum/*" element={<CommunityHome />} />
+                <Route path="members" element={<CommunityHome />} />
+                <Route path="resources" element={<CommunityHome />} />
+              </Route>
 
               {/* Resource viewer routes */}
               {/* Policy brief: public (General Public) */}
@@ -146,12 +142,12 @@ const App = () => (
               <Route path="/policy" element={<Policy />} />
               {/* BRIDGE document pages — sector intelligence with wrapper */}
               <Route path="/resources/budget-alignment" element={
-                <SectorIntelligenceWrapper title="2026 Budget Alignment" freeDownloadPath="/resources/policy-brief">
+                <SectorIntelligenceWrapper title="2026 Budget Alignment" freePreviewPath="/resources/policy-brief">
                   <BudgetAlignment />
                 </SectorIntelligenceWrapper>
               } />
               <Route path="/resources/ghana-intelligence" element={
-                <SectorIntelligenceWrapper title="Ghana Intelligence Q1 2026" freeDownloadPath="/resources/annual-review">
+                <SectorIntelligenceWrapper title="Ghana Intelligence Q1 2026" freePreviewPath="/resources/annual-review">
                   <GhanaIntelligence />
                 </SectorIntelligenceWrapper>
               } />

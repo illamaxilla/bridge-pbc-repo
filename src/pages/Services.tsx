@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
+import { Layout } from "@/components/Layout";
 
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
 // BRIDGE Design System - Consistent with Homepage
@@ -1240,6 +1240,7 @@ export default function ServicesSectorsPageV2() {
   const totalVentures = sectorsData.reduce((sum, s) => sum + s.ventures, 0);
 
   return (
+    <Layout hideFooter>
     <div
       style={{ fontFamily: "Helvetica, Arial, sans-serif", margin: 0, padding: 0, backgroundColor: colors.background }}
     >
@@ -1255,7 +1256,6 @@ export default function ServicesSectorsPageV2() {
         .cta-lime:hover { background-color: #1B4D3E !important; color: #FFFFFF !important; }
       `}</style>
 
-      <SiteHeader />
       {/* ============================================ */}
       {/* SECTION 1: Audience-Focused Hero */}
       {/* ============================================ */}
@@ -4758,5 +4758,6 @@ export default function ServicesSectorsPageV2() {
         </div>
       </footer>
     </div>
+    </Layout>
   );
 }

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { colors } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, SelectField, TextareaField } from "./FormField";
@@ -7,6 +10,23 @@ import type { SelectOption } from "./FormField";
 // ============================================================
 // REQUEST ACCESS FORM
 // ============================================================
+
+const requestAccessSchema = z.object({
+  // Step 1
+  name: z.string().min(1, "Name is required"),
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+  country: z.string().min(1, "Country is required"),
+  organization: z.string().optional(),
+  role: z.string().optional(),
+  // Step 2
+  primaryInterest: z.string().min(1, "Primary interest is required"),
+  connection: z.string().min(1, "This field is required"),
+  description: z.string().optional(),
+  consent: z.literal(true, { errorMap: () => ({ message: "You must agree to continue" }) }),
+});
+
+type RequestAccessFormData = z.infer<typeof requestAccessSchema>;
+
 export interface RequestAccessFormProps {
   onSuccess?: (mode: string) => void;
   isMobile: boolean;
@@ -66,33 +86,42 @@ export interface RequestFormState {
 }
 
 export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProps) => {
-  const [form, setForm] = useState<RequestFormState>({
-    name: "", email: "", country: "", organization: "",
-    role: "", primaryInterest: "", connection: "", description: "", consent: false,
-  });
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [btnHover, setBtnHover] = useState(false);
-
-  const set = (key: keyof RequestFormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
-    setForm(f => ({ ...f, [key]: e.target.value }));
-
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const { control, handleSubmit, formState: { errors }, trigger, watch } = useForm<RequestAccessFormData>({
+    resolver: zodResolver(requestAccessSchema),
+    defaultValues: {
+      name: "", email: "", country: "", organization: "",
+      role: "", primaryInterest: "", connection: "", description: "", consent: false as unknown as true,
+    },
+  });
+
+  const watchedValues = watch();
+
+  const step1Valid = watchedValues.name && watchedValues.email && watchedValues.country;
+  const step2Valid = watchedValues.primaryInterest && watchedValues.connection && watchedValues.consent;
+
+  const handleStep1Continue = async () => {
+    const valid = await trigger(["name", "email", "country"]);
+    if (valid) setStep(2);
+  };
+
+  const onSubmit = async (data: RequestAccessFormData) => {
     setError(null);
     setLoading(true);
     try {
       const { error } = await supabase.from("access_requests").insert({
-        name: form.name,
-        email: form.email,
-        country: form.country,
-        organization: form.organization || null,
-        role: form.role || null,
-        primary_interest: form.primaryInterest,
-        connection: form.connection,
-        description: form.description || null,
+        name: data.name,
+        email: data.email,
+        country: data.country,
+        organization: data.organization || null,
+        role: data.role || null,
+        primary_interest: data.primaryInterest,
+        connection: data.connection,
+        description: data.description || null,
       });
       if (error) throw error;
       onSuccess?.("request");
@@ -104,11 +133,8 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
     }
   };
 
-  const step1Valid = form.name && form.email && form.country;
-  const step2Valid = form.primaryInterest && form.connection && form.consent;
-
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       {error && (
         <div style={{
           padding: "12px 16px", borderRadius: "10px",
@@ -153,22 +179,73 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
 
       {step === 1 && (
         <>
-          <Field label="Full Name" placeholder="Your full name" value={form.name} onChange={set("name")} required />
-          <Field label="Email Address" type="email" placeholder="your@email.com" value={form.email} onChange={set("email")} required />
-
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px" }}>
-            <SelectField label="Country" value={form.country} onChange={set("country")} options={countryOptions} required />
-            <Field label="Organization" placeholder="Your org or company" value={form.organization} onChange={set("organization")} />
+          <div>
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <Field label="Full Name" placeholder="Your full name" value={field.value} onChange={field.onChange} required />
+              )}
+            />
+            {errors.name && (
+              <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
+                {errors.name.message}
+              </span>
+            )}
+          </div>
+          <div>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <Field label="Email Address" type="email" placeholder="your@email.com" value={field.value} onChange={field.onChange} required />
+              )}
+            />
+            {errors.email && (
+              <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
+                {errors.email.message}
+              </span>
+            )}
           </div>
 
-          <SelectField label="Your Role" value={form.role} onChange={set("role")} options={roleOptions} />
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px" }}>
+            <div>
+              <Controller
+                name="country"
+                control={control}
+                render={({ field }) => (
+                  <SelectField label="Country" value={field.value} onChange={field.onChange} options={countryOptions} required />
+                )}
+              />
+              {errors.country && (
+                <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
+                  {errors.country.message}
+                </span>
+              )}
+            </div>
+            <Controller
+              name="organization"
+              control={control}
+              render={({ field }) => (
+                <Field label="Organization" placeholder="Your org or company" value={field.value ?? ""} onChange={field.onChange} />
+              )}
+            />
+          </div>
+
+          <Controller
+            name="role"
+            control={control}
+            render={({ field }) => (
+              <SelectField label="Your Role" value={field.value ?? ""} onChange={field.onChange} options={roleOptions} />
+            )}
+          />
 
           <button
             type="button"
             disabled={!step1Valid}
             onMouseEnter={() => setBtnHover(true)}
             onMouseLeave={() => setBtnHover(false)}
-            onClick={() => setStep(2)}
+            onClick={handleStep1Continue}
             style={{
               marginTop: "4px",
               padding: "14px 32px",
@@ -192,37 +269,82 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
 
       {step === 2 && (
         <>
-          <SelectField label="Primary Interest" value={form.primaryInterest} onChange={set("primaryInterest")} options={interestOptions} required />
-          <SelectField label="How did you hear about BRIDGE?" value={form.connection} onChange={set("connection")} options={connectionOptions} required />
-          <TextareaField label="Anything else you'd like to share?" placeholder="Optional context about your work or interest…" value={form.description} onChange={set("description")} />
+          <div>
+            <Controller
+              name="primaryInterest"
+              control={control}
+              render={({ field }) => (
+                <SelectField label="Primary Interest" value={field.value} onChange={field.onChange} options={interestOptions} required />
+              )}
+            />
+            {errors.primaryInterest && (
+              <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
+                {errors.primaryInterest.message}
+              </span>
+            )}
+          </div>
+          <div>
+            <Controller
+              name="connection"
+              control={control}
+              render={({ field }) => (
+                <SelectField label="How did you hear about BRIDGE?" value={field.value} onChange={field.onChange} options={connectionOptions} required />
+              )}
+            />
+            {errors.connection && (
+              <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
+                {errors.connection.message}
+              </span>
+            )}
+          </div>
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <TextareaField label="Anything else you'd like to share?" placeholder="Optional context about your work or interest…" value={field.value ?? ""} onChange={field.onChange} />
+            )}
+          />
 
           {/* Consent */}
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-            <div
-              role="checkbox"
-              aria-checked={form.consent}
-              tabIndex={0}
-              onClick={() => setForm(f => ({ ...f, consent: !f.consent }))}
-              onKeyDown={e => { if (e.key === " " || e.key === "Enter") setForm(f => ({ ...f, consent: !f.consent })); }}
-              style={{
-                width: "18px", height: "18px", minWidth: "18px",
-                borderRadius: "5px", marginTop: "1px",
-                border: `2px solid ${form.consent ? colors.primary : colors.line}`,
-                backgroundColor: form.consent ? colors.primary : colors.white,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                transition: "all 0.2s ease", cursor: "pointer",
-              }}
-            >
-              {form.consent && (
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
-                  <path d="M20 6L9 17l-5-5" />
-                </svg>
-              )}
-            </div>
-            <span style={{ fontSize: "13px", color: "#555", fontFamily: "Inter, sans-serif", lineHeight: "1.5" }}>
-              I agree to receive communications from BRIDGE PBC and understand that access is subject to team review and approval.
-            </span>
-          </div>
+          <Controller
+            name="consent"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                  <div
+                    role="checkbox"
+                    aria-checked={field.value}
+                    tabIndex={0}
+                    onClick={() => field.onChange(!field.value)}
+                    onKeyDown={e => { if (e.key === " " || e.key === "Enter") field.onChange(!field.value); }}
+                    style={{
+                      width: "18px", height: "18px", minWidth: "18px",
+                      borderRadius: "5px", marginTop: "1px",
+                      border: `2px solid ${field.value ? colors.primary : colors.line}`,
+                      backgroundColor: field.value ? colors.primary : colors.white,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      transition: "all 0.2s ease", cursor: "pointer",
+                    }}
+                  >
+                    {field.value && (
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                    )}
+                  </div>
+                  <span style={{ fontSize: "13px", color: "#555", fontFamily: "Inter, sans-serif", lineHeight: "1.5" }}>
+                    I agree to receive communications from BRIDGE PBC and understand that access is subject to team review and approval.
+                  </span>
+                </div>
+                {errors.consent && (
+                  <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
+                    {errors.consent.message}
+                  </span>
+                )}
+              </div>
+            )}
+          />
 
           <div style={{ display: "flex", gap: "12px" }}>
             <button

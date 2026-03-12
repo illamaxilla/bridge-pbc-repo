@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
 
@@ -525,6 +524,7 @@ export default function BRIDGEHomePage() {
   const tabIndex = ["identification", "connection", "engagement"].indexOf(activeTab);
 
   return (
+    <Layout>
     <div style={{ fontFamily: "Helvetica, Arial, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
 
 
@@ -566,8 +566,6 @@ export default function BRIDGEHomePage() {
         .header-icon:hover { color: #1B4D3E !important; }
         .header-icon:hover svg { stroke: #1B4D3E !important; }
       `}</style>
-
-      <SiteHeader />
 
       {/* HERO */}
       <section style={{ backgroundColor: colors.white, padding: isMobile ? "36px 20px 24px" : "60px 48px 40px 48px" }}>
@@ -3725,9 +3723,9 @@ export default function BRIDGEHomePage() {
             </div>
           )}
 
-          <SiteFooter />
         </div>
       </section>
     </div>
+    </Layout>
   );
 }

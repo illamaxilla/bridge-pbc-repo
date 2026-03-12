@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Search, User, Menu, X } from "lucide-react";
 import { colors as clr } from "@/lib/theme";
 import { BridgeLogo } from "@/components/BridgeLogo";
+import { useScrollLock } from "@/hooks/useScrollLock";
 
 // ── Nav items with route mapping ──────────────────────────────────────────────
 const ALL_NAV = [
@@ -53,10 +54,7 @@ export default function SiteHeader() {
   }, []);
 
   // Lock body scroll when menu or search is open
-  useEffect(() => {
-    document.body.style.overflow = (menuOpen || searchOpen) ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [menuOpen, searchOpen]);
+  useScrollLock(menuOpen || searchOpen);
 
   // Auto-focus search input when opened
   useEffect(() => {
@@ -166,6 +164,7 @@ export default function SiteHeader() {
           {/* Menu toggle */}
           <button
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}
             style={{
               ...iconStyle,

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/context/AuthContext";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -466,8 +465,7 @@ export default function SectorReportPage() {
 
   if (!report) {
     return (
-      <>
-        <SiteHeader />
+      <Layout>
         <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "16px" }}>
           <h1 style={{ fontSize: "24px", fontWeight: "700", color: colors.dark, fontFamily: "DM Sans, sans-serif" }}>Report Not Found</h1>
           <p style={{ color: "#666", fontFamily: "Inter, sans-serif" }}>The sector report you're looking for doesn't exist.</p>
@@ -475,17 +473,14 @@ export default function SectorReportPage() {
             Back to Resources
           </button>
         </div>
-        <SiteFooter />
-      </>
+      </Layout>
     );
   }
 
   const isLocked = !report.free && !user;
 
   return (
-    <>
-      <SiteHeader />
-
+    <Layout>
       <div style={{ backgroundColor: colors.background, minHeight: "100vh" }}>
         {/* ── Breadcrumb ── */}
         <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: mobile ? "20px 20px 0" : "28px 40px 0" }}>
@@ -896,14 +891,12 @@ export default function SectorReportPage() {
         </div>
       </div>
 
-      <SiteFooter />
-
       <BRIDGEAuthModal
         isOpen={showAuth}
         onClose={() => setShowAuth(false)}
         defaultTab="request"
         onSignInSuccess={() => setShowAuth(false)}
       />
-    </>
+    </Layout>
   );
 }

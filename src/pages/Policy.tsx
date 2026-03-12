@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 
 import { colors } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -501,8 +500,8 @@ export default function PolicyPage() {
   const HP = isMobile ? "20px" : "48px";
 
   return (
+    <Layout>
     <div style={{ fontFamily: "Inter, sans-serif", backgroundColor: C.white, minHeight: "100vh" }}>
-      <SiteHeader />
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <section style={{ backgroundColor: C.primary, padding: isMobile ? "56px 20px 48px" : "80px 48px 72px", textAlign: "center" }}>
@@ -911,7 +910,7 @@ export default function PolicyPage() {
         </div>
       </section>
 
-      <SiteFooter />
     </div>
+    </Layout>
   );
 }

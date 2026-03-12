@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 import { BridgeLogo } from "@/components/BridgeLogo";
 import {
   Lightbulb,
@@ -2643,16 +2642,16 @@ export default function HowWeWorkPage() {
   return (
     <>
       <style>{GLOBAL_CSS}</style>
+      <Layout>
       <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', sans-serif" }}>
-        <SiteHeader />
         <Hero activeIdx={activeIdx} setActive={handleSetActive} />
         <ProcessTrack key={animKey} seg={seg} animKey={animKey} />
         <ToolkitSection seg={seg} />
         <DeliverablesSection seg={seg} />
         <MethodologySection />
         <CTASection seg={seg} />
-        <SiteFooter />
       </div>
+      </Layout>
     </>
   );
 }

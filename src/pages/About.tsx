@@ -1,8 +1,7 @@
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 
 // ============================================================================
 // BRIDGE ABOUT US PAGE v3
@@ -2529,6 +2528,7 @@ export default function BRIDGEAboutPage() {
   const isMobile = useIsMobile();
 
   return (
+    <Layout>
     <div style={{ fontFamily: "DM Sans, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
 
 
@@ -2539,14 +2539,13 @@ export default function BRIDGEAboutPage() {
         .header-icon:hover svg { stroke: #1B4D3E !important; }
       `}</style>
 
-      <SiteHeader />
       <HeroSection isMobile={isMobile} />
       <VisionSection isMobile={isMobile} />
       <WhatWeDoSection isMobile={isMobile} />
       <ThreeGapsSection isMobile={isMobile} />
       <BridgeToImpactSection isMobile={isMobile} />
       <CTASection isMobile={isMobile} />
-      <SiteFooter />
     </div>
+    </Layout>
   );
 }

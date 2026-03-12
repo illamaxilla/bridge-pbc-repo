@@ -22,45 +22,15 @@ export default function ReportViewer({
   const navigate = useNavigate();
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
+    <div className="relative w-full h-screen overflow-hidden">
       {/* Floating top bar */}
       <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 10,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "10px 20px",
-          background: "rgba(27, 77, 62, 0.92)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-        }}
+        className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-5 py-2.5 bg-[rgba(27,77,62,0.92)] backdrop-blur-[12px] border-b border-[rgba(255,255,255,0.08)]"
       >
         {/* Left: back button */}
         <button
           onClick={() => navigate(backTo)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            background: "rgba(255,255,255,0.1)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "6px",
-            padding: "6px 14px",
-            cursor: "pointer",
-            color: "#fff",
-            fontSize: "12px",
-            fontWeight: "600",
-            fontFamily: "Inter, sans-serif",
-            transition: "background 0.15s",
-          }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.18)"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)"; }}
+          className="flex items-center gap-1.5 bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.12)] rounded-[6px] px-3.5 py-1.5 cursor-pointer text-white text-xs font-semibold font-[Inter,sans-serif] transition-[background] duration-150 hover:bg-[rgba(255,255,255,0.18)]"
         >
           <ArrowLeft size={13} />
           {backLabel}
@@ -68,20 +38,7 @@ export default function ReportViewer({
 
         {/* Center: title */}
         <span
-          style={{
-            position: "absolute",
-            left: "50%",
-            transform: "translateX(-50%)",
-            fontSize: "12px",
-            fontWeight: "600",
-            color: "rgba(255,255,255,0.7)",
-            fontFamily: "Inter, sans-serif",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            maxWidth: "40%",
-            pointerEvents: "none",
-          }}
+          className="absolute left-1/2 -translate-x-1/2 text-xs font-semibold text-[rgba(255,255,255,0.7)] font-[Inter,sans-serif] whitespace-nowrap overflow-hidden text-ellipsis max-w-[40%] pointer-events-none"
         >
           {title}
         </span>
@@ -89,21 +46,7 @@ export default function ReportViewer({
         {/* Right: close */}
         <button
           onClick={() => navigate(backTo)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "32px",
-            height: "32px",
-            borderRadius: "6px",
-            background: "rgba(255,255,255,0.1)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            cursor: "pointer",
-            color: "#fff",
-            transition: "background 0.15s",
-          }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.18)"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)"; }}
+          className="flex items-center justify-center w-8 h-8 rounded-[6px] bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.12)] cursor-pointer text-white transition-[background] duration-150 hover:bg-[rgba(255,255,255,0.18)]"
         >
           <X size={15} />
         </button>
@@ -113,13 +56,8 @@ export default function ReportViewer({
       <iframe
         src={src}
         title={title}
-        style={{
-          width: "100%",
-          height: "100%",
-          border: "none",
-          paddingTop: "52px",
-          boxSizing: "border-box",
-        }}
+        sandbox="allow-same-origin"
+        className="w-full h-full border-none pt-[52px] box-border"
       />
     </div>
   );

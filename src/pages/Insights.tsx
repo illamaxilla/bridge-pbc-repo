@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SiteHeaderShared from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 import {
   ArrowUpRight,
   ChevronRight,
@@ -896,8 +895,8 @@ export default function InsightsPage() {
   }, []);
 
   return (
+    <Layout>
     <div style={{ background: C.bg, fontFamily: "DM Sans,sans-serif" }}>
-      <SiteHeaderShared />
 
       {/* ── HERO ──────────────────────────────────────────── */}
       <section style={{ background: C.primary, padding: mobile ? "60px 20px 52px" : `80px ${PAD} 80px` }}>
@@ -2785,7 +2784,7 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <SiteFooter />
     </div>
+    </Layout>
   );
 }

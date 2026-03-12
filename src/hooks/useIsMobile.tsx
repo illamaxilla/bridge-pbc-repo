@@ -1,6 +1,7 @@
 import * as React from "react";
+import { layout } from "@/lib/theme";
 
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = layout.mobileBreakpoint;
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined);
