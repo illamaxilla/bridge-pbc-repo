@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 import { TrendingUp, MoreHorizontal } from "lucide-react";
 import { C } from "../constants";
 import { Card } from "../Card";
@@ -15,7 +15,9 @@ interface SparkCardProps {
   trendUp?: boolean;
 }
 
-export function SparkCard({ label, value, sublabel, iconBg, iconEl, s, trend = "+5.1%", trendUp = true }) {
+// React.memo: SparkCard is a leaf component rendered in a grid of metric cards.
+// Memo prevents re-renders when sibling cards or unrelated dashboard state changes.
+export const SparkCard = memo(function SparkCard({ label, value, sublabel, iconBg, iconEl, s, trend = "+5.1%", trendUp = true }) {
   const bars = Array.from({ length: 10 }, (_, i) => Math.round(30 + Math.sin(i * 1.1 + s.score * 0.04) * 30 + i * 3));
   const maxB = Math.max(...bars);
   return (
@@ -95,4 +97,4 @@ export function SparkCard({ label, value, sublabel, iconBg, iconEl, s, trend = "
       </div>
     </Card>
   );
-}
+});

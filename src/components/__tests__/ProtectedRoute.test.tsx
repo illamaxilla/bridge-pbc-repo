@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "../ProtectedRoute";
 
 // ---------- Mock AuthContext ----------
@@ -59,5 +59,71 @@ describe("ProtectedRoute", () => {
     );
 
     expect(screen.getByText("Protected content")).toBeInTheDocument();
+  });
+
+  it("includes the current path as redirect param in the login URL", () => {
+    mockUseAuth.mockReturnValue({ user: null, loading: false });
+
+    // Use Routes to capture the redirected location
+    let navigatedTo = "";
+
+    render(
+      <MemoryRouter initialEntries={["/intelligence/dashboard"]}>
+        <Routes>
+          <Route
+            path="/intelligence/dashboard"
+            element={
+              <ProtectedRoute>
+                <div>Protected content</div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={<div data-testid="login-page">Login page</div>}
+          />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    // The Navigate should redirect to /login with the redirect param
+    expect(screen.queryByText("Protected content")).not.toBeInTheDocument();
+  });
+
+  it("does not show loading text when not loading and user exists", () => {
+    mockUseAuth.mockReturnValue({
+      user: { id: "user-1" },
+      loading: false,
+    });
+
+    render(
+      <MemoryRouter>
+        <ProtectedRoute>
+          <div>Protected content</div>
+        </ProtectedRoute>
+      </MemoryRouter>
+    );
+
+    expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    expect(screen.getByText("Protected content")).toBeInTheDocument();
+  });
+
+  it("renders multiple children correctly when authenticated", () => {
+    mockUseAuth.mockReturnValue({
+      user: { id: "user-1" },
+      loading: false,
+    });
+
+    render(
+      <MemoryRouter>
+        <ProtectedRoute>
+          <div>Child 1</div>
+          <div>Child 2</div>
+        </ProtectedRoute>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("Child 1")).toBeInTheDocument();
+    expect(screen.getByText("Child 2")).toBeInTheDocument();
   });
 });

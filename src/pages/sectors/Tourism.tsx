@@ -9,6 +9,7 @@ import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
 import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
+import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -1322,210 +1323,6 @@ const ValueChainSectionPremium = () => {
         )}
       </div>
     </section>
-  );
-};
-
-// ============================================================================
-// SOLUTIONS SECTION
-// ============================================================================
-
-const SolutionsSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  const [activeTier, setActiveTier] = useState(isMobile ? 1 : "all");
-  const [solScrollIdx, setSolScrollIdx] = useState(0);
-  const solScrollRef = React.useRef(null);
-  const tiers = [
-    { key: "all", label: "All" },
-    { key: 1, label: "Flagship" },
-    { key: 2, label: "Growth" },
-    { key: 3, label: "Strategic" },
-  ];
-  const filtered = activeTier === "all" ? sector.solutions : sector.solutions.filter((s) => s.tier === activeTier);
-
-  const handleSolScroll = () => {
-    const el = solScrollRef.current;
-    if (!el || filtered.length === 0) return;
-    const cardW = el.scrollWidth / filtered.length;
-    const idx = Math.round(el.scrollLeft / cardW);
-    setSolScrollIdx(Math.min(idx, filtered.length - 1));
-  };
-
-  const scrollToSolCard = (idx) => {
-    const el = solScrollRef.current;
-    if (!el || filtered.length === 0) return;
-    const cardW = el.scrollWidth / filtered.length;
-    el.scrollTo({ left: cardW * idx, behavior: "smooth" });
-    setSolScrollIdx(idx);
-  };
-
-  return (
-    <section style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "80px 80px" }}>
-      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <div style={{ marginBottom: isMobile ? "24px" : "40px" }}>
-          <span
-            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-5 px-5 py-[10px]"
-            style={{
-              backgroundColor: "rgba(184,217,53,0.15)",
-              color: colors.accent,
-            }}
-          >
-            The Pathway to Impact
-          </span>
-          <h2
-            className="font-[Inter,sans-serif] font-light tracking-[-0.5px] leading-[1.2] mt-0 mb-4 max-w-[900px]"
-            style={{
-              fontSize: isMobile ? "28px" : "42px",
-              color: colors.white,
-            }}
-          >
-            Ventures That Build <span className="font-semibold" style={{ color: colors.accent }}>Lasting Value</span>
-          </h2>
-          <div
-            className="gap-10"
-            style={{
-              display: isMobile ? "block" : "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-            }}
-          >
-            <p
-              className="font-[Inter,sans-serif] text-white/60 max-w-[580px] leading-[1.65]"
-              style={{
-                fontSize: isMobile ? "15px" : "16px",
-                margin: isMobile ? "0 0 20px 0" : 0,
-              }}
-            >
-              Each venture is a bridge from insight to investment to measurable public benefit — prioritized by impact,
-              feasibility, and alignment with Ghana's unique diaspora tourism advantage.
-            </p>
-            <div className="inline-flex gap-1 shrink-0 justify-end ml-auto rounded-full p-1 border border-[rgba(255,255,255,0.15)]">
-              {tiers.map((t) => (
-                <button
-                  key={t.key}
-                  onClick={() => {
-                    setActiveTier(t.key);
-                    setSolScrollIdx(0);
-                  }}
-                  className="border-none rounded-full text-[13px] font-[Inter,sans-serif] cursor-pointer transition-all duration-200 px-[18px] py-2"
-                  style={{
-                    backgroundColor: activeTier === t.key ? colors.accent : "transparent",
-                    color: activeTier === t.key ? colors.primary : "rgba(255,255,255,0.6)",
-                    fontWeight: activeTier === t.key ? "700" : "500",
-                  }}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div
-          ref={solScrollRef}
-          onScroll={handleSolScroll}
-          className={isMobile ? "hide-scrollbar" : ""}
-          style={
-            isMobile
-              ? {
-                  display: "flex",
-                  gap: "12px",
-                  overflowX: "auto",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                  margin: "0 -20px",
-                  padding: "0 20px 8px",
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                }
-              : {
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "24px",
-                }
-          }
-        >
-          {filtered.map((solution, i) => (
-            <div
-              key={i}
-              className={cn(isMobile && "min-w-[80%] max-w-[80%] shrink-0 snap-start")}
-            >
-              <SolutionCard solution={solution} />
-            </div>
-          ))}
-        </div>
-
-        {isMobile && (
-          <div className="flex justify-center gap-2 mt-4">
-            {filtered.map((_, i) => (
-              <div
-                key={i}
-                onClick={() => scrollToSolCard(i)}
-                className="h-2 rounded cursor-pointer transition-all duration-300"
-                style={{
-                  width: i === solScrollIdx ? "24px" : "8px",
-                  backgroundColor: i === solScrollIdx ? colors.accent : "rgba(255,255,255,0.2)",
-                }}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
-  );
-};
-
-const SolutionCard = ({ solution }) => {
-  const tierLabels = { 1: "FLAGSHIP", 2: "GROWTH", 3: "STRATEGIC" };
-  return (
-    <div
-      className="rounded-[20px] p-7 flex flex-col h-full"
-      style={{
-        backgroundColor: colors.white,
-        border: `1px solid ${colors.line}`,
-      }}
-    >
-      <div className="flex items-center justify-between mb-4">
-        <span
-          className="rounded-[20px] text-[11px] font-bold font-[Inter,sans-serif] px-3 py-1"
-          style={{
-            backgroundColor: colors.accentLight,
-            color: colors.primary,
-          }}
-        >
-          {tierLabels[solution.tier] || "VENTURE"}
-        </span>
-        <span className="font-[Poppins,sans-serif] text-[22px] font-bold" style={{ color: colors.primary }}>
-          {solution.capital}
-        </span>
-      </div>
-      <h3
-        className="font-[Inter,sans-serif] text-[18px] font-semibold mt-0 mb-[10px] min-h-[44px]"
-        style={{ color: colors.dark }}
-      >
-        {solution.name}
-      </h3>
-      <p className="font-[Inter,sans-serif] text-[14px] text-[#666] leading-[1.6] mt-0 mb-4 flex-1 min-h-[67px]">
-        {solution.description}
-      </p>
-      <div className="flex items-center gap-2 pt-4" style={{ borderTop: `1px solid ${colors.line}` }}>
-        <Check size={14} strokeWidth={2.5} color={colors.accent} />
-        <span className="font-[Inter,sans-serif] text-[13px] text-[#888]">{solution.impact}</span>
-      </div>
-      <div className="flex items-center justify-between mt-3">
-        <div className="w-[60px] h-1 rounded-sm overflow-hidden" style={{ backgroundColor: colors.line }}>
-          <div
-            className="h-full rounded-sm"
-            style={{
-              width: `${(solution.score / 45) * 100}%`,
-              backgroundColor: colors.accent,
-            }}
-          />
-        </div>
-        <span className="font-[Inter,sans-serif] text-[11px] text-[#bbb]">
-          Score: {solution.score}/45
-        </span>
-      </div>
-    </div>
   );
 };
 
@@ -3973,7 +3770,7 @@ export default function TourismHospitalitySectorPage() {
       <SectorHeroSection sector={sectorData} />
       <ProblemSection />
       <ValueChainSectionPremium />
-      <SolutionsSection sector={sectorData} />
+      <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Growth", tier: 2 }, { key: 3, label: "Strategic", tier: 3 }]} />
       <CompetitiveLandscapeSection sector={sectorData} />
       <PolicyAlignmentSection />
       <ImpactSection />

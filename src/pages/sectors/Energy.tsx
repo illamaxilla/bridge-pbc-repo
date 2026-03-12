@@ -17,6 +17,7 @@ import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
 import SectorHeroSection from "@/components/sectors/SectorHeroSection";
+import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -1395,181 +1396,6 @@ const ValueChainSection = ({ sector }) => {
             />
           )}
         </div>
-      </div>
-    </section>
-  );
-};
-
-// ============================================================================
-// SOLUTIONS SECTION (Pathways to Impact)
-// ============================================================================
-
-const SolutionsSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  const [activeTier, setActiveTier] = useState("all");
-  const [page, setPage] = useState(0);
-  const PAGE_SIZE = 9;
-
-  const tiers = [
-    { key: "all", label: "All" },
-    { key: 1, label: "Flagship" },
-    { key: 2, label: "Scaling" },
-    { key: 3, label: "Emerging" },
-  ];
-
-  const filtered = activeTier === "all" ? sector.solutions : sector.solutions.filter((s) => s.tier === activeTier);
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-  const pageItems = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
-
-  const handleTierChange = (key) => {
-    setActiveTier(key);
-    setPage(0);
-  };
-
-  return (
-    <section id="solutions" style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}>
-      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <span
-          className="inline-block bg-white/[0.08] rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 border border-white/15"
-          style={{ color: colors.accent, padding: "10px 20px" }}
-        >
-          Pathways to Impact
-        </span>
-
-        <h2
-          className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px]"
-          style={{
-            fontSize: isMobile ? "28px" : "42px",
-            color: colors.white,
-            margin: "0 0 16px 0",
-          }}
-        >
-          Ventures That Build <span className="font-semibold" style={{ color: colors.accent }}>Lasting Value</span>
-        </h2>
-
-        <div className="flex justify-between items-end flex-wrap gap-4 mb-8">
-          <p className="font-[Inter,sans-serif] text-[16px] leading-[1.65] text-white/60 max-w-[680px] m-0">
-            18 identified ventures — each one a bridge from insight to investment to measurable public benefit across
-            Ghana's energy landscape.
-          </p>
-
-          {/* Tier Filters */}
-          <div className="flex gap-[6px] shrink-0 border border-white/15 rounded-full p-1">
-            {tiers.map((tier) => (
-              <button
-                key={tier.key}
-                onClick={() => handleTierChange(tier.key)}
-                className="border-none rounded-full text-[12px] font-[Inter,sans-serif] cursor-pointer transition-all duration-200"
-                style={{
-                  backgroundColor: activeTier === tier.key ? colors.accent : "transparent",
-                  color: activeTier === tier.key ? colors.primary : "rgba(255,255,255,0.7)",
-                  padding: "6px 16px",
-                  fontWeight: activeTier === tier.key ? "700" : "500",
-                }}
-              >
-                {tier.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* 3×3 Card Grid / Mobile scroll */}
-        <div
-          style={
-            isMobile
-              ? {
-                  display: "flex",
-                  gap: "12px",
-                  overflowX: "auto",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                  paddingBottom: "8px",
-                  margin: "0 -20px",
-                  padding: "0 20px 8px",
-                  msOverflowStyle: "none",
-                  scrollbarWidth: "none",
-                }
-              : {
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "16px",
-                  minHeight: "540px",
-                  alignItems: "start",
-                }
-          }
-        >
-          {pageItems.map((solution, i) => (
-            <div
-              key={`${solution.tier}-${solution.score}-${i}`}
-              className="bg-white rounded-2xl p-6 flex flex-col"
-              style={isMobile ? { minWidth: "280px", maxWidth: "280px", flexShrink: 0, scrollSnapAlign: "start" } : {}}
-            >
-              <div className="flex justify-between items-center mb-3">
-                <span
-                  className="rounded-full text-[10px] font-bold uppercase tracking-[0.5px]"
-                  style={{
-                    backgroundColor:
-                      solution.tier === 1
-                        ? "rgba(184,217,53,0.15)"
-                        : solution.tier === 2
-                          ? "rgba(27,77,62,0.07)"
-                          : "rgba(0,0,0,0.04)",
-                    color: solution.tier === 1 ? colors.primary : solution.tier === 2 ? colors.primary : "#666",
-                    padding: "5px 14px",
-                  }}
-                >
-                  {solution.tier === 1 ? "Flagship" : solution.tier === 2 ? "Scaling" : "Emerging"}
-                </span>
-                <span
-                  className="font-[Poppins,sans-serif] text-[14px] font-bold"
-                  style={{ color: colors.accent }}
-                >
-                  {solution.score}
-                </span>
-              </div>
-              <h4
-                className="font-[Inter,sans-serif] text-[16px] font-bold min-h-[40px]"
-                style={{ color: colors.primary, margin: "0 0 8px 0" }}
-              >
-                {solution.name}
-              </h4>
-              <p className="font-[Inter,sans-serif] text-[13px] leading-[1.6] text-[#666] flex-1 min-h-[84px]" style={{ margin: "0 0 16px 0" }}>
-                {solution.description}
-              </p>
-              <div
-                className="pt-3 flex justify-between items-center"
-                style={{ borderTop: `1px solid ${colors.line}` }}
-              >
-                <span
-                  className="font-[Poppins,sans-serif] text-[15px] font-bold"
-                  style={{ color: colors.primary }}
-                >
-                  {solution.capital}
-                </span>
-                <span className="font-[Inter,sans-serif] text-[11px] text-[#999] max-w-[180px] text-right">
-                  {solution.impact}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Pagination Dots */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-[6px] mt-8">
-            {Array.from({ length: totalPages }, (_, idx) => (
-              <div
-                key={idx}
-                onClick={() => setPage(idx)}
-                className="h-2 rounded cursor-pointer transition-all duration-300"
-                style={{
-                  width: page === idx ? "24px" : "8px",
-                  backgroundColor: page === idx ? colors.accent : "rgba(255,255,255,0.2)",
-                }}
-              />
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );
@@ -3854,7 +3680,7 @@ export default function EnergySectorPage() {
       <SectorHeroSection sector={sectorData} />
       <OpportunitySection sector={sectorData} />
       <ValueChainSection sector={sectorData} />
-      <SolutionsSection sector={sectorData} />
+      <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Scaling", tier: 2 }, { key: 3, label: "Emerging", tier: 3 }]} />
       <LandscapeSection sector={sectorData} />
       <GovernancePolicySection sector={sectorData} />
       <RippleEffectSection sector={sectorData} />

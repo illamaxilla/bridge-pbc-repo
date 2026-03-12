@@ -18,6 +18,7 @@ import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
 import SectorHeroSection from "@/components/sectors/SectorHeroSection";
+import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -1177,210 +1178,6 @@ const ValueChainSectionPremium = () => {
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
-
-// ============================================================================
-// SOLUTIONS SECTION
-// ============================================================================
-
-const SolutionCard = ({ solution, index }) => {
-  const tierColors = {
-    1: { bg: colors.accent, text: colors.primary, label: "Flagship" },
-    2: { bg: "rgba(184, 217, 53, 0.5)", text: colors.primary, label: "Scaling" },
-    3: { bg: "rgba(184, 217, 53, 0.25)", text: colors.primary, label: "Strategic" },
-  };
-  const tier = tierColors[solution.tier];
-
-  return (
-    <div
-      className="rounded-[20px] p-7 border-none flex flex-col transition-all duration-300"
-      style={{ backgroundColor: colors.white }}
-    >
-      {/* Tier + Capital row */}
-      <div className="flex justify-between items-center mb-4">
-        <span
-          className="rounded-[20px] text-[11px] font-bold font-[Inter,sans-serif] uppercase tracking-[0.5px] py-[5px] px-3"
-          style={{ backgroundColor: tier.bg, color: tier.text }}
-        >
-          Tier {solution.tier} · {tier.label}
-        </span>
-        <span
-          className="font-[Poppins,sans-serif] text-[16px] font-bold"
-          style={{ color: colors.primary }}
-        >
-          {solution.capital}
-        </span>
-      </div>
-
-      {/* Title */}
-      <h3
-        className="font-[Inter,sans-serif] text-[18px] font-semibold leading-[1.3] min-h-[24px] mt-0 mb-3"
-        style={{ color: colors.primary }}
-      >
-        {solution.name}
-      </h3>
-
-      {/* Description */}
-      <p className="font-[Inter,sans-serif] text-[14px] text-[#666] leading-[1.6] mt-0 mb-5 flex-1">
-        {solution.description}
-      </p>
-
-      {/* Impact container */}
-      <div
-        className="rounded-xl bg-[rgba(27,77,62,0.06)] py-[14px] px-4 border border-[rgba(27,77,62,0.1)]"
-      >
-        <div className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[1px] text-[#999] mb-[5px]">
-          Expected Impact
-        </div>
-        <div
-          className="font-[Inter,sans-serif] text-[13px] font-semibold whitespace-nowrap"
-          style={{ color: colors.primary }}
-        >
-          {solution.impact}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SolutionsSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  const [activeTier, setActiveTier] = useState("all");
-
-  const tierFilters = [
-    { key: "all", label: "All Ventures" },
-    { key: 1, label: "Flagship" },
-    { key: 2, label: "Scaling" },
-    { key: 3, label: "Strategic" },
-  ];
-
-  const filteredSolutions =
-    activeTier === "all" ? sector.solutions : sector.solutions.filter((s) => s.tier === activeTier);
-
-  return (
-    <section
-      style={{
-        backgroundColor: colors.primary,
-        padding: isMobile ? "60px 20px" : "100px 80px",
-      }}
-    >
-      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        {/* Header + Filter row */}
-        <div
-          style={{
-            display: isMobile ? "block" : "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            marginBottom: isMobile ? "32px" : "60px",
-          }}
-        >
-          <div className="flex-1" style={{ marginBottom: isMobile ? "24px" : 0 }}>
-            <span
-              className="rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] px-5 py-[10px]"
-              style={{
-                backgroundColor: "rgba(184, 217, 53, 0.15)",
-                color: colors.accent,
-              }}
-            >
-              The Pathway to Impact
-            </span>
-            <h2
-              className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[900px]"
-              style={{
-                fontSize: isMobile ? "28px" : "42px",
-                color: colors.white,
-                margin: "24px 0 20px 0",
-              }}
-            >
-              Ventures That Build Lasting <span className="font-semibold" style={{ color: colors.accent }}>Human Capital</span>
-            </h2>
-            <p
-              className="font-[Inter,sans-serif] leading-[1.65] text-white/60 max-w-[700px] m-0"
-              style={{ fontSize: isMobile ? "15px" : "16px" }}
-            >
-              Nine ventures — each one a bridge from insight to investment to measurable public benefit — leveraging
-              diaspora expertise, TVET partnerships, and BRIDGE's integrated portfolio to connect learning with earning.
-            </p>
-          </div>
-
-          {/* Right: Filter container */}
-          <div
-            className="flex shrink-0"
-            style={{ justifyContent: isMobile ? "flex-start" : "flex-end" }}
-          >
-            <div className="inline-flex gap-1 p-1 rounded-full border border-white/15">
-              {tierFilters.map((f) => {
-                const isActive = activeTier === f.key;
-                const count =
-                  f.key === "all" ? sector.solutions.length : sector.solutions.filter((s) => s.tier === f.key).length;
-                if (count === 0) return null;
-                return (
-                  <button
-                    key={f.key}
-                    onClick={() => setActiveTier(String(f.key))}
-                    className="border-none rounded-full font-[Inter,sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap"
-                    style={{
-                      backgroundColor: isActive ? "rgba(255,255,255,0.12)" : "transparent",
-                      color: isActive ? colors.accent : "rgba(255,255,255,0.5)",
-                      padding: isMobile ? "6px 12px" : "6px 16px",
-                      fontSize: isMobile ? "11px" : "12px",
-                      fontWeight: isActive ? "700" : "500",
-                    }}
-                  >
-                    {f.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div
-          style={
-            isMobile
-              ? {
-                  display: "flex",
-                  gap: "12px",
-                  overflowX: "auto",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                  margin: "0 -20px",
-                  padding: "0 20px 8px",
-                }
-              : {
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "24px",
-                }
-          }
-        >
-          {filteredSolutions.map((solution, i) => (
-            <div
-              key={`${activeTier}-${i}`}
-              style={isMobile ? { minWidth: "80%", maxWidth: "80%", flexShrink: 0, scrollSnapAlign: "start" } : {}}
-            >
-              <SolutionCard solution={solution} index={i} />
-            </div>
-          ))}
-        </div>
-
-        {isMobile && (
-          <div className="flex justify-center gap-1.5 mt-4">
-            {filteredSolutions.map((_, i) => (
-              <div
-                key={i}
-                className="h-2 rounded cursor-pointer transition-all duration-300"
-                style={{
-                  width: i === 0 ? "24px" : "8px",
-                  backgroundColor: i === 0 ? colors.accent : "rgba(255,255,255,0.2)",
-                }}
-              />
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );
@@ -3921,7 +3718,7 @@ export default function EducationSkillsSectorPage() {
         {/* ★ PREMIUM VALUE CHAIN SECTION ★ */}
         <ValueChainSectionPremium />
 
-        <SolutionsSection sector={sectorData} />
+        <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All Ventures", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Scaling", tier: 2 }, { key: 3, label: "Strategic", tier: 3 }]} />
         <CompetitiveLandscapeSection sector={sectorData} />
         <PolicyAlignmentSection />
         <CrossSectorSection />
