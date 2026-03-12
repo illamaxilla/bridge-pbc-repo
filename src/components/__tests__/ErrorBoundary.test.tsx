@@ -41,14 +41,14 @@ describe("ErrorBoundary", () => {
     ).toBeInTheDocument();
   });
 
-  it('has a "Refresh Page" button in the error UI', () => {
+  it('has a "Try again" button in the error UI', () => {
     render(
       <ErrorBoundary>
         <ThrowingChild shouldThrow={true} />
       </ErrorBoundary>
     );
     expect(
-      screen.getByRole("button", { name: "Refresh Page" })
+      screen.getByRole("button", { name: "Try again" })
     ).toBeInTheDocument();
   });
 
