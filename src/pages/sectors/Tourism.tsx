@@ -4035,12 +4035,8 @@ const InvestmentCTASection = () => {
           </div>
         ) : (
           <div
-            style={{
-              display: "flex",
-              justifyContent: isMobile ? "center" : "flex-start",
-              gap: "12px",
-              marginBottom: "40px",
-            }}
+            className="flex gap-3 mb-10"
+            style={{ justifyContent: isMobile ? "center" : "flex-start" }}
           >
             {investmentAudiences.map((aud, idx) => {
               const isActive = activeAudience === idx;
@@ -4048,24 +4044,15 @@ const InvestmentCTASection = () => {
                 <button
                   key={aud.key}
                   onClick={() => setActiveAudience(idx)}
+                  className="flex items-center gap-2 px-5 py-[10px] rounded-full font-[Inter,sans-serif] text-[13px] cursor-pointer transition-all duration-[250ms] ease-in-out shrink-0"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "10px 20px",
-                    borderRadius: "50px",
                     border: isActive ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
                     backgroundColor: isActive ? colors.accentLight : "transparent",
                     color: isActive ? colors.primary : "#999",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
                     fontWeight: isActive ? "700" : "500",
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
-                    flexShrink: 0,
                   }}
                 >
-                  <span style={{ display: "flex", color: colors.primary, transition: "all 0.25s ease" }}>
+                  <span className="flex transition-all duration-[250ms] ease-in-out" style={{ color: colors.primary }}>
                     {aud.icon}
                   </span>
                   {aud.label}

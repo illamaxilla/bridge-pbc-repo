@@ -1653,12 +1653,7 @@ const ValueChainSectionPremium = () => {
                       {/* Play/Pause */}
                       <button
                         onClick={() => setIsPlaying(!isPlaying)}
-                        className="flex items-center gap-2 rounded-full cursor-pointer"
-                        style={{
-                          backgroundColor: "rgba(255,255,255,0.08)",
-                          border: "1px solid rgba(255,255,255,0.12)",
-                          padding: "6px 14px",
-                        }}
+                        className="flex items-center gap-2 rounded-full cursor-pointer bg-white/[0.08] border border-white/[0.12] py-1.5 px-3.5"
                       >
                         <div
                           className="w-[22px] h-[22px] rounded-full flex items-center justify-center"

@@ -2864,38 +2864,21 @@ function MembersPage({ isMobile }) {
           >
             {/* Background watermark circle */}
             <div
+              className="absolute rounded-full"
               style={{
-                position: "absolute",
                 top: -16,
                 right: -16,
                 width: 72,
                 height: 72,
-                borderRadius: "50%",
                 background: s.accent + "12",
               }}
             />
 
             {/* Top row: icon + trend chip */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                marginBottom: 14,
-                position: "relative",
-              }}
-            >
+            <div className="flex justify-between items-start mb-[14px] relative">
               <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 10,
-                  background: s.accent + "20",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: s.accent,
-                }}
+                className="w-9 h-9 rounded-[10px] flex items-center justify-center"
+                style={{ background: s.accent + "20", color: s.accent }}
               >
                 {s.icon}
               </div>

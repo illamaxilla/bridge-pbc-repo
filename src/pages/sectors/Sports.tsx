@@ -4611,7 +4611,7 @@ const InvestmentCTASection = ({ sector }) => {
           }}
         >
           {/* LEFT COLUMN */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="flex flex-col">
             {/* Headline (Desktop Only) */}
             {!isMobile && (
               <h3
@@ -4695,7 +4695,7 @@ const InvestmentCTASection = ({ sector }) => {
                   >
                     {stat.label}
                   </div>
-                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: "10px", color: "#888" }}>{stat.detail}</div>
+                  <div className="font-[Inter,sans-serif] text-[10px] text-[#888]">{stat.detail}</div>
                 </div>
               ))}
             </div>
