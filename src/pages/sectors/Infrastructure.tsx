@@ -4126,7 +4126,7 @@ export default function InfrastructureSectorPage() {
   const isMobile = useIsMobile();
   return (
     <Layout>
-    <div style={{ fontFamily: "Helvetica, Arial, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
+    <div className="font-[Helvetica,Arial,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
 
 
       {/* Production CSS: Animations & Hover States */}
@@ -4190,7 +4190,7 @@ export default function InfrastructureSectorPage() {
       <ImpactSection />
       <FinalCTASection />
       <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+        <div className="h-px bg-white/[0.08]" />
       </div>
     </div>
     </Layout>

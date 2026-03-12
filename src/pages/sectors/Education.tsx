@@ -3068,61 +3068,32 @@ const CrossSectorSection = () => {
                 {/* Column 3: Linked Ventures (collapsible on mobile) */}
                 {(!isMobile || showMoreRipple) && (
                   <div>
-                    <h4
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        textTransform: "uppercase",
-                        letterSpacing: "1px",
-                        color: colors.accent,
-                        margin: "0 0 16px 0",
-                      }}
-                    >
+                    <h4 className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mt-0 mb-4" style={{ color: colors.accent }}>
                       Linked Ventures
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {pathways[activeNode].bridgeVentures.map((v, i) => (
                         <div
                           key={i}
+                          className="flex justify-between items-center rounded-xl"
                           style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
                             padding: "14px 18px",
-                            borderRadius: "12px",
                             backgroundColor: "rgba(184, 217, 53, 0.1)",
                             border: "1px solid rgba(184, 217, 53, 0.15)",
                           }}
                         >
-                          <span
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "14px",
-                              fontWeight: "600",
-                              color: colors.white,
-                            }}
-                          >
+                          <span className="font-[Inter,sans-serif] text-[14px] font-semibold" style={{ color: colors.white }}>
                             {v}
                           </span>
-                          <span style={{ color: colors.accent, fontSize: "16px" }}>→</span>
+                          <span className="text-[16px]" style={{ color: colors.accent }}>→</span>
                         </div>
                       ))}
                     </div>
                     <a
                       href={SECTOR_ROUTES[pathways[activeNode].name] || "/sectors"}
                       onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[pathways[activeNode].name] || "/sectors"); }}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        marginTop: "20px",
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        color: colors.accent,
-                        textDecoration: "none",
-                      }}
+                      className="inline-flex items-center gap-2 mt-5 font-[Inter,sans-serif] text-[14px] font-semibold no-underline"
+                      style={{ color: colors.accent }}
                     >
                       Explore {pathways[activeNode].name} Sector →
                     </a>
@@ -3134,23 +3105,8 @@ const CrossSectorSection = () => {
               {isMobile && (
                 <button
                   onClick={() => setShowMoreRipple(!showMoreRipple)}
-                  style={{
-                    width: "100%",
-                    padding: "14px",
-                    backgroundColor: "transparent",
-                    border: "1px solid rgba(255,255,255,0.15)",
-                    borderRadius: "12px",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    color: colors.white,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    marginTop: "16px",
-                  }}
+                  className="w-full p-[14px] bg-transparent border border-white/15 rounded-xl font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer flex items-center justify-center gap-2 mt-4"
+                  style={{ color: colors.white }}
                 >
                   {showMoreRipple ? "Show less" : "Show more details"}
                   <ChevronDown size={14} strokeWidth={2} color="white" style={{

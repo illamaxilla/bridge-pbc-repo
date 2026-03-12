@@ -3729,17 +3729,12 @@ const MetricRow = ({ item, animate, delay, index, isMobile }) => {
           </div>
         </div>
         <div
-          style={{
-            fontSize: "14px",
-            fontWeight: "700",
-            color: colors.primary,
-            marginBottom: "3px",
-            fontFamily: "Inter, sans-serif",
-          }}
+          className="text-[14px] font-bold font-[Inter,sans-serif] mb-[3px]"
+          style={{ color: colors.primary }}
         >
           {item.label}
         </div>
-        <div style={{ fontSize: "13px", color: "#666", lineHeight: "1.5", fontFamily: "Inter, sans-serif" }}>
+        <div className="text-[13px] text-[#666] leading-[1.5] font-[Inter,sans-serif]">
           {item.description}
         </div>
       </div>
@@ -3748,79 +3743,51 @@ const MetricRow = ({ item, animate, delay, index, isMobile }) => {
 
   return (
     <div
+      className="grid items-center transition-opacity duration-[400ms]"
       style={{
-        display: "grid",
         gridTemplateColumns: "200px 1fr 200px",
         gap: "32px",
-        alignItems: "center",
         padding: "24px 28px",
         backgroundColor: index % 2 === 0 ? colors.white : "transparent",
         opacity: visible ? 1 : 0,
-        transition: "opacity 0.4s ease",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div className="flex justify-between items-start">
         <div
-          style={{
-            fontSize: "36px",
-            fontWeight: "700",
-            color: colors.primary,
-            fontFamily: "Poppins, sans-serif",
-            letterSpacing: "-1px",
-            lineHeight: "1",
-          }}
+          className="text-[36px] font-bold font-[Poppins,sans-serif] -tracking-[1px] leading-none"
+          style={{ color: colors.primary }}
         >
           {formatValue()}
         </div>
         <div
-          style={{
-            fontSize: "10px",
-            fontWeight: "700",
-            color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-            marginTop: "4px",
-          }}
+          className="text-[10px] font-bold uppercase tracking-[0.5px] mt-1"
+          style={{ color: colors.accent }}
         >
           {item.trend}
         </div>
       </div>
       <div>
         <div
-          style={{
-            fontSize: "15px",
-            fontWeight: "700",
-            color: colors.primary,
-            marginBottom: "4px",
-            fontFamily: "Inter, sans-serif",
-          }}
+          className="text-[15px] font-bold font-[Inter,sans-serif] mb-1"
+          style={{ color: colors.primary }}
         >
           {item.label}
         </div>
-        <div style={{ fontSize: "13px", color: "#666", lineHeight: "1.5", fontFamily: "Inter, sans-serif" }}>
+        <div className="text-[13px] text-[#666] leading-[1.5] font-[Inter,sans-serif]">
           {item.description}
         </div>
       </div>
       <div
+        className="rounded-[10px]"
         style={{
           backgroundColor: index % 2 === 0 ? colors.background : "rgba(27,77,62,0.04)",
-          borderRadius: "10px",
           padding: "10px 16px",
         }}
       >
-        <div
-          style={{
-            fontSize: "9px",
-            fontWeight: "700",
-            color: "#aaa",
-            textTransform: "uppercase",
-            letterSpacing: "1px",
-            marginBottom: "2px",
-          }}
-        >
+        <div className="text-[9px] font-bold text-[#aaa] uppercase tracking-[1px] mb-[2px]">
           Linked Ventures
         </div>
-        <div style={{ fontSize: "11px", fontWeight: "500", color: colors.primary, lineHeight: "1.4" }}>
+        <div className="text-[11px] font-medium leading-[1.4]" style={{ color: colors.primary }}>
           {item.ventures}
         </div>
       </div>

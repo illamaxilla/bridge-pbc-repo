@@ -1803,42 +1803,26 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                 const total = liveVotes.reduce((a, b) => a + b, 0);
                 return (
                   <div
+                    className="rounded-2xl overflow-hidden"
                     style={{
                       background: C.white,
                       border: `1.5px solid ${C.line}`,
-                      borderRadius: 16,
-                      overflow: "hidden",
                       boxShadow: C.cardShadow,
                     }}
                   >
                     <div style={{ padding: "20px 24px 16px", borderBottom: `1px solid ${C.line}` }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-start",
-                          marginBottom: 12,
-                        }}
-                      >
+                      <div className="flex justify-between items-start mb-3">
                         <span
-                          style={{
-                            fontSize: 10,
-                            fontWeight: 700,
-                            letterSpacing: "1px",
-                            textTransform: "uppercase",
-                            color: C.primary,
-                            background: `${C.primary}10`,
-                            padding: "3px 10px",
-                            borderRadius: 6,
-                          }}
+                          className="text-[10px] font-bold tracking-[1px] uppercase py-[3px] px-[10px] rounded-md"
+                          style={{ color: C.primary, background: `${C.primary}10` }}
                         >
                           {poll.sector}
                         </span>
-                        <span style={{ fontSize: 11, color: C.muted, display: "flex", alignItems: "center", gap: 4 }}>
+                        <span className="text-[11px] flex items-center gap-1" style={{ color: C.muted }}>
                           <Clock size={11} /> Closes {poll.closes}
                         </span>
                       </div>
-                      <h3 style={{ fontSize: 15, fontWeight: 700, color: C.dark, margin: 0, lineHeight: 1.45 }}>
+                      <h3 className="text-[15px] font-bold m-0 leading-[1.45]" style={{ color: C.dark }}>
                         {poll.q}
                       </h3>
                     </div>

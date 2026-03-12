@@ -4494,7 +4494,7 @@ const InvestmentCTASection = () => {
 
   return (
     <section style={{ backgroundColor: colors.background, padding: isMobile ? "60px 0" : "100px 80px" }}>
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         <div
           style={{
             marginBottom: isMobile ? "32px" : "48px",
@@ -4503,48 +4503,26 @@ const InvestmentCTASection = () => {
           }}
         >
           <span
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Investment Thesis
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[820px] mt-0 mb-4"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
-              margin: "0 0 16px 0",
-              maxWidth: "820px",
             }}
           >
-            Every <span style={{ fontWeight: "600", color: colors.primary }}>Stakeholder</span> Has a Role in{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Industrial Growth</span>
+            Every <span className="font-semibold" style={{ color: colors.primary }}>Stakeholder</span> Has a Role in{" "}
+            <span className="font-semibold" style={{ color: colors.accent }}>Industrial Growth</span>
           </h2>
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "16px",
-              color: "#666",
-              lineHeight: "1.65",
-              margin: 0,
-              maxWidth: "700px",
-            }}
-          >
+          <p className="font-[Inter,sans-serif] text-[16px] text-[#666] leading-[1.65] m-0 max-w-[700px]">
             Investment isn't only capital — it's expertise, partnerships, policy, and vision. See how your role
             contributes to {sectorData.ventures} ventures across {sectorData.capitalRange} in opportunity.
           </p>
