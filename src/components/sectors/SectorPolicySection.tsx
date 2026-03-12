@@ -75,6 +75,7 @@ const CAT_BADGE: Record<string, { bg: string; border: string }> = {
 const CAT_LABELS: Record<string, string> = {
   funding: "Direct Funding",
   tax: "Tax & Regulatory",
+  regulatory: "Regulatory",
   infrastructure: "Infrastructure",
   partnerships: "Partnerships",
 };
@@ -320,11 +321,14 @@ export const SectorPolicySection: React.FC<SectorPolicySectionProps> = ({
   ctaLabel = "View Partnership Strategy",
   ctaHref = "/methodology",
   backgroundColor = colors.white,
+  categories: categoriesProp,
 }) => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("all");
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+  const resolvedCategories = categoriesProp || CATEGORIES;
 
   const filteredPolicies =
     activeCategory === "all"
