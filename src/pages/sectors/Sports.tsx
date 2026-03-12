@@ -4721,20 +4721,14 @@ const InvestmentCTASection = ({ sector }) => {
                     border: `1px solid ${colors.line}`,
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+                  <div className="flex flex-col gap-1 flex-1">
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-semibold"
+                      style={{ color: colors.primary }}
                     >
                       {path.bring}
                     </div>
-                    <div
-                      style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#777", lineHeight: "1.5" }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[12px] text-[#777] leading-[1.5]">
                       {path.get}
                     </div>
                   </div>
@@ -4800,7 +4794,7 @@ const InvestmentCTASection = ({ sector }) => {
               </div>
 
               {/* Tab Content Cards */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+              <div className="flex flex-col gap-[10px] flex-1">
                 {tabContent[activeTab].map((item, idx) => (
                   <div
                     key={idx}
@@ -4874,7 +4868,7 @@ const InvestmentCTASection = ({ sector }) => {
                   flexShrink: 0,
                 }}
               >
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)" }}>
+                <span className="font-[Inter,sans-serif] text-[13px] text-white/45">
                   Full financial model available
                 </span>
                 <a

@@ -4064,40 +4064,26 @@ const InvestmentCTASection = () => {
 
         {/* Content Grid */}
         <div
+          className="grid items-stretch"
           style={{
-            display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
             gap: isMobile ? "24px" : "48px",
-            alignItems: "stretch",
             padding: isMobile ? "0 20px" : 0,
           }}
         >
           {/* LEFT COLUMN */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="flex flex-col">
             {!isMobile && (
               <h3
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "32px",
-                  fontWeight: "300",
-                  lineHeight: "1.25",
-                  letterSpacing: "-0.3px",
-                  color: colors.primary,
-                  margin: "0 0 16px 0",
-                }}
+                className="font-[Inter,sans-serif] text-[32px] font-light leading-[1.25] tracking-[-0.3px] mt-0 mr-0 mb-4 ml-0"
+                style={{ color: colors.primary }}
               >
                 {activeAudienceData.headline}
               </h3>
             )}
             {!isMobile && (
               <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "15px",
-                  color: "#555",
-                  lineHeight: "1.7",
-                  margin: "0 0 24px 0",
-                }}
+                className="font-[Inter,sans-serif] text-[15px] text-[#555] leading-[1.7] mt-0 mr-0 mb-6 ml-0"
               >
                 {activeAudienceData.pitch}
               </p>

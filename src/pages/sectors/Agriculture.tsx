@@ -1675,12 +1675,7 @@ const ValueChainSectionPremium = () => {
                       {/* Jump-to stage dots — desktop only */}
                       {!isMobile && (
                         <div
-                          className="flex items-center gap-1.5 rounded-full"
-                          style={{
-                            backgroundColor: "rgba(255,255,255,0.06)",
-                            padding: "6px 10px",
-                            border: "1px solid rgba(255,255,255,0.08)",
-                          }}
+                          className="flex items-center gap-1.5 rounded-full bg-white/[0.06] py-1.5 px-2.5 border border-white/[0.08]"
                         >
                           {valueChainStages.map((s, i) => (
                             <button
@@ -4336,16 +4331,7 @@ const InvestmentThesisSection = () => {
             </h2>
 
             {!isMobile && (
-              <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "16px",
-                  color: "#666",
-                  lineHeight: "1.65",
-                  margin: "0",
-                  maxWidth: "700px",
-                }}
-              >
+              <p className="font-[Inter,sans-serif] text-base text-[#666] leading-[1.65] m-0 max-w-[700px]">
                 Investment isn't only capital — it's expertise, partnerships, policy, and vision. See how your role
                 contributes to 18 ventures across $12-22M in opportunity.
               </p>
@@ -4354,7 +4340,7 @@ const InvestmentThesisSection = () => {
 
           {/* Audience Selector */}
           {isMobile ? (
-            <div style={{ display: "flex", justifyContent: "center", gap: "12px", marginBottom: "12px" }}>
+            <div className="flex justify-center gap-3 mb-3">
               {investmentAudiences.map((a, idx) => {
                 const isActive = activeAudience === idx;
                 return (

@@ -2884,17 +2884,11 @@ function MembersPage({ isMobile }) {
               </div>
               {s.trendUp !== null ? (
                 <span
+                  className="text-[10px] font-bold py-[3px] px-2 rounded-[20px] flex items-center gap-[3px]"
                   style={{
-                    fontSize: 10,
-                    fontWeight: 700,
                     color: s.trendUp ? "#27AE60" : C.muted,
                     background: s.trendUp ? "#27AE6014" : C.bg,
                     border: `1px solid ${s.trendUp ? "#27AE6030" : C.line}`,
-                    padding: "3px 8px",
-                    borderRadius: 20,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 3,
                   }}
                 >
                   {s.trendUp ? "↑" : ""} {s.trend}

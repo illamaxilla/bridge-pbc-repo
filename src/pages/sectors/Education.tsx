@@ -3796,6 +3796,7 @@ const MetricRow = ({ item, index, animate }) => {
 
   return (
     <div
+      className="relative"
       style={{
         display: isMobile ? "flex" : "grid",
         flexDirection: isMobile ? "column" : undefined,
@@ -3805,23 +3806,13 @@ const MetricRow = ({ item, index, animate }) => {
         backgroundColor: index % 2 === 0 ? colors.white : "transparent",
         opacity: animate ? 1 : 0,
         transition: `opacity 0.4s ease ${index * 80}ms`,
-        position: "relative",
       }}
     >
       {/* Trend tag — top-right on mobile, inline on desktop */}
       {isMobile && (
         <div
-          style={{
-            position: "absolute",
-            top: "16px",
-            right: "16px",
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "10px",
-            fontWeight: "700",
-            color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-          }}
+          className="absolute top-4 right-4 font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px]"
+          style={{ color: colors.accent }}
         >
           {item.trend}
         </div>
@@ -3830,13 +3821,10 @@ const MetricRow = ({ item, index, animate }) => {
       {/* Col 1: Number + Trend */}
       <div>
         <div
+          className="font-[Poppins,sans-serif] font-bold tracking-[-1px] leading-[1.1]"
           style={{
-            fontFamily: "Poppins, sans-serif",
             fontSize: isMobile ? "28px" : "36px",
-            fontWeight: "700",
             color: colors.primary,
-            letterSpacing: "-1px",
-            lineHeight: "1.1",
           }}
         >
           {item.prefix}
@@ -3845,15 +3833,8 @@ const MetricRow = ({ item, index, animate }) => {
         </div>
         {!isMobile && (
           <div
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "10px",
-              fontWeight: "700",
-              color: colors.accent,
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-              marginTop: "4px",
-            }}
+            className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px] mt-1"
+            style={{ color: colors.accent }}
           >
             {item.trend}
           </div>
@@ -3863,24 +3844,12 @@ const MetricRow = ({ item, index, animate }) => {
       {/* Col 2: Label + Description */}
       <div>
         <div
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "15px",
-            fontWeight: "700",
-            color: colors.primary,
-            marginBottom: "4px",
-          }}
+          className="font-[Inter,sans-serif] text-[15px] font-bold mb-1"
+          style={{ color: colors.primary }}
         >
           {item.label}
         </div>
-        <div
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "13px",
-            color: "#666",
-            lineHeight: "1.5",
-          }}
-        >
+        <div className="font-[Inter,sans-serif] text-[13px] text-[#666] leading-[1.5]">
           {item.description}
         </div>
       </div>
@@ -3888,37 +3857,17 @@ const MetricRow = ({ item, index, animate }) => {
       {/* Col 3: Linked Ventures */}
       {!isMobile && (
         <div
+          className="rounded-[10px] py-[10px] px-4 flex flex-col justify-center"
           style={{
             backgroundColor: index % 2 === 0 ? colors.background : "rgba(27,77,62,0.04)",
-            borderRadius: "10px",
-            padding: "10px 16px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
           }}
         >
-          <div
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "9px",
-              fontWeight: "700",
-              color: "#aaa",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              marginBottom: "4px",
-            }}
-          >
+          <div className="font-[Inter,sans-serif] text-[9px] font-bold text-[#aaa] uppercase tracking-[1px] mb-1">
             Linked Ventures
           </div>
           <div
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "11px",
-              fontWeight: "500",
-              color: colors.primary,
-              lineHeight: "1.4",
-              whiteSpace: "nowrap",
-            }}
+            className="font-[Inter,sans-serif] text-[11px] font-medium leading-[1.4] whitespace-nowrap"
+            style={{ color: colors.primary }}
           >
             {item.ventures}
           </div>
