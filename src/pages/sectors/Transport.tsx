@@ -3340,26 +3340,21 @@ const ImpactSection = () => {
               <button
                 key={v}
                 onClick={() => switchView(v)}
+                className="rounded-full border-none cursor-pointer font-['DM_Sans',sans-serif] transition-all duration-200 ease-in-out whitespace-nowrap"
                 style={{
                   padding: isMobile ? "5px 10px" : "6px 16px",
-                  borderRadius: "50px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: "'DM Sans', sans-serif",
                   fontSize: isMobile ? "11px" : "12px",
                   fontWeight: view === v ? "700" : "500",
                   backgroundColor: view === v ? colors.white : "transparent",
                   color: view === v ? colors.primary : "#999",
                   boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
-                  transition: "all 0.2s ease",
-                  whiteSpace: "nowrap",
                 }}
               >
                 {v === "metrics" ? (isMobile ? "Metric" : "By Metric") : isMobile ? "Stakeholder" : "By Stakeholder"}
               </button>
             ))}
           </div>
-          <div style={{ width: "1px", height: "20px", backgroundColor: colors.line, flexShrink: 0 }} />
+          <div className="w-px h-5 shrink-0" style={{ backgroundColor: colors.line }} />
           {view === "metrics"
             ? metrics.map((m, i) => (
                 <button

@@ -4079,24 +4079,14 @@ function HomePageContent({
         }}
       >
         <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: isMobile ? 16 : 24,
-          }}
+          className="flex justify-between items-center"
+          style={{ marginBottom: isMobile ? 16 : 24 }}
         >
           <div>
             <SectionLabel>Goals & Milestones</SectionLabel>
             <h2
-              style={{
-                fontFamily: font.display,
-                fontSize: isMobile ? 20 : 24,
-                fontWeight: 700,
-                color: C.primary,
-                margin: 0,
-                letterSpacing: "-0.3px",
-              }}
+              className="font-[DM_Sans,sans-serif] font-bold m-0 tracking-[-0.3px]"
+              style={{ fontSize: isMobile ? 20 : 24, color: C.primary }}
             >
               Your Contribution <span style={{ color: C.accent }}>Roadmap</span>
             </h2>
