@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { C, M } from "./constants";
-import type { ReactNode, CSSProperties, ComponentType } from "react";
+import type { ReactNode, CSSProperties } from "react";
 
 /* ─── Tag Badge ─── */
 export interface TProps {
@@ -232,7 +232,7 @@ export const Tip = ({ active, payload, label }: TipProps) => {
 /* ─── SectorHeader (dark bg) ─── */
 export interface SectorHeaderProps {
   s: {
-    icon: ComponentType<{ size?: number; color?: string }>;
+    icon: any;
     short: string;
     tag: string;
     score: number;
@@ -284,7 +284,7 @@ export function SectorHeader({ s }: SectorHeaderProps) {
 export interface MSectionProps {
   title: string;
   subtitle?: string;
-  icon?: ComponentType<{ size?: number; color?: string }>;
+  icon?: any;
   accent?: boolean;
   defaultOpen?: boolean;
   children?: ReactNode;
@@ -395,7 +395,7 @@ export function MSection({ title, subtitle, icon: Icon, accent = false, defaultO
 
 /* ─── MCard (mobile section card) ─── */
 export interface MCardProps {
-  icon?: ComponentType<{ size?: number; color?: string }>;
+  icon?: any;
   title?: string;
   badge?: string;
   badgeLime?: boolean;
