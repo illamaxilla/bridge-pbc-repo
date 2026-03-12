@@ -3360,19 +3360,14 @@ const ImpactSection = () => {
                 <button
                   key={m.category}
                   onClick={() => switchCategory(i)}
+                  className="rounded-full cursor-pointer font-['DM_Sans',sans-serif] transition-all duration-200 ease-in-out whitespace-nowrap shrink-0"
                   style={{
                     padding: isMobile ? "5px 10px" : "6px 16px",
-                    borderRadius: "50px",
-                    cursor: "pointer",
-                    fontFamily: "'DM Sans', sans-serif",
                     fontSize: isMobile ? "11px" : "12px",
                     fontWeight: activeCategory === i ? "700" : "500",
                     backgroundColor: activeCategory === i ? colors.accentLight : "transparent",
                     border: activeCategory === i ? `1.5px solid ${colors.accent}` : "none",
                     color: activeCategory === i ? colors.primary : "#999",
-                    transition: "all 0.2s ease",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
                   }}
                 >
                   {m.category}
@@ -3382,19 +3377,14 @@ const ImpactSection = () => {
                 <button
                   key={s.title}
                   onClick={() => setActiveStakeholder(i)}
+                  className="rounded-full cursor-pointer font-['DM_Sans',sans-serif] transition-all duration-200 ease-in-out whitespace-nowrap shrink-0"
                   style={{
                     padding: isMobile ? "5px 10px" : "6px 16px",
-                    borderRadius: "50px",
-                    cursor: "pointer",
-                    fontFamily: "'DM Sans', sans-serif",
                     fontSize: isMobile ? "11px" : "12px",
                     fontWeight: activeStakeholder === i ? "700" : "500",
                     backgroundColor: activeStakeholder === i ? colors.accentLight : "transparent",
                     border: activeStakeholder === i ? `1.5px solid ${colors.accent}` : "none",
                     color: activeStakeholder === i ? colors.primary : "#999",
-                    transition: "all 0.2s ease",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
                   }}
                 >
                   {s.title.split(" ")[1]}
@@ -3405,12 +3395,8 @@ const ImpactSection = () => {
         {/* Content */}
         {view === "metrics" ? (
           <div
-            style={{
-              backgroundColor: colors.background,
-              borderRadius: "20px",
-              border: `2px solid ${colors.primary}`,
-              overflow: "hidden",
-            }}
+            className="rounded-[20px] overflow-hidden"
+            style={{ backgroundColor: colors.background, border: `2px solid ${colors.primary}` }}
           >
             {currentMetrics.items.map((item, idx) => (
               <MetricRow key={`${activeCategory}-${idx}`} item={item} idx={idx} animate={animate} isMobile={isMobile} />

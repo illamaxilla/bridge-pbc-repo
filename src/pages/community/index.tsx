@@ -4093,21 +4093,12 @@ function HomePageContent({
           </div>
           <button
             onClick={() => setShowGoalModal(true)}
+            className="rounded-[20px] border-none cursor-pointer font-[Inter,sans-serif] font-bold flex items-center gap-[6px] whitespace-nowrap shrink-0"
             style={{
               padding: isMobile ? "8px 14px" : "10px 20px",
-              borderRadius: 20,
-              border: "none",
-              cursor: "pointer",
               background: C.primary,
               color: C.white,
-              fontFamily: font.body,
               fontSize: isMobile ? 12 : 13,
-              fontWeight: 700,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              whiteSpace: "nowrap",
-              flexShrink: 0,
             }}
           >
             <Plus size={14} />
