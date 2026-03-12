@@ -1729,6 +1729,164 @@ const CompetitiveLandscapeSection = ({ sector }) => {
 // GOVERNANCE & POLICY SECTION — Horizontal Scrollable Card Widget
 // ============================================================================
 
+const techPolicies = [
+  {
+    policy: "Proposed $50M Fintech Fund",
+    body: "Bank of Ghana / Mahama Administration",
+    allocation: "$50M Proposed",
+    category: "funding",
+    relevance: ["digital"],
+    alignment:
+      "Dedicated government-backed fund targeting fintech startups building credit scoring, mobile lending, insurance, and payment infrastructure",
+    bridgeRole:
+      "Co-investment partner for fintech portfolio ventures — BRIDGE provides deal sourcing, due diligence, and venture support alongside government capital",
+    bridgeVentures: ["Fintech Growth Portfolio", "BRIDGE Growth Fund"],
+    pillars: ["Fintech Innovation", "MSME Access", "Digital Payments"],
+  },
+  {
+    policy: "Youth Enterprise Support Fund",
+    body: "Ministry of Youth & Sports / NBSSI",
+    allocation: "$25M Allocated",
+    category: "funding",
+    relevance: ["digital"],
+    alignment:
+      "Dedicated funding stream for youth-led enterprises with priority tracks for digital businesses and technology startups",
+    bridgeRole:
+      "BRIDGE accelerator graduates gain access to government-backed growth capital — creating a seamless pipeline from training through funding to market entry",
+    bridgeVentures: ["Female Founder Accelerator", "Digital Apprentice Pipeline"],
+    pillars: ["Youth Employment", "Startup Capital", "Digital Skills"],
+  },
+  {
+    policy: "Ghana EXIM Bank Tech Export Fund",
+    body: "Ghana Export-Import Bank",
+    allocation: "$15M Credit Line",
+    category: "funding",
+    relevance: ["digital"],
+    alignment:
+      "Credit facility supporting Ghanaian tech companies expanding to regional markets across ECOWAS and broader Africa",
+    bridgeRole:
+      "BRIDGE portfolio companies access export credit for cross-border expansion — enabling Kejetia platform and fintech products to scale regionally",
+    bridgeVentures: ["BRIDGE Growth Fund", "Kejetia Digital Platform"],
+    pillars: ["Regional Expansion", "Tech Exports", "AfCFTA Alignment"],
+  },
+  {
+    policy: "Ghana Innovation & Startup Act",
+    body: "Ministry of Communications & Digitalisation",
+    allocation: "Tax Holidays + Fund",
+    category: "tax",
+    relevance: ["digital"],
+    alignment:
+      "Landmark legislation creating regulatory sandbox, tax incentives for certified startups, and national innovation fund",
+    bridgeRole:
+      "BRIDGE ventures benefit directly from startup tax holidays and sandbox provisions — reducing barriers for portfolio companies while accelerating market entry",
+    bridgeVentures: ["BRIDGE Growth Fund", "Female Founder Accelerator", "Innovation Advisory Service"],
+    pillars: ["Tax Relief", "Simplified Registration", "Innovation Fund"],
+  },
+  {
+    policy: "E-Levy Reform",
+    body: "Ministry of Finance / GRA",
+    allocation: "Rate Reduction",
+    category: "tax",
+    relevance: ["digital"],
+    alignment:
+      "Expected rollback or modification of the electronic levy on digital transactions to reduce friction for digital economy growth",
+    bridgeRole:
+      "Lower transaction costs directly improve unit economics for every BRIDGE fintech and digital platform venture — expanding addressable user base and transaction volume",
+    bridgeVentures: ["Fintech Growth Portfolio", "Kejetia Digital Platform", "Market Platform Expansion"],
+    pillars: ["Transaction Cost Reduction", "Digital Economy Enablement"],
+  },
+  {
+    policy: "Free Zones Tech Incentives",
+    body: "Ghana Free Zones Authority",
+    allocation: "Tax Exemptions",
+    category: "tax",
+    relevance: ["digital"],
+    alignment:
+      "Extended Free Zones benefits for technology companies including 10-year corporate tax holidays and duty-free equipment imports for qualifying digital enterprises",
+    bridgeRole:
+      "BRIDGE portfolio companies in Accra Digital Centre and partner hubs leverage Free Zones status to reduce operational costs during critical growth phases",
+    bridgeVentures: ["Hub Partnership Network", "BRIDGE Growth Fund", "Innovation Advisory Service"],
+    pillars: ["Corporate Tax Holiday", "Duty-Free Imports", "Digital Free Zones"],
+  },
+  {
+    policy: "Digital Infrastructure Expansion",
+    body: "National IT Agency (NITA) / NGIC",
+    allocation: "€310M / 4,400 Sites",
+    category: "infrastructure",
+    relevance: ["infrastructure"],
+    alignment:
+      "4,400 new telecom sites for 4G/5G deployment targeting 80% 4G penetration by 2028 and closing the urban-rural digital divide",
+    bridgeRole:
+      "Connectivity is the foundation layer for every BRIDGE technology venture — as infrastructure expands, platform ventures gain access to 10.4M previously offline Ghanaians",
+    bridgeVentures: ["Kejetia Digital Platform", "Market Platform Expansion"],
+    pillars: ["4G/5G Rollout", "Rural Connectivity", "Broadband Targets"],
+  },
+  {
+    policy: "Ghana Digital Centres Program",
+    body: "Ministry of Communications & Digitalisation",
+    allocation: "$2.6M Expansion",
+    category: "infrastructure",
+    relevance: ["infrastructure"],
+    alignment:
+      "Government-supported innovation spaces including Accra Digital Centre flagship with $2.6M commitment for two additional regional centres",
+    bridgeRole:
+      "Hub Partnership Network connects BRIDGE portfolio companies to government-backed co-working infrastructure — providing physical space, talent access, and ecosystem integration",
+    bridgeVentures: ["Hub Partnership Network", "Digital Apprentice Pipeline"],
+    pillars: ["Accra Digital Centre", "Regional Hubs", "Training Integration"],
+  },
+  {
+    policy: "National Data Centre Initiative",
+    body: "National IT Agency (NITA)",
+    allocation: "$8M Phase 1",
+    category: "infrastructure",
+    relevance: ["infrastructure"],
+    alignment:
+      "Sovereign cloud and data hosting infrastructure reducing dependency on offshore servers, cutting latency, and enabling data residency compliance for local platforms",
+    bridgeRole:
+      "BRIDGE fintech and market platform ventures gain local hosting options with lower latency and regulatory compliance — critical for payment processing and vendor data",
+    bridgeVentures: ["Kejetia Digital Platform", "Fintech Growth Portfolio"],
+    pillars: ["Data Sovereignty", "Cloud Infrastructure", "Latency Reduction"],
+  },
+  {
+    policy: "National AI Strategy",
+    body: "Ghana Investment Promotion Centre",
+    allocation: "Multi-Year Priority",
+    category: "partnerships",
+    relevance: ["digital"],
+    alignment:
+      "Comprehensive strategy positioning Ghana as regional AI hub with ethics frameworks, workforce development, and sector-specific pilot programs",
+    bridgeRole:
+      "BRIDGE portfolio companies in HealthTech, AgTech, and EdTech deploy AI/ML solutions aligning with national pilot programs — creating a pipeline from government strategy to products",
+    bridgeVentures: ["BRIDGE Growth Fund", "Digital Apprentice Pipeline", "Hub Partnership Network"],
+    pillars: ["One Million Coders", "AI Ethics Framework", "Sector Pilots"],
+  },
+  {
+    policy: "GIZ FAIR Forward / Make-IT",
+    body: "German Development Cooperation",
+    allocation: "Technical Assistance",
+    category: "partnerships",
+    relevance: ["digital"],
+    alignment:
+      "AI accelerator through Ghana Tech Lab partnership promoting responsible AI development, digital literacy for 22,000+ trainees, and ethical AI governance",
+    bridgeRole:
+      "BRIDGE connects GIZ-trained talent and AI research outputs to commercial ventures — bridging the gap between development programs and market-ready products",
+    bridgeVentures: ["Tech Talent Bridge Program", "Digital Apprentice Pipeline", "Innovation Advisory Service"],
+    pillars: ["AI Governance", "Digital Literacy", "Responsible Innovation"],
+  },
+  {
+    policy: "World Bank Digital Economy Project",
+    body: "World Bank / Ministry of Finance",
+    allocation: "$200M IDA Credit",
+    category: "partnerships",
+    relevance: ["digital"],
+    alignment:
+      "Multi-year program strengthening Ghana's digital foundations — broadband access, digital financial services, and government technology modernization",
+    bridgeRole:
+      "BRIDGE ventures operate in sectors directly targeted by World Bank investments — market digitization, fintech inclusion, and skills development create natural alignment for co-implementation",
+    bridgeVentures: ["Kejetia Digital Platform", "Fintech Growth Portfolio", "Digital Apprentice Pipeline"],
+    pillars: ["Broadband Access", "Digital Financial Services", "GovTech Modernization"],
+  },
+];
 // ============================================================================
 // CROSS-SECTOR / RIPPLE EFFECT SECTION
 // ============================================================================
@@ -3739,7 +3897,11 @@ export default function TechnologyInnovationSectorPage() {
 
       <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Priority", tier: 1 }, { key: 2, label: "Growth", tier: 2 }]} />
       <CompetitiveLandscapeSection sector={sectorData} />
-      <PolicyCardSection />
+      <SectorPolicySection
+        policies={techPolicies}
+        title={<>Moving in Step with Ghana's{" "}<span style={{ color: colors.accent }} className="font-semibold">Digital Ambition</span></>}
+        subtitle="BRIDGE ventures align directly with Ghana's digital transformation agenda — from the $50M Fintech Fund to the Innovation & Startup Act — creating pathways for public-private collaboration."
+      />
       <CrossSectorSection />
       <InvestmentCTASection />
       <ImpactSection />

@@ -1167,6 +1167,157 @@ const LandscapeSection = ({ sector }) => {
 // 6. GOVERNANCE & POLICY — Scrollable Card Widget (bg: white)
 // ============================================================================
 
+const transportPolicies = [
+  {
+    policy: "Connect24 Transport Corridor",
+    body: "24-Hour Plus Authority / Office of the President",
+    allocation: "$4B programme ($300-400M seed)",
+    category: "funding",
+    relevance: ["road", "rail"],
+    alignment:
+      "Central transport corridor connecting regions through economic clusters, targeting 18% logistics cost reduction.",
+    bridgeRole:
+      "BRIDGE cold chain, fleet management, and logistics platforms operate along Connect24 corridors as active economic nodes.",
+    bridgeVentures: ["Cold Chain Ghana", "Fleet Management Services", "Load Matching Platform"],
+    pillars: ["Cold chains", "Night cargo corridors", "Inland water transport"],
+  },
+  {
+    policy: "Railway Master Plan",
+    body: "Ghana Railway Development Authority",
+    allocation: "$21.5B for 4,007 km network",
+    category: "infrastructure",
+    relevance: ["rail"],
+    alignment:
+      "Comprehensive railway expansion enabling multimodal freight and passenger services across all regions.",
+    bridgeRole:
+      "BRIDGE rail logistics integration services position ventures for multimodal connectivity as the national network expands.",
+    bridgeVentures: ["Rail Logistics Integration", "Cross-Border Facilitation"],
+    pillars: ["Standard gauge", "Freight corridors", "Passenger services"],
+  },
+  {
+    policy: "Tema-Mpakadan Railway (India EXIM)",
+    body: "India EXIM Bank / Ministry of Transport",
+    allocation: "$440M financing",
+    category: "partnerships",
+    relevance: ["rail"],
+    alignment:
+      "Railway connecting Tema Port to Volta Region, opening key inland logistics corridors for agricultural trade.",
+    bridgeRole:
+      "BRIDGE agricultural collection and warehousing ventures connect to rail terminus points for farm-to-port logistics.",
+    bridgeVentures: ["Agricultural Collection Network", "Warehousing Company"],
+    pillars: ["Volta corridor", "Port connectivity"],
+  },
+  {
+    policy: "Boankra Inland Port",
+    body: "Ghana Shippers Authority",
+    allocation: "80%+ complete Phase 1",
+    category: "infrastructure",
+    relevance: ["road", "rail"],
+    alignment: "Inland dry port in Ashanti Region reducing coastal port congestion and serving the middle belt.",
+    bridgeRole:
+      "BRIDGE Boankra Port Services venture provides container handling, forwarding, and customs clearance at the facility.",
+    bridgeVentures: ["Boankra Port Services", "Cross-Border Facilitation"],
+    pillars: ["Container handling", "Freight forwarding", "Customs clearance"],
+  },
+  {
+    policy: "AfDB Prime Meridian Docks",
+    body: "African Development Bank",
+    allocation: "$23M facility",
+    category: "partnerships",
+    relevance: ["maritime"],
+    alignment:
+      "Ship repair facility enhancing maritime services, regional port competitiveness, and fleet maintenance capacity.",
+    bridgeRole:
+      "BRIDGE maritime logistics and cross-border trade facilitation services complement expanded port capacity and regional connectivity.",
+    bridgeVentures: ["Cross-Border Facilitation", "Regional Logistics Hub"],
+  },
+  {
+    policy: "Road Infrastructure Budget",
+    body: "Ministry of Roads and Highways",
+    allocation: "Significant annual allocation",
+    category: "funding",
+    relevance: ["road"],
+    alignment:
+      "Road construction and maintenance programmes enabling the 97% road-dependent national freight network.",
+    bridgeRole:
+      "BRIDGE fleet management and load matching platforms maximize the economic value of improved road networks.",
+    bridgeVentures: ["Fleet Management Services", "Last-Mile Delivery Platform", "Load Matching Platform"],
+  },
+  {
+    policy: "ACES Cold Chain Programme (UK)",
+    body: "Africa Centre of Excellence for Sustainable Cooling",
+    allocation: "Training & technology transfer",
+    category: "tax",
+    relevance: ["road"],
+    alignment: "Technical support for cold chain development including training, standards, and technology transfer.",
+    bridgeRole:
+      "BRIDGE Training Academy and Cold Chain Ghana leverage ACES expertise for skills development and cold chain best practices.",
+    bridgeVentures: ["Cold Chain Ghana", "Logistics Training Academy", "Pharmaceutical Cold Chain"],
+  },
+  {
+    policy: "Customs Trade Facilitation",
+    body: "Ghana Revenue Authority (Customs Division)",
+    allocation: "AfCFTA corridor investment",
+    category: "tax",
+    relevance: ["road", "rail"],
+    alignment: "Border efficiency improvements and customs modernization supporting regional trade under AfCFTA.",
+    bridgeRole:
+      "BRIDGE cross-border facilitation provides customs brokerage and documentation reducing border friction alongside GRA reforms.",
+    bridgeVentures: ["Cross-Border Facilitation", "Regional Logistics Hub"],
+  },
+  {
+    policy: "Free Zone Logistics Incentives",
+    body: "Ghana Free Zones Authority",
+    allocation: "Tax holidays & duty exemptions",
+    category: "tax",
+    relevance: ["road", "maritime"],
+    alignment:
+      "Designated free zones offering 10-year tax holidays and duty-free imports for logistics and warehousing operators.",
+    bridgeRole:
+      "BRIDGE warehousing and cold chain ventures leverage free zone benefits to reduce capital costs and accelerate facility development.",
+    bridgeVentures: ["Cold Chain Ghana", "Warehousing Company", "Regional Logistics Hub"],
+    pillars: ["Tax holidays", "Duty exemptions", "Export processing"],
+  },
+  {
+    policy: "National Road Safety Authority Programme",
+    body: "National Road Safety Authority (NRSA)",
+    allocation: "$45M annual programme",
+    category: "funding",
+    relevance: ["road"],
+    alignment:
+      "Fleet safety standards, driver certification, and vehicle inspection programmes reducing road fatalities by 50% target.",
+    bridgeRole:
+      "BRIDGE fleet management integrates NRSA safety standards while the Training Academy provides certified driver programmes.",
+    bridgeVentures: ["Fleet Management Services", "Logistics Training Academy"],
+    pillars: ["Driver certification", "Vehicle standards", "Safety tech"],
+  },
+  {
+    policy: "Tema Motorway Expansion",
+    body: "Ministry of Roads and Highways",
+    allocation: "$300M+ multi-phase",
+    category: "infrastructure",
+    relevance: ["road"],
+    alignment:
+      "Six-lane motorway expansion between Accra and Tema Port, Ghana's busiest freight corridor handling 70% of imports.",
+    bridgeRole:
+      "BRIDGE last-mile delivery and fleet management services operate along the expanded corridor, reducing port-to-warehouse transit times.",
+    bridgeVentures: ["Last-Mile Delivery Platform", "Fleet Management Services", "Load Matching Platform"],
+    pillars: ["Port corridor", "Freight capacity", "Urban logistics"],
+  },
+  {
+    policy: "Japan-Ghana Logistics Partnership",
+    body: "JICA / Ministry of Transport",
+    allocation: "$180M concessional lending",
+    category: "partnerships",
+    relevance: ["road", "maritime"],
+    alignment:
+      "Technical cooperation for port modernization, logistics training, and supply chain management capacity building.",
+    bridgeRole:
+      "BRIDGE Training Academy and port logistics ventures align with JICA capacity building for workforce development and operational excellence.",
+    bridgeVentures: ["Logistics Training Academy", "Boankra Port Services", "Cross-Border Facilitation"],
+    pillars: ["Capacity building", "Port efficiency", "Training"],
+  },
+];
 // ============================================================================
 // 7. THE RIPPLE EFFECT — Interactive Cross-Sector (bg: primary)
 // ============================================================================
@@ -2669,7 +2820,12 @@ export default function TransportationLogisticsSectorPage() {
       <ProcessSection />
       <SectorSolutionsSection sector={sectorData} />
       <LandscapeSection sector={sectorData} />
-      <GovernanceSection />
+      <SectorPolicySection
+        policies={transportPolicies}
+        pillLabel="Policy & Governance"
+        title={<>Moving in Step with Ghana's <span className="font-semibold">Transport</span>{" "}<span className="font-semibold" style={{ color: colors.accent }}>Vision</span></>}
+        subtitle="Connect24 creates the corridors — BRIDGE builds the services, technology, and human capital that make them work for ordinary Ghanaians."
+      />
       <RippleEffectSection />
       <InvestmentThesisSection />
       <ImpactSection />

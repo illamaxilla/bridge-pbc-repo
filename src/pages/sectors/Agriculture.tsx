@@ -2006,6 +2006,166 @@ const CompetitiveLandscapeSection = ({ sector }) => {
 // GOVERNANCE & POLICY SECTION (Horizontal Scrollable Cards — Handoff Spec)
 // ============================================================================
 
+const governancePolicies = [
+  {
+    policy: "Oil Palm Development Finance Window",
+    body: "Ministry of Finance / Fund24",
+    allocation: "GH₵6.9B (~$500M)",
+    category: "funding",
+    relevance: ["downstream"],
+    alignment:
+      "Largest agricultural finance window with 5-year moratorium and 70% project financing for palm oil value chain development.",
+    bridgeRole:
+      "Co-financing partner for Integrated Agriculture Hub and palm oil processing facilities, leveraging concessionary terms.",
+    bridgeVentures: ["Integrated Agriculture Hub", "Coconut Processing Hub"],
+    pillars: ["Grow24", "Fund24"],
+  },
+  {
+    policy: "Agricultural Enclave Roads",
+    body: "Ministry of Roads & Highways",
+    allocation: "GH₵828M (~$60M)",
+    category: "infrastructure",
+    relevance: ["upstream", "downstream"],
+    alignment:
+      "Farm-to-market road construction connecting agricultural production zones to processing centers and regional markets.",
+    bridgeRole:
+      "Infrastructure beneficiary enabling cold storage network siting and market aggregation hub connectivity access.",
+    bridgeVentures: ["Cold Storage Network", "Market Aggregation Centers"],
+    pillars: ["Build24"],
+  },
+  {
+    policy: "Farmer Service Centers",
+    body: "Ministry of Food & Agriculture",
+    allocation: "GH₵690M (~$50M)",
+    category: "partnerships",
+    relevance: ["upstream"],
+    alignment:
+      "One-stop service centers for extension, inputs, and financial services supporting 5.6M smallholder farmer households.",
+    bridgeRole:
+      "Service delivery partner for cooperative strengthening programs and AgTech platform distribution channel access.",
+    bridgeVentures: ["Cooperative Capital Fund", "AgTech Portfolio"],
+    pillars: ["Grow24"],
+  },
+  {
+    policy: "MoFA Core Budget Allocation",
+    body: "Ministry of Food & Agriculture",
+    allocation: "GH₵245M (~$18M)",
+    category: "funding",
+    relevance: ["upstream", "downstream"],
+    alignment:
+      "Core ministry allocation for agricultural development programs, extension services, and national policy coordination.",
+    bridgeRole:
+      "Technical partnership for all agriculture sector ventures with policy alignment and M&E framework integration.",
+    bridgeVentures: ["All Agriculture Ventures"],
+    pillars: ["Grow24"],
+  },
+  {
+    policy: "Ghana Buffer Stock Company",
+    body: "Ministry of Trade & Industry",
+    allocation: "GH₵200M (~$15M)",
+    category: "partnerships",
+    relevance: ["downstream"],
+    alignment:
+      "Strategic grain reserve management and price stabilization through government commodity purchasing and storage programs.",
+    bridgeRole:
+      "Warehouse receipt financing offtake partner providing guaranteed demand floor for stored agricultural commodities.",
+    bridgeVentures: ["Warehouse Receipt System", "Cold Storage Network"],
+    pillars: ["Grow24"],
+  },
+  {
+    policy: "Irrigation Infrastructure (GIDA)",
+    body: "Ghana Irrigation Development Authority",
+    allocation: "GH₵180M (~$13M)",
+    category: "infrastructure",
+    relevance: ["upstream"],
+    alignment:
+      "Small-scale irrigation systems enabling year-round agricultural production, crop diversification, and climate resilience.",
+    bridgeRole:
+      "Water access enabler for aggregation zones, increasing reliable supply volumes to processing and storage ventures.",
+    bridgeVentures: ["Integrated Agriculture Hub", "Market Aggregation Centers"],
+    pillars: ["Grow24", "Build24"],
+  },
+  {
+    policy: "Agricultural Credit Facility",
+    body: "Bank of Ghana",
+    allocation: "GH₵150M (~$11M)",
+    category: "tax",
+    relevance: ["upstream", "downstream"],
+    alignment:
+      "Subsidized lending rates and extended tenors for agricultural value chain financing and smallholder credit access.",
+    bridgeRole:
+      "Blended finance partner for smallholder and cooperative lending platforms with flexible collateral frameworks.",
+    bridgeVentures: ["Cooperative Capital Fund", "Digital Agricultural Lending"],
+    pillars: ["Fund24"],
+  },
+  {
+    policy: "Aquaculture Development Fund",
+    body: "Fisheries Commission",
+    allocation: "GH₵100M (~$7M)",
+    category: "tax",
+    relevance: ["downstream"],
+    alignment:
+      "Subsidized financing and tax incentives for fish farming development and aquaculture processing across all regions.",
+    bridgeRole:
+      "Processing facility co-investment partner and cold chain integration coordinator for aquaculture value chains.",
+    bridgeVentures: ["Cold Storage Network", "Export Processing"],
+    pillars: ["Grow24"],
+  },
+  {
+    policy: "Tree Crops Development Authority",
+    body: "Ministry of Food & Agriculture",
+    allocation: "GH₵350M (~$25M)",
+    category: "funding",
+    relevance: ["upstream", "downstream"],
+    alignment:
+      "Development and regulation of tree crop value chains including cashew, shea, mango, and coconut across all regions.",
+    bridgeRole:
+      "Processing and export partner for tree crop commodities, integrating with coconut and shea value chain ventures.",
+    bridgeVentures: ["Coconut Processing Facility", "Agricultural Input Marketplace"],
+    pillars: ["Grow24"],
+  },
+  {
+    policy: "Rural Electrification Programme",
+    body: "Ministry of Energy",
+    allocation: "GH₵275M (~$20M)",
+    category: "infrastructure",
+    relevance: ["upstream", "downstream"],
+    alignment:
+      "Expanding grid and off-grid power solutions to rural agricultural zones for processing and cold chain operations.",
+    bridgeRole:
+      "Energy access beneficiary enabling solar cold storage deployment and agricultural processing equipment operations.",
+    bridgeVentures: ["Community Cold Storage Network", "Cassava Processing Hub"],
+    pillars: ["Build24"],
+  },
+  {
+    policy: "National Seed Council",
+    body: "Ministry of Food & Agriculture",
+    allocation: "GH₵80M (~$6M)",
+    category: "partnerships",
+    relevance: ["upstream"],
+    alignment:
+      "Certified seed production, quality assurance, and distribution systems strengthening smallholder crop productivity.",
+    bridgeRole:
+      "Input marketplace distribution partner connecting certified seed suppliers to cooperative purchasing networks.",
+    bridgeVentures: ["Agricultural Input Marketplace", "Cooperative Capital Fund"],
+    pillars: ["Grow24"],
+  },
+  {
+    policy: "Export Development & Investment Fund",
+    body: "Ministry of Trade & Industry",
+    allocation: "GH₵120M (~$9M)",
+    category: "tax",
+    relevance: ["downstream"],
+    alignment:
+      "Tax rebates and export financing for agricultural processors meeting international quality and packaging standards.",
+    bridgeRole:
+      "Export facilitation partner leveraging tax incentives for processed agricultural products targeting regional markets.",
+    bridgeVentures: ["Coconut Processing Facility", "Cassava Processing Hub"],
+    pillars: ["Fund24"],
+  },
+];
+
+
 // ============================================================================
 // IMPACT DASHBOARD SECTION (Dual-Lens: By Metric / By Stakeholder)
 // ============================================================================
@@ -3831,7 +3991,11 @@ export default function AgricultureSectorPageIntegrated() {
 
         <SectorSolutionsSection sector={sectorData} />
         <CompetitiveLandscapeSection sector={sectorData} />
-        <GovernancePolicySection />
+        <SectorPolicySection
+          policies={governancePolicies}
+          title={<>Moving in Step with Ghana's <span className="font-semibold">Agricultural</span>{" "}<span style={{ color: colors.accent }} className="font-semibold">Renaissance</span></>}
+          subtitle="Every BRIDGE agriculture venture aligns with active government programs under the Grow24 and Fund24 pillars, ensuring complementary investment."
+        />
         <ImpactDashboardSection />
         <RippleEffectSection />
         <InvestmentThesisSection />

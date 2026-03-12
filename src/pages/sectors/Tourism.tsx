@@ -1716,12 +1716,126 @@ const CompetitiveLandscapeSection = ({ sector }) => {
 // GOVERNANCE & POLICY SECTION (Horizontal Scrollable Cards)
 // ============================================================================
 
-const governanceCategories = [
-  { id: "all", label: "All" },
-  { id: "funding", label: "Direct Funding" },
-  { id: "infrastructure", label: "Infrastructure" },
-  { id: "partnerships", label: "Partnerships" },
+const governancePolicies = [
+  {
+    policy: "Black Star Experience Program",
+    body: "Office of the President / Ministry of Tourism",
+    allocation: "7-Pillar National Initiative",
+    category: "partnerships",
+    relevance: ["heritage", "eco"],
+    alignment:
+      "Flagship cultural tourism platform positioning Ghana as the cultural heartbeat of Africa through seven integrated programming pillars spanning heritage and creative expression.",
+    bridgeRole:
+      "BRIDGE provides digital infrastructure, guide certification, and destination optimization that operationalizes each programming pillar at national scale.",
+    bridgeVentures: ["GTM Platform Enhancement", "Heritage Interpretation Excellence", "Regional Training Centers"],
+    pillars: ["Cinema", "Audio", "Cuisine", "Aesthetics", "Style", "Literature", "Culture"],
+  },
+  {
+    policy: "Beyond the Return 2020-2030",
+    body: "Diaspora Affairs Office",
+    allocation: "10-Year Strategic Program",
+    category: "partnerships",
+    relevance: ["heritage", "business"],
+    alignment:
+      "Diaspora engagement initiative sustaining Year of Return momentum through curated cultural experiences, investment pathways, and citizenship programs.",
+    bridgeRole:
+      "BRIDGE operates the diaspora tourism programming arm — December in GH experiences, heritage tour packaging, and diaspora investment pathway connections.",
+    bridgeVentures: ["Diaspora Heritage Tour Operator", "GTM Platform Enhancement", "Heritage Boutique Hotel Network"],
+  },
+  {
+    policy: "GTA Licensing & Standards",
+    body: "Ghana Tourism Authority",
+    allocation: "Regulatory Framework",
+    category: "partnerships",
+    relevance: ["heritage", "eco", "business"],
+    alignment:
+      "National licensing, standards enforcement, destination marketing, and industry development oversight spanning 6,700+ registered hospitality enterprises.",
+    bridgeRole:
+      "BRIDGE certification program creates the independent quality layer that GTA licensing framework requires but cannot operationally deliver at scale.",
+    bridgeVentures: [
+      "Hospitality Excellence Certification",
+      "Regional Training Centers",
+      "Tourism Business Intelligence",
+    ],
+  },
+  {
+    policy: "Osu Castle Redevelopment",
+    body: "Ministry of Tourism, Arts & Culture",
+    allocation: "22-Acre Heritage Precinct",
+    category: "infrastructure",
+    relevance: ["heritage"],
+    alignment:
+      "Transformation of historic Osu Castle into a premier tourism and heritage precinct anchoring Accra's cultural corridor, visitor economy, and diaspora engagement infrastructure.",
+    bridgeRole:
+      "BRIDGE heritage hotel network and interpretation excellence programs create demand-side activation and programming for the redeveloped precinct.",
+    bridgeVentures: ["Heritage Interpretation Excellence", "Heritage Boutique Hotel Network", "Eco-Lodge Development"],
+  },
+  {
+    policy: "Accra Marine Drive Project",
+    body: "Ministry of Works & Housing",
+    allocation: "241-Acre Coastal Development",
+    category: "infrastructure",
+    relevance: ["business"],
+    alignment:
+      "Revival of major coastal redevelopment for tourism, leisure, MICE conference facilities, waterfront dining, and integrated destination experience venues.",
+    bridgeRole:
+      "BRIDGE MICE conference facility venture directly complements the Marine Drive vision with business tourism infrastructure and event programming capacity.",
+    bridgeVentures: ["MICE Conference Facility", "Tourism Business Intelligence", "GTM Platform Enhancement"],
+  },
+  {
+    policy: "National Theatre & Cultural Venues",
+    body: "Ministry of Tourism, Arts & Culture",
+    allocation: "Cultural Infrastructure Program",
+    category: "infrastructure",
+    relevance: ["heritage", "eco"],
+    alignment:
+      "Rehabilitation and programming of the National Theatre and regional cultural venues as anchor destinations for performing arts tourism and festival circuits.",
+    bridgeRole:
+      "BRIDGE festival tourism circuits and creative industry partnerships activate rehabilitated venues with revenue-generating cultural programming year-round.",
+    bridgeVentures: ["Festival Tourism Circuits", "Heritage Interpretation Excellence", "Regional Training Centers"],
+  },
+  {
+    policy: "GTDC Digital Innovation Hub",
+    body: "GTDC under Prof. Mensah",
+    allocation: "Government Digital Platform",
+    category: "funding",
+    relevance: ["heritage", "eco", "business"],
+    alignment:
+      "Government-funded digital platforms including GTM marketplace, GTiP portal, and Accra By Night activation driving tourism technology and innovation forward.",
+    bridgeRole:
+      "BRIDGE enhances the GTM platform with direct booking engines, quality data layers, and business intelligence tools that multiply GTDC's overall digital reach and impact.",
+    bridgeVentures: [
+      "GTM Platform Enhancement",
+      "Tourism Business Intelligence",
+      "Hospitality Excellence Certification",
+    ],
+  },
+  {
+    policy: "Tourism Sector Budget 2026",
+    body: "Ministry of Finance",
+    allocation: "GH₵ 850M Allocation",
+    category: "funding",
+    relevance: ["heritage", "eco"],
+    alignment:
+      "Direct government funding allocation for tourism marketing campaigns, heritage site development, and institutional capacity building across all regions.",
+    bridgeRole:
+      "BRIDGE ventures leverage public investment by deploying private capital to multiply impact of government-funded site improvements and marketing initiatives.",
+    bridgeVentures: ["Regional Training Centers", "Heritage Interpretation Excellence", "Eco-Lodge Development"],
+  },
+  {
+    policy: "Tourism Investment Incentives",
+    body: "Ghana Investment Promotion Centre",
+    allocation: "Tax & Regulatory Framework",
+    category: "funding",
+    relevance: ["business", "eco"],
+    alignment:
+      "GIPC incentive packages including tax holidays, import duty waivers, and expedited permitting designed to attract private capital into tourism infrastructure.",
+    bridgeRole:
+      "BRIDGE structures each venture to maximize GIPC incentive eligibility, reducing investor risk and accelerating capital deployment across the tourism portfolio.",
+    bridgeVentures: ["Heritage Boutique Hotel Network", "Eco-Lodge Development", "MICE Conference Facility"],
+  },
 ];
+
 
 // ============================================================================
 // IMPACT SECTION (Dual-Lens Dashboard)
@@ -3252,7 +3366,17 @@ export default function TourismHospitalitySectorPage() {
       <ValueChainSectionPremium />
       <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Growth", tier: 2 }, { key: 3, label: "Strategic", tier: 3 }]} />
       <CompetitiveLandscapeSection sector={sectorData} />
-      <PolicyAlignmentSection />
+      <SectorPolicySection
+        policies={governancePolicies}
+        title={<>Moving in Step with Ghana's{" "}<span className="font-semibold" style={{ color: colors.accent }}>Tourism Strategy</span></>}
+        subtitle="BRIDGE ventures align directly with the Mahama administration's Black Star Experience, Beyond the Return, and tourism infrastructure commitments — creating pathways for public-private collaboration."
+        categories={[
+          { id: "all", label: "All", short: "All" },
+          { id: "funding", label: "Direct Funding", short: "Funding" },
+          { id: "infrastructure", label: "Infrastructure", short: "Infra" },
+          { id: "partnerships", label: "Partnerships", short: "Partners" },
+        ]}
+      />
       <ImpactSection />
       <CrossSectorSection />
       <InvestmentCTASection />

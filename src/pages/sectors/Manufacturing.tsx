@@ -1529,6 +1529,154 @@ const EcosystemSection = ({ sector }) => {
 // GOVERNANCE & POLICY SECTION — Horizontal Scroll Cards (Production Handoff)
 // ============================================================================
 
+const governancePolicies = [
+  {
+    policy: "24-Hour Economy Policy",
+    body: "Office of the President",
+    allocation: "Flagship Initiative",
+    category: "infrastructure",
+    alignment:
+      "The Make24 pillar specifically targets manufacturing revitalization through three-shift working models and industrial incentive packages.",
+    bridgeRole:
+      "BRIDGE aligns manufacturing ventures with shift incentives, nighttime tariff reductions, and enhanced security for 24-hour operations.",
+    bridgeVentures: ["Agro-Processing Hub", "Packaged Foods Company"],
+    pillars: ["Make24", "Tax Incentives"],
+  },
+  {
+    policy: "Textile Industry Revival",
+    body: "Ministry of Trade & Industry",
+    allocation: "$2B by 2033",
+    category: "funding",
+    alignment:
+      "Government strategy to rebuild the textile sector to $2 billion by 2033, with focus on traditional fabrics and export market channels.",
+    bridgeRole:
+      "Textile ventures directly support the scaling strategy with diaspora market connections and quality certification pathway access.",
+    bridgeVentures: ["Textile & Garment Factory", "Quality Certification Hub"],
+    pillars: ["Scale Capacity", "Export Channels"],
+  },
+  {
+    policy: "AfCFTA Implementation",
+    body: "AfCFTA Secretariat, Accra",
+    allocation: "1.4B Market Access",
+    category: "partnerships",
+    alignment:
+      "With AfCFTA headquarters in Accra, Ghana has both symbolic and practical advantages for continental manufacturing trade access.",
+    bridgeRole:
+      "Manufacturing portfolio positioned for first-mover advantage in continental market access and regional value chain integration.",
+    bridgeVentures: ["Regional Export Platform", "Building Materials Plant"],
+    pillars: ["Preferential Access", "Standards Harmonization"],
+  },
+  {
+    policy: "Ghana Free Zones Regime",
+    body: "Ghana Free Zones Authority (GFZA)",
+    allocation: "500+ Enterprises",
+    category: "tax",
+    alignment:
+      "GFZA provides 100% duty exemption on production imports and corporate tax holidays for qualifying export-oriented manufacturers.",
+    bridgeRole:
+      "Free zone incentive access for export-oriented ventures, enabling duty-free raw material import and competitive production costs.",
+    bridgeVentures: ["Agro-Processing Hub", "Electronics Assembly"],
+    pillars: ["Duty Exemptions", "Tax Holidays"],
+  },
+  {
+    policy: "1D1F Program",
+    body: "Ministry of Trade & Industry",
+    allocation: "126+ Operational",
+    category: "infrastructure",
+    alignment:
+      "One District One Factory has established 126+ operational factories that still need technical support, market linkages, and scaling.",
+    bridgeRole:
+      "Technical support, quality certification, and market linkage services for existing 1D1F factories seeking to reach full scale.",
+    bridgeVentures: ["Quality Certification Hub", "Manufacturing Skills Academy"],
+    pillars: ["Operationalization", "Technical Assistance"],
+  },
+  {
+    policy: "Development Bank Ghana",
+    body: "Development Bank Ghana (DBG)",
+    allocation: "Gov Capitalized",
+    category: "funding",
+    alignment:
+      "National development bank designating manufacturing as a priority sector, providing favorable terms for SME lending and equipment.",
+    bridgeRole:
+      "Co-design of manufacturing working capital facility with DBG, enabling equipment leasing and inventory financing for SMEs.",
+    bridgeVentures: ["Building Materials Plant", "Industrial Chemicals Plant"],
+    pillars: ["SME Lending", "Equipment Financing"],
+  },
+  {
+    policy: "Skills Development Fund",
+    body: "Council for TVET",
+    allocation: "Annual Allocation",
+    category: "partnerships",
+    alignment:
+      "National TVET reform creating demand-driven technical training aligned with manufacturing workforce needs and industry standards.",
+    bridgeRole:
+      "Manufacturing Skills Academy feeds TVET reform pipeline with industry-defined curriculum and portable credential frameworks.",
+    bridgeVentures: ["Manufacturing Skills Academy", "Pharmaceutical Expansion"],
+    pillars: ["Demand-Driven Training", "Portable Credentials"],
+  },
+  {
+    policy: "Ghana Standards Authority",
+    body: "Ghana Standards Authority (GSA)",
+    allocation: "Tax Credits",
+    category: "tax",
+    alignment:
+      "GSA provides tax credits and expedited certification for manufacturers meeting national quality standards and export readiness.",
+    bridgeRole:
+      "Quality Certification Hub leverages GSA framework to provide accelerated and subsidized certification for SME manufacturers.",
+    bridgeVentures: ["Quality Certification Hub", "Regional Export Platform"],
+    pillars: ["Quality Tax Credits", "Export Certification"],
+  },
+  {
+    policy: "National Industrial Revitalization",
+    body: "Ministry of Trade & Industry",
+    allocation: "Multi-Year Plan",
+    category: "infrastructure",
+    alignment:
+      "National strategy to revive dormant factories and establish new industrial parks with modern infrastructure and utilities access.",
+    bridgeRole:
+      "BRIDGE provides technical feasibility studies, factory revival blueprints, and operational management for industrial park ventures.",
+    bridgeVentures: ["Agro-Processing Hub", "Building Materials Plant"],
+    pillars: ["Factory Revival", "Industrial Parks"],
+  },
+  {
+    policy: "EXIM Bank Ghana",
+    body: "Ghana Export-Import Bank",
+    allocation: "Export Financing",
+    category: "funding",
+    alignment:
+      "Dedicated export financing facility supporting manufacturers with trade credit, guarantees, and pre-shipment working capital lines.",
+    bridgeRole:
+      "BRIDGE connects export-ready ventures with EXIM trade finance products, reducing working capital barriers for market entry.",
+    bridgeVentures: ["Regional Export Platform", "Shea Value Addition"],
+    pillars: ["Trade Credit", "Pre-Shipment Finance"],
+  },
+  {
+    policy: "Ghana Investment Promotion",
+    body: "GIPC",
+    allocation: "FDI Facilitation",
+    category: "partnerships",
+    alignment:
+      "GIPC facilitates foreign direct investment into manufacturing with streamlined registration, incentive packages, and investor matching.",
+    bridgeRole:
+      "BRIDGE positions as a co-investment platform connecting GIPC-registered investors with vetted manufacturing venture opportunities.",
+    bridgeVentures: ["Electronics Assembly", "Textile & Garment Factory"],
+    pillars: ["Investor Matching", "Joint Ventures"],
+  },
+  {
+    policy: "Special Import Duty Regime",
+    body: "Ministry of Finance",
+    allocation: "Tariff Protection",
+    category: "tax",
+    alignment:
+      "Protective tariffs on select manufactured goods incentivizing domestic production over imports in priority industrial subsectors.",
+    bridgeRole:
+      "BRIDGE ventures in protected subsectors benefit from import duty advantages that improve domestic price competitiveness.",
+    bridgeVentures: ["Packaged Foods Company", "Personal Care Products"],
+    pillars: ["Import Protection", "Local Preference"],
+  },
+];
+
+
 // ============================================================================
 // IMPACT SECTION — Dual-Lens Dashboard (By Metric / By Stakeholder)
 // ============================================================================
@@ -4072,7 +4220,11 @@ export default function ManufacturingSectorPage() {
       <ProblemSection sector={sectorData} />
       <ValueChainSectionPremium />
       <SectorSolutionsSection sector={sectorData} maxSolutions={9} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Growth", tier: 2 }, { key: 3, label: "Emerging", tier: 3 }]} />
-      <PolicyAlignmentSection />
+      <SectorPolicySection
+        policies={governancePolicies}
+        title={<>Moving in Step with Ghana's{" "}<span className="font-semibold" style={{ color: colors.accent }}>Industrial Ambition</span></>}
+        subtitle="BRIDGE's manufacturing ventures align directly with Ghana's flagship industrial policies, the 24-Hour Economy, and AfCFTA positioning — creating pathways for public-private collaboration."
+      />
       <CompetitiveLandscapeSection sector={sectorData} />
       <CrossSectorSection />
       <InvestmentCTASection />

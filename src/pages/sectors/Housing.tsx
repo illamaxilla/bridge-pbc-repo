@@ -1444,6 +1444,164 @@ const MarketEcosystemSection = ({ sector }) => {
 // SECTION 6: GOVERNANCE & POLICY — Scrollable Card Widget (Handoff v1)
 // ============================================================================
 
+const housingPolicies = [
+  {
+    policy: "Big Push Infrastructure Programme",
+    body: "Ministry of Works, Housing & Water Resources",
+    allocation: "$10B commitment",
+    category: "funding",
+    relevance: ["affordable"],
+    alignment:
+      "Housing components within the largest infrastructure initiative in Ghana's history, targeting delivery of 250,000 housing units nationwide.",
+    bridgeRole:
+      "BRIDGE provides construction oversight, contractor verification, and quality assurance services for housing delivery within the programme.",
+    bridgeVentures: ["Construction Oversight Platform", "Contractor Verification System"],
+    pillars: ["Housing delivery", "Urban planning"],
+  },
+  {
+    policy: "National Housing & Mortgage Fund",
+    body: "SSNIT & MoF",
+    allocation: "GH₵1B target",
+    category: "funding",
+    relevance: ["affordable"],
+    alignment:
+      "Dedicated fund channeling pension and public capital into affordable housing development and expanding mortgage product accessibility.",
+    bridgeRole:
+      "BRIDGE housing savings products and cooperative structures create the demand pipeline and borrower readiness for NHMF mortgage disbursement.",
+    bridgeVentures: ["Housing Savings Products", "Housing Cooperative Structure"],
+    pillars: ["Mortgage access", "Savings mobilization"],
+  },
+  {
+    policy: "Low-Cost Housing for Public Workers",
+    body: "Office of the President",
+    allocation: "Salary deduction model",
+    category: "funding",
+    relevance: ["affordable"],
+    alignment:
+      "Government-backed affordable housing for public sector employees through payroll-linked financing and standardized unit development.",
+    bridgeRole:
+      "BRIDGE construction oversight and contractor verification ensure quality delivery and cost control for public worker housing projects.",
+    bridgeVentures: ["Construction Oversight Platform", "Property Management Service"],
+    pillars: ["Public housing", "Payroll financing"],
+  },
+  {
+    policy: "Real Estate Agency Act 2020",
+    body: "Lands Commission",
+    allocation: "Regulatory framework",
+    category: "regulatory",
+    relevance: ["commercial"],
+    alignment:
+      "Comprehensive regulatory framework establishing professional standards in real estate, including licensing for agents and developers.",
+    bridgeRole:
+      "BRIDGE contractor verification and property management services support licensing implementation and professional standards compliance.",
+    bridgeVentures: ["Contractor Verification System", "Property Management Service"],
+    pillars: ["Professional standards", "Licensing"],
+  },
+  {
+    policy: "Rent Control Bill",
+    body: "Parliament of Ghana",
+    allocation: "Legislative reform",
+    category: "regulatory",
+    relevance: ["affordable"],
+    alignment:
+      "Landmark legislation limiting rent advances to one year and establishing tenant rights protections across the entire rental market.",
+    bridgeRole:
+      "BRIDGE rental guarantee products directly enable compliance with 1-year advance limits while protecting landlord revenue.",
+    bridgeVentures: ["Rental Guarantee Products", "Tenant Services Platform"],
+    pillars: ["Rent reform", "Consumer protection"],
+  },
+  {
+    policy: "Building Code & Permit Reform",
+    body: "Ministry of Works & Housing",
+    allocation: "Regulatory overhaul",
+    category: "regulatory",
+    relevance: ["affordable", "commercial"],
+    alignment:
+      "Modernization of building codes and permit processes to reduce approval timelines and improve construction quality standards nationally.",
+    bridgeRole:
+      "BRIDGE contractor certification aligns skilled artisans with updated building standards, creating a verified workforce for compliant construction.",
+    bridgeVentures: ["Construction Skills Certification", "Contractor Verification System"],
+    pillars: ["Building standards", "Permit reform"],
+  },
+  {
+    policy: "Lands Commission Digitization",
+    body: "Lands Commission & World Bank",
+    allocation: "$85M project",
+    category: "infrastructure",
+    relevance: ["affordable", "commercial"],
+    alignment:
+      "Multi-year project to digitize land records across Ghana, creating digital infrastructure for the 98% of properties without title.",
+    bridgeRole:
+      "BRIDGE title verification adds a private verification layer complementing government digitization, accelerating trust in property transactions.",
+    bridgeVentures: ["Title Verification Platform", "Land Registry Integration"],
+    pillars: ["Digital records", "Title security"],
+  },
+  {
+    policy: "National Rental Assistance Scheme",
+    body: "Ministry of Works, Housing & Water Resources",
+    allocation: "Gov't funded",
+    category: "infrastructure",
+    relevance: ["affordable"],
+    alignment:
+      "Government programme building rental market infrastructure with structured advance limits, tenant protections, and subsidy channels.",
+    bridgeRole:
+      "BRIDGE rent advance financing and rental guarantee products scale the NRAS model through private sector channels, reaching 19M renters.",
+    bridgeVentures: ["Rental Guarantee Products", "Rent Advance Financing"],
+    pillars: ["Rental reform", "Tenant protection"],
+  },
+  {
+    policy: "Affordable Housing REITs Framework",
+    body: "Securities & Exchange Commission",
+    allocation: "Capital market reform",
+    category: "infrastructure",
+    relevance: ["commercial"],
+    alignment:
+      "Regulatory framework enabling Real Estate Investment Trusts focused on affordable housing, unlocking institutional capital for residential development.",
+    bridgeRole:
+      "BRIDGE property management and title verification services create the transparent asset base required for REIT qualification and investor confidence.",
+    bridgeVentures: ["Property Management Service", "Title Verification Platform"],
+    pillars: ["Capital markets", "Institutional investment"],
+  },
+  {
+    policy: "IFC Her Home Initiative",
+    body: "International Finance Corporation",
+    allocation: "$2B global target",
+    category: "partnerships",
+    relevance: ["affordable"],
+    alignment:
+      "IFC initiative specifically targeting women's access to housing through mortgage support, title assistance, and savings programmes.",
+    bridgeRole:
+      "BRIDGE title verification and housing savings products advance women's housing access with gender-responsive design integrated from inception.",
+    bridgeVentures: ["Title Verification Platform", "Housing Savings Products"],
+    pillars: ["Gender equity", "Housing access"],
+  },
+  {
+    policy: "World Bank Land Administration Project",
+    body: "World Bank & Lands Commission",
+    allocation: "$100M+ cumulative",
+    category: "partnerships",
+    relevance: ["affordable", "commercial"],
+    alignment:
+      "Long-running partnership modernizing Ghana's land governance through systematic titling, boundary mapping, and institutional reform.",
+    bridgeRole:
+      "BRIDGE title verification platform integrates with LAP digitization outputs, extending verified land data to private sector users at scale.",
+    bridgeVentures: ["Title Verification Platform", "Land Registry Integration"],
+    pillars: ["Land governance", "Institutional reform"],
+  },
+  {
+    policy: "UN-Habitat Ghana Programme",
+    body: "UN-Habitat & MWRWH",
+    allocation: "Technical assistance",
+    category: "partnerships",
+    relevance: ["affordable"],
+    alignment:
+      "United Nations programme providing technical support for slum upgrading, urban planning, and inclusive housing policy development across Ghana.",
+    bridgeRole:
+      "BRIDGE cooperative housing models and tenant services complement UN-Habitat community upgrading with market-based solutions for residents.",
+    bridgeVentures: ["Housing Cooperative Structure", "Tenant Services Platform"],
+    pillars: ["Urban upgrading", "Community development"],
+  },
+];
 // ============================================================================
 // SECTION 7: RIPPLE EFFECT / CROSS-SECTOR — Interactive Icon Pathway (Handoff v1)
 // ============================================================================
@@ -3039,7 +3197,18 @@ export default function HousingRealEstateSectorPage() {
         <ValueChainSectionPremium />
         <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All Ventures", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Scaling", tier: 2 }]} />
         <MarketEcosystemSection sector={sectorData} />
-        <PolicyAlignmentSection />
+        <SectorPolicySection
+          policies={housingPolicies}
+          title={<>Moving in Step with Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Housing Agenda</span></>}
+          subtitle="BRIDGE housing ventures align directly with current government priorities — from the Big Push Programme to the Rent Control Bill — creating pathways for public-private collaboration."
+          categories={[
+            { id: "all", label: "All", short: "All" },
+            { id: "funding", label: "Direct Funding", short: "Funding" },
+            { id: "regulatory", label: "Regulatory", short: "Regulatory" },
+            { id: "infrastructure", label: "Infrastructure", short: "Infra" },
+            { id: "partnerships", label: "Partnerships", short: "Partners" },
+          ]}
+        />
         <CrossSectorSection />
         <InvestmentCTASection sector={sectorData} />
         <ImpactSection />

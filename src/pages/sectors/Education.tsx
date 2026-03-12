@@ -1691,6 +1691,155 @@ const CompetitiveLandscapeSection = ({ sector }) => {
 // GOVERNANCE & POLICY SECTION
 // ============================================================================
 
+
+const govPolicies = [
+  {
+    policy: "Ghana Skills Development Fund",
+    body: "Ministry of Education / World Bank",
+    allocation: "$200M",
+    category: "funding",
+    relevance: ["tvet"],
+    alignment: "Largest skills initiative — comprehensive TVET and workforce training reform.",
+    bridgeRole:
+      "Co-funding partner for TVET expansion, leveraging BRIDGE delivery infrastructure and portfolio employment pipeline.",
+    bridgeVentures: ["TVET Partnership Program", "Employment Guarantee Bootcamps"],
+    pillars: ["Employer-responsive training", "Quality assurance", "Graduate tracking"],
+  },
+  {
+    policy: "Free SHS Policy",
+    body: "Ministry of Education",
+    allocation: "GH₵4.2B (2026)",
+    category: "funding",
+    relevance: ["basic"],
+    alignment: "Flagship access policy expanding secondary enrollment — creating a massive TVET-ready pipeline.",
+    bridgeRole:
+      "TVET pathway developer for the surge of SHS graduates entering the workforce, connecting credentials to careers.",
+    bridgeVentures: ["Career Guidance Platform", "TVET Transition Pathways"],
+    pillars: ["Post-SHS pathways", "Skills assessment", "Career counseling"],
+  },
+  {
+    policy: "National Apprenticeship Programme",
+    body: "Ministry of Education",
+    allocation: "GH₵170M (2026)",
+    category: "funding",
+    relevance: ["tvet"],
+    alignment: "Direct skills-to-jobs pipeline formalizing traditional apprenticeship at national scale.",
+    bridgeRole:
+      "Industry-facing complement connecting program graduates to BRIDGE portfolio company employment opportunities.",
+    bridgeVentures: ["Apprenticeship Certification", "Master Craftsperson Network"],
+    pillars: ["Curriculum alignment", "Placement services", "Continuing education"],
+  },
+  {
+    policy: "Free TVET Policy",
+    body: "CTVET / TVET Service",
+    allocation: "47 institutions fee-free",
+    category: "tax",
+    relevance: ["tvet"],
+    alignment: "Removes cost barrier — 47 public TVET institutions now fee-free, 32 new schools underway.",
+    bridgeRole:
+      "Quality enhancement partner for newly free institutions, providing equipment, curriculum, and industry connections.",
+    bridgeVentures: ["TVET Equipment Leasing", "Industry Curriculum Co-Design"],
+    pillars: ["Equipment modernization", "Instructor upskilling", "Industry partnerships"],
+  },
+  {
+    policy: "National Coders Programme",
+    body: "Ministry of Communications / National AI Strategy",
+    allocation: "GH₵100M (2026)",
+    category: "tax",
+    relevance: ["tvet", "tertiary"],
+    alignment: "Government-subsidized coding training targeting 1M Ghanaians — pillar of National AI Strategy.",
+    bridgeRole:
+      "Bootcamp delivery partner integrating BRIDGE technology portfolio employment pipeline for program graduates.",
+    bridgeVentures: ["Digital Skills Bootcamps", "Tech Employment Pipeline"],
+    pillars: ["Coding bootcamps", "Tech employment", "Startup pipeline"],
+  },
+  {
+    policy: "Teacher Trainee Allowances",
+    body: "Ministry of Education",
+    allocation: "GH₵207M (2026)",
+    category: "tax",
+    relevance: ["basic"],
+    alignment: "Direct government subsidy sustaining the educator pipeline — critical for rural retention.",
+    bridgeRole:
+      "ICT training integration for teacher trainees, ensuring graduates can deliver digital-age instruction.",
+    bridgeVentures: ["Teacher ICT Certification", "Rural Educator Support"],
+    pillars: ["Digital pedagogy", "Rural deployment", "Retention incentives"],
+  },
+  {
+    policy: "Smart Schools Project",
+    body: "Ministry of Education",
+    allocation: "1.3M tablets deployed",
+    category: "infrastructure",
+    relevance: ["basic", "tertiary"],
+    alignment: "Digital infrastructure foundation — 1.3M tablets deployed for technology-enabled learning.",
+    bridgeRole:
+      "Digital skills content delivery and employment-linked learning platform integration across Smart Schools network.",
+    bridgeVentures: ["Digital Skills Bootcamps", "EdTech Investment Fund"],
+    pillars: ["Content delivery", "Digital assessment", "Teacher ICT training"],
+  },
+  {
+    policy: "Basic Education Infrastructure",
+    body: "Ministry of Education",
+    allocation: "GH₵2.0B (2026)",
+    category: "infrastructure",
+    relevance: ["basic"],
+    alignment: "Massive build-out — 200 JHS, 200 primary, 200 KG facilities driving construction skills demand.",
+    bridgeRole:
+      "Construction skills training pipeline supplying certified workers for government infrastructure projects.",
+    bridgeVentures: ["Construction Certification", "Kejetia Vendor Training"],
+    pillars: ["Trades training", "Artisan certification", "Project placement"],
+  },
+  {
+    policy: "GSLIP — End Double-Track",
+    body: "Ministry of Education",
+    allocation: "GH₵1.1B (2026)",
+    category: "infrastructure",
+    relevance: ["basic"],
+    alignment: "Eliminates double-track system through infrastructure expansion — improving learning time.",
+    bridgeRole:
+      "Quality improvement partner ensuring expanded facilities include ICT labs, libraries, and TVET workshops.",
+    bridgeVentures: ["School ICT Lab Program", "TVET Workshop Builds"],
+    pillars: ["Quality improvement", "ICT integration", "TVET access"],
+  },
+  {
+    policy: "Mastercard Foundation Scholars",
+    body: "Development Partner",
+    allocation: "Multi-year, $500M+ Africa-wide",
+    category: "partnerships",
+    relevance: ["tertiary"],
+    alignment: "Leading scholarship and youth employment funder with substantial Ghana presence — university focus.",
+    bridgeRole:
+      "Complementary pipeline — Mastercard funds university scholarships, BRIDGE delivers vocational training and employment.",
+    bridgeVentures: ["Service-Linked Scholarships", "Graduate Employment Pipeline"],
+    pillars: ["Scholar transition", "Impact measurement", "Co-funding"],
+  },
+  {
+    policy: "GIZ TVET Programs",
+    body: "German Development Cooperation",
+    allocation: "Technical assistance",
+    category: "partnerships",
+    relevance: ["tvet"],
+    alignment: "German dual training expertise and institutional strengthening for TVET quality improvement.",
+    bridgeRole:
+      "Co-implementation of dual training model adding BRIDGE employment pipeline and private sector delivery capacity.",
+    bridgeVentures: ["TVET Partnership Program", "Dual Training Model"],
+    pillars: ["Quality standards", "Industry linkage", "Sustainability"],
+  },
+  {
+    policy: "CTVET — National TVET Authority",
+    body: "Government of Ghana (Act 1023)",
+    allocation: "National mandate",
+    category: "partnerships",
+    relevance: ["tvet"],
+    alignment: "Regulatory body for all TVET — oversees NTVETQF, accredits institutions, coordinates development.",
+    bridgeRole:
+      "Accreditation partner for all BRIDGE TVET programs, apprenticeship recognition, and quality standard alignment.",
+    bridgeVentures: ["Apprenticeship Certification", "TVET Partnership Program"],
+    pillars: ["Accreditation", "Quality assurance", "Recognition pathway"],
+  },
+];
+
+
 // ============================================================================
 // CROSS-SECTOR INTEGRATION SECTION
 // ============================================================================
@@ -3192,7 +3341,11 @@ export default function EducationSkillsSectorPage() {
 
         <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All Ventures", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Scaling", tier: 2 }, { key: 3, label: "Strategic", tier: 3 }]} />
         <CompetitiveLandscapeSection sector={sectorData} />
-        <PolicyAlignmentSection />
+        <SectorPolicySection
+          policies={govPolicies}
+          title={<>Moving in Step with Ghana's <span className="font-semibold">Education</span>{" "}<span className="font-semibold" style={{ color: colors.accent }}>Reform</span></>}
+          subtitle="From the World Bank's $200M Skills Development Fund to the GH&#8373;4.2B Free SHS commitment, every BRIDGE venture maps to an active government policy or institutional priority."
+        />
         <CrossSectorSection />
         <InvestmentCTASection />
         <ImpactSection />

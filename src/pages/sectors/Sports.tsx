@@ -2138,6 +2138,159 @@ const MarketEcosystemSection = () => {
 // SECTION 6: THE GOVERNANCE & POLICY
 // ============================================================================
 
+const governancePolicies = [
+  {
+    policy: "Black Star Experience Initiative",
+    body: "Ministry of Tourism, Culture & Creative Arts",
+    allocation: "$5B target by 2027",
+    category: "funding",
+    relevance: ["arts"],
+    alignment:
+      "Direct alignment across all seven pillars \u2014 Cinema, Audio, Cuisine, Aesthetics, Style, Literature, Culture.",
+    bridgeRole: "BRIDGE complements with diaspora investment mobilization and implementation capacity.",
+    bridgeVentures: ["Black Star Recording Studios", "Film Production Hub", "Heritage Textiles Platform"],
+    pillars: ["Cinema", "Audio", "Cuisine", "Aesthetics", "Style", "Literature", "Culture"],
+  },
+  {
+    policy: "2026 Budget Creative Industries Seed",
+    body: "Ministry of Finance",
+    allocation: "GHS 20M",
+    category: "funding",
+    relevance: ["arts"],
+    alignment: "Unprecedented direct budget support for creative industries value chain.",
+    bridgeRole:
+      "BRIDGE co-invests to multiply government seed capital into production infrastructure and creative financing.",
+    bridgeVentures: ["Creative Arts Financing Facility", "Film Production Training Institute"],
+    pillars: [],
+  },
+  {
+    policy: "20% Film Tax Rebate",
+    body: "National Film Authority",
+    allocation: "Tax incentive",
+    category: "tax",
+    relevance: ["arts"],
+    alignment: "Enhances viability of Film Production Hub and attracts international co-productions.",
+    bridgeRole: 'Combined with "Shoot in Ghana" momentum including NFL Super Bowl filming.',
+    bridgeVentures: ["Film Production Hub", "Film Production Training Institute"],
+    pillars: [],
+  },
+  {
+    policy: "VAT Elimination on Local Textiles",
+    body: "Ministry of Finance",
+    allocation: "Tax policy",
+    category: "tax",
+    relevance: ["arts"],
+    alignment: "Strengthens heritage textiles competitiveness against counterfeit imports.",
+    bridgeRole: "Creates price advantage for authentic Kente and traditional cloth products.",
+    bridgeVentures: ["Heritage Textiles Market Platform", "Ashanti Fashion Design Incubator"],
+    pillars: [],
+  },
+  {
+    policy: "National Theatre Refurbishment",
+    body: "Chinese Government Partnership",
+    allocation: "$30M commitment",
+    category: "infrastructure",
+    relevance: ["arts", "sport"],
+    alignment: "Major venue infrastructure upgrade for performances, events, and cultural programming.",
+    bridgeRole: "BRIDGE complements with content production capabilities and programming to fill renovated spaces.",
+    bridgeVentures: ["Black Star Recording Studios", "Diaspora Mentorship Network"],
+    pillars: [],
+  },
+  {
+    policy: "Ananse Studio / Pixel Ray Partnership",
+    body: "National Film Authority",
+    allocation: "Multi-million $",
+    category: "partnerships",
+    relevance: ["arts"],
+    alignment: "Government flagship production facility on 200-acre site with NFA partnership.",
+    bridgeRole:
+      "BRIDGE Film Hub complements with mid-budget production focus and training integration \u2014 filling gaps, not competing.",
+    bridgeVentures: ["Film Production Hub", "Film Production Training Institute"],
+    pillars: [],
+  },
+  {
+    policy: "GFA Grassroots Development",
+    body: "Ghana Football Association",
+    allocation: "$200K announced",
+    category: "funding",
+    relevance: ["sport"],
+    alignment: "Signals development intent but critically underfunded relative to talent pipeline scale.",
+    bridgeRole:
+      "BRIDGE fills the massive gap with integrated academy combining athletics, education, and medical support.",
+    bridgeVentures: ["Ghana Youth Football Academy", "Diaspora Mentorship Network"],
+    pillars: [],
+  },
+  {
+    policy: "Creative Arts Agency (Act 1048)",
+    body: "CAA / Mahama Administration",
+    allocation: "Institutional",
+    category: "partnerships",
+    relevance: ["arts", "sport"],
+    alignment: "Newly appointed board and Executive Secretary provide institutional framework for creative sector.",
+    bridgeRole: "BRIDGE engages as implementation and investment partner for capacity building and reform.",
+    bridgeVentures: ["GHAMRO Capacity Building", "Creative Arts Financing Facility"],
+    pillars: [],
+  },
+  {
+    policy: "Import Duty Exemptions on Film Equipment",
+    body: "Ministry of Trade & Industry",
+    allocation: "Tax policy",
+    category: "tax",
+    relevance: ["arts"],
+    alignment:
+      "Reduces production cost barriers by eliminating duties on cameras, lighting, sound, and post-production hardware.",
+    bridgeRole:
+      "Directly lowers capital expenditure for Film Production Hub and Black Star Studios equipment procurement.",
+    bridgeVentures: ["Film Production Hub", "Black Star Recording Studios"],
+    pillars: [],
+  },
+  {
+    policy: "GPL Stadium Modernization Program",
+    body: "National Sports Authority",
+    allocation: "$15M phased",
+    category: "infrastructure",
+    relevance: ["sport"],
+    alignment: "Upgrading Premier League venues to meet CAF standards for broadcast-quality domestic football.",
+    bridgeRole:
+      "BRIDGE complements venue upgrades with fan engagement platforms and broadcast infrastructure investment.",
+    bridgeVentures: ["Ghana Youth Football Academy", "Sports Media & Broadcast Fund"],
+    pillars: [],
+  },
+  {
+    policy: "Detty December Cultural Infrastructure",
+    body: "Ghana Tourism Authority",
+    allocation: "Multi-agency",
+    category: "infrastructure",
+    relevance: ["arts"],
+    alignment:
+      "Festival infrastructure and programming support turning seasonal diaspora visits into year-round cultural economy.",
+    bridgeRole:
+      "BRIDGE builds permanent venue and production capacity that serves festival season and sustains year-round creative output.",
+    bridgeVentures: ["Black Star Recording Studios", "Heritage Experience Tours"],
+    pillars: [],
+  },
+  {
+    policy: "Afreximbank CANEX Program",
+    body: "Afreximbank / Continental",
+    allocation: "$500M continental",
+    category: "partnerships",
+    relevance: ["arts"],
+    alignment:
+      "Creative Africa Nexus provides continental financing framework for creative industries trade and investment.",
+    bridgeRole:
+      "BRIDGE positions Ghana ventures as CANEX implementation partners, accessing continental capital for local creative enterprises.",
+    bridgeVentures: ["Creative Arts Financing Facility", "Heritage Textiles Market Platform"],
+    pillars: [],
+  },
+];
+
+const govCatBadge = {
+  funding: { bg: "rgba(184,217,53,0.15)", border: "rgba(184,217,53,0.3)" },
+  tax: { bg: "rgba(27,77,62,0.07)", border: "rgba(27,77,62,0.15)" },
+  infrastructure: { bg: "rgba(184,217,53,0.1)", border: "rgba(184,217,53,0.25)" },
+  partnerships: { bg: "rgba(27,77,62,0.05)", border: "rgba(27,77,62,0.12)" },
+};
+
 const governanceCategories = [
   { id: "all", label: "All", mobileLabel: "All" },
   { id: "funding", label: "Direct Funding", mobileLabel: "Funding" },
@@ -3981,7 +4134,11 @@ export default function SportsEntertainmentSectorPage() {
       <ValueChainSection />
       <SectorSolutionsSection sector={sectorData} maxSolutions={9} />
       <MarketEcosystemSection />
-      <PolicyAlignmentSection />
+      <SectorPolicySection
+        policies={governancePolicies}
+        title={<>Moving in Step with Ghana's <span className="font-semibold">Creative</span>{" "}<span className="font-semibold" style={{ color: colors.accent }}>Vision</span></>}
+        subtitle="The Black Star Experience and 2026 Budget create an unprecedented policy environment. BRIDGE doesn't replace government initiatives — it complements them with diaspora capital, expertise, and implementation capacity."
+      />
       <CrossSectorSection />
       <InvestmentCTASection sector={sectorData} />
       <ImpactSection />
