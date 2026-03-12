@@ -4048,44 +4048,19 @@ const RippleEffectSection = () => {
                 {(!isMobile || showMoreRipple) && (
                   <div>
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        textTransform: "uppercase",
-                        letterSpacing: "1px",
-                        color: colors.accent,
-                        marginBottom: "16px",
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mb-4"
+                      style={{ color: colors.accent }}
                     >
                       Synergy Pathways
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-2.5">
                       {ripplePathways[activeNode].synergies.map((syn, si) => (
                         <div
                           key={si}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "12px",
-                            padding: "12px 16px",
-                            borderRadius: "10px",
-                            backgroundColor: "rgba(255,255,255,0.05)",
-                            border: "1px solid rgba(255,255,255,0.06)",
-                            overflow: "hidden",
-                          }}
+                          className="flex items-center gap-3 py-3 px-4 rounded-[10px] bg-white/5 border border-white/[0.06] overflow-hidden"
                         >
-                          <span style={{ color: colors.accent, fontSize: "8px", flexShrink: 0 }}>●</span>
-                          <span
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "14px",
-                              color: "rgba(255,255,255,0.75)",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
+                          <span className="text-[8px] shrink-0" style={{ color: colors.accent }}>●</span>
+                          <span className="font-[Inter,sans-serif] text-sm text-white/75 whitespace-nowrap overflow-hidden text-ellipsis">
                             {syn}
                           </span>
                         </div>
@@ -4098,60 +4073,29 @@ const RippleEffectSection = () => {
                 {(!isMobile || showMoreRipple) && (
                   <div>
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        textTransform: "uppercase",
-                        letterSpacing: "1px",
-                        color: colors.accent,
-                        marginBottom: "16px",
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mb-4"
+                      style={{ color: colors.accent }}
                     >
                       Linked Ventures
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-2.5">
                       {ripplePathways[activeNode].bridgeVentures.map((v, vi) => (
                         <div
                           key={vi}
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            backgroundColor: "rgba(184, 217, 53, 0.1)",
-                            border: "1px solid rgba(184, 217, 53, 0.15)",
-                            padding: "14px 18px",
-                            borderRadius: "12px",
-                          }}
+                          className="flex justify-between items-center bg-[rgba(184,217,53,0.1)] border border-[rgba(184,217,53,0.15)] py-3.5 px-[18px] rounded-xl"
                         >
-                          <span
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "14px",
-                              fontWeight: "600",
-                              color: colors.white,
-                            }}
-                          >
+                          <span className="font-[Inter,sans-serif] text-sm font-semibold text-white">
                             {v}
                           </span>
-                          <span style={{ color: colors.accent, fontSize: "16px" }}>→</span>
+                          <span className="text-base" style={{ color: colors.accent }}>→</span>
                         </div>
                       ))}
                     </div>
                     <a
                       href={SECTOR_ROUTES[ripplePathways[activeNode].name] || "/sectors"}
                       onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[ripplePathways[activeNode].name] || "/sectors"); }}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        color: colors.accent,
-                        textDecoration: "none",
-                        marginTop: "20px",
-                      }}
+                      className="inline-flex items-center gap-2 font-[Inter,sans-serif] text-sm font-semibold no-underline mt-5"
+                      style={{ color: colors.accent }}
                     >
                       Explore {ripplePathways[activeNode].name} Sector <span>→</span>
                     </a>

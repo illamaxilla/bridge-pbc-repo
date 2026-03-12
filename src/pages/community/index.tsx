@@ -2015,24 +2015,16 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                     <p className="text-[12px] leading-[1.55]" style={{ color: C.muted, margin: "0 0 16px" }}>{g.desc}</p>
 
                     {/* Member avatars + stats */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <div style={{ display: "flex" }}>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-[10px]">
+                        <div className="flex">
                           {g.avatars.slice(0, 4).map((av, ai) => (
                             <div
                               key={ai}
+                              className="w-[26px] h-[26px] rounded-full text-[9px] font-bold font-[Inter,sans-serif] flex items-center justify-center"
                               style={{
-                                width: 26,
-                                height: 26,
-                                borderRadius: "50%",
                                 background: g.sectorColor,
                                 color: C.white,
-                                fontSize: 9,
-                                fontWeight: 700,
-                                fontFamily: font.body,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
                                 marginLeft: ai > 0 ? -8 : 0,
                                 border: `2px solid ${C.white}`,
                                 zIndex: 4 - ai,
