@@ -2147,110 +2147,50 @@ export default function BRIDGEHomePage() {
               <div
                 ref={insightScrollRef}
                 onScroll={handleInsightScroll}
-                className="insight-snap"
-                style={{
-                  display: "flex",
-                  gap: "16px",
-                  overflowX: "auto",
-                  scrollSnapType: "x mandatory",
-                  scrollbarWidth: "none",
-                }}
+                className="insight-snap flex gap-4 overflow-x-auto snap-x snap-mandatory"
+                style={{ scrollbarWidth: "none" }}
               >
                 {insights.map((insight, index) => (
                   <div
                     key={index}
+                    className="flex-[0_0_100%] min-w-full snap-start rounded-[20px] grid grid-cols-1 overflow-hidden cursor-pointer transition-colors duration-300 ease-in-out"
                     style={{
-                      flex: "0 0 100%",
-                      minWidth: "100%",
-                      scrollSnapAlign: "start",
                       backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
-                      borderRadius: "20px",
-                      display: "grid",
-                      gridTemplateColumns: "1fr",
-                      overflow: "hidden",
-                      cursor: "pointer",
-                      transition: "background-color 0.3s ease",
                     }}
                     onMouseEnter={() => setHoveredInsight(index)}
                     onMouseLeave={() => setHoveredInsight(null)}
                   >
-                    <div
-                      style={{
-                        backgroundColor: "#3D4F4F",
-                        minHeight: "180px",
-                        borderRadius: "16px",
-                        margin: "12px 12px 0",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "rgba(255,255,255,0.3)",
-                        fontSize: "12px",
-                        fontFamily: "Inter, sans-serif",
-                      }}
-                    >
+                    <div className="bg-[#3D4F4F] min-h-[180px] rounded-2xl m-[12px_12px_0] flex items-center justify-center text-white/30 text-xs font-[Inter,sans-serif]">
                       [ Image ]
                     </div>
-                    <div
-                      style={{
-                        padding: "20px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        position: "relative",
-                      }}
-                    >
-                      <div style={{ position: "absolute", top: 0, right: 0, width: "60px", height: "60px" }}>
+                    <div className="p-5 flex flex-col justify-between relative">
+                      <div className="absolute top-0 right-0 w-[60px] h-[60px]">
                         <div
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            right: 0,
-                            width: "60px",
-                            height: "60px",
-                            backgroundColor: colors.background,
-                            borderBottomLeftRadius: "60px",
-                          }}
+                          className="absolute top-0 right-0 w-[60px] h-[60px] rounded-bl-[60px]"
+                          style={{ backgroundColor: colors.background }}
                         />
                       </div>
                       <div>
                         <span
+                          className="text-xs font-semibold tracking-[1.5px] uppercase block mb-4 transition-colors duration-300 ease-in-out"
                           style={{
-                            fontSize: "12px",
-                            fontWeight: "600",
-                            letterSpacing: "1.5px",
                             color: hoveredInsight === index ? colors.primary : colors.accent,
-                            textTransform: "uppercase",
-                            display: "block",
-                            marginBottom: "16px",
-                            transition: "color 0.3s ease",
                           }}
                         >
                           {insight.category}
                         </span>
                         <h3
-                          style={{
-                            fontSize: "18px",
-                            fontWeight: "600",
-                            lineHeight: "1.3",
-                            color: colors.primary,
-                            fontFamily: "Inter, sans-serif",
-                            margin: 0,
-                          }}
+                          className="text-lg font-semibold leading-[1.3] font-[Inter,sans-serif] m-0"
+                          style={{ color: colors.primary }}
                         >
                           {insight.title}
                         </h3>
                       </div>
                       <div className="self-end mt-4">
                         <div
+                          className="w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out"
                           style={{
-                            width: "48px",
-                            height: "48px",
-                            borderRadius: "50%",
                             backgroundColor: hoveredInsight === index ? colors.primary : colors.white,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            transition: "background-color 0.3s ease",
                           }}
                         >
                           <svg
@@ -2260,7 +2200,7 @@ export default function BRIDGEHomePage() {
                             fill="none"
                             stroke={hoveredInsight === index ? colors.white : colors.primary}
                             strokeWidth="2"
-                            style={{ transition: "stroke 0.3s ease" }}
+                            className="transition-[stroke] duration-300 ease-in-out"
                           >
                             <path d="M7 17L17 7M17 7H7M17 7V17" />
                           </svg>
@@ -2271,20 +2211,15 @@ export default function BRIDGEHomePage() {
                 ))}
               </div>
               {/* Mobile dots */}
-              <div
-                className="flex justify-center items-center gap-2 mt-6"
-              >
+              <div className="flex justify-center items-center gap-2 mt-6">
                 {insights.map((_, i) => (
                   <div
                     key={i}
                     onClick={() => scrollToInsight(i)}
+                    className="h-2 rounded cursor-pointer transition-all duration-300 ease-in-out"
                     style={{
                       width: insightIndex === i ? "24px" : "8px",
-                      height: "8px",
-                      borderRadius: "4px",
                       backgroundColor: insightIndex === i ? colors.accent : colors.line,
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
                     }}
                   />
                 ))}
@@ -2301,96 +2236,44 @@ export default function BRIDGEHomePage() {
                   {insights.map((insight, index) => (
                     <div
                       key={index}
+                      className="flex-[0_0_calc(50%-12px)] rounded-3xl grid grid-cols-2 overflow-hidden cursor-pointer transition-colors duration-300 ease-in-out"
                       style={{
-                        flex: "0 0 calc(50% - 12px)",
                         backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
-                        borderRadius: "24px",
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        overflow: "hidden",
-                        cursor: "pointer",
-                        transition: "background-color 0.3s ease",
                       }}
                       onMouseEnter={() => setHoveredInsight(index)}
                       onMouseLeave={() => setHoveredInsight(null)}
                     >
-                      <div
-                        style={{
-                          backgroundColor: "#3D4F4F",
-                          minHeight: "320px",
-                          borderRadius: "20px",
-                          margin: "16px 0 16px 16px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          color: "rgba(255,255,255,0.3)",
-                          fontSize: "12px",
-                          fontFamily: "Inter, sans-serif",
-                        }}
-                      >
+                      <div className="bg-[#3D4F4F] min-h-[320px] rounded-[20px] m-[16px_0_16px_16px] flex items-center justify-center text-white/30 text-xs font-[Inter,sans-serif]">
                         [ Image ]
                       </div>
-                      <div
-                        style={{
-                          padding: "32px",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "space-between",
-                          position: "relative",
-                        }}
-                      >
-                        <div style={{ position: "absolute", top: 0, right: 0, width: "60px", height: "60px" }}>
+                      <div className="p-8 flex flex-col justify-between relative">
+                        <div className="absolute top-0 right-0 w-[60px] h-[60px]">
                           <div
-                            style={{
-                              position: "absolute",
-                              top: 0,
-                              right: 0,
-                              width: "60px",
-                              height: "60px",
-                              backgroundColor: colors.background,
-                              borderBottomLeftRadius: "60px",
-                            }}
+                            className="absolute top-0 right-0 w-[60px] h-[60px] rounded-bl-[60px]"
+                            style={{ backgroundColor: colors.background }}
                           />
                         </div>
                         <div>
                           <span
+                            className="text-xs font-semibold tracking-[1.5px] uppercase block mb-4 transition-colors duration-300 ease-in-out"
                             style={{
-                              fontSize: "12px",
-                              fontWeight: "600",
-                              letterSpacing: "1.5px",
                               color: hoveredInsight === index ? colors.primary : colors.accent,
-                              textTransform: "uppercase",
-                              display: "block",
-                              marginBottom: "16px",
-                              transition: "color 0.3s ease",
                             }}
                           >
                             {insight.category}
                           </span>
                           <h3
-                            style={{
-                              fontSize: "22px",
-                              fontWeight: "600",
-                              lineHeight: "1.3",
-                              color: colors.primary,
-                              fontFamily: "Inter, sans-serif",
-                              margin: 0,
-                            }}
+                            className="text-[22px] font-semibold leading-[1.3] font-[Inter,sans-serif] m-0"
+                            style={{ color: colors.primary }}
                           >
                             {insight.title}
                           </h3>
                         </div>
                         <div className="self-end">
                           <div
+                            className="w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ease-in-out"
                             style={{
-                              width: "48px",
-                              height: "48px",
-                              borderRadius: "50%",
                               backgroundColor: hoveredInsight === index ? colors.primary : colors.white,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              transition: "background-color 0.3s ease",
                             }}
                           >
                             <svg
@@ -2400,7 +2283,7 @@ export default function BRIDGEHomePage() {
                               fill="none"
                               stroke={hoveredInsight === index ? colors.white : colors.primary}
                               strokeWidth="2"
-                              style={{ transition: "stroke 0.3s ease" }}
+                              className="transition-[stroke] duration-300 ease-in-out"
                             >
                               <path d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
@@ -2412,20 +2295,15 @@ export default function BRIDGEHomePage() {
                 </div>
               </div>
               {/* Desktop dots */}
-              <div
-                className="flex justify-center items-center gap-2 mt-9"
-              >
+              <div className="flex justify-center items-center gap-2 mt-9">
                 {Array.from({ length: insights.length - 1 }).map((_, i) => (
                   <div
                     key={i}
                     onClick={() => setInsightIndex(i)}
+                    className="h-2 rounded cursor-pointer transition-all duration-300 ease-in-out"
                     style={{
                       width: insightIndex === i ? "24px" : "8px",
-                      height: "8px",
-                      borderRadius: "4px",
                       backgroundColor: insightIndex === i ? colors.accent : colors.line,
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
                     }}
                   />
                 ))}
@@ -2435,16 +2313,12 @@ export default function BRIDGEHomePage() {
           <div className="text-center mt-12">
             <a href="/insights" className="no-underline">
               <button
+                className="border-none font-semibold font-[Inter,sans-serif] cursor-pointer rounded-[50px]"
                 style={{
                   backgroundColor: colors.accent,
                   color: colors.primary,
-                  border: "none",
                   padding: isMobile ? "12px 24px" : "16px 32px",
                   fontSize: isMobile ? "13px" : "15px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
                 }}
               >
                 More Insights
@@ -2462,19 +2336,10 @@ export default function BRIDGEHomePage() {
           >
             {!isMobile && <div className="flex-1 h-px" style={{ backgroundColor: colors.line }} />}
             <div
+              className="inline-flex items-center gap-2 p-[10px_24px] rounded-[50px] text-xs font-semibold tracking-[1.5px] font-[Inter,sans-serif] uppercase"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "10px 24px",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
-                fontSize: "12px",
-                fontWeight: "600",
-                letterSpacing: "1.5px",
                 color: colors.primary,
-                fontFamily: "Inter, sans-serif",
-                textTransform: "uppercase",
                 backgroundColor: colors.white,
                 margin: isMobile ? "0" : "0 24px",
               }}
@@ -2556,61 +2421,27 @@ export default function BRIDGEHomePage() {
         <div style={{ backgroundColor: colors.primary, paddingTop: isMobile ? "0" : "90px" }}>
           {!isMobile && (
             <div
-              style={{
-                maxWidth: CONTENT_MAX_WIDTH,
-                margin: "0 auto",
-                padding: "0 48px",
-                transform: "translateY(-500px)",
-                marginBottom: "-450px",
-              }}
+              className="mx-auto px-12 -translate-y-[500px] -mb-[450px]"
+              style={{ maxWidth: CONTENT_MAX_WIDTH }}
             >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  borderRadius: "32px",
-                  overflow: "hidden",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
-                }}
-              >
-                <div style={{ backgroundColor: colors.background, padding: "48px" }}>
+              <div className="grid grid-cols-2 rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
+                <div className="p-12" style={{ backgroundColor: colors.background }}>
                   <div
+                    className="inline-flex items-center gap-2 p-[10px_20px] rounded-[50px] text-xs font-semibold tracking-[1.5px] font-[Inter,sans-serif] uppercase mb-6"
                     style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "10px 20px",
                       border: `1px solid ${colors.line}`,
-                      borderRadius: "50px",
-                      fontSize: "12px",
-                      fontWeight: "600",
-                      letterSpacing: "1.5px",
                       color: colors.primary,
-                      fontFamily: "Inter, sans-serif",
-                      textTransform: "uppercase",
-                      marginBottom: "24px",
                     }}
                   >
                     <span
-                      style={{
-                        width: "6px",
-                        height: "6px",
-                        borderRadius: "50%",
-                        backgroundColor: colors.accent,
-                        display: "inline-block",
-                      }}
+                      className="w-1.5 h-1.5 rounded-full inline-block"
+                      style={{ backgroundColor: colors.accent }}
                     />
                     Get In Touch
                   </div>
                   <h2
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "42px",
-                      fontWeight: "300",
-                      lineHeight: "1.2",
-                      color: colors.primary,
-                      margin: "0 0 16px 0",
-                    }}
+                    className="font-[Inter,sans-serif] text-[42px] font-light leading-[1.2] m-[0_0_16px_0]"
+                    style={{ color: colors.primary }}
                   >
                     <span className="font-bold">Let's</span> Connect
                   </h2>
@@ -2667,31 +2498,10 @@ export default function BRIDGEHomePage() {
                   className="bg-[#3D4F4F] relative flex items-center justify-center text-white/30 text-sm font-[Inter,sans-serif]"
                 >
                   [ Image ]
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: "24px",
-                      left: "24px",
-                      right: "24px",
-                      backgroundColor: "rgba(255,255,255,0.95)",
-                      borderRadius: "16px",
-                      padding: "20px 24px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "16px",
-                    }}
-                  >
+                  <div className="absolute bottom-6 left-6 right-6 bg-white/95 rounded-2xl p-[20px_24px] flex items-center gap-4">
                     <div
-                      style={{
-                        width: "48px",
-                        height: "48px",
-                        borderRadius: "50%",
-                        backgroundColor: colors.accent,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
+                      className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: colors.accent }}
                     >
                       <svg
                         width="20"
@@ -2705,16 +2515,11 @@ export default function BRIDGEHomePage() {
                       </svg>
                     </div>
                     <p
-                      style={{
-                        fontSize: "14px",
-                        lineHeight: "1.5",
-                        color: colors.dark,
-                        fontFamily: "Inter, sans-serif",
-                        margin: 0,
-                      }}
+                      className="text-sm leading-[1.5] font-[Inter,sans-serif] m-0"
+                      style={{ color: colors.dark }}
                     >
                       Email us at{" "}
-                      <span style={{ fontWeight: "600", textDecoration: "underline" }}>info@bridgepbc.com</span> or fill
+                      <span className="font-semibold underline">info@bridgepbc.com</span> or fill
                       out our form, and we'll connect within one business day.
                     </p>
                   </div>

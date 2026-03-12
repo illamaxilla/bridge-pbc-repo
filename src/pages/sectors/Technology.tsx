@@ -4012,42 +4012,16 @@ const InvestmentCTASection = () => {
               </div>
 
               {/* Prospectus Bar */}
-              <div
-                style={{
-                  marginTop: "16px",
-                  padding: "14px 20px",
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
-                    color: "rgba(255,255,255,0.45)",
-                  }}
-                >
+              <div className="mt-[16px] px-[20px] py-[14px] bg-white/[0.05] rounded-[12px] flex justify-between items-center shrink-0">
+                <span className="font-[Inter,sans-serif] text-[13px] text-white/45">
                   Full financial model available
                 </span>
                 <a
                   href="/resources"
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    textDecoration: "none",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    flexShrink: 0,
-                  }}
+                  className="font-[Inter,sans-serif] text-[14px] font-bold no-underline inline-flex items-center gap-[6px] shrink-0"
+                  style={{ color: colors.accent }}
                 >
-                  Download Prospectus <span style={{ fontSize: "16px" }}>→</span>
+                  Download Prospectus <span className="text-[16px]">→</span>
                 </a>
               </div>
             </div>
@@ -4057,21 +4031,10 @@ const InvestmentCTASection = () => {
           {isMobile && !showInvestmentDetails && (
             <button
               onClick={() => setShowInvestmentDetails(true)}
+              className="flex items-center justify-center gap-[8px] w-full p-[14px] bg-transparent rounded-[12px] font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                width: "100%",
-                padding: "14px",
-                backgroundColor: "transparent",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "12px",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "600",
                 color: colors.primary,
-                cursor: "pointer",
               }}
             >
               View returns, timeline & impact
@@ -4081,21 +4044,10 @@ const InvestmentCTASection = () => {
           {isMobile && showInvestmentDetails && (
             <button
               onClick={() => setShowInvestmentDetails(false)}
+              className="flex items-center justify-center gap-[8px] w-full p-[14px] bg-transparent rounded-[12px] font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                width: "100%",
-                padding: "14px",
-                backgroundColor: "transparent",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "12px",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "600",
                 color: colors.primary,
-                cursor: "pointer",
               }}
             >
               Show less
@@ -4557,14 +4509,8 @@ const ImpactSection = () => {
             <span style={{ color: colors.accent, fontWeight: "600" }}>Works</span>
           </h2>
           <p
-            style={{
-              fontFamily: "DM Sans, sans-serif",
-              fontSize: isMobile ? "15px" : "16px",
-              color: "#555",
-              maxWidth: "750px",
-              margin: "0",
-              lineHeight: "1.7",
-            }}
+            className="font-['DM_Sans',sans-serif] text-[#555] max-w-[750px] m-0 leading-[1.7]"
+            style={{ fontSize: isMobile ? "15px" : "16px" }}
           >
             When startups scale locally, platforms serve Ghanaian needs, and digital skills reach every region — the
             ripple effects accelerate innovation, create high-value jobs, and position Ghana as a technology leader
@@ -4681,11 +4627,10 @@ const ImpactSection = () => {
         {/* ===== METRICS VIEW ===== */}
         {view === "metrics" && (
           <div
+            className="rounded-[20px] overflow-hidden"
             style={{
               backgroundColor: colors.background,
-              borderRadius: "20px",
               border: `2px solid ${colors.primary}`,
-              overflow: "hidden",
             }}
           >
             {activeMetrics.items.map((item, i) => (
@@ -4696,97 +4641,72 @@ const ImpactSection = () => {
 
         {/* ===== STAKEHOLDER VIEW ===== */}
         {view === "stakeholder" && (
-          <div style={{ opacity: animate ? 1 : 0, transition: "opacity 0.3s ease" }}>
+          <div className="transition-opacity duration-300 ease-in-out" style={{ opacity: animate ? 1 : 0 }}>
             {/* Title + Stat header */}
             <div
+              className="flex justify-between mb-[24px]"
               style={{
-                display: "flex",
-                justifyContent: "space-between",
                 alignItems: isMobile ? "flex-start" : "center",
-                marginBottom: "24px",
                 flexDirection: isMobile ? "column" : "row",
                 gap: isMobile ? "12px" : "0",
               }}
             >
               <div>
                 <div
+                  className="font-['DM_Sans',sans-serif] font-bold mb-[4px]"
                   style={{
-                    fontFamily: "DM Sans, sans-serif",
                     fontSize: isMobile ? "24px" : "28px",
-                    fontWeight: "700",
                     color: colors.primary,
-                    marginBottom: "4px",
                   }}
                 >
                   {activeStk.title}
                 </div>
-                <div style={{ fontFamily: "DM Sans, sans-serif", fontSize: "14px", color: "#888" }}>
+                <div className="font-['DM_Sans',sans-serif] text-[14px] text-[#888]">
                   {activeStk.subtitle}
                 </div>
               </div>
               <div style={{ textAlign: isMobile ? "left" : "right" }}>
                 <div
+                  className="font-[Poppins,sans-serif] font-bold tracking-[-1.5px] leading-none"
                   style={{
-                    fontFamily: "Poppins, sans-serif",
                     fontSize: isMobile ? "32px" : "40px",
-                    fontWeight: "700",
                     color: colors.primary,
-                    letterSpacing: "-1.5px",
-                    lineHeight: "1",
                   }}
                 >
                   {activeStk.stat}
                 </div>
-                <div style={{ fontFamily: "DM Sans, sans-serif", fontSize: "12px", color: "#888", marginTop: "4px" }}>
+                <div className="font-['DM_Sans',sans-serif] text-[12px] text-[#888] mt-[4px]">
                   {activeStk.statLabel}
                 </div>
               </div>
             </div>
 
             {/* Outcome rows */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div className="flex flex-col gap-[6px]">
               {activeStk.outcomes.map((outcome, i) => {
                 const isEven = i % 2 === 0;
                 return (
                   <div
                     key={i}
+                    className="px-[20px] py-[14px] rounded-[12px] flex items-center gap-[14px]"
                     style={{
-                      padding: "14px 20px",
-                      borderRadius: "12px",
                       backgroundColor: isEven ? colors.background : "transparent",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "14px",
                       opacity: animate ? 1 : 0,
                       transition: `opacity 0.4s ease ${i * 0.08}s`,
                     }}
                   >
                     <div
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "50%",
-                        backgroundColor: isEven ? colors.white : colors.background,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
+                      className="w-[28px] h-[28px] rounded-full flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: isEven ? colors.white : colors.background }}
                     >
                       <span
-                        style={{
-                          fontFamily: "DM Sans, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: "700",
-                          color: colors.primary,
-                        }}
+                        className="font-['DM_Sans',sans-serif] text-[12px] font-bold"
+                        style={{ color: colors.primary }}
                       >
                         {i + 1}
                       </span>
                     </div>
-                    <span
-                      style={{ fontFamily: "DM Sans, sans-serif", fontSize: "15px", color: "#333", lineHeight: "1.5" }}
-                    >
+                    <span className="font-['DM_Sans',sans-serif] text-[15px] text-[#333] leading-[1.5]">
                       {outcome}
                     </span>
                   </div>
@@ -4796,38 +4716,20 @@ const ImpactSection = () => {
 
             {/* Key Advantage Strip */}
             <div
+              className="mt-[24px] px-[24px] py-[16px] rounded-[12px] flex items-center"
               style={{
-                marginTop: "24px",
-                padding: "16px 24px",
                 backgroundColor: colors.primary,
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
                 flexWrap: isMobile ? "wrap" : "nowrap",
                 gap: isMobile ? "8px" : "16px",
               }}
             >
               <span
-                style={{
-                  fontFamily: "DM Sans, sans-serif",
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  flexShrink: 0,
-                }}
+                className="font-['DM_Sans',sans-serif] text-[10px] font-bold uppercase tracking-[1.5px] shrink-0"
+                style={{ color: colors.accent }}
               >
                 Key Advantage
               </span>
-              <span
-                style={{
-                  fontFamily: "DM Sans, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  color: "rgba(255,255,255,0.85)",
-                }}
-              >
+              <span className="font-['DM_Sans',sans-serif] text-[14px] font-medium text-white/85">
                 {activeStk.highlight}
               </span>
             </div>

@@ -3162,137 +3162,91 @@ const InvestmentCTASection = ({ sector }) => {
 
         {/* Content Grid */}
         <div
+          className="grid items-stretch"
           style={{
-            display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
             gap: isMobile ? "24px" : "48px",
-            alignItems: "stretch",
             padding: isMobile ? "0 20px" : 0,
           }}
         >
           {/* Left Column */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="flex flex-col">
             {!isMobile && (
               <h3
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "32px",
-                  fontWeight: "300",
-                  lineHeight: "1.25",
-                  letterSpacing: "-0.3px",
-                  color: colors.primary,
-                  margin: "0 0 16px 0",
-                  minHeight: "80px",
-                  display: "flex",
-                  alignItems: "flex-end",
-                }}
+                className="font-[Inter,sans-serif] text-[32px] font-light leading-[1.25] tracking-[-0.3px] min-h-[80px] flex items-end"
+                style={{ color: colors.primary, margin: "0 0 16px 0" }}
               >
                 {activeAudienceData.headline}
               </h3>
             )}
             {!isMobile && (
-              <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "15px",
-                  color: "#555",
-                  lineHeight: "1.7",
-                  margin: "0 0 24px 0",
-                  minHeight: "100px",
-                }}
-              >
+              <p className="font-[Inter,sans-serif] text-[15px] text-[#555] leading-[1.7] min-h-[100px]" style={{ margin: "0 0 24px 0" }}>
                 {activeAudienceData.pitch}
               </p>
             )}
 
             {/* Stat Cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "24px" }}>
+            <div className="grid grid-cols-3 gap-3 mb-6">
               {activeAudienceData.stats.map((stat, idx) => (
                 <div
                   key={idx}
+                  className="rounded-[12px] text-center flex flex-col justify-center"
                   style={{
                     backgroundColor: colors.white,
-                    borderRadius: "12px",
                     padding: isMobile ? "16px 10px" : "18px 14px",
-                    textAlign: "center",
                     border: `1px solid ${colors.line}`,
                     minHeight: isMobile ? "auto" : "110px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
                   }}
                 >
                   <div
+                    className="font-[Poppins,sans-serif] font-bold leading-[1.1] mb-1"
                     style={{
-                      fontFamily: "Poppins, sans-serif",
                       fontSize: isMobile ? "20px" : "26px",
-                      fontWeight: "700",
                       color: colors.accent,
-                      lineHeight: "1.1",
-                      marginBottom: "4px",
                     }}
                   >
                     {stat.value}
                   </div>
                   <div
+                    className="font-[Inter,sans-serif] font-semibold mb-[2px]"
                     style={{
-                      fontFamily: "Inter, sans-serif",
                       fontSize: isMobile ? "11px" : "12px",
-                      fontWeight: "600",
                       color: colors.primary,
-                      marginBottom: "2px",
                     }}
                   >
                     {stat.label}
                   </div>
-                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: "10px", color: "#888" }}>{stat.detail}</div>
+                  <div className="font-[Inter,sans-serif] text-[10px] text-[#888]">{stat.detail}</div>
                 </div>
               ))}
             </div>
 
             {/* Engagement Pathways */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
+            <div className="flex-1 flex flex-col gap-[10px] mb-5">
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.primary,
-                  marginBottom: "4px",
-                  opacity: 0.5,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1px] mb-1 opacity-50"
+                style={{ color: colors.primary }}
               >
                 Your Engagement
               </div>
               {activeAudienceData.pathways.map((path, idx) => (
                 <div
                   key={idx}
+                  className="flex items-start gap-3 rounded-[10px]"
                   style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "12px",
                     padding: "12px 16px",
                     backgroundColor: colors.white,
-                    borderRadius: "10px",
                     border: `1px solid ${colors.line}`,
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+                  <div className="flex flex-col gap-1 flex-1">
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-semibold"
+                      style={{ color: colors.primary }}
                     >
                       {path.bring}
                     </div>
-                    <div
-                      style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#777", lineHeight: "1.5" }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[12px] text-[#777] leading-[1.5]">
                       {path.get}
                     </div>
                   </div>
@@ -3301,20 +3255,11 @@ const InvestmentCTASection = ({ sector }) => {
             </div>
 
             {/* Validation Bar */}
-            <div
-              style={{
-                padding: "14px 18px",
-                backgroundColor: "rgba(27, 77, 62, 0.06)",
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <div style={{ color: colors.primary, flexShrink: 0, display: "flex" }}>
+            <div className="rounded-[12px] flex items-center gap-3" style={{ padding: "14px 18px", backgroundColor: "rgba(27, 77, 62, 0.06)" }}>
+              <div className="shrink-0 flex" style={{ color: colors.primary }}>
                 <IconCheck />
               </div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#444", lineHeight: "1.5" }}>
+              <div className="font-[Inter,sans-serif] text-[13px] text-[#444] leading-[1.5]">
                 <strong style={{ color: colors.primary }}>Ministry of Works, Housing & Water Resources</strong> aligned
                 with national housing delivery targets
               </div>
@@ -3324,41 +3269,25 @@ const InvestmentCTASection = ({ sector }) => {
           {/* Right Column: Green Panel */}
           {(!isMobile || showInvestmentDetails) && (
             <div
+              className="flex flex-col"
               style={{
                 backgroundColor: colors.primary,
                 borderRadius: isMobile ? "16px" : "20px",
                 padding: isMobile ? "20px" : "28px",
-                display: "flex",
-                flexDirection: "column",
               }}
             >
               {/* Tab Selector */}
-              <div
-                style={{
-                  display: "flex",
-                  backgroundColor: "rgba(255,255,255,0.08)",
-                  borderRadius: "12px",
-                  padding: "4px",
-                  marginBottom: "20px",
-                  flexShrink: 0,
-                }}
-              >
+              <div className="flex rounded-[12px] p-1 mb-5 shrink-0" style={{ backgroundColor: "rgba(255,255,255,0.08)" }}>
                 {tabs.map((tab) => (
                   <button
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
+                    className="flex-1 border-none rounded-[10px] text-[14px] font-[Inter,sans-serif] cursor-pointer transition-all duration-200 ease-in-out"
                     style={{
-                      flex: 1,
                       backgroundColor: activeTab === tab.key ? colors.accent : "transparent",
                       color: activeTab === tab.key ? colors.primary : "rgba(255,255,255,0.5)",
-                      border: "none",
                       padding: "12px 20px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
                       fontWeight: activeTab === tab.key ? "700" : "500",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
                     }}
                   >
                     {tab.label}
@@ -3367,61 +3296,36 @@ const InvestmentCTASection = ({ sector }) => {
               </div>
 
               {/* Tab Content — bordered row layout */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flex: 1,
-                  borderRadius: "16px",
-                  overflow: "hidden",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-              >
+              <div className="flex flex-col flex-1 rounded-[16px] overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
                 {tabContent[activeTab].map((item, idx) => (
                   <div
                     key={idx}
+                    className="flex items-center"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
                       gap: isMobile ? "14px" : "20px",
                       padding: isMobile ? "16px 18px" : "20px 24px",
                       backgroundColor: "rgba(255,255,255,0.04)",
                       borderTop: idx > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
                     }}
                   >
-                    <div style={{ width: isMobile ? "90px" : "120px", flexShrink: 0 }}>
+                    <div className="shrink-0" style={{ width: isMobile ? "90px" : "120px" }}>
                       <div
+                        className="font-[Poppins,sans-serif] font-bold leading-[1.1]"
                         style={{
-                          fontFamily: "Poppins, sans-serif",
                           fontSize: isMobile ? "20px" : "24px",
-                          fontWeight: "700",
                           color: colors.accent,
-                          lineHeight: "1.1",
                         }}
                       >
                         {item.value}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "8px",
-                          fontWeight: "700",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                          color: "rgba(255,255,255,0.35)",
-                          marginTop: "4px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[8px] font-bold uppercase tracking-[0.5px] text-[rgba(255,255,255,0.35)] mt-1">
                         {item.label}
                       </div>
                     </div>
                     <div
+                      className="font-[Inter,sans-serif] text-[rgba(255,255,255,0.6)] leading-[1.55] flex-1"
                       style={{
-                        fontFamily: "Inter, sans-serif",
                         fontSize: isMobile ? "13px" : "14px",
-                        color: "rgba(255,255,255,0.6)",
-                        lineHeight: "1.55",
-                        flex: 1,
                         borderLeft: "1px solid rgba(255,255,255,0.08)",
                         paddingLeft: isMobile ? "14px" : "20px",
                       }}
@@ -3433,37 +3337,17 @@ const InvestmentCTASection = ({ sector }) => {
               </div>
 
               {/* Prospectus Bar */}
-              <div
-                style={{
-                  marginTop: "16px",
-                  padding: "14px 20px",
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)" }}>
+              <div className="mt-4 rounded-[12px] flex justify-between items-center shrink-0" style={{ padding: "14px 20px", backgroundColor: "rgba(255,255,255,0.05)" }}>
+                <span className="font-[Inter,sans-serif] text-[13px] text-[rgba(255,255,255,0.45)]">
                   Full financial model available
                 </span>
                 <a
                   href="/resources"
                   onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    textDecoration: "none",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    flexShrink: 0,
-                  }}
+                  className="font-[Inter,sans-serif] text-[14px] font-bold no-underline inline-flex items-center gap-[6px] shrink-0"
+                  style={{ color: colors.accent }}
                 >
-                  Download Prospectus <span style={{ fontSize: "16px" }}>→</span>
+                  Download Prospectus <span className="text-[16px]">→</span>
                 </a>
               </div>
             </div>
@@ -3473,21 +3357,11 @@ const InvestmentCTASection = ({ sector }) => {
           {isMobile && !showInvestmentDetails && (
             <button
               onClick={() => setShowInvestmentDetails(true)}
+              className="flex items-center justify-center gap-2 w-full bg-transparent rounded-[12px] font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                width: "100%",
                 padding: "14px",
-                backgroundColor: "transparent",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "12px",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "600",
                 color: colors.primary,
-                cursor: "pointer",
               }}
             >
               View returns, timeline & impact
@@ -3720,52 +3594,33 @@ const ImpactSection = () => {
 
   return (
     <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "80px 32px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: "1100px" }}>
         {/* Header */}
         <span
+          className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
           style={{
-            display: "inline-block",
             backgroundColor: colors.white,
             border: `1px solid ${colors.line}`,
             color: colors.primary,
             padding: "10px 20px",
-            borderRadius: "50px",
-            fontSize: "11px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            fontFamily: "Inter, sans-serif",
-            marginBottom: "24px",
           }}
         >
           The Impact
         </span>
         <h2
+          className="font-[Inter,sans-serif] font-light tracking-[-0.5px] leading-[1.2]"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "28px" : "42px",
-            fontWeight: "300",
             color: colors.primary,
             margin: "0 0 12px 0",
-            letterSpacing: "-0.5px",
-            lineHeight: "1.2",
           }}
         >
-          What Changes When <span style={{ fontWeight: "600" }}>Housing</span>
+          What Changes When <span className="font-semibold">Housing</span>
           <br />
-          <span style={{ fontWeight: "600" }}>Markets</span>{" "}
-          <span style={{ fontWeight: "600", color: colors.accent }}>Work</span>
+          <span className="font-semibold">Markets</span>{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Work</span>
         </h2>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "16px",
-            color: "#666",
-            lineHeight: "1.65",
-            maxWidth: "680px",
-            margin: "0 0 40px 0",
-          }}
-        >
+        <p className="font-[Inter,sans-serif] text-[16px] text-[#666] leading-[1.65] max-w-[680px]" style={{ margin: "0 0 40px 0" }}>
           When families access affordable homes, construction creates local jobs, and mortgage systems serve the middle
           class — the ripple effects build wealth, stabilize communities, and drive economic growth across Ghana.
         </p>
@@ -3773,39 +3628,21 @@ const ImpactSection = () => {
         {/* Controls Bar */}
         {isMobile ? (
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0",
-              border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
-              padding: "4px",
-              marginBottom: "24px",
-            }}
+            className="inline-flex items-center rounded-full p-1 mb-6"
+            style={{ border: `1px solid ${colors.line}` }}
           >
             {/* Shaded toggle group */}
-            <div
-              style={{
-                display: "inline-flex",
-                backgroundColor: colors.background,
-                borderRadius: "50px",
-                padding: "2px",
-              }}
-            >
+            <div className="inline-flex rounded-full p-[2px]" style={{ backgroundColor: colors.background }}>
               {["metrics", "stakeholder"].map((v) => (
                 <button
                   key={v}
                   onClick={() => switchView(v)}
+                  className="rounded-full border-none font-[Inter,sans-serif] text-[11px] cursor-pointer"
                   style={{
                     padding: "5px 12px",
-                    borderRadius: "50px",
-                    border: "none",
                     backgroundColor: view === v ? colors.white : "transparent",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
                     fontWeight: view === v ? "700" : "500",
                     color: view === v ? colors.primary : "#999",
-                    cursor: "pointer",
                     boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
                   }}
                 >
@@ -3814,25 +3651,19 @@ const ImpactSection = () => {
               ))}
             </div>
             {/* Divider */}
-            <div
-              style={{ width: "1px", height: "20px", backgroundColor: colors.line, margin: "0 6px", flexShrink: 0 }}
-            />
+            <div className="w-px h-5 shrink-0 mx-[6px]" style={{ backgroundColor: colors.line }} />
             {/* Sub-filters */}
             {view === "metrics"
               ? metrics.map((m, idx) => (
                   <button
                     key={m.category}
                     onClick={() => switchCategory(idx)}
+                    className="rounded-full bg-transparent font-[Inter,sans-serif] text-[11px] cursor-pointer"
                     style={{
                       padding: "5px 10px",
-                      borderRadius: "50px",
                       border: activeCategory === idx ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                      backgroundColor: "transparent",
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "11px",
                       fontWeight: activeCategory === idx ? "700" : "500",
                       color: activeCategory === idx ? colors.primary : "#999",
-                      cursor: "pointer",
                     }}
                   >
                     {m.category}
@@ -3842,16 +3673,12 @@ const ImpactSection = () => {
                   <button
                     key={s.title}
                     onClick={() => setActiveStakeholder(idx)}
+                    className="rounded-full bg-transparent font-[Inter,sans-serif] text-[11px] cursor-pointer"
                     style={{
                       padding: "5px 10px",
-                      borderRadius: "50px",
                       border: activeStakeholder === idx ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                      backgroundColor: "transparent",
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "11px",
                       fontWeight: activeStakeholder === idx ? "700" : "500",
                       color: activeStakeholder === idx ? colors.primary : "#999",
-                      cursor: "pointer",
                     }}
                   >
                     {s.title.split(" ")[1]}
@@ -3859,30 +3686,24 @@ const ImpactSection = () => {
                 ))}
           </div>
         ) : (
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "24px", flexWrap: "wrap" }}>
+          <div className="flex items-center gap-4 mb-6 flex-wrap">
             <div
+              className="inline-flex rounded-full p-1"
               style={{
-                display: "inline-flex",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
                 backgroundColor: colors.background,
-                padding: "4px",
               }}
             >
               {["metrics", "stakeholder"].map((v) => (
                 <button
                   key={v}
                   onClick={() => switchView(v)}
+                  className="rounded-full border-none font-[Inter,sans-serif] text-[12px] cursor-pointer"
                   style={{
                     padding: "6px 16px",
-                    borderRadius: "50px",
-                    border: "none",
                     backgroundColor: view === v ? colors.white : "transparent",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "12px",
                     fontWeight: view === v ? "700" : "500",
                     color: view === v ? colors.primary : "#999",
-                    cursor: "pointer",
                     boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
                   }}
                 >
@@ -3890,22 +3711,19 @@ const ImpactSection = () => {
                 </button>
               ))}
             </div>
-            <div style={{ width: "1px", height: "24px", backgroundColor: colors.line }} />
+            <div className="w-px h-6" style={{ backgroundColor: colors.line }} />
             {view === "metrics"
               ? metrics.map((m, idx) => (
                   <button
                     key={m.category}
                     onClick={() => switchCategory(idx)}
+                    className="rounded-full font-[Inter,sans-serif] text-[12px] cursor-pointer"
                     style={{
                       padding: "6px 16px",
-                      borderRadius: "50px",
                       border: activeCategory === idx ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
                       backgroundColor: activeCategory === idx ? colors.accentLight : "transparent",
                       color: activeCategory === idx ? colors.primary : "#999",
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "12px",
                       fontWeight: activeCategory === idx ? "700" : "500",
-                      cursor: "pointer",
                     }}
                   >
                     {m.category}
@@ -3915,16 +3733,13 @@ const ImpactSection = () => {
                   <button
                     key={s.title}
                     onClick={() => setActiveStakeholder(idx)}
+                    className="rounded-full font-[Inter,sans-serif] text-[12px] cursor-pointer"
                     style={{
                       padding: "6px 16px",
-                      borderRadius: "50px",
                       border: activeStakeholder === idx ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
                       backgroundColor: activeStakeholder === idx ? colors.accentLight : "transparent",
                       color: activeStakeholder === idx ? colors.primary : "#999",
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "12px",
                       fontWeight: activeStakeholder === idx ? "700" : "500",
-                      cursor: "pointer",
                     }}
                   >
                     {s.title.split(" ")[1]}
@@ -3936,11 +3751,10 @@ const ImpactSection = () => {
         {/* Content Area */}
         {view === "metrics" ? (
           <div
+            className="rounded-[20px] overflow-hidden"
             style={{
               backgroundColor: colors.background,
-              borderRadius: "20px",
               border: `2px solid ${colors.primary}`,
-              overflow: "hidden",
             }}
           >
             {activeMetrics.items.map((item, idx) => (
@@ -3954,143 +3768,79 @@ const ImpactSection = () => {
                 }}
               >
                 {isMobile ? (
-                  /* Mobile: tag top-right, stacked layout */
                   <>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        marginBottom: "8px",
-                      }}
-                    >
+                    <div className="flex justify-between items-start mb-2">
                       <div
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "28px",
-                          fontWeight: "700",
-                          color: colors.primary,
-                          letterSpacing: "-1px",
-                        }}
+                        className="font-[Poppins,sans-serif] text-[28px] font-bold tracking-[-1px]"
+                        style={{ color: colors.primary }}
                       >
                         {item.prefix}
                         {useCounter(item.value, 1200, animate)}
                         {item.suffix}
                       </div>
                       <span
+                        className="font-[Inter,sans-serif] text-[9px] font-bold uppercase tracking-[0.5px] rounded-[20px] whitespace-nowrap shrink-0"
                         style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "9px",
-                          fontWeight: "700",
                           color: colors.accent,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
                           backgroundColor: "rgba(184,217,53,0.12)",
                           padding: "4px 10px",
-                          borderRadius: "20px",
-                          whiteSpace: "nowrap",
-                          flexShrink: 0,
                         }}
                       >
                         {item.trend}
                       </span>
                     </div>
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "15px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                        marginBottom: "4px",
-                      }}
+                      className="font-[Inter,sans-serif] text-[15px] font-bold mb-1"
+                      style={{ color: colors.primary }}
                     >
                       {item.label}
                     </div>
-                    <div
-                      style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#666", lineHeight: "1.5" }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[13px] text-[#666] leading-[1.5]">
                       {item.description}
                     </div>
                   </>
                 ) : (
-                  /* Desktop: original grid layout */
                   <>
                     <div>
                       <div
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "36px",
-                          fontWeight: "700",
-                          color: colors.primary,
-                          letterSpacing: "-1px",
-                        }}
+                        className="font-[Poppins,sans-serif] text-[36px] font-bold tracking-[-1px]"
+                        style={{ color: colors.primary }}
                       >
                         {item.prefix}
                         {useCounter(item.value, 1200, animate)}
                         {item.suffix}
                       </div>
                       <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "10px",
-                          fontWeight: "700",
-                          color: colors.accent,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                          marginTop: "4px",
-                        }}
+                        className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px] mt-1"
+                        style={{ color: colors.accent }}
                       >
                         {item.trend}
                       </div>
                     </div>
                     <div>
                       <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: "700",
-                          color: colors.primary,
-                          marginBottom: "4px",
-                        }}
+                        className="font-[Inter,sans-serif] text-[15px] font-bold mb-1"
+                        style={{ color: colors.primary }}
                       >
                         {item.label}
                       </div>
-                      <div
-                        style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#666", lineHeight: "1.5" }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-[#666] leading-[1.5]">
                         {item.description}
                       </div>
                     </div>
                     <div
+                      className="rounded-[10px]"
                       style={{
-                        borderRadius: "10px",
                         padding: "10px 16px",
                         backgroundColor: idx % 2 === 0 ? colors.background : "rgba(27,77,62,0.04)",
                       }}
                     >
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "9px",
-                          fontWeight: "700",
-                          color: "#aaa",
-                          textTransform: "uppercase",
-                          letterSpacing: "1px",
-                          marginBottom: "6px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[9px] font-bold text-[#aaa] uppercase tracking-[1px] mb-[6px]">
                         LINKED VENTURES
                       </div>
                       <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          fontWeight: "500",
-                          color: colors.primary,
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
+                        className="font-[Inter,sans-serif] text-[11px] font-medium whitespace-nowrap overflow-hidden text-ellipsis"
+                        style={{ color: colors.primary }}
                       >
                         {item.ventures}
                       </div>
@@ -4103,85 +3853,60 @@ const ImpactSection = () => {
         ) : (
           <div>
             {/* Stakeholder Header */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                marginBottom: "24px",
-              }}
-            >
+            <div className="flex justify-between items-start mb-6">
               <div>
                 <div
+                  className="font-[Inter,sans-serif] font-bold"
                   style={{
-                    fontFamily: "Inter, sans-serif",
                     fontSize: isMobile ? "22px" : "28px",
-                    fontWeight: "700",
                     color: colors.primary,
                   }}
                 >
                   {activeS.title}
                 </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#888", marginTop: "4px" }}>
+                <div className="font-[Inter,sans-serif] text-[14px] text-[#888] mt-1">
                   {activeS.subtitle}
                 </div>
               </div>
-              <div style={{ textAlign: "right" }}>
+              <div className="text-right">
                 <div
+                  className="font-[Poppins,sans-serif] font-bold tracking-[-1.5px]"
                   style={{
-                    fontFamily: "Poppins, sans-serif",
                     fontSize: isMobile ? "32px" : "40px",
-                    fontWeight: "700",
                     color: colors.primary,
-                    letterSpacing: "-1.5px",
                   }}
                 >
                   {activeS.stat}
                 </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#888" }}>
+                <div className="font-[Inter,sans-serif] text-[12px] text-[#888]">
                   {activeS.statLabel}
                 </div>
               </div>
             </div>
 
             {/* Outcome Rows */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div className="flex flex-col gap-[6px]">
               {activeS.outcomes.map((outcome, idx) => (
                 <div
                   key={idx}
+                  className="flex items-center gap-4 rounded-[12px]"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "16px",
                     padding: "14px 20px",
-                    borderRadius: "12px",
                     backgroundColor: idx % 2 === 0 ? colors.background : "transparent",
                   }}
                 >
                   <div
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      borderRadius: "50%",
-                      backgroundColor: idx % 2 === 0 ? colors.white : colors.background,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
+                    className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: idx % 2 === 0 ? colors.white : colors.background }}
                   >
                     <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-bold"
+                      style={{ color: colors.primary }}
                     >
                       {idx + 1}
                     </span>
                   </div>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "15px", color: "#333", lineHeight: "1.5" }}>
+                  <span className="font-[Inter,sans-serif] text-[15px] text-[#333] leading-[1.5]">
                     {outcome}
                   </span>
                 </div>
@@ -4190,36 +3915,16 @@ const ImpactSection = () => {
 
             {/* Key Advantage Strip */}
             <div
-              style={{
-                marginTop: "24px",
-                padding: "16px 24px",
-                backgroundColor: colors.primary,
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-              }}
+              className="mt-6 rounded-[12px] flex items-center"
+              style={{ padding: "16px 24px", backgroundColor: colors.primary }}
             >
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                }}
+                className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[1.5px]"
+                style={{ color: colors.accent }}
               >
                 KEY ADVANTAGE
               </span>
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  color: "rgba(255,255,255,0.85)",
-                  marginLeft: "16px",
-                }}
-              >
+              <span className="font-[Inter,sans-serif] text-[14px] font-medium text-[rgba(255,255,255,0.85)] ml-4">
                 {activeS.highlight}
               </span>
             </div>
@@ -4237,107 +3942,68 @@ const FinalCTASection = () => {
   const isMobile = useIsMobile();
   return (
     <section
-      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px", textAlign: "center" }}
+      className="text-center"
+      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}
     >
-      <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+      <div className="max-w-[900px] mx-auto text-center">
         <span
+          className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
           style={{
-            display: "inline-block",
             backgroundColor: "rgba(255,255,255,0.08)",
             border: "1px solid rgba(255,255,255,0.15)",
             color: colors.accent,
             padding: "10px 20px",
-            borderRadius: "50px",
-            fontSize: "11px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            fontFamily: "Inter, sans-serif",
-            marginBottom: "24px",
           }}
         >
           Be Part of the Journey
         </span>
         <h2
+          className="font-[Inter,sans-serif] font-light leading-[1.2]"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "32px" : "48px",
-            fontWeight: "300",
-            lineHeight: "1.2",
             color: colors.white,
             margin: "0 0 24px 0",
           }}
         >
-          Let's Build Ghana's <span style={{ color: colors.accent, fontWeight: "600" }}>Housing Future</span>
+          Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Housing Future</span>
         </h2>
         <p
+          className="font-[Inter,sans-serif] leading-[1.7] text-[rgba(255,255,255,0.7)] max-w-[620px] mx-auto"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "16px" : "18px",
-            lineHeight: "1.7",
-            color: "rgba(255,255,255,0.7)",
             margin: "0 0 40px 0",
-            maxWidth: "620px",
-            marginLeft: "auto",
-            marginRight: "auto",
           }}
         >
           Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
           sustainable communities.
         </p>
         <div
-          style={{
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            gap: "16px",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          className="flex gap-4 justify-center items-center"
+          style={{ flexDirection: isMobile ? "column" : "row" }}
         >
           <button
+            className="border-none rounded-full text-[15px] font-bold font-['DM_Sans',sans-serif] cursor-pointer flex items-center justify-center gap-[10px]"
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
-              border: "none",
               padding: isMobile ? "16px 28px" : "14px 28px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "700",
-              fontFamily: "'DM Sans', sans-serif",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
               width: isMobile ? "100%" : "auto",
             }}
           >
             Start a Conversation
             <span
-              style={{
-                width: "28px",
-                height: "28px",
-                backgroundColor: colors.white,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              className="w-7 h-7 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: colors.white }}
             >
               <ArrowUpRight size={14} strokeWidth={2.5} color={colors.primary} />
             </span>
           </button>
           <button
+            className="bg-transparent rounded-full text-[14px] font-semibold font-['DM_Sans',sans-serif] cursor-pointer"
             style={{
-              backgroundColor: "transparent",
               color: "rgba(255,255,255,0.8)",
               border: "1.5px solid rgba(255,255,255,0.25)",
               padding: isMobile ? "16px 28px" : "14px 28px",
-              borderRadius: "50px",
-              fontSize: "14px",
-              fontWeight: "600",
-              fontFamily: "'DM Sans', sans-serif",
-              cursor: "pointer",
               width: isMobile ? "100%" : "auto",
             }}
           >

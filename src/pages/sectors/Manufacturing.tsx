@@ -2454,46 +2454,34 @@ const PolicyAlignmentSection = () => {
           </div>
         )}
         <div
+          className="rounded-2xl flex items-center gap-4"
           style={{
             backgroundColor: colors.primary,
-            borderRadius: "16px",
             padding: isMobile ? "24px" : "28px 32px",
-            display: "flex",
             flexDirection: isMobile ? "column" : "row",
             justifyContent: "space-between",
-            alignItems: isMobile ? "center" : "center",
-            gap: "16px",
             textAlign: isMobile ? "center" : "left",
           }}
         >
           <div>
             <div
+              className="font-['DM_Sans',sans-serif] font-semibold mb-1"
               style={{
-                fontFamily: "'DM Sans', sans-serif",
                 fontSize: isMobile ? "16px" : "18px",
-                fontWeight: "600",
                 color: colors.white,
-                marginBottom: "4px",
               }}
             >
               BRIDGE complements — never competes with — government vision.
             </div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.6)" }}>
+            <div className="font-['DM_Sans',sans-serif] text-[14px] text-white/60">
               Every venture aligns with at least one active government policy or initiative.
             </div>
           </div>
           <button
+            className="border-none rounded-full text-[14px] font-bold font-['DM_Sans',sans-serif] cursor-pointer shrink-0 py-[14px] px-8"
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
-              border: "none",
-              padding: "14px 32px",
-              borderRadius: "50px",
-              fontSize: "14px",
-              fontWeight: "700",
-              fontFamily: "'DM Sans', sans-serif",
-              cursor: "pointer",
-              flexShrink: 0,
             }}
           >
             View Partnership Strategy
@@ -2804,22 +2792,14 @@ const ImpactSection = () => {
 
   return (
     <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "80px 32px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <div className="max-w-[1100px] mx-auto">
         {/* Pill */}
         <span
+          className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-['DM_Sans',sans-serif] mb-6 px-5 py-[10px]"
           style={{
-            display: "inline-block",
             backgroundColor: colors.white,
             border: `1px solid ${colors.line}`,
             color: colors.primary,
-            padding: "10px 20px",
-            borderRadius: "50px",
-            fontSize: "11px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            fontFamily: "'DM Sans', sans-serif",
-            marginBottom: "24px",
           }}
         >
           The Impact
@@ -2907,7 +2887,7 @@ const ImpactSection = () => {
               ))}
             </div>
             {/* Vertical Divider */}
-            <div style={{ width: "1px", height: "20px", backgroundColor: colors.line, flexShrink: 0 }} />
+            <div className="w-px h-5 shrink-0" style={{ backgroundColor: colors.line }} />
             {/* Sub-filter Pills */}
             {view === "metrics"
               ? impactMetrics.map((cat, i) => (
@@ -3034,49 +3014,31 @@ const ImpactSection = () => {
             </div>
 
             {/* Outcome Rows */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div className="flex flex-col gap-[6px]">
               {stk.outcomes.map((outcome, i) => (
                 <div
                   key={i}
+                  className="flex items-center rounded-xl"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
                     gap: isMobile ? "12px" : "16px",
                     padding: isMobile ? "12px 16px" : "14px 20px",
-                    borderRadius: "12px",
                     backgroundColor: i % 2 === 0 ? colors.background : "transparent",
                   }}
                 >
                   <div
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: i % 2 === 0 ? colors.white : colors.background,
-                      flexShrink: 0,
-                    }}
+                    className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: i % 2 === 0 ? colors.white : colors.background }}
                   >
                     <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                        fontFamily: "'DM Sans', sans-serif",
-                      }}
+                      className="text-[12px] font-bold font-['DM_Sans',sans-serif]"
+                      style={{ color: colors.primary }}
                     >
                       {i + 1}
                     </span>
                   </div>
                   <span
-                    style={{
-                      fontSize: isMobile ? "14px" : "15px",
-                      color: "#333",
-                      fontFamily: "'DM Sans', sans-serif",
-                      lineHeight: "1.5",
-                    }}
+                    className="text-[#333] font-['DM_Sans',sans-serif] leading-[1.5]"
+                    style={{ fontSize: isMobile ? "14px" : "15px" }}
                   >
                     {outcome}
                   </span>
@@ -3137,25 +3099,17 @@ function CompetitorAnalysisCard({ competitors, currentIndex, setCurrentIndex, hi
   const c = competitors[currentIndex];
   return (
     <div
+      className="rounded-[20px] flex flex-col"
       style={{
         backgroundColor: colors.white,
-        borderRadius: "20px",
         border: `1px solid ${colors.line}`,
         padding: isMobile ? "24px" : "28px",
-        display: "flex",
-        flexDirection: "column",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
+      <div className="flex justify-between items-start mb-[14px]">
         <h3
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "18px",
-            fontWeight: "600",
-            color: colors.dark,
-            margin: 0,
-            lineHeight: "1.3",
-          }}
+          className="font-[Inter,sans-serif] text-[18px] font-semibold m-0 leading-[1.3]"
+          style={{ color: colors.dark }}
         >
           {c.name}
         </h3>
@@ -3187,20 +3141,18 @@ function CompetitorAnalysisCard({ competitors, currentIndex, setCurrentIndex, hi
       >
         {c.focus}
       </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
+      <div className="flex flex-col gap-[10px] mb-5">
         {c.strengths.map((s, si) => (
-          <div key={si} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
-            <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#666", whiteSpace: "nowrap" }}>
+          <div key={si} className="flex items-center justify-between gap-3">
+            <span className="font-[Inter,sans-serif] text-[13px] text-[#666] whitespace-nowrap">
               {s.name}
             </span>
-            <div style={{ display: "flex", gap: "3px" }}>
+            <div className="flex gap-[3px]">
               {[1, 2, 3, 4, 5].map((v) => (
                 <div
                   key={v}
+                  className="w-4 h-[6px] rounded-[3px]"
                   style={{
-                    width: "16px",
-                    height: "6px",
-                    borderRadius: "3px",
                     backgroundColor: v <= s.rating ? colors.accent : colors.line,
                   }}
                 />
@@ -3211,82 +3163,45 @@ function CompetitorAnalysisCard({ competitors, currentIndex, setCurrentIndex, hi
       </div>
 
       {isExpanded && (
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              fontSize: "10px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "1.5px",
-              color: "#888",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "10px",
-            }}
-          >
+        <div className="mb-5">
+          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-[#888] font-[Inter,sans-serif] mb-[10px]">
             Where BRIDGE Helps
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "16px" }}>
+          <div className="flex flex-col gap-[6px] mb-4">
             {c.gaps.map((g, gi) => (
               <div
                 key={gi}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  fontSize: "13px",
-                  fontFamily: "Inter, sans-serif",
-                  color: "#555",
-                }}
+                className="flex items-center gap-2 text-[13px] font-[Inter,sans-serif] text-[#555]"
               >
-                <span style={{ color: colors.accent, flexShrink: 0 }}>{"\u2192"}</span>
+                <span className="shrink-0" style={{ color: colors.accent }}>{"\u2192"}</span>
                 {g}
               </div>
             ))}
           </div>
           <div
+            className="rounded-xl p-[14px_16px]"
             style={{
               backgroundColor: colors.accentLight,
               border: `1px solid ${colors.accent}`,
-              borderRadius: "12px",
-              padding: "14px 16px",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+            <div className="flex items-center gap-2 mb-[6px]">
               <div
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
+                className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
+                style={{ backgroundColor: colors.accent }}
               >
-                <span style={{ fontSize: "10px", fontWeight: "700", color: colors.primary }}>{"\u2726"}</span>
+                <span className="text-[10px] font-bold" style={{ color: colors.primary }}>{"\u2726"}</span>
               </div>
               <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.primary,
-                  fontFamily: "Inter, sans-serif",
-                }}
+                className="text-[10px] font-bold uppercase tracking-[1px] font-[Inter,sans-serif]"
+                style={{ color: colors.primary }}
               >
                 BRIDGE Opportunity
               </span>
             </div>
             <p
-              style={{
-                fontSize: "13px",
-                fontFamily: "Inter, sans-serif",
-                color: colors.primary,
-                margin: 0,
-                lineHeight: "1.5",
-              }}
+              className="text-[13px] font-[Inter,sans-serif] m-0 leading-[1.5]"
+              style={{ color: colors.primary }}
             >
               {c.bridgeOpportunity}
             </p>
@@ -3295,40 +3210,27 @@ function CompetitorAnalysisCard({ competitors, currentIndex, setCurrentIndex, hi
       )}
 
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          borderTop: `1px solid ${colors.line}`,
-          paddingTop: "16px",
-          marginTop: "auto",
-        }}
+        className="flex items-center justify-between pt-4 mt-auto"
+        style={{ borderTop: `1px solid ${colors.line}` }}
       >
         {!hiddenNav ? (
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div className="flex items-center gap-3">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setCurrentIndex(currentIndex > 0 ? currentIndex - 1 : competitors.length - 1);
                 setIsExpanded(false);
               }}
+              className="w-8 h-8 rounded-full cursor-pointer flex items-center justify-center text-[14px]"
               style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
                 border: `1px solid ${colors.line}`,
                 backgroundColor: colors.white,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "14px",
                 color: colors.primary,
               }}
             >
               {"\u25C0"}
             </button>
-            <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#999" }}>
+            <span className="font-[Inter,sans-serif] text-[13px] text-[#999]">
               {currentIndex + 1} / {competitors.length}
             </span>
             <button
@@ -3337,17 +3239,10 @@ function CompetitorAnalysisCard({ competitors, currentIndex, setCurrentIndex, hi
                 setCurrentIndex(currentIndex < competitors.length - 1 ? currentIndex + 1 : 0);
                 setIsExpanded(false);
               }}
+              className="w-8 h-8 rounded-full cursor-pointer flex items-center justify-center text-[14px]"
               style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
                 border: `1px solid ${colors.line}`,
                 backgroundColor: colors.white,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "14px",
                 color: colors.primary,
               }}
             >
@@ -3362,19 +3257,10 @@ function CompetitorAnalysisCard({ competitors, currentIndex, setCurrentIndex, hi
             e.stopPropagation();
             setIsExpanded(!isExpanded);
           }}
+          className="bg-transparent rounded-full py-[6px] px-4 text-[12px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center gap-[6px]"
           style={{
-            backgroundColor: "transparent",
             border: `1px solid ${colors.line}`,
-            borderRadius: "50px",
-            padding: "6px 16px",
-            fontSize: "12px",
-            fontWeight: "600",
-            fontFamily: "Inter, sans-serif",
             color: colors.primary,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
           }}
         >
           Analysis{" "}
@@ -3464,49 +3350,30 @@ function CompetitiveLandscapeSection({ sector }) {
 
   return (
     <section style={{ backgroundColor: colors.background, padding: isMobile ? "60px 20px" : "100px 80px" }}>
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         <div style={{ marginBottom: isMobile ? "32px" : "60px" }}>
           <span
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Landscape
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[820px] mt-0 mb-4"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
-              margin: "0 0 16px 0",
-              maxWidth: "820px",
             }}
           >
-            Building With Ghana's <span style={{ color: colors.accent, fontWeight: "600" }}>Industrial Pioneers</span>
+            Building With Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Industrial Pioneers</span>
           </h2>
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "15px" : "16px",
-              lineHeight: "1.65",
-              color: "#666",
-              maxWidth: "680px",
-              margin: 0,
-            }}
+            className="font-[Inter,sans-serif] leading-[1.65] text-[#666] max-w-[680px] m-0"
+            style={{ fontSize: isMobile ? "15px" : "16px" }}
           >
             GIPC, AGI, and 1D1F anchor Ghana's industrial base. BRIDGE adds quality certification and supply chain
             integration — combining industrial policy with private sector execution.
@@ -3940,51 +3807,27 @@ const CrossSectorSection = () => {
 
   return (
     <section style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}>
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "48px" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
+        <div className="text-center" style={{ marginBottom: isMobile ? "32px" : "48px" }}>
           <span
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
             style={{
-              display: "inline-block",
               backgroundColor: "rgba(184,217,53,0.15)",
               color: colors.accent,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Ripple Effect
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[820px] mx-auto mt-0 mb-5"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
               color: colors.white,
-              margin: "0 0 20px 0",
-              letterSpacing: "-0.5px",
-              maxWidth: "820px",
-              marginLeft: "auto",
-              marginRight: "auto",
             }}
           >
-            How Manufacturing Amplifies <span style={{ color: colors.accent, fontWeight: "600" }}>Impact</span>
+            How Manufacturing Amplifies <span className="font-semibold" style={{ color: colors.accent }}>Impact</span>
           </h2>
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "16px",
-              color: "rgba(255,255,255,0.6)",
-              maxWidth: "680px",
-              margin: "0 auto",
-              lineHeight: "1.65",
-            }}
-          >
+          <p className="font-[Inter,sans-serif] text-[16px] text-white/60 max-w-[680px] mx-auto leading-[1.65]">
             Every manufacturing venture creates compounding value across BRIDGE sectors. Explore how one investment
             becomes many.
           </p>
@@ -3992,18 +3835,13 @@ const CrossSectorSection = () => {
 
         {/* Pathway Visual */}
         {isMobile ? (
-          <div style={{ marginBottom: "24px" }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
+          <div className="mb-6">
+            <div className="flex justify-center mb-4">
+              <div className="flex flex-col items-center gap-[6px]">
                 <div
+                  className="w-14 h-14 rounded-[14px] flex items-center justify-center"
                   style={{
-                    width: "56px",
-                    height: "56px",
-                    borderRadius: "14px",
                     backgroundColor: colors.accent,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                     color: colors.primary,
                     boxShadow: "0 0 24px rgba(184, 217, 53, 0.3)",
                   }}
@@ -4011,14 +3849,8 @@ const CrossSectorSection = () => {
                   <Factory size={24} strokeWidth={1.5} />
                 </div>
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "10px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
+                  className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px]"
+                  style={{ color: colors.accent }}
                 >
                   Manufacturing
                 </span>
@@ -4079,30 +3911,14 @@ const CrossSectorSection = () => {
             </div>
           </div>
         ) : (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              gap: "32px",
-              marginBottom: "48px",
-            }}
-          >
-            <div
-              style={{ width: "120px", display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}
-            >
+          <div className="flex items-start justify-center gap-8 mb-12">
+            <div className="w-[120px] flex flex-col items-center shrink-0">
               <div
+                className="w-20 h-20 rounded-[20px] flex items-center justify-center mb-[10px]"
                 style={{
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "20px",
                   backgroundColor: colors.accent,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   color: colors.primary,
                   boxShadow: "0 0 30px rgba(184, 217, 53, 0.3)",
-                  marginBottom: "10px",
                 }}
               >
                 <Factory size={32} strokeWidth={1.5} />
@@ -4306,15 +4122,8 @@ const CrossSectorSection = () => {
                 {/* Column 1: Why It Matters */}
                 <div>
                   <h4
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      textTransform: "uppercase",
-                      letterSpacing: "1px",
-                      color: colors.accent,
-                      marginBottom: "16px",
-                    }}
+                    className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mb-4"
+                    style={{ color: colors.accent }}
                   >
                     Why It Matters
                   </h4>

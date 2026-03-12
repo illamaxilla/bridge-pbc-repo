@@ -2776,49 +2776,32 @@ const CrossSectorSection = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
         <div style={{ marginBottom: isMobile ? "32px" : "60px", textAlign: isMobile ? "center" : "left" }}>
           <span
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
             style={{
-              display: "inline-block",
               backgroundColor: "rgba(184, 217, 53, 0.15)",
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
               color: colors.accent,
-              marginBottom: "24px",
             }}
           >
             The Ripple Effect
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[820px] mt-0 mb-5"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.white,
-              margin: "0 0 20px 0",
-              maxWidth: "820px",
             }}
           >
-            How Education <span style={{ color: colors.accent, fontWeight: "600" }}>Amplifies Impact</span> Across Every
+            How Education <span className="font-semibold" style={{ color: colors.accent }}>Amplifies Impact</span> Across Every
             Sector
           </h2>
           <p
+            className="font-[Inter,sans-serif] leading-[1.65] text-white/60 m-0 max-w-[680px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "15px" : "16px",
-              lineHeight: "1.65",
-              color: "rgba(255,255,255,0.6)",
-              margin: 0,
-              maxWidth: "680px",
               ...(isMobile
                 ? {
                     display: "-webkit-box",
@@ -2837,41 +2820,29 @@ const CrossSectorSection = () => {
         {/* ============ PATHWAY VISUAL ============ */}
         {isMobile ? (
           /* ---- MOBILE: Hub on top, 5 icons below ---- */
-          <div style={{ marginBottom: "24px" }}>
+          <div className="mb-6">
             {/* Hub Icon */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "16px" }}>
+            <div className="flex flex-col items-center mb-4">
               <div
+                className="w-14 h-14 rounded-[14px] flex items-center justify-center mb-1.5"
                 style={{
-                  width: "56px",
-                  height: "56px",
-                  borderRadius: "14px",
                   backgroundColor: colors.accent,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   color: colors.primary,
                   boxShadow: "0 0 24px rgba(184, 217, 53, 0.3)",
-                  marginBottom: "6px",
                 }}
               >
                 <IconGraduation />
               </div>
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[0.5px]"
+                style={{ color: colors.accent }}
               >
                 Education
               </span>
             </div>
 
             {/* 5 Sector Icons Row */}
-            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+            <div className="flex justify-center gap-3">
               {pathways.map((p, i) => {
                 const isActive = activeNode === i;
                 return (
@@ -2881,43 +2852,22 @@ const CrossSectorSection = () => {
                       setActiveNode(isActive ? null : i);
                       setShowMoreRipple(false);
                     }}
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      opacity: activeNode !== null && !isActive ? 0.4 : 1,
-                      transition: "all 0.3s ease",
-                    }}
+                    className="flex flex-col items-center cursor-pointer transition-all duration-300"
+                    style={{ opacity: activeNode !== null && !isActive ? 0.4 : 1 }}
                   >
                     <div
+                      className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 mb-1.5"
                       style={{
-                        width: "44px",
-                        height: "44px",
-                        borderRadius: "12px",
                         backgroundColor: isActive ? colors.accent : "rgba(255,255,255,0.08)",
                         border: isActive ? "none" : "1px solid rgba(255,255,255,0.1)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
                         color: isActive ? colors.primary : "rgba(255,255,255,0.6)",
-                        transition: "all 0.3s ease",
-                        marginBottom: "6px",
                       }}
                     >
                       {p.icon}
                     </div>
                     <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "10px",
-                        fontWeight: "600",
-                        color: isActive ? colors.white : "rgba(255,255,255,0.5)",
-                        textAlign: "center",
-                        maxWidth: "58px",
-                        lineHeight: "1.2",
-                        transition: "all 0.3s ease",
-                      }}
+                      className="font-[Inter,sans-serif] text-[10px] font-semibold text-center max-w-[58px] leading-[1.2] transition-all duration-300"
+                      style={{ color: isActive ? colors.white : "rgba(255,255,255,0.5)" }}
                     >
                       {crossSectorMobileNames[i]}
                     </span>
@@ -2928,37 +2878,15 @@ const CrossSectorSection = () => {
           </div>
         ) : (
           /* ---- DESKTOP: Horizontal icon row ---- */
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              gap: "32px",
-              marginBottom: "48px",
-            }}
-          >
+          <div className="flex items-start justify-center gap-8 mb-12">
             {/* Hub Icon */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: "120px",
-                flexShrink: 0,
-              }}
-            >
+            <div className="flex flex-col items-center w-[120px] shrink-0">
               <div
+                className="w-20 h-20 rounded-[20px] flex items-center justify-center mb-[10px]"
                 style={{
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "20px",
                   backgroundColor: colors.accent,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   color: colors.primary,
                   boxShadow: "0 0 30px rgba(184, 217, 53, 0.3)",
-                  marginBottom: "10px",
                 }}
               >
                 <IconGraduation />
@@ -2972,55 +2900,28 @@ const CrossSectorSection = () => {
                 <div
                   key={i}
                   onClick={() => setActiveNode(isActive ? null : i)}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    width: "120px",
-                    cursor: "pointer",
-                    opacity: activeNode !== null && !isActive ? 0.4 : 1,
-                    transition: "all 0.3s ease",
-                  }}
+                  className="flex flex-col items-center w-[120px] cursor-pointer transition-all duration-300"
+                  style={{ opacity: activeNode !== null && !isActive ? 0.4 : 1 }}
                 >
                   <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 mb-[10px]"
                     style={{
-                      width: "56px",
-                      height: "56px",
-                      borderRadius: "16px",
                       backgroundColor: isActive ? colors.accent : "rgba(255,255,255,0.08)",
                       border: isActive ? "none" : "1px solid rgba(255,255,255,0.1)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
                       color: isActive ? colors.primary : "rgba(255,255,255,0.6)",
-                      transition: "all 0.3s ease",
-                      marginBottom: "10px",
                     }}
                   >
                     {p.icon}
                   </div>
                   <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      color: isActive ? colors.white : "rgba(255,255,255,0.5)",
-                      textAlign: "center",
-                      transition: "all 0.3s ease",
-                      whiteSpace: "nowrap",
-                    }}
+                    className="font-[Inter,sans-serif] text-[13px] font-semibold text-center transition-all duration-300 whitespace-nowrap"
+                    style={{ color: isActive ? colors.white : "rgba(255,255,255,0.5)" }}
                   >
                     {crossSectorShortNames[i]}
                   </span>
                   <span
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "20px",
-                      fontWeight: "700",
-                      color: isActive ? colors.accent : "rgba(255,255,255,0.3)",
-                      marginTop: "4px",
-                      transition: "all 0.3s ease",
-                    }}
+                    className="font-[Poppins,sans-serif] text-[20px] font-bold mt-1 transition-all duration-300"
+                    style={{ color: isActive ? colors.accent : "rgba(255,255,255,0.3)" }}
                   >
                     {p.multiplier}
                   </span>
@@ -3044,110 +2945,43 @@ const CrossSectorSection = () => {
           {activeNode === null ? (
             /* ---- DEFAULT STATE ---- */
             isMobile ? (
-              <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <p
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "15px",
-                    color: "rgba(255,255,255,0.5)",
-                    margin: 0,
-                    lineHeight: "1.6",
-                  }}
-                >
+              <div className="text-center py-5">
+                <p className="font-[Inter,sans-serif] text-[15px] text-white/50 m-0 leading-[1.6]">
                   Tap a sector above to explore how education amplifies its impact
                 </p>
               </div>
             ) : (
               <div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "24px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                      color: colors.white,
-                    }}
-                  >
+                <div className="flex justify-between items-center mb-6">
+                  <span className="font-[Inter,sans-serif] text-[16px] font-semibold" style={{ color: colors.white }}>
                     Cross-Sector Integration Opportunities
                   </span>
-                  <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "13px",
-                      color: "rgba(255,255,255,0.4)",
-                    }}
-                  >
+                  <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                     Click a sector above to explore
                   </span>
                 </div>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(5, 1fr)",
-                    gap: "16px",
-                  }}
-                >
+                <div className="grid grid-cols-5 gap-4">
                   {pathways.map((p, i) => (
                     <div
                       key={i}
                       onClick={() => setActiveNode(i)}
+                      className="rounded-2xl cursor-pointer transition-all duration-300"
                       style={{
                         backgroundColor: "rgba(255,255,255,0.05)",
-                        borderRadius: "16px",
                         padding: "24px 20px",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease",
                       }}
                     >
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: colors.white,
-                          marginBottom: "8px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[14px] font-semibold mb-2" style={{ color: colors.white }}>
                         {p.name}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.45)",
-                          height: "40px",
-                          overflow: "hidden",
-                          lineHeight: "1.5",
-                          marginBottom: "12px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-white/45 h-10 overflow-hidden leading-[1.5] mb-3">
                         {p.connection}
                       </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-                        <span
-                          style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "18px",
-                            fontWeight: "700",
-                            color: colors.accent,
-                          }}
-                        >
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="font-[Poppins,sans-serif] text-[18px] font-bold" style={{ color: colors.accent }}>
                           {p.multiplier}
                         </span>
-                        <span
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "11px",
-                            color: "rgba(255,255,255,0.4)",
-                          }}
-                        >
+                        <span className="font-[Inter,sans-serif] text-[11px] text-white/40">
                           multiplier
                         </span>
                       </div>
@@ -3160,31 +2994,20 @@ const CrossSectorSection = () => {
             /* ---- ACTIVE STATE ---- */
             <div>
               {/* Breadcrumb Path */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  flexWrap: "wrap",
-                  marginBottom: "28px",
-                }}
-              >
+              <div className="flex items-center gap-2 flex-wrap mb-7">
                 {pathways[activeNode].pathLabel.split(" → ").map((step, i, arr) => (
                   <React.Fragment key={i}>
                     <span
+                      className="font-[Inter,sans-serif] text-[13px] rounded-[20px] px-[14px] py-1.5"
                       style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
                         fontWeight: i === 0 ? "700" : "500",
                         color: i === 0 ? colors.accent : "rgba(255,255,255,0.7)",
                         backgroundColor: i === 0 ? "rgba(184, 217, 53, 0.15)" : "rgba(255,255,255,0.05)",
-                        padding: "6px 14px",
-                        borderRadius: "20px",
                       }}
                     >
                       {step}
                     </span>
-                    {i < arr.length - 1 && <span style={{ color: colors.accent, fontSize: "14px" }}>→</span>}
+                    {i < arr.length - 1 && <span className="text-[14px]" style={{ color: colors.accent }}>→</span>}
                   </React.Fragment>
                 ))}
               </div>

@@ -1931,36 +1931,25 @@ const GovernanceSection = () => {
         )}
 
         <div
+          className="rounded-2xl flex gap-4 text-left"
           style={{
             backgroundColor: colors.primary,
-            borderRadius: "16px",
             padding: isMobile ? "20px 24px" : "28px 32px",
-            display: "flex",
             justifyContent: isMobile ? "flex-start" : "space-between",
             alignItems: isMobile ? "flex-start" : "center",
             flexDirection: isMobile ? "column" : "row",
-            gap: "16px",
-            textAlign: "left",
           }}
         >
           <div>
             <div
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: isMobile ? "16px" : "18px",
-                fontWeight: "600",
-                color: colors.white,
-              }}
+              className="font-['DM_Sans',sans-serif] font-semibold"
+              style={{ fontSize: isMobile ? "16px" : "18px", color: colors.white }}
             >
               BRIDGE complements — never competes with — government vision.
             </div>
             <div
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: isMobile ? "13px" : "14px",
-                color: "rgba(255,255,255,0.6)",
-                marginTop: "4px",
-              }}
+              className="font-['DM_Sans',sans-serif] text-white/60 mt-1"
+              style={{ fontSize: isMobile ? "13px" : "14px" }}
             >
               Every venture aligns with at least one active government policy or initiative.
             </div>
@@ -1968,17 +1957,10 @@ const GovernanceSection = () => {
           <a
             href="/contact"
             onClick={(e) => { e.preventDefault(); navigate("/contact"); }}
+            className="font-['DM_Sans',sans-serif] text-[13px] font-bold rounded-full no-underline whitespace-nowrap text-center px-6 py-3"
             style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "13px",
-              fontWeight: "700",
               color: colors.primary,
               backgroundColor: colors.accent,
-              padding: "12px 24px",
-              borderRadius: "50px",
-              textDecoration: "none",
-              whiteSpace: "nowrap",
-              textAlign: "center",
               alignSelf: isMobile ? "center" : "auto",
             }}
           >
@@ -2134,51 +2116,27 @@ const RippleEffectSection = () => {
             maxWidth: "820px",
           }}
         >
-          How Transportation <span style={{ color: colors.accent, fontWeight: "600" }}>Amplifies Impact</span>
+          How Transportation <span className="font-semibold" style={{ color: colors.accent }}>Amplifies Impact</span>
         </h2>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "16px",
-            lineHeight: "1.65",
-            color: "rgba(255,255,255,0.6)",
-            maxWidth: "680px",
-            margin: "0 auto 48px",
-          }}
-        >
+        <p className="font-[Inter,sans-serif] text-[16px] leading-[1.65] text-white/60 max-w-[680px] mx-auto mb-12" style={{ margin: "0 auto 48px" }}>
           When goods move efficiently, transit systems serve workers, and logistics costs fall — the ripple effects
           connect producers to markets, reduce consumer prices, and accelerate commerce across Ghana.
         </p>
 
         {/* Icon Row */}
         {isMobile ? (
-          <div style={{ marginBottom: "24px" }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
+          <div className="mb-6">
+            <div className="flex justify-center mb-4">
+              <div className="flex flex-col items-center gap-[6px]">
                 <div
-                  style={{
-                    width: "56px",
-                    height: "56px",
-                    borderRadius: "14px",
-                    backgroundColor: colors.accent,
-                    color: colors.primary,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxShadow: "0 0 24px rgba(184, 217, 53, 0.3)",
-                  }}
+                  className="w-14 h-14 rounded-[14px] flex items-center justify-center"
+                  style={{ backgroundColor: colors.accent, color: colors.primary, boxShadow: "0 0 24px rgba(184, 217, 53, 0.3)" }}
                 >
                   <IconTruck />
                 </div>
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "10px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                  }}
+                  className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px]"
+                  style={{ color: colors.accent }}
                 >
                   TRANSPORT
                 </span>
@@ -2906,7 +2864,7 @@ const InvestmentThesisSection = () => {
 
   return (
     <section style={{ backgroundColor: colors.background, padding: isMobile ? "60px 0" : "100px 80px" }}>
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         <div
           style={{
             textAlign: isMobile ? "center" : "left",
@@ -2915,39 +2873,17 @@ const InvestmentThesisSection = () => {
           }}
         >
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px 20px",
-              border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              letterSpacing: "2px",
-              color: colors.primary,
-              fontFamily: "Inter, sans-serif",
-              textTransform: "uppercase",
-              marginBottom: "24px",
-              backgroundColor: colors.white,
-            }}
+            className="inline-flex items-center gap-2 px-5 py-[10px] rounded-full text-[11px] font-bold tracking-[2px] font-[Inter,sans-serif] uppercase mb-6"
+            style={{ border: `1px solid ${colors.line}`, color: colors.primary, backgroundColor: colors.white }}
           >
             Investment Opportunity
           </div>
           <h2
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
-              color: colors.primary,
-              margin: isMobile ? "0 auto 16px" : "0 0 16px",
-              maxWidth: "820px",
-            }}
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[820px]"
+            style={{ fontSize: isMobile ? "28px" : "42px", color: colors.primary, margin: isMobile ? "0 auto 16px" : "0 0 16px" }}
           >
-            Every <span style={{ fontWeight: "600" }}>Stakeholder</span> Has a Role in{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Ghana's Logistics Transformation</span>
+            Every <span className="font-semibold">Stakeholder</span> Has a Role in{" "}
+            <span className="font-semibold" style={{ color: colors.accent }}>Ghana's Logistics Transformation</span>
           </h2>
           <p
             style={{
@@ -3811,56 +3747,25 @@ const ImpactSection = () => {
 
   return (
     <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "100px 80px" }}>
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Header */}
-        <div style={{ textAlign: "left", marginBottom: isMobile ? "24px" : "40px" }}>
+        <div className="text-left" style={{ marginBottom: isMobile ? "24px" : "40px" }}>
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px 20px",
-              border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              letterSpacing: "2px",
-              color: colors.primary,
-              fontFamily: "Inter, sans-serif",
-              textTransform: "uppercase",
-              marginBottom: "24px",
-              backgroundColor: colors.white,
-            }}
+            className="inline-flex items-center gap-2 px-5 py-[10px] rounded-full text-[11px] font-bold tracking-[2px] font-[Inter,sans-serif] uppercase mb-6"
+            style={{ border: `1px solid ${colors.line}`, color: colors.primary, backgroundColor: colors.white }}
           >
             The Impact
           </div>
           <h2
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
-              color: colors.primary,
-              margin: "0 0 12px",
-              maxWidth: "820px",
-            }}
+            className="font-['DM_Sans',sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[820px]"
+            style={{ fontSize: isMobile ? "28px" : "42px", color: colors.primary, margin: "0 0 12px" }}
           >
-            What Changes When <span style={{ fontWeight: "600" }}>Transport</span>
+            What Changes When <span className="font-semibold">Transport</span>
             {isMobile ? " " : <br />}
-            <span style={{ fontWeight: "600" }}>Networks</span>{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Work</span>
+            <span className="font-semibold">Networks</span>{" "}
+            <span className="font-semibold" style={{ color: colors.accent }}>Work</span>
           </h2>
-          <p
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "16px",
-              color: "#555",
-              lineHeight: "1.7",
-              margin: "0",
-              maxWidth: "680px",
-            }}
-          >
+          <p className="font-['DM_Sans',sans-serif] text-[16px] text-[#555] leading-[1.7] m-0 max-w-[680px]">
             When goods move efficiently, transit systems serve workers, and logistics costs fall — the ripple effects
             connect producers to markets, reduce consumer prices, and accelerate commerce across Ghana.
           </p>
@@ -4113,110 +4018,54 @@ const FinalCTASection = () => {
   const isMobile = useIsMobile();
   return (
     <section
-      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px", textAlign: "center" }}
+      className="text-center"
+      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}
     >
-      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <div className="max-w-[900px] mx-auto">
         <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "10px 20px",
-            border: "1px solid rgba(255,255,255,0.15)",
-            borderRadius: "50px",
-            fontSize: "11px",
-            fontWeight: "700",
-            letterSpacing: "2px",
-            color: colors.accent,
-            fontFamily: "Inter, sans-serif",
-            textTransform: "uppercase",
-            marginBottom: "24px",
-            backgroundColor: "rgba(255,255,255,0.08)",
-          }}
+          className="inline-flex items-center gap-2 px-5 py-[10px] rounded-full text-[11px] font-bold tracking-[2px] font-[Inter,sans-serif] uppercase mb-6 border border-white/15 bg-white/[0.08]"
+          style={{ color: colors.accent }}
         >
           Be Part of the Journey
         </div>
         <h2
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "32px" : "48px",
-            fontWeight: "300",
-            lineHeight: "1.2",
-            color: colors.white,
-            margin: "0 0 24px 0",
-          }}
+          className="font-[Inter,sans-serif] font-light leading-[1.2]"
+          style={{ fontSize: isMobile ? "32px" : "48px", color: colors.white, margin: "0 0 24px 0" }}
         >
-          Let's Build Ghana's <span style={{ color: colors.accent, fontWeight: "600" }}>Logistics Future</span>
+          Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Logistics Future</span>
         </h2>
         <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "16px" : "18px",
-            lineHeight: "1.7",
-            color: "rgba(255,255,255,0.6)",
-            margin: "0 auto 40px",
-            maxWidth: "680px",
-          }}
+          className="font-[Inter,sans-serif] leading-[1.7] text-white/60 max-w-[680px] mx-auto"
+          style={{ fontSize: isMobile ? "16px" : "18px", margin: "0 auto 40px" }}
         >
           Whether you're an investor, operator, or government partner, there's a seat at the table in building Ghana's
           logistics future.
         </p>
         <div
+          className="flex gap-4 justify-center"
           style={{
-            display: "flex",
-            gap: "16px",
-            justifyContent: "center",
             flexDirection: isMobile ? "column" : "row",
             alignItems: isMobile ? "stretch" : "center",
           }}
         >
           <button
-            className="cta-lime-swap"
+            className="cta-lime-swap flex items-center justify-center gap-3 border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer"
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
-              border: "none",
               padding: isMobile ? "16px 24px" : "16px 28px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "12px",
             }}
           >
             Start a Conversation
             <span
-              className="cta-btn-arrow"
-              style={{
-                width: "36px",
-                height: "36px",
-                backgroundColor: colors.white,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              className="cta-btn-arrow w-9 h-9 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: colors.white }}
             >
               <ArrowUpRight size={16} strokeWidth={2.5} color={colors.primary} />
             </span>
           </button>
           <button
-            className="cta-secondary"
-            style={{
-              backgroundColor: "transparent",
-              color: "rgba(255,255,255,0.7)",
-              border: "1.5px solid rgba(255,255,255,0.2)",
-              padding: "14px 28px",
-              borderRadius: "50px",
-              fontSize: "14px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-            }}
+            className="cta-secondary bg-transparent rounded-full text-[14px] font-semibold font-[Inter,sans-serif] cursor-pointer text-white/70 border-[1.5px] border-white/20 px-7 py-[14px]"
           >
             Explore the Full Analysis
           </button>

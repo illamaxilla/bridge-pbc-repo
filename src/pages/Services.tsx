@@ -1330,7 +1330,7 @@ export default function ServicesSectorsPageV2() {
                         onMouseEnter={() => setHeroSectorHovered(i)}
                         onMouseLeave={() => setHeroSectorHovered(null)}
                         onDoubleClick={() => navigate(sector.to)}
-                        className="flex items-center justify-center cursor-pointer" style={{ aspectRatio: isMobile ? "auto" : "1", height: isMobile ? "56px" : "auto", borderRadius: isMobile ? "10px" : "12px", backgroundColor: isHovered ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.05)", border: `1px solid ${isHovered ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.08)"}`, transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)", transform: isHovered ? "translateY(-2px)" : "none", boxShadow: isHovered ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none" }}
+                        className="flex items-center justify-center cursor-pointer transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]" style={{ aspectRatio: isMobile ? "auto" : "1", height: isMobile ? "56px" : "auto", borderRadius: isMobile ? "10px" : "12px", backgroundColor: isHovered ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.05)", border: `1px solid ${isHovered ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.08)"}`, transform: isHovered ? "translateY(-2px)" : "none", boxShadow: isHovered ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none" }}
                       >
                         <div
                           className="transition-opacity duration-[250ms] ease-in-out flex items-center justify-center" style={{ opacity: isHovered ? 1 : 0.6, transform: isMobile ? "scale(1.2)" : "scale(1.25)" }}
@@ -1468,7 +1468,7 @@ export default function ServicesSectorsPageV2() {
                   className="cursor-pointer text-left transition-all duration-300 ease-in-out flex items-center shrink-0 border-none" style={{ width: isMobile ? "auto" : "100%", padding: isMobile ? "10px 20px" : "24px 40px", backgroundColor: activeService === service.id ? "#1B4D3E" : "transparent", borderLeft: isMobile
                       ? undefined
                       : activeService === service.id
-                        ? `4px solid ${"#B8D935"}`
+                        ? "4px solid #B8D935"
                         : "4px solid transparent", gap: isMobile ? "8px" : "16px", borderRadius: isMobile ? "50px" : "0", whiteSpace: isMobile ? "nowrap" : "normal" }}
                 >
                   {/* Number */}
@@ -1940,7 +1940,7 @@ export default function ServicesSectorsPageV2() {
                 <div
                   key={sector.id}
                   onClick={() => setSelectedSector(selectedSector === sector.id ? null : sector.id)}
-                  className="cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col bg-[#F3F5F2]" style={{ borderRadius: isMobile ? "16px" : "24px", padding: isMobile ? "16px" : filterCategory === "all" ? "24px" : "32px", border: selectedSector === sector.id ? `2px solid ${"#B8D935"}` : "2px solid transparent", minHeight: isMobile ? "130px" : filterCategory === "all" ? "160px" : "auto" }}
+                  className="cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col bg-[#F3F5F2]" style={{ borderRadius: isMobile ? "16px" : "24px", padding: isMobile ? "16px" : filterCategory === "all" ? "24px" : "32px", border: selectedSector === sector.id ? "2px solid #B8D935" : "2px solid transparent", minHeight: isMobile ? "130px" : filterCategory === "all" ? "160px" : "auto" }}
                 >
                   {/* Sector Icon Badge */}
                   <div
@@ -1971,7 +1971,7 @@ export default function ServicesSectorsPageV2() {
                   {/* Compact stats for "all" view */}
                   {filterCategory === "all" ? (
                     <div
-                      className="flex justify-between" style={{ alignItems: isMobile ? "flex-start" : "center", paddingTop: isMobile ? "12px" : "16px", borderTop: `1px solid ${"#DEDEDE"}`, marginTop: isMobile ? "12px" : "16px", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "4px" : "0" }}
+                      className="flex justify-between border-t border-[#DEDEDE]" style={{ alignItems: isMobile ? "flex-start" : "center", paddingTop: isMobile ? "12px" : "16px", marginTop: isMobile ? "12px" : "16px", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "4px" : "0" }}
                     >
                       <span
                         className="font-semibold font-['Inter',sans-serif] text-[#1B4D3E]" style={{ fontSize: isMobile ? "12px" : "14px" }}

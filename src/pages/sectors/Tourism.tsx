@@ -2496,58 +2496,32 @@ const PolicyAlignmentSection = () => {
                   <div
                     key={i}
                     onClick={() => setExpandedCard(isExpanded ? null : i)}
+                    className="shrink-0 rounded-2xl p-6 cursor-pointer transition-all duration-300 flex flex-col"
                     style={{
                       minWidth: isExpanded ? "360px" : "280px",
                       maxWidth: isExpanded ? "360px" : "280px",
-                      flexShrink: 0,
                       backgroundColor: colors.background,
                       border: isExpanded ? `2px solid ${colors.accent}` : `2px solid ${colors.primary}`,
-                      borderRadius: "16px",
-                      padding: "24px",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                      display: "flex",
-                      flexDirection: "column",
                     }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginBottom: "12px",
-                      }}
-                    >
+                    <div className="flex justify-between items-center mb-3">
                       <span
+                        className="rounded-full text-[9px] font-bold uppercase font-['DM_Sans',sans-serif] px-[10px] py-1"
                         style={{
                           backgroundColor: badge.bg,
                           border: `1px solid ${badge.border}`,
-                          borderRadius: "50px",
-                          padding: "4px 10px",
-                          fontSize: "9px",
-                          fontWeight: "700",
-                          textTransform: "uppercase",
-                          fontFamily: "'DM Sans', sans-serif",
                           color: colors.primary,
                         }}
                       >
                         {p.category}
                       </span>
                       {p.relevance && (
-                        <div style={{ display: "flex", gap: "4px" }}>
+                        <div className="flex gap-1">
                           {p.relevance.map((r) => (
                             <span
                               key={r}
-                              style={{
-                                fontSize: "9px",
-                                fontWeight: "600",
-                                color: colors.primary,
-                                backgroundColor: colors.white,
-                                padding: "2px 8px",
-                                borderRadius: "50px",
-                                fontFamily: "'DM Sans', sans-serif",
-                                textTransform: "uppercase",
-                              }}
+                              className="text-[9px] font-semibold rounded-full uppercase font-['DM_Sans',sans-serif] px-2 py-0.5"
+                              style={{ color: colors.primary, backgroundColor: colors.white }}
                             >
                               {r}
                             </span>
@@ -2555,91 +2529,40 @@ const PolicyAlignmentSection = () => {
                         </div>
                       )}
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: "16px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                        minHeight: "42px",
-                        marginBottom: "8px",
-                      }}
-                    >
+                    <div className="font-['DM_Sans',sans-serif] text-[16px] font-bold min-h-[42px] mb-2" style={{ color: colors.primary }}>
                       {p.policy}
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: "13px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                        marginBottom: "10px",
-                      }}
-                    >
+                    <div className="font-['DM_Sans',sans-serif] text-[13px] font-bold mb-[10px]" style={{ color: colors.accent }}>
                       {p.allocation}
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: "13px",
-                        color: "#666",
-                        lineHeight: "1.5",
-                        minHeight: "40px",
-                        marginBottom: "12px",
-                      }}
-                    >
+                    <div className="font-['DM_Sans',sans-serif] text-[13px] text-[#666] leading-[1.5] min-h-[40px] mb-3">
                       {p.alignment}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "auto" }}>
+                    <div className="flex items-center gap-1.5 mt-auto">
                       <span
-                        style={{
-                          fontFamily: "'DM Sans', sans-serif",
-                          fontSize: "11px",
-                          fontWeight: "600",
-                          color: colors.primary,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                        }}
+                        className="font-['DM_Sans',sans-serif] text-[11px] font-semibold uppercase tracking-[0.5px]"
+                        style={{ color: colors.primary }}
                       >
                         {isExpanded ? "BRIDGE alignment ▾" : "BRIDGE alignment ▸"}
                       </span>
                     </div>
                     {isExpanded && (
-                      <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: `1px solid ${colors.line}` }}>
-                        <div
-                          style={{
-                            fontFamily: "'DM Sans', sans-serif",
-                            fontSize: "11px",
-                            color: "#888",
-                            marginBottom: "8px",
-                          }}
-                        >
+                      <div className="mt-4 pt-4" style={{ borderTop: `1px solid ${colors.line}` }}>
+                        <div className="font-['DM_Sans',sans-serif] text-[11px] text-[#888] mb-2">
                           {p.body}
                         </div>
-                        <div
-                          style={{
-                            fontFamily: "'DM Sans', sans-serif",
-                            fontSize: "13px",
-                            color: "#444",
-                            lineHeight: "1.6",
-                            marginBottom: "16px",
-                          }}
-                        >
+                        <div className="font-['DM_Sans',sans-serif] text-[13px] text-[#444] leading-[1.6] mb-4">
                           {p.bridgeRole}
                         </div>
                         {p.pillars && (
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "16px" }}>
+                          <div className="flex flex-wrap gap-1.5 mb-4">
                             {p.pillars.map((pill) => (
                               <span
                                 key={pill}
+                                className="rounded-full text-[11px] font-bold font-['DM_Sans',sans-serif] px-3 py-[5px]"
                                 style={{
                                   backgroundColor: colors.accentLight,
                                   color: colors.primary,
-                                  padding: "5px 12px",
-                                  borderRadius: "50px",
-                                  fontSize: "11px",
-                                  fontWeight: "700",
-                                  fontFamily: "'DM Sans', sans-serif",
                                   border: `1px solid ${colors.accent}`,
                                 }}
                               >
@@ -2648,38 +2571,17 @@ const PolicyAlignmentSection = () => {
                             ))}
                           </div>
                         )}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        <div className="flex flex-col gap-2">
                           {p.bridgeVentures.map((v) => (
                             <div
                               key={v}
-                              style={{
-                                backgroundColor: colors.primary,
-                                borderRadius: "10px",
-                                padding: "10px 14px",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "10px",
-                              }}
+                              className="rounded-[10px] flex items-center gap-[10px] px-[14px] py-[10px]"
+                              style={{ backgroundColor: colors.primary }}
                             >
-                              <div
-                                style={{
-                                  width: "8px",
-                                  height: "8px",
-                                  borderRadius: "50%",
-                                  backgroundColor: colors.accent,
-                                  flexShrink: 0,
-                                }}
-                              />
+                              <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: colors.accent }} />
                               <span
-                                style={{
-                                  fontFamily: "'DM Sans', sans-serif",
-                                  fontSize: "13px",
-                                  fontWeight: "600",
-                                  color: colors.white,
-                                  whiteSpace: "nowrap",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                }}
+                                className="font-['DM_Sans',sans-serif] text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis"
+                                style={{ color: colors.white }}
                               >
                                 {v}
                               </span>
@@ -2693,7 +2595,7 @@ const PolicyAlignmentSection = () => {
               })}
             </div>
             {/* Scroll indicator dots */}
-            <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "32px" }}>
+            <div className="flex justify-center gap-2 mb-8">
               {displayed.map((_, di) => (
                 <div
                   key={di}
@@ -2704,13 +2606,10 @@ const PolicyAlignmentSection = () => {
                     el.scrollTo({ left: cardW * di, behavior: "smooth" });
                     setDesktopScrollIdx(di);
                   }}
+                  className="h-2 rounded cursor-pointer transition-all duration-300"
                   style={{
                     width: di === desktopScrollIdx ? "24px" : "8px",
-                    height: "8px",
-                    borderRadius: "4px",
-                    cursor: "pointer",
                     backgroundColor: di === desktopScrollIdx ? colors.accent : colors.line,
-                    transition: "all 0.3s ease",
                   }}
                 />
               ))}
@@ -2720,46 +2619,34 @@ const PolicyAlignmentSection = () => {
 
         {/* Bottom CTA Bar */}
         <div
+          className="flex justify-between gap-4 text-left"
           style={{
             backgroundColor: colors.primary,
             borderRadius: isMobile ? "12px" : "16px",
             padding: isMobile ? "20px" : "28px 32px",
-            display: "flex",
-            justifyContent: "space-between",
             alignItems: isMobile ? "flex-start" : "center",
             flexDirection: isMobile ? "column" : "row",
-            gap: "16px",
-            textAlign: isMobile ? "left" : "left",
           }}
         >
           <div>
             <div
+              className="font-['DM_Sans',sans-serif] font-semibold mb-1"
               style={{
-                fontFamily: "'DM Sans', sans-serif",
                 fontSize: isMobile ? "16px" : "18px",
-                fontWeight: "600",
                 color: colors.white,
-                marginBottom: "4px",
               }}
             >
               BRIDGE complements — never competes with — government vision.
             </div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.6)" }}>
+            <div className="font-['DM_Sans',sans-serif] text-[14px] text-white/60">
               Every venture aligns with at least one active government policy or initiative.
             </div>
           </div>
           <button
+            className="border-none rounded-full text-[13px] font-bold font-['DM_Sans',sans-serif] cursor-pointer shrink-0 px-6 py-3"
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
-              border: "none",
-              padding: "12px 24px",
-              borderRadius: "50px",
-              fontSize: "13px",
-              fontWeight: "700",
-              fontFamily: "'DM Sans', sans-serif",
-              cursor: "pointer",
-              flexShrink: 0,
             }}
           >
             View Partnership Strategy
@@ -2978,27 +2865,20 @@ const MetricRow = ({ item, index, animate, isMobile }) => {
         transition: `opacity 0.4s ease ${index * 80}ms`,
       }}
     >
-      <div style={isMobile ? { display: "flex", justifyContent: "space-between", alignItems: "baseline" } : {}}>
+      <div className={cn(isMobile && "flex justify-between items-baseline")}>
         <div
+          className="font-[Poppins,sans-serif] font-bold tracking-[-1px] leading-[1.1]"
           style={{
-            fontFamily: "Poppins, sans-serif",
             fontSize: isMobile ? "28px" : "36px",
-            fontWeight: "700",
             color: colors.primary,
-            letterSpacing: "-1px",
-            lineHeight: "1.1",
           }}
         >
           {formatted}
         </div>
         <div
+          className="text-[10px] font-bold uppercase tracking-[0.5px] font-['DM_Sans',sans-serif]"
           style={{
-            fontSize: "10px",
-            fontWeight: "700",
             color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-            fontFamily: "'DM Sans', sans-serif",
             marginTop: isMobile ? "0" : "4px",
           }}
         >
@@ -3007,50 +2887,29 @@ const MetricRow = ({ item, index, animate, isMobile }) => {
       </div>
       <div>
         <div
+          className="font-['DM_Sans',sans-serif] font-bold"
           style={{
-            fontFamily: "'DM Sans', sans-serif",
             fontSize: isMobile ? "14px" : "15px",
-            fontWeight: "700",
             color: colors.primary,
           }}
         >
           {item.label}
         </div>
-        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "#666", lineHeight: "1.5" }}>
+        <div className="font-['DM_Sans',sans-serif] text-[13px] text-[#666] leading-[1.5]">
           {item.description}
         </div>
       </div>
       {!isMobile && (
         <div
-          style={{
-            backgroundColor: isEven ? colors.background : "rgba(27,77,62,0.04)",
-            borderRadius: "10px",
-            padding: "10px 16px",
-          }}
+          className="rounded-[10px] px-4 py-[10px]"
+          style={{ backgroundColor: isEven ? colors.background : "rgba(27,77,62,0.04)" }}
         >
-          <div
-            style={{
-              fontSize: "9px",
-              fontWeight: "700",
-              color: "#aaa",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              fontFamily: "'DM Sans', sans-serif",
-              marginBottom: "4px",
-            }}
-          >
+          <div className="text-[9px] font-bold text-[#aaa] uppercase tracking-[1px] font-['DM_Sans',sans-serif] mb-1">
             LINKED VENTURES
           </div>
           <div
-            style={{
-              fontSize: "11px",
-              fontWeight: "500",
-              color: colors.primary,
-              fontFamily: "'DM Sans', sans-serif",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
+            className="text-[11px] font-medium font-['DM_Sans',sans-serif] whitespace-nowrap overflow-hidden text-ellipsis"
+            style={{ color: colors.primary }}
           >
             {item.ventures}
           </div>
@@ -3074,51 +2933,33 @@ const ImpactSection = () => {
 
   return (
     <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "80px 32px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <div className="max-w-[1100px] mx-auto">
         <span
+          className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
           style={{
-            display: "inline-block",
             backgroundColor: colors.white,
-            padding: "10px 20px",
-            borderRadius: "50px",
-            fontSize: "11px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "2px",
-            fontFamily: "Inter, sans-serif",
             color: colors.primary,
             border: `1px solid ${colors.line}`,
-            marginBottom: "24px",
           }}
         >
           The Impact
         </span>
         <h2
+          className="font-[Inter,sans-serif] font-light tracking-[-0.5px] leading-[1.2] mt-0 mb-3"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "28px" : "42px",
-            fontWeight: "300",
-            letterSpacing: "-0.5px",
-            lineHeight: "1.2",
             color: colors.primary,
-            margin: "0 0 12px 0",
           }}
         >
-          What Changes When <span style={{ fontWeight: "600" }}>Tourism</span>
+          What Changes When <span className="font-semibold">Tourism</span>
           {!isMobile && <br />}
           {isMobile ? " " : ""}
-          <span style={{ fontWeight: "600" }}>Infrastructure</span>{" "}
-          <span style={{ color: colors.accent, fontWeight: "600" }}>Works</span>
+          <span className="font-semibold">Infrastructure</span>{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Works</span>
         </h2>
         <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "15px" : "16px",
-            color: "#666",
-            lineHeight: "1.65",
-            maxWidth: "700px",
-            margin: "0 0 40px 0",
-          }}
+          className="font-[Inter,sans-serif] text-[#666] leading-[1.65] max-w-[700px] mt-0 mb-10"
+          style={{ fontSize: isMobile ? "15px" : "16px" }}
         >
           When destinations meet global standards, local communities share in visitor spending, and cultural heritage
           generates revenue — the ripple effects create sustainable jobs, preserve identity, and diversify Ghana's
@@ -3126,26 +2967,21 @@ const ImpactSection = () => {
         </p>
 
         {/* Controls Bar */}
-        <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "24px" }}>
+        <div className="flex justify-start mb-6">
           <div
+            className="inline-flex items-center rounded-full"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
               gap: isMobile ? "6px" : "12px",
               border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
               padding: isMobile ? "4px" : "5px",
               backgroundColor: colors.white,
             }}
           >
             {/* View Toggle */}
             <div
+              className="inline-flex rounded-full overflow-hidden shrink-0"
               style={{
-                display: "inline-flex",
                 backgroundColor: colors.background,
-                borderRadius: "50px",
-                overflow: "hidden",
-                flexShrink: 0,
                 padding: isMobile ? "2px" : "3px",
               }}
             >
@@ -3156,14 +2992,10 @@ const ImpactSection = () => {
                     setView(v);
                     triggerAnimate();
                   }}
+                  className="rounded-full border-none cursor-pointer font-[Inter,sans-serif] transition-all duration-200"
                   style={{
                     padding: isMobile ? "5px 10px" : "6px 14px",
                     fontSize: isMobile ? "11px" : "12px",
-                    borderRadius: "50px",
-                    border: "none",
-                    cursor: "pointer",
-                    fontFamily: "Inter, sans-serif",
-                    transition: "all 0.2s ease",
                     backgroundColor: view === v ? colors.white : "transparent",
                     color: view === v ? colors.primary : "#999",
                     fontWeight: view === v ? "700" : "500",
@@ -3176,7 +3008,7 @@ const ImpactSection = () => {
             </div>
 
             {/* Vertical Divider */}
-            <div style={{ width: "1px", height: "20px", backgroundColor: colors.line, flexShrink: 0 }} />
+            <div className="w-px h-5 shrink-0" style={{ backgroundColor: colors.line }} />
 
             {/* Sub-filter Pills */}
             {view === "metrics"
@@ -3187,15 +3019,10 @@ const ImpactSection = () => {
                       setActiveCategory(i);
                       triggerAnimate();
                     }}
+                    className="rounded-full cursor-pointer font-[Inter,sans-serif] transition-all duration-200 whitespace-nowrap shrink-0"
                     style={{
                       padding: isMobile ? "5px 8px" : "6px 14px",
                       fontSize: isMobile ? "10px" : "12px",
-                      borderRadius: "50px",
-                      cursor: "pointer",
-                      fontFamily: "Inter, sans-serif",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
                       backgroundColor: activeCategory === i ? colors.accentLight : "transparent",
                       color: activeCategory === i ? colors.primary : "#999",
                       fontWeight: activeCategory === i ? "700" : "500",
@@ -3209,15 +3036,10 @@ const ImpactSection = () => {
                   <button
                     key={s.title}
                     onClick={() => setActiveStakeholder(i)}
+                    className="rounded-full cursor-pointer font-[Inter,sans-serif] transition-all duration-200 whitespace-nowrap shrink-0"
                     style={{
                       padding: isMobile ? "5px 8px" : "6px 14px",
                       fontSize: isMobile ? "10px" : "12px",
-                      borderRadius: "50px",
-                      cursor: "pointer",
-                      fontFamily: "Inter, sans-serif",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
                       backgroundColor: activeStakeholder === i ? colors.accentLight : "transparent",
                       color: activeStakeholder === i ? colors.primary : "#999",
                       fontWeight: activeStakeholder === i ? "700" : "500",
@@ -3233,11 +3055,11 @@ const ImpactSection = () => {
         {/* Metrics View */}
         {view === "metrics" && (
           <div
+            className="overflow-hidden"
             style={{
               backgroundColor: colors.background,
               borderRadius: isMobile ? "16px" : "20px",
               border: `2px solid ${colors.primary}`,
-              overflow: "hidden",
             }}
           >
             {impactMetrics[activeCategory].items.map((item, i) => (
@@ -3253,130 +3075,74 @@ const ImpactSection = () => {
             return (
               <div>
                 <div
+                  className="flex justify-between mb-6"
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
                     alignItems: isMobile ? "center" : "flex-start",
-                    marginBottom: "24px",
                     flexDirection: isMobile ? "column" : "row",
                     gap: isMobile ? "12px" : "0",
                   }}
                 >
                   <div>
                     <div
+                      className="font-['DM_Sans',sans-serif] font-bold"
                       style={{
-                        fontFamily: "'DM Sans', sans-serif",
                         fontSize: isMobile ? "24px" : "28px",
-                        fontWeight: "700",
                         color: colors.primary,
                       }}
                     >
                       {s.title}
                     </div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "14px", color: "#888" }}>
+                    <div className="font-['DM_Sans',sans-serif] text-[14px] text-[#888]">
                       {s.subtitle}
                     </div>
                   </div>
                   <div style={{ textAlign: isMobile ? "center" : "right" }}>
                     <div
+                      className="font-[Poppins,sans-serif] font-bold tracking-[-1.5px] leading-none"
                       style={{
-                        fontFamily: "Poppins, sans-serif",
                         fontSize: isMobile ? "32px" : "40px",
-                        fontWeight: "700",
                         color: colors.primary,
-                        letterSpacing: "-1.5px",
-                        lineHeight: "1",
                       }}
                     >
                       {s.stat}
                     </div>
-                    <div
-                      style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "#888", marginTop: "4px" }}
-                    >
+                    <div className="font-['DM_Sans',sans-serif] text-[12px] text-[#888] mt-1">
                       {s.statLabel}
                     </div>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                <div className="flex flex-col gap-1.5">
                   {s.outcomes.map((outcome, i) => (
                     <div
                       key={i}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "16px",
-                        padding: "14px 20px",
-                        borderRadius: "12px",
-                        backgroundColor: i % 2 === 0 ? colors.background : "transparent",
-                      }}
+                      className="flex items-center gap-4 rounded-xl px-5 py-[14px]"
+                      style={{ backgroundColor: i % 2 === 0 ? colors.background : "transparent" }}
                     >
                       <div
-                        style={{
-                          width: "28px",
-                          height: "28px",
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                          backgroundColor: i % 2 === 0 ? colors.white : colors.background,
-                        }}
+                        className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                        style={{ backgroundColor: i % 2 === 0 ? colors.white : colors.background }}
                       >
-                        <span
-                          style={{
-                            fontFamily: "'DM Sans', sans-serif",
-                            fontSize: "12px",
-                            fontWeight: "700",
-                            color: colors.primary,
-                          }}
-                        >
+                        <span className="font-['DM_Sans',sans-serif] text-[12px] font-bold" style={{ color: colors.primary }}>
                           {i + 1}
                         </span>
                       </div>
-                      <span
-                        style={{
-                          fontFamily: "'DM Sans', sans-serif",
-                          fontSize: "15px",
-                          color: "#333",
-                          lineHeight: "1.5",
-                        }}
-                      >
+                      <span className="font-['DM_Sans',sans-serif] text-[15px] text-[#333] leading-[1.5]">
                         {outcome}
                       </span>
                     </div>
                   ))}
                 </div>
                 <div
-                  style={{
-                    marginTop: "24px",
-                    padding: "16px 24px",
-                    backgroundColor: colors.primary,
-                    borderRadius: "12px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
+                  className="mt-6 rounded-xl flex items-center px-6 py-4"
+                  style={{ backgroundColor: colors.primary }}
                 >
                   <span
-                    style={{
-                      fontSize: "10px",
-                      fontWeight: "700",
-                      color: colors.accent,
-                      textTransform: "uppercase",
-                      letterSpacing: "1.5px",
-                      fontFamily: "'DM Sans', sans-serif",
-                    }}
+                    className="text-[10px] font-bold uppercase tracking-[1.5px] font-['DM_Sans',sans-serif]"
+                    style={{ color: colors.accent }}
                   >
                     KEY ADVANTAGE
                   </span>
-                  <span
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "14px",
-                      color: "rgba(255,255,255,0.85)",
-                      fontWeight: "500",
-                      marginLeft: "16px",
-                    }}
-                  >
+                  <span className="font-['DM_Sans',sans-serif] text-[14px] text-white/85 font-medium ml-4">
                     {s.highlight}
                   </span>
                 </div>

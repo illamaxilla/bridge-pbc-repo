@@ -3035,7 +3035,7 @@ const InvestmentCTASection = ({ sector }) => {
         padding: isMobile ? "60px 0" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
         <div
           style={{
@@ -3045,50 +3045,32 @@ const InvestmentCTASection = ({ sector }) => {
           }}
         >
           <span
+            className="inline-block py-[10px] px-5 rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Investment Thesis
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[820px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
               margin: isMobile ? "0 auto 16px" : "0 0 16px 0",
-              maxWidth: "820px",
             }}
           >
-            Every <span style={{ fontWeight: "600" }}>Stakeholder</span> Has a{" "}
-            <span style={{ fontWeight: "600" }}>Role</span> in{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Infrastructure Growth</span>
+            Every <span className="font-semibold">Stakeholder</span> Has a{" "}
+            <span className="font-semibold">Role</span> in{" "}
+            <span style={{ color: colors.accent }} className="font-semibold">Infrastructure Growth</span>
           </h2>
 
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "16px",
-              color: "#666",
-              lineHeight: "1.65",
-              margin: isMobile ? "0 auto" : "0",
-              maxWidth: "700px",
-            }}
+            className="font-[Inter,sans-serif] text-[16px] text-[#666] leading-[1.65] max-w-[700px]"
+            style={{ margin: isMobile ? "0 auto" : "0" }}
           >
             Investment isn't only capital — it's expertise, partnerships, policy, and vision. See how your role
             contributes to {sector.ventures} ventures across {sector.capitalRange} in opportunity.
@@ -3097,57 +3079,29 @@ const InvestmentCTASection = ({ sector }) => {
 
         {/* Audience Selector */}
         {isMobile ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "12px",
-              marginBottom: "24px",
-              padding: "0 20px",
-            }}
-          >
+          <div className="flex justify-center gap-3 mb-6 px-5">
             {audiences.map((aud, idx) => {
               const isActive = activeAudience === idx;
               return (
                 <button
                   key={aud.key}
                   onClick={() => setActiveAudience(idx)}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "6px",
-                    background: "none",
-                    border: "none",
-                    padding: "8px",
-                    cursor: "pointer",
-                    opacity: isActive ? 1 : 0.4,
-                    transition: "all 0.2s ease",
-                  }}
+                  className="flex flex-col items-center gap-1.5 bg-none border-none p-2 cursor-pointer transition-all duration-200"
+                  style={{ opacity: isActive ? 1 : 0.4 }}
                 >
                   <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200"
                     style={{
-                      width: "44px",
-                      height: "44px",
-                      borderRadius: "12px",
                       backgroundColor: isActive ? colors.primary : colors.background,
                       border: isActive ? "none" : `1px solid ${colors.line}`,
                       color: isActive ? colors.accent : colors.primary,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      transition: "all 0.2s ease",
                     }}
                   >
                     {aud.icon}
                   </div>
                   <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "10px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                    }}
+                    className="font-[Inter,sans-serif] text-[10px] font-semibold"
+                    style={{ color: colors.primary }}
                   >
                     {aud.shortLabel}
                   </span>
@@ -3156,39 +3110,24 @@ const InvestmentCTASection = ({ sector }) => {
             })}
           </div>
         ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "12px",
-              marginBottom: "40px",
-            }}
-          >
+          <div className="flex justify-start gap-3 mb-10">
             {audiences.map((aud, idx) => {
               const isActive = activeAudience === idx;
               return (
                 <button
                   key={aud.key}
                   onClick={() => setActiveAudience(idx)}
+                  className="flex items-center gap-2 py-2 px-[18px] rounded-full font-[Inter,sans-serif] text-[12px] cursor-pointer transition-all duration-[250ms] shrink-0"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "8px 18px",
-                    borderRadius: "50px",
                     border: isActive ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
                     backgroundColor: isActive ? colors.accentLight : "transparent",
                     color: isActive ? colors.primary : "#999",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "12px",
                     fontWeight: isActive ? "700" : "500",
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
-                    flexShrink: 0,
                   }}
                 >
                   <span
-                    style={{ display: "flex", color: isActive ? colors.primary : "#999", transition: "all 0.25s ease" }}
+                    className="flex transition-all duration-[250ms]"
+                    style={{ color: isActive ? colors.primary : "#999" }}
                   >
                     {aud.icon}
                   </span>
@@ -3201,111 +3140,62 @@ const InvestmentCTASection = ({ sector }) => {
 
         {/* Main Content Grid */}
         <div
+          className="grid items-stretch"
           style={{
-            display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
             gap: isMobile ? "24px" : "48px",
-            alignItems: "stretch",
             padding: isMobile ? "0 20px" : 0,
           }}
         >
-          {/* LEFT COLUMN: Audience-Specific Content */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {/* Headline — desktop only */}
+          {/* LEFT COLUMN */}
+          <div className="flex flex-col">
             {!isMobile && (
               <h3
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "32px",
-                  fontWeight: "300",
-                  lineHeight: "1.25",
-                  letterSpacing: "-0.3px",
-                  color: colors.primary,
-                  margin: "0 0 16px 0",
-                  minHeight: "80px",
-                  display: "flex",
-                  alignItems: "flex-end",
-                }}
+                className="font-[Inter,sans-serif] text-[32px] font-light leading-[1.25] tracking-[-0.3px] m-0 mb-4 min-h-[80px] flex items-end"
+                style={{ color: colors.primary }}
               >
                 {activeAudienceData.headline}
               </h3>
             )}
 
-            {/* Pitch — desktop only */}
             {!isMobile && (
-              <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "15px",
-                  color: "#555",
-                  lineHeight: "1.7",
-                  margin: "0 0 24px 0",
-                  minHeight: "100px",
-                }}
-              >
+              <p className="font-[Inter,sans-serif] text-[15px] text-[#555] leading-[1.7] m-0 mb-6 min-h-[100px]">
                 {activeAudienceData.pitch}
               </p>
             )}
 
-            {/* Stat cards — 3 columns */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "12px",
-                marginBottom: "24px",
-              }}
-            >
+            {/* Stat cards */}
+            <div className="grid grid-cols-3 gap-3 mb-6">
               {activeAudienceData.stats.map((stat, idx) => (
                 <div
                   key={idx}
+                  className="rounded-xl text-center flex flex-col justify-center"
                   style={{
                     backgroundColor: colors.white,
-                    borderRadius: "12px",
                     padding: isMobile ? "16px 10px" : "18px 14px",
-                    textAlign: "center",
                     border: `1px solid ${colors.line}`,
                     minHeight: isMobile ? "auto" : "110px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
                   }}
                 >
                   <div
+                    className="font-[Poppins,sans-serif] font-bold leading-[1.1] mb-1"
                     style={{
-                      fontFamily: "Poppins, sans-serif",
                       fontSize: isMobile ? "20px" : "26px",
-                      fontWeight: "700",
                       color: colors.accent,
-                      lineHeight: "1.1",
-                      marginBottom: "4px",
                     }}
                   >
                     {stat.value}
                   </div>
                   <div
+                    className="font-[Inter,sans-serif] font-semibold mb-0.5"
                     style={{
-                      fontFamily: "Inter, sans-serif",
                       fontSize: isMobile ? "11px" : "12px",
-                      fontWeight: "600",
                       color: colors.primary,
-                      marginBottom: "2px",
                     }}
                   >
                     {stat.label}
                   </div>
-                  <div
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "10px",
-                      color: "#888",
-                    }}
-                  >
+                  <div className="font-[Inter,sans-serif] text-[10px] text-[#888]">
                     {stat.detail}
                   </div>
                 </div>
@@ -3313,68 +3203,30 @@ const InvestmentCTASection = ({ sector }) => {
             </div>
 
             {/* Engagement Pathways */}
-            <div
-              style={{
-                flex: 1,
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                marginBottom: "20px",
-              }}
-            >
+            <div className="flex-1 flex flex-col gap-[10px] mb-5">
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.primary,
-                  marginBottom: "4px",
-                  opacity: 0.5,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1px] mb-1 opacity-50"
+                style={{ color: colors.primary }}
               >
                 Your Engagement
               </div>
               {activeAudienceData.pathways.map((path, idx) => (
                 <div
                   key={idx}
+                  className="flex items-start gap-3 py-3 px-4 rounded-[10px]"
                   style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "12px",
-                    padding: "12px 16px",
                     backgroundColor: colors.white,
-                    borderRadius: "10px",
                     border: `1px solid ${colors.line}`,
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "4px",
-                      flex: 1,
-                    }}
-                  >
+                  <div className="flex flex-col gap-1 flex-1">
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-semibold"
+                      style={{ color: colors.primary }}
                     >
                       {path.bring}
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#777",
-                        lineHeight: "1.5",
-                      }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[12px] text-[#777] leading-[1.5]">
                       {path.get}
                     </div>
                   </div>
@@ -3383,71 +3235,38 @@ const InvestmentCTASection = ({ sector }) => {
             </div>
 
             {/* Validation Bar */}
-            <div
-              style={{
-                padding: "14px 18px",
-                backgroundColor: "rgba(27, 77, 62, 0.06)",
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <div style={{ color: colors.primary, flexShrink: 0, display: "flex" }}>
+            <div className="py-3.5 px-[18px] bg-[rgba(27,77,62,0.06)] rounded-xl flex items-center gap-3">
+              <div className="shrink-0 flex" style={{ color: colors.primary }}>
                 <IconCheck />
               </div>
-              <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  color: "#444",
-                  lineHeight: "1.5",
-                }}
-              >
+              <div className="font-[Inter,sans-serif] text-[13px] text-[#444] leading-[1.5]">
                 <strong style={{ color: colors.primary }}>Ghana Highway Authority</strong> partnership framework for
                 infrastructure
               </div>
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Returns / Timeline / Impact Panel */}
+          {/* RIGHT COLUMN */}
           {(!isMobile || showInvestmentDetails) && (
             <div
+              className="flex flex-col"
               style={{
                 backgroundColor: colors.primary,
                 borderRadius: isMobile ? "16px" : "20px",
                 padding: isMobile ? "20px" : "28px",
-                display: "flex",
-                flexDirection: "column",
               }}
             >
               {/* Tab Selector */}
-              <div
-                style={{
-                  display: "flex",
-                  backgroundColor: "rgba(255,255,255,0.08)",
-                  borderRadius: "12px",
-                  padding: "4px",
-                  marginBottom: "20px",
-                  flexShrink: 0,
-                }}
-              >
+              <div className="flex bg-white/[0.08] rounded-xl p-1 mb-5 shrink-0">
                 {tabs.map((tab) => (
                   <button
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
+                    className="flex-1 border-none py-3 px-5 rounded-[10px] text-[14px] font-[Inter,sans-serif] cursor-pointer transition-all duration-200"
                     style={{
-                      flex: 1,
                       backgroundColor: activeTab === tab.key ? colors.accent : "transparent",
                       color: activeTab === tab.key ? colors.primary : "rgba(255,255,255,0.5)",
-                      border: "none",
-                      padding: "12px 20px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
                       fontWeight: activeTab === tab.key ? "700" : "500",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
                     }}
                   >
                     {tab.label}
@@ -3456,73 +3275,31 @@ const InvestmentCTASection = ({ sector }) => {
               </div>
 
               {/* Tab Content Cards */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  flex: 1,
-                }}
-              >
+              <div className="flex flex-col gap-[10px] flex-1">
                 {tabContent[activeTab].map((item, idx) => (
                   <div
                     key={idx}
+                    className="bg-white/5 rounded-xl flex gap-4 items-center flex-1"
                     style={{
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      borderRadius: "12px",
                       padding: isMobile ? "16px" : "18px 20px",
-                      display: "flex",
-                      gap: "16px",
-                      alignItems: "center",
-                      flex: 1,
                       minHeight: isMobile ? "auto" : "0",
                     }}
                   >
-                    <div
-                      style={{
-                        minWidth: isMobile ? "80px" : "120px",
-                        flexShrink: 0,
-                      }}
-                    >
+                    <div className="shrink-0" style={{ minWidth: isMobile ? "80px" : "120px" }}>
                       <div
+                        className="font-[Poppins,sans-serif] font-bold leading-[1.1] whitespace-nowrap"
                         style={{
-                          fontFamily: "Poppins, sans-serif",
                           fontSize: isMobile ? "20px" : "22px",
-                          fontWeight: "700",
                           color: colors.accent,
-                          lineHeight: "1.1",
-                          whiteSpace: "nowrap",
                         }}
                       >
                         {item.value}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "9px",
-                          color: "rgba(255,255,255,0.35)",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                          marginTop: "4px",
-                          lineHeight: "1.3",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[9px] text-white/35 uppercase tracking-[0.5px] mt-1 leading-[1.3] whitespace-nowrap">
                         {item.label}
                       </div>
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
-                        color: "rgba(255,255,255,0.7)",
-                        lineHeight: "1.55",
-                        borderLeft: "1px solid rgba(255,255,255,0.1)",
-                        paddingLeft: "16px",
-                        flex: 1,
-                        minWidth: 0,
-                      }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[13px] text-white/70 leading-[1.55] border-l border-white/10 pl-4 flex-1 min-w-0">
                       {item.detail}
                     </div>
                   </div>
@@ -3530,43 +3307,17 @@ const InvestmentCTASection = ({ sector }) => {
               </div>
 
               {/* Prospectus Bar */}
-              <div
-                style={{
-                  marginTop: "16px",
-                  padding: "14px 20px",
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
-                    color: "rgba(255,255,255,0.45)",
-                  }}
-                >
+              <div className="mt-4 py-3.5 px-5 bg-white/5 rounded-xl flex justify-between items-center shrink-0">
+                <span className="font-[Inter,sans-serif] text-[13px] text-white/45">
                   Full financial model available
                 </span>
                 <a
                   href="/resources"
                   onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    textDecoration: "none",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    flexShrink: 0,
-                  }}
+                  className="font-[Inter,sans-serif] text-[14px] font-bold no-underline inline-flex items-center gap-1.5 shrink-0"
+                  style={{ color: colors.accent }}
                 >
-                  Download Prospectus <span style={{ fontSize: "16px" }}>→</span>
+                  Download Prospectus <span className="text-[16px]">→</span>
                 </a>
               </div>
             </div>
@@ -3576,21 +3327,10 @@ const InvestmentCTASection = ({ sector }) => {
           {isMobile && !showInvestmentDetails && (
             <button
               onClick={() => setShowInvestmentDetails(true)}
+              className="flex items-center justify-center gap-2 w-full p-3.5 bg-transparent rounded-xl font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                width: "100%",
-                padding: "14px",
-                backgroundColor: "transparent",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "12px",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "600",
                 color: colors.primary,
-                cursor: "pointer",
               }}
             >
               View returns, timeline & impact
@@ -3620,13 +3360,10 @@ const ImpactSection = () => {
     const display = Number.isInteger(item.value) ? Math.round(val) : val.toFixed(1);
     return (
       <span
+        className="font-[Poppins,sans-serif] font-bold tracking-[-1px] leading-none"
         style={{
-          fontFamily: "Poppins, sans-serif",
           fontSize: isMobile ? "28px" : "36px",
-          fontWeight: "700",
           color: colors.primary,
-          letterSpacing: "-1px",
-          lineHeight: "1",
         }}
       >
         {item.prefix}
@@ -3843,22 +3580,14 @@ const ImpactSection = () => {
         padding: isMobile ? "60px 20px" : "80px 32px",
       }}
     >
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <div className="max-w-[1100px] mx-auto">
         {/* Header */}
-        <div style={{ marginBottom: "24px" }}>
+        <div className="mb-6">
           <span
+            className="inline-block py-[10px] px-5 rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
               border: `1px solid ${colors.line}`,
             }}
           >
@@ -3866,32 +3595,21 @@ const ImpactSection = () => {
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] m-0 mb-3 max-w-[900px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
-              margin: "0 0 12px 0",
-              maxWidth: "900px",
             }}
           >
-            What Changes When <span style={{ fontWeight: "600" }}>Infrastructure</span>
+            What Changes When <span className="font-semibold">Infrastructure</span>
             {"\n"}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Investment</span>{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Works</span>
+            <span style={{ color: colors.accent }} className="font-semibold">Investment</span>{" "}
+            <span style={{ color: colors.accent }} className="font-semibold">Works</span>
           </h2>
 
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "15px" : "16px",
-              lineHeight: "1.7",
-              color: "#555",
-              maxWidth: "750px",
-              margin: "0 0 40px 0",
-            }}
+            className="font-[Inter,sans-serif] leading-[1.7] text-[#555] max-w-[750px] m-0 mb-10"
+            style={{ fontSize: isMobile ? "15px" : "16px" }}
           >
             When roads connect markets, water flows reliably, and digital networks reach every district — the ripple
             effects unlock economic potential, reduce inequality, and lay the foundation for lasting prosperity across
@@ -3900,32 +3618,21 @@ const ImpactSection = () => {
         </div>
 
         {/* Controls Bar */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            marginBottom: "24px",
-          }}
-        >
+        <div className="flex justify-start mb-6">
           <div
+            className="inline-flex items-center rounded-full"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
               gap: isMobile ? "6px" : "12px",
               border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
               padding: isMobile ? "4px" : "5px",
               backgroundColor: colors.white,
             }}
           >
             {/* View Toggle */}
             <div
+              className="inline-flex rounded-full overflow-hidden shrink-0"
               style={{
-                display: "inline-flex",
                 backgroundColor: colors.background,
-                borderRadius: "50px",
-                overflow: "hidden",
-                flexShrink: 0,
                 padding: isMobile ? "2px" : "3px",
               }}
             >
@@ -3933,17 +3640,13 @@ const ImpactSection = () => {
                 <button
                   key={v}
                   onClick={() => switchView(v)}
+                  className="font-[Inter,sans-serif] border-none rounded-full cursor-pointer transition-all duration-200"
                   style={{
-                    fontFamily: "Inter, sans-serif",
                     fontSize: isMobile ? "11px" : "12px",
                     fontWeight: view === v ? "700" : "500",
                     color: view === v ? colors.primary : "#999",
                     backgroundColor: view === v ? colors.white : "transparent",
-                    border: "none",
-                    borderRadius: "50px",
                     padding: isMobile ? "5px 10px" : "6px 14px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
                     boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
                   }}
                 >
@@ -3953,7 +3656,7 @@ const ImpactSection = () => {
             </div>
 
             {/* Vertical Divider */}
-            <div style={{ width: "1px", height: "20px", backgroundColor: colors.line, flexShrink: 0 }} />
+            <div className="w-px h-5 shrink-0" style={{ backgroundColor: colors.line }} />
 
             {/* Sub-Filters */}
             {view === "metrics"
@@ -4188,79 +3891,50 @@ const ImpactSection = () => {
           >
             {/* Stakeholder Header */}
             <div
+              className="flex gap-4 mb-0 rounded-t-2xl"
               style={{
-                display: "flex",
                 alignItems: isMobile ? "flex-start" : "center",
                 justifyContent: "space-between",
                 flexDirection: isMobile ? "column" : "row",
-                gap: "16px",
-                marginBottom: "0",
                 padding: "20px 28px",
                 backgroundColor: colors.background,
-                borderRadius: "16px 16px 0 0",
                 border: `2px solid ${colors.primary}`,
                 borderBottom: `1px solid ${colors.line}`,
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+              <div className="flex items-center gap-4">
                 <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
                   style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "12px",
                     backgroundColor: colors.accent,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                     color: colors.primary,
-                    flexShrink: 0,
                   }}
                 >
                   {activeStakeholderData.icon}
                 </div>
                 <div>
                   <h3
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "22px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      margin: 0,
-                    }}
+                    className="font-[Inter,sans-serif] text-[22px] font-semibold m-0"
+                    style={{ color: colors.primary }}
                   >
                     {activeStakeholderData.title}
                   </h3>
-                  <p
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "14px",
-                      color: "#888",
-                      margin: "2px 0 0 0",
-                    }}
-                  >
+                  <p className="font-[Inter,sans-serif] text-[14px] text-[#888] mt-0.5 mb-0">
                     {activeStakeholderData.subtitle}
                   </p>
                 </div>
               </div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+              <div className="flex items-baseline gap-2">
                 <span
+                  className="font-[Poppins,sans-serif] font-bold tracking-[-1.5px]"
                   style={{
-                    fontFamily: "Poppins, sans-serif",
                     fontSize: isMobile ? "32px" : "40px",
-                    fontWeight: "700",
                     color: colors.primary,
-                    letterSpacing: "-1.5px",
                   }}
                 >
                   {activeStakeholderData.stat}
                 </span>
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    color: "#888",
-                  }}
-                >
+                <span className="font-[Inter,sans-serif] text-[14px] text-[#888]">
                   {activeStakeholderData.statLabel}
                 </span>
               </div>
@@ -4268,79 +3942,43 @@ const ImpactSection = () => {
 
             {/* Outcome Rows */}
             <div
+              className="rounded-b-2xl overflow-hidden"
               style={{
                 border: `2px solid ${colors.primary}`,
                 borderTop: "none",
-                borderRadius: "0 0 16px 16px",
-                overflow: "hidden",
               }}
             >
               {activeStakeholderData.outcomes.map((outcome, i) => (
                 <div
                   key={i}
+                  className="flex items-center gap-3.5 py-[18px] px-7"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "14px",
-                    padding: "18px 28px",
                     backgroundColor: i % 2 === 0 ? colors.white : colors.background,
                     borderBottom: i < activeStakeholderData.outcomes.length - 1 ? `1px solid ${colors.line}` : "none",
                   }}
                 >
-                  <span
-                    style={{
-                      color: colors.accent,
-                      flexShrink: 0,
-                    }}
-                  >
+                  <span className="shrink-0" style={{ color: colors.accent }}>
                     <IconCheck />
                   </span>
-                  <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "14px",
-                      color: "#444",
-                      lineHeight: "1.5",
-                    }}
-                  >
+                  <span className="font-[Inter,sans-serif] text-[14px] text-[#444] leading-[1.5]">
                     {outcome}
                   </span>
                 </div>
               ))}
             </div>
 
-            {/* Key Advantage Strip - Free Floating */}
+            {/* Key Advantage Strip */}
             <div
-              style={{
-                backgroundColor: colors.primary,
-                padding: "16px 28px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                borderRadius: "12px",
-                marginTop: "12px",
-              }}
+              className="py-4 px-7 flex items-center gap-3 rounded-xl mt-3"
+              style={{ backgroundColor: colors.primary }}
             >
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.accent,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1px]"
+                style={{ color: colors.accent }}
               >
                 Key Advantage
               </span>
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  color: colors.white,
-                }}
-              >
+              <span className="font-[Inter,sans-serif] text-[14px] font-semibold text-white">
                 {activeStakeholderData.highlight}
               </span>
             </div>

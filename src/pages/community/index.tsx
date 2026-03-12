@@ -1387,41 +1387,23 @@ function CommunityDashboard({ memberType, onLogout }) {
                 ))}
               </div>
             </div>
-            <div style={{ display: "flex", gap: 10 }}>
+            <div className="flex gap-[10px]">
               <button
                 onClick={() => setShowQuestionModal(false)}
+                className="flex-1 p-[13px] rounded-[10px] bg-transparent cursor-pointer font-[Inter,sans-serif] text-[14px] font-semibold"
                 style={{
-                  flex: 1,
-                  padding: "13px",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
-                  background: "transparent",
                   color: C.text,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 600,
                 }}
               >
                 Cancel
               </button>
               <button
                 onClick={() => setShowQuestionModal(false)}
+                className="flex-[2] p-[13px] rounded-[10px] border-none cursor-pointer font-[Inter,sans-serif] text-[14px] font-bold flex items-center justify-center gap-2"
                 style={{
-                  flex: 2,
-                  padding: "13px",
-                  borderRadius: 10,
-                  border: "none",
                   background: C.accent,
                   color: C.primary,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
                 }}
               >
                 <Send size={14} /> Post Question
@@ -1498,28 +1480,22 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
     : sortedQs;
 
   return (
-    <div style={{ background: C.white, borderRadius: isMobile ? 16 : 20, overflow: "hidden", boxShadow: C.cardShadow }}>
+    <div className="overflow-hidden" style={{ background: C.white, borderRadius: isMobile ? 16 : 20, boxShadow: C.cardShadow }}>
       {/* Header */}
       <div
+        className="flex justify-between items-center gap-3"
         style={{
           padding: isMobile ? "20px 16px 16px" : "28px 32px 20px",
           borderBottom: `1px solid ${C.line}`,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 12,
         }}
       >
         <div>
           <SectionLabel>Discussion Board</SectionLabel>
           <h2
+            className="font-[DM_Sans,sans-serif] font-bold m-0 tracking-[-0.3px]"
             style={{
-              fontFamily: font.display,
               fontSize: isMobile ? 22 : 28,
-              fontWeight: 700,
               color: C.primary,
-              margin: 0,
-              letterSpacing: "-0.3px",
             }}
           >
             Sector <span style={{ color: C.accent }}>Q&A Forum</span>
@@ -1527,21 +1503,12 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
         </div>
         <button
           onClick={() => setShowQuestionModal(true)}
+          className="rounded-[20px] border-none cursor-pointer font-[Inter,sans-serif] font-bold flex items-center gap-[6px] whitespace-nowrap shrink-0"
           style={{
             padding: isMobile ? "9px 14px" : "11px 22px",
-            borderRadius: 20,
-            border: "none",
-            cursor: "pointer",
             background: C.accent,
             color: C.primary,
-            fontFamily: font.body,
             fontSize: isMobile ? 12 : 13,
-            fontWeight: 700,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            whiteSpace: "nowrap",
-            flexShrink: 0,
           }}
         >
           <Plus size={14} />
@@ -1552,10 +1519,8 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
       {/* Mobile: horizontal scrolling pill nav */}
       {isMobile && (
         <div
+          className="overflow-x-auto flex gap-[6px] scrollbar-none"
           style={{
-            overflowX: "auto",
-            display: "flex",
-            gap: 6,
             padding: "12px 16px",
             borderBottom: `1px solid ${C.line}`,
             scrollbarWidth: "none",
@@ -1568,21 +1533,12 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               <button
                 key={item.label}
                 onClick={() => handleForumNav(item.label)}
+                className="flex items-center gap-[5px] py-[7px] px-[14px] rounded-[20px] font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap shrink-0"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                  padding: "7px 14px",
-                  borderRadius: 20,
                   border: `1.5px solid ${isActive ? C.primary : C.line}`,
                   background: isActive ? C.primary : "transparent",
                   color: isActive ? C.white : C.muted,
-                  fontFamily: font.body,
-                  fontSize: 12,
                   fontWeight: isActive ? 700 : 400,
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  flexShrink: 0,
                 }}
               >
                 {item.icon}
@@ -1593,10 +1549,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "220px 1fr 260px" }}>
+      <div className="grid" style={{ gridTemplateColumns: isMobile ? "1fr" : "220px 1fr 260px" }}>
         {/* Left Nav — hidden on mobile (replaced by pill strip above) */}
         {!isMobile && (
-          <div style={{ borderRight: `1px solid ${C.line}`, padding: "24px 16px" }}>
+          <div className="py-6 px-4" style={{ borderRight: `1px solid ${C.line}` }}>
             {FORUM_NAV.map((item) => {
               const isActive = forumView === item.label;
               const goesToMembers = item.label === "Members";
@@ -1604,23 +1560,11 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                 <button
                   key={item.label}
                   onClick={() => handleForumNav(item.label)}
+                  className="flex items-center gap-[10px] w-full py-[9px] px-3 rounded-lg border-none cursor-pointer font-[Inter,sans-serif] text-[13px] text-left mb-[2px] transition-all duration-150"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    width: "100%",
-                    padding: "9px 12px",
-                    borderRadius: 8,
-                    border: "none",
-                    cursor: "pointer",
                     background: isActive ? `${C.primary}10` : "transparent",
                     color: isActive ? C.primary : C.muted,
-                    fontFamily: font.body,
-                    fontSize: 13,
                     fontWeight: isActive ? 700 : 400,
-                    textAlign: "left",
-                    marginBottom: 2,
-                    transition: "all 0.15s",
                   }}
                 >
                   {item.icon}
@@ -1629,47 +1573,28 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               );
             })}
 
-            <div style={{ marginTop: 24, borderTop: `1px solid ${C.line}`, paddingTop: 16 }}>
+            <div className="mt-6 pt-4" style={{ borderTop: `1px solid ${C.line}` }}>
               <div
-                style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  letterSpacing: "1.5px",
-                  color: C.muted,
-                  textTransform: "uppercase",
-                  padding: "0 12px",
-                  marginBottom: 10,
-                }}
+                className="text-[10px] font-bold tracking-[1.5px] uppercase px-3 mb-[10px]"
+                style={{ color: C.muted }}
               >
                 Sectors
               </div>
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.name}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    padding: "6px 12px",
-                    border: "none",
-                    cursor: "pointer",
-                    background: "transparent",
-                    color: C.text,
-                    fontFamily: font.body,
-                    fontSize: 12,
-                    textAlign: "left",
-                    borderRadius: 6,
-                  }}
+                  className="flex items-center justify-between w-full py-[6px] px-3 border-none cursor-pointer bg-transparent font-[Inter,sans-serif] text-[12px] text-left rounded-md"
+                  style={{ color: C.text }}
                   onMouseEnter={(e) => (e.currentTarget.style.background = C.bg)}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
-                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <span className="flex items-center gap-[6px]">
                     <span style={{ color: C.primary }}>{cat.icon}</span>
                     {cat.name}
                   </span>
                   <span
-                    style={{ fontSize: 11, color: C.muted, background: C.bg, padding: "1px 6px", borderRadius: 10 }}
+                    className="text-[11px] py-px px-[6px] rounded-[10px]"
+                    style={{ color: C.muted, background: C.bg }}
                   >
                     {cat.count}
                   </span>
@@ -1682,24 +1607,20 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
         {/* Main Content */}
         <div style={{ padding: isMobile ? "16px" : "24px", minHeight: isMobile ? "auto" : 600 }}>
           {/* Search */}
-          <div style={{ position: "relative", marginBottom: 16 }}>
+          <div className="relative mb-4">
             <Search
               size={15}
-              style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+              className="absolute left-[14px] top-1/2 -translate-y-1/2"
+              style={{ color: C.muted }}
             />
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Have a question? Ask or enter a keyword..."
+              className="w-full rounded-[10px] font-[Inter,sans-serif] text-[13px] outline-none box-border"
               style={{
-                width: "100%",
                 padding: "11px 14px 11px 42px",
-                borderRadius: 10,
                 border: `1.5px solid ${C.line}`,
-                fontFamily: font.body,
-                fontSize: 13,
-                outline: "none",
-                boxSizing: "border-box",
                 background: C.bg,
                 color: C.dark,
               }}
@@ -1711,37 +1632,28 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
           {/* Sub-views */}
           {(forumView === "Questions" || forumView === "Home" || forumView === "Most Answered") && (
             <>
-              <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
+              <div className="flex gap-[6px] mb-5">
                 {["Recent", "Most Answered", "Unanswered", "Featured"].map((f) => (
                   <button
                     key={f}
                     onClick={() => setForumFilter(f)}
+                    className="py-[6px] px-[14px] rounded-[20px] font-[Inter,sans-serif] text-[12px] font-semibold cursor-pointer"
                     style={{
-                      padding: "6px 14px",
-                      borderRadius: 20,
                       border: `1.5px solid ${forumFilter === f ? C.primary : C.line}`,
                       background: forumFilter === f ? C.primary : "transparent",
                       color: forumFilter === f ? C.white : C.muted,
-                      fontFamily: font.body,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      cursor: "pointer",
                     }}
                   >
                     {f}
                   </button>
                 ))}
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div className="flex flex-col gap-3">
                 {filteredQs.map((q) => (
                   <div
                     key={q.id}
-                    style={{
-                      border: `1.5px solid ${C.line}`,
-                      borderRadius: 14,
-                      padding: 20,
-                      transition: "border-color 0.2s, box-shadow 0.2s",
-                    }}
+                    className="rounded-[14px] p-5 transition-[border-color,box-shadow] duration-200"
+                    style={{ border: `1.5px solid ${C.line}` }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = C.primary;
                       e.currentTarget.style.boxShadow = C.cardShadow;
@@ -1751,45 +1663,25 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                       e.currentTarget.style.boxShadow = "none";
                     }}
                   >
-                    <div style={{ display: "flex", gap: 12 }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          gap: 4,
-                          flexShrink: 0,
-                        }}
-                      >
+                    <div className="flex gap-3">
+                      <div className="flex flex-col items-center gap-1 shrink-0">
                         <button
                           onClick={() => handleVote(q.id, "up")}
+                          className="rounded-md w-7 h-7 flex items-center justify-center cursor-pointer"
                           style={{
                             background: q.userVote === "up" ? C.primary : C.bg,
                             border: `1.5px solid ${q.userVote === "up" ? C.primary : C.line}`,
-                            borderRadius: 6,
-                            width: 28,
-                            height: 28,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
                           }}
                         >
                           <ThumbsUp size={12} color={q.userVote === "up" ? C.white : C.muted} />
                         </button>
-                        <span style={{ fontSize: 13, fontWeight: 700, color: C.primary }}>{q.votes}</span>
+                        <span className="text-[13px] font-bold" style={{ color: C.primary }}>{q.votes}</span>
                         <button
                           onClick={() => handleVote(q.id, "down")}
+                          className="rounded-md w-7 h-7 flex items-center justify-center cursor-pointer"
                           style={{
                             background: q.userVote === "down" ? "#e74c3c" : C.bg,
                             border: `1.5px solid ${q.userVote === "down" ? "#e74c3c" : C.line}`,
-                            borderRadius: 6,
-                            width: 28,
-                            height: 28,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
                           }}
                         >
                           <ThumbsDown size={12} color={q.userVote === "down" ? C.white : C.muted} />

@@ -4703,80 +4703,33 @@ const InvestmentThesisSection = () => {
             </div>
 
             {/* Engagement Pathways */}
-            <div
-              style={{
-                flex: 1,
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                marginBottom: "20px",
-                width: "100%",
-                overflow: "hidden",
-              }}
-            >
+            <div className="flex-1 flex flex-col gap-2.5 mb-5 w-full overflow-hidden">
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.primary,
-                  marginBottom: "4px",
-                  opacity: 0.5,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1px] mb-1 opacity-50"
+                style={{ color: colors.primary }}
               >
                 Your Engagement
               </div>
               {aud.pathways.map((path, idx) => (
                 <div
                   key={idx}
+                  className="flex items-center gap-3 py-3 px-4 rounded-[10px] overflow-hidden"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "12px 16px",
                     backgroundColor: colors.white,
-                    borderRadius: "10px",
                     border: `1px solid ${colors.line}`,
-                    overflow: "hidden",
                   }}
                 >
                   <div
-                    style={{
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
-                      backgroundColor: colors.accent,
-                      flexShrink: 0,
-                    }}
+                    className="w-1.5 h-1.5 rounded-full shrink-0"
+                    style={{ backgroundColor: colors.accent }}
                   />
                   <div
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      flexShrink: 0,
-                      maxWidth: "45%",
-                    }}
+                    className="font-[Inter,sans-serif] text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis shrink-0 max-w-[45%]"
+                    style={{ color: colors.primary }}
                   >
                     {path.bring}
                   </div>
-                  <div
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "12px",
-                      color: "#777",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      flex: 1,
-                    }}
-                  >
+                  <div className="font-[Inter,sans-serif] text-[12px] text-[#777] whitespace-nowrap overflow-hidden text-ellipsis flex-1">
                     {path.get}
                   </div>
                 </div>
@@ -4784,32 +4737,13 @@ const InvestmentThesisSection = () => {
             </div>
 
             {/* Validation bar */}
-            <div
-              style={{
-                padding: "14px 18px",
-                backgroundColor: "rgba(27, 77, 62, 0.06)",
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                width: "100%",
-                boxSizing: "border-box",
-                overflow: "hidden",
-              }}
-            >
-              <div style={{ color: colors.primary, flexShrink: 0, display: "flex" }}>
+            <div className="py-3.5 px-[18px] bg-[rgba(27,77,62,0.06)] rounded-xl flex items-center gap-3 w-full box-border overflow-hidden">
+              <div className="shrink-0 flex" style={{ color: colors.primary }}>
                 <IconCheck />
               </div>
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  color: "#444",
-                  lineHeight: "1.5",
-                  whiteSpace: isMobile ? "nowrap" : "normal",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
+                className="font-[Inter,sans-serif] text-[13px] text-[#444] leading-[1.5] overflow-hidden text-ellipsis"
+                style={{ whiteSpace: isMobile ? "nowrap" : "normal" }}
               >
                 <strong style={{ color: colors.primary }}>MoFA</strong>
                 {isMobile ? " · Planting for Food & Jobs" : " supporting Planting for Food & Jobs objectives"}
@@ -4820,41 +4754,24 @@ const InvestmentThesisSection = () => {
           {/* RIGHT COLUMN: Green panel */}
           {(!isMobile || showInvestmentDetails) && (
             <div
+              className="flex flex-col"
               style={{
                 backgroundColor: colors.primary,
                 borderRadius: isMobile ? "16px" : "20px",
                 padding: isMobile ? "20px" : "28px",
-                display: "flex",
-                flexDirection: "column",
               }}
             >
               {/* Tab selector */}
-              <div
-                style={{
-                  display: "flex",
-                  backgroundColor: "rgba(255,255,255,0.08)",
-                  borderRadius: "12px",
-                  padding: "4px",
-                  marginBottom: "20px",
-                  flexShrink: 0,
-                }}
-              >
+              <div className="flex bg-white/[0.08] rounded-xl p-1 mb-5 shrink-0">
                 {investmentTabs.map((tab) => (
                   <button
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
+                    className="flex-1 border-none py-3 px-5 rounded-[10px] text-sm font-[Inter,sans-serif] cursor-pointer transition-all duration-200 ease-in-out"
                     style={{
-                      flex: 1,
                       backgroundColor: activeTab === tab.key ? colors.accent : "transparent",
                       color: activeTab === tab.key ? colors.primary : "rgba(255,255,255,0.5)",
-                      border: "none",
-                      padding: "12px 20px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
                       fontWeight: activeTab === tab.key ? "700" : "500",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
                     }}
                   >
                     {tab.label}
@@ -4863,63 +4780,34 @@ const InvestmentThesisSection = () => {
               </div>
 
               {/* Tab content cards */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+              <div className="flex flex-col gap-2.5 flex-1">
                 {investmentTabContent[activeTab].map((item, idx) => {
                   const isTextValue =
                     isNaN(item.value.charAt(0)) && !item.value.includes("%") && !item.value.includes("x");
                   return (
                     <div
                       key={idx}
+                      className="bg-white/5 rounded-xl flex gap-4 items-center flex-1"
                       style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        borderRadius: "12px",
                         padding: isMobile ? "16px" : "18px 20px",
-                        display: "flex",
-                        gap: "16px",
-                        alignItems: "center",
-                        flex: 1,
                         minHeight: isMobile ? "auto" : "0",
                       }}
                     >
-                      <div style={{ minWidth: isMobile ? "80px" : "100px", flexShrink: 0 }}>
+                      <div className="shrink-0" style={{ minWidth: isMobile ? "80px" : "100px" }}>
                         <div
+                          className="font-[Poppins,sans-serif] font-bold leading-[1.1] whitespace-nowrap"
                           style={{
-                            fontFamily: "Poppins, sans-serif",
                             fontSize: isTextValue ? (isMobile ? "17px" : "19px") : isMobile ? "20px" : "22px",
-                            fontWeight: "700",
                             color: colors.accent,
-                            lineHeight: "1.1",
-                            whiteSpace: "nowrap",
                           }}
                         >
                           {item.value}
                         </div>
-                        <div
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "9px",
-                            color: "rgba(255,255,255,0.35)",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.5px",
-                            marginTop: "4px",
-                            lineHeight: "1.3",
-                          }}
-                        >
+                        <div className="font-[Inter,sans-serif] text-[9px] text-white/[0.35] uppercase tracking-[0.5px] mt-1 leading-[1.3]">
                           {item.label}
                         </div>
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.7)",
-                          lineHeight: "1.55",
-                          borderLeft: "1px solid rgba(255,255,255,0.1)",
-                          paddingLeft: "16px",
-                          flex: 1,
-                          minWidth: 0,
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-white/70 leading-[1.55] border-l border-white/10 pl-4 flex-1 min-w-0">
                         {item.detail}
                       </div>
                     </div>
@@ -4928,37 +4816,17 @@ const InvestmentThesisSection = () => {
               </div>
 
               {/* Prospectus bar */}
-              <div
-                style={{
-                  marginTop: "16px",
-                  padding: "14px 20px",
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)" }}>
+              <div className="mt-4 py-3.5 px-5 bg-white/5 rounded-xl flex justify-between items-center shrink-0">
+                <span className="font-[Inter,sans-serif] text-[13px] text-white/[0.45]">
                   Full financial model available
                 </span>
                 <a
                   href="/resources"
                   onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    textDecoration: "none",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    flexShrink: 0,
-                  }}
+                  className="font-[Inter,sans-serif] text-sm font-bold no-underline inline-flex items-center gap-1.5 shrink-0"
+                  style={{ color: colors.accent }}
                 >
-                  Download Prospectus <span style={{ fontSize: "16px" }}>→</span>
+                  Download Prospectus <span className="text-base">→</span>
                 </a>
               </div>
             </div>
@@ -4968,21 +4836,10 @@ const InvestmentThesisSection = () => {
           {isMobile && !showInvestmentDetails && (
             <button
               onClick={() => setShowInvestmentDetails(true)}
+              className="flex items-center justify-center gap-2 w-full p-3.5 bg-transparent rounded-xl font-[Inter,sans-serif] text-sm font-semibold cursor-pointer"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                width: "100%",
-                padding: "14px",
-                backgroundColor: "transparent",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "12px",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "600",
                 color: colors.primary,
-                cursor: "pointer",
               }}
             >
               View returns, timeline & impact
@@ -5088,22 +4945,14 @@ const SectorGrid = () => {
   return (
     <div>
       <div
+        className="text-[12px] font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-3 transition-colors duration-[250ms] ease-in-out leading-none min-h-[12px]"
         style={{
-          fontSize: "12px",
-          fontWeight: "600",
           color: hovered !== null ? colors.accent : "rgba(255,255,255,0.4)",
-          fontFamily: "'DM Sans', sans-serif",
-          textTransform: "uppercase",
-          letterSpacing: "1.5px",
-          marginBottom: "12px",
-          transition: "color 0.25s ease",
-          lineHeight: "1",
-          minHeight: "12px",
         }}
       >
         {hovered !== null ? FOOTER_SECTOR_ICONS[hovered].label : "Explore 12 Sectors"}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="flex justify-between items-center">
         {FOOTER_SECTOR_ICONS.map((sector, i) => {
           const isH = hovered === i;
           return (
@@ -5113,31 +4962,17 @@ const SectorGrid = () => {
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
+              className="flex items-center justify-center w-11 h-11 rounded-[10px] cursor-pointer no-underline transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] box-border"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "44px",
-                height: "44px",
-                borderRadius: "10px",
                 backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)",
                 border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`,
-                cursor: "pointer",
-                textDecoration: "none",
-                transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
                 transform: isH ? "translateY(-2px)" : "none",
                 boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
-                boxSizing: "border-box",
               }}
             >
               <div
-                style={{
-                  opacity: isH ? 1 : 0.5,
-                  transition: "opacity 0.25s ease",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className="flex items-center justify-center transition-opacity duration-[250ms] ease-in-out"
+                style={{ opacity: isH ? 1 : 0.5 }}
               >
                 {sector.icon(isH ? colors.accent : "rgba(255,255,255,0.85)")}
               </div>

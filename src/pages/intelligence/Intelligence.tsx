@@ -315,13 +315,11 @@ export default function Intelligence() {
               >
                 {({ isActive }) => (
                   <>
-                    <Icon size={16} color={isActive ? C.accent : "rgba(255,255,255,0.4)"} style={{ flexShrink: 0 }} />
-                    <span style={{
-                      fontFamily: "DM Sans,sans-serif",
-                      opacity: textVisible ? 1 : 0,
-                      transition: "opacity 0.15s ease",
-                      overflow: "hidden", whiteSpace: "nowrap",
-                    }}>{label}</span>
+                    <Icon size={16} color={isActive ? C.accent : "rgba(255,255,255,0.4)"} className="shrink-0" />
+                    <span
+                      className="font-['DM_Sans',sans-serif] overflow-hidden whitespace-nowrap transition-opacity duration-150 ease-in-out"
+                      style={{ opacity: textVisible ? 1 : 0 }}
+                    >{label}</span>
                   </>
                 )}
               </NavLink>
@@ -329,15 +327,14 @@ export default function Intelligence() {
           </nav>
 
           {/* ── Sectors ── */}
-          <div style={{ flex: 1, overflowY: "auto", padding: "0 8px 12px", scrollbarWidth: "none", minWidth: 220 }}>
-            <p style={{
-              fontSize: 9, fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)",
-              fontFamily: "Inter,sans-serif", padding: "6px 8px 6px", textTransform: "uppercase", whiteSpace: "nowrap",
-              opacity: textVisible ? 1 : 0, transition: "opacity 0.15s ease",
-            }}>
+          <div className="flex-1 overflow-y-auto px-2 pb-3 min-w-[220px]" style={{ scrollbarWidth: "none" }}>
+            <p
+              className="text-[9px] font-bold tracking-[1px] text-white/20 font-['Inter',sans-serif] py-1.5 px-2 uppercase whitespace-nowrap transition-opacity duration-150 ease-in-out"
+              style={{ opacity: textVisible ? 1 : 0 }}
+            >
               Sectors
             </p>
-            {collapsed && <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "4px 6px 10px" }} />}
+            {collapsed && <div className="h-px bg-white/[0.07] mx-1.5 mt-1 mb-2.5" />}
             {SIDEBAR_SECTORS.map(({ id, short, icon: Icon }) => {
               const isActiveSector = activeSectorId === id;
               return (
@@ -365,15 +362,15 @@ export default function Intelligence() {
                   onMouseEnter={e => { if (!isActiveSector) e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
                   onMouseLeave={e => { if (!isActiveSector) e.currentTarget.style.background = "none"; }}
                 >
-                  <Icon size={collapsed ? 14 : 12} color={isActiveSector ? C.accent : collapsed ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.3)"} style={{ flexShrink: 0 }} />
-                  <span style={{
-                    fontSize: 11.5, fontWeight: isActiveSector ? 600 : 400,
-                    color: isActiveSector ? C.accent : "rgba(255,255,255,0.45)",
-                    fontFamily: "DM Sans,sans-serif",
-                    opacity: textVisible ? 1 : 0,
-                    transition: "opacity 0.15s ease",
-                    overflow: "hidden", whiteSpace: "nowrap",
-                  }}>
+                  <Icon size={collapsed ? 14 : 12} color={isActiveSector ? C.accent : collapsed ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.3)"} className="shrink-0" />
+                  <span
+                    className="text-[11.5px] font-['DM_Sans',sans-serif] overflow-hidden whitespace-nowrap transition-opacity duration-150 ease-in-out"
+                    style={{
+                      fontWeight: isActiveSector ? 600 : 400,
+                      color: isActiveSector ? C.accent : "rgba(255,255,255,0.45)",
+                      opacity: textVisible ? 1 : 0,
+                    }}
+                  >
                     {short}
                   </span>
                 </button>
@@ -382,33 +379,25 @@ export default function Intelligence() {
           </div>
 
           {/* ── Upgrade to Pro ── */}
-          <div style={{
-            margin: "0 10px 12px",
-            background: "linear-gradient(135deg,#1E3327,#152A1F)",
-            border: "1px solid rgba(184,217,53,0.15)",
-            borderRadius: 8, padding: collapsed ? "10px 4px" : 12, flexShrink: 0,
-            overflow: "hidden", transition: "padding 0.22s ease",
-          }}>
-            <div style={{
-              opacity: textVisible ? 1 : 0, transition: "opacity 0.15s ease",
-              pointerEvents: textVisible ? "auto" : "none",
-            }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: C.white, fontFamily: "DM Sans,sans-serif", marginBottom: 3 }}>
+          <div
+            className="mx-2.5 mb-3 bg-gradient-to-br from-[#1E3327] to-[#152A1F] border border-[rgba(184,217,53,0.15)] rounded-lg shrink-0 overflow-hidden transition-[padding] duration-[220ms] ease-in-out"
+            style={{ padding: collapsed ? "10px 4px" : 12 }}
+          >
+            <div
+              className="transition-opacity duration-150 ease-in-out"
+              style={{ opacity: textVisible ? 1 : 0, pointerEvents: textVisible ? "auto" : "none" }}
+            >
+              <div className="text-[11px] font-bold font-['DM_Sans',sans-serif] mb-[3px]" style={{ color: C.white }}>
                 Upgrade to Pro
               </div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", fontFamily: "Inter,sans-serif", marginBottom: 8, lineHeight: 1.4 }}>
+              <div className="text-[10px] text-white/40 font-['Inter',sans-serif] mb-2 leading-[1.4]">
                 Full access to all 12 sector analyses
               </div>
             </div>
             <button
               onClick={() => setShowUpgrade(true)}
-              style={{
-                width: "100%", background: C.accent, border: "none", borderRadius: 5,
-                padding: "7px 0", fontSize: 10, fontWeight: 700, color: C.primary,
-                fontFamily: "Inter,sans-serif", cursor: "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
-                transition: "opacity 0.15s",
-              }}
+              className="w-full border-none rounded-[5px] py-[7px] text-[10px] font-bold font-['Inter',sans-serif] cursor-pointer flex items-center justify-center gap-1 transition-opacity duration-150"
+              style={{ background: C.accent, color: C.primary }}
               onMouseEnter={e => (e.currentTarget.style.opacity = "0.88")}
               onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
             >
@@ -421,19 +410,17 @@ export default function Intelligence() {
         {isMobile && (
           <div
             onClick={() => setSidebarOpen(false)}
+            className="fixed inset-0 top-14 z-[44] transition-opacity duration-[280ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
             style={{
-              position: "fixed", inset: 0, top: 56,
               background: "rgba(0,0,0,0.45)",
-              zIndex: 44,
               opacity: sidebarOpen ? 1 : 0,
               pointerEvents: sidebarOpen ? "auto" : "none",
-              transition: "opacity 0.28s cubic-bezier(0.4,0,0.2,1)",
             }}
           />
         )}
 
         {/* ── Main Content ── */}
-        <main style={{ flex: 1, overflow: "auto" }}>
+        <main className="flex-1 overflow-auto">
           <Outlet />
         </main>
 
