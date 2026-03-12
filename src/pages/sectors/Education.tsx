@@ -3506,68 +3506,51 @@ const InvestmentCTASection = () => {
               </div>
 
               {/* Tab Content Cards */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+              <div className="flex flex-col gap-[10px] flex-1">
                 {tabContent[activeTab].map((item, idx) => (
                   <div
                     key={idx}
+                    className="bg-[rgba(255,255,255,0.05)] rounded-xl flex-1"
                     style={{
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      borderRadius: "12px",
                       padding: isMobile ? "16px" : "18px 20px",
                       display: "flex",
                       flexDirection: isMobile ? "column" : "row",
                       gap: isMobile ? "10px" : "16px",
                       alignItems: isMobile ? "flex-start" : "center",
-                      flex: 1,
                       minHeight: isMobile ? "auto" : "0",
                     }}
                   >
                     <div
+                      className="shrink-0 flex items-baseline"
                       style={{
                         width: isMobile ? "auto" : "140px",
-                        flexShrink: 0,
-                        display: "flex",
-                        alignItems: "baseline",
                         gap: isMobile ? "10px" : "0",
                         flexDirection: isMobile ? "row" : "column",
                       }}
                     >
                       <div
+                        className="font-[Poppins,sans-serif] font-bold leading-[1.1]"
                         style={{
-                          fontFamily: "Poppins, sans-serif",
                           fontSize: isMobile ? "20px" : "22px",
-                          fontWeight: "700",
                           color: colors.accent,
-                          lineHeight: "1.1",
                         }}
                       >
                         {item.value}
                       </div>
                       <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "9px",
-                          color: "rgba(255,255,255,0.35)",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                          marginTop: isMobile ? "0" : "4px",
-                          lineHeight: "1.3",
-                        }}
+                        className="font-[Inter,sans-serif] text-[9px] text-[rgba(255,255,255,0.35)] uppercase tracking-[0.5px] leading-[1.3]"
+                        style={{ marginTop: isMobile ? "0" : "4px" }}
                       >
                         {item.label}
                       </div>
                     </div>
                     <div
+                      className="font-[Inter,sans-serif] text-[13px] text-[rgba(255,255,255,0.7)] leading-[1.55] flex-1"
                       style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
-                        color: "rgba(255,255,255,0.7)",
-                        lineHeight: "1.55",
                         borderLeft: isMobile ? "none" : "1px solid rgba(255,255,255,0.1)",
                         borderTop: isMobile ? "1px solid rgba(255,255,255,0.08)" : "none",
                         paddingLeft: isMobile ? "0" : "16px",
                         paddingTop: isMobile ? "10px" : "0",
-                        flex: 1,
                       }}
                     >
                       {item.detail}

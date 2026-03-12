@@ -2766,23 +2766,17 @@ function MembersPage({ isMobile }) {
   }).sort((a, b) => (sortBy === "points" ? b.points - a.points : a.name.localeCompare(b.name)));
 
   const PillToggle = ({ opts, val, set }) => (
-    <div style={{ display: "flex", gap: 4 }}>
+    <div className="flex gap-1">
       {opts.map((o) => (
         <button
           key={o}
           onClick={() => set(o)}
+          className="py-[5px] px-3 rounded-lg font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap transition-all duration-150"
           style={{
-            padding: "5px 12px",
-            borderRadius: 8,
             border: `1.5px solid ${val === o ? C.primary : C.line}`,
             background: val === o ? C.primary : C.white,
             color: val === o ? C.white : C.muted,
-            fontFamily: font.body,
-            fontSize: 12,
             fontWeight: val === o ? 700 : 400,
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-            transition: "all 0.15s",
           }}
         >
           {o}
@@ -2794,21 +2788,15 @@ function MembersPage({ isMobile }) {
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 24 }}>
+      <div className="mb-6">
         <SectionLabel>Community</SectionLabel>
         <h2
-          style={{
-            fontFamily: font.display,
-            fontSize: 32,
-            fontWeight: 700,
-            color: C.primary,
-            margin: "0 0 6px",
-            letterSpacing: "-0.5px",
-          }}
+          className="font-[DM_Sans,sans-serif] text-[32px] font-bold tracking-[-0.5px]"
+          style={{ color: C.primary, margin: "0 0 6px" }}
         >
           Member <span style={{ color: C.accent }}>Directory</span>
         </h2>
-        <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>
+        <p className="text-[14px] m-0" style={{ color: C.muted }}>
           {ALL_MEMBERS.length} members building Ghana's future across 12 sectors
         </p>
       </div>

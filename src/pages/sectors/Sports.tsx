@@ -2899,7 +2899,7 @@ const PolicyAlignmentSection = () => {
                     >
                       {governanceCategories.find((c) => c.id === item.category)?.label}
                     </span>
-                    <div style={{ display: "flex", gap: "4px" }}>
+                    <div className="flex gap-1">
                       {item.relevance.map((r) => (
                         <span
                           key={r}
@@ -3033,7 +3033,7 @@ const PolicyAlignmentSection = () => {
         {/* Mobile scroll indicators */}
         {isMobile && filtered.length > 1 && (
           <div
-            style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "16px", marginBottom: "16px" }}
+            className="flex justify-center gap-2 mt-4 mb-4"
           >
             {filtered.map((_, i) => (
               <div
@@ -3374,7 +3374,7 @@ const CrossSectorSection = () => {
                   >
                     Cross-Sector Integration Opportunities
                   </span>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                  <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                     Click a sector above to explore
                   </span>
                 </div>

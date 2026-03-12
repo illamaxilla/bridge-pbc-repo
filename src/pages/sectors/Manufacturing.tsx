@@ -1356,13 +1356,11 @@ const ValueChainSectionPremium = () => {
                         >
                           {stage.actor}
                         </div>
-                        <div style={{ marginTop: "auto" }}>
+                        <div className="mt-auto">
                           <div
+                            className="text-[11px] font-[Inter,sans-serif] mb-1"
                             style={{
-                              fontSize: "11px",
                               color: isActive ? "rgba(255,255,255,0.4)" : "#999",
-                              fontFamily: "Inter, sans-serif",
-                              marginBottom: "4px",
                             }}
                           >
                             Key Stat
@@ -1380,7 +1378,7 @@ const ValueChainSectionPremium = () => {
                             {stage.stat}
                           </div>
                         </div>
-                        <div style={{ marginTop: "16px", display: "flex", justifyContent: "center" }}>
+                        <div className="mt-4 flex justify-center">
                           <ChevronDown size={18} strokeWidth={2} color={isActive ? "rgba(255,255,255,0.4)" : "#ccc"} style={{
                               transform: isActive ? "rotate(180deg)" : "none",
                               transition: "transform 0.2s ease",
