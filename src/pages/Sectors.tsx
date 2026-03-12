@@ -13,7 +13,7 @@ const sectorRoute = (slug: string): string => {
 import SiteFooter from "@/components/SiteFooter";
 
 import { colors, layout } from "@/lib/theme";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 const MAX_W = layout.maxWidth;
 
 const icons = {

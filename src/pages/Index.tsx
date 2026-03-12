@@ -9,7 +9,7 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 // BRIDGE Design System
 // ═══════════════════════════════════════════════
 import { colors, layout } from "@/lib/theme";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
 // BRIDGE 12 Sectors data
