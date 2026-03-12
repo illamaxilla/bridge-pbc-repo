@@ -2276,40 +2276,23 @@ const RippleEffectSection = () => {
               </p>
             ) : (
               <div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "20px",
-                  }}
-                >
+                <div className="flex justify-between items-center mb-5">
                   <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                      color: colors.white,
-                    }}
+                    className="font-[Inter,sans-serif] text-[16px] font-semibold"
+                    style={{ color: colors.white }}
                   >
                     Cross-Sector Integration Opportunities
                   </span>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                  <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                     Click a sector above to explore
                   </span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px" }}>
+                <div className="grid grid-cols-5 gap-3">
                   {pathways.map((p, i) => (
                     <div
                       key={i}
                       onClick={() => setActiveNode(i)}
-                      style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        borderRadius: "16px",
-                        padding: "24px 20px",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                      }}
+                      className="bg-white/5 rounded-2xl py-6 px-5 cursor-pointer transition-all duration-200 ease-in-out"
                     >
                       <div
                         className="font-[Inter,sans-serif] text-[14px] font-semibold mb-2"
@@ -2322,23 +2305,12 @@ const RippleEffectSection = () => {
                       </div>
                       <div className="mt-3">
                         <span
-                          style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "18px",
-                            fontWeight: "700",
-                            color: colors.accent,
-                          }}
+                          className="font-[Poppins,sans-serif] text-[18px] font-bold"
+                          style={{ color: colors.accent }}
                         >
                           {p.multiplier}
                         </span>
-                        <span
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "11px",
-                            color: "rgba(255,255,255,0.4)",
-                            marginLeft: "6px",
-                          }}
-                        >
+                        <span className="font-[Inter,sans-serif] text-[11px] text-white/40 ml-1.5">
                           multiplier
                         </span>
                       </div>
@@ -2350,25 +2322,20 @@ const RippleEffectSection = () => {
           ) : (
             <div>
               {/* Breadcrumb */}
-              <div
-                style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "28px", alignItems: "center" }}
-              >
+              <div className="flex gap-2 flex-wrap mb-7 items-center">
                 {pathways[activeNode].pathLabel.split(" → ").map((seg, si, arr) => (
                   <React.Fragment key={si}>
                     <span
+                      className="font-[Inter,sans-serif] text-[13px] px-[14px] py-1.5 rounded-full"
                       style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
                         fontWeight: si === 0 ? "700" : "500",
                         color: si === 0 ? colors.accent : "rgba(255,255,255,0.7)",
                         backgroundColor: si === 0 ? "rgba(184, 217, 53, 0.15)" : "rgba(255,255,255,0.05)",
-                        padding: "6px 14px",
-                        borderRadius: "50px",
                       }}
                     >
                       {seg}
                     </span>
-                    {si < arr.length - 1 && <span style={{ color: colors.accent, fontSize: "14px" }}>→</span>}
+                    {si < arr.length - 1 && <span className="text-[14px]" style={{ color: colors.accent }}>→</span>}
                   </React.Fragment>
                 ))}
               </div>
@@ -2726,13 +2693,10 @@ const InvestmentThesisSection = () => {
             <span className="font-semibold" style={{ color: colors.accent }}>Ghana's Logistics Transformation</span>
           </h2>
           <p
+            className="font-[Inter,sans-serif] text-[#666] leading-[1.65] max-w-[700px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "15px" : "16px",
-              color: "#666",
-              lineHeight: "1.65",
               margin: isMobile ? "0 auto" : "0",
-              maxWidth: "700px",
               ...(isMobile
                 ? { display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }
                 : {}),
@@ -2745,51 +2709,29 @@ const InvestmentThesisSection = () => {
 
         {/* Audience Selector */}
         {isMobile ? (
-          <div
-            style={{ display: "flex", justifyContent: "center", gap: "12px", marginBottom: "24px", padding: "0 20px" }}
-          >
+          <div className="flex justify-center gap-3 mb-6 px-5">
             {audiences.map((aud, idx) => {
               const isActive = activeAudience === idx;
               return (
                 <button
                   key={aud.key}
                   onClick={() => setActiveAudience(idx)}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "6px",
-                    background: "none",
-                    border: "none",
-                    padding: "8px",
-                    cursor: "pointer",
-                    opacity: isActive ? 1 : 0.4,
-                    transition: "all 0.2s ease",
-                  }}
+                  className="flex flex-col items-center gap-1.5 bg-none border-none p-2 cursor-pointer transition-all duration-200 ease-in-out"
+                  style={{ opacity: isActive ? 1 : 0.4 }}
                 >
                   <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200 ease-in-out"
                     style={{
-                      width: "44px",
-                      height: "44px",
-                      borderRadius: "12px",
                       backgroundColor: isActive ? colors.accentLight : colors.background,
                       border: isActive ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
                       color: isActive ? colors.primary : "#999",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      transition: "all 0.2s ease",
                     }}
                   >
                     {aud.icon}
                   </div>
                   <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "10px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                    }}
+                    className="font-[Inter,sans-serif] text-[10px] font-semibold"
+                    style={{ color: colors.primary }}
                   >
                     {aud.shortLabel}
                   </span>
@@ -2798,32 +2740,24 @@ const InvestmentThesisSection = () => {
             })}
           </div>
         ) : (
-          <div style={{ display: "flex", justifyContent: "flex-start", gap: "12px", marginBottom: "40px" }}>
+          <div className="flex justify-start gap-3 mb-10">
             {audiences.map((aud, idx) => {
               const isActive = activeAudience === idx;
               return (
                 <button
                   key={aud.key}
                   onClick={() => setActiveAudience(idx)}
+                  className="flex items-center gap-2 py-3 px-6 rounded-full font-[Inter,sans-serif] text-[14px] cursor-pointer transition-all duration-[250ms] ease-in-out shrink-0"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "12px 24px",
-                    borderRadius: "50px",
                     border: isActive ? `1.5px solid ${colors.accent}` : `1px solid ${colors.line}`,
                     backgroundColor: isActive ? colors.accentLight : "transparent",
                     color: isActive ? colors.primary : "#999",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
                     fontWeight: isActive ? "700" : "500",
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
-                    flexShrink: 0,
                   }}
                 >
                   <span
-                    style={{ display: "flex", color: isActive ? colors.primary : "#999", transition: "all 0.25s ease" }}
+                    className="flex transition-all duration-[250ms] ease-in-out"
+                    style={{ color: isActive ? colors.primary : "#999" }}
                   >
                     {aud.icon}
                   </span>
@@ -2845,130 +2779,75 @@ const InvestmentThesisSection = () => {
           }}
         >
           {/* Left Column */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="flex flex-col">
             {!isMobile && (
               <h3
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "32px",
-                  fontWeight: "300",
-                  lineHeight: "1.25",
-                  letterSpacing: "-0.3px",
-                  color: colors.primary,
-                  margin: "0 0 16px 0",
-                }}
+                className="font-[Inter,sans-serif] text-[32px] font-light leading-[1.25] tracking-[-0.3px] m-0 mb-4"
+                style={{ color: colors.primary }}
               >
                 {activeAudienceData.headline}
               </h3>
             )}
             {!isMobile && (
-              <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "15px",
-                  color: "#555",
-                  lineHeight: "1.7",
-                  margin: "0 0 24px 0",
-                }}
-              >
+              <p className="font-[Inter,sans-serif] text-[15px] text-[#555] leading-[1.7] m-0 mb-6">
                 {activeAudienceData.pitch}
               </p>
             )}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "24px" }}>
+            <div className="grid grid-cols-3 gap-3 mb-6">
               {activeAudienceData.stats.map((stat, idx) => (
                 <div
                   key={idx}
+                  className="rounded-xl text-center flex flex-col justify-center"
                   style={{
                     backgroundColor: colors.white,
-                    borderRadius: "12px",
                     padding: isMobile ? "16px 10px" : "18px 14px",
-                    textAlign: "center",
                     border: `1px solid ${colors.line}`,
                     minHeight: isMobile ? "auto" : "110px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
                   }}
                 >
                   <div
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: isMobile ? "20px" : "26px",
-                      fontWeight: "700",
-                      color: colors.accent,
-                      lineHeight: "1.1",
-                      marginBottom: "4px",
-                    }}
+                    className="font-[Poppins,sans-serif] font-bold leading-[1.1] mb-1"
+                    style={{ fontSize: isMobile ? "20px" : "26px", color: colors.accent }}
                   >
                     {stat.value}
                   </div>
                   <div
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: isMobile ? "11px" : "12px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      marginBottom: "2px",
-                    }}
+                    className="font-[Inter,sans-serif] font-semibold mb-[2px]"
+                    style={{ fontSize: isMobile ? "11px" : "12px", color: colors.primary }}
                   >
                     {stat.label}
                   </div>
-                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: "10px", color: "#888" }}>{stat.detail}</div>
+                  <div className="font-[Inter,sans-serif] text-[10px] text-[#888]">{stat.detail}</div>
                 </div>
               ))}
             </div>
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
+            <div className="flex-1 flex flex-col gap-[10px] mb-5">
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.primary,
-                  marginBottom: "4px",
-                  opacity: 0.5,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1px] mb-1 opacity-50"
+                style={{ color: colors.primary }}
               >
                 Your Engagement
               </div>
               {activeAudienceData.pathways.map((path, idx) => (
                 <div
                   key={idx}
+                  className="flex items-start gap-3 rounded-[10px]"
                   style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "12px",
                     padding: isMobile ? "10px 14px" : "12px 16px",
                     backgroundColor: colors.white,
-                    borderRadius: "10px",
                     border: `1px solid ${colors.line}`,
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", gap: "2px", flex: 1, overflow: "hidden" }}>
+                  <div className="flex flex-col gap-[2px] flex-1 overflow-hidden">
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: isMobile ? "11px" : "12px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
+                      className="font-[Inter,sans-serif] font-semibold whitespace-nowrap overflow-hidden text-ellipsis"
+                      style={{ fontSize: isMobile ? "11px" : "12px", color: colors.primary }}
                     >
                       {path.bring}
                     </div>
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: isMobile ? "11px" : "12px",
-                        color: "#777",
-                        lineHeight: "1.4",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
+                      className="font-[Inter,sans-serif] text-[#777] leading-[1.4] whitespace-nowrap overflow-hidden text-ellipsis"
+                      style={{ fontSize: isMobile ? "11px" : "12px" }}
                     >
                       {path.get}
                     </div>
@@ -2977,28 +2856,15 @@ const InvestmentThesisSection = () => {
               ))}
             </div>
             <div
-              style={{
-                padding: isMobile ? "12px 14px" : "14px 18px",
-                backgroundColor: "rgba(27, 77, 62, 0.06)",
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
+              className="bg-[rgba(27,77,62,0.06)] rounded-xl flex items-center gap-[10px]"
+              style={{ padding: isMobile ? "12px 14px" : "14px 18px" }}
             >
-              <div style={{ color: colors.primary, flexShrink: 0, display: "flex" }}>
+              <div className="shrink-0 flex" style={{ color: colors.primary }}>
                 <IconCheck />
               </div>
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: isMobile ? "11px" : "13px",
-                  color: "#444",
-                  lineHeight: "1.4",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
+                className="font-[Inter,sans-serif] text-[#444] leading-[1.4] whitespace-nowrap overflow-hidden text-ellipsis"
+                style={{ fontSize: isMobile ? "11px" : "13px" }}
               >
                 <strong style={{ color: colors.primary }}>Ministry of Transport</strong> partnership framework for
                 Connect24 logistics alignment
@@ -3017,129 +2883,60 @@ const InvestmentThesisSection = () => {
                 flexDirection: "column",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  backgroundColor: "rgba(255,255,255,0.08)",
-                  borderRadius: "12px",
-                  padding: "4px",
-                  marginBottom: "20px",
-                  flexShrink: 0,
-                }}
-              >
+              <div className="flex bg-white/[0.08] rounded-xl p-1 mb-5 shrink-0">
                 {tabs.map((tab) => (
                   <button
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
+                    className="flex-1 border-none py-3 px-5 rounded-[10px] text-[14px] font-[Inter,sans-serif] cursor-pointer transition-all duration-200 ease-in-out"
                     style={{
-                      flex: 1,
                       backgroundColor: activeTab === tab.key ? colors.accent : "transparent",
                       color: activeTab === tab.key ? colors.primary : "rgba(255,255,255,0.5)",
-                      border: "none",
-                      padding: "12px 20px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
                       fontWeight: activeTab === tab.key ? "700" : "500",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
                     }}
                   >
                     {tab.label}
                   </button>
                 ))}
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+              <div className="flex flex-col gap-[10px] flex-1">
                 {tabContent[activeTab].map((item, idx) => (
                   <div
                     key={idx}
+                    className="bg-white/5 rounded-xl flex gap-4 items-center flex-1"
                     style={{
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      borderRadius: "12px",
                       padding: isMobile ? "16px" : "18px 20px",
-                      display: "flex",
-                      gap: "16px",
-                      alignItems: "center",
-                      flex: 1,
                       minHeight: isMobile ? "auto" : "0",
                     }}
                   >
-                    <div style={{ width: isMobile ? "90px" : "110px", flexShrink: 0 }}>
+                    <div className="shrink-0" style={{ width: isMobile ? "90px" : "110px" }}>
                       <div
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: isMobile ? "18px" : "20px",
-                          fontWeight: "700",
-                          color: colors.accent,
-                          lineHeight: "1.1",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
+                        className="font-[Poppins,sans-serif] font-bold leading-[1.1] whitespace-nowrap overflow-hidden text-ellipsis"
+                        style={{ fontSize: isMobile ? "18px" : "20px", color: colors.accent }}
                       >
                         {item.value}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "9px",
-                          color: "rgba(255,255,255,0.35)",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                          marginTop: "4px",
-                          lineHeight: "1.3",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[9px] text-white/35 uppercase tracking-[0.5px] mt-1 leading-[1.3]">
                         {item.label}
                       </div>
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
-                        color: "rgba(255,255,255,0.7)",
-                        lineHeight: "1.55",
-                        borderLeft: "1px solid rgba(255,255,255,0.1)",
-                        paddingLeft: "16px",
-                        flex: 1,
-                      }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[13px] text-white/70 leading-[1.55] border-l border-white/10 pl-4 flex-1">
                       {item.detail}
                     </div>
                   </div>
                 ))}
               </div>
-              <div
-                style={{
-                  marginTop: "16px",
-                  padding: "14px 20px",
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)" }}>
+              <div className="mt-4 py-[14px] px-5 bg-white/5 rounded-xl flex justify-between items-center shrink-0">
+                <span className="font-[Inter,sans-serif] text-[13px] text-white/45">
                   Full financial model available
                 </span>
                 <a
                   href="/resources"
                   onClick={(e) => { e.preventDefault(); navigate("/resources"); }}
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    textDecoration: "none",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    flexShrink: 0,
-                  }}
+                  className="font-[Inter,sans-serif] text-[14px] font-bold no-underline inline-flex items-center gap-1.5 shrink-0"
+                  style={{ color: colors.accent }}
                 >
-                  Download Prospectus <span style={{ fontSize: "16px" }}>→</span>
+                  Download Prospectus <span className="text-[16px]">→</span>
                 </a>
               </div>
             </div>
@@ -3149,22 +2946,8 @@ const InvestmentThesisSection = () => {
           {isMobile && !showInvestmentDetails && (
             <button
               onClick={() => setShowInvestmentDetails(true)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                width: "100%",
-                padding: "14px",
-                backgroundColor: "transparent",
-                border: `1px solid ${colors.line}`,
-                borderRadius: "12px",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "600",
-                color: colors.primary,
-                cursor: "pointer",
-              }}
+              className="flex items-center justify-center gap-2 w-full p-[14px] bg-transparent rounded-xl font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer"
+              style={{ border: `1px solid ${colors.line}`, color: colors.primary }}
             >
               View returns, timeline & impact
               <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} />
@@ -3546,27 +3329,12 @@ const ImpactSection = () => {
 
         {/* Controls Bar */}
         <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "4px",
-            marginBottom: "24px",
-            border: `1px solid ${colors.line}`,
-            borderRadius: "50px",
-            backgroundColor: "transparent",
-            padding: "4px",
-            overflowX: "auto",
-            WebkitOverflowScrolling: "touch",
-          }}
+          className="inline-flex items-center gap-1 mb-6 rounded-full bg-transparent p-1 overflow-x-auto"
+          style={{ border: `1px solid ${colors.line}`, WebkitOverflowScrolling: "touch" }}
         >
           <div
-            style={{
-              display: "inline-flex",
-              borderRadius: "50px",
-              backgroundColor: colors.background,
-              padding: "3px",
-              gap: "2px",
-            }}
+            className="inline-flex rounded-full p-[3px] gap-[2px]"
+            style={{ backgroundColor: colors.background }}
           >
             {["metrics", "stakeholder"].map((v) => (
               <button

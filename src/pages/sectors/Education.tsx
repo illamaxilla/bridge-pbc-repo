@@ -619,7 +619,7 @@ const HeroSection = ({ sector }) => {
           <span className="font-[Inter,sans-serif] text-[13px] text-[#999] mb-2">
             Explore Analysis
           </span>
-          <div className="text-[#999]" style={{ animation: "bounce 2s infinite" }}>
+          <div className="text-[#999] animate-bounce">
             <IconArrowDown />
           </div>
         </div>
@@ -1221,12 +1221,7 @@ const ValueChainSectionPremium = () => {
                   >
                     {/* Key Stat */}
                     <div
-                      className="rounded-[14px] flex items-center gap-4"
-                      style={{
-                        backgroundColor: "rgba(27, 77, 62, 0.04)",
-                        padding: "14px 20px",
-                        border: "1px solid rgba(27, 77, 62, 0.08)",
-                      }}
+                      className="rounded-[14px] flex items-center gap-4 bg-[rgba(27,77,62,0.04)] py-[14px] px-5 border border-[rgba(27,77,62,0.08)]"
                     >
                       <div
                         className="font-[Poppins,sans-serif] text-[32px] font-bold leading-none shrink-0"
@@ -1429,12 +1424,7 @@ const SolutionCard = ({ solution, index }) => {
 
       {/* Impact container */}
       <div
-        className="rounded-xl"
-        style={{
-          backgroundColor: "rgba(27, 77, 62, 0.06)",
-          padding: "14px 16px",
-          border: "1px solid rgba(27, 77, 62, 0.1)",
-        }}
+        className="rounded-xl bg-[rgba(27,77,62,0.06)] py-[14px] px-4 border border-[rgba(27,77,62,0.1)]"
       >
         <div className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[1px] text-[#999] mb-[5px]">
           Expected Impact
@@ -2428,19 +2418,13 @@ const PolicyAlignmentSection = () => {
         overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Header */}
         <div style={{ textAlign: isMobile ? "left" : "center", marginBottom: isMobile ? "32px" : "60px" }}>
           <span
+            className="rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] px-5 py-[10px]"
             style={{
               backgroundColor: colors.white,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "'Inter', sans-serif",
               color: colors.primary,
               border: `1px solid ${colors.line}`,
             }}
@@ -2448,27 +2432,20 @@ const PolicyAlignmentSection = () => {
             The Governance & Policy
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[900px]"
             style={{
-              fontFamily: "'Inter', sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
               margin: isMobile ? "24px 0 20px 0" : "24px auto 20px auto",
-              maxWidth: "900px",
             }}
           >
-            Moving in Step with Ghana's <span style={{ fontWeight: "600" }}>Education</span>{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Reform</span>
+            Moving in Step with Ghana's <span className="font-semibold">Education</span>{" "}
+            <span className="font-semibold" style={{ color: colors.accent }}>Reform</span>
           </h2>
           <p
+            className="font-[Inter,sans-serif] leading-[1.65] text-[#555] max-w-[750px]"
             style={{
-              fontFamily: "'Inter', sans-serif",
               fontSize: isMobile ? "15px" : "16px",
-              lineHeight: "1.65",
-              color: "#555",
-              maxWidth: "750px",
               margin: isMobile ? "0 0 24px 0" : "0 auto 32px auto",
             }}
           >
@@ -2478,18 +2455,14 @@ const PolicyAlignmentSection = () => {
 
           {/* Category filter pills — Impact filter style */}
           <div
-            style={{
-              display: "flex",
-              justifyContent: isMobile ? "flex-start" : "center",
-            }}
+            className="flex"
+            style={{ justifyContent: isMobile ? "flex-start" : "center" }}
           >
             <div
+              className="inline-flex items-center rounded-full"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
                 gap: isMobile ? "6px" : "12px",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
                 padding: isMobile ? "4px" : "5px",
                 backgroundColor: colors.white,
                 ...(isMobile ? { overflowX: "auto", WebkitOverflowScrolling: "touch" } : {}),
@@ -2512,19 +2485,14 @@ const PolicyAlignmentSection = () => {
                       setExpandedCard(null);
                       setShowAllPolicies(false);
                     }}
+                    className="rounded-full font-[Inter,sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap shrink-0"
                     style={{
                       backgroundColor: isActive ? colors.accentLight : "transparent",
                       color: isActive ? colors.primary : "#999",
                       fontWeight: isActive ? "700" : "500",
                       border: isActive ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
                       padding: isMobile ? "5px 8px" : "6px 14px",
-                      borderRadius: "50px",
                       fontSize: isMobile ? "10px" : "12px",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
                     }}
                   >
                     {isMobile ? mobileLabels[cat.id] || cat.label : cat.label}
@@ -2965,11 +2933,7 @@ const CrossSectorSection = () => {
                     <div
                       key={i}
                       onClick={() => setActiveNode(i)}
-                      className="rounded-2xl cursor-pointer transition-all duration-300"
-                      style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        padding: "24px 20px",
-                      }}
+                      className="rounded-2xl cursor-pointer transition-all duration-300 bg-[rgba(255,255,255,0.05)] py-6 px-5"
                     >
                       <div className="font-[Inter,sans-serif] text-[14px] font-semibold mb-2" style={{ color: colors.white }}>
                         {p.name}
@@ -3048,12 +3012,7 @@ const CrossSectorSection = () => {
                       {pathways[activeNode].synergies.map((syn, i) => (
                         <div
                           key={i}
-                          className="flex items-center gap-3 rounded-[10px]"
-                          style={{
-                            padding: "12px 16px",
-                            backgroundColor: "rgba(255,255,255,0.05)",
-                            border: "1px solid rgba(255,255,255,0.06)",
-                          }}
+                          className="flex items-center gap-3 rounded-[10px] py-3 px-4 bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.06)]"
                         >
                           <span className="text-[8px] shrink-0" style={{ color: colors.accent }}>●</span>
                           <span className="font-[Inter,sans-serif] text-[14px] text-white/75 leading-[1.3] whitespace-nowrap overflow-hidden text-ellipsis">
@@ -3075,12 +3034,7 @@ const CrossSectorSection = () => {
                       {pathways[activeNode].bridgeVentures.map((v, i) => (
                         <div
                           key={i}
-                          className="flex justify-between items-center rounded-xl"
-                          style={{
-                            padding: "14px 18px",
-                            backgroundColor: "rgba(184, 217, 53, 0.1)",
-                            border: "1px solid rgba(184, 217, 53, 0.15)",
-                          }}
+                          className="flex justify-between items-center rounded-xl py-[14px] px-[18px] bg-[rgba(184,217,53,0.1)] border border-[rgba(184,217,53,0.15)]"
                         >
                           <span className="font-[Inter,sans-serif] text-[14px] font-semibold" style={{ color: colors.white }}>
                             {v}

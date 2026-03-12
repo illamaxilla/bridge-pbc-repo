@@ -579,7 +579,7 @@ const HeroSection = ({ sector }) => {
             </div>
 
             {/* Main Stats Row */}
-            <div className="flex justify-between mt-5 pb-6" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+            <div className="flex justify-between mt-5 pb-6 border-b border-[rgba(255,255,255,0.1)]">
               <div>
                 <div
                   className="text-[42px] font-bold font-[Inter,sans-serif] leading-none mb-2"
@@ -1365,11 +1365,7 @@ const ValueChainSectionPremium = () => {
             >
               {/* Header bar */}
               <div
-                className="flex items-center justify-between"
-                style={{
-                  padding: "20px 32px",
-                  borderBottom: "1px solid rgba(255,255,255,0.08)",
-                }}
+                className="flex items-center justify-between py-5 px-8 border-b border-[rgba(255,255,255,0.08)]"
               >
                 <div className="flex items-center gap-[14px]">
                   <div
@@ -1415,7 +1411,7 @@ const ValueChainSectionPremium = () => {
               </div>
 
               {/* Two-column content */}
-              <div className="grid grid-cols-2 gap-8" style={{ padding: "24px 32px" }}>
+              <div className="grid grid-cols-2 gap-8 py-6 px-8">
                 {/* Left: Opportunities 2x2 */}
                 <div className="flex flex-col">
                   <div
@@ -1428,12 +1424,7 @@ const ValueChainSectionPremium = () => {
                     {active.painPoints.map((point, i) => (
                       <div
                         key={i}
-                        className="rounded-[10px] flex items-start gap-[10px]"
-                        style={{
-                          backgroundColor: "rgba(255,255,255,0.05)",
-                          border: "1px solid rgba(255,255,255,0.06)",
-                          padding: "14px 16px",
-                        }}
+                        className="rounded-[10px] flex items-start gap-[10px] bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.06)] py-[14px] px-4"
                       >
                         <div
                           className="w-2 h-2 rounded-full shrink-0 mt-1"
@@ -1447,12 +1438,7 @@ const ValueChainSectionPremium = () => {
                   </div>
                   {/* Value leakage + retained */}
                   <div
-                    className="mt-3 rounded-[10px] flex items-center justify-between"
-                    style={{
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      padding: "14px 18px",
-                    }}
+                    className="mt-3 rounded-[10px] flex items-center justify-between bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.06)] py-[14px] px-[18px]"
                   >
                     <div className="flex items-center gap-3">
                       <span
@@ -1496,12 +1482,7 @@ const ValueChainSectionPremium = () => {
                     Key Insight
                   </div>
                   <div
-                    className="rounded-[14px] flex-1 flex flex-col justify-center"
-                    style={{
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      padding: "18px 20px",
-                    }}
+                    className="rounded-[14px] flex-1 flex flex-col justify-center bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.06)] py-[18px] px-5"
                   >
                     <div
                       className="font-[Poppins,sans-serif] text-[24px] font-extrabold leading-[1.15] mb-[10px]"
@@ -1609,7 +1590,7 @@ const SolutionsSection = ({ sector }) => {
               Each venture is a bridge from insight to investment to measurable public benefit — prioritized by impact,
               feasibility, and alignment with Ghana's unique diaspora tourism advantage.
             </p>
-            <div className="inline-flex gap-1 shrink-0 justify-end ml-auto rounded-full p-1" style={{ border: "1px solid rgba(255,255,255,0.15)" }}>
+            <div className="inline-flex gap-1 shrink-0 justify-end ml-auto rounded-full p-1 border border-[rgba(255,255,255,0.15)]">
               {tiers.map((t) => (
                 <button
                   key={t.key}
@@ -3435,88 +3416,42 @@ const CrossSectorSection = () => {
           {activeNode === null ? (
             /* Default State */
             isMobile ? (
-              <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.5)" }}>
+              <div className="text-center py-5 px-0">
+                <p className="font-[Inter,sans-serif] text-[15px] text-white/50">
                   Tap a sector above to explore how tourism amplifies its impact
                 </p>
               </div>
             ) : (
               <div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "24px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                      color: colors.white,
-                    }}
-                  >
+                <div className="flex justify-between items-center mb-6">
+                  <span className="font-[Inter,sans-serif] text-[16px] font-semibold text-white">
                     Cross-Sector Integration Opportunities
                   </span>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                  <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                     Click a sector above to explore
                   </span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px" }}>
+                <div className="grid grid-cols-5 gap-3">
                   {pathways.map((p, i) => (
                     <div
                       key={i}
                       onClick={() => setActiveNode(i)}
-                      style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        borderRadius: "16px",
-                        padding: "24px 20px",
-                        cursor: "pointer",
-                      }}
+                      className="bg-[rgba(255,255,255,0.05)] rounded-2xl py-6 px-5 cursor-pointer"
                     >
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: colors.white,
-                          marginBottom: "8px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[14px] font-semibold text-white mb-2">
                         {p.name}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.45)",
-                          height: "40px",
-                          overflow: "hidden",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-white/45 h-10 overflow-hidden">
                         {p.connection}
                       </div>
-                      <div style={{ marginTop: "12px" }}>
+                      <div className="mt-3">
                         <span
-                          style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "18px",
-                            fontWeight: "700",
-                            color: colors.accent,
-                          }}
+                          className="font-[Poppins,sans-serif] text-[18px] font-bold"
+                          style={{ color: colors.accent }}
                         >
                           {p.multiplier}
                         </span>
-                        <span
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "11px",
-                            color: "rgba(255,255,255,0.4)",
-                            marginLeft: "6px",
-                          }}
-                        >
+                        <span className="font-[Inter,sans-serif] text-[11px] text-white/40 ml-[6px]">
                           multiplier
                         </span>
                       </div>
@@ -3529,9 +3464,7 @@ const CrossSectorSection = () => {
             /* Active State */
             <div>
               {/* Breadcrumb */}
-              <div
-                style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "28px", alignItems: "center" }}
-              >
+              <div className="flex gap-2 flex-wrap mb-7 items-center">
                 {pathways[activeNode].pathLabel.split(" → ").map((seg, i, arr) => (
                   <React.Fragment key={i}>
                     <span
@@ -3575,29 +3508,17 @@ const CrossSectorSection = () => {
                   >
                     Why It Matters
                   </div>
-                  <p
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "15px",
-                      color: "rgba(255,255,255,0.7)",
-                      lineHeight: "1.6",
-                      marginBottom: "20px",
-                    }}
-                  >
+                  <p className="font-[Inter,sans-serif] text-[15px] text-white/70 leading-[1.6] mb-5">
                     {pathways[activeNode].impact}
                   </p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <div className="flex items-baseline gap-2">
                     <span
-                      style={{
-                        fontFamily: "Poppins, sans-serif",
-                        fontSize: "32px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                      }}
+                      className="font-[Poppins,sans-serif] text-[32px] font-bold"
+                      style={{ color: colors.accent }}
                     >
                       {pathways[activeNode].multiplier}
                     </span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                    <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                       value multiplier
                     </span>
                   </div>
@@ -3619,31 +3540,14 @@ const CrossSectorSection = () => {
                     >
                       Synergy Pathways
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {pathways[activeNode].synergies.map((syn, i) => (
                         <div
                           key={i}
-                          style={{
-                            display: "flex",
-                            gap: "12px",
-                            padding: "12px 16px",
-                            borderRadius: "10px",
-                            backgroundColor: "rgba(255,255,255,0.05)",
-                            border: "1px solid rgba(255,255,255,0.06)",
-                            alignItems: "center",
-                          }}
+                          className="flex gap-3 py-3 px-4 rounded-[10px] bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.06)] items-center"
                         >
-                          <span style={{ color: colors.accent, fontSize: "8px", flexShrink: 0 }}>●</span>
-                          <span
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "14px",
-                              color: "rgba(255,255,255,0.75)",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
+                          <span className="text-[8px] shrink-0" style={{ color: colors.accent }}>●</span>
+                          <span className="font-[Inter,sans-serif] text-[14px] text-white/75 whitespace-nowrap overflow-hidden text-ellipsis">
                             {syn}
                           </span>
                         </div>
@@ -3668,31 +3572,16 @@ const CrossSectorSection = () => {
                     >
                       Linked Ventures
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {pathways[activeNode].bridgeVentures.map((v, i) => (
                         <div
                           key={i}
-                          style={{
-                            backgroundColor: "rgba(184, 217, 53, 0.1)",
-                            border: "1px solid rgba(184, 217, 53, 0.15)",
-                            padding: "14px 18px",
-                            borderRadius: "12px",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
+                          className="bg-[rgba(184,217,53,0.1)] border border-[rgba(184,217,53,0.15)] py-[14px] px-[18px] rounded-xl flex justify-between items-center"
                         >
-                          <span
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "14px",
-                              fontWeight: "600",
-                              color: colors.white,
-                            }}
-                          >
+                          <span className="font-[Inter,sans-serif] text-[14px] font-semibold text-white">
                             {v}
                           </span>
-                          <span style={{ color: colors.accent, fontSize: "16px" }}>→</span>
+                          <span className="text-[16px]" style={{ color: colors.accent }}>→</span>
                         </div>
                       ))}
                     </div>

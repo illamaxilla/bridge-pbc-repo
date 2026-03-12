@@ -3142,24 +3142,18 @@ function MembersPage({ isMobile }) {
                 </div>
 
                 {/* Points + CTA */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div className="flex justify-between items-center">
                   <div>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: sColor, fontFamily: font.display }}>
+                    <div className="text-[16px] font-extrabold font-[DM_Sans,sans-serif]" style={{ color: sColor }}>
                       {m.points.toLocaleString()}
                     </div>
-                    <div style={{ fontSize: 10, color: C.muted }}>points</div>
+                    <div className="text-[10px]" style={{ color: C.muted }}>points</div>
                   </div>
                   <button
+                    className="py-[7px] px-4 rounded-[20px] bg-transparent text-[12px] font-semibold cursor-pointer font-[Inter,sans-serif]"
                     style={{
-                      padding: "7px 16px",
-                      borderRadius: 20,
                       border: `1.5px solid ${sColor}`,
-                      background: "transparent",
                       color: sColor,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      fontFamily: font.body,
                     }}
                   >
                     View Profile
@@ -3292,56 +3286,42 @@ function ResourcesPage({ isMobile }) {
 
   return (
     <div>
-      <div style={{ marginBottom: 24 }}>
+      <div className="mb-6">
         <SectionLabel>Knowledge Hub</SectionLabel>
         <h2
-          style={{
-            fontFamily: font.display,
-            fontSize: 32,
-            fontWeight: 700,
-            color: C.primary,
-            margin: "0 0 6px",
-            letterSpacing: "-0.5px",
-          }}
+          className="font-[DM_Sans,sans-serif] text-[32px] font-bold tracking-[-0.5px]"
+          style={{ color: C.primary, margin: "0 0 6px" }}
         >
           BRIDGE <span style={{ color: C.accent }}>Resources</span>
         </h2>
-        <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>
+        <p className="text-[14px] m-0" style={{ color: C.muted }}>
           Sector analyses, strategy briefs, frameworks, and policy documents
         </p>
       </div>
 
       {/* Search + Type filters */}
       <div
+        className="rounded-[14px] flex flex-col gap-3 mb-5"
         style={{
           background: C.white,
-          borderRadius: 14,
           padding: isMobile ? "14px 16px" : "16px 20px",
           boxShadow: C.cardShadow,
-          marginBottom: 20,
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
         }}
       >
-        <div style={{ position: "relative" }}>
+        <div className="relative">
           <Search
             size={14}
-            style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+            className="absolute left-3 top-1/2 -translate-y-1/2"
+            style={{ color: C.muted }}
           />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by title or sector..."
+            className="w-full rounded-[10px] font-[Inter,sans-serif] text-[13px] outline-none box-border"
             style={{
-              width: "100%",
               padding: "9px 12px 9px 36px",
-              borderRadius: 10,
               border: `1.5px solid ${C.line}`,
-              fontFamily: font.body,
-              fontSize: 13,
-              outline: "none",
-              boxSizing: "border-box",
             }}
             onFocus={(e) => (e.target.style.borderColor = C.primary)}
             onBlur={(e) => (e.target.style.borderColor = C.line)}
@@ -3754,17 +3734,17 @@ function HomePageContent({
     <>
       {/* ── WIDGET ROW: 3-col on desktop, single-col on mobile ── */}
       <div
+        className="grid"
         style={{
-          display: "grid",
           gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 320px",
           gap: isMobile ? 16 : 20,
           marginBottom: isMobile ? 20 : 28,
         }}
       >
         {/* LEFT COLUMN */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div className="flex flex-col gap-5">
           {/* Featured Insight */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-6" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Today's Featured Insight</SectionLabel>
             <div
               style={{
@@ -3775,49 +3755,29 @@ function HomePageContent({
                 marginBottom: 16,
               }}
             >
-              <p style={{ fontSize: 15, color: C.dark, lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
+              <p className="text-[15px] leading-[1.6] m-0 font-medium" style={{ color: C.dark }}>
                 "{INSIGHTS[0]}"
               </p>
             </div>
-            <div style={{ display: "flex", gap: 10 }}>
+            <div className="flex gap-[10px]">
               <button
                 onClick={() => setSavedInsight(!savedInsight)}
+                className="flex-1 py-[9px] px-4 rounded-lg cursor-pointer font-[Inter,sans-serif] text-[13px] font-semibold flex items-center justify-center gap-[6px]"
                 style={{
-                  flex: 1,
-                  padding: "9px 16px",
-                  borderRadius: 8,
                   border: `1.5px solid ${savedInsight ? C.primary : C.line}`,
                   background: savedInsight ? C.primary : "transparent",
                   color: savedInsight ? C.white : C.text,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
                 }}
               >
                 <Bookmark size={14} />
                 {savedInsight ? "Saved" : "Save"}
               </button>
               <button
+                className="flex-1 py-[9px] px-4 rounded-lg cursor-pointer font-[Inter,sans-serif] text-[13px] font-bold flex items-center justify-center gap-[6px]"
                 style={{
-                  flex: 1,
-                  padding: "9px 16px",
-                  borderRadius: 8,
                   border: `1.5px solid ${C.accent}`,
                   background: C.accent,
                   color: C.primary,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
                 }}
               >
                 <Heart size={14} />
@@ -3827,39 +3787,31 @@ function HomePageContent({
           </div>
 
           {/* Active Contributions */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-6" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Your Active Contributions</SectionLabel>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
+            <div className="flex flex-col gap-[10px] mb-4">
               {contributions.map((item, i) => (
                 <div
                   key={i}
                   onClick={() =>
                     setContributions((prev) => prev.map((c, j) => (j === i ? { ...c, done: !c.done } : c)))
                   }
-                  style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
+                  className="flex items-center gap-3 cursor-pointer"
                 >
                   <div
+                    className="w-5 h-5 rounded flex items-center justify-center shrink-0 transition-all duration-200"
                     style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 4,
                       border: `1.5px solid ${item.done ? C.primary : C.line}`,
                       background: item.done ? C.primary : "transparent",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      transition: "all 0.2s",
                     }}
                   >
                     {item.done && <Check size={11} color={C.white} strokeWidth={3} />}
                   </div>
                   <span
+                    className="text-[13px] transition-all duration-200"
                     style={{
-                      fontSize: 13,
                       color: item.done ? C.muted : C.dark,
                       textDecoration: item.done ? "line-through" : "none",
-                      transition: "all 0.2s",
                     }}
                   >
                     {item.label}
@@ -3868,17 +3820,10 @@ function HomePageContent({
               ))}
             </div>
             <button
+              className="w-full py-[9px] rounded-lg bg-transparent cursor-pointer font-[Inter,sans-serif] text-[13px] font-semibold"
               style={{
-                width: "100%",
-                padding: "9px",
-                borderRadius: 8,
                 border: `1.5px solid ${C.primary}`,
-                background: "transparent",
                 color: C.primary,
-                cursor: "pointer",
-                fontFamily: font.body,
-                fontSize: 13,
-                fontWeight: 600,
               }}
             >
               Save Progress
@@ -3942,34 +3887,32 @@ function HomePageContent({
         </div>
 
         {/* CENTER COLUMN */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div className="flex flex-col gap-5">
           {/* Progress Tracker */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-6" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Community Journey</SectionLabel>
-            <div style={{ marginBottom: 20 }}>
+            <div className="mb-5">
               <StepTracker steps={JOURNEY_STEPS} current={user.journey} />
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-              <span style={{ fontSize: 13, color: C.text, fontWeight: 600 }}>Progress to Leader</span>
-              <span style={{ fontSize: 13, color: C.primary, fontWeight: 700 }}>2,840 / 5,000 pts</span>
+            <div className="flex justify-between mb-2">
+              <span className="text-[13px] font-semibold" style={{ color: C.text }}>Progress to Leader</span>
+              <span className="text-[13px] font-bold" style={{ color: C.primary }}>2,840 / 5,000 pts</span>
             </div>
             <ProgressBar value={56.8} />
-            <p style={{ fontSize: 12, color: C.muted, marginTop: 10 }}>
+            <p className="text-[12px] mt-[10px]" style={{ color: C.muted }}>
               2,160 points needed to reach Leader status. Answer 3 more questions to earn a milestone bonus.
             </p>
           </div>
 
           {/* Weekly Ghana Briefing */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow, flex: 1 }}>
-            <div
-              style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}
-            >
+          <div className="rounded-2xl p-6 flex-1" style={{ background: C.white, boxShadow: C.cardShadow }}>
+            <div className="flex justify-between items-start mb-4">
               <SectionLabel>Weekly Ghana Briefing</SectionLabel>
-              <span style={{ fontSize: 10, fontWeight: 600, color: C.muted, letterSpacing: "0.5px" }}>
+              <span className="text-[10px] font-semibold tracking-[0.5px]" style={{ color: C.muted }}>
                 Mar 3 – 7, 2026
               </span>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 2, overflowY: "auto", maxHeight: 320 }}>
+            <div className="flex flex-col gap-[2px] overflow-y-auto max-h-[320px]">
               {[
                 {
                   tag: "Policy",
@@ -4009,46 +3952,26 @@ function HomePageContent({
                     borderBottom: i < 4 ? `1px solid ${C.line}` : "none",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                  <div className="flex items-center gap-2 mb-[5px]">
                     <span
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 700,
-                        letterSpacing: "0.8px",
-                        textTransform: "uppercase",
-                        color: item.tagColor,
-                        background: item.tagColor + "14",
-                        padding: "2px 8px",
-                        borderRadius: 20,
-                      }}
+                      className="text-[10px] font-bold tracking-[0.8px] uppercase py-[2px] px-2 rounded-[20px]"
+                      style={{ color: item.tagColor, background: item.tagColor + "14" }}
                     >
                       {item.tag}
                     </span>
                   </div>
-                  <p style={{ fontSize: 13, fontWeight: 600, color: C.dark, margin: "0 0 4px", lineHeight: 1.4 }}>
+                  <p className="text-[13px] font-semibold leading-[1.4]" style={{ color: C.dark, margin: "0 0 4px" }}>
                     {item.headline}
                   </p>
-                  <p style={{ fontSize: 11, color: C.muted, margin: 0, fontStyle: "italic" }}>{item.signal}</p>
+                  <p className="text-[11px] m-0 italic" style={{ color: C.muted }}>{item.signal}</p>
                 </div>
               ))}
             </div>
             <button
+              className="mt-[14px] w-full py-[9px] rounded-lg bg-transparent font-[Inter,sans-serif] text-[12px] font-bold cursor-pointer flex items-center justify-center gap-[6px]"
               style={{
-                marginTop: 14,
-                width: "100%",
-                padding: "9px",
-                borderRadius: 8,
                 border: `1.5px solid ${C.line}`,
-                background: "transparent",
                 color: C.primary,
-                fontFamily: font.body,
-                fontSize: 12,
-                fontWeight: 700,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 6,
               }}
             >
               <BookOpen size={13} /> View Full Briefing
@@ -4057,34 +3980,24 @@ function HomePageContent({
         </div>
 
         {/* RIGHT SIDEBAR */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div className="flex flex-col gap-5">
           {/* Community Feed */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-5" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Community Feed</SectionLabel>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: 220, overflowY: "auto" }}>
+            <div className="flex flex-col gap-3 max-h-[220px] overflow-y-auto">
               {FEED_ITEMS.map((item) => (
-                <div key={item.id} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <div key={item.id} className="flex gap-[10px] items-start">
                   <Avatar initials={item.avatar} size={28} />
-                  <div style={{ flex: 1 }}>
-                    <p style={{ margin: 0, fontSize: 12, color: C.dark, lineHeight: 1.4 }}>
+                  <div className="flex-1">
+                    <p className="m-0 text-[12px] leading-[1.4]" style={{ color: C.dark }}>
                       <strong>{item.name}</strong> {item.action}{" "}
-                      <span style={{ color: C.primary, fontWeight: 600 }}>{item.subject}</span>
+                      <span className="font-semibold" style={{ color: C.primary }}>{item.subject}</span>
                     </p>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 4 }}>
-                      <span style={{ fontSize: 10, color: C.muted }}>{item.time}</span>
-                      <button
-                        style={{
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 3,
-                          padding: 0,
-                        }}
-                      >
+                    <div className="flex items-center gap-[10px] mt-1">
+                      <span className="text-[10px]" style={{ color: C.muted }}>{item.time}</span>
+                      <button className="bg-none border-none cursor-pointer flex items-center gap-[3px] p-0">
                         <ThumbsUp size={10} color={C.muted} />
-                        <span style={{ fontSize: 10, color: C.muted }}>{item.likes}</span>
+                        <span className="text-[10px]" style={{ color: C.muted }}>{item.likes}</span>
                       </button>
                     </div>
                   </div>
@@ -4094,7 +4007,7 @@ function HomePageContent({
           </div>
 
           {/* Take a Note */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-5" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Quick Note</SectionLabel>
             <textarea
               value={noteText}
@@ -4103,53 +4016,33 @@ function HomePageContent({
                 setNoteSaved(false);
               }}
               placeholder="Capture an idea, observation, or question..."
+              className="w-full min-h-[80px] resize-none rounded-[10px] font-[Inter,sans-serif] text-[12px] box-border outline-none leading-[1.5]"
               style={{
-                width: "100%",
-                minHeight: 80,
-                resize: "none",
                 border: `1.5px solid ${C.line}`,
-                borderRadius: 10,
                 padding: "10px 12px",
-                fontFamily: font.body,
-                fontSize: 12,
                 color: C.dark,
-                boxSizing: "border-box",
-                outline: "none",
-                lineHeight: 1.5,
               }}
               onFocus={(e) => (e.target.style.borderColor = C.primary)}
               onBlur={(e) => (e.target.style.borderColor = C.line)}
             />
-            <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+            <div className="flex gap-2 mt-2">
               <button
                 onClick={() => setNoteSaved(true)}
+                className="flex-1 py-[7px] rounded-lg cursor-pointer font-[Inter,sans-serif] text-[12px] font-semibold"
                 style={{
-                  flex: 1,
-                  padding: "7px",
-                  borderRadius: 8,
                   border: `1.5px solid ${noteSaved ? C.primary : C.line}`,
                   background: noteSaved ? C.primary : "transparent",
                   color: noteSaved ? C.white : C.text,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 12,
-                  fontWeight: 600,
                 }}
               >
                 {noteSaved ? "✓ Saved" : "Save"}
               </button>
               <button
+                className="flex-1 py-[7px] rounded-lg cursor-pointer font-[Inter,sans-serif] text-[12px] font-semibold"
                 style={{
-                  flex: 1,
-                  padding: "7px",
-                  borderRadius: 8,
                   border: `1.5px solid ${C.accent}`,
                   background: C.accent,
                   color: C.primary,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 12,
-                  fontWeight: 600,
                 }}
               >
                 Share
@@ -4158,17 +4051,17 @@ function HomePageContent({
           </div>
 
           {/* Top Contributors */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-5" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Top Contributors Today</SectionLabel>
             {MEMBERS.slice(0, 3).map((m, i) => (
-              <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: i < 2 ? 12 : 0 }}>
-                <span style={{ fontSize: 16 }}>{["🥇", "🥈", "🥉"][i]}</span>
+              <div key={m.id} className="flex items-center gap-[10px]" style={{ marginBottom: i < 2 ? 12 : 0 }}>
+                <span className="text-[16px]">{["🥇", "🥈", "🥉"][i]}</span>
                 <Avatar initials={m.avatar} size={28} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
-                  <div style={{ fontSize: 10, color: C.muted }}>{m.sector}</div>
+                <div className="flex-1">
+                  <div className="text-[12px] font-semibold" style={{ color: C.dark }}>{m.name}</div>
+                  <div className="text-[10px]" style={{ color: C.muted }}>{m.sector}</div>
                 </div>
-                <span style={{ fontSize: 12, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
+                <span className="text-[12px] font-bold" style={{ color: C.primary }}>{m.points.toLocaleString()}</span>
               </div>
             ))}
           </div>
@@ -4177,9 +4070,9 @@ function HomePageContent({
 
       {/* ── GOALS SECTION ── */}
       <section
+        className="rounded-[20px]"
         style={{
           background: C.white,
-          borderRadius: 20,
           padding: isMobile ? "20px 16px" : 32,
           boxShadow: C.cardShadow,
           marginBottom: isMobile ? 20 : 28,
