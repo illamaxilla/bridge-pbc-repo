@@ -2,10 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 
-import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
+import { FOOTER_SECTOR_ICONS, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
 // BRIDGE Design System - Consistent with Homepage
-import { colors, layout } from "@/lib/theme";
-const CONTENT_MAX_WIDTH = layout.maxWidth;
+import { colors } from "@/lib/theme";
 
 // 4 Services Data - Enhanced for focused view
 const servicesData = [
@@ -529,65 +528,27 @@ const IconTruck = () => (
 // FLOATING SECTOR CARD COMPONENT
 // ============================================
 const FloatingSectorCard = ({ sector, icon }) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-
   return (
     <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        flex: "1",
-        maxWidth: "200px",
-        backgroundColor: isHovered ? colors.accent : "rgba(255,255,255,0.95)",
-        borderRadius: "16px",
-        padding: "18px",
-        cursor: "pointer",
-        transition: "all 0.3s ease",
-        transform: isHovered ? "translateY(-6px)" : "translateY(0)",
-        boxShadow: isHovered ? "0 16px 48px rgba(0,0,0,0.25)" : "0 4px 24px rgba(0,0,0,0.12)",
-      }}
+      className="group flex-1 max-w-[200px] bg-white/95 hover:bg-[#B8D935] rounded-2xl p-[18px] cursor-pointer transition-all duration-300 ease-in-out translate-y-0 hover:-translate-y-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.25)]"
     >
       {/* Icon */}
       <div
-        style={{
-          width: "44px",
-          height: "44px",
-          backgroundColor: isHovered ? colors.primary : colors.background,
-          borderRadius: "12px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: "12px",
-          color: isHovered ? colors.accent : colors.primary,
-          transition: "all 0.3s ease",
-        }}
+        className="w-[44px] h-[44px] bg-[#F3F5F2] group-hover:bg-[#1B4D3E] rounded-xl flex items-center justify-center mb-3 text-[#1B4D3E] group-hover:text-[#B8D935] transition-all duration-300 ease-in-out"
       >
         {icon}
       </div>
 
       {/* Sector Name */}
       <div
-        style={{
-          fontSize: "13px",
-          fontWeight: "600",
-          color: colors.primary,
-          fontFamily: "Inter, sans-serif",
-          marginBottom: "4px",
-          lineHeight: "1.3",
-        }}
+        className="text-[13px] font-semibold text-[#1B4D3E] font-['Inter',sans-serif] mb-1 leading-[1.3]"
       >
         {sector.shortName}
       </div>
 
       {/* Solutions Count */}
       <div
-        style={{
-          fontSize: "12px",
-          color: isHovered ? colors.primary : "#666",
-          fontFamily: "Inter, sans-serif",
-          opacity: isHovered ? 0.7 : 1,
-          transition: "all 0.3s ease",
-        }}
+        className="text-xs text-[#666] group-hover:text-[#1B4D3E] font-['Inter',sans-serif] opacity-100 group-hover:opacity-70 transition-all duration-300 ease-in-out"
       >
         {sector.ventures}+ solutions
       </div>
@@ -600,17 +561,7 @@ const FloatingSectorCard = ({ sector, icon }) => {
 // ============================================
 const IconCircle = ({ icon, isFirst = false }) => (
   <div
-    style={{
-      width: "48px",
-      height: "48px",
-      backgroundColor: isFirst ? colors.accent : colors.background,
-      borderRadius: "12px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: colors.primary,
-      flexShrink: 0,
-    }}
+    className={`w-12 h-12 ${isFirst ? "bg-[#B8D935]" : "bg-[#F3F5F2]"} rounded-xl flex items-center justify-center text-[#1B4D3E] shrink-0`}
   >
     {icon}
   </div>
@@ -621,15 +572,10 @@ const IconCircle = ({ icon, isFirst = false }) => (
 // ============================================
 const DottedLine = () => (
   <div
+    className="flex-1 min-w-[24px] max-w-[48px] h-0.5 bg-repeat-x mx-1"
     style={{
-      flex: "1",
-      minWidth: "24px",
-      maxWidth: "48px",
-      height: "2px",
       backgroundImage: `linear-gradient(to right, ${colors.primary}40 50%, transparent 50%)`,
       backgroundSize: "8px 2px",
-      backgroundRepeat: "repeat-x",
-      margin: "0 4px",
     }}
   />
 );
@@ -1242,7 +1188,7 @@ export default function ServicesSectorsPageV2() {
   return (
     <Layout hideFooter>
     <div
-      style={{ fontFamily: "Helvetica, Arial, sans-serif", margin: 0, padding: 0, backgroundColor: colors.background }}
+      className="font-['Helvetica',Arial,sans-serif] m-0 p-0 bg-[#F3F5F2]"
     >
 
       <style>{`
@@ -1260,43 +1206,18 @@ export default function ServicesSectorsPageV2() {
       {/* SECTION 1: Audience-Focused Hero */}
       {/* ============================================ */}
       <section
-        style={{
-          backgroundColor: colors.background,
-          padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
-        }}
+        className={`bg-[#F3F5F2] ${isMobile ? "px-5 py-10" : "px-20 pt-[60px] pb-14"}`}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div className="max-w-[1200px] mx-auto">
           {/* Pill Badge */}
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              backgroundColor: colors.white,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              marginBottom: "24px",
-              border: `1px solid ${colors.line}`,
-            }}
+            className="inline-flex items-center gap-2 bg-white px-5 py-2.5 rounded-full mb-6 border border-[#DEDEDE]"
           >
             <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                backgroundColor: colors.accent,
-                display: "inline-block",
-              }}
+              className="w-1.5 h-1.5 rounded-full bg-[#B8D935] inline-block"
             />
             <span
-              style={{
-                fontSize: "12px",
-                fontWeight: "600",
-                letterSpacing: "1.5px",
-                color: colors.primary,
-                fontFamily: "Inter, sans-serif",
-                textTransform: "uppercase",
-              }}
+              className="text-xs font-semibold tracking-[1.5px] text-[#1B4D3E] font-['Inter',sans-serif] uppercase"
             >
               Your Bridge to Impact
             </span>
@@ -1304,36 +1225,19 @@ export default function ServicesSectorsPageV2() {
 
           {/* Main Headline - Static */}
           <h1
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "32px" : "56px",
-              fontWeight: "300",
-              lineHeight: "1.12",
-              color: colors.primary,
-              margin: isMobile ? "0 0 32px 0" : "0 0 48px 0",
-              letterSpacing: "-1px",
-              maxWidth: "900px",
-            }}
+            className={`font-['Inter',sans-serif] ${isMobile ? "text-[32px] mb-8" : "text-[56px] mb-12"} font-light leading-[1.12] text-[#1B4D3E] tracking-[-1px] max-w-[900px]`}
           >
-            We <span style={{ fontWeight: "700" }}>connect</span> the people, capital, and expertise that create{" "}
-            <span style={{ fontWeight: "700", color: colors.accent }}>measurable, lasting impact.</span>
+            We <span className="font-bold">connect</span> the people, capital, and expertise that create{" "}
+            <span className="font-bold text-[#B8D935]">measurable, lasting impact.</span>
           </h1>
 
           {/* Audience Selector + Dynamic Content Container */}
           <div
-            style={{
-              backgroundColor: colors.white,
-              borderRadius: "24px",
-              overflow: "hidden",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
-            }}
+            className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.06)]"
           >
             {/* Audience Tabs */}
             <div
-              style={{
-                display: "flex",
-                borderBottom: `1px solid ${colors.line}`,
-              }}
+              className="flex border-b border-[#DEDEDE]"
             >
               {audienceData.map((audience) => {
                 const isActive = activeAudience === audience.id;
@@ -1341,39 +1245,16 @@ export default function ServicesSectorsPageV2() {
                   <button
                     key={audience.id}
                     onClick={() => setActiveAudience(audience.id)}
-                    style={{
-                      flex: 1,
-                      padding: isMobile ? "16px 12px" : "24px 32px",
-                      backgroundColor: isActive ? colors.primary : "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: isMobile ? "0" : "12px",
-                      transition: "all 0.3s ease",
-                      borderBottom: isActive ? `3px solid ${colors.white}` : "3px solid transparent",
-                    }}
+                    className={`flex-1 ${isMobile ? "px-3 py-4" : "px-8 py-6"} ${isActive ? "bg-[#1B4D3E] border-b-[3px] border-b-white" : "bg-transparent border-b-[3px] border-b-transparent"} border-none cursor-pointer flex items-center justify-center ${isMobile ? "gap-0" : "gap-3"} transition-all duration-300 ease-in-out`}
                   >
                     <span
-                      style={{
-                        color: isActive ? colors.white : "#999",
-                        display: "flex",
-                        alignItems: "center",
-                        transition: "color 0.3s ease",
-                      }}
+                      className={`${isActive ? "text-white" : "text-[#999]"} flex items-center transition-colors duration-300 ease-in-out`}
                     >
                       {audience.icon}
                     </span>
                     {!isMobile && (
                       <span
-                        style={{
-                          fontSize: "15px",
-                          fontWeight: "600",
-                          fontFamily: "Inter, sans-serif",
-                          color: isActive ? colors.white : "#666",
-                          transition: "color 0.3s ease",
-                        }}
+                        className={`text-[15px] font-semibold font-['Inter',sans-serif] ${isActive ? "text-white" : "text-[#666]"} transition-colors duration-300 ease-in-out`}
                       >
                         {audience.label}
                       </span>
@@ -1385,47 +1266,21 @@ export default function ServicesSectorsPageV2() {
 
             {/* Dynamic Content Area */}
             <div
-              style={{
-                display: isMobile ? "flex" : "grid",
-                flexDirection: "column",
-                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                height: isMobile ? "auto" : "420px",
-              }}
+              className={`${isMobile ? "flex flex-col" : "grid grid-cols-2"} ${isMobile ? "h-auto" : "h-[420px]"}`}
             >
               {/* Left - Text Content */}
               <div
-                style={{
-                  padding: isMobile ? "32px 24px" : "48px 56px 48px 56px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  gap: "32px",
-                }}
+                className={`${isMobile ? "px-6 py-8" : "px-14 py-12"} flex flex-col justify-center gap-8`}
               >
                 {/* Top content */}
                 <div>
                   <h2
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: isMobile ? "24px" : "36px",
-                      fontWeight: "300",
-                      lineHeight: "1.2",
-                      color: colors.primary,
-                      margin: "0 0 24px 0",
-                      letterSpacing: "-0.5px",
-                    }}
+                    className={`font-['Inter',sans-serif] ${isMobile ? "text-2xl" : "text-4xl"} font-light leading-[1.2] text-[#1B4D3E] mb-6 tracking-[-0.5px]`}
                   >
                     {currentAudience.headline}
                   </h2>
                   <p
-                    style={{
-                      fontSize: "16px",
-                      lineHeight: "1.7",
-                      color: "#666",
-                      fontFamily: "Inter, sans-serif",
-                      margin: "0",
-                      maxWidth: "480px",
-                    }}
+                    className="text-base leading-[1.7] text-[#666] font-['Inter',sans-serif] m-0 max-w-[480px]"
                   >
                     {currentAudience.description}
                   </p>
