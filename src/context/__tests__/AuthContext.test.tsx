@@ -3,20 +3,29 @@ import { render, screen, act, waitFor } from "@testing-library/react";
 import { AuthProvider, useAuth } from "../AuthContext";
 
 // ---------- Mock Supabase ----------
+// vi.hoisted ensures these are available when vi.mock is hoisted to top of file
 
-let mockSession: any = null;
-let authChangeCallback: ((event: string, session: any) => void) | null = null;
-const mockUnsubscribe = vi.fn();
-
-const mockSignInWithPassword = vi.fn();
-const mockSignOut = vi.fn();
+const { mockSignInWithPassword, mockSignOut, mockUnsubscribe, getMockSession, setMockSession, getAuthChangeCallback } = vi.hoisted(() => {
+  let _mockSession: any = null;
+  let _authChangeCallback: ((event: string, session: any) => void) | null = null;
+  return {
+    mockSignInWithPassword: vi.fn(),
+    mockSignOut: vi.fn(),
+    mockUnsubscribe: vi.fn(),
+    getMockSession: () => _mockSession,
+    setMockSession: (s: any) => { _mockSession = s; },
+    getAuthChangeCallback: () => _authChangeCallback,
+  };
+});
 
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
     auth: {
-      getSession: vi.fn(() => Promise.resolve({ data: { session: mockSession } })),
+      getSession: vi.fn(() => Promise.resolve({ data: { session: getMockSession() } })),
       onAuthStateChange: vi.fn((cb: any) => {
-        authChangeCallback = cb;
+        // Store the callback so tests can trigger auth state changes
+        // We use a side-channel via the hoisted module
+        (globalThis as any).__authChangeCallback = cb;
         return { data: { subscription: { unsubscribe: mockUnsubscribe } } };
       }),
       signInWithPassword: mockSignInWithPassword,
@@ -44,8 +53,8 @@ function AuthConsumer() {
 
 describe("AuthContext", () => {
   beforeEach(() => {
-    mockSession = null;
-    authChangeCallback = null;
+    setMockSession(null);
+    delete (globalThis as any).__authChangeCallback;
     vi.clearAllMocks();
   });
 
@@ -65,9 +74,9 @@ describe("AuthContext", () => {
   });
 
   it("provides user and free tier when session has a user without paid metadata", async () => {
-    mockSession = {
+    setMockSession({
       user: { id: "user-123", user_metadata: {} },
-    };
+    });
 
     render(
       <AuthProvider>
@@ -84,9 +93,9 @@ describe("AuthContext", () => {
   });
 
   it("resolves paid tier from user metadata", async () => {
-    mockSession = {
+    setMockSession({
       user: { id: "user-paid", user_metadata: { membership_tier: "paid" } },
-    };
+    });
 
     render(
       <AuthProvider>
@@ -154,6 +163,8 @@ describe("AuthContext", () => {
     });
 
     expect(screen.getByTestId("user").textContent).toBe("null");
+
+    const authChangeCallback = (globalThis as any).__authChangeCallback;
 
     // Simulate auth state change
     await act(async () => {
