@@ -53,7 +53,7 @@ import {
 
 /* ─── DESIGN TOKENS ─────────────────────────────────────────────── */
 import { colors } from "@/lib/theme";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 const C = {
   ...colors,
   accentDim: "rgba(184,217,53,0.15)",

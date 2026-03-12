@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import { BridgeLogo } from "@/components/BridgeLogo";
+import { Layout } from "@/components/Layout";
+import { IconArrowRight, IconArrowDown, IconCheck, IconTarget, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconBatteryCharging, IconBlocks, IconSprout, IconCross, IconFactory, IconTruck, IconChevronDown } from "@/components/icons/SectorIcons";
 import { FOOTER_SECTOR_ICONS } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
 
@@ -14,275 +13,9 @@ import { useCounter } from "@/hooks/useCounter";
 // ============================================================================
 
 import { colors, layout } from "@/lib/theme";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
-
-// ============================================================================
-// ICONS
-// ============================================================================
-
-const IconArrowRight = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
-);
-
-const IconArrowDown = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 5v14M5 12l7 7 7-7" />
-  </svg>
-);
-
-const IconCheck = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
-
-const IconTarget = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <circle cx="12" cy="12" r="6" />
-    <circle cx="12" cy="12" r="2" />
-  </svg>
-);
-
-const IconStorefront = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M2 7l1.5-4h17L22 7" />
-    <path d="M2 7h20v4c0 0-1.5 2-5 2s-5-2-5-2-1.5 2-5 2-5-2-5-2V7z" />
-    <path d="M4 13v8h16v-8" />
-    <path d="M10 21v-6h4v6" />
-  </svg>
-);
-
-const IconOfficeBuilding = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
-    <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
-    <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
-    <path d="M10 6h4" />
-    <path d="M10 10h4" />
-    <path d="M10 14h4" />
-    <path d="M10 18h4" />
-  </svg>
-);
-
-const IconTrendingUp = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-    <polyline points="16 7 22 7 22 13" />
-  </svg>
-);
-
-const IconLandmark = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="3" y1="22" x2="21" y2="22" />
-    <line x1="6" y1="18" x2="6" y2="11" />
-    <line x1="10" y1="18" x2="10" y2="11" />
-    <line x1="14" y1="18" x2="14" y2="11" />
-    <line x1="18" y1="18" x2="18" y2="11" />
-    <polygon points="12 2 20 8 4 8" />
-    <line x1="2" y1="18" x2="22" y2="18" />
-  </svg>
-);
-
-// Sector Icons (Lucide-style)
-const IconBatteryCharging = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="1" y="6" width="18" height="12" rx="2" ry="2" />
-    <line x1="23" y1="13" x2="23" y2="11" />
-    <path d="M11 6l-4 6h6l-4 6" />
-  </svg>
-);
-
-const IconBlocks = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="2" y="2" width="8" height="8" rx="1" />
-    <rect x="14" y="2" width="8" height="8" rx="1" />
-    <rect x="2" y="14" width="8" height="8" rx="1" />
-    <rect x="14" y="14" width="8" height="8" rx="1" />
-  </svg>
-);
-
-const IconSprout = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M7 20h10" />
-    <path d="M10 20c5.5-2.5.8-6.4 3-10" />
-    <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z" />
-    <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z" />
-  </svg>
-);
-
-const IconCross = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M8 2v4h8V2" />
-    <path d="M4 6h16v4H4z" />
-    <path d="M8 10v12" />
-    <path d="M16 10v12" />
-    <path d="M10 22h4" />
-  </svg>
-);
-
-const IconFactory = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-    <path d="M17 18h1" />
-    <path d="M12 18h1" />
-    <path d="M7 18h1" />
-  </svg>
-);
-
-const IconTruck = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11" />
-    <path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2" />
-    <circle cx="7" cy="18" r="2" />
-    <circle cx="17" cy="18" r="2" />
-  </svg>
-);
-
-const IconChevronDown = ({ size = 14 }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M6 9l6 6 6-6" />
-  </svg>
-);
 
 const StageIcon = ({ type, size = 20, color = "currentColor" }) => {
   const p = {
@@ -5834,9 +5567,8 @@ const FinalCTASection = () => {
 
 export default function EnergySectorPage() {
   return (
+    <Layout>
     <div style={{ fontFamily: "Inter, sans-serif" }}>
-
-      <SiteHeader />
       <HeroSection sector={sectorData} />
       <OpportunitySection sector={sectorData} />
       <ValueChainSection sector={sectorData} />
@@ -5847,7 +5579,7 @@ export default function EnergySectorPage() {
       <InvestmentCTASection sector={sectorData} />
       <ImpactSection sector={sectorData} />
       <FinalCTASection />
-      <SiteFooter />
     </div>
+    </Layout>
   );
 }

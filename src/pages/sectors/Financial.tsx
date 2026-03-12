@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import { BridgeLogo } from "@/components/BridgeLogo";
+import { Layout } from "@/components/Layout";
+import { IconBuilding, IconWallet, IconWheat, IconCpu, IconBank, IconPhone, IconHandshake, IconGlobe, IconStore, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconTrendingUp, IconShield, IconDollar, IconTarget, IconChevronDown, IconExternalLink, IconArrowUpRight, IconStorefront, IconOfficeBuilding, IconLandmark } from "@/components/icons/SectorIcons";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
 
@@ -14,7 +13,7 @@ import { useCounter } from "@/hooks/useCounter";
 // ============================================================================
 
 import { colors, layout } from "@/lib/theme";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -707,319 +706,6 @@ const valueChainStages = [
 // ============================================================================
 // ICON COMPONENTS
 // ============================================================================
-
-const IconBuilding = () => (
-  <svg
-    width="32"
-    height="32"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
-    <path d="M9 22v-4h6v4" />
-    <path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01" />
-  </svg>
-);
-
-const IconWallet = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-    <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-    <path d="M18 12a2 2 0 0 0 0 4h4v-4z" />
-  </svg>
-);
-
-const IconWheat = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M2 22L16 8" />
-    <path d="M3.47 12.53L5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94z" />
-    <path d="M7.47 8.53L9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94z" />
-    <path d="M11.47 4.53L13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94z" />
-  </svg>
-);
-
-const IconCpu = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
-    <rect x="9" y="9" width="6" height="6" />
-    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
-  </svg>
-);
-
-// Value Chain specific icons (28px for card use)
-const IconBank = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M3 21h18" />
-    <path d="M3 10h18" />
-    <path d="M12 3l9 7H3l9-7z" />
-    <path d="M5 10v11M9 10v11M15 10v11M19 10v11" />
-  </svg>
-);
-
-const IconPhone = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-    <path d="M12 18h.01" />
-  </svg>
-);
-
-const IconHandshake = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-);
-
-const IconGlobe = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <path d="M2 12h20" />
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-  </svg>
-);
-
-const IconStore = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-    <polyline points="9 22 9 12 15 12 15 22" />
-  </svg>
-);
-
-const IconArrowRight = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M7 17L17 7M17 7H7M17 7V17" />
-  </svg>
-);
-
-const IconArrowDown = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 5v14M19 12l-7 7-7-7" />
-  </svg>
-);
-
-const IconCheck = ({ style }: { style?: React.CSSProperties }) => (
-  <svg
-    width={style?.width ?? 16}
-    height={style?.height ?? 16}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke={style?.color ?? "currentColor"}
-    style={style}
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
-
-const IconWarning = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-    <path d="M12 9v4M12 17h.01" />
-  </svg>
-);
-
-const IconTrendingUp = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-    <polyline points="17 6 23 6 23 12" />
-  </svg>
-);
-
-const IconShield = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-  </svg>
-);
-
-const IconDollar = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="12" y1="1" x2="12" y2="23" />
-    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-  </svg>
-);
-
-const IconTarget = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <circle cx="12" cy="12" r="6" />
-    <circle cx="12" cy="12" r="2" />
-  </svg>
-);
-
-const IconChevronDown = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="6 9 12 15 18 9" />
-  </svg>
-);
-
-const IconExternalLink = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-    <polyline points="15 3 21 3 21 9" />
-    <line x1="10" y1="14" x2="21" y2="3" />
-  </svg>
-);
 
 // Stage icons array for value chain (indexed by position)
 const stageIcons = [<IconBank />, <IconPhone />, <IconHandshake />, <IconGlobe />, <IconStore />];
@@ -2815,21 +2501,6 @@ const ecosystemTypeStyle = {
   Collaborate: { color: "#A3C585", bg: "rgba(163,197,133,0.12)", darkBg: "rgba(163,197,133,0.15)" },
   Differentiate: { color: "#D4E157", bg: "rgba(212,225,87,0.12)", darkBg: "rgba(212,225,87,0.12)" },
 };
-
-const IconArrowUpRight = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M7 17L17 7M17 7H7M17 7V17" />
-  </svg>
-);
 
 const MarketEcosystemSection = ({ sector }) => {
   const isMobile = useIsMobile();
@@ -5597,66 +5268,6 @@ const InvestmentCTASection = ({ sector }) => {
 // IMPACT SECTION — Dual-Lens Dashboard
 // ============================================================================
 
-const IconStorefront = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M2 7l1.5-4h17L22 7" />
-    <path d="M2 7h20v4c0 0-1.5 2-5 2s-5-2-5-2-1.5 2-5 2-5-2-5-2V7z" />
-    <path d="M4 13v8h16v-8" />
-    <path d="M10 21v-6h4v6" />
-  </svg>
-);
-
-const IconOfficeBuilding = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
-    <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
-    <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
-    <path d="M10 6h4" />
-    <path d="M10 10h4" />
-    <path d="M10 14h4" />
-    <path d="M10 18h4" />
-  </svg>
-);
-
-const IconLandmark = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="3" y1="22" x2="21" y2="22" />
-    <line x1="6" y1="18" x2="6" y2="11" />
-    <line x1="10" y1="18" x2="10" y2="11" />
-    <line x1="14" y1="18" x2="14" y2="11" />
-    <line x1="18" y1="18" x2="18" y2="11" />
-    <polygon points="12 2 20 8 4 8" />
-    <line x1="2" y1="18" x2="22" y2="18" />
-  </svg>
-);
-
 
 const MetricRow = ({ item, index, animate, isMobile }) => {
   const raw = useCounter(item.value, 1200, animate);
@@ -6646,23 +6257,23 @@ const SectorGrid = () => {
 export default function FinancialInclusionSectorPage() {
   const isMobile = useIsMobile();
   return (
-    <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
+    <Layout>
+      <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
 
-      <SiteHeader />
-      <HeroSection sector={sectorData} />
-      <ProblemSection sector={sectorData} />
-      <ValueChainSectionPremium />
-      <SolutionsSection sector={sectorData} />
-      <MarketEcosystemSection sector={sectorData} />
-      <PolicyAlignmentSection />
-      <CrossSectorSection />
-      <InvestmentCTASection sector={sectorData} />
-      <ImpactSection />
-      <FinalCTASection />
-      <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+        <HeroSection sector={sectorData} />
+        <ProblemSection sector={sectorData} />
+        <ValueChainSectionPremium />
+        <SolutionsSection sector={sectorData} />
+        <MarketEcosystemSection sector={sectorData} />
+        <PolicyAlignmentSection />
+        <CrossSectorSection />
+        <InvestmentCTASection sector={sectorData} />
+        <ImpactSection />
+        <FinalCTASection />
+        <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
+          <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+        </div>
       </div>
-      <SiteFooter />
-    </div>
+    </Layout>
   );
 }

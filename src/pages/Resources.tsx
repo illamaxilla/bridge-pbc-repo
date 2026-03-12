@@ -46,7 +46,7 @@ import {
 
 // ─── Design System ────────────────────────────────────────
 import { colors, layout } from "@/lib/theme";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 const C = {
   ...colors,
   teal: colors.ctaGreen,

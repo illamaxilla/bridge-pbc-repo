@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import { BridgeLogo } from "@/components/BridgeLogo";
+import { Layout } from "@/components/Layout";
+import { IconArrowRight, IconArrowDown, IconCheck, IconWallet, IconGraduation, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark } from "@/components/icons/SectorIcons";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
 
@@ -14,7 +13,7 @@ import { useCounter } from "@/hooks/useCounter";
 // ============================================================================
 
 import { colors, layout } from "@/lib/theme";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -558,87 +557,6 @@ const valueChainStages = [
   },
 ];
 
-// ============================================================================
-// ICON COMPONENTS
-// ============================================================================
-
-const IconArrowRight = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
-);
-
-const IconArrowDown = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 5v14M5 12l7 7 7-7" />
-  </svg>
-);
-
-const IconCheck = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
-
-const IconWallet = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-    <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-    <path d="M18 12a2 2 0 0 0 0 4h4v-4z" />
-  </svg>
-);
-
-const IconGraduation = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-    <path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5" />
-  </svg>
-);
 
 // Premium Value Chain Icons
 const valueChainIcons = {
@@ -5422,78 +5340,6 @@ const CrossSectorSection = () => {
 // INVESTMENT THESIS — Production Handoff (Audience Tabs + Returns Panel)
 // ============================================================================
 
-const IconStorefront = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M2 7l1.5-4h17L22 7" />
-    <path d="M2 7h20v4c0 0-1.5 2-5 2s-5-2-5-2-1.5 2-5 2-5-2-5-2V7z" />
-    <path d="M4 13v8h16v-8" />
-    <path d="M10 21v-6h4v6" />
-  </svg>
-);
-const IconOfficeBuilding = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
-    <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
-    <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
-    <path d="M10 6h4" />
-    <path d="M10 10h4" />
-    <path d="M10 14h4" />
-    <path d="M10 18h4" />
-  </svg>
-);
-const IconTrendingUp = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-    <polyline points="16 7 22 7 22 13" />
-  </svg>
-);
-const IconLandmark = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="3" y1="22" x2="21" y2="22" />
-    <line x1="6" y1="18" x2="6" y2="11" />
-    <line x1="10" y1="18" x2="10" y2="11" />
-    <line x1="14" y1="18" x2="14" y2="11" />
-    <line x1="18" y1="18" x2="18" y2="11" />
-    <polygon points="12 2 20 8 4 8" />
-    <line x1="2" y1="18" x2="22" y2="18" />
-  </svg>
-);
 
 const investmentTabs = [
   { key: "returns", label: "Returns" },
@@ -6381,23 +6227,13 @@ const SectorGrid = () => {
 export default function ManufacturingSectorPage() {
   const isMobile = useIsMobile();
   return (
-    <div
-      style={{
-        fontFamily: "Inter, sans-serif",
-        margin: 0,
-        padding: 0,
-        backgroundColor: colors.white,
-        overflowX: "hidden",
-      }}
-    >
+    <Layout>
       <style>{`
         * { -webkit-tap-highlight-color: transparent; }
         ::-webkit-scrollbar { height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
       `}</style>
-
-      <SiteHeader />
       <HeroSection sector={sectorData} />
       <ProblemSection sector={sectorData} />
       <ValueChainSectionPremium />
@@ -6412,7 +6248,6 @@ export default function ManufacturingSectorPage() {
       <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
         <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
       </div>
-      <SiteFooter />
-    </div>
+    </Layout>
   );
 }

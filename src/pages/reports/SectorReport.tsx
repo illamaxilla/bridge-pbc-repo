@@ -4,7 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/context/AuthContext";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { colors, layout } from "@/lib/theme";
 import {
   ArrowLeft, Download, Lock, ArrowUpRight, CheckCircle2, ChevronRight,

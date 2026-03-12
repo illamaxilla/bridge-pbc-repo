@@ -6,7 +6,7 @@ import {
   BatteryCharging, Factory, Truck, Blocks, Cross, Zap, Shield, Globe,
 } from "lucide-react";
 import { useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const C = {
   accent: "#B8D935",
