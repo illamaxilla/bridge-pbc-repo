@@ -2,10 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 
-import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
+import { FOOTER_SECTOR_ICONS, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
 // BRIDGE Design System - Consistent with Homepage
-import { colors, layout } from "@/lib/theme";
-const CONTENT_MAX_WIDTH = layout.maxWidth;
+import { colors } from "@/lib/theme";
 
 // 4 Services Data - Enhanced for focused view
 const servicesData = [
@@ -529,65 +528,27 @@ const IconTruck = () => (
 // FLOATING SECTOR CARD COMPONENT
 // ============================================
 const FloatingSectorCard = ({ sector, icon }) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-
   return (
     <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        flex: "1",
-        maxWidth: "200px",
-        backgroundColor: isHovered ? colors.accent : "rgba(255,255,255,0.95)",
-        borderRadius: "16px",
-        padding: "18px",
-        cursor: "pointer",
-        transition: "all 0.3s ease",
-        transform: isHovered ? "translateY(-6px)" : "translateY(0)",
-        boxShadow: isHovered ? "0 16px 48px rgba(0,0,0,0.25)" : "0 4px 24px rgba(0,0,0,0.12)",
-      }}
+      className="group flex-1 max-w-[200px] bg-white/95 hover:bg-[#B8D935] rounded-2xl p-[18px] cursor-pointer transition-all duration-300 ease-in-out translate-y-0 hover:-translate-y-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.25)]"
     >
       {/* Icon */}
       <div
-        style={{
-          width: "44px",
-          height: "44px",
-          backgroundColor: isHovered ? colors.primary : colors.background,
-          borderRadius: "12px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: "12px",
-          color: isHovered ? colors.accent : colors.primary,
-          transition: "all 0.3s ease",
-        }}
+        className="w-[44px] h-[44px] bg-[#F3F5F2] group-hover:bg-[#1B4D3E] rounded-xl flex items-center justify-center mb-3 text-[#1B4D3E] group-hover:text-[#B8D935] transition-all duration-300 ease-in-out"
       >
         {icon}
       </div>
 
       {/* Sector Name */}
       <div
-        style={{
-          fontSize: "13px",
-          fontWeight: "600",
-          color: colors.primary,
-          fontFamily: "Inter, sans-serif",
-          marginBottom: "4px",
-          lineHeight: "1.3",
-        }}
+        className="text-[13px] font-semibold text-[#1B4D3E] font-['Inter',sans-serif] mb-1 leading-[1.3]"
       >
         {sector.shortName}
       </div>
 
       {/* Solutions Count */}
       <div
-        style={{
-          fontSize: "12px",
-          color: isHovered ? colors.primary : "#666",
-          fontFamily: "Inter, sans-serif",
-          opacity: isHovered ? 0.7 : 1,
-          transition: "all 0.3s ease",
-        }}
+        className="text-xs text-[#666] group-hover:text-[#1B4D3E] font-['Inter',sans-serif] opacity-100 group-hover:opacity-70 transition-all duration-300 ease-in-out"
       >
         {sector.ventures}+ solutions
       </div>
@@ -600,17 +561,7 @@ const FloatingSectorCard = ({ sector, icon }) => {
 // ============================================
 const IconCircle = ({ icon, isFirst = false }) => (
   <div
-    style={{
-      width: "48px",
-      height: "48px",
-      backgroundColor: isFirst ? colors.accent : colors.background,
-      borderRadius: "12px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: colors.primary,
-      flexShrink: 0,
-    }}
+    className={`w-12 h-12 ${isFirst ? "bg-[#B8D935]" : "bg-[#F3F5F2]"} rounded-xl flex items-center justify-center text-[#1B4D3E] shrink-0`}
   >
     {icon}
   </div>
@@ -621,15 +572,10 @@ const IconCircle = ({ icon, isFirst = false }) => (
 // ============================================
 const DottedLine = () => (
   <div
+    className="flex-1 min-w-[24px] max-w-[48px] h-0.5 bg-repeat-x mx-1"
     style={{
-      flex: "1",
-      minWidth: "24px",
-      maxWidth: "48px",
-      height: "2px",
       backgroundImage: `linear-gradient(to right, ${colors.primary}40 50%, transparent 50%)`,
       backgroundSize: "8px 2px",
-      backgroundRepeat: "repeat-x",
-      margin: "0 4px",
     }}
   />
 );
@@ -1014,8 +960,8 @@ export default function ServicesSectorsPageV2() {
       ),
       headline: (
         <>
-          Build <span style={{ fontWeight: "700" }}>Ventures</span> That Address{" "}
-          <span style={{ fontWeight: "700", color: colors.accent }}>Real Gaps</span>
+          Build <span className="font-bold">Ventures</span> That Address{" "}
+          <span className="font-bold text-[#B8D935]">Real Gaps</span>
         </>
       ),
       description:
@@ -1051,8 +997,8 @@ export default function ServicesSectorsPageV2() {
       ),
       headline: (
         <>
-          Expand into <span style={{ fontWeight: "700" }}>High-Growth Markets</span> with{" "}
-          <span style={{ fontWeight: "700", color: colors.accent }}>Local Expertise</span>
+          Expand into <span className="font-bold">High-Growth Markets</span> with{" "}
+          <span className="font-bold text-[#B8D935]">Local Expertise</span>
         </>
       ),
       description:
@@ -1083,8 +1029,8 @@ export default function ServicesSectorsPageV2() {
       ),
       headline: (
         <>
-          Deploy <span style={{ fontWeight: "700" }}>Capital</span> Where It Creates{" "}
-          <span style={{ fontWeight: "700", color: colors.accent }}>Real Impact</span>
+          Deploy <span className="font-bold">Capital</span> Where It Creates{" "}
+          <span className="font-bold text-[#B8D935]">Real Impact</span>
         </>
       ),
       description:
@@ -1120,8 +1066,8 @@ export default function ServicesSectorsPageV2() {
       ),
       headline: (
         <>
-          Accelerate <span style={{ fontWeight: "700" }}>Development Goals</span> Through{" "}
-          <span style={{ fontWeight: "700", color: colors.accent }}>Strategic Alignment</span>
+          Accelerate <span className="font-bold">Development Goals</span> Through{" "}
+          <span className="font-bold text-[#B8D935]">Strategic Alignment</span>
         </>
       ),
       description:
@@ -1265,7 +1211,7 @@ export default function ServicesSectorsPageV2() {
           padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
         }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           {/* Pill Badge */}
           <div
             style={{
@@ -1315,8 +1261,8 @@ export default function ServicesSectorsPageV2() {
               maxWidth: "900px",
             }}
           >
-            We <span style={{ fontWeight: "700" }}>connect</span> the people, capital, and expertise that create{" "}
-            <span style={{ fontWeight: "700", color: colors.accent }}>measurable, lasting impact.</span>
+            We <span className="font-bold">connect</span> the people, capital, and expertise that create{" "}
+            <span className="font-bold text-[#B8D935]">measurable, lasting impact.</span>
           </h1>
 
           {/* Audience Selector + Dynamic Content Container */}
@@ -1432,7 +1378,7 @@ export default function ServicesSectorsPageV2() {
                 </div>
 
                 {/* CTA Button - pushed to bottom */}
-                <a href="/contact" style={{ textDecoration: "none" }}>
+                <a href="/contact" className="no-underline">
                 <button
                   className="cta-lime"
                   style={{
@@ -1587,7 +1533,7 @@ export default function ServicesSectorsPageV2() {
           padding: isMobile ? "60px 20px" : "100px 80px",
         }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           {/* Pill Badge - Variant A (Light Background) */}
           <div
             style={{
@@ -1644,10 +1590,10 @@ export default function ServicesSectorsPageV2() {
                 letterSpacing: "-0.5px",
               }}
             >
-              We <span style={{ fontWeight: "700" }}>Bridge</span> the Gaps Between{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Insight</span>,{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Opportunity</span>, and{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Impact</span>
+              We <span className="font-bold">Bridge</span> the Gaps Between{" "}
+              <span className="font-bold text-[#B8D935]">Insight</span>,{" "}
+              <span className="font-bold text-[#B8D935]">Opportunity</span>, and{" "}
+              <span className="font-bold text-[#B8D935]">Impact</span>
             </h2>
 
             {/* Right - Description Paragraphs */}
@@ -1695,7 +1641,7 @@ export default function ServicesSectorsPageV2() {
       >
         <div
           style={{
-            maxWidth: CONTENT_MAX_WIDTH,
+            maxWidth: "1200px",
             margin: "0 auto",
             display: isMobile ? "flex" : "grid",
             flexDirection: "column",
@@ -1836,7 +1782,7 @@ export default function ServicesSectorsPageV2() {
                       fill="none"
                       stroke={colors.accent}
                       strokeWidth="2"
-                      style={{ marginLeft: "auto" }}
+                      className="ml-auto"
                     >
                       <path d="M9 18l6-6-6-6" />
                     </svg>
@@ -1870,32 +1816,32 @@ export default function ServicesSectorsPageV2() {
             >
               {currentService.id === "research" && (
                 <>
-                  The <span style={{ fontWeight: "700" }}>Foundation</span> for Every{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Decision</span>
+                  The <span className="font-bold">Foundation</span> for Every{" "}
+                  <span className="font-bold text-[#B8D935]">Decision</span>
                 </>
               )}
               {currentService.id === "ventures" && (
                 <>
-                  From <span style={{ fontWeight: "700" }}>Ideas</span> to{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Impactful Solutions</span>
+                  From <span className="font-bold">Ideas</span> to{" "}
+                  <span className="font-bold text-[#B8D935]">Impactful Solutions</span>
                 </>
               )}
               {currentService.id === "investment" && (
                 <>
-                  <span style={{ fontWeight: "700" }}>Deploying Capital</span> Where It{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Matters</span>
+                  <span className="font-bold">Deploying Capital</span> Where It{" "}
+                  <span className="font-bold text-[#B8D935]">Matters</span>
                 </>
               )}
               {currentService.id === "partnerships" && (
                 <>
-                  <span style={{ fontWeight: "700" }}>Building Relationships</span> That{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Work</span>
+                  <span className="font-bold">Building Relationships</span> That{" "}
+                  <span className="font-bold text-[#B8D935]">Work</span>
                 </>
               )}
               {currentService.id === "advisory" && (
                 <>
-                  <span style={{ fontWeight: "700" }}>Building Systems</span> That{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Outlast Us</span>
+                  <span className="font-bold">Building Systems</span> That{" "}
+                  <span className="font-bold text-[#B8D935]">Outlast Us</span>
                 </>
               )}
             </h2>
@@ -2189,7 +2135,7 @@ export default function ServicesSectorsPageV2() {
           padding: isMobile ? "60px 20px" : "100px 80px",
         }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           {/* Section Header */}
           <div
             style={{
@@ -2242,8 +2188,8 @@ export default function ServicesSectorsPageV2() {
                 lineHeight: "1.15",
               }}
             >
-              <span style={{ fontWeight: "700" }}>Opportunity</span> Across{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Every Sector</span>
+              <span className="font-bold">Opportunity</span> Across{" "}
+              <span className="font-bold text-[#B8D935]">Every Sector</span>
             </h2>
             <p
               style={{
@@ -2445,7 +2391,7 @@ export default function ServicesSectorsPageV2() {
                     </p>
 
                     {/* Spacer */}
-                    <div style={{ flex: 1 }} />
+                    <div className="flex-1" />
 
                     {/* Stats row */}
                     <div
@@ -2653,7 +2599,7 @@ export default function ServicesSectorsPageV2() {
                   </h3>
 
                   {/* Spacer pushes stats to bottom */}
-                  <div style={{ flex: 1 }} />
+                  <div className="flex-1" />
 
                   {/* Problem - Hidden in "all" view and mobile for cleaner look */}
                   {filterCategory !== "all" && !isMobile && (
@@ -2906,7 +2852,7 @@ export default function ServicesSectorsPageV2() {
           padding: isMobile ? "60px 20px" : "100px 80px",
         }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div
             style={{
               display: "grid",
@@ -2963,8 +2909,8 @@ export default function ServicesSectorsPageV2() {
                   lineHeight: "1.2",
                 }}
               >
-                <span style={{ fontWeight: "700" }}>Progressive Systems</span>, Not{" "}
-                <span style={{ fontWeight: "700", color: colors.accent }}>Silos</span>
+                <span className="font-bold">Progressive Systems</span>, Not{" "}
+                <span className="font-bold text-[#B8D935]">Silos</span>
               </h2>
               <p
                 style={{
@@ -3006,7 +2952,7 @@ export default function ServicesSectorsPageV2() {
 
               {/* CTA - hidden on mobile, shown after pathways */}
               {!isMobile && (
-                <a href="/methodology" style={{ textDecoration: "none" }}>
+                <a href="/methodology" className="no-underline">
                 <button
                   style={{
                     backgroundColor: colors.primary,
@@ -3449,7 +3395,7 @@ export default function ServicesSectorsPageV2() {
           padding: isMobile ? "60px 20px" : "100px 80px",
         }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           {/* Section Header */}
           <div style={{ marginBottom: isMobile ? "32px" : "44px" }}>
             {/* Pill Badge */}
@@ -3507,10 +3453,10 @@ export default function ServicesSectorsPageV2() {
                   letterSpacing: "-0.5px",
                 }}
               >
-                Your <span style={{ fontWeight: "700" }}>Tool</span>. Your{" "}
-                <span style={{ fontWeight: "700" }}>Resource</span>.
+                Your <span className="font-bold">Tool</span>. Your{" "}
+                <span className="font-bold">Resource</span>.
                 <br />
-                Your <span style={{ fontWeight: "700", color: colors.accent }}>Solution</span>.
+                Your <span className="font-bold text-[#B8D935]">Solution</span>.
               </h2>
               <div style={{ maxWidth: "480px" }}>
                 <p
@@ -3997,7 +3943,7 @@ export default function ServicesSectorsPageV2() {
             backgroundSize: "30px 30px",
           }}
         />
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 
         <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center", position: "relative" }}>
           <h2
@@ -4011,8 +3957,8 @@ export default function ServicesSectorsPageV2() {
               lineHeight: "1.2",
             }}
           >
-            Let's <span style={{ fontWeight: "700" }}>Build</span> Something{" "}
-            <span style={{ fontWeight: "700", color: colors.accent }}>Together</span>
+            Let's <span className="font-bold">Build</span> Something{" "}
+            <span className="font-bold text-[#B8D935]">Together</span>
           </h2>
           <p
             style={{
@@ -4120,7 +4066,7 @@ export default function ServicesSectorsPageV2() {
             <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
               <div style={{ flexShrink: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", height: "40px" }}>
-                  <svg viewBox="0 0 4113.9 932.3" height="36" style={{ display: "block" }}>
+                  <svg viewBox="0 0 4113.9 932.3" height="36" className="block">
                     <path
                       fill={colors.white}
                       d="M3355.1,655.6h31.2v5.7h-31.2v-5.7ZM3355.1,667h31.2v11.1h-31.2v-11.1ZM3355.1,683.9h31.2v11.1h-31.2v-11.1ZM3355.1,700.8h31.2v11.1h-31.2v-11.1ZM3355.1,717.7h31.2v11.1h-31.2v-11.1ZM3355.1,734.5h31.2v11.1h-31.2v-11.1ZM3355.1,751.4h31.2v10.8h-31.2v-10.8ZM3355.1,767.9h31.2v11.1h-31.2v-11.1ZM3355.1,784.9h31.2v11.1h-31.2v-11.1ZM3355.1,801.8h31.2v11.1h-31.2v-11.1ZM3355.1,818.6h31.2v11.1h-31.2v-11.1ZM3355.1,835.5h31.2v11.1h-31.2v-11.1ZM3355.1,852.4h31.2v11.1h-31.2v-11.1ZM3355.1,869.2h31.2v11.1h-31.2v-11.1ZM3355.1,886.1h31.2v11.1h-31.2v-11.1ZM3355.1,903h31.2v5.7h-31.2v-5.7ZM3397.5,655.6h61.7c12.5,0,24.3,1.7,35.1,5.7h-96.8v-5.7h0ZM3397.5,667h109.7c5.9,3,11.4,6.7,16.7,11.1h-126.3v-11.1h-.1ZM3397.5,801.8h126.3c-5.2,4.4-10.8,8.1-16.7,11.1h-109.7v-11.1h.1ZM3397.5,818.6h96.8c-10.8,4-22.5,6.1-35.1,6.1h-30.5v84h-31.2v-90.2.1ZM3479.6,739.9c0-17.2-13.5-24.7-28.1-24.7h-23.6v49.3h23.6c14.5,0,28.1-7.5,28.1-24.7h0v.1ZM3485.6,683.9h44.4c3.4,3,6.6,6.7,9.3,11.1h-37.1c-4.9-4.4-10.8-8.4-16.7-11.1h.1ZM3502.2,784.9h37.1c-2.8,4-5.9,7.8-9.3,11.1h-44.4c5.9-2.7,11.8-6.7,16.7-11.1h-.1ZM3507.4,700.8h35.7c2.4,3.4,4.2,7.1,5.6,11.1h-33.6c-2.1-4-4.5-7.8-7.7-11.1ZM3515,767.9h33.6l-5.6,11.1h-35.7c3.1-3.4,5.6-7.1,7.7-11.1ZM3517.8,717.7h32.6c1.3,3.7,2.4,7.5,2.8,11.1h-32.3c-.7-3.7-1.8-7.5-3.1-11.1h0ZM3520.9,751.4h32.3c-.3,3.7-1.3,7.5-2.8,10.8h-32.6c1.3-3.4,2.4-7.1,3.1-10.8h0ZM3521.7,734.5h32.3c.3,3.7.3,7.5-.3,11.1h-32c.7-3.7.7-7.5,0-11.1h0ZM3397.5,689.2h61.7c28.4,0,51.7,23.3,51.7,50.9s-23.2,50.9-51.7,50.9h-61.7v-102h0v.2Z"
@@ -4299,7 +4245,7 @@ export default function ServicesSectorsPageV2() {
                         textDecoration: "none",
                       }}
                     >
-                    <span style={{ transform: "scale(0.8125)", display: "flex" }}>{icon}</span>
+                    <span className="scale-[0.8125] flex">{icon}</span>
                   </a>
                 ))}
               </div>
@@ -4313,7 +4259,7 @@ export default function ServicesSectorsPageV2() {
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                 <div>
                   <div style={{ marginBottom: "24px", display: "flex", alignItems: "center", height: "40px" }}>
-                    <svg viewBox="0 0 4113.9 932.3" height="36" style={{ display: "block" }}>
+                    <svg viewBox="0 0 4113.9 932.3" height="36" className="block">
                       <path
                         fill={colors.white}
                         d="M3355.1,655.6h31.2v5.7h-31.2v-5.7ZM3355.1,667h31.2v11.1h-31.2v-11.1ZM3355.1,683.9h31.2v11.1h-31.2v-11.1ZM3355.1,700.8h31.2v11.1h-31.2v-11.1ZM3355.1,717.7h31.2v11.1h-31.2v-11.1ZM3355.1,734.5h31.2v11.1h-31.2v-11.1ZM3355.1,751.4h31.2v10.8h-31.2v-10.8ZM3355.1,767.9h31.2v11.1h-31.2v-11.1ZM3355.1,784.9h31.2v11.1h-31.2v-11.1ZM3355.1,801.8h31.2v11.1h-31.2v-11.1ZM3355.1,818.6h31.2v11.1h-31.2v-11.1ZM3355.1,835.5h31.2v11.1h-31.2v-11.1ZM3355.1,852.4h31.2v11.1h-31.2v-11.1ZM3355.1,869.2h31.2v11.1h-31.2v-11.1ZM3355.1,886.1h31.2v11.1h-31.2v-11.1ZM3355.1,903h31.2v5.7h-31.2v-5.7ZM3397.5,655.6h61.7c12.5,0,24.3,1.7,35.1,5.7h-96.8v-5.7h0ZM3397.5,667h109.7c5.9,3,11.4,6.7,16.7,11.1h-126.3v-11.1h-.1ZM3397.5,801.8h126.3c-5.2,4.4-10.8,8.1-16.7,11.1h-109.7v-11.1h.1ZM3397.5,818.6h96.8c-10.8,4-22.5,6.1-35.1,6.1h-30.5v84h-31.2v-90.2.1ZM3479.6,739.9c0-17.2-13.5-24.7-28.1-24.7h-23.6v49.3h23.6c14.5,0,28.1-7.5,28.1-24.7h0v.1ZM3485.6,683.9h44.4c3.4,3,6.6,6.7,9.3,11.1h-37.1c-4.9-4.4-10.8-8.4-16.7-11.1h.1ZM3502.2,784.9h37.1c-2.8,4-5.9,7.8-9.3,11.1h-44.4c5.9-2.7,11.8-6.7,16.7-11.1h-.1ZM3507.4,700.8h35.7c2.4,3.4,4.2,7.1,5.6,11.1h-33.6c-2.1-4-4.5-7.8-7.7-11.1ZM3515,767.9h33.6l-5.6,11.1h-35.7c3.1-3.4,5.6-7.1,7.7-11.1ZM3517.8,717.7h32.6c1.3,3.7,2.4,7.5,2.8,11.1h-32.3c-.7-3.7-1.8-7.5-3.1-11.1h0ZM3520.9,751.4h32.3c-.3,3.7-1.3,7.5-2.8,10.8h-32.6c1.3-3.4,2.4-7.1,3.1-10.8h0ZM3521.7,734.5h32.3c.3,3.7.3,7.5-.3,11.1h-32c.7-3.7.7-7.5,0-11.1h0ZM3397.5,689.2h61.7c28.4,0,51.7,23.3,51.7,50.9s-23.2,50.9-51.7,50.9h-61.7v-102h0v.2Z"
