@@ -2895,14 +2895,11 @@ function MembersPage({ isMobile }) {
                 </span>
               ) : (
                 <span
+                  className="text-[10px] font-semibold py-[3px] px-2 rounded-[20px]"
                   style={{
-                    fontSize: 10,
-                    fontWeight: 600,
                     color: s.accent,
                     background: s.accent + "14",
                     border: `1px solid ${s.accent}30`,
-                    padding: "3px 8px",
-                    borderRadius: 20,
                   }}
                 >
                   {s.trend}
@@ -2912,20 +2909,13 @@ function MembersPage({ isMobile }) {
 
             {/* Value + Label */}
             <div
-              style={{
-                fontFamily: font.display,
-                fontSize: 34,
-                fontWeight: 800,
-                color: s.accent,
-                lineHeight: 1,
-                marginBottom: 4,
-                position: "relative",
-              }}
+              className="font-[DM_Sans,sans-serif] text-[34px] font-extrabold leading-none mb-1 relative"
+              style={{ color: s.accent }}
             >
               {s.val}
             </div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: C.dark, marginBottom: 2 }}>{s.label}</div>
-            <div style={{ fontSize: 11, color: C.muted, marginBottom: 14 }}>{s.sub}</div>
+            <div className="text-[13px] font-bold mb-[2px]" style={{ color: C.dark }}>{s.label}</div>
+            <div className="text-[11px] mb-[14px]" style={{ color: C.muted }}>{s.sub}</div>
 
             {/* Mini progress bar */}
             <div>

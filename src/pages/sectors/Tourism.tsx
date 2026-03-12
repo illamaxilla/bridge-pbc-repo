@@ -4126,48 +4126,30 @@ const InvestmentCTASection = () => {
             </div>
 
             {/* Engagement Pathways */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
+            <div className="flex-1 flex flex-col gap-[10px] mb-5">
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.primary,
-                  marginBottom: "4px",
-                  opacity: 0.5,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1px] mb-1 opacity-50"
+                style={{ color: colors.primary }}
               >
                 Your Engagement
               </div>
               {activeAudienceData.pathways.map((path, idx) => (
                 <div
                   key={idx}
+                  className="flex items-start gap-3 py-3 px-4 rounded-[10px]"
                   style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "12px",
-                    padding: "12px 16px",
                     backgroundColor: colors.white,
-                    borderRadius: "10px",
                     border: `1px solid ${colors.line}`,
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+                  <div className="flex flex-col gap-1 flex-1">
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-semibold"
+                      style={{ color: colors.primary }}
                     >
                       {path.bring}
                     </div>
-                    <div
-                      style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#777", lineHeight: "1.5" }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[12px] text-[#777] leading-[1.5]">
                       {path.get}
                     </div>
                   </div>

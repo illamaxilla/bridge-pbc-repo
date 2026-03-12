@@ -3898,55 +3898,36 @@ const ImpactSection = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
-        <div style={{ textAlign: "left", marginBottom: "40px" }}>
+        <div className="text-left mb-10">
           <span
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "'Inter', sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Impact
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] m-0 mb-3 max-w-[900px]"
             style={{
-              fontFamily: "'Inter', sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
-              margin: "0 0 12px",
-              maxWidth: "900px",
             }}
           >
-            What Changes When <span style={{ fontWeight: "600" }}>Education</span>
+            What Changes When <span className="font-semibold">Education</span>
             <br />
-            <span style={{ fontWeight: "600" }}>Pathways</span>{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Work</span>
+            <span className="font-semibold">Pathways</span>{" "}
+            <span className="font-semibold" style={{ color: colors.accent }}>Work</span>
           </h2>
 
           <p
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: isMobile ? "15px" : "16px",
-              color: "#555",
-              lineHeight: "1.7",
-              margin: "0 0 40px 0",
-              maxWidth: "700px",
-            }}
+            className="font-[Inter,sans-serif] text-[#555] leading-[1.7] m-0 mb-10 max-w-[700px]"
+            style={{ fontSize: isMobile ? "15px" : "16px" }}
           >
             When graduates find employment, vocational training matches market needs, and skills connect to careers —
             the ripple effects break poverty cycles, build family security, and power Ghana's human capital advantage.
