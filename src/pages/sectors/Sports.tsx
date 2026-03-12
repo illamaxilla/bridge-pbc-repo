@@ -4142,7 +4142,7 @@ const ImpactSection = () => {
                 >
                   {impactStakeholders[activeStakeholder].title}
                 </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#888" }}>
+                <div className="font-[Inter,sans-serif] text-[14px] text-[#888]">
                   {impactStakeholders[activeStakeholder].subtitle}
                 </div>
               </div>
@@ -4159,7 +4159,7 @@ const ImpactSection = () => {
                 >
                   {impactStakeholders[activeStakeholder].stat}
                 </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#888", marginTop: "4px" }}>
+                <div className="font-[Inter,sans-serif] text-[12px] text-[#888] mt-1">
                   {impactStakeholders[activeStakeholder].statLabel}
                 </div>
               </div>

@@ -2803,12 +2803,8 @@ function MembersPage({ isMobile }) {
 
       {/* Stats strip */}
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)",
-          gap: 12,
-          marginBottom: 20,
-        }}
+        className="grid gap-3 mb-5"
+        style={{ gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)" }}
       >
         {[
           {
@@ -2858,14 +2854,12 @@ function MembersPage({ isMobile }) {
         ].map((s) => (
           <div
             key={s.label}
+            className="rounded-2xl relative overflow-hidden"
             style={{
-              borderRadius: 16,
               padding: "20px 20px 18px",
               background: `linear-gradient(135deg, ${s.accent}14 0%, ${s.accent}06 100%)`,
               border: `1.5px solid ${s.accent}22`,
               boxShadow: C.cardShadow,
-              position: "relative",
-              overflow: "hidden",
             }}
           >
             {/* Background watermark circle */}
