@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { colors } from "@/lib/theme";
+import { cn } from "@/lib/utils";
 
 // ============================================================
 // FIELD COMPONENT
@@ -17,9 +17,9 @@ export interface FieldProps {
 export const Field = ({ label, type = "text", placeholder, value, onChange, required, hint }: FieldProps) => {
   const [focused, setFocused] = useState(false);
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-      <label style={{ fontSize: "13px", fontWeight: "600", color: colors.dark, fontFamily: "Inter, sans-serif" }}>
-        {label}{required && <span style={{ color: colors.primary, marginLeft: "2px" }}>*</span>}
+    <div className="flex flex-col gap-1.5">
+      <label className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
+        {label}{required && <span className="text-[#1B4D3E] ml-0.5">*</span>}
       </label>
       <input
         type={type}
@@ -29,22 +29,15 @@ export const Field = ({ label, type = "text", placeholder, value, onChange, requ
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         required={required}
-        style={{
-          padding: "12px 16px",
-          borderRadius: "10px",
-          border: `1.5px solid ${focused ? colors.primary : colors.line}`,
-          backgroundColor: focused ? colors.white : colors.background,
-          fontSize: "15px",
-          fontFamily: "Inter, sans-serif",
-          color: colors.dark,
-          outline: "none",
-          transition: "all 0.2s ease",
-          boxSizing: "border-box" as const,
-          width: "100%",
-        }}
+        className={cn(
+          "px-4 py-3 rounded-[10px] border-[1.5px] text-[15px] font-[Inter,sans-serif] text-[#191919] outline-none transition-all duration-200 w-full box-border",
+          focused
+            ? "border-[#1B4D3E] bg-white"
+            : "border-[#DEDEDE] bg-[#F3F5F2]"
+        )}
       />
       {hint && (
-        <span style={{ fontSize: "12px", color: "#999", fontFamily: "Inter, sans-serif" }}>{hint}</span>
+        <span className="text-xs text-gray-400 font-[Inter,sans-serif]">{hint}</span>
       )}
     </div>
   );
@@ -65,9 +58,9 @@ export interface SelectFieldProps {
 export const SelectField = ({ label, value, onChange, options, required }: SelectFieldProps) => {
   const [focused, setFocused] = useState(false);
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-      <label style={{ fontSize: "13px", fontWeight: "600", color: colors.dark, fontFamily: "Inter, sans-serif" }}>
-        {label}{required && <span style={{ color: colors.primary, marginLeft: "2px" }}>*</span>}
+    <div className="flex flex-col gap-1.5">
+      <label className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
+        {label}{required && <span className="text-[#1B4D3E] ml-0.5">*</span>}
       </label>
       <select
         value={value}
@@ -75,24 +68,15 @@ export const SelectField = ({ label, value, onChange, options, required }: Selec
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         required={required}
+        className={cn(
+          "px-4 py-3 pr-10 rounded-[10px] border-[1.5px] text-[15px] font-[Inter,sans-serif] outline-none transition-all duration-200 cursor-pointer appearance-none w-full box-border bg-no-repeat bg-[right_14px_center]",
+          focused
+            ? "border-[#1B4D3E] bg-white"
+            : "border-[#DEDEDE] bg-[#F3F5F2]",
+          value ? "text-[#191919]" : "text-gray-400"
+        )}
         style={{
-          padding: "12px 16px",
-          borderRadius: "10px",
-          border: `1.5px solid ${focused ? colors.primary : colors.line}`,
-          backgroundColor: focused ? colors.white : colors.background,
-          fontSize: "15px",
-          fontFamily: "Inter, sans-serif",
-          color: value ? colors.dark : "#999",
-          outline: "none",
-          transition: "all 0.2s ease",
-          cursor: "pointer",
-          appearance: "none" as const,
           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231B4D3E' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "right 14px center",
-          paddingRight: "40px",
-          width: "100%",
-          boxSizing: "border-box" as const,
         }}
       >
         {options.map(opt => (
@@ -117,9 +101,9 @@ export interface TextareaFieldProps {
 export const TextareaField = ({ label, placeholder, value, onChange, required }: TextareaFieldProps) => {
   const [focused, setFocused] = useState(false);
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-      <label style={{ fontSize: "13px", fontWeight: "600", color: colors.dark, fontFamily: "Inter, sans-serif" }}>
-        {label}{required && <span style={{ color: colors.primary, marginLeft: "2px" }}>*</span>}
+    <div className="flex flex-col gap-1.5">
+      <label className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
+        {label}{required && <span className="text-[#1B4D3E] ml-0.5">*</span>}
       </label>
       <textarea
         placeholder={placeholder}
@@ -129,22 +113,12 @@ export const TextareaField = ({ label, placeholder, value, onChange, required }:
         onBlur={() => setFocused(false)}
         rows={3}
         required={required}
-        style={{
-          padding: "12px 16px",
-          borderRadius: "10px",
-          border: `1.5px solid ${focused ? colors.primary : colors.line}`,
-          backgroundColor: focused ? colors.white : colors.background,
-          fontSize: "15px",
-          fontFamily: "Inter, sans-serif",
-          color: colors.dark,
-          outline: "none",
-          transition: "all 0.2s ease",
-          resize: "vertical" as const,
-          minHeight: "88px",
-          boxSizing: "border-box" as const,
-          width: "100%",
-          lineHeight: "1.5",
-        }}
+        className={cn(
+          "px-4 py-3 rounded-[10px] border-[1.5px] text-[15px] font-[Inter,sans-serif] text-[#191919] outline-none transition-all duration-200 resize-y min-h-[88px] w-full box-border leading-relaxed",
+          focused
+            ? "border-[#1B4D3E] bg-white"
+            : "border-[#DEDEDE] bg-[#F3F5F2]"
+        )}
       />
     </div>
   );

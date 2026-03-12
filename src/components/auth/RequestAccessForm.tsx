@@ -2,23 +2,16 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { colors } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, SelectField, TextareaField } from "./FormField";
 import type { SelectOption } from "./FormField";
 
-// ============================================================
-// REQUEST ACCESS FORM
-// ============================================================
-
 const requestAccessSchema = z.object({
-  // Step 1
   name: z.string().min(1, "Name is required"),
   email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
   country: z.string().min(1, "Country is required"),
   organization: z.string().optional(),
   role: z.string().optional(),
-  // Step 2
   primaryInterest: z.string().min(1, "Primary interest is required"),
   connection: z.string().min(1, "This field is required"),
   description: z.string().optional(),
@@ -88,7 +81,6 @@ export interface RequestFormState {
 export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProps) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [btnHover, setBtnHover] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const { control, handleSubmit, formState: { errors }, trigger, watch } = useForm<RequestAccessFormData>({
@@ -133,45 +125,45 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
     }
   };
 
+  const errorMsg = (msg?: string) =>
+    msg ? <span className="block mt-1 text-xs text-red-600 font-[Inter,sans-serif]">{msg}</span> : null;
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       {error && (
-        <div style={{
-          padding: "12px 16px", borderRadius: "10px",
-          backgroundColor: "#fef2f2", border: "1px solid #fecaca",
-          color: "#991b1b", fontSize: "13px", fontFamily: "Inter, sans-serif",
-          lineHeight: "1.5",
-        }}>
+        <div className="px-4 py-3 rounded-[10px] bg-red-50 border border-red-200 text-red-800 text-[13px] font-[Inter,sans-serif] leading-relaxed">
           {error}
         </div>
       )}
 
       {/* Step Indicator */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "4px" }}>
+      <div className="flex items-center justify-center gap-2 mb-1">
         {[1, 2].map(n => (
           <React.Fragment key={n}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-              <div style={{
-                width: "28px", height: "28px", borderRadius: "50%",
-                backgroundColor: step >= n ? colors.primary : colors.line,
-                border: `2px solid ${step >= n ? colors.primary : colors.line}`,
-                color: step >= n ? colors.white : "#999",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "12px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                transition: "all 0.3s ease",
-              }}>
+            <div className="flex flex-col items-center gap-1">
+              <div
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-[Inter,sans-serif] transition-all duration-300 border-2 ${
+                  step >= n
+                    ? "bg-[#1B4D3E] border-[#1B4D3E] text-white"
+                    : "bg-[#DEDEDE] border-[#DEDEDE] text-gray-400"
+                }`}
+              >
                 {step > n ? (
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                 ) : n}
               </div>
-              <span style={{ fontSize: "11px", color: step >= n ? colors.primary : "#999", fontFamily: "Inter, sans-serif", fontWeight: step >= n ? "600" : "400" }}>
+              <span className={`text-[11px] font-[Inter,sans-serif] ${
+                step >= n ? "text-[#1B4D3E] font-semibold" : "text-gray-400 font-normal"
+              }`}>
                 {n === 1 ? "Your Details" : "Your Interest"}
               </span>
             </div>
             {n < 2 && (
-              <div style={{ width: "48px", height: "2px", backgroundColor: step > 1 ? colors.primary : colors.line, margin: "0 4px", marginBottom: "20px", transition: "background-color 0.3s ease" }} />
+              <div className={`w-12 h-0.5 mx-1 mb-5 transition-colors duration-300 ${
+                step > 1 ? "bg-[#1B4D3E]" : "bg-[#DEDEDE]"
+              }`} />
             )}
           </React.Fragment>
         ))}
@@ -187,11 +179,7 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
                 <Field label="Full Name" placeholder="Your full name" value={field.value} onChange={field.onChange} required />
               )}
             />
-            {errors.name && (
-              <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
-                {errors.name.message}
-              </span>
-            )}
+            {errorMsg(errors.name?.message)}
           </div>
           <div>
             <Controller
@@ -201,14 +189,10 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
                 <Field label="Email Address" type="email" placeholder="your@email.com" value={field.value} onChange={field.onChange} required />
               )}
             />
-            {errors.email && (
-              <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
-                {errors.email.message}
-              </span>
-            )}
+            {errorMsg(errors.email?.message)}
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px" }}>
+          <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-2"}`}>
             <div>
               <Controller
                 name="country"
@@ -217,11 +201,7 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
                   <SelectField label="Country" value={field.value} onChange={field.onChange} options={countryOptions} required />
                 )}
               />
-              {errors.country && (
-                <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
-                  {errors.country.message}
-                </span>
-              )}
+              {errorMsg(errors.country?.message)}
             </div>
             <Controller
               name="organization"
@@ -243,21 +223,8 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
           <button
             type="button"
             disabled={!step1Valid}
-            onMouseEnter={() => setBtnHover(true)}
-            onMouseLeave={() => setBtnHover(false)}
             onClick={handleStep1Continue}
-            style={{
-              marginTop: "4px",
-              padding: "14px 32px",
-              borderRadius: "50px", border: "none",
-              backgroundColor: step1Valid ? (btnHover ? "#163f32" : colors.primary) : "#ccc",
-              color: colors.white,
-              fontSize: "15px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-              cursor: step1Valid ? "pointer" : "not-allowed",
-              transition: "all 0.2s ease",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-              width: "100%",
-            }}
+            className="mt-1 px-8 py-[14px] rounded-full border-none bg-[#1B4D3E] hover:bg-[#163f32] disabled:bg-gray-300 text-white text-[15px] font-semibold font-[Inter,sans-serif] disabled:cursor-not-allowed cursor-pointer transition-all duration-200 flex items-center justify-center gap-2.5 w-full"
           >
             Continue
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -277,11 +244,7 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
                 <SelectField label="Primary Interest" value={field.value} onChange={field.onChange} options={interestOptions} required />
               )}
             />
-            {errors.primaryInterest && (
-              <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
-                {errors.primaryInterest.message}
-              </span>
-            )}
+            {errorMsg(errors.primaryInterest?.message)}
           </div>
           <div>
             <Controller
@@ -291,11 +254,7 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
                 <SelectField label="How did you hear about BRIDGE?" value={field.value} onChange={field.onChange} options={connectionOptions} required />
               )}
             />
-            {errors.connection && (
-              <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
-                {errors.connection.message}
-              </span>
-            )}
+            {errorMsg(errors.connection?.message)}
           </div>
           <Controller
             name="description"
@@ -311,21 +270,18 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
             control={control}
             render={({ field }) => (
               <div>
-                <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                <div className="flex items-start gap-2.5">
                   <div
                     role="checkbox"
                     aria-checked={field.value}
                     tabIndex={0}
                     onClick={() => field.onChange(!field.value)}
                     onKeyDown={e => { if (e.key === " " || e.key === "Enter") field.onChange(!field.value); }}
-                    style={{
-                      width: "18px", height: "18px", minWidth: "18px",
-                      borderRadius: "5px", marginTop: "1px",
-                      border: `2px solid ${field.value ? colors.primary : colors.line}`,
-                      backgroundColor: field.value ? colors.primary : colors.white,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      transition: "all 0.2s ease", cursor: "pointer",
-                    }}
+                    className={`w-[18px] h-[18px] min-w-[18px] rounded-[5px] mt-px border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                      field.value
+                        ? "border-[#1B4D3E] bg-[#1B4D3E]"
+                        : "border-[#DEDEDE] bg-white"
+                    }`}
                   >
                     {field.value && (
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
@@ -333,62 +289,31 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
                       </svg>
                     )}
                   </div>
-                  <span style={{ fontSize: "13px", color: "#555", fontFamily: "Inter, sans-serif", lineHeight: "1.5" }}>
+                  <span className="text-[13px] text-gray-600 font-[Inter,sans-serif] leading-relaxed">
                     I agree to receive communications from BRIDGE PBC and understand that access is subject to team review and approval.
                   </span>
                 </div>
-                {errors.consent && (
-                  <span style={{ fontSize: "12px", color: "#dc2626", fontFamily: "Inter, sans-serif", marginTop: "4px", display: "block" }}>
-                    {errors.consent.message}
-                  </span>
-                )}
+                {errorMsg(errors.consent?.message)}
               </div>
             )}
           />
 
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div className="flex gap-3">
             <button
               type="button"
               onClick={() => setStep(1)}
-              style={{
-                flex: "0 0 auto",
-                padding: "14px 20px",
-                borderRadius: "50px",
-                border: `1.5px solid ${colors.line}`,
-                backgroundColor: "transparent",
-                color: colors.primary,
-                fontSize: "14px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-                cursor: "pointer", transition: "all 0.2s ease",
-              }}
+              className="flex-none px-5 py-[14px] rounded-full border-[1.5px] border-[#DEDEDE] bg-transparent text-[#1B4D3E] text-sm font-semibold font-[Inter,sans-serif] cursor-pointer transition-all duration-200"
             >
               ← Back
             </button>
             <button
               type="submit"
               disabled={!step2Valid || loading}
-              onMouseEnter={() => setBtnHover(true)}
-              onMouseLeave={() => setBtnHover(false)}
-              style={{
-                flex: 1,
-                padding: "14px 24px",
-                borderRadius: "50px", border: "none",
-                backgroundColor: (!step2Valid || loading) ? "#ccc" : (btnHover ? "#163f32" : colors.primary),
-                color: colors.white,
-                fontSize: "15px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-                cursor: (!step2Valid || loading) ? "not-allowed" : "pointer",
-                transition: "all 0.2s ease",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-              }}
+              className="flex-1 px-6 py-[14px] rounded-full border-none bg-[#1B4D3E] hover:bg-[#163f32] disabled:bg-gray-300 text-white text-[15px] font-semibold font-[Inter,sans-serif] disabled:cursor-not-allowed cursor-pointer transition-all duration-200 flex items-center justify-center gap-2.5"
             >
               {loading ? (
                 <>
-                  <span style={{
-                    width: "16px", height: "16px", borderRadius: "50%",
-                    border: "2px solid rgba(255,255,255,0.3)",
-                    borderTopColor: colors.white,
-                    animation: "bridge-spin 0.7s linear infinite",
-                    display: "inline-block",
-                  }} />
+                  <span className="inline-block w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                   Submitting…
                 </>
               ) : (

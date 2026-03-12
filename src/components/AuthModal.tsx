@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
-import { colors } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { BridgeLogo } from "@/components/BridgeLogo";
+import { cn } from "@/lib/utils";
 
 import { SignInForm } from "./auth/SignInForm";
 import { ForgotPasswordForm } from "./auth/ForgotPasswordForm";
 import { RequestAccessForm } from "./auth/RequestAccessForm";
 import { SuccessState } from "./auth/SuccessState";
 
-// ============================================================
-// MAIN MODAL COMPONENT
-// ============================================================
 export interface BRIDGEAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -49,12 +46,9 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen, onClose]);
 
-  // Lock body scroll when open
   useScrollLock(isOpen);
 
   if (!isOpen && !visible) return null;
-
-  const hPad = isMobile ? "20px" : "32px";
 
   return (
     <>
@@ -62,7 +56,6 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
         @keyframes bridge-spin { to { transform: rotate(360deg); } }
         @keyframes bridge-modalIn { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes bridge-slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        @keyframes bridge-slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
         .bridge-hide-scrollbar::-webkit-scrollbar { display: none; }
         .bridge-hide-scrollbar { scrollbar-width: none; }
       `}</style>
@@ -73,29 +66,22 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
         aria-modal="true"
         aria-labelledby="auth-modal-title"
         onClick={handleBackdrop}
-        style={{
-          position: "fixed", inset: 0, zIndex: 9998,
-          backgroundColor: "rgba(0,0,0,0.55)",
-          backdropFilter: "blur(4px)",
-          display: "flex",
-          alignItems: isMobile ? "flex-end" : "center",
-          justifyContent: "center",
-          opacity: visible ? 1 : 0,
-          transition: "opacity 0.25s ease",
-        }}
+        className={cn(
+          "fixed inset-0 z-[9998] bg-black/55 backdrop-blur-[4px] flex justify-center transition-opacity duration-[250ms]",
+          isMobile ? "items-end" : "items-center",
+          visible ? "opacity-100" : "opacity-0"
+        )}
       >
         {/* Modal Panel */}
         <div
           ref={modalRef}
-          className="bridge-hide-scrollbar"
+          className={cn(
+            "bridge-hide-scrollbar relative bg-white overflow-y-auto shadow-[0_24px_60px_rgba(0,0,0,0.18)]",
+            isMobile
+              ? "w-full max-h-[92vh] rounded-t-[20px]"
+              : "w-[480px] max-h-[90vh] rounded-[20px]"
+          )}
           style={{
-            position: "relative",
-            backgroundColor: colors.white,
-            width: isMobile ? "100%" : "480px",
-            maxHeight: isMobile ? "92vh" : "90vh",
-            overflowY: "auto",
-            borderRadius: isMobile ? "20px 20px 0 0" : "20px",
-            boxShadow: "0 24px 60px rgba(0,0,0,0.18)",
             animation: visible
               ? (isMobile ? "bridge-slideUp 0.35s cubic-bezier(0.32,0.72,0,1)" : "bridge-modalIn 0.3s cubic-bezier(0.32,0.72,0,1)")
               : "none",
@@ -103,46 +89,26 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
         >
           {/* Drag handle on mobile */}
           {isMobile && (
-            <div style={{ display: "flex", justifyContent: "center", paddingTop: "12px", paddingBottom: "4px" }}>
-              <div style={{ width: "36px", height: "4px", borderRadius: "2px", backgroundColor: colors.line }} />
+            <div className="flex justify-center pt-3 pb-1">
+              <div className="w-9 h-1 rounded-sm bg-[#DEDEDE]" />
             </div>
           )}
 
           {/* Header */}
-          <div style={{
-            display: "flex", flexDirection: "column", gap: "16px",
-            padding: `20px ${hPad} 0`,
-          }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div className={cn("flex flex-col gap-4", isMobile ? "px-5 pt-5" : "px-8 pt-5")}>
+            <div className="flex justify-between items-center">
               <BridgeLogo height={isMobile ? 28 : 34} />
               <button
                 onClick={onClose}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = colors.background;
-                  (e.currentTarget as HTMLButtonElement).style.borderColor = colors.primary;
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
-                  (e.currentTarget as HTMLButtonElement).style.borderColor = colors.line;
-                }}
-                style={{
-                  width: "34px", height: "34px", borderRadius: "50%",
-                  border: `1.5px solid ${colors.line}`, backgroundColor: "transparent",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  cursor: "pointer", transition: "all 0.2s ease", flexShrink: 0,
-                }}
+                className="w-[34px] h-[34px] rounded-full border-[1.5px] border-[#DEDEDE] bg-transparent hover:bg-[#F3F5F2] hover:border-[#1B4D3E] flex items-center justify-center cursor-pointer transition-all duration-200 shrink-0"
               >
-                <X size={16} color={colors.dark} />
+                <X size={16} color="#191919" />
               </button>
             </div>
 
             {/* Tab Bar */}
             {!success && !showForgot && (
-              <div style={{
-                display: "flex", gap: "4px",
-                backgroundColor: colors.background,
-                borderRadius: "12px", padding: "4px",
-              }}>
+              <div className="flex gap-1 bg-[#F3F5F2] rounded-xl p-1">
                 {([
                   { key: "signin" as const, label: "Sign In" },
                   { key: "request" as const, label: "Request Access" },
@@ -151,18 +117,13 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
                     key={t.key}
                     type="button"
                     onClick={() => setTab(t.key)}
-                    style={{
-                      flex: 1, padding: isMobile ? "10px 8px" : "10px 16px",
-                      borderRadius: "9px", border: "none",
-                      backgroundColor: tab === t.key ? colors.white : "transparent",
-                      color: tab === t.key ? colors.primary : "#999",
-                      fontSize: isMobile ? "13px" : "14px",
-                      fontWeight: tab === t.key ? "700" : "500",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer", transition: "all 0.2s ease",
-                      boxShadow: tab === t.key ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
-                      whiteSpace: "nowrap" as const,
-                    }}
+                    className={cn(
+                      "flex-1 rounded-[9px] border-none font-[Inter,sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap",
+                      isMobile ? "py-2.5 px-2 text-[13px]" : "py-2.5 px-4 text-sm",
+                      tab === t.key
+                        ? "bg-white text-[#1B4D3E] font-bold shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+                        : "bg-transparent text-gray-400 font-medium"
+                    )}
                   >
                     {t.label}
                   </button>
@@ -172,34 +133,30 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
           </div>
 
           {/* Body */}
-          <div style={{ padding: `24px ${hPad} 32px` }}>
+          <div className={cn(isMobile ? "px-5 pt-6 pb-8" : "px-8 pt-6 pb-8")}>
             {success ? (
               <SuccessState mode={success} onClose={onClose} />
             ) : showForgot ? (
               <ForgotPasswordForm onBack={() => setShowForgot(false)} />
             ) : tab === "signin" ? (
               <>
-                <div style={{ marginBottom: "24px", display: "flex", flexDirection: "column", gap: "6px" }}>
-                  <h2 id="auth-modal-title" style={{ fontSize: "22px", fontWeight: "700", color: colors.dark, fontFamily: "Inter, sans-serif", margin: 0 }}>
+                <div className="mb-6 flex flex-col gap-1.5">
+                  <h2 id="auth-modal-title" className="text-[22px] font-bold text-[#191919] font-[Inter,sans-serif] m-0">
                     Welcome back
                   </h2>
-                  <p style={{ fontSize: "14px", color: "#666", fontFamily: "Inter, sans-serif", margin: 0 }}>
+                  <p className="text-sm text-gray-500 font-[Inter,sans-serif] m-0">
                     Sign in to access your BRIDGE portal and documents.
                   </p>
                 </div>
 
                 <SignInForm onSuccess={() => { onSignInSuccess?.(); setSuccess("signin"); }} onForgot={() => setShowForgot(true)} />
 
-                <p style={{ textAlign: "center" as const, fontSize: "13px", color: "#666", fontFamily: "Inter, sans-serif", marginTop: "20px" }}>
+                <p className="text-center text-[13px] text-gray-500 font-[Inter,sans-serif] mt-5">
                   Don't have access yet?{" "}
                   <button
                     type="button"
                     onClick={() => setTab("request")}
-                    style={{
-                      background: "none", border: "none", cursor: "pointer",
-                      color: colors.primary, fontWeight: "600", fontSize: "13px",
-                      fontFamily: "Inter, sans-serif", padding: 0, textDecoration: "underline",
-                    }}
+                    className="bg-transparent border-none cursor-pointer text-[#1B4D3E] font-semibold text-[13px] font-[Inter,sans-serif] p-0 underline"
                   >
                     Request Access →
                   </button>
@@ -207,28 +164,24 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
               </>
             ) : (
               <>
-                <div style={{ marginBottom: "24px", display: "flex", flexDirection: "column", gap: "6px" }}>
-                  <h2 id="auth-modal-title" style={{ fontSize: "22px", fontWeight: "700", color: colors.dark, fontFamily: "Inter, sans-serif", margin: 0 }}>
+                <div className="mb-6 flex flex-col gap-1.5">
+                  <h2 id="auth-modal-title" className="text-[22px] font-bold text-[#191919] font-[Inter,sans-serif] m-0">
                     Access the full BRIDGE research{" "}
-                    <span style={{ color: colors.primary }}>library</span>
+                    <span className="text-[#1B4D3E]">library</span>
                   </h2>
-                  <p style={{ fontSize: "14px", color: "#666", fontFamily: "Inter, sans-serif", margin: 0 }}>
+                  <p className="text-sm text-gray-500 font-[Inter,sans-serif] m-0">
                     Complete 12 sector analyses, white papers, investment summaries, and government alignment documentation.
                   </p>
                 </div>
 
                 <RequestAccessForm onSuccess={(mode) => setSuccess(mode)} isMobile={isMobile} />
 
-                <p style={{ textAlign: "center" as const, fontSize: "13px", color: "#666", fontFamily: "Inter, sans-serif", marginTop: "20px" }}>
+                <p className="text-center text-[13px] text-gray-500 font-[Inter,sans-serif] mt-5">
                   Already have access?{" "}
                   <button
                     type="button"
                     onClick={() => setTab("signin")}
-                    style={{
-                      background: "none", border: "none", cursor: "pointer",
-                      color: colors.primary, fontWeight: "600", fontSize: "13px",
-                      fontFamily: "Inter, sans-serif", padding: 0, textDecoration: "underline",
-                    }}
+                    className="bg-transparent border-none cursor-pointer text-[#1B4D3E] font-semibold text-[13px] font-[Inter,sans-serif] p-0 underline"
                   >
                     Sign In →
                   </button>
