@@ -37,21 +37,21 @@ describe("useCounter", () => {
   });
 
   it("reaches the target value when animation completes", () => {
-    let rafCallback: ((ts: number) => void) | null = null;
+    const callbacks: Array<(ts: number) => void> = [];
     const rafSpy = vi
       .spyOn(window, "requestAnimationFrame")
       .mockImplementation((cb) => {
-        rafCallback = cb;
-        return 1;
+        callbacks.push(cb);
+        return callbacks.length;
       });
 
     const { result } = renderHook(() => useCounter(50, 1000, true));
 
-    // Simulate the first frame (start = 0, so progress = 0)
-    act(() => { rafCallback?.(0); });
+    // Simulate the first frame — sets start timestamp
+    act(() => { callbacks[callbacks.length - 1]?.(0); });
 
-    // Simulate the final frame (progress = 1)
-    act(() => { rafCallback?.(1000); });
+    // Simulate the final frame — progress reaches 1
+    act(() => { callbacks[callbacks.length - 1]?.(1000); });
 
     expect(result.current).toBe(50);
 

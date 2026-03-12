@@ -25,6 +25,12 @@ export interface PolicyItem {
   pillars?: string[];
 }
 
+export interface PolicyCategory {
+  id: string;
+  label: string;
+  short: string;
+}
+
 export interface SectorPolicySectionProps {
   /** Array of policy objects to display */
   policies: PolicyItem[];
@@ -40,6 +46,8 @@ export interface SectorPolicySectionProps {
   ctaHref?: string;
   /** Section background color (default: colors.white) */
   backgroundColor?: string;
+  /** Override the default category filter pills */
+  categories?: PolicyCategory[];
 }
 
 // ---------------------------------------------------------------------------
@@ -59,6 +67,7 @@ const CATEGORIES = [
 const CAT_BADGE: Record<string, { bg: string; border: string }> = {
   funding: { bg: "rgba(184,217,53,0.15)", border: "rgba(184,217,53,0.3)" },
   tax: { bg: "rgba(27,77,62,0.07)", border: "rgba(27,77,62,0.15)" },
+  regulatory: { bg: "rgba(27,77,62,0.07)", border: "rgba(27,77,62,0.15)" },
   infrastructure: { bg: "rgba(184,217,53,0.1)", border: "rgba(184,217,53,0.25)" },
   partnerships: { bg: "rgba(27,77,62,0.05)", border: "rgba(27,77,62,0.12)" },
 };
