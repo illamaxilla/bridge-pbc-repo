@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { IconCode, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconCpu, IconStorefront, IconOfficeBuilding, IconLandmark, IconTrendingUp, IconCross } from "@/components/icons/SectorIcons";
-import { BarChart3, Blocks, Check, ChevronDown, GraduationCap, Lightbulb, Sprout, Users, Wifi } from "lucide-react";
+import { ArrowRight, BarChart3, Blocks, Check, ChevronDown, GraduationCap, Lightbulb, Sprout, Users, Wifi } from "lucide-react";
 import { useCounter } from "@/hooks/useCounter";
 
 // ============================================================================
@@ -1333,19 +1333,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.accent}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ flexShrink: 0 }}
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Check size={18} stroke={colors.accent} strokeWidth={2.5} style={{ flexShrink: 0 }} />
               <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#888", flexShrink: 0 }}>
                 BRIDGE Solution:
               </span>
@@ -1377,19 +1365,7 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
               }}
             >
               View{" "}
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.primary}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
+              <ArrowRight size={14} stroke={colors.primary} strokeWidth={2} />
             </span>
           </div>
         </div>
