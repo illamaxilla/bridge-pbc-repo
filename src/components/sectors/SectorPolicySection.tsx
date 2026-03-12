@@ -412,7 +412,7 @@ export const SectorPolicySection: React.FC<SectorPolicySectionProps> = ({
             overflowX: isMobile ? "auto" : "visible",
           }}
         >
-          {CATEGORIES.map((cat) => {
+          {resolvedCategories.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
               <button

@@ -47,11 +47,11 @@ describe("useCounter", () => {
 
     const { result } = renderHook(() => useCounter(50, 1000, true));
 
-    // Simulate the first frame — sets start timestamp
-    act(() => { callbacks[callbacks.length - 1]?.(0); });
+    // First frame sets start timestamp (use non-zero because the hook uses !start check)
+    act(() => { callbacks[callbacks.length - 1]?.(100); });
 
-    // Simulate the final frame — progress reaches 1
-    act(() => { callbacks[callbacks.length - 1]?.(1000); });
+    // Final frame — elapsed = 1100 - 100 = 1000, progress = 1
+    act(() => { callbacks[callbacks.length - 1]?.(1100); });
 
     expect(result.current).toBe(50);
 

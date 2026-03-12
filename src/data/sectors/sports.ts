@@ -8,6 +8,10 @@ export const sportsSector: SectorData = {
   category: "The Creative Economy",
   categoryColor: "#1565C0",
 
+  heroTitleBold: "Sports",
+  heroTitleRest: "& Creative Entertainment",
+  problemHeadline: "Where Talent Meets Opportunity on the Global Stage",
+
   capitalRange: "$10-22M",
   ventures: 22,
   jobsImpact: "3M+ creatives",

@@ -8,6 +8,10 @@ export const technologySector: SectorData = {
   category: "Innovation",
   categoryColor: "#7C3AED",
 
+  heroTitleBold: "Technology",
+  heroTitleRest: "& Innovation",
+  problemHeadline: "Bridging Ghana's Digital Divide",
+
   capitalRange: "$8-15M",
   ventures: 21,
   jobsImpact: "24.3M users",

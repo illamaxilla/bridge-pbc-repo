@@ -8,6 +8,10 @@ export const tourismSector: SectorData = {
   category: "Cultural Capital",
   categoryColor: "#2E7D32",
 
+  heroTitleBold: "Tourism",
+  heroTitleRest: "& Hospitality",
+  problemHeadline: "Where Heritage Meets Homecoming",
+
   capitalRange: "$10-18M",
   ventures: 15,
   jobsImpact: "813K jobs",

@@ -8,6 +8,10 @@ export const energySector: SectorData = {
   category: "Powering Progress",
   categoryColor: "#1B4D3E",
 
+  heroTitleBold: "Energy",
+  heroTitleRest: "& Renewable Resources",
+  problemHeadline: "Powering Every Home, Business, and Community",
+
   capitalRange: "$12-22M",
   ventures: 18,
   jobsImpact: "14M+ households",

@@ -8,6 +8,10 @@ export const financialSector: SectorData = {
   category: "Economic Enablers",
   categoryColor: "#1B4D3E",
 
+  heroTitleBold: "Financial Inclusion",
+  heroTitleRest: "& Economic Security",
+  problemHeadline: "From Access to Prosperity",
+
   capitalRange: "$13-39M",
   ventures: 18,
   jobsImpact: "Millions of traders",

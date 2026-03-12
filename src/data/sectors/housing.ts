@@ -8,6 +8,10 @@ export const housingSector: SectorData = {
   category: "Shelter & Security",
   categoryColor: "#6B21A8",
 
+  heroTitleBold: "Housing",
+  heroTitleRest: "& Real Estate",
+  problemHeadline: "The Foundation Beneath Every Family's Future",
+
   capitalRange: "$26-48M",
   ventures: 19,
   jobsImpact: "19M renters",

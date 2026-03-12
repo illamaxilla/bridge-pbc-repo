@@ -8,6 +8,10 @@ export const transportSector: SectorData = {
   category: "Enabling Infrastructure",
   categoryColor: "#1B4D3E",
 
+  heroTitleBold: "Transportation",
+  heroTitleRest: "& Logistics",
+  problemHeadline: "Connecting Producers to Prosperity",
+
   capitalRange: "$14-26M",
   ventures: 19,
   jobsImpact: "100K+ operators",

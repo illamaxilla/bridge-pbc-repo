@@ -8,6 +8,10 @@ export const healthSector: SectorData = {
   category: "Essential Care",
   categoryColor: "#1B4D3E",
 
+  heroTitleBold: "Health",
+  heroTitleRest: "Systems & Wellbeing",
+  problemHeadline: "Where Every Investment Becomes a Life Transformed",
+
   capitalRange: "$12-40M",
   ventures: 19,
   jobsImpact: "32M+ citizens",

@@ -8,6 +8,10 @@ export const infrastructureSector: SectorData = {
   category: "Essential Systems",
   categoryColor: "#1B4D3E",
 
+  heroTitleBold: "Infrastructure",
+  heroTitleRest: "& Basic Services",
+  problemHeadline: "The Foundation Beneath Every Thriving Community",
+
   capitalRange: "$8-15M",
   ventures: 18,
   jobsImpact: "10,000+ traders",

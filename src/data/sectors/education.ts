@@ -8,6 +8,10 @@ export const educationSector: SectorData = {
   category: "The Talent Engine",
   categoryColor: "#1B4D3E",
 
+  heroTitleBold: "Education & Skills",
+  heroTitleRest: "Development",
+  problemHeadline: "The Foundation Beneath Every Career, Enterprise, and Innovation",
+
   capitalRange: "$16.5-33.5M",
   ventures: 19,
   jobsImpact: "10M+ learners",

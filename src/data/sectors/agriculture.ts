@@ -8,6 +8,10 @@ export const agricultureSector: SectorData = {
   category: "Economic Engines",
   categoryColor: "#2E7D32",
 
+  heroTitleBold: "Agriculture",
+  heroTitleRest: "& Value Chains",
+  problemHeadline: "The Engine of Shared Prosperity",
+
   capitalRange: "$12-22M",
   ventures: 18,
   jobsImpact: "7M+ farmers",

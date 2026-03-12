@@ -8,6 +8,10 @@ export const manufacturingSector: SectorData = {
   category: "Economic Engines",
   categoryColor: "#2E7D32",
 
+  heroTitleBold: "Manufacturing",
+  heroTitleRest: "& Light Industry",
+  problemHeadline: "The Foundation for Ghana's Industrial Renaissance",
+
   capitalRange: "$15-30M",
   ventures: 18,
   jobsImpact: "2M+ workers",
