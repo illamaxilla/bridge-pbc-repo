@@ -864,13 +864,8 @@ function SectorIconBtn({ svgIcon, label, active, onClick }) {
       </button>
       {hov && (
         <div
-          className="absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 px-2 py-1 rounded-[5px] text-[10px]"
-          style={{
-            background: C.dark,
-            color: C.white,
-            fontWeight: "600",
-            fontFamily: "Inter,sans-serif",
-          }}
+          className="absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 px-2 py-1 rounded-[5px] text-[10px] font-semibold font-[Inter,sans-serif]"
+          style={{ background: C.dark, color: C.white }}
         >
           {label}
           <div

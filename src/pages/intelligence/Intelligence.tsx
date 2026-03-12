@@ -6,6 +6,7 @@ import {
   BatteryCharging, Factory, Truck, Blocks, Cross, Zap, Shield, Globe,
 } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const C = {
@@ -53,7 +54,7 @@ const ACCENT_SVG = "#B8D935";
 
 function BridgeLogo() {
   return (
-    <svg viewBox="0 0 4113.9 932.3" height="28" style={{ display: "block" }}>
+    <svg viewBox="0 0 4113.9 932.3" height="28" className="block">
       <path fill={WHITE} d="M3355.1,655.6h31.2v5.7h-31.2v-5.7ZM3355.1,667h31.2v11.1h-31.2v-11.1ZM3355.1,683.9h31.2v11.1h-31.2v-11.1ZM3355.1,700.8h31.2v11.1h-31.2v-11.1ZM3355.1,717.7h31.2v11.1h-31.2v-11.1ZM3355.1,734.5h31.2v11.1h-31.2v-11.1ZM3355.1,751.4h31.2v10.8h-31.2v-10.8ZM3355.1,767.9h31.2v11.1h-31.2v-11.1ZM3355.1,784.9h31.2v11.1h-31.2v-11.1ZM3355.1,801.8h31.2v11.1h-31.2v-11.1ZM3355.1,818.6h31.2v11.1h-31.2v-11.1ZM3355.1,835.5h31.2v11.1h-31.2v-11.1ZM3355.1,852.4h31.2v11.1h-31.2v-11.1ZM3355.1,869.2h31.2v11.1h-31.2v-11.1ZM3355.1,886.1h31.2v11.1h-31.2v-11.1ZM3355.1,903h31.2v5.7h-31.2v-5.7ZM3397.5,655.6h61.7c12.5,0,24.3,1.7,35.1,5.7h-96.8v-5.7h0ZM3397.5,667h109.7c5.9,3,11.4,6.7,16.7,11.1h-126.3v-11.1h-.1ZM3397.5,801.8h126.3c-5.2,4.4-10.8,8.1-16.7,11.1h-109.7v-11.1h.1ZM3397.5,818.6h96.8c-10.8,4-22.5,6.1-35.1,6.1h-30.5v84h-31.2v-90.2.1ZM3479.6,739.9c0-17.2-13.5-24.7-28.1-24.7h-23.6v49.3h23.6c14.5,0,28.1-7.5,28.1-24.7h0v.1ZM3485.6,683.9h44.4c3.4,3,6.6,6.7,9.3,11.1h-37.1c-4.9-4.4-10.8-8.4-16.7-11.1h.1ZM3502.2,784.9h37.1c-2.8,4-5.9,7.8-9.3,11.1h-44.4c5.9-2.7,11.8-6.7,16.7-11.1h-.1ZM3507.4,700.8h35.7c2.4,3.4,4.2,7.1,5.6,11.1h-33.6c-2.1-4-4.5-7.8-7.7-11.1ZM3515,767.9h33.6l-5.6,11.1h-35.7c3.1-3.4,5.6-7.1,7.7-11.1ZM3517.8,717.7h32.6c1.3,3.7,2.4,7.5,2.8,11.1h-32.3c-.7-3.7-1.8-7.5-3.1-11.1h0ZM3520.9,751.4h32.3c-.3,3.7-1.3,7.5-2.8,10.8h-32.6c1.3-3.4,2.4-7.1,3.1-10.8h0ZM3521.7,734.5h32.3c.3,3.7.3,7.5-.3,11.1h-32c.7-3.7.7-7.5,0-11.1h0ZM3397.5,689.2h61.7c28.4,0,51.7,23.3,51.7,50.9s-23.2,50.9-51.7,50.9h-61.7v-102h0v.2Z" />
       <path fill={WHITE} d="M3572.3,655.6h31.2v5.7h-31.2v-5.7ZM3572.3,667h31.2v11.1h-31.2v-11.1ZM3572.3,683.9h31.2v11.1h-31.2v-11.1ZM3572.3,700.8h31.2v11.1h-31.2v-11.1ZM3572.3,717.7h31.2v11.1h-31.2v-11.1ZM3572.3,734.5h31.2v11.1h-31.2v-11.1ZM3572.3,751.4h31.2v10.8h-31.2v-10.8ZM3572.3,767.9h31.2v11.1h-31.2v-11.1ZM3572.3,784.9h31.2v11.1h-31.2v-11.1ZM3572.3,801.8h31.2v11.1h-31.2v-11.1ZM3572.3,818.6h31.2v11.1h-31.2v-11.1ZM3572.3,835.5h31.2v11.1h-31.2v-11.1ZM3572.3,852.4h31.2v11.1h-31.2v-11.1ZM3572.3,869.2h31.2v11.1h-31.2v-11.1ZM3572.3,886.1h31.2v11.1h-31.2v-11.1ZM3572.3,903h31.2v5.7h-31.2v-5.7ZM3614.6,655.6h45.4c12.5,0,24.6,2.1,35.7,5.7h-81.2v-5.7h.1ZM3614.6,667h94.4c5.9,3,11.4,6.7,16,11.1h-110.3v-11.1h-.1ZM3614.6,689h45.4c23.6,0,42,12.5,42,34.1,0,36.4-42.3,62.5-87.5,72.2v-106.4l.1.1ZM3685.4,775.1c17.3,9.8,36.4,32.4,36.4,57.1s-16,43.2-46.2,43.2h-61.1v-69.5c24.6-4.8,52.4-15.6,70.8-30.7h.1v-.1ZM3614.6,886.1h125.2c-4.5,4.4-10.1,8.1-16,11.1h-109.3v-11.1h.1ZM3614.6,903h96.1c-10.8,3.7-22.5,5.7-35.1,5.7h-61.1v-5.7h.1ZM3674.3,725.4c0-7.5-6.6-12.9-15.6-12.9h-16.3v49c19.8-9.1,32-21.9,32-36.1h-.1ZM3686.1,805.8c-13.2,7.5-28.4,13.5-43.7,18.3v27.7h32c19.1,0,27.1-17.5,11.8-45.9h-.1v-.1ZM3687.5,683.9h43.1c3.1,3.4,5.6,7.1,7.7,11.1h-35.4c-4.2-4.8-9.3-8.4-15.3-11.1h-.1ZM3694.7,767.9h38.9c3.8,3.7,7.3,7.5,10.4,11.1h-35.7c-4.2-4.4-9-8.1-13.5-11.1h-.1,0ZM3705.8,751.4h30.5c-2.1,4-4.5,7.8-7.3,10.8h-30.9c2.8-3.4,5.6-7.1,7.7-10.8h0ZM3718.4,869.2h35.7c-2.4,4-5.2,7.8-8.7,11.1h-42.3c5.9-3,11.1-6.7,15.3-11.1h.1-.1ZM3706.9,700.8h33.6c1.3,2.7,2.8,7.1,3.1,11.1h-32c-1-4-2.8-7.8-4.9-11.1h.2ZM3711.8,734.5h30.9c-.7,4-1.8,7.8-3.4,11.1h-30.5c1.3-3.7,2.4-7.5,3.1-11.1h-.1ZM3712.8,717.7h31.2c.3,3.7.3,7.5-.3,11.1h-30.9c.7-3,.7-8.1,0-11.1h0ZM3713.8,784.9h34.3c2.4,3.4,4.9,7.5,6.6,11.1h-33c-2.4-4-5.2-7.8-8-11.1h.1ZM3729.1,852.4h32.3c-.7,3.7-2.1,7.5-4.2,11.1h-34c2.4-3.4,4.5-7.1,5.9-11.1h0ZM3724.9,801.8h32.6c1.8,3.7,3.1,7.5,3.8,11.1h-31.5c-1.3-3.7-2.8-7.5-4.9-11.1ZM3732.6,835.5h31.5c0,3.7-.3,7.5-1.3,11.1h-32c1-3.7,1.8-7.5,1.8-11.1h0ZM3731.3,818.6h31.5c1,3.7,1.3,7.5,1.3,11.1h-31.2c-.3-3.7-.7-7.5-1.8-11.1h.2Z" />
       <path fill={WHITE} d="M3774.6,767.9h32l-.7,11.1h-32c0-3.4.3-7.8.7-11.1ZM3773.9,784.9h32c0,3.4.3,7.5.7,11.1h-32c-.3-3.4-.7-7.8-.7-11.1ZM3777.7,751.4h32.3c-1,3.7-1.8,6.7-2.4,10.8h-32.3c.7-3.7,1.3-7.1,2.4-10.8ZM3775.3,801.8h32.3c.7,4,1.3,7.5,2.4,11.1h-32.3c-1-3.7-1.8-7.5-2.4-11.1ZM3783.2,734.5h33c-1.8,3.7-3.1,7.5-4.5,11.1h-32.6c1-3.7,2.4-7.5,4.2-11.1h-.1ZM3779.1,818.6h32.6c1.3,3.7,2.8,7.5,4.5,11.1h-33c-1.8-3.7-3.1-7.5-4.2-11.1h.1ZM3791.5,717.7h34.3l-7,11.1h-33.3c1.8-3.7,3.4-7.1,5.9-11.1h.1ZM3785.7,835.5h33.3l7,11.1h-34.3c-2.4-4-4.2-7.5-5.9-11.1h-.1ZM3803.4,700.8h37.5c-3.8,3.4-7.7,7.5-10.4,11.1h-35.4c2.1-3.4,5.2-7.5,8.3-11.1ZM3795.1,852.4h35.4c2.8,3.7,6.6,7.8,10.4,11.1h-37.5c-3.1-3.7-6.2-7.8-8.3-11.1ZM3819.7,683.9h45.1c-5.9,3-11.8,6.7-17.3,11.1h-39.2c3.8-4,7.7-7.8,11.4-11.1ZM3808.3,869.2h39.2c5.6,4.4,11.4,8.1,17.3,11.1h-45.1c-3.8-3.4-7.7-7.1-11.4-11.1ZM3817,782.2c0-55.4,43.1-99.3,96.8-99.3s57.9,14.2,75.6,36.8l-18.1,21.9c-12.9-18.9-33.6-31-57.6-31-36.1,0-64.9,31-64.9,71.6s28.8,71.6,64.9,71.6,44.7-12.1,57.6-31l18.1,21.9c-17.7,22.6-44.7,36.8-75.6,36.8-53.7,0-96.8-43.9-96.8-99.3ZM3844.7,667h138.1c6.2,3.4,12.1,7.1,17.7,11.1h-51.1c-11.4-4-23.2-6.1-35.7-6.1s-24.3,2.1-35.7,6.1h-51.1c5.6-4,11.4-7.8,17.7-11.1h-.1.2ZM3826.9,886.1h51.1c11.4,4,23.2,6.1,35.7,6.1s24.3-2.1,35.7-6.1h51.1c-5.6,4-11.4,7.8-17.7,11.1h-138.1c-6.2-3.4-12.1-7.1-17.7-11.1h.1-.2ZM3913.8,650.2c20.4,0,39.5,4,56.9,11.1h-113.8c17.3-7.1,36.4-11.1,56.9-11.1h.1-.1ZM3856.8,903h113.8c-17.3,7.1-36.4,11.1-56.9,11.1s-39.5-4-56.9-11.1h-.1.1ZM3962.7,683.9h45.1l5.9,5.4-4.5,5.7h-29.2c-5.6-4.4-11.4-8.1-17.3-11.1h-.1.1ZM3980,869.2h29.2l4.5,5.4c-1.8,2.1-3.8,4-5.9,5.7h-45.1c5.9-3,11.8-6.7,17.3-11.1h.1-.1ZM3986.6,700.8h18.1l-8.3,10.2c-2.8-3.4-6.2-7.1-9.8-10.2h0ZM3996.3,853.3l8.3,10.2h-18.1c3.4-3,7-6.7,9.8-10.2h0Z" />
@@ -84,73 +85,46 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
   };
   return (
     <div
-      style={{
-        position: "fixed", inset: 0, zIndex: 100,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        background: "rgba(0,0,0,0.65)", backdropFilter: "blur(4px)",
-        padding: 20,
-      }}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/65 backdrop-blur-[4px] p-5"
       onClick={onClose}
     >
       <div
         onClick={e => e.stopPropagation()}
-        style={{
-          background: "#0F1A12",
-          border: "1px solid rgba(184,217,53,0.2)",
-          borderRadius: 16,
-          padding: 32,
-          maxWidth: 420,
-          width: "100%",
-          position: "relative",
-          boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
-        }}
+        className="bg-[#0F1A12] border border-[rgba(184,217,53,0.2)] rounded-2xl p-8 max-w-[420px] w-full relative shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
       >
         {/* Close */}
         <button
           onClick={onClose}
-          style={{
-            position: "absolute", top: 14, right: 14,
-            background: "rgba(255,255,255,0.06)", border: "none",
-            borderRadius: 6, cursor: "pointer", padding: 6,
-            color: "rgba(255,255,255,0.4)", display: "flex",
-          }}
+          className="absolute top-3.5 right-3.5 bg-white/[0.06] border-none rounded-md cursor-pointer p-1.5 text-white/40 flex"
         >
           <X size={16} />
         </button>
 
         {/* Badge */}
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 6,
-          background: "rgba(184,217,53,0.12)", border: "1px solid rgba(184,217,53,0.25)",
-          borderRadius: 20, padding: "4px 12px", marginBottom: 16,
-        }}>
+        <div className="inline-flex items-center gap-1.5 bg-[rgba(184,217,53,0.12)] border border-[rgba(184,217,53,0.25)] rounded-[20px] py-1 px-3 mb-4">
           <Zap size={12} color={C.accent} />
-          <span style={{ fontSize: 10, fontWeight: 700, color: C.accent, fontFamily: "Inter,sans-serif", letterSpacing: ".06em" }}>
+          <span className="text-[10px] font-bold font-['Inter',sans-serif] tracking-[0.06em]" style={{ color: C.accent }}>
             BRIDGE INTELLIGENCE PRO
           </span>
         </div>
 
         {/* Headline */}
-        <h2 style={{ fontSize: 22, fontWeight: 800, color: C.white, fontFamily: "DM Sans,sans-serif", margin: "0 0 6px" }}>
+        <h2 className="text-[22px] font-extrabold font-['DM_Sans',sans-serif] m-0 mb-1.5" style={{ color: C.white }}>
           Unlock the Full Picture
         </h2>
-        <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", fontFamily: "Inter,sans-serif", marginBottom: 24, lineHeight: 1.5 }}>
+        <p className="text-[13px] text-white/45 font-['Inter',sans-serif] mb-6 leading-[1.5]">
           Get deep-dive access to all 12 Ghana investment sectors, live opportunity alerts, and custom portfolio tools.
         </p>
 
         {/* Features */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
+        <div className="flex flex-col gap-2.5 mb-7">
           {PRO_FEATURES.map(({ icon: Icon, text }) => (
-            <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{
-                width: 28, height: 28, borderRadius: 6,
-                background: "rgba(184,217,53,0.1)", border: "1px solid rgba(184,217,53,0.15)",
-                display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-              }}>
+            <div key={text} className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-md bg-[rgba(184,217,53,0.1)] border border-[rgba(184,217,53,0.15)] flex items-center justify-center shrink-0">
                 <Icon size={14} color={C.accent} />
               </div>
-              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", fontFamily: "DM Sans,sans-serif" }}>{text}</span>
-              <Check size={13} color={C.accent} style={{ marginLeft: "auto", flexShrink: 0 }} />
+              <span className="text-[13px] text-white/75 font-['DM_Sans',sans-serif]">{text}</span>
+              <Check size={13} color={C.accent} className="ml-auto shrink-0" />
             </div>
           ))}
         </div>
@@ -158,17 +132,12 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
         {/* CTA */}
         <button
           onClick={handleRequestAccess}
-          style={{
-            width: "100%", background: C.accent, border: "none", borderRadius: 8,
-            padding: "13px 0", fontSize: 13, fontWeight: 700, color: C.primary,
-            fontFamily: "Inter,sans-serif", cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-            marginBottom: 10,
-          }}
+          className="w-full border-none rounded-lg py-[13px] text-[13px] font-bold font-['Inter',sans-serif] cursor-pointer flex items-center justify-center gap-1.5 mb-2.5"
+          style={{ background: C.accent, color: C.primary }}
         >
           Request Pro Access <ArrowUpRight size={14} />
         </button>
-        <p style={{ textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.25)", fontFamily: "Inter,sans-serif", margin: 0 }}>
+        <p className="text-center text-[11px] text-white/25 font-['Inter',sans-serif] m-0">
           Institutional & diaspora investor pricing available
         </p>
       </div>
@@ -211,61 +180,59 @@ export default function Intelligence() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "#F3F5F2", fontFamily: "Inter, sans-serif" }}>
+    <div className="min-h-screen flex flex-col bg-[#F3F5F2] font-['Inter',sans-serif]">
 
       {/* ── Upgrade Modal ── */}
       {showUpgrade && <UpgradeModal onClose={() => setShowUpgrade(false)} />}
 
       {/* ── Top Bar ── */}
-      <header style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0 16px", height: 56, flexShrink: 0,
-        backgroundColor: C.sidebar, borderBottom: "1px solid rgba(255,255,255,0.06)",
-        ...(isMobile ? { position: "sticky", top: 0, zIndex: 50 } : {}),
-      }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <header
+        className={cn(
+          "flex items-center justify-between px-4 h-14 shrink-0 border-b border-white/[0.06]",
+          isMobile && "sticky top-0 z-50"
+        )}
+        style={{ backgroundColor: C.sidebar }}
+      >
+        <div className="flex items-center gap-2.5">
           {isMobile && (
             <button onClick={() => setSidebarOpen(v => !v)}
-              style={{ color: C.white, background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center" }}
+              className="bg-transparent border-none cursor-pointer p-1 flex items-center"
+              style={{ color: C.white }}
               aria-label="Toggle menu">
               {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           )}
           {!isMobile && (
             <button onClick={handleToggleCollapsed}
-              style={{ color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center" }}
+              className="text-white/30 bg-transparent border-none cursor-pointer p-1 flex items-center"
               aria-label="Toggle sidebar">
               {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
             </button>
           )}
-          <NavLink to="/" style={{ textDecoration: "none" }}>
+          <NavLink to="/" className="no-underline">
             <BridgeLogo />
           </NavLink>
           {!isMobile && (
-            <div style={{
-              fontSize: 7, fontWeight: 700, color: C.accent,
-              textTransform: "uppercase", letterSpacing: "0.05em",
-              lineHeight: 1.4, fontFamily: "Inter,sans-serif",
-            }}>
+            <div
+              className="text-[7px] font-bold uppercase tracking-[0.05em] leading-[1.4] font-['Inter',sans-serif]"
+              style={{ color: C.accent }}
+            >
               Intelligence
             </div>
           )}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{
-            fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20,
-            backgroundColor: C.accent, color: C.primary, letterSpacing: "0.06em",
-          }}>
+        <div className="flex items-center gap-2">
+          <span
+            className="text-[10px] font-bold py-[3px] px-2.5 rounded-[20px] tracking-[0.06em]"
+            style={{ backgroundColor: C.accent, color: C.primary }}
+          >
             BETA
           </span>
           {isMobile && activeSectorId && (() => {
             const sector = SIDEBAR_SECTORS.find(s => s.id === activeSectorId);
             return sector ? (
-              <span style={{
-                fontSize: 10, color: "rgba(255,255,255,0.42)", fontFamily: "Inter,sans-serif",
-                letterSpacing: "0.03em", fontWeight: 400,
-              }}>
+              <span className="text-[10px] text-white/[0.42] font-['Inter',sans-serif] tracking-[0.03em] font-normal">
                 · {sector.short}
               </span>
             ) : null;
@@ -277,13 +244,7 @@ export default function Intelligence() {
               navigate("/");
             }}
             title="Sign out"
-            style={{
-              display: "flex", alignItems: "center", gap: 5,
-              background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 6, cursor: "pointer", padding: "5px 10px",
-              color: "rgba(255,255,255,0.55)", fontSize: 11, fontFamily: "Inter,sans-serif",
-              fontWeight: 600, letterSpacing: "0.03em", transition: "all 0.15s ease",
-            }}
+            className="flex items-center gap-[5px] bg-white/[0.06] border border-white/10 rounded-md cursor-pointer py-[5px] px-2.5 text-white/55 text-[11px] font-['Inter',sans-serif] font-semibold tracking-[0.03em] transition-all duration-150 ease-in-out"
             onMouseEnter={e => {
               (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.12)";
               (e.currentTarget as HTMLButtonElement).style.color = "#fff";
@@ -303,38 +264,29 @@ export default function Intelligence() {
         </div>
       </header>
 
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+      <div className="flex flex-1 overflow-hidden">
 
         {/* ── Sidebar ── */}
-        <aside style={{
-          width: isMobile ? 220 : sidebarWidth,
-          flexShrink: 0,
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-          transition: isMobile
-            ? "transform 0.28s cubic-bezier(0.4,0,0.2,1)"
-            : "width 0.22s ease",
-          transform: isMobile
-            ? (sidebarOpen ? "translateX(0)" : "translateX(-100%)")
-            : "none",
-          backgroundColor: C.sidebar,
-          borderRight: "1px solid rgba(255,255,255,0.06)",
-          position: isMobile ? "fixed" : "relative",
-          zIndex: isMobile ? 60 : "auto",
-          top: isMobile ? 56 : "auto",
-          bottom: isMobile ? 0 : "auto",
-          left: isMobile ? 0 : "auto",
-          height: isMobile ? "calc(100vh - 56px)" : "auto",
-        }}>
+        <aside
+          className={cn(
+            "shrink-0 flex flex-col overflow-hidden border-r border-white/[0.06]",
+            isMobile
+              ? "fixed z-[60] top-14 bottom-0 left-0 h-[calc(100vh-56px)] w-[220px] transition-transform duration-[280ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+              : "relative transition-[width] duration-[220ms] ease-in-out"
+          )}
+          style={{
+            width: isMobile ? 220 : sidebarWidth,
+            transform: isMobile ? (sidebarOpen ? "translateX(0)" : "translateX(-100%)") : "none",
+            backgroundColor: C.sidebar,
+          }}
+        >
 
           {/* ── Nav Items ── */}
-          <nav style={{ padding: "10px 8px", flexShrink: 0, minWidth: 220 }}>
-            <p style={{
-              fontSize: 9, fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)",
-              fontFamily: "Inter,sans-serif", padding: "6px 8px 6px", textTransform: "uppercase", whiteSpace: "nowrap",
-              opacity: textVisible ? 1 : 0, transition: "opacity 0.15s ease",
-            }}>
+          <nav className="p-[10px_8px] shrink-0 min-w-[220px]">
+            <p
+              className="text-[9px] font-bold tracking-[1px] text-white/20 font-['Inter',sans-serif] py-1.5 px-2 uppercase whitespace-nowrap transition-opacity duration-150 ease-in-out"
+              style={{ opacity: textVisible ? 1 : 0 }}
+            >
               Navigation
             </p>
             {navItems.map(({ to, label, icon: Icon }) => (

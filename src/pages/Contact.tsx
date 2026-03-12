@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Layout } from "@/components/Layout";
+import { cn } from "@/lib/utils";
 
 // ============================================================================
 // BRIDGE PBC — Contact Page (Integrated with Guided Widget)
@@ -1315,13 +1316,12 @@ const StepWho = ({ value, onChange, freeText, onFreeText }) => {
   const isMobile = useIsMobile();
   return (
     <div>
-      <div style={{ marginBottom: isMobile ? "16px" : "28px" }}>
+      <div className={cn(isMobile ? "mb-4" : "mb-7")}>
         <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mb-2 mt-0 mx-0">
           Step 1 of 4
         </p>
         <h2
-          className="font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]"
-          style={{ fontSize: isMobile ? "20px" : "26px" }}
+          className={cn("font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]", isMobile ? "text-[20px]" : "text-[26px]")}
         >
           Who are you reaching out <strong className="font-bold">as?</strong>
         </h2>
@@ -1330,12 +1330,7 @@ const StepWho = ({ value, onChange, freeText, onFreeText }) => {
         </p>
       </div>
       <div
-        className="grid"
-        style={{
-          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
-          gap: isMobile ? "6px" : "8px",
-          marginBottom: isMobile ? "8px" : "10px",
-        }}
+        className={cn("grid", isMobile ? "grid-cols-2 gap-1.5 mb-2" : "grid-cols-3 gap-2 mb-2.5")}
       >
         {WHO_OPTIONS.map((opt) => {
           const sel = value === opt.id;
@@ -1408,13 +1403,12 @@ const StepSectors = ({ values, onChange, freeText, onFreeText }) => {
   };
   return (
     <div>
-      <div style={{ marginBottom: isMobile ? "14px" : "28px" }}>
+      <div className={cn(isMobile ? "mb-3.5" : "mb-7")}>
         <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mb-2 mt-0 mx-0">
           Step 2 of 4
         </p>
         <h2
-          className="font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]"
-          style={{ fontSize: isMobile ? "20px" : "26px" }}
+          className={cn("font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]", isMobile ? "text-[20px]" : "text-[26px]")}
         >
           Which sectors are you <strong className="font-bold">focused on?</strong>
         </h2>
@@ -1423,8 +1417,7 @@ const StepSectors = ({ values, onChange, freeText, onFreeText }) => {
         </p>
       </div>
       <div
-        className="grid gap-1.5 mb-2"
-        style={{ gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)" }}
+        className={cn("grid gap-1.5 mb-2", isMobile ? "grid-cols-3" : "grid-cols-4")}
       >
         {SECTOR_OPTIONS.map((opt, i) => {
           const sel = values.includes(opt.id);
@@ -1488,13 +1481,12 @@ const StepGoal = ({ whoId, value, onChange, freeText, onFreeText }) => {
   const options = GOAL_OPTIONS[whoId] || GOAL_OPTIONS["partner"];
   return (
     <div>
-      <div style={{ marginBottom: isMobile ? "14px" : "28px" }}>
+      <div className={cn(isMobile ? "mb-3.5" : "mb-7")}>
         <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mb-2 mt-0 mx-0">
           Step 3 of 4
         </p>
         <h2
-          className="font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]"
-          style={{ fontSize: isMobile ? "20px" : "26px" }}
+          className={cn("font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]", isMobile ? "text-[20px]" : "text-[26px]")}
         >
           What's your <strong className="font-bold">primary goal?</strong>
         </h2>
@@ -1502,7 +1494,7 @@ const StepGoal = ({ whoId, value, onChange, freeText, onFreeText }) => {
           Pick the one that best describes what you're here for.
         </p>
       </div>
-      <div className="grid gap-2" style={{ gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)" }}>
+      <div className={cn("grid gap-2", isMobile ? "grid-cols-1" : "grid-cols-2")}>
         {options.map((opt) => {
           const sel = value === opt.id;
           const hovered = hov === opt.id;
@@ -1551,38 +1543,24 @@ const StepGoal = ({ whoId, value, onChange, freeText, onFreeText }) => {
 
 const StepDetails = ({ values, onChange }) => {
   const isMobile = useIsMobile();
-  const inp: React.CSSProperties = {
-    width: "100%",
-    padding: "13px 15px",
-    borderRadius: "12px",
+  const inpClassName = "w-full py-[13px] px-[15px] rounded-xl text-sm font-[Inter,sans-serif] outline-none box-border transition-[border-color] duration-200 ease-in-out";
+  const inpStyle: React.CSSProperties = {
     border: `1.5px solid ${colors.line}`,
     backgroundColor: colors.white,
-    fontSize: "14px",
-    fontFamily: "Inter, sans-serif",
     color: colors.dark,
-    outline: "none",
-    boxSizing: "border-box",
-    transition: "border-color 0.2s ease",
   };
-  const lbl: React.CSSProperties = {
-    fontFamily: "Inter, sans-serif",
-    fontSize: "11px",
-    fontWeight: "700",
+  const lblClassName = "font-[Inter,sans-serif] text-[11px] font-bold block mb-[7px] uppercase tracking-[0.5px]";
+  const lblStyle: React.CSSProperties = {
     color: colors.primary,
-    display: "block",
-    marginBottom: "7px",
-    textTransform: "uppercase",
-    letterSpacing: "0.5px",
   };
   return (
     <div>
-      <div style={{ marginBottom: isMobile ? "16px" : "28px" }}>
+      <div className={cn(isMobile ? "mb-4" : "mb-7")}>
         <p className="font-[Inter,sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px] mb-2 mt-0 mx-0">
           Step 4 of 4
         </p>
         <h2
-          className="font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]"
-          style={{ fontSize: isMobile ? "20px" : "26px" }}
+          className={cn("font-[Inter,sans-serif] font-light text-[#1B4D3E] tracking-[-0.5px] mb-1 mt-0 leading-[1.2]", isMobile ? "text-[20px]" : "text-[26px]")}
         >
           Almost there — <strong className="font-bold">your details</strong>
         </h2>
@@ -1591,30 +1569,30 @@ const StepDetails = ({ values, onChange }) => {
         </p>
       </div>
       <div className="flex flex-col gap-3">
-        <div className="grid gap-3" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}>
+        <div className={cn("grid gap-3", isMobile ? "grid-cols-1" : "grid-cols-2")}>
           <div>
-            <label style={lbl}>Full Name *</label>
+            <label className={lblClassName} style={lblStyle}>Full Name *</label>
             <input
               type="text"
               placeholder="e.g. Kwame Asante"
               value={values.name}
               onChange={(e) => onChange({ ...values, name: e.target.value })}
-              style={inp}
+              className={inpClassName} style={inpStyle}
             />
           </div>
           <div>
-            <label style={lbl}>Email *</label>
+            <label className={lblClassName} style={lblStyle}>Email *</label>
             <input
               type="email"
               placeholder="kwame@example.com"
               value={values.email}
               onChange={(e) => onChange({ ...values, email: e.target.value })}
-              style={inp}
+              className={inpClassName} style={inpStyle}
             />
           </div>
         </div>
         <div>
-          <label style={lbl}>
+          <label className={lblClassName} style={lblStyle}>
             Organization <span className="font-normal normal-case opacity-60">— optional</span>
           </label>
           <input
@@ -1622,11 +1600,11 @@ const StepDetails = ({ values, onChange }) => {
             placeholder="Your company, ministry, or institution"
             value={values.organization}
             onChange={(e) => onChange({ ...values, organization: e.target.value })}
-            style={inp}
+            className={inpClassName} style={inpStyle}
           />
         </div>
         <div>
-          <label style={lbl}>
+          <label className={lblClassName} style={lblStyle}>
             Additional context{" "}
             <span className="font-normal normal-case opacity-60">— optional</span>
           </label>
@@ -1635,7 +1613,8 @@ const StepDetails = ({ values, onChange }) => {
             rows={3}
             value={values.note}
             onChange={(e) => onChange({ ...values, note: e.target.value })}
-            style={{ ...inp, resize: "vertical", lineHeight: "1.6" }}
+            className={cn(inpClassName, "resize-y leading-[1.6]")}
+            style={inpStyle}
           />
         </div>
       </div>
@@ -1820,11 +1799,8 @@ const WhatHappensNext = ({ name, who }) => {
       {/* Success header */}
       <div className="text-center mb-9">
         <div
-          className="w-[72px] h-[72px] rounded-full bg-[#E8F5E0] flex items-center justify-center mx-auto mb-5"
-          style={{
-            border: `2.5px solid ${colors.accent}`,
-            animation: "popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-          }}
+          className="w-[72px] h-[72px] rounded-full bg-[#E8F5E0] flex items-center justify-center mx-auto mb-5 animate-[popIn_0.45s_cubic-bezier(0.175,0.885,0.32,1.275)]"
+          style={{ border: `2.5px solid ${colors.accent}` }}
         >
           <svg
             width="32"
@@ -1954,11 +1930,7 @@ const GuidedWidget = () => {
 
   const leftPanel = (
     <div
-      className="bg-[#F3F5F2] flex flex-col"
-      style={{
-        padding: isMobile ? "22px 18px" : "44px 44px 32px",
-        minHeight: isMobile ? "480px" : "560px",
-      }}
+      className={cn("bg-[#F3F5F2] flex flex-col", isMobile ? "py-[22px] px-[18px] min-h-[480px]" : "pt-11 px-11 pb-8 min-h-[560px]")}
     >
       {/* Top bar */}
       <div className="flex items-center gap-3 mb-7">
@@ -2133,8 +2105,7 @@ const GuidedWidget = () => {
 
   const rightPanel = (
     <div
-      className="bg-[#2E5A4D] flex flex-col justify-between"
-      style={{ padding: isMobile ? "28px 22px" : "44px" }}
+      className={cn("bg-[#2E5A4D] flex flex-col justify-between", isMobile ? "py-7 px-[22px]" : "p-11")}
     >
       {/* Top: contact info — original style */}
       <div>
@@ -2281,8 +2252,7 @@ const GuidedWidget = () => {
 
   return (
     <div
-      className="grid rounded-[28px] overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.14)]"
-      style={{ gridTemplateColumns: isMobile ? "1fr" : "1.15fr 0.85fr" }}
+      className={cn("grid rounded-[28px] overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.14)]", isMobile ? "grid-cols-1" : "grid-cols-[1.15fr_0.85fr]")}
     >
       {leftPanel}
       {!isMobile && rightPanel}
@@ -2313,12 +2283,11 @@ const HeroSection = () => {
   const isMobile = useIsMobile();
   return (
     <section
-      className="bg-white relative overflow-hidden"
-      style={{ padding: isMobile ? "64px 20px 40px" : "100px 80px 120px" }}
+      className={cn("bg-white relative overflow-hidden", isMobile ? "pt-16 px-5 pb-10" : "pt-[100px] px-20 pb-[120px]")}
     >
       <div
         className="absolute -top-[60px] -right-[60px] w-[480px] h-[480px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(184,217,53,0.08) 0%, transparent 70%)" }}
+        className="bg-[radial-gradient(circle,rgba(184,217,53,0.08)_0%,transparent_70%)]"
       />
       <div className="relative mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         <div
@@ -2330,16 +2299,14 @@ const HeroSection = () => {
             Contact Us
           </span>
         </div>
-        <div style={{ maxWidth: isMobile ? "100%" : "680px" }}>
+        <div className={cn(isMobile ? "max-w-full" : "max-w-[680px]")}>
           <h1
-            className="font-[Inter,sans-serif] font-light text-[#1B4D3E] leading-[1.1] tracking-[-1px] mt-0 mb-6"
-            style={{ fontSize: isMobile ? "36px" : "60px" }}
+            className={cn("font-[Inter,sans-serif] font-light text-[#1B4D3E] leading-[1.1] tracking-[-1px] mt-0 mb-6", isMobile ? "text-4xl" : "text-[60px]")}
           >
             Let's build something <strong className="font-bold">meaningful</strong> together
           </h1>
           <p
-            className="font-[Inter,sans-serif] text-[#5a6a64] leading-[1.75] m-0"
-            style={{ fontSize: isMobile ? "16px" : "18px" }}
+            className={cn("font-[Inter,sans-serif] text-[#5a6a64] leading-[1.75] m-0", isMobile ? "text-base" : "text-lg")}
           >
             Whether you're a government partner, investor, practitioner, or community leader — BRIDGE is built for
             collaboration. Tell us who you are and we'll route you to exactly the right team.
@@ -2448,9 +2415,9 @@ const InquiryTypesSection = () => {
     },
   ];
   return (
-    <section className="bg-[#F3F5F2]" style={{ padding: isMobile ? "40px 20px" : "56px 80px" }}>
+    <section className={cn("bg-[#F3F5F2]", isMobile ? "py-10 px-5" : "py-14 px-20")}>
       <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <div className="grid gap-3" style={{ gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)" }}>
+        <div className={cn("grid gap-3", isMobile ? "grid-cols-1" : "grid-cols-2")}>
           {inquiryTypes.map((item, i) => (
             <div
               key={i}
@@ -2497,13 +2464,9 @@ const InquiryTypesSection = () => {
 const WidgetSection = () => {
   const isMobile = useIsMobile();
   return (
-    <section className="bg-white" style={{ paddingTop: isMobile ? "0" : "200px" }}>
+    <section className={cn("bg-white", isMobile ? "pt-0" : "pt-[200px]")}>
       <div
-        className="bg-[#1B4D3E] relative overflow-visible"
-        style={{
-          paddingTop: isMobile ? "32px" : "260px",
-          paddingBottom: isMobile ? "48px" : "240px",
-        }}
+        className={cn("bg-[#1B4D3E] relative overflow-visible", isMobile ? "pt-8 pb-12" : "pt-[260px] pb-[240px]")}
       >
         {/* Floating widget card */}
         <div
@@ -2521,11 +2484,8 @@ const WidgetSection = () => {
 
         {/* Stats row */}
         <div
-          className="mx-auto grid grid-cols-3 gap-8"
-          style={{
-            maxWidth: CONTENT_MAX_WIDTH,
-            display: isMobile ? "none" : "grid",
-          }}
+          className={cn("mx-auto grid grid-cols-3 gap-8", isMobile ? "hidden" : "grid")}
+          style={{ maxWidth: CONTENT_MAX_WIDTH }}
         >
           {[
             { number: "12", label: "Integrated Sectors", sub: "Agriculture to Transportation" },

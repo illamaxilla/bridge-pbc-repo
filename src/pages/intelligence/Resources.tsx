@@ -70,14 +70,8 @@ function MobileResourcesPage() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        background: DM.bg,
-        fontFamily: "DM Sans,sans-serif",
-        overflow: "hidden",
-      }}
+      className="flex flex-col h-screen overflow-hidden font-['DM_Sans',sans-serif]"
+      style={{ background: DM.bg }}
     >
       <style>{`
         *{box-sizing:border-box}
@@ -87,7 +81,7 @@ function MobileResourcesPage() {
 
       <MobileHeader activeSector={activeSector} setActiveSector={setActiveSector} />
 
-      <div style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none" }}>
+      <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         {activeSector && <SectorHeroCard sector={activeSector} />}
 
         {activeTab === "library" && (
@@ -106,7 +100,7 @@ function MobileResourcesPage() {
         {activeTab === "datasets" && <DatasetsTab />}
         {activeTab === "saved" && <SavedTab resources={resources} onOpen={openRes} onWatch={toggleWatch} />}
 
-        <div style={{ height: 12 }} />
+        <div className="h-3" />
       </div>
 
       <MobileBottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -175,13 +169,8 @@ function DesktopResourcesPage() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        background: C.bg,
-        fontFamily: "DM Sans,sans-serif",
-        overflow: "hidden",
-      }}
+      className="flex h-screen overflow-hidden font-['DM_Sans',sans-serif]"
+      style={{ background: C.bg }}
     >
       <style>{`*{box-sizing:border-box} ::-webkit-scrollbar{display:none}`}</style>
 
@@ -194,47 +183,32 @@ function DesktopResourcesPage() {
       />
 
       {/* Main column */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" }}>
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Header activeSector={activeSector} />
 
         {/* Content row */}
-        <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
+        <div className="flex-1 flex overflow-hidden">
           {/* Analytics Panel */}
           <AnalyticsPanel activeSector={activeSector} />
 
           {/* Right Content */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
+          <div className="flex-1 flex flex-col overflow-hidden min-w-0">
             {/* Sub-nav + controls */}
             <div
-              style={{
-                background: C.white,
-                borderBottom: `1px solid ${C.line}`,
-                padding: "0 20px",
-                display: "flex",
-                alignItems: "center",
-                gap: 0,
-                flexShrink: 0,
-              }}
+              className="px-5 flex items-center shrink-0"
+              style={{ background: C.white, borderBottom: `1px solid ${C.line}` }}
             >
               {/* Tabs */}
-              <div style={{ display: "flex", alignItems: "center", gap: 2, flex: 1 }}>
+              <div className="flex items-center gap-0.5 flex-1">
                 {TABS.map((t) => (
                   <button
                     key={t}
                     onClick={() => setActiveTab(t)}
+                    className="py-3 px-[14px] text-xs bg-transparent border-none cursor-pointer font-['DM_Sans',sans-serif] capitalize transition-all duration-150 -mb-px"
                     style={{
-                      padding: "12px 14px",
-                      fontSize: "12px",
-                      fontWeight: activeTab === t ? "700" : "500",
+                      fontWeight: activeTab === t ? 700 : 500,
                       color: activeTab === t ? C.primary : C.muted,
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
                       borderBottom: activeTab === t ? `2px solid ${C.primary}` : "2px solid transparent",
-                      fontFamily: "DM Sans,sans-serif",
-                      textTransform: "capitalize",
-                      transition: "all 0.15s",
-                      marginBottom: "-1px",
                     }}
                   >
                     {t}
@@ -242,34 +216,17 @@ function DesktopResourcesPage() {
                 ))}
               </div>
               {/* Controls */}
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="flex items-center gap-2">
                 <button
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 5,
-                    fontSize: "11px",
-                    fontWeight: "600",
-                    color: C.mid,
-                    fontFamily: "Inter,sans-serif",
-                    background: C.bg,
-                    border: `1px solid ${C.line}`,
-                    borderRadius: 6,
-                    padding: "5px 10px",
-                    cursor: "pointer",
-                  }}
+                  className="flex items-center gap-[5px] text-[11px] font-semibold font-['Inter',sans-serif] rounded-md py-[5px] px-2.5 cursor-pointer"
+                  style={{ color: C.mid, background: C.bg, border: `1px solid ${C.line}` }}
                 >
                   <Filter size={11} /> Filter
                 </button>
                 {/* View toggles */}
                 <div
-                  style={{
-                    display: "flex",
-                    background: C.bg,
-                    border: `1px solid ${C.line}`,
-                    borderRadius: 6,
-                    overflow: "hidden",
-                  }}
+                  className="flex rounded-md overflow-hidden"
+                  style={{ background: C.bg, border: `1px solid ${C.line}` }}
                 >
                   {(
                     [
@@ -280,15 +237,8 @@ function DesktopResourcesPage() {
                     <button
                       key={v}
                       onClick={() => setViewMode(v)}
-                      style={{
-                        padding: "5px 9px",
-                        background: viewMode === v ? C.primary : "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        transition: "background 0.15s",
-                      }}
+                      className="py-[5px] px-[9px] border-none cursor-pointer flex items-center transition-colors duration-150"
+                      style={{ background: viewMode === v ? C.primary : "transparent" }}
                     >
                       <ViewIcon size={13} color={viewMode === v ? C.white : C.muted} />
                     </button>
@@ -299,78 +249,44 @@ function DesktopResourcesPage() {
 
             {/* Greeting bar */}
             <div
-              style={{
-                background: C.white,
-                borderBottom: `1px solid ${C.line}`,
-                padding: "10px 20px",
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                flexShrink: 0,
-              }}
+              className="py-2.5 px-5 flex items-center gap-3 shrink-0"
+              style={{ background: C.white, borderBottom: `1px solid ${C.line}` }}
             >
               <div>
-                <div style={{ fontSize: "13px", fontWeight: "700", color: C.dark, fontFamily: "DM Sans,sans-serif" }}>
+                <div className="text-[13px] font-bold font-['DM_Sans',sans-serif]" style={{ color: C.dark }}>
                   {greeting}, Joseph
                 </div>
-                <div style={{ fontSize: "11px", color: C.muted, fontFamily: "Inter,sans-serif", marginTop: 1 }}>
+                <div className="text-[11px] font-['Inter',sans-serif] mt-px" style={{ color: C.muted }}>
                   {sorted.length} resource{sorted.length !== 1 ? "s" : ""} available
                   {activeSector ? ` in ${activeSector.short}` : ""}
                 </div>
               </div>
-              <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="ml-auto flex items-center gap-2">
                 {/* Search */}
                 <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 7,
-                    background: C.bg,
-                    border: `1px solid ${C.line}`,
-                    borderRadius: 7,
-                    padding: "6px 10px",
-                    width: 180,
-                  }}
+                  className="flex items-center gap-[7px] rounded-[7px] py-1.5 px-2.5 w-[180px]"
+                  style={{ background: C.bg, border: `1px solid ${C.line}` }}
                 >
                   <Search size={12} color={C.muted} />
                   <input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search\u2026"
-                    style={{
-                      border: "none",
-                      background: "transparent",
-                      fontSize: "11px",
-                      color: C.dark,
-                      fontFamily: "Inter,sans-serif",
-                      outline: "none",
-                      width: "100%",
-                    }}
+                    className="border-none bg-transparent text-[11px] font-['Inter',sans-serif] outline-none w-full"
+                    style={{ color: C.dark }}
                   />
                   {search && (
                     <button
                       onClick={() => setSearch("")}
-                      style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}
+                      className="bg-transparent border-none cursor-pointer p-0 flex"
                     >
                       <X size={10} color={C.muted} />
                     </button>
                   )}
                 </div>
                 <button
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 5,
-                    background: C.primary,
-                    border: "none",
-                    borderRadius: 7,
-                    padding: "6px 12px",
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    color: C.white,
-                    fontFamily: "Inter,sans-serif",
-                    cursor: "pointer",
-                  }}
+                  className="flex items-center gap-[5px] border-none rounded-[7px] py-1.5 px-3 text-[11px] font-bold font-['Inter',sans-serif] cursor-pointer"
+                  style={{ background: C.primary, color: C.white }}
                 >
                   <Eye size={11} /> View Report
                 </button>
@@ -379,19 +295,10 @@ function DesktopResourcesPage() {
 
             {/* Category pills */}
             <div
-              style={{
-                background: C.white,
-                borderBottom: `1px solid ${C.line}`,
-                padding: "0 20px",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                flexShrink: 0,
-                overflowX: "auto",
-                scrollbarWidth: "none",
-              }}
+              className="px-5 flex items-center gap-1.5 shrink-0 overflow-x-auto"
+              style={{ background: C.white, borderBottom: `1px solid ${C.line}`, scrollbarWidth: "none" }}
             >
-              <div style={{ display: "flex", gap: 6, padding: "8px 0" }}>
+              <div className="flex gap-1.5 py-2">
                 {CATEGORIES.map((cat) => {
                   const cnt = cat.key === "all" ? resources.length : resources.filter((r) => r.type === cat.key).length;
                   const act = activeCategory === cat.key;
@@ -399,38 +306,23 @@ function DesktopResourcesPage() {
                     <button
                       key={cat.key}
                       onClick={() => setCategory(cat.key)}
+                      className="flex items-center gap-[5px] py-[5px] px-[11px] rounded-[20px] cursor-pointer whitespace-nowrap transition-all duration-150"
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 5,
-                        padding: "5px 11px",
-                        borderRadius: 20,
                         border: `1px solid ${act ? C.primary : C.line}`,
                         background: act ? C.primary : C.white,
-                        cursor: "pointer",
-                        whiteSpace: "nowrap",
-                        transition: "all 0.15s",
                       }}
                     >
                       <span
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "600",
-                          color: act ? C.white : C.mid,
-                          fontFamily: "Inter,sans-serif",
-                        }}
+                        className="text-[11px] font-semibold font-['Inter',sans-serif]"
+                        style={{ color: act ? C.white : C.mid }}
                       >
                         {cat.label}
                       </span>
                       <span
+                        className="text-[9px] font-bold font-['Inter',sans-serif] py-px px-[5px] rounded-[10px]"
                         style={{
-                          fontSize: "9px",
-                          fontWeight: "700",
                           color: act ? "rgba(255,255,255,0.7)" : C.muted,
-                          fontFamily: "Inter,sans-serif",
                           background: act ? "rgba(255,255,255,0.15)" : C.line,
-                          padding: "1px 5px",
-                          borderRadius: 10,
                         }}
                       >
                         {cnt}
@@ -442,7 +334,7 @@ function DesktopResourcesPage() {
             </div>
 
             {/* Resource list */}
-            <div style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none" }}>
+            <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
               {viewMode === "table" ? (
                 <TableView
                   resources={sorted}
@@ -456,18 +348,9 @@ function DesktopResourcesPage() {
                 <GridView resources={sorted} onOpen={openResource} onWatch={toggleWatch} />
               )}
               {sorted.length === 0 && (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: 200,
-                    gap: 8,
-                  }}
-                >
+                <div className="flex flex-col items-center justify-center h-[200px] gap-2">
                   <AlertCircle size={28} color={C.muted} />
-                  <div style={{ fontSize: "13px", color: C.muted, fontFamily: "Inter,sans-serif" }}>
+                  <div className="text-[13px] font-['Inter',sans-serif]" style={{ color: C.muted }}>
                     No resources match your filters
                   </div>
                 </div>
@@ -477,29 +360,10 @@ function DesktopResourcesPage() {
         </div>
 
         {/* Status bar */}
-        <div
-          style={{
-            height: 36,
-            flexShrink: 0,
-            background: "#111E17",
-            borderTop: "1px solid #1A2E22",
-            display: "flex",
-            alignItems: "center",
-            padding: "0 22px",
-            gap: 0,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginRight: 20 }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.accent }} />
-            <span
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                color: "rgba(255,255,255,0.7)",
-                letterSpacing: ".5px",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
+        <div className="h-9 shrink-0 bg-[#111E17] border-t border-[#1A2E22] flex items-center px-[22px]">
+          <div className="flex items-center gap-1.5 mr-5">
+            <div className="w-1.5 h-1.5 rounded-full" style={{ background: C.accent }} />
+            <span className="text-[10px] font-bold text-white/70 tracking-[0.5px] font-['Inter',sans-serif]">
               BRIDGE Intelligence
             </span>
           </div>
@@ -510,55 +374,26 @@ function DesktopResourcesPage() {
             `${sorted.length} Results`,
           ].map((label, i) => (
             <React.Fragment key={i}>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.18)",
-                  marginRight: 14,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+              <span className="text-[10px] text-white/[0.18] mr-3.5 font-['Inter',sans-serif]">
                 ·
               </span>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.35)",
-                  marginRight: 14,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+              <span className="text-[10px] text-white/[0.35] mr-3.5 font-['Inter',sans-serif]">
                 {label}
               </span>
             </React.Fragment>
           ))}
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", fontFamily: "Inter,sans-serif" }}>
+          <div className="ml-auto flex items-center gap-3.5">
+            <span className="text-[10px] text-white/20 font-['Inter',sans-serif]">
               © 2026 BRIDGE PBC
             </span>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "3px 8px",
-                borderRadius: 4,
-                background: "rgba(184,217,53,0.08)",
-                border: "1px solid rgba(184,217,53,0.15)",
-              }}
-            >
+            <div className="flex items-center gap-[5px] py-[3px] px-2 rounded bg-[rgba(184,217,53,0.08)] border border-[rgba(184,217,53,0.15)]">
               <div
-                style={{ width: 5, height: 5, borderRadius: "50%", background: C.accent, boxShadow: "0 0 5px #B8D935" }}
+                className="w-[5px] h-[5px] rounded-full shadow-[0_0_5px_#B8D935]"
+                style={{ background: C.accent }}
               />
               <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  color: C.accent,
-                  letterSpacing: ".8px",
-                  textTransform: "uppercase",
-                  fontFamily: "Inter,sans-serif",
-                }}
+                className="text-[9px] font-bold tracking-[0.8px] uppercase font-['Inter',sans-serif]"
+                style={{ color: C.accent }}
               >
                 Live
               </span>

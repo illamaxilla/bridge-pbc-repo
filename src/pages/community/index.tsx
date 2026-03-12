@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 import {
   Bell,
   MessageCircle,
@@ -334,7 +335,7 @@ function BridgeLogo({ height = 40, dark = false }) {
       viewBox="0 0 4113.8 932.3"
       width={w}
       height={height}
-      style={{ display: "block" }}
+      className="block"
     >
       <defs>
         <style>{`.bl1{stroke-width:80px;}.bl1,.bl2{fill:none;stroke:${textColor};}.bl1,.bl2,.bl3,.bl4{stroke-miterlimit:10;}.bl2{stroke-width:5px;}.bl5,.bl4{fill:#b8d935;}.bl6,.bl3{fill:${textColor};}.bl3{stroke:#000;stroke-width:.5px;}.bl4{stroke:#1b4d3e;}.bl7{fill:#74914a;}`}</style>
@@ -399,20 +400,13 @@ function BridgeLogo({ height = 40, dark = false }) {
 function Avatar({ initials, size = 36, bg = C.primary, color = C.accent }) {
   return (
     <div
+      className="rounded-full flex items-center justify-center font-[Inter,sans-serif] font-bold shrink-0 tracking-[0.5px]"
       style={{
         width: size,
         height: size,
-        borderRadius: "50%",
         background: bg,
         color,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: font.body,
         fontSize: size * 0.33,
-        fontWeight: 700,
-        flexShrink: 0,
-        letterSpacing: "0.5px",
       }}
     >
       {initials}
@@ -424,17 +418,10 @@ function Avatar({ initials, size = 36, bg = C.primary, color = C.accent }) {
 function Pill({ children, color = C.primary, bg = "transparent", border = true, small }) {
   return (
     <span
+      className="inline-flex items-center gap-1 rounded-full font-bold font-[Inter,sans-serif] tracking-[0.8px] uppercase"
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 4,
         padding: small ? "3px 10px" : "5px 14px",
-        borderRadius: 50,
         fontSize: small ? 10 : 11,
-        fontWeight: 700,
-        fontFamily: font.body,
-        letterSpacing: "0.8px",
-        textTransform: "uppercase",
         color,
         background: bg,
         border: border ? `1.5px solid ${color}` : "none",
@@ -448,14 +435,12 @@ function Pill({ children, color = C.primary, bg = "transparent", border = true, 
 // ─── PROGRESS BAR ──────────────────────────────────────────────
 function ProgressBar({ value, height = 6, color = C.accent }) {
   return (
-    <div style={{ width: "100%", height, borderRadius: 10, background: C.line, overflow: "hidden" }}>
+    <div className="w-full rounded-[10px] overflow-hidden" style={{ height, background: C.line }}>
       <div
+        className="h-full rounded-[10px] transition-[width] duration-[800ms] ease-[ease]"
         style={{
           width: `${value}%`,
-          height: "100%",
-          borderRadius: 10,
           background: `linear-gradient(90deg, ${C.primary}, ${color})`,
-          transition: "width 0.8s ease",
         }}
       />
     </div>
@@ -465,36 +450,29 @@ function ProgressBar({ value, height = 6, color = C.accent }) {
 // ─── STEP TRACKER ──────────────────────────────────────────────
 function StepTracker({ steps, current }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 0, width: "100%" }}>
+    <div className="flex items-center gap-0 w-full">
       {steps.map((step, i) => {
         const done = i < current;
         const active = i === current;
         return (
-          <div key={step} style={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "none" }}>
+          <div key={step} className="flex items-center flex-1">
+            <div className="flex flex-col items-center flex-none">
               <div
+                className="rounded-full transition-all duration-300 flex items-center justify-center"
                 style={{
                   width: active ? 20 : 14,
                   height: active ? 20 : 14,
-                  borderRadius: "50%",
                   background: done ? C.primary : active ? C.accent : C.line,
                   border: active ? `3px solid ${C.primary}` : done ? "none" : `2px solid ${C.line}`,
-                  transition: "all 0.3s",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                 }}
               >
                 {done && <Check size={8} color={C.white} strokeWidth={3} />}
               </div>
               <span
+                className="text-[10px] font-[Inter,sans-serif] mt-[6px] whitespace-nowrap"
                 style={{
-                  fontSize: 10,
                   fontWeight: active ? 700 : 500,
-                  fontFamily: font.body,
                   color: active ? C.primary : done ? C.muted : C.line,
-                  marginTop: 6,
-                  whiteSpace: "nowrap",
                 }}
               >
                 {step}
@@ -502,12 +480,9 @@ function StepTracker({ steps, current }) {
             </div>
             {i < steps.length - 1 && (
               <div
+                className="flex-1 h-[2px] mb-4 transition-[background] duration-300"
                 style={{
-                  flex: 1,
-                  height: 2,
                   background: done ? C.primary : C.line,
-                  marginBottom: 16,
-                  transition: "background 0.3s",
                 }}
               />
             )}
@@ -521,17 +496,11 @@ function StepTracker({ steps, current }) {
 // ─── SECTION LABEL ─────────────────────────────────────────────
 function SectionLabel({ children }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-      <span style={{ width: 3, height: 16, borderRadius: 2, background: C.accent, display: "block" }} />
+    <div className="flex items-center gap-2 mb-4">
+      <span className="block w-[3px] h-4 rounded-sm" style={{ background: C.accent }} />
       <span
-        style={{
-          fontFamily: font.body,
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: "1.5px",
-          textTransform: "uppercase",
-          color: C.primary,
-        }}
+        className="font-[Inter,sans-serif] text-[11px] font-bold tracking-[1.5px] uppercase"
+        style={{ color: C.primary }}
       >
         {children}
       </span>
@@ -560,61 +529,55 @@ function LoginPage({ onLogin }) {
 
   return (
     <div
+      className="min-h-screen flex font-[Inter,sans-serif]"
       style={{
-        minHeight: "100vh",
-        display: "flex",
         flexDirection: isMobile ? "column" : "row",
         background: C.primary,
-        fontFamily: font.body,
       }}
     >
       {/* ── BRAND PANEL (full on desktop, compact header on mobile) ── */}
       {isMobile ? (
         /* Mobile: compact brand header */
         <div
+          className="relative overflow-hidden"
           style={{
             padding: "32px 24px 28px",
             background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 100%)`,
-            position: "relative",
-            overflow: "hidden",
           }}
         >
           <div
+            className="absolute rounded-full"
             style={{
-              position: "absolute",
               top: -40,
               right: -40,
               width: 180,
               height: 180,
-              borderRadius: "50%",
               border: "1px solid rgba(184,217,53,0.12)",
             }}
           />
-          <div style={{ position: "relative", zIndex: 1 }}>
+          <div className="relative z-[1]">
             <BridgeLogo height={36} />
             <p
+              className="text-[13px] leading-[1.5] max-w-[280px]"
               style={{
-                fontSize: 13,
                 color: "rgba(255,255,255,0.55)",
                 margin: "14px 0 0",
-                lineHeight: 1.5,
-                maxWidth: 280,
               }}
             >
               Where Ghana's <strong style={{ color: C.accent }}>Builders</strong> Come Together
             </p>
             {/* Mini stats row */}
-            <div style={{ display: "flex", gap: 24, marginTop: 18 }}>
+            <div className="flex gap-6 mt-[18px]">
               {[
                 { val: "174+", label: "Ventures" },
                 { val: "6,200+", label: "Traders" },
                 { val: "23%", label: "Yield Growth" },
               ].map((s) => (
                 <div key={s.val}>
-                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 18, color: C.accent }}>
+                  <div className="font-[DM_Sans,sans-serif] font-extrabold text-[18px]" style={{ color: C.accent }}>
                     {s.val}
                   </div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.3px" }}>{s.label}</div>
+                  <div className="text-[10px] tracking-[0.3px]" style={{ color: "rgba(255,255,255,0.4)" }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -623,104 +586,89 @@ function LoginPage({ onLogin }) {
       ) : (
         /* Desktop: full left panel */
         <div
+          className="flex-1 flex flex-col justify-between relative overflow-hidden"
           style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
             padding: "60px 64px",
             background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 60%, #1e5c4a 100%)`,
-            position: "relative",
-            overflow: "hidden",
           }}
         >
           <div
+            className="absolute rounded-full"
             style={{
-              position: "absolute",
               top: -80,
               left: -80,
               width: 300,
               height: 300,
-              borderRadius: "50%",
               border: "1px solid rgba(184,217,53,0.12)",
             }}
           />
           <div
+            className="absolute rounded-full"
             style={{
-              position: "absolute",
               top: 60,
               left: 40,
               width: 180,
               height: 180,
-              borderRadius: "50%",
               border: "1px solid rgba(184,217,53,0.08)",
             }}
           />
           <div
+            className="absolute rounded-full"
             style={{
-              position: "absolute",
               bottom: -60,
               right: -60,
               width: 400,
               height: 400,
-              borderRadius: "50%",
               border: "1px solid rgba(255,255,255,0.06)",
             }}
           />
           <div
+            className="absolute rounded-full"
             style={{
-              position: "absolute",
               bottom: 80,
               right: 40,
               width: 200,
               height: 200,
-              borderRadius: "50%",
               border: "1px solid rgba(184,217,53,0.1)",
             }}
           />
 
-          <div style={{ position: "relative", zIndex: 1 }}>
+          <div className="relative z-[1]">
             <BridgeLogo height={48} />
           </div>
-          <div style={{ position: "relative", zIndex: 1 }}>
-            <div style={{ marginBottom: 24 }}>
+          <div className="relative z-[1]">
+            <div className="mb-6">
               <Pill color={C.accent} bg="rgba(184,217,53,0.12)" border={false} small>
                 Ghana-First Community
               </Pill>
             </div>
             <h1
-              style={{
-                fontFamily: font.display,
-                fontWeight: 300,
-                fontSize: 52,
-                color: C.white,
-                lineHeight: 1.1,
-                letterSpacing: "-1.5px",
-                margin: "0 0 24px 0",
-              }}
+              className="font-[DM_Sans,sans-serif] font-light text-[52px] leading-[1.1] tracking-[-1.5px] m-0 mb-6"
+              style={{ color: C.white }}
             >
               Where Ghana's
               <br />
-              <span style={{ fontWeight: 800, color: C.accent }}>Builders</span>
+              <span className="font-extrabold" style={{ color: C.accent }}>Builders</span>
               <br />
               Come Together
             </h1>
-            <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, maxWidth: 380, margin: 0 }}>
+            <p className="text-[16px] leading-[1.7] max-w-[380px] m-0" style={{ color: "rgba(255,255,255,0.6)" }}>
               Join a community of investors, innovators, and development professionals working to drive Peace &
               Prosperity across the nation.
             </p>
-            <div style={{ display: "flex", gap: 40, marginTop: 48 }}>
+            <div className="flex gap-10 mt-12">
               {[
                 { val: "174+", label: "Active Ventures" },
                 { val: "6,200+", label: "Traders Onboarded" },
                 { val: "23%", label: "Avg. Yield Growth" },
               ].map((s) => (
                 <div key={s.val}>
-                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 28, color: C.accent }}>
+                  <div className="font-[DM_Sans,sans-serif] font-extrabold text-[28px]" style={{ color: C.accent }}>
                     {s.val}
                   </div>
                   <div
-                    style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 500, letterSpacing: "0.5px" }}
+                    className="text-[12px] font-medium tracking-[0.5px]"
+                    style={{ color: "rgba(255,255,255,0.45)" }}
                   >
                     {s.label}
                   </div>
@@ -729,9 +677,10 @@ function LoginPage({ onLogin }) {
             </div>
           </div>
           <div
-            style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 24 }}
+            className="relative z-[1] pt-6"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
           >
-            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", fontStyle: "italic", margin: 0 }}>
+            <p className="text-[13px] italic m-0" style={{ color: "rgba(255,255,255,0.35)" }}>
               "Blending Resources and Innovation to Drive Ghana's Empowerment"
             </p>
           </div>
@@ -740,53 +689,41 @@ function LoginPage({ onLogin }) {
 
       {/* ── FORM PANEL ── */}
       <div
+        className="flex flex-col overflow-y-auto"
         style={{
           width: isMobile ? "100%" : 480,
           background: C.bg,
           flex: isMobile ? 1 : "none",
-          display: "flex",
-          flexDirection: "column",
           justifyContent: isMobile ? "flex-start" : "center",
           padding: isMobile ? "32px 24px 40px" : "60px 52px",
-          overflowY: "auto",
         }}
       >
-        <div style={{ marginBottom: 28 }}>
+        <div className="mb-7">
           <h2
+            className="font-[DM_Sans,sans-serif] font-bold tracking-[-0.5px]"
             style={{
-              fontFamily: font.display,
-              fontWeight: 700,
               fontSize: isMobile ? 26 : 32,
               color: C.primary,
               margin: "0 0 6px 0",
-              letterSpacing: "-0.5px",
             }}
           >
             Welcome back
           </h2>
-          <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>Sign in to your BRIDGE community account</p>
+          <p className="text-[14px] m-0" style={{ color: C.muted }}>Sign in to your BRIDGE community account</p>
         </div>
 
         {/* Member Type Toggle */}
-        <div style={{ marginBottom: 24 }}>
+        <div className="mb-6">
           <div
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "1px",
-              color: C.muted,
-              textTransform: "uppercase",
-              marginBottom: 8,
-            }}
+            className="text-[11px] font-bold tracking-[1px] uppercase mb-2"
+            style={{ color: C.muted }}
           >
             Account Type
           </div>
           <div
+            className="flex rounded-xl overflow-hidden"
             style={{
-              display: "flex",
-              borderRadius: 12,
               border: `1.5px solid ${C.line}`,
-              overflow: "hidden",
               background: C.white,
             }}
           >
@@ -797,15 +734,8 @@ function LoginPage({ onLogin }) {
               <button
                 key={t.key}
                 onClick={() => setMemberType(t.key)}
+                className="flex-1 py-3 px-4 border-none cursor-pointer font-[Inter,sans-serif] text-[13px] font-semibold transition-all duration-200"
                 style={{
-                  flex: 1,
-                  padding: "12px 16px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  transition: "all 0.2s",
                   background: memberType === t.key ? C.primary : "transparent",
                   color: memberType === t.key ? C.white : C.muted,
                 }}
@@ -817,31 +747,27 @@ function LoginPage({ onLogin }) {
         </div>
 
         {/* Fields */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 20 }}>
+        <div className="flex flex-col gap-[14px] mb-5">
           <div>
-            <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
               Email Address
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <Mail
                 size={16}
-                style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+                className="absolute left-[14px] top-1/2 -translate-y-1/2"
+                style={{ color: C.muted }}
               />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
+                className="w-full rounded-[10px] font-[Inter,sans-serif] text-[15px] outline-none box-border"
                 style={{
-                  width: "100%",
                   padding: "13px 14px 13px 42px",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
-                  fontFamily: font.body,
-                  fontSize: 15,
                   background: C.white,
-                  outline: "none",
-                  boxSizing: "border-box",
                   color: C.dark,
                 }}
                 onFocus={(e) => (e.target.style.borderColor = C.primary)}
@@ -850,29 +776,25 @@ function LoginPage({ onLogin }) {
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
               Password
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <Lock
                 size={16}
-                style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+                className="absolute left-[14px] top-1/2 -translate-y-1/2"
+                style={{ color: C.muted }}
               />
               <input
                 type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                className="w-full rounded-[10px] font-[Inter,sans-serif] text-[15px] outline-none box-border"
                 style={{
-                  width: "100%",
                   padding: "13px 42px 13px 42px",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
-                  fontFamily: font.body,
-                  fontSize: 15,
                   background: C.white,
-                  outline: "none",
-                  boxSizing: "border-box",
                   color: C.dark,
                 }}
                 onFocus={(e) => (e.target.style.borderColor = C.primary)}
@@ -881,17 +803,8 @@ function LoginPage({ onLogin }) {
               />
               <button
                 onClick={() => setShowPass(!showPass)}
-                style={{
-                  position: "absolute",
-                  right: 14,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  color: C.muted,
-                  padding: 0,
-                }}
+                className="absolute right-[14px] top-1/2 -translate-y-1/2 bg-none border-none cursor-pointer p-0"
+                style={{ color: C.muted }}
               >
                 {showPass ? <Eye size={16} /> : <Lock size={16} />}
               </button>
@@ -899,28 +812,21 @@ function LoginPage({ onLogin }) {
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-          <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+        <div className="flex justify-between items-center mb-6">
+          <label className="flex items-center gap-2 cursor-pointer">
             <div
               onClick={() => setRemember(!remember)}
+              className="w-5 h-5 rounded-[5px] flex items-center justify-center shrink-0 transition-all duration-200"
               style={{
-                width: 20,
-                height: 20,
-                borderRadius: 5,
                 border: `1.5px solid ${remember ? C.primary : C.line}`,
                 background: remember ? C.primary : "transparent",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                transition: "all 0.2s",
               }}
             >
               {remember && <Check size={11} color={C.white} strokeWidth={3} />}
             </div>
-            <span style={{ fontSize: 13, color: C.text }}>Remember me</span>
+            <span className="text-[13px]" style={{ color: C.text }}>Remember me</span>
           </label>
-          <a href="/login" style={{ fontSize: 13, color: C.primary, textDecoration: "none", fontWeight: 600 }}>
+          <a href="/login" className="text-[13px] no-underline font-semibold" style={{ color: C.primary }}>
             Forgot password?
           </a>
         </div>
@@ -928,35 +834,20 @@ function LoginPage({ onLogin }) {
         <button
           onClick={handleLogin}
           disabled={loading}
+          className="w-full py-[15px] px-6 rounded-xl border-none font-[Inter,sans-serif] text-[15px] font-bold flex items-center justify-center gap-2 transition-all duration-200 min-h-[52px]"
           style={{
-            width: "100%",
-            padding: "15px 24px",
-            borderRadius: 12,
-            border: "none",
             cursor: loading ? "not-allowed" : "pointer",
-            fontFamily: font.body,
-            fontSize: 15,
-            fontWeight: 700,
             background: loading ? C.muted : C.primary,
             color: C.white,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            transition: "all 0.2s",
-            minHeight: 52,
           }}
         >
           {loading ? (
             <>
               <div
+                className="w-4 h-4 rounded-full animate-spin"
                 style={{
-                  width: 16,
-                  height: 16,
                   border: "2px solid rgba(255,255,255,0.3)",
                   borderTop: "2px solid white",
-                  borderRadius: "50%",
-                  animation: "spin 0.8s linear infinite",
                 }}
               />
               Signing in...
@@ -969,36 +860,25 @@ function LoginPage({ onLogin }) {
           )}
         </button>
 
-        <div style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: C.muted }}>
+        <div className="text-center mt-5 text-[13px]" style={{ color: C.muted }}>
           Don't have an account?{" "}
-          <a href="/login" style={{ color: C.primary, fontWeight: 700, textDecoration: "none" }}>
+          <a href="/login" className="font-bold no-underline" style={{ color: C.primary }}>
             Request Access
           </a>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "24px 0" }}>
-          <div style={{ flex: 1, height: 1, background: C.line }} />
-          <span style={{ fontSize: 12, color: C.muted }}>or</span>
-          <div style={{ flex: 1, height: 1, background: C.line }} />
+        <div className="flex items-center gap-3 my-6">
+          <div className="flex-1 h-px" style={{ background: C.line }} />
+          <span className="text-[12px]" style={{ color: C.muted }}>or</span>
+          <div className="flex-1 h-px" style={{ background: C.line }} />
         </div>
 
         <button
+          className="w-full py-[13px] px-5 rounded-xl cursor-pointer font-[Inter,sans-serif] text-[14px] font-semibold flex items-center justify-center gap-[10px] min-h-[48px]"
           style={{
-            width: "100%",
-            padding: "13px 20px",
-            borderRadius: 12,
             border: `1.5px solid ${C.line}`,
             background: C.white,
-            cursor: "pointer",
-            fontFamily: font.body,
-            fontSize: 14,
-            fontWeight: 600,
             color: C.text,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
-            minHeight: 48,
           }}
         >
           <Globe size={16} color={C.primary} />
@@ -1007,13 +887,8 @@ function LoginPage({ onLogin }) {
 
         {isMobile && (
           <p
-            style={{
-              textAlign: "center",
-              fontSize: 11,
-              color: "rgba(27,77,62,0.35)",
-              fontStyle: "italic",
-              marginTop: 32,
-            }}
+            className="text-center text-[11px] italic mt-8"
+            style={{ color: "rgba(27,77,62,0.35)" }}
           >
             "Blending Resources and Innovation to Drive Ghana's Empowerment"
           </p>
@@ -1100,34 +975,26 @@ function CommunityDashboard({ memberType, onLogout }) {
   ];
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: font.body }}>
+    <div className="min-h-screen font-[Inter,sans-serif]" style={{ background: C.bg }}>
       {/* ── HEADER ── */}
       <header
+        className="sticky top-0 z-[100] flex items-center justify-between"
         style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 100,
           background: C.white,
           borderBottom: `1px solid ${C.line}`,
           padding: isMobile ? "0 16px" : "0 32px",
           height: isMobile ? 56 : 64,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
           boxShadow: "0 2px 12px rgba(27,77,62,0.06)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 40 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="flex items-center" style={{ gap: isMobile ? 10 : 40 }}>
+          <div className="flex items-center gap-[10px]">
             <BridgeLogo height={isMobile ? 24 : 28} dark />
             <span
+              className="text-[8px] font-bold tracking-[2px] pl-[10px]"
               style={{
-                fontSize: 8,
-                fontWeight: 700,
-                letterSpacing: "2px",
                 color: C.muted,
                 borderLeft: `1px solid ${C.line}`,
-                paddingLeft: 10,
               }}
             >
               COMMUNITY
@@ -1135,18 +1002,13 @@ function CommunityDashboard({ memberType, onLogout }) {
           </div>
           {/* Desktop nav */}
           {!isMobile && (
-            <nav style={{ display: "flex", gap: 4 }}>
+            <nav className="flex gap-1">
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.key}
                   onClick={() => handleNavChange(item.key)}
+                  className="py-[6px] px-[14px] rounded-lg border-none cursor-pointer font-[Inter,sans-serif] text-[13px]"
                   style={{
-                    padding: "6px 14px",
-                    borderRadius: 8,
-                    border: "none",
-                    cursor: "pointer",
-                    fontFamily: font.body,
-                    fontSize: 13,
                     background: currentPage === item.key ? `rgba(27,77,62,0.08)` : "transparent",
                     color: currentPage === item.key ? C.primary : C.text,
                     fontWeight: currentPage === item.key ? 700 : 500,
@@ -1159,50 +1021,39 @@ function CommunityDashboard({ memberType, onLogout }) {
           )}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 16 }}>
+        <div className="flex items-center" style={{ gap: isMobile ? 8 : 16 }}>
           {!isMobile && (
             <div
+              className="flex items-center gap-[6px] py-[5px] px-3 rounded-[20px]"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                padding: "5px 12px",
-                borderRadius: 20,
                 background: mType.color + "18",
                 border: `1.5px solid ${mType.color}30`,
               }}
             >
               <Shield size={12} color={mType.color} />
-              <span style={{ fontSize: 11, fontWeight: 700, color: mType.color, letterSpacing: "0.5px" }}>
+              <span className="text-[11px] font-bold tracking-[0.5px]" style={{ color: mType.color }}>
                 {mType.badge}
               </span>
             </div>
           )}
-          <button style={{ background: "none", border: "none", cursor: "pointer", padding: 6, position: "relative" }}>
+          <button className="bg-none border-none cursor-pointer p-[6px] relative">
             <Bell size={isMobile ? 20 : 18} color={C.text} />
             <span
+              className="absolute top-1 right-1 w-[7px] h-[7px] rounded-full"
               style={{
-                position: "absolute",
-                top: 4,
-                right: 4,
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
                 background: C.accent,
                 border: `2px solid ${C.white}`,
               }}
             />
           </button>
           {!isMobile && (
-            <button style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}>
+            <button className="bg-none border-none cursor-pointer p-[6px]">
               <MessageCircle size={18} color={C.text} />
             </button>
           )}
           <div
+            className="flex items-center gap-2"
             style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
               paddingLeft: isMobile ? 4 : 16,
               borderLeft: isMobile ? "none" : `1px solid ${C.line}`,
             }}
@@ -1210,15 +1061,15 @@ function CommunityDashboard({ memberType, onLogout }) {
             <Avatar initials={user.initials} size={isMobile ? 30 : 32} />
             {!isMobile && (
               <div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: C.dark, lineHeight: 1.2 }}>{user.name}</div>
-                <div style={{ fontSize: 10, color: C.muted }}>2,840 pts</div>
+                <div className="text-[13px] font-semibold leading-[1.2]" style={{ color: C.dark }}>{user.name}</div>
+                <div className="text-[10px]" style={{ color: C.muted }}>2,840 pts</div>
               </div>
             )}
           </div>
           {isMobile ? (
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}
+              className="bg-none border-none cursor-pointer p-[6px]"
             >
               {mobileMenuOpen ? <X size={22} color={C.dark} /> : <Menu size={22} color={C.dark} />}
             </button>
@@ -1226,7 +1077,7 @@ function CommunityDashboard({ memberType, onLogout }) {
             <button
               onClick={onLogout}
               title="Sign out"
-              style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}
+              className="bg-none border-none cursor-pointer p-[6px]"
             >
               <LogOut size={16} color={C.muted} />
             </button>
@@ -1237,33 +1088,26 @@ function CommunityDashboard({ memberType, onLogout }) {
       {/* ── MOBILE SLIDE-DOWN MENU ── */}
       {isMobile && mobileMenuOpen && (
         <div
+          className="fixed top-[56px] left-0 right-0 z-[99]"
           style={{
-            position: "fixed",
-            top: 56,
-            left: 0,
-            right: 0,
-            zIndex: 99,
             background: C.white,
             borderBottom: `1px solid ${C.line}`,
             boxShadow: "0 8px 32px rgba(27,77,62,0.12)",
             padding: "8px 0 12px",
           }}
         >
-          <div style={{ padding: "8px 16px 12px", borderBottom: `1px solid ${C.line}`, marginBottom: 8 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div className="mb-2" style={{ padding: "8px 16px 12px", borderBottom: `1px solid ${C.line}` }}>
+            <div className="flex items-center gap-2">
               <Avatar initials={user.initials} size={36} />
               <div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: C.dark }}>{user.name}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontSize: 11, color: C.primary, fontWeight: 600 }}>2,840 pts</span>
+                <div className="text-[14px] font-bold" style={{ color: C.dark }}>{user.name}</div>
+                <div className="flex items-center gap-[6px]">
+                  <span className="text-[11px] font-semibold" style={{ color: C.primary }}>2,840 pts</span>
                   <span
+                    className="text-[9px] font-bold py-px px-[7px] rounded-[10px]"
                     style={{
-                      fontSize: 9,
-                      fontWeight: 700,
                       color: mType.color,
                       background: mType.color + "18",
-                      padding: "1px 7px",
-                      borderRadius: 10,
                     }}
                   >
                     {mType.badge}
@@ -1276,19 +1120,10 @@ function CommunityDashboard({ memberType, onLogout }) {
             <button
               key={item.key}
               onClick={() => handleNavChange(item.key)}
+              className="flex items-center gap-[14px] w-full py-[13px] px-5 border-none cursor-pointer text-left font-[Inter,sans-serif] text-[15px]"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                width: "100%",
-                padding: "13px 20px",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "left",
                 background: currentPage === item.key ? `${C.primary}08` : "transparent",
                 color: currentPage === item.key ? C.primary : C.text,
-                fontFamily: font.body,
-                fontSize: 15,
                 fontWeight: currentPage === item.key ? 700 : 400,
               }}
             >
@@ -1296,22 +1131,11 @@ function CommunityDashboard({ memberType, onLogout }) {
               {item.label}
             </button>
           ))}
-          <div style={{ borderTop: `1px solid ${C.line}`, marginTop: 8, padding: "8px 0 0" }}>
+          <div className="mt-2 pt-2" style={{ borderTop: `1px solid ${C.line}` }}>
             <button
               onClick={onLogout}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                width: "100%",
-                padding: "12px 20px",
-                border: "none",
-                cursor: "pointer",
-                background: "transparent",
-                color: C.muted,
-                fontFamily: font.body,
-                fontSize: 14,
-              }}
+              className="flex items-center gap-[14px] w-full py-3 px-5 border-none cursor-pointer bg-transparent font-[Inter,sans-serif] text-[14px]"
+              style={{ color: C.muted }}
             >
               <LogOut size={18} color={C.muted} /> Sign Out
             </button>
@@ -1321,9 +1145,9 @@ function CommunityDashboard({ memberType, onLogout }) {
 
       {/* ── PAGE CONTENT ── */}
       <div
+        className="mx-auto"
         style={{
           maxWidth: isMobile ? "100%" : 1280,
-          margin: "0 auto",
           padding: isMobile ? "16px 16px 88px" : "32px 32px 80px",
         }}
       >
@@ -1365,16 +1189,10 @@ function CommunityDashboard({ memberType, onLogout }) {
       {/* ── MOBILE BOTTOM TAB BAR ── */}
       {isMobile && (
         <div
+          className="fixed bottom-0 left-0 right-0 z-[100] flex h-16"
           style={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 100,
             background: C.white,
             borderTop: `1px solid ${C.line}`,
-            display: "flex",
-            height: 64,
             boxShadow: "0 -4px 20px rgba(27,77,62,0.08)",
           }}
         >
@@ -1384,43 +1202,19 @@ function CommunityDashboard({ memberType, onLogout }) {
               <button
                 key={item.key}
                 onClick={() => handleNavChange(item.key)}
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 3,
-                  border: "none",
-                  cursor: "pointer",
-                  background: "transparent",
-                  padding: "8px 0",
-                  color: active ? C.primary : C.muted,
-                  position: "relative",
-                }}
+                className="flex-1 flex flex-col items-center justify-center gap-[3px] border-none cursor-pointer bg-transparent py-2 px-0 relative"
+                style={{ color: active ? C.primary : C.muted }}
               >
                 {active && (
                   <div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      width: 32,
-                      height: 3,
-                      borderRadius: "0 0 3px 3px",
-                      background: C.accent,
-                    }}
+                    className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] rounded-b-[3px]"
+                    style={{ background: C.accent }}
                   />
                 )}
-                <div style={{ color: active ? C.primary : C.muted, transition: "color 0.15s" }}>{item.icon}</div>
+                <div className="transition-colors duration-150" style={{ color: active ? C.primary : C.muted }}>{item.icon}</div>
                 <span
-                  style={{
-                    fontSize: 10,
-                    fontWeight: active ? 700 : 400,
-                    fontFamily: font.body,
-                    letterSpacing: "0.2px",
-                  }}
+                  className="text-[10px] font-[Inter,sans-serif] tracking-[0.2px]"
+                  style={{ fontWeight: active ? 700 : 400 }}
                 >
                   {item.label}
                 </span>
@@ -1432,15 +1226,10 @@ function CommunityDashboard({ memberType, onLogout }) {
       {/* ── CREATE GOAL MODAL ── */}
       {showGoalModal && (
         <div
+          className="fixed inset-0 flex justify-center z-[200] backdrop-blur-[4px]"
           style={{
-            position: "fixed",
-            inset: 0,
             background: "rgba(27,77,62,0.5)",
-            display: "flex",
             alignItems: isMobile ? "flex-end" : "center",
-            justifyContent: "center",
-            zIndex: 200,
-            backdropFilter: "blur(4px)",
           }}
           onClick={() => setShowGoalModal(false)}
         >
@@ -1454,87 +1243,60 @@ function CommunityDashboard({ memberType, onLogout }) {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-              <h2 style={{ fontFamily: font.display, fontSize: 20, fontWeight: 700, color: C.primary, margin: 0 }}>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="font-[DM_Sans,sans-serif] text-[20px] font-bold m-0" style={{ color: C.primary }}>
                 Create New Goal
               </h2>
               <button
                 onClick={() => setShowGoalModal(false)}
-                style={{ background: "none", border: "none", cursor: "pointer" }}
+                className="bg-none border-none cursor-pointer"
               >
                 <X size={20} color={C.muted} />
               </button>
             </div>
             {["Goal Name", "Details", "Deadline"].map((field) => (
-              <div key={field} style={{ marginBottom: 14 }}>
-                <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+              <div key={field} className="mb-[14px]">
+                <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
                   {field}
                 </label>
                 {field === "Details" ? (
                   <textarea
                     placeholder={`Enter ${field.toLowerCase()}...`}
+                    className="w-full rounded-[10px] font-[Inter,sans-serif] text-[14px] resize-none min-h-[80px] outline-none box-border"
                     style={{
-                      width: "100%",
-                      borderRadius: 10,
                       border: `1.5px solid ${C.line}`,
                       padding: "10px 12px",
-                      fontFamily: font.body,
-                      fontSize: 14,
-                      resize: "none",
-                      minHeight: 80,
-                      outline: "none",
-                      boxSizing: "border-box",
                     }}
                   />
                 ) : (
                   <input
                     type={field === "Deadline" ? "date" : "text"}
                     placeholder={`Enter ${field.toLowerCase()}...`}
+                    className="w-full p-3 rounded-[10px] font-[Inter,sans-serif] text-[14px] outline-none box-border"
                     style={{
-                      width: "100%",
-                      padding: "12px",
-                      borderRadius: 10,
                       border: `1.5px solid ${C.line}`,
-                      fontFamily: font.body,
-                      fontSize: 14,
-                      outline: "none",
-                      boxSizing: "border-box",
                     }}
                   />
                 )}
               </div>
             ))}
-            <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+            <div className="flex gap-[10px] mt-2">
               <button
                 onClick={() => setShowGoalModal(false)}
+                className="flex-1 p-[13px] rounded-[10px] bg-transparent cursor-pointer font-[Inter,sans-serif] text-[14px] font-semibold"
                 style={{
-                  flex: 1,
-                  padding: "13px",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
-                  background: "transparent",
                   color: C.text,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 600,
                 }}
               >
                 Cancel
               </button>
               <button
                 onClick={() => setShowGoalModal(false)}
+                className="flex-[2] p-[13px] rounded-[10px] border-none cursor-pointer font-[Inter,sans-serif] text-[14px] font-bold"
                 style={{
-                  flex: 2,
-                  padding: "13px",
-                  borderRadius: 10,
-                  border: "none",
                   background: C.primary,
                   color: C.white,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 700,
                 }}
               >
                 Create Goal
@@ -1547,15 +1309,10 @@ function CommunityDashboard({ memberType, onLogout }) {
       {/* ── ASK QUESTION MODAL ── */}
       {showQuestionModal && (
         <div
+          className="fixed inset-0 flex justify-center z-[200] backdrop-blur-[4px]"
           style={{
-            position: "fixed",
-            inset: 0,
             background: "rgba(27,77,62,0.5)",
-            display: "flex",
             alignItems: isMobile ? "flex-end" : "center",
-            justifyContent: "center",
-            zIndex: 200,
-            backdropFilter: "blur(4px)",
           }}
           onClick={() => setShowQuestionModal(false)}
         >
@@ -1569,72 +1326,52 @@ function CommunityDashboard({ memberType, onLogout }) {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <h2 style={{ fontFamily: font.display, fontSize: 20, fontWeight: 700, color: C.primary, margin: 0 }}>
+            <div className="flex justify-between items-center mb-5">
+              <h2 className="font-[DM_Sans,sans-serif] text-[20px] font-bold m-0" style={{ color: C.primary }}>
                 Ask the Community
               </h2>
               <button
                 onClick={() => setShowQuestionModal(false)}
-                style={{ background: "none", border: "none", cursor: "pointer" }}
+                className="bg-none border-none cursor-pointer"
               >
                 <X size={20} color={C.muted} />
               </button>
             </div>
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <div className="mb-[14px]">
+              <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
                 Question
               </label>
               <input
                 placeholder="What would you like to ask the BRIDGE community?"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  borderRadius: 10,
-                  border: `1.5px solid ${C.line}`,
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  outline: "none",
-                  boxSizing: "border-box",
-                }}
+                className="w-full p-3 rounded-[10px] font-[Inter,sans-serif] text-[14px] outline-none box-border"
+                style={{ border: `1.5px solid ${C.line}` }}
               />
             </div>
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <div className="mb-[14px]">
+              <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
                 Details
               </label>
               <textarea
                 placeholder="Add context, background, or supporting information..."
+                className="w-full rounded-[10px] font-[Inter,sans-serif] text-[14px] resize-none min-h-[80px] outline-none box-border"
                 style={{
-                  width: "100%",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
                   padding: "10px 12px",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  resize: "none",
-                  minHeight: 80,
-                  outline: "none",
-                  boxSizing: "border-box",
                 }}
               />
             </div>
-            <div style={{ marginBottom: 18 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 8 }}>
+            <div className="mb-[18px]">
+              <label className="text-[12px] font-semibold block mb-2" style={{ color: C.text }}>
                 Sector Tag
               </label>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              <div className="flex flex-wrap gap-[6px]">
                 {["Infrastructure", "Agriculture", "Health", "Technology", "Education", "Energy"].map((s) => (
                   <button
                     key={s}
+                    className="py-[7px] px-[14px] rounded-[20px] bg-transparent cursor-pointer font-[Inter,sans-serif] text-[13px]"
                     style={{
-                      padding: "7px 14px",
-                      borderRadius: 20,
                       border: `1.5px solid ${C.line}`,
-                      background: "transparent",
                       color: C.text,
-                      cursor: "pointer",
-                      fontFamily: font.body,
-                      fontSize: 13,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = C.primary;

@@ -572,11 +572,8 @@ const IconCircle = ({ icon, isFirst = false }) => (
 // ============================================
 const DottedLine = () => (
   <div
-    className="flex-1 min-w-[24px] max-w-[48px] h-0.5 bg-repeat-x mx-1"
-    style={{
-      backgroundImage: `linear-gradient(to right, ${"#1B4D3E"}40 50%, transparent 50%)`,
-      backgroundSize: "8px 2px",
-    }}
+    className="flex-1 min-w-[24px] max-w-[48px] h-0.5 bg-repeat-x mx-1 bg-[length:8px_2px]"
+    style={{ backgroundImage: "linear-gradient(to right, #1B4D3E40 50%, transparent 50%)" }}
   />
 );
 
@@ -1211,7 +1208,7 @@ export default function ServicesSectorsPageV2() {
         <div className="max-w-[1200px] mx-auto">
           {/* Pill Badge */}
           <div
-            className="inline-flex items-center gap-2 rounded-full mb-6 bg-white px-5 py-2.5" style={{ border: `1px solid ${"#DEDEDE"}` }}
+            className="inline-flex items-center gap-2 rounded-full mb-6 bg-white px-5 py-2.5 border border-[#DEDEDE]"
           >
             <span
               className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
@@ -1237,7 +1234,7 @@ export default function ServicesSectorsPageV2() {
           >
             {/* Audience Tabs */}
             <div
-              className="flex" style={{ borderBottom: `1px solid ${"#DEDEDE"}` }}
+              className="flex border-b border-[#DEDEDE]"
             >
               {audienceData.map((audience) => {
                 const isActive = activeAudience === audience.id;
@@ -1245,7 +1242,7 @@ export default function ServicesSectorsPageV2() {
                   <button
                     key={audience.id}
                     onClick={() => setActiveAudience(audience.id)}
-                    className="border-none cursor-pointer flex items-center justify-center transition-all duration-300 ease-in-out" style={{ flex: 1, padding: isMobile ? "16px 12px" : "24px 32px", backgroundColor: isActive ? "#1B4D3E" : "transparent", gap: isMobile ? "0" : "12px", borderBottom: isActive ? `3px solid ${"#FFFFFF"}` : "3px solid transparent" }}
+                    className="border-none cursor-pointer flex flex-1 items-center justify-center transition-all duration-300 ease-in-out" style={{ padding: isMobile ? "16px 12px" : "24px 32px", backgroundColor: isActive ? "#1B4D3E" : "transparent", gap: isMobile ? "0" : "12px", borderBottom: isActive ? "3px solid #FFFFFF" : "3px solid transparent" }}
                   >
                     <span
                       className="flex items-center transition-colors duration-300 ease-in-out" style={{ color: isActive ? "#FFFFFF" : "#999" }}
@@ -1270,7 +1267,7 @@ export default function ServicesSectorsPageV2() {
             >
               {/* Left - Text Content */}
               <div
-                className="flex flex-col justify-center" style={{ padding: isMobile ? "32px 24px" : "48px 56px 48px 56px", gap: "32px" }}
+                className="flex flex-col justify-center gap-8" style={{ padding: isMobile ? "32px 24px" : "48px 56px 48px 56px" }}
               >
                 {/* Top content */}
                 <div>
@@ -1316,7 +1313,7 @@ export default function ServicesSectorsPageV2() {
               >
                 {/* Section Label - Shows sector name on hover */}
                 <div
-                  className="text-[10px] font-bold tracking-[2px] uppercase transition-colors duration-[250ms] ease-in-out min-h-[15px]" style={{ fontFamily: "DM Sans, sans-serif", color: heroSectorHovered !== null ? "#B8D935" : "rgba(255,255,255,0.4)", marginBottom: isMobile ? "10px" : "16px" }}
+                  className="text-[10px] font-bold tracking-[2px] uppercase transition-colors duration-[250ms] ease-in-out min-h-[15px] font-['DM_Sans',sans-serif]" style={{ color: heroSectorHovered !== null ? "#B8D935" : "rgba(255,255,255,0.4)", marginBottom: isMobile ? "10px" : "16px" }}
                 >
                   {heroSectorHovered !== null ? FOOTER_SECTOR_ICONS[heroSectorHovered].label : "12 Integrated Sectors"}
                 </div>
@@ -1368,7 +1365,7 @@ export default function ServicesSectorsPageV2() {
         <div className="max-w-[1200px] mx-auto">
           {/* Pill Badge - Variant A (Light Background) */}
           <div
-            className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5" style={{ border: `1px solid ${"#DEDEDE"}` }}
+            className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5 border border-[#DEDEDE]"
           >
             <span
               className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
@@ -1468,7 +1465,7 @@ export default function ServicesSectorsPageV2() {
                     setActiveService(service.id);
                     setShowFeatures(false);
                   }}
-                  className="cursor-pointer text-left transition-all duration-300 ease-in-out flex items-center shrink-0" style={{ width: isMobile ? "auto" : "100%", padding: isMobile ? "10px 20px" : "24px 40px", backgroundColor: activeService === service.id ? (isMobile ? "#1B4D3E" : "#1B4D3E") : "transparent", border: isMobile ? "none" : "none", borderLeft: isMobile
+                  className="cursor-pointer text-left transition-all duration-300 ease-in-out flex items-center shrink-0 border-none" style={{ width: isMobile ? "auto" : "100%", padding: isMobile ? "10px 20px" : "24px 40px", backgroundColor: activeService === service.id ? "#1B4D3E" : "transparent", borderLeft: isMobile
                       ? undefined
                       : activeService === service.id
                         ? `4px solid ${"#B8D935"}`
@@ -1725,7 +1722,7 @@ export default function ServicesSectorsPageV2() {
           >
             {/* Pill Badge - Variant A */}
             <div
-              className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5" style={{ border: `1px solid ${"#DEDEDE"}` }}
+              className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5 border border-[#DEDEDE]"
             >
               <span
                 className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
@@ -1771,7 +1768,7 @@ export default function ServicesSectorsPageV2() {
             className="flex justify-center mb-6" style={{ overflowX: isMobile ? "auto" : "visible", WebkitOverflowScrolling: "touch" }}
           >
             <div
-              className="inline-flex gap-2 rounded-full shrink-0 bg-white" style={{ padding: "8px", border: `1px solid ${"#DEDEDE"}` }}
+              className="inline-flex gap-2 rounded-full shrink-0 bg-white p-2 border border-[#DEDEDE]"
             >
               {categories.map((cat) => (
                 <button
@@ -1786,7 +1783,7 @@ export default function ServicesSectorsPageV2() {
                   {isMobile ? cat.mobileLabel : cat.label}
                   {cat.id !== "all" && !isMobile && (
                     <span
-                      className="text-xs opacity-60" style={{ marginLeft: "8px" }}
+                      className="text-xs opacity-60 ml-2"
                     >
                       ({cat.sectors.length})
                     </span>
@@ -1799,7 +1796,7 @@ export default function ServicesSectorsPageV2() {
           {/* Category Description */}
           {filterCategory !== "all" && (
             <div
-              className="text-center" style={{ marginBottom: "48px" }}
+              className="text-center mb-12"
             >
               <p
                 className="text-base text-[#666] font-['Inter',sans-serif] italic"
@@ -1822,7 +1819,7 @@ export default function ServicesSectorsPageV2() {
                     setSectorScrollIndex(idx);
                   }
                 }}
-                style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
+                className="snap-x snap-mandatory" style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
                 <style>{`
                   .sector-scroll::-webkit-scrollbar { display: none; }
@@ -1831,7 +1828,7 @@ export default function ServicesSectorsPageV2() {
                   <div
                     key={sector.id}
                     onClick={() => setSelectedSector(selectedSector === sector.id ? null : sector.id)}
-                    className="rounded-[20px] cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col box-border bg-[#F3F5F2] p-6" style={{ flex: "0 0 100%", scrollSnapAlign: "start", border: selectedSector === sector.id ? `2px solid ${"#B8D935"}` : "2px solid transparent", minHeight: "160px" }}
+                    className="rounded-[20px] cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col box-border bg-[#F3F5F2] p-6 flex-[0_0_100%] snap-start min-h-40" style={{ border: selectedSector === sector.id ? "2px solid #B8D935" : "2px solid transparent" }}
                   >
                     {/* Sector Icon Badge */}
                     <div
@@ -1842,14 +1839,14 @@ export default function ServicesSectorsPageV2() {
 
                     {/* Sector Name */}
                     <h3
-                      className="text-lg font-semibold font-['Inter',sans-serif] m-0 leading-[1.3] text-[#1B4D3E]" style={{ paddingRight: "56px" }}
+                      className="text-lg font-semibold font-['Inter',sans-serif] m-0 leading-[1.3] text-[#1B4D3E] pr-14"
                     >
                       {sector.name}
                     </h3>
 
                     {/* Problem text - visible in carousel */}
                     <p
-                      className="text-[13px] leading-normal text-[#666] font-['Inter',sans-serif]" style={{ margin: "12px 0 0 0" }}
+                      className="text-[13px] leading-normal text-[#666] font-['Inter',sans-serif] mt-3 mb-0 mx-0"
                     >
                       {sector.problem}
                     </p>
@@ -1859,7 +1856,7 @@ export default function ServicesSectorsPageV2() {
 
                     {/* Stats row */}
                     <div
-                      className="flex justify-between items-center pt-4 mt-4" style={{ borderTop: `1px solid ${"#DEDEDE"}` }}
+                      className="flex justify-between items-center pt-4 mt-4 border-t border-[#DEDEDE]"
                     >
                       <span
                         className="text-sm font-semibold font-['Inter',sans-serif] text-[#1B4D3E]"
@@ -1876,7 +1873,7 @@ export default function ServicesSectorsPageV2() {
                     {/* Expanded Content */}
                     {selectedSector === sector.id && (
                       <div
-                        className="mt-4 pt-4" style={{ borderTop: `1px solid ${"#DEDEDE"}` }}
+                        className="mt-4 pt-4 border-t border-[#DEDEDE]"
                       >
                         <div
                           className="text-[11px] font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[1px] mb-3"
@@ -1918,7 +1915,7 @@ export default function ServicesSectorsPageV2() {
 
               {/* Scroll Dots */}
               <div
-                className="flex justify-center items-center gap-1.5" style={{ marginTop: "20px" }}
+                className="flex justify-center items-center gap-1.5 mt-5"
               >
                 {filteredSectors.map((_, i) => (
                   <div
@@ -2007,7 +2004,7 @@ export default function ServicesSectorsPageV2() {
 
                       {/* Stats Row */}
                       <div
-                        className="flex justify-between pt-4" style={{ borderTop: `1px solid ${"#DEDEDE"}` }}
+                        className="flex justify-between pt-4 border-t border-[#DEDEDE]"
                       >
                         <div>
                           <div
@@ -2040,12 +2037,12 @@ export default function ServicesSectorsPageV2() {
                   {/* Expanded Content */}
                   {selectedSector === sector.id && (
                     <div
-                      className="pt-5" style={{ marginTop: "20px", borderTop: `1px solid ${"#DEDEDE"}` }}
+                      className="pt-5 mt-5 border-t border-[#DEDEDE]"
                     >
                       {/* Show problem if in "all" view */}
                       {filterCategory === "all" && (
                         <p
-                          className="text-[13px] leading-[1.6] text-[#666] font-['Inter',sans-serif]" style={{ margin: "0 0 16px 0" }}
+                          className="text-[13px] leading-[1.6] text-[#666] font-['Inter',sans-serif] mb-4 mt-0 mx-0"
                         >
                           {sector.problem}
                         </p>
@@ -2106,7 +2103,7 @@ export default function ServicesSectorsPageV2() {
             <div>
               {/* Pill Badge - Light Background Variant */}
               <div
-                className="inline-flex items-center gap-2 rounded-full mb-6 bg-white px-5 py-2.5" style={{ border: `1px solid ${"#DEDEDE"}` }}
+                className="inline-flex items-center gap-2 rounded-full mb-6 bg-white px-5 py-2.5 border border-[#DEDEDE]"
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
@@ -2132,7 +2129,7 @@ export default function ServicesSectorsPageV2() {
 
               {/* Quote */}
               <div
-                className="pl-6" style={{ borderLeft: `4px solid ${"#B8D935"}`, marginBottom: isMobile ? "24px" : "52px" }}
+                className="pl-6 border-l-4 border-l-[#B8D935]" style={{ marginBottom: isMobile ? "24px" : "52px" }}
               >
                 <p
                   className="text-lg italic font-['Georgia',serif] m-0 leading-[1.6] text-[#1B4D3E]"
@@ -2166,7 +2163,7 @@ export default function ServicesSectorsPageV2() {
               <div>
                 <button
                   onClick={() => setShowPathways(!showPathways)}
-                  className="w-full rounded-2xl cursor-pointer flex items-center justify-between bg-white px-5 py-4" style={{ border: `1px solid ${"#DEDEDE"}` }}
+                  className="w-full rounded-2xl cursor-pointer flex items-center justify-between bg-white px-5 py-4 border border-[#DEDEDE]"
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -2212,7 +2209,7 @@ export default function ServicesSectorsPageV2() {
                   >
                     {/* Farm to Fork */}
                     <div
-                      className="rounded-2xl bg-white p-5" style={{ border: `1px solid ${"#DEDEDE"}` }}
+                      className="rounded-2xl bg-white p-5 border border-[#DEDEDE]"
                     >
                       <div
                         className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
@@ -2237,7 +2234,7 @@ export default function ServicesSectorsPageV2() {
 
                     {/* Healthcare Delivery */}
                     <div
-                      className="rounded-2xl bg-white p-5" style={{ border: `1px solid ${"#DEDEDE"}` }}
+                      className="rounded-2xl bg-white p-5 border border-[#DEDEDE]"
                     >
                       <div
                         className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
@@ -2262,7 +2259,7 @@ export default function ServicesSectorsPageV2() {
 
                     {/* Skills to Jobs */}
                     <div
-                      className="rounded-2xl bg-white p-5" style={{ border: `1px solid ${"#DEDEDE"}` }}
+                      className="rounded-2xl bg-white p-5 border border-[#DEDEDE]"
                     >
                       <div
                         className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
@@ -2309,7 +2306,7 @@ export default function ServicesSectorsPageV2() {
               >
                 {/* Farm to Fork */}
                 <div
-                  className="rounded-[20px] bg-white p-7" style={{ border: `1px solid ${"#DEDEDE"}` }}
+                  className="rounded-[20px] bg-white p-7 border border-[#DEDEDE]"
                 >
                   <div
                     className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
@@ -2341,7 +2338,7 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Healthcare Delivery */}
                 <div
-                  className="rounded-[20px] bg-white p-7" style={{ border: `1px solid ${"#DEDEDE"}` }}
+                  className="rounded-[20px] bg-white p-7 border border-[#DEDEDE]"
                 >
                   <div
                     className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
@@ -2373,7 +2370,7 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Skills to Jobs */}
                 <div
-                  className="rounded-[20px] bg-white p-7" style={{ border: `1px solid ${"#DEDEDE"}` }}
+                  className="rounded-[20px] bg-white p-7 border border-[#DEDEDE]"
                 >
                   <div
                     className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
@@ -2419,7 +2416,7 @@ export default function ServicesSectorsPageV2() {
           <div style={{ marginBottom: isMobile ? "32px" : "44px" }}>
             {/* Pill Badge */}
             <div
-              className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5" style={{ border: `1px solid ${"#DEDEDE"}` }}
+              className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5 border border-[#DEDEDE]"
             >
               <span
                 className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
@@ -2456,8 +2453,8 @@ export default function ServicesSectorsPageV2() {
 
           {/* Audience Tabs */}
           <div
+            className="flex box-border"
             style={{
-              display: "flex",
               gap: isMobile ? "8px" : "4px",
               marginBottom: isMobile ? "28px" : "36px",
               ...(isMobile
@@ -2468,7 +2465,6 @@ export default function ServicesSectorsPageV2() {
                     backgroundColor: "#F3F5F2",
                     borderRadius: "12px",
                     padding: "5px",
-                    boxSizing: "border-box",
                     width: "100%",
                   }),
             }}
@@ -2487,17 +2483,12 @@ export default function ServicesSectorsPageV2() {
                       setShowAllAudSvc(false);
                     }
                   }}
+                  className="flex items-center justify-center border-none cursor-pointer transition-all duration-[250ms] ease-in-out"
                   style={{
                     flex: isMobile ? "0 0 auto" : "1",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                     gap: isMobile ? "0" : "9px",
                     padding: isMobile ? "12px" : "13px 20px",
-                    border: "none",
                     borderRadius: isMobile ? "12px" : "9px",
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
                     backgroundColor: isActive ? colors.white : "transparent",
                     boxShadow: isActive && !isMobile ? "0 1px 4px rgba(0,0,0,0.06)" : "none",
                     ...(isMobile
@@ -2538,7 +2529,7 @@ export default function ServicesSectorsPageV2() {
             (() => {
               const aud = audienceServicesData.find((a) => a.id === activeAudSvc);
               return (
-                <div className="text-center mb-6" style={{ marginTop: "-16px" }}>
+                <div className="text-center mb-6 -mt-4">
                   <span
                     className="text-[13px] font-bold font-['DM_Sans',sans-serif] text-[#1B4D3E]"
                   >
@@ -2669,15 +2660,15 @@ export default function ServicesSectorsPageV2() {
 
                         {/* Expanded Detail */}
                         <div
-                          className="overflow-hidden" style={{ maxHeight: isExpanded ? "400px" : "0", opacity: isExpanded ? 1 : 0, transition: "max-height 0.35s ease, opacity 0.25s ease, margin 0.3s ease", marginTop: isExpanded ? "20px" : "0" }}
+                          className="overflow-hidden transition-[max-height,opacity,margin] duration-[350ms,250ms,300ms] ease-in-out" style={{ maxHeight: isExpanded ? "400px" : "0", opacity: isExpanded ? 1 : 0, marginTop: isExpanded ? "20px" : "0" }}
                         >
                           <div
-                            className="pt-5 grid gap-3.5" style={{ borderTop: `1px solid ${"#DEDEDE"}`, gridTemplateColumns: isMobile ? "1fr" : "repeat(3, minmax(0, 1fr))" }}
+                            className="pt-5 grid gap-3.5 border-t border-[#DEDEDE]" style={{ gridTemplateColumns: isMobile ? "1fr" : "repeat(3, minmax(0, 1fr))" }}
                           >
                             {svc.detail.lines.map((line, li) => (
                               <div
                                 key={li}
-                                className="flex flex-col gap-2 rounded-[10px] bg-white" style={{ padding: isMobile ? "16px" : "20px", border: `1px solid ${"#DEDEDE"}` }}
+                                className="flex flex-col gap-2 rounded-[10px] bg-white border border-[#DEDEDE]" style={{ padding: isMobile ? "16px" : "20px" }}
                               >
                                 <span
                                   className="font-extrabold font-['Inter',sans-serif] leading-[1.2] text-[#1B4D3E]" style={{ fontSize: isMobile ? "18px" : "22px" }}
@@ -2702,7 +2693,7 @@ export default function ServicesSectorsPageV2() {
                 {isMobile && audSvcExpanded === null && (
                   <button
                     onClick={() => setShowAllAudSvc(!showAllAudSvc)}
-                    className="flex items-center justify-center gap-1.5 w-full rounded-[10px] bg-transparent cursor-pointer transition-all duration-[250ms] ease-in-out" style={{ padding: "14px", marginTop: "12px", border: `1px solid ${"#DEDEDE"}` }}
+                    className="flex items-center justify-center gap-1.5 w-full rounded-[10px] bg-transparent cursor-pointer transition-all duration-[250ms] ease-in-out p-3.5 mt-3 border border-[#DEDEDE]"
                   >
                     <svg
                       width="14"
@@ -2739,7 +2730,7 @@ export default function ServicesSectorsPageV2() {
       >
         {/* Background Pattern */}
         <div
-          className="absolute top-0 left-0 right-0 bottom-0 opacity-5 bg-[length:30px_30px]" style={{ backgroundImage: `radial-gradient(${"#B8D935"} 1px, transparent 1px)` }}
+          className="absolute top-0 left-0 right-0 bottom-0 opacity-5 bg-[length:30px_30px] bg-[radial-gradient(#B8D935_1px,transparent_1px)]"
         />
         <div className="max-w-[1200px] mx-auto">
 
@@ -2776,7 +2767,7 @@ export default function ServicesSectorsPageV2() {
             </a>
             <a href="/services" className="no-underline" style={{ display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
               <button
-                className="bg-transparent text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full text-center text-white px-7 py-4" style={{ border: `1.5px solid rgba(255,255,255,0.3)`, width: isMobile ? "100%" : "auto" }}
+                className="bg-transparent text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full text-center text-white px-7 py-4 border-[1.5px] border-white/30" style={{ width: isMobile ? "100%" : "auto" }}
               >
                 Explore Sectors
               </button>
@@ -2794,13 +2785,13 @@ export default function ServicesSectorsPageV2() {
       {/* Footer — Exact match to BRIDGE_Footer_Exact_Build_Handoff.md */}
       <footer className="p-0 bg-[#1B4D3E]">
         {/* Section separator */}
-        <div style={{ padding: "0 80px" }}>
+        <div className="px-20">
           <div className="h-[0.5px] bg-white/[0.08]" />
         </div>
 
         {isMobile ? (
           /* ═══ MOBILE FOOTER ═══ */
-          <div className="flex flex-col gap-6" style={{ padding: "32px 20px 16px" }}>
+          <div className="flex flex-col gap-6 pt-8 px-5 pb-4">
             {/* Row 1: Logo + Nav labels */}
             <div className="flex items-center gap-6">
               <div className="shrink-0">
@@ -2905,7 +2896,7 @@ export default function ServicesSectorsPageV2() {
             <div className="flex gap-2">
               <input
                 placeholder="Subscribe to insights"
-                className="rounded-lg bg-white/5 text-xs font-['DM_Sans',sans-serif] outline-none text-white px-3.5 py-[11px] border border-white/[0.12]" style={{ flex: 1 }}
+                className="rounded-lg bg-white/5 text-xs font-['DM_Sans',sans-serif] outline-none text-white px-3.5 py-[11px] border border-white/[0.12] flex-1"
               />
               <button
                 className="border-none text-xs font-bold font-['DM_Sans',sans-serif] cursor-pointer rounded-lg bg-[#B8D935] text-[#1B4D3E] px-[18px] py-[11px]"
@@ -2944,7 +2935,7 @@ export default function ServicesSectorsPageV2() {
         ) : (
           /* ═══ DESKTOP FOOTER ═══ */
           <>
-            <div className="grid" style={{ padding: "64px 80px 32px", gridTemplateColumns: "325px 1fr", gap: "220px" }}>
+            <div className="grid pt-16 px-20 pb-8 grid-cols-[325px_1fr] gap-[220px]">
               {/* LEFT — Brand */}
               <div className="flex flex-col justify-between">
                 <div>
@@ -3061,7 +3052,7 @@ export default function ServicesSectorsPageV2() {
                     <div className="flex gap-2">
                       <input
                         placeholder="Your email address"
-                        className="rounded-lg bg-white/5 text-[13px] font-['DM_Sans',sans-serif] outline-none h-11 box-border text-white px-4 py-3 border border-white/[0.12]" style={{ flex: 1 }}
+                        className="rounded-lg bg-white/5 text-[13px] font-['DM_Sans',sans-serif] outline-none h-11 box-border text-white px-4 py-3 border border-white/[0.12] flex-1"
                       />
                       <button
                         className="border-none text-[13px] font-bold font-['DM_Sans',sans-serif] cursor-pointer rounded-lg h-11 box-border bg-[#B8D935] text-[#1B4D3E] px-5 py-3"
@@ -3161,7 +3152,7 @@ export default function ServicesSectorsPageV2() {
                 </div>
 
                 {/* Sector Grid Widget — desktop only */}
-                <div style={{ marginBottom: "50px" }}>
+                <div className="mb-[50px]">
                   <div
                     className="text-xs font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-3 transition-colors duration-[250ms] ease-in-out leading-none min-h-[12px]" style={{ color: footerSectorHovered !== null ? "#B8D935" : "rgba(255,255,255,0.4)" }}
                   >
@@ -3190,7 +3181,7 @@ export default function ServicesSectorsPageV2() {
                           title={sector.label}
                           onMouseEnter={() => setFooterSectorHovered(i)}
                           onMouseLeave={() => setFooterSectorHovered(null)}
-                          className="flex items-center justify-center w-11 h-11 rounded-[10px] cursor-pointer no-underline box-border" style={{ backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)", border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`, transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)", transform: isH ? "translateY(-2px)" : "none", boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none" }}
+                          className="flex items-center justify-center w-11 h-11 rounded-[10px] cursor-pointer no-underline box-border transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]" style={{ backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)", border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`, transform: isH ? "translateY(-2px)" : "none", boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none" }}
                         >
                           <div
                             className="transition-opacity duration-[250ms] ease-in-out flex items-center justify-center" style={{ opacity: isH ? 1 : 0.5 }}

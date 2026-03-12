@@ -28,19 +28,14 @@ export default function App() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        overflow: "hidden",
-        background: C.bg,
-        fontFamily: "'DM Sans',Inter,sans-serif",
-      }}
+      className="flex h-screen overflow-hidden font-['DM_Sans',Inter,sans-serif]"
+      style={{ background: C.bg }}
     >
       <style>{`*{box-sizing:border-box}::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px}`}</style>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} active={sector} setActive={handleSetSector} />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         <TopNav sector={sector} syncing={syncing} setSyncing={setSyncing} />
-        <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
+        <div className="flex-1 flex overflow-hidden">
           <LeftPanel sector={sector} selId={selId} setSelId={setSelId} tab={listTab} setTab={setListTab} />
           <RightPanel selId={selId} setSelId={setSelId} />
         </div>

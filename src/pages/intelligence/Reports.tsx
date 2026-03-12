@@ -60,139 +60,59 @@ export default function BridgeReportsPage() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        overflow: "hidden",
-        background: C.bg,
-        fontFamily: "'DM Sans',sans-serif",
-      }}
+      className="flex h-screen overflow-hidden font-['DM_Sans',sans-serif]"
+      style={{ background: C.bg }}
     >
       <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}`}</style>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} activeSector={s} setActiveSector={setS} />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Top Nav */}
-        <div
-          style={{
-            background: "#fff",
-            borderBottom: "1px solid #E5E7EB",
-            padding: "0 20px",
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            height: 56,
-            flexShrink: 0,
-            boxShadow: "0 1px 0 rgba(0,0,0,0.04)",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div className="bg-white border-b border-[#E5E7EB] px-5 flex items-center gap-3 h-14 shrink-0 shadow-[0_1px_0_rgba(0,0,0,0.04)]">
+          <div className="flex items-center gap-4">
             <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: C.dark }}>Reports</div>
-              <div style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif" }}>
+              <div className="text-sm font-bold" style={{ color: C.dark }}>Reports</div>
+              <div className="text-[10px] font-['Inter',sans-serif]" style={{ color: C.muted }}>
                 {new Date().toLocaleString("default", { month: "long", year: "numeric" })}
               </div>
             </div>
-            <div style={{ width: 1, height: 28, background: C.line }} />
+            <div className="w-px h-7" style={{ background: C.line }} />
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "3px 10px",
-                borderRadius: 7,
-                background: C.accentBg,
-                border: `1px solid ${C.accent}44`,
-              }}
+              className="flex items-center gap-[5px] py-[3px] px-2.5 rounded-[7px]"
+              style={{ background: C.accentBg, border: `1px solid ${C.accent}44` }}
             >
               {s.svgIcon(C.primary, 11)}
-              <span style={{ fontSize: 10, fontWeight: 700, color: C.primary, fontFamily: "Inter,sans-serif" }}>
+              <span className="text-[10px] font-bold font-['Inter',sans-serif]" style={{ color: C.primary }}>
                 {s.short}
               </span>
             </div>
           </div>
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 7 }}>
-            <div
-              style={{
-                width: 380,
-                display: "flex",
-                alignItems: "center",
-                gap: 7,
-                background: "#F9FAFB",
-                border: "1px solid #E5E7EB",
-                borderRadius: 9,
-                padding: "7px 11px",
-              }}
-            >
+          <div className="ml-auto flex items-center gap-[7px]">
+            <div className="w-[380px] flex items-center gap-[7px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-[9px] py-[7px] px-[11px]">
               <Search size={13} color={C.muted} />
               <input
                 placeholder="Search reports, signals..."
-                style={{
-                  background: "none",
-                  border: "none",
-                  outline: "none",
-                  fontSize: 12,
-                  color: C.mid,
-                  fontFamily: "Inter,sans-serif",
-                  width: "100%",
-                }}
+                className="bg-transparent border-none outline-none text-xs w-full font-['Inter',sans-serif]"
+                style={{ color: C.mid }}
               />
             </div>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <button
                 onClick={() => setNotif((o) => !o)}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 9,
-                  border: "1px solid #E5E7EB",
-                  background: "#fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  position: "relative",
-                }}
+                className="w-9 h-9 rounded-[9px] border border-[#E5E7EB] bg-white flex items-center justify-center cursor-pointer relative"
               >
                 <Bell size={15} color={C.mid} />
                 <div
-                  style={{
-                    position: "absolute",
-                    top: 7,
-                    right: 7,
-                    width: 7,
-                    height: 7,
-                    borderRadius: "50%",
-                    background: C.red,
-                    border: "2px solid #fff",
-                  }}
+                  className="absolute top-[7px] right-[7px] w-[7px] h-[7px] rounded-full border-2 border-white"
+                  style={{ background: C.red }}
                 />
               </button>
               {notif && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 44,
-                    right: 0,
-                    width: 280,
-                    background: "#fff",
-                    border: "1px solid #E5E7EB",
-                    borderRadius: 12,
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
-                    zIndex: 99,
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    style={{
-                      padding: "11px 14px",
-                      borderBottom: "1px solid #E5E7EB",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span style={{ fontSize: 13, fontWeight: 700, color: C.dark }}>Alerts</span>
+                <div className="absolute top-[44px] right-0 w-[280px] bg-white border border-[#E5E7EB] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.1)] z-[99] overflow-hidden">
+                  <div className="py-[11px] px-[14px] border-b border-[#E5E7EB] flex justify-between">
+                    <span className="text-[13px] font-bold" style={{ color: C.dark }}>Alerts</span>
                     <span
-                      style={{ fontSize: 11, color: C.accent, cursor: "pointer", fontWeight: 600 }}
+                      className="text-[11px] cursor-pointer font-semibold"
+                      style={{ color: C.accent }}
                       onClick={() => setNotif(false)}
                     >
                       Mark all read
@@ -201,21 +121,15 @@ export default function BridgeReportsPage() {
                   {s.activity.slice(0, 3).map((a, i) => (
                     <div
                       key={i}
-                      style={{ display: "flex", gap: 9, padding: "10px 14px", borderBottom: "1px solid #F3F4F6" }}
+                      className="flex gap-[9px] py-2.5 px-[14px] border-b border-[#F3F4F6]"
                     >
                       <div
-                        style={{
-                          width: 7,
-                          height: 7,
-                          borderRadius: "50%",
-                          background: sigCol(a.sig),
-                          marginTop: 4,
-                          flexShrink: 0,
-                        }}
+                        className="w-[7px] h-[7px] rounded-full mt-1 shrink-0"
+                        style={{ background: sigCol(a.sig) }}
                       />
                       <div>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: C.dark, lineHeight: 1.3 }}>{a.h}</div>
-                        <div style={{ fontSize: 10, color: C.muted, marginTop: 2, fontFamily: "Inter,sans-serif" }}>
+                        <div className="text-xs font-semibold leading-[1.3]" style={{ color: C.dark }}>{a.h}</div>
+                        <div className="text-[10px] mt-0.5 font-['Inter',sans-serif]" style={{ color: C.muted }}>
                           {a.date}
                         </div>
                       </div>
@@ -226,49 +140,17 @@ export default function BridgeReportsPage() {
             </div>
             <button
               onClick={handleSync}
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 9,
-                border: "1px solid #E5E7EB",
-                background: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
+              className="w-9 h-9 rounded-[9px] border border-[#E5E7EB] bg-white flex items-center justify-center cursor-pointer"
             >
               <RefreshCw size={14} color={C.mid} className={syncing ? "spin" : ""} />
             </button>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "5px 11px",
-                border: "1px solid #E5E7EB",
-                borderRadius: 9,
-                cursor: "pointer",
-                background: "#fff",
-              }}
-            >
-              <div
-                style={{
-                  width: 27,
-                  height: 27,
-                  borderRadius: "50%",
-                  background: "rgba(184,217,53,0.2)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
+            <div className="flex items-center gap-2 py-[5px] px-[11px] border border-[#E5E7EB] rounded-[9px] cursor-pointer bg-white">
+              <div className="w-[27px] h-[27px] rounded-full bg-[rgba(184,217,53,0.2)] flex items-center justify-center shrink-0">
                 <User size={13} color={C.primary} />
               </div>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.dark, lineHeight: 1 }}>Joseph A.</div>
-                <div style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif" }}>Full Access</div>
+                <div className="text-xs font-bold leading-none" style={{ color: C.dark }}>Joseph A.</div>
+                <div className="text-[10px] font-['Inter',sans-serif]" style={{ color: C.muted }}>Full Access</div>
               </div>
               <ChevronDown size={11} color={C.muted} />
             </div>
@@ -276,124 +158,53 @@ export default function BridgeReportsPage() {
         </div>
 
         {/* Page Header Bar */}
-        <div
-          style={{
-            background: "#fff",
-            borderBottom: "1px solid #E5E7EB",
-            padding: "10px 20px",
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="bg-white border-b border-[#E5E7EB] py-2.5 px-5 shrink-0 flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5">
             <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                background: C.accentBg,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              className="w-8 h-8 rounded-lg flex items-center justify-center"
+              style={{ background: C.accentBg }}
             >
               <FileText size={15} color={C.primary} />
             </div>
             <div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>Sector Reports</div>
-              <div style={{ fontSize: 10, color: C.muted, fontFamily: "Inter,sans-serif" }}>
+              <div className="text-[15px] font-bold" style={{ color: C.dark }}>Sector Reports</div>
+              <div className="text-[10px] font-['Inter',sans-serif]" style={{ color: C.muted }}>
                 Comprehensive analysis & intelligence
               </div>
             </div>
           </div>
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 7 }}>
+          <div className="ml-auto flex items-center gap-[7px]">
             <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 12px",
-                border: "1px solid #E5E7EB",
-                borderRadius: 8,
-                background: "#fff",
-                fontSize: 11,
-                color: C.mid,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
+              className="flex items-center gap-[5px] py-1.5 px-3 border border-[#E5E7EB] rounded-lg bg-white text-[11px] cursor-pointer font-['Inter',sans-serif]"
+              style={{ color: C.mid }}
             >
               <Calendar size={12} color={C.muted} />
               This Month
               <ChevronDown size={10} color={C.muted} />
             </button>
             <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 12px",
-                border: "1px solid #E5E7EB",
-                borderRadius: 8,
-                background: "#fff",
-                fontSize: 11,
-                color: C.mid,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
+              className="flex items-center gap-[5px] py-1.5 px-3 border border-[#E5E7EB] rounded-lg bg-white text-[11px] cursor-pointer font-['Inter',sans-serif]"
+              style={{ color: C.mid }}
             >
               <SlidersHorizontal size={12} />
               Filters
             </button>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <button
                 onClick={() => setExportOpen((o) => !o)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                  padding: "6px 12px",
-                  border: "1px solid #E5E7EB",
-                  borderRadius: 8,
-                  background: "#fff",
-                  fontSize: 11,
-                  color: C.mid,
-                  cursor: "pointer",
-                  fontFamily: "Inter,sans-serif",
-                }}
+                className="flex items-center gap-[5px] py-1.5 px-3 border border-[#E5E7EB] rounded-lg bg-white text-[11px] cursor-pointer font-['Inter',sans-serif]"
+                style={{ color: C.mid }}
               >
                 <Download size={12} />
                 Export
               </button>
               {exportOpen && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 38,
-                    right: 0,
-                    background: "#fff",
-                    border: "1px solid #E5E7EB",
-                    borderRadius: 10,
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-                    zIndex: 50,
-                    overflow: "hidden",
-                    minWidth: 130,
-                  }}
-                >
+                <div className="absolute top-[38px] right-0 bg-white border border-[#E5E7EB] rounded-[10px] shadow-[0_4px_16px_rgba(0,0,0,0.08)] z-50 overflow-hidden min-w-[130px]">
                   {["CSV", "Excel", "PDF", "PNG"].map((f) => (
                     <div
                       key={f}
-                      style={{
-                        padding: "9px 14px",
-                        fontSize: 11,
-                        color: C.mid,
-                        cursor: "pointer",
-                        fontFamily: "Inter,sans-serif",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 8,
-                      }}
+                      className="py-[9px] px-[14px] text-[11px] cursor-pointer font-['Inter',sans-serif] flex items-center gap-2 hover:bg-[#F9FAFB]"
+                      style={{ color: C.mid }}
                       onMouseEnter={(e) => (e.currentTarget.style.background = "#F9FAFB")}
                       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                     >
@@ -405,38 +216,15 @@ export default function BridgeReportsPage() {
               )}
             </div>
             <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 12px",
-                border: "1px solid #E5E7EB",
-                borderRadius: 8,
-                background: "#fff",
-                fontSize: 11,
-                color: C.mid,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-              }}
+              className="flex items-center gap-[5px] py-1.5 px-3 border border-[#E5E7EB] rounded-lg bg-white text-[11px] cursor-pointer font-['Inter',sans-serif]"
+              style={{ color: C.mid }}
             >
               <Printer size={12} />
               Print
             </button>
             <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "6px 14px",
-                border: `1px solid ${C.accent}`,
-                borderRadius: 8,
-                background: C.accentBg,
-                fontSize: 11,
-                color: C.primary,
-                cursor: "pointer",
-                fontFamily: "Inter,sans-serif",
-                fontWeight: 700,
-              }}
+              className="flex items-center gap-[5px] py-1.5 px-[14px] rounded-lg text-[11px] cursor-pointer font-['Inter',sans-serif] font-bold"
+              style={{ border: `1px solid ${C.accent}`, background: C.accentBg, color: C.primary }}
             >
               <Plus size={12} />
               New Report
@@ -445,33 +233,16 @@ export default function BridgeReportsPage() {
         </div>
 
         {/* Tab Bar */}
-        <div
-          style={{
-            background: "#fff",
-            borderBottom: "1px solid #E5E7EB",
-            padding: "0 20px",
-            flexShrink: 0,
-            display: "flex",
-            gap: 0,
-            overflowX: "auto",
-          }}
-        >
+        <div className="bg-white border-b border-[#E5E7EB] px-5 shrink-0 flex overflow-x-auto">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
+              className="py-[11px] px-4 border-none bg-transparent text-xs cursor-pointer whitespace-nowrap transition-all duration-150 font-['Inter',sans-serif]"
               style={{
-                padding: "11px 16px",
-                border: "none",
                 borderBottom: `2px solid ${activeTab === tab.id ? C.accent : "transparent"}`,
-                background: "transparent",
-                fontSize: 12,
                 fontWeight: activeTab === tab.id ? 700 : 500,
                 color: activeTab === tab.id ? C.primary : C.muted,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                transition: "all .15s",
-                fontFamily: "Inter,sans-serif",
               }}
             >
               {tab.label}
@@ -480,12 +251,12 @@ export default function BridgeReportsPage() {
         </div>
 
         {/* Scrollable Content */}
-        <div style={{ flex: 1, overflowY: "auto", padding: 16 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.8fr 1fr", gap: 12, marginBottom: 12, height: 355 }}>
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="grid grid-cols-[1.8fr_1fr] gap-3 mb-3 h-[355px]">
             <MetricsChartCard s={s} tab={activeTab} chartFilter={chartFilter} setChartFilter={setChartFilter} />
             <DonutGoalCard s={s} />
           </div>
-          <div style={{ marginBottom: 12 }}>
+          <div className="mb-3">
             <ComposedChartRow s={s} overtimeView={overtimeView} setOvertimeView={setOvertimeView} />
           </div>
           <TabPanel s={s} tab={activeTab} />
@@ -503,90 +274,30 @@ export default function BridgeReportsPage() {
         </div>
 
         {/* Status Bar */}
-        <div
-          style={{
-            height: 36,
-            flexShrink: 0,
-            background: "#111E17",
-            borderTop: "1px solid #1A2E22",
-            display: "flex",
-            alignItems: "center",
-            padding: "0 22px",
-            gap: 0,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginRight: 20 }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935" }} />
-            <span
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                color: "rgba(255,255,255,0.7)",
-                letterSpacing: ".5px",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
+        <div className="h-9 shrink-0 bg-[#111E17] border-t border-[#1A2E22] flex items-center px-[22px]">
+          <div className="flex items-center gap-1.5 mr-5">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#B8D935]" />
+            <span className="text-[10px] font-bold text-white/70 tracking-[0.5px] font-['Inter',sans-serif]">
               BRIDGE Intelligence
             </span>
           </div>
           {["12 Sectors", "174 Ventures", `Active: ${s.full}`, "Data: Mar 2026"].map((label, i) => (
             <React.Fragment key={i}>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.18)",
-                  marginRight: 14,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+              <span className="text-[10px] text-white/[0.18] mr-3.5 font-['Inter',sans-serif]">
                 ·
               </span>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.35)",
-                  marginRight: 14,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+              <span className="text-[10px] text-white/[0.35] mr-3.5 font-['Inter',sans-serif]">
                 {label}
               </span>
             </React.Fragment>
           ))}
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", fontFamily: "Inter,sans-serif" }}>
+          <div className="ml-auto flex items-center gap-3.5">
+            <span className="text-[10px] text-white/20 font-['Inter',sans-serif]">
               © 2026 BRIDGE PBC
             </span>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "3px 8px",
-                borderRadius: 4,
-                background: "rgba(184,217,53,0.08)",
-                border: "1px solid rgba(184,217,53,0.15)",
-              }}
-            >
-              <div
-                style={{
-                  width: 5,
-                  height: 5,
-                  borderRadius: "50%",
-                  background: "#B8D935",
-                  boxShadow: "0 0 5px #B8D935",
-                }}
-              />
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  color: "#B8D935",
-                  letterSpacing: ".8px",
-                  textTransform: "uppercase",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+            <div className="flex items-center gap-[5px] py-[3px] px-2 rounded bg-[rgba(184,217,53,0.08)] border border-[rgba(184,217,53,0.15)]">
+              <div className="w-[5px] h-[5px] rounded-full bg-[#B8D935] shadow-[0_0_5px_#B8D935]" />
+              <span className="text-[9px] font-bold text-[#B8D935] tracking-[0.8px] uppercase font-['Inter',sans-serif]">
                 Live
               </span>
             </div>

@@ -28,13 +28,8 @@ export default function BridgeAnalyticsPage() {
   if (isMobile) return <MobileApp />;
   return (
     <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        overflow: "hidden",
-        background: C.bg,
-        fontFamily: "'DM Sans',sans-serif",
-      }}
+      className="flex h-screen overflow-hidden font-['DM_Sans',sans-serif]"
+      style={{ background: C.bg }}
     >
       <style>{`*{box-sizing:border-box;}::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:4px;}.aspin{animation:spin 1s linear infinite}`}</style>
       <Sidebar
@@ -48,26 +43,19 @@ export default function BridgeAnalyticsPage() {
           if (sec) setS(sec);
         }}
       />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0, width: 0 }}>
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0 w-0">
         <TopNav s={s} syncing={syncing} setSyncing={setSyncing} />
         <PageHeader s={s} period={period} setPeriod={setPeriod} syncing={syncing} setSyncing={setSyncing} />
-        <div style={{ flex: 1, overflowY: "auto", overflowX: "hidden", padding: "14px 16px", minWidth: 0 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, width: "100%", minWidth: 0 }}>
-            <div
-              style={{
-                gridColumn: "1 / -1",
-                display: "grid",
-                gridTemplateColumns: "repeat(4,1fr)",
-                gap: 12,
-                minHeight: 148,
-              }}
-            >
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-[14px_16px] min-w-0">
+          <div className="grid grid-cols-2 gap-3 w-full min-w-0">
+            <div className="col-span-full grid grid-cols-4 gap-3 min-h-[148px]">
+
               <SparkCard
                 label="Total Market Cap"
                 value={`$${capTotal.toFixed(1)}B`}
                 sublabel="Sector aggregate"
                 iconBg={C.accentBg}
-                iconEl={<span style={{ fontSize: 16, fontWeight: 800, color: C.primary }}>$</span>}
+                iconEl={<span className="text-base font-extrabold" style={{ color: C.primary }}>$</span>}
                 s={s}
                 trend="+5.1%"
               />
@@ -99,114 +87,54 @@ export default function BridgeAnalyticsPage() {
                 trend="+1.2%"
               />
             </div>
-            <div style={{ minWidth: 0, minHeight: 320 }}>
+            <div className="min-w-0 min-h-[320px]">
               <BubbleChart s={s} />
             </div>
-            <div style={{ minWidth: 0, minHeight: 320 }}>
+            <div className="min-w-0 min-h-[320px]">
               <DotMatrixChart s={s} />
             </div>
-            <div style={{ minWidth: 0, minHeight: 286 }}>
+            <div className="min-w-0 min-h-[286px]">
               <ActivityHeatmap s={s} />
             </div>
-            <div style={{ minWidth: 0, minHeight: 286 }}>
+            <div className="min-w-0 min-h-[286px]">
               <SourceBreakdown s={s} />
             </div>
-            <div style={{ minWidth: 0, minHeight: 330 }}>
+            <div className="min-w-0 min-h-[330px]">
               <CompaniesTable s={s} />
             </div>
-            <div style={{ minWidth: 0, minHeight: 330 }}>
+            <div className="min-w-0 min-h-[330px]">
               <EngagementMetrics s={s} />
             </div>
-            <div style={{ gridColumn: "1 / -1", minWidth: 0, minHeight: 340 }}>
+            <div className="col-span-full min-w-0 min-h-[340px]">
               <WorldMap s={s} />
             </div>
-            <div style={{ gridColumn: "1 / -1", height: 8 }} />
+            <div className="col-span-full h-2" />
           </div>
         </div>
-        <div
-          style={{
-            height: 36,
-            flexShrink: 0,
-            background: "#111E17",
-            borderTop: "1px solid #1A2E22",
-            display: "flex",
-            alignItems: "center",
-            padding: "0 22px",
-            gap: 0,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginRight: 20 }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#B8D935" }} />
-            <span
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                color: "rgba(255,255,255,0.7)",
-                letterSpacing: ".5px",
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
+        <div className="h-9 shrink-0 bg-[#111E17] border-t border-[#1A2E22] flex items-center px-[22px]">
+          <div className="flex items-center gap-1.5 mr-5">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#B8D935]" />
+            <span className="text-[10px] font-bold text-white/70 tracking-[0.5px] font-['Inter',sans-serif]">
               BRIDGE Intelligence
             </span>
           </div>
           {["12 Sectors", "174 Ventures", `Active: ${s.full}`, "Data: Mar 2026"].map((label, i) => (
-            <span key={i} style={{ display: "flex", alignItems: "center" }}>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.18)",
-                  marginRight: 10,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+            <span key={i} className="flex items-center">
+              <span className="text-[10px] text-white/[0.18] mr-2.5 font-['Inter',sans-serif]">
                 ·
               </span>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.35)",
-                  marginRight: 10,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+              <span className="text-[10px] text-white/[0.35] mr-2.5 font-['Inter',sans-serif]">
                 {label}
               </span>
             </span>
           ))}
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", fontFamily: "Inter,sans-serif" }}>
+          <div className="ml-auto flex items-center gap-3.5">
+            <span className="text-[10px] text-white/20 font-['Inter',sans-serif]">
               © 2026 BRIDGE PBC
             </span>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                padding: "3px 8px",
-                borderRadius: 4,
-                background: "rgba(184,217,53,0.08)",
-                border: "1px solid rgba(184,217,53,0.15)",
-              }}
-            >
-              <div
-                style={{
-                  width: 5,
-                  height: 5,
-                  borderRadius: "50%",
-                  background: "#B8D935",
-                  boxShadow: "0 0 5px #B8D935",
-                }}
-              />
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  color: "#B8D935",
-                  letterSpacing: ".8px",
-                  textTransform: "uppercase",
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+            <div className="flex items-center gap-[5px] py-[3px] px-2 rounded bg-[rgba(184,217,53,0.08)] border border-[rgba(184,217,53,0.15)]">
+              <div className="w-[5px] h-[5px] rounded-full bg-[#B8D935] shadow-[0_0_5px_#B8D935]" />
+              <span className="text-[9px] font-bold text-[#B8D935] tracking-[0.8px] uppercase font-['Inter',sans-serif]">
                 Live
               </span>
             </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { cn } from "@/lib/utils";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
 
@@ -215,22 +216,12 @@ const SectorGrid = () => {
   return (
     <div>
       <div
-        style={{
-          fontSize: "12px",
-          fontWeight: "600",
-          color: hovered !== null ? colors.accent : "rgba(255,255,255,0.4)",
-          fontFamily: "'DM Sans', sans-serif",
-          textTransform: "uppercase",
-          letterSpacing: "1.5px",
-          marginBottom: "12px",
-          transition: "color 0.25s ease",
-          lineHeight: "1",
-          minHeight: "12px",
-        }}
+        className="text-xs font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-3 transition-colors duration-[250ms] ease-in-out leading-none min-h-[12px]"
+        style={{ color: hovered !== null ? colors.accent : "rgba(255,255,255,0.4)" }}
       >
         {hovered !== null ? FOOTER_SECTOR_ICONS[hovered].label : "Explore 12 Sectors"}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="flex justify-between items-center">
         {FOOTER_SECTOR_ICONS.map((sector, i) => {
           const isH = hovered === i;
           return (
@@ -240,31 +231,17 @@ const SectorGrid = () => {
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
+              className="flex items-center justify-center w-11 h-11 rounded-[10px] cursor-pointer no-underline transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] box-border"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "44px",
-                height: "44px",
-                borderRadius: "10px",
                 backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)",
                 border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`,
-                cursor: "pointer",
-                textDecoration: "none",
-                transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
                 transform: isH ? "translateY(-2px)" : "none",
                 boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
-                boxSizing: "border-box",
               }}
             >
               <div
-                style={{
-                  opacity: isH ? 1 : 0.5,
-                  transition: "opacity 0.25s ease",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className="flex items-center justify-center transition-opacity duration-[250ms] ease-in-out"
+                style={{ opacity: isH ? 1 : 0.5 }}
               >
                 {sector.icon(isH ? colors.accent : "rgba(255,255,255,0.85)")}
               </div>
@@ -566,11 +543,9 @@ export default function BRIDGEHomePage() {
       <section style={{ backgroundColor: colors.white, padding: isMobile ? "36px 20px 24px" : "60px 48px 40px 48px" }}>
         <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
           <div
+            className="flex justify-between flex-wrap"
             style={{
-              display: "flex",
               alignItems: isMobile ? "flex-start" : "flex-end",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
               gap: isMobile ? "24px" : "40px",
               flexDirection: isMobile ? "column" : "row",
             }}
@@ -593,31 +568,17 @@ export default function BRIDGEHomePage() {
               </span>
             </h1>
             <div
-              style={{
-                display: "flex",
-                gap: "12px",
-                alignItems: "center",
-                marginBottom: isMobile ? 0 : "8px",
-                flex: "0 0 auto",
-                animation: "fadeUp 0.8s ease-out 0.2s both",
-              }}
+              className="flex gap-3 items-center flex-[0_0_auto] animate-[fadeUp_0.8s_ease-out_0.2s_both]"
+              style={{ marginBottom: isMobile ? 0 : "8px" }}
             >
               <a href="/services" className="no-underline">
               <button
-                className="cta-primary"
+                className="cta-primary border-none font-medium font-[Inter,sans-serif] cursor-pointer rounded-[50px] flex items-center gap-2"
                 style={{
                   backgroundColor: colors.primary,
                   color: colors.white,
-                  border: "none",
                   padding: isMobile ? "12px 22px" : "16px 28px",
                   fontSize: isMobile ? "13px" : "14px",
-                  fontWeight: "500",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
                 }}
               >
                 Explore Our Work
@@ -854,17 +815,8 @@ export default function BRIDGEHomePage() {
               onMouseLeave={() => setHoveredCard(null)}
             >
               <div
-                style={{
-                  position: "absolute",
-                  top: "-20px",
-                  right: "-20px",
-                  width: "120px",
-                  height: "120px",
-                  borderRadius: "50%",
-                  backgroundColor: "rgba(27, 77, 62, 0.06)",
-                  transition: "transform 0.5s ease",
-                  transform: hoveredCard === 2 ? "scale(1.3)" : "scale(1)",
-                }}
+                className="absolute -top-5 -right-5 w-[120px] h-[120px] rounded-full bg-[rgba(27,77,62,0.06)] transition-transform duration-500 ease-in-out"
+                style={{ transform: hoveredCard === 2 ? "scale(1.3)" : "scale(1)" }}
               />
               <div className="relative">
                 <div className="flex justify-between items-start">
@@ -981,13 +933,11 @@ export default function BRIDGEHomePage() {
       {/* THE APPROACH */}
       <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "100px 48px" }}>
         <div
+          className="mx-auto grid items-stretch"
           style={{
             maxWidth: CONTENT_MAX_WIDTH,
-            margin: "0 auto",
-            display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1fr 1.2fr",
             gap: isMobile ? "40px" : "80px",
-            alignItems: "stretch",
           }}
         >
           <div className="flex flex-col h-full self-stretch">
@@ -1024,22 +974,10 @@ export default function BRIDGEHomePage() {
             {!isMobile && (
               <a href="/methodology" className="no-underline">
               <button
-                className="cta-approach"
+                className="cta-approach border-none p-[16px_32px] text-[15px] font-medium font-[Inter,sans-serif] cursor-pointer rounded-[50px] flex items-center gap-2.5 mt-auto self-start"
                 style={{
                   backgroundColor: colors.primary,
                   color: colors.white,
-                  border: "none",
-                  padding: "16px 32px",
-                  fontSize: "15px",
-                  fontWeight: "500",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  marginTop: "auto",
-                  alignSelf: "flex-start",
                 }}
               >
                 See How It Works
@@ -1060,41 +998,23 @@ export default function BRIDGEHomePage() {
               {["identification", "connection", "engagement"].map((tab, i) => (
                 <button
                   key={tab}
-                  className="approach-tab"
+                  className="approach-tab flex-1 font-[Inter,sans-serif] capitalize cursor-pointer rounded-xl flex items-center justify-center"
                   onClick={() => handleTabChange(tab)}
                   style={{
-                    flex: 1,
                     padding: isMobile ? "12px 10px" : "16px 20px",
                     fontSize: isMobile ? "12px" : "14px",
                     fontWeight: activeTab === tab ? "700" : "500",
-                    fontFamily: "Inter, sans-serif",
-                    textTransform: "capitalize",
-                    cursor: "pointer",
-                    borderRadius: "12px",
                     border: activeTab === tab ? `2px solid ${colors.primary}` : `1px solid ${colors.line}`,
                     backgroundColor: activeTab === tab ? "rgba(27, 77, 62, 0.04)" : "transparent",
                     color: activeTab === tab ? colors.primary : "#888",
-                    display: "flex",
-                    alignItems: "center",
                     gap: isMobile ? "6px" : "10px",
-                    justifyContent: "center",
                   }}
                 >
                   <span
+                    className="w-6 h-6 rounded-full text-[11px] font-bold flex items-center justify-center font-[Inter,sans-serif] transition-all duration-300 ease-in-out shrink-0"
                     style={{
-                      width: "24px",
-                      height: "24px",
-                      borderRadius: "50%",
                       backgroundColor: activeTab === tab ? colors.accent : colors.background,
                       color: activeTab === tab ? colors.primary : "#999",
-                      fontSize: "11px",
-                      fontWeight: "700",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontFamily: "Inter, sans-serif",
-                      transition: "all 0.3s ease",
-                      flexShrink: 0,
                     }}
                   >
                     {i + 1}
@@ -1105,84 +1025,56 @@ export default function BRIDGEHomePage() {
             </div>
 
             <div
+              className="rounded-[20px] transition-all duration-200 ease-in-out"
               style={{
                 backgroundColor: colors.background,
-                borderRadius: "20px",
                 padding: isMobile ? "24px 20px" : "32px",
                 opacity: tabTransition ? 0 : 1,
                 transform: tabTransition ? "translateY(8px)" : "translateY(0)",
-                transition: "all 0.2s ease",
               }}
             >
-              <div style={{ display: "flex", gap: "16px", marginBottom: "28px", alignItems: "flex-start" }}>
+              <div className="flex gap-4 mb-7 items-start">
                 <div
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "12px",
-                    backgroundColor: colors.white,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-                  }}
+                  className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+                  style={{ backgroundColor: colors.white }}
                 >
                   {current.icon}
                 </div>
                 <p
+                  className="leading-[1.7] font-[Inter,sans-serif] m-0"
                   style={{
                     fontSize: isMobile ? "14px" : "17px",
-                    lineHeight: "1.7",
                     color: colors.dark,
-                    fontFamily: "Inter, sans-serif",
-                    margin: 0,
                   }}
                 >
                   {current.text}
                 </p>
               </div>
               <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: isMobile ? "8px" : "16px",
-                  marginBottom: "28px",
-                }}
+                className="grid grid-cols-3 mb-7"
+                style={{ gap: isMobile ? "8px" : "16px" }}
               >
                 {current.stats.map((stat, i) => (
                   <div
                     key={i}
+                    className="rounded-[14px] text-center shadow-[0_2px_8px_rgba(0,0,0,0.04)] cursor-default"
                     style={{
                       backgroundColor: colors.white,
-                      borderRadius: "14px",
                       padding: isMobile ? "14px 10px" : "18px 16px",
-                      textAlign: "center",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-                      cursor: "default",
                     }}
                   >
                     <div
+                      className="font-bold font-[Inter,sans-serif] leading-none mb-1.5"
                       style={{
                         fontSize: isMobile ? "20px" : "24px",
-                        fontWeight: "700",
                         color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                        lineHeight: "1",
-                        marginBottom: "6px",
                       }}
                     >
                       {stat.value}
                     </div>
                     <div
-                      style={{
-                        fontSize: isMobile ? "9px" : "11px",
-                        fontWeight: "600",
-                        color: "#999",
-                        fontFamily: "Inter, sans-serif",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.5px",
-                      }}
+                      className="font-semibold text-[#999] font-[Inter,sans-serif] uppercase tracking-[0.5px]"
+                      style={{ fontSize: isMobile ? "9px" : "11px" }}
                     >
                       {stat.label}
                     </div>
@@ -1193,14 +1085,13 @@ export default function BRIDGEHomePage() {
                 {current.progressItems.map((item, i) => (
                   <div
                     key={`${activeTab}-${i}`}
-                    style={{ display: "flex", alignItems: "center", gap: isMobile ? "10px" : "14px" }}
+                    className="flex items-center"
+                    style={{ gap: isMobile ? "10px" : "14px" }}
                   >
                     <span
+                      className="font-semibold text-[#666] font-[Inter,sans-serif]"
                       style={{
                         fontSize: isMobile ? "11px" : "12px",
-                        fontWeight: "600",
-                        color: "#666",
-                        fontFamily: "Inter, sans-serif",
                         minWidth: isMobile ? "100px" : "140px",
                       }}
                     >
@@ -1227,13 +1118,10 @@ export default function BRIDGEHomePage() {
                   <div
                     key={i}
                     onClick={() => handleTabChange(["identification", "connection", "engagement"][i])}
+                    className="h-2 rounded cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
                     style={{
                       width: tabIndex === i ? "24px" : "8px",
-                      height: "8px",
-                      borderRadius: "4px",
                       backgroundColor: tabIndex === i ? colors.primary : tabIndex > i ? colors.accent : colors.line,
-                      transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                      cursor: "pointer",
                     }}
                   />
                 ))}
@@ -1253,18 +1141,15 @@ export default function BRIDGEHomePage() {
           }}
         >
           <div
+            className="mx-auto box-border"
             style={{
               maxWidth: CONTENT_MAX_WIDTH,
-              margin: "0 auto",
               padding: isMobile ? "0 24px" : "0 48px",
-              boxSizing: "border-box",
             }}
           >
             <div
+              className="flex justify-between items-start"
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: isMobile ? "flex-start" : "flex-start",
                 marginBottom: isMobile ? "32px" : "50px",
                 flexDirection: isMobile ? "column" : "row",
                 gap: isMobile ? "20px" : "0",
@@ -1282,15 +1167,10 @@ export default function BRIDGEHomePage() {
                   Services
                 </div>
                 <h2
+                  className="font-[Inter,sans-serif] font-light leading-[1.2] m-0 tracking-[-0.5px] max-w-[600px]"
                   style={{
-                    fontFamily: "Inter, sans-serif",
                     fontSize: isMobile ? "28px" : "44px",
-                    fontWeight: "300",
-                    lineHeight: "1.2",
                     color: colors.white,
-                    margin: 0,
-                    letterSpacing: "-0.5px",
-                    maxWidth: "600px",
                   }}
                 >
                   How We <span className="font-bold" style={{ color: colors.accent }}>Bridge the Gap</span> from
@@ -1358,30 +1238,19 @@ export default function BRIDGEHomePage() {
                 >
                   <div className="service-card-inner">
                     <div className="service-card-front" style={{ backgroundColor: colors.accent }}>
-                      <div style={{ position: "relative", height: isMobile ? "160px" : "200px" }}>
+                      <div className="relative" style={{ height: isMobile ? "160px" : "200px" }}>
                         <div
+                          className="absolute top-2.5 left-1/2 -translate-x-1/2 bg-white/30 rounded-[50%_50%_50%_50%/60%_60%_40%_40%]"
                           style={{
-                            position: "absolute",
-                            top: "10px",
-                            left: "50%",
-                            transform: "translateX(-50%)",
                             width: isMobile ? "140px" : "180px",
                             height: isMobile ? "140px" : "180px",
-                            backgroundColor: "rgba(255,255,255,0.3)",
-                            borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
                           }}
                         />
                         <div
+                          className="absolute top-[30px] left-1/2 -translate-x-1/2 bg-[#D1D5D0] rounded-full border-4 border-white/50"
                           style={{
-                            position: "absolute",
-                            top: "30px",
-                            left: "50%",
-                            transform: "translateX(-50%)",
                             width: isMobile ? "110px" : "140px",
                             height: isMobile ? "110px" : "140px",
-                            backgroundColor: "#D1D5D0",
-                            borderRadius: "50%",
-                            border: "4px solid rgba(255,255,255,0.5)",
                           }}
                         />
                       </div>
@@ -1428,37 +1297,23 @@ export default function BRIDGEHomePage() {
                     <div className="service-card-back" style={{ backgroundColor: colors.primary }}>
                       <div>
                         <span
-                          style={{
-                            fontSize: isMobile ? "48px" : "64px",
-                            fontWeight: "800",
-                            fontFamily: "Inter, sans-serif",
-                            color: "rgba(184, 217, 53, 0.15)",
-                            lineHeight: "1",
-                            display: "block",
-                            marginBottom: "12px",
-                          }}
+                          className="font-[800] font-[Inter,sans-serif] text-[rgba(184,217,53,0.15)] leading-none block mb-3"
+                          style={{ fontSize: isMobile ? "48px" : "64px" }}
                         >
                           0{index + 1}
                         </span>
                         <h3
+                          className="font-bold font-[Inter,sans-serif] m-[0_0_12px_0]"
                           style={{
                             fontSize: isMobile ? "20px" : "24px",
-                            fontWeight: "700",
                             color: colors.white,
-                            fontFamily: "Inter, sans-serif",
-                            margin: "0 0 12px 0",
                           }}
                         >
                           {service.name}
                         </h3>
                         <p
-                          style={{
-                            fontSize: isMobile ? "13px" : "15px",
-                            lineHeight: "1.7",
-                            color: "rgba(255,255,255,0.7)",
-                            fontFamily: "Inter, sans-serif",
-                            margin: 0,
-                          }}
+                          className="leading-[1.7] text-white/70 font-[Inter,sans-serif] m-0"
+                          style={{ fontSize: isMobile ? "13px" : "15px" }}
                         >
                           {service.description}
                         </p>
@@ -1506,14 +1361,10 @@ export default function BRIDGEHomePage() {
               Our Values
             </div>
             <h2
+              className="font-[Inter,sans-serif] font-light leading-[1.2] m-0 tracking-[-0.5px]"
               style={{
-                fontFamily: "Inter, sans-serif",
                 fontSize: isMobile ? "28px" : "44px",
-                fontWeight: "300",
-                lineHeight: "1.2",
                 color: colors.primary,
-                margin: 0,
-                letterSpacing: "-0.5px",
               }}
             >
               {isMobile ? (
@@ -1546,11 +1397,8 @@ export default function BRIDGEHomePage() {
                 }}
               >
                 <div
-                  style={{
-                    display: "flex",
-                    transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                    transform: `translateX(-${valueIndex * 100}%)`,
-                  }}
+                  className="flex transition-transform duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+                  style={{ transform: `translateX(-${valueIndex * 100}%)` }}
                 >
                   {[
                     {
@@ -1578,21 +1426,15 @@ export default function BRIDGEHomePage() {
                       highlighted: false,
                     },
                   ].map((value, index) => (
-                    <div key={index} style={{ flex: "0 0 100%", paddingRight: "16px", boxSizing: "border-box" }}>
+                    <div key={index} className="flex-[0_0_100%] pr-4 box-border">
                       <div
+                        className="rounded-3xl flex flex-col min-h-[340px] cursor-default"
                         style={{
                           backgroundColor: value.highlighted ? colors.accent : colors.white,
-                          borderRadius: "24px",
                           border: value.highlighted ? `3px solid ${colors.accent}` : `1.5px dashed ${colors.line}`,
-                          display: "flex",
-                          flexDirection: "column",
-                          minHeight: "340px",
-                          cursor: "default",
                         }}
                       >
-                        <div
-                          style={{ padding: "24px 24px 40px", flex: "1", display: "flex", alignItems: "flex-start" }}
-                        >
+                        <div className="p-[24px_24px_40px] flex-1 flex items-start">
                           {value.highlighted ? (
                             <svg width="90" height="70" viewBox="0 0 90 70">
                               <defs>
@@ -1658,33 +1500,16 @@ export default function BRIDGEHomePage() {
                           )}
                         </div>
                         <div
-                          style={{
-                            backgroundColor: colors.background,
-                            borderRadius: "16px",
-                            margin: "0 12px 12px",
-                            padding: "24px",
-                          }}
+                          className="rounded-2xl m-[0_12px_12px] p-6"
+                          style={{ backgroundColor: colors.background }}
                         >
                           <h3
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "600",
-                              color: colors.primary,
-                              fontFamily: "Inter, sans-serif",
-                              margin: "0 0 12px 0",
-                            }}
+                            className="text-xl font-semibold font-[Inter,sans-serif] m-[0_0_12px_0]"
+                            style={{ color: colors.primary }}
                           >
                             {value.title}
                           </h3>
-                          <p
-                            style={{
-                              fontSize: "14px",
-                              lineHeight: "1.6",
-                              color: "#666",
-                              fontFamily: "Inter, sans-serif",
-                              margin: 0,
-                            }}
-                          >
+                          <p className="text-sm leading-[1.6] text-[#666] font-[Inter,sans-serif] m-0">
                             {value.description}
                           </p>
                         </div>
@@ -1699,13 +1524,10 @@ export default function BRIDGEHomePage() {
                   <div
                     key={i}
                     onClick={() => setValueIndex(i)}
+                    className="h-2 rounded cursor-pointer transition-all duration-300 ease-in-out"
                     style={{
                       width: valueIndex === i ? "24px" : "8px",
-                      height: "8px",
-                      borderRadius: "4px",
                       backgroundColor: valueIndex === i ? colors.accent : colors.line,
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
                     }}
                   />
                 ))}
@@ -1741,18 +1563,13 @@ export default function BRIDGEHomePage() {
               ].map((value, index) => (
                 <div
                   key={index}
-                  className="value-card"
+                  className="value-card rounded-3xl flex flex-col min-h-[400px] cursor-default"
                   style={{
                     backgroundColor: value.highlighted ? colors.accent : colors.white,
-                    borderRadius: "24px",
                     border: value.highlighted ? `3px solid ${colors.accent}` : `1.5px dashed ${colors.line}`,
-                    display: "flex",
-                    flexDirection: "column",
-                    minHeight: "400px",
-                    cursor: "default",
                   }}
                 >
-                  <div style={{ padding: "36px 36px 60px", flex: "1", display: "flex", alignItems: "flex-start" }}>
+                  <div className="p-[36px_36px_60px] flex-1 flex items-start">
                     {value.highlighted ? (
                       <svg width="90" height="70" viewBox="0 0 90 70">
                         <defs>
@@ -1818,34 +1635,16 @@ export default function BRIDGEHomePage() {
                     )}
                   </div>
                   <div
-                    style={{
-                      backgroundColor: colors.background,
-                      borderRadius: "20px",
-                      margin: "0 16px 16px 16px",
-                      padding: "28px",
-                    }}
+                    className="rounded-[20px] m-[0_16px_16px_16px] p-7"
+                    style={{ backgroundColor: colors.background }}
                   >
                     <h3
-                      style={{
-                        fontSize: "22px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                        marginBottom: "16px",
-                        margin: "0 0 16px 0",
-                      }}
+                      className="text-[22px] font-semibold font-[Inter,sans-serif] m-[0_0_16px_0]"
+                      style={{ color: colors.primary }}
                     >
                       {value.title}
                     </h3>
-                    <p
-                      style={{
-                        fontSize: "15px",
-                        lineHeight: "1.6",
-                        color: "#666",
-                        fontFamily: "Inter, sans-serif",
-                        margin: 0,
-                      }}
-                    >
+                    <p className="text-[15px] leading-[1.6] text-[#666] font-[Inter,sans-serif] m-0">
                       {value.description}
                     </p>
                   </div>
@@ -1859,47 +1658,24 @@ export default function BRIDGEHomePage() {
       {/* CTA BANNER */}
       <section style={{ padding: isMobile ? "20px 20px 60px" : "40px 48px 100px", backgroundColor: colors.white }}>
         <div
+          className="mx-auto overflow-hidden relative bg-[#3D4F4F] bg-gradient-to-br from-[#3D4F4F] to-[#2D3D3D]"
           style={{
             maxWidth: CONTENT_MAX_WIDTH,
-            margin: "0 auto",
             borderRadius: isMobile ? "24px" : "32px",
-            overflow: "hidden",
-            position: "relative",
             height: isMobile ? "300px" : "450px",
-            backgroundColor: "#3D4F4F",
-            backgroundImage: "linear-gradient(135deg, #3D4F4F 0%, #2D3D3D 100%)",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(0,0,0,0.3)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "rgba(255,255,255,0.3)",
-              fontSize: "14px",
-              fontFamily: "Inter, sans-serif",
-            }}
-          >
+          <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white/30 text-sm font-[Inter,sans-serif]">
             [ Background Image ]
           </div>
           <div
+            className="absolute rounded-full flex items-center justify-center"
             style={{
-              position: "absolute",
               top: isMobile ? "20px" : "32px",
               left: isMobile ? "20px" : "32px",
               width: isMobile ? "44px" : "56px",
               height: isMobile ? "44px" : "56px",
               backgroundColor: colors.white,
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2">
@@ -1908,27 +1684,20 @@ export default function BRIDGEHomePage() {
             </svg>
           </div>
           <div
+            className="absolute flex justify-between items-end"
             style={{
-              position: "absolute",
               bottom: isMobile ? "20px" : "40px",
               left: isMobile ? "20px" : "32px",
               right: isMobile ? "20px" : "32px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: isMobile ? "flex-end" : "flex-end",
               flexDirection: isMobile ? "column" : "row",
               gap: isMobile ? "8px" : "0",
             }}
           >
             <h3
+              className="font-[Inter,sans-serif] font-light m-0 max-w-[500px] leading-[1.3]"
               style={{
-                fontFamily: "Inter, sans-serif",
                 fontSize: isMobile ? "22px" : "32px",
-                fontWeight: "300",
                 color: colors.white,
-                margin: 0,
-                maxWidth: "500px",
-                lineHeight: "1.3",
               }}
             >
               Connecting <span className="font-bold">Resources</span>, Building Pathways —{" "}
@@ -1936,33 +1705,23 @@ export default function BRIDGEHomePage() {
             </h3>
             <a href="/services" className="no-underline">
             <button
+              className="border-none font-semibold font-[Inter,sans-serif] cursor-pointer rounded-[50px] flex items-center shrink-0"
               style={{
                 backgroundColor: colors.accent,
                 color: colors.primary,
-                border: "none",
                 padding: isMobile ? "10px 18px" : "16px 32px",
                 fontSize: isMobile ? "12px" : "15px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                borderRadius: "50px",
-                display: "flex",
-                alignItems: "center",
                 gap: isMobile ? "6px" : "10px",
-                flexShrink: 0,
                 alignSelf: isMobile ? "flex-end" : "auto",
               }}
             >
               Get Involved
               <span
+                className="rounded-full flex items-center justify-center"
                 style={{
                   width: isMobile ? "22px" : "28px",
                   height: isMobile ? "22px" : "28px",
                   backgroundColor: colors.white,
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                 }}
               >
                 <svg
@@ -1997,14 +1756,10 @@ export default function BRIDGEHomePage() {
               Sectors
             </div>
             <h2
+              className="font-[Inter,sans-serif] font-light leading-[1.15] m-0 tracking-[-0.5px]"
               style={{
-                fontFamily: "Inter, sans-serif",
                 fontSize: isMobile ? "28px" : "48px",
-                fontWeight: "300",
-                lineHeight: "1.15",
                 color: colors.primary,
-                margin: 0,
-                letterSpacing: "-0.5px",
               }}
             >
               <span className="font-bold">Twelve Integrated Sectors.</span>
@@ -2013,11 +1768,10 @@ export default function BRIDGEHomePage() {
             </h2>
           </div>
           <div
+            className="grid items-start"
             style={{
-              display: "grid",
               gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
               gap: isMobile ? "0" : "80px",
-              alignItems: "start",
             }}
           >
             {!isMobile && (
@@ -2053,27 +1807,25 @@ export default function BRIDGEHomePage() {
                           const data = payload[0].payload;
                           return (
                             <div
+                              className="p-[12px_16px] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.12)] font-[Inter,sans-serif]"
                               style={{
                                 backgroundColor: colors.white,
-                                padding: "12px 16px",
-                                borderRadius: "12px",
-                                boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
                                 border: `1px solid ${colors.line}`,
-                                fontFamily: "Inter, sans-serif",
                               }}
                             >
                               <p
-                                style={{ fontWeight: "600", color: colors.dark, fontSize: "13px", margin: "0 0 8px 0" }}
+                                className="font-semibold text-[13px] m-[0_0_8px_0]"
+                                style={{ color: colors.dark }}
                               >
                                 {data.fullName}
                               </p>
-                              <p style={{ fontSize: "12px", color: colors.primary, margin: "0 0 4px 0" }}>
+                              <p className="text-xs m-[0_0_4px_0]" style={{ color: colors.primary }}>
                                 Gap: {data.gap}
                               </p>
-                              <p style={{ fontSize: "12px", color: "#7CB342", margin: "0 0 4px 0" }}>
+                              <p className="text-xs text-[#7CB342] m-[0_0_4px_0]">
                                 At Stake: {data.market}
                               </p>
-                              <p style={{ fontSize: "12px", color: "#666", margin: 0 }}>{data.pathways}</p>
+                              <p className="text-xs text-[#666] m-0">{data.pathways}</p>
                             </div>
                           );
                         }
@@ -2091,32 +1843,22 @@ export default function BRIDGEHomePage() {
                   return (
                     <div
                       key={index}
+                      className="border-none rounded-[14px] overflow-hidden transition-colors duration-300 ease-in-out cursor-pointer"
                       style={{
                         backgroundColor: isOpen ? colors.primary : colors.background,
-                        border: "none",
-                        borderRadius: "14px",
-                        overflow: "hidden",
-                        transition: "background-color 0.3s ease",
-                        cursor: "pointer",
                       }}
                       onClick={() => setOpenSector(isOpen ? null : index)}
                     >
                       <div
-                        className="sector-row"
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: isMobile ? "14px 16px" : "16px 20px",
-                        }}
+                        className="sector-row flex justify-between items-center"
+                        style={{ padding: isMobile ? "14px 16px" : "16px 20px" }}
                       >
                         <span
+                          className="font-[Inter,sans-serif] transition-colors duration-300 ease-in-out"
                           style={{
                             fontSize: isMobile ? "14px" : "15px",
                             fontWeight: isOpen ? "600" : "400",
                             color: isOpen ? colors.white : colors.primary,
-                            fontFamily: "Inter, sans-serif",
-                            transition: "color 0.3s ease",
                           }}
                         >
                           {sector.fullName}
@@ -2140,93 +1882,54 @@ export default function BRIDGEHomePage() {
                         </svg>
                       </div>
                       <div
+                        className="overflow-hidden transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
                         style={{
                           maxHeight: isOpen ? "120px" : "0px",
                           opacity: isOpen ? 1 : 0,
                           padding: isOpen ? "0 20px 18px 20px" : "0 20px",
-                          overflow: "hidden",
-                          transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
                         }}
                       >
                         <div
-                          style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: isMobile ? "8px" : "12px" }}
+                          className="grid grid-cols-3"
+                          style={{ gap: isMobile ? "8px" : "12px" }}
                         >
                           <div>
-                            <p
-                              style={{
-                                fontSize: "10px",
-                                fontWeight: "500",
-                                color: "rgba(255,255,255,0.5)",
-                                fontFamily: "Inter, sans-serif",
-                                textTransform: "uppercase",
-                                letterSpacing: "0.5px",
-                                margin: "0 0 4px 0",
-                              }}
-                            >
+                            <p className="text-[10px] font-medium text-white/50 font-[Inter,sans-serif] uppercase tracking-[0.5px] m-[0_0_4px_0]">
                               The Gap
                             </p>
                             <p
+                              className="font-bold font-[Inter,sans-serif] m-0 leading-[1.2]"
                               style={{
                                 fontSize: isMobile ? "14px" : "18px",
-                                fontWeight: "700",
                                 color: colors.white,
-                                fontFamily: "Inter, sans-serif",
-                                margin: 0,
-                                lineHeight: "1.2",
                               }}
                             >
                               {sector.gap}
                             </p>
                           </div>
                           <div>
-                            <p
-                              style={{
-                                fontSize: "10px",
-                                fontWeight: "500",
-                                color: "rgba(255,255,255,0.5)",
-                                fontFamily: "Inter, sans-serif",
-                                textTransform: "uppercase",
-                                letterSpacing: "0.5px",
-                                margin: "0 0 4px 0",
-                              }}
-                            >
+                            <p className="text-[10px] font-medium text-white/50 font-[Inter,sans-serif] uppercase tracking-[0.5px] m-[0_0_4px_0]">
                               At Stake
                             </p>
                             <p
+                              className="font-bold font-[Inter,sans-serif] m-0 leading-[1.2]"
                               style={{
                                 fontSize: isMobile ? "14px" : "18px",
-                                fontWeight: "700",
                                 color: colors.accent,
-                                fontFamily: "Inter, sans-serif",
-                                margin: 0,
-                                lineHeight: "1.2",
                               }}
                             >
                               {sector.market}
                             </p>
                           </div>
                           <div>
-                            <p
-                              style={{
-                                fontSize: "10px",
-                                fontWeight: "500",
-                                color: "rgba(255,255,255,0.5)",
-                                fontFamily: "Inter, sans-serif",
-                                textTransform: "uppercase",
-                                letterSpacing: "0.5px",
-                                margin: "0 0 4px 0",
-                              }}
-                            >
+                            <p className="text-[10px] font-medium text-white/50 font-[Inter,sans-serif] uppercase tracking-[0.5px] m-[0_0_4px_0]">
                               Identified
                             </p>
                             <p
+                              className="font-bold font-[Inter,sans-serif] m-0 leading-[1.2]"
                               style={{
                                 fontSize: isMobile ? "14px" : "18px",
-                                fontWeight: "700",
                                 color: colors.white,
-                                fontFamily: "Inter, sans-serif",
-                                margin: 0,
-                                lineHeight: "1.2",
                               }}
                             >
                               {sector.pathways}
@@ -2240,24 +1943,15 @@ export default function BRIDGEHomePage() {
               </div>
               <Link
                 to="/sectors"
+                className="rounded-[14px] flex justify-between items-center no-underline"
                 style={{
                   backgroundColor: colors.background,
-                  borderRadius: "14px",
                   padding: isMobile ? "14px 16px" : "16px 20px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  textDecoration: "none",
                 }}
               >
                 <span
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    color: colors.accent,
-                    fontFamily: "Inter, sans-serif",
-                    letterSpacing: "0.3px",
-                  }}
+                  className="text-sm font-medium font-[Inter,sans-serif] tracking-[0.3px]"
+                  style={{ color: colors.accent }}
                 >
                   View all 12 sectors
                 </span>
@@ -2281,109 +1975,42 @@ export default function BRIDGEHomePage() {
       {/* TRUSTED PARTNER */}
       <section style={{ padding: isMobile ? "60px 20px" : "100px 48px", backgroundColor: colors.background }}>
         <div
+          className="mx-auto grid gap-6 items-stretch"
           style={{
             maxWidth: CONTENT_MAX_WIDTH,
-            margin: "0 auto",
-            display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1.2fr 1fr",
-            gap: "24px",
-            alignItems: "stretch",
           }}
         >
           {isMobile ? (
-            <div
-              style={{
-                position: "relative",
-                borderRadius: "24px",
-                overflow: "hidden",
-                backgroundColor: "#3D4F4F",
-                backgroundImage: "linear-gradient(135deg, #2D3D3D 0%, #3D4F4F 100%)",
-                minHeight: "360px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: "rgba(0,0,0,0.25)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "rgba(255,255,255,0.2)",
-                  fontSize: "12px",
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
+            <div className="relative rounded-3xl overflow-hidden bg-[#3D4F4F] bg-gradient-to-br from-[#2D3D3D] to-[#3D4F4F] min-h-[360px] flex flex-col justify-start">
+              <div className="absolute inset-0 bg-black/25 flex items-center justify-center text-white/20 text-xs font-[Inter,sans-serif]">
                 [ Background Image ]
               </div>
-              <div style={{ position: "relative", zIndex: 1, padding: "24px", display: "flex", flexDirection: "column", height: "100%", flex: 1, minHeight: "360px" }}>
-                <div style={{ flex: 1 }}>
+              <div className="relative z-[1] p-6 flex flex-col h-full flex-1 min-h-[360px]">
+                <div className="flex-1">
                   <div
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "8px 16px",
-                      backgroundColor: "rgba(255,255,255,0.15)",
-                      backdropFilter: "blur(8px)",
-                      borderRadius: "50px",
-                      fontSize: "11px",
-                      fontWeight: "600",
-                      letterSpacing: "1.5px",
-                      color: colors.white,
-                      fontFamily: "Inter, sans-serif",
-                      textTransform: "uppercase",
-                      marginBottom: "16px",
-                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-[8px] rounded-[50px] text-[11px] font-semibold tracking-[1.5px] font-[Inter,sans-serif] uppercase mb-4"
+                    style={{ color: colors.white }}
                   >
                     Trusted Partner
                   </div>
                   <h3
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "28px",
-                      fontWeight: "300",
-                      lineHeight: "1.2",
-                      color: colors.white,
-                      margin: "0 0 12px",
-                    }}
+                    className="font-[Inter,sans-serif] text-[28px] font-light leading-[1.2] m-[0_0_12px]"
+                    style={{ color: colors.white }}
                   >
                     <span className="font-bold">Public Benefit</span> Corporation
                   </h3>
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      lineHeight: "1.6",
-                      color: "rgba(255,255,255,0.75)",
-                      fontFamily: "Inter, sans-serif",
-                      margin: 0,
-                    }}
-                  >
+                  <p className="text-sm leading-[1.6] text-white/75 font-[Inter,sans-serif] m-0">
                     A development engine — identifying opportunities, connecting resources, and initiating ventures.
                   </p>
                 </div>
-                <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
+                <div className="flex justify-end mt-5">
                   <a href="/services" className="no-underline">
                     <button
+                      className="border-none p-[10px_20px] text-xs font-bold font-[Inter,sans-serif] cursor-pointer rounded-[50px] flex items-center gap-2"
                       style={{
                         backgroundColor: colors.accent,
                         color: colors.primary,
-                        border: "none",
-                        padding: "10px 20px",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        fontFamily: "Inter, sans-serif",
-                        cursor: "pointer",
-                        borderRadius: "50px",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
                       }}
                     >
                       Learn More
@@ -2397,57 +2024,17 @@ export default function BRIDGEHomePage() {
             </div>
           ) : (
             <>
-              <div
-                style={{
-                  position: "relative",
-                  borderRadius: "24px",
-                  overflow: "hidden",
-                  backgroundColor: "#3D4F4F",
-                  minHeight: "500px",
-                }}
-              >
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: "rgba(0,0,0,0.2)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "rgba(255,255,255,0.3)",
-                    fontSize: "14px",
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
+              <div className="relative rounded-3xl overflow-hidden bg-[#3D4F4F] min-h-[500px]">
+                <div className="absolute inset-0 bg-black/20 flex items-center justify-center text-white/30 text-sm font-[Inter,sans-serif]">
                   [ Background Image ]
                 </div>
                 <div
-                  style={{
-                    position: "absolute",
-                    bottom: "24px",
-                    right: "24px",
-                    backgroundColor: colors.white,
-                    borderRadius: "16px",
-                    padding: "20px 28px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-                  }}
+                  className="absolute bottom-6 right-6 rounded-2xl p-[20px_28px] flex items-center gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.1)]"
+                  style={{ backgroundColor: colors.white }}
                 >
                   <div
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      borderRadius: "50%",
-                      border: `2px solid ${colors.primary}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                    style={{ border: `2px solid ${colors.primary}` }}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2">
                       <path d="M12 2L2 7l10 5 10-5-10-5z" />
@@ -2456,12 +2043,8 @@ export default function BRIDGEHomePage() {
                     </svg>
                   </div>
                   <span
-                    style={{
-                      fontSize: "18px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      fontFamily: "Inter, sans-serif",
-                    }}
+                    className="text-lg font-semibold font-[Inter,sans-serif]"
+                    style={{ color: colors.primary }}
                   >
                     PBC
                   </span>
@@ -2479,14 +2062,8 @@ export default function BRIDGEHomePage() {
                     Trusted Partner
                   </div>
                   <h3
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "36px",
-                      fontWeight: "300",
-                      lineHeight: "1.2",
-                      color: colors.primary,
-                      margin: 0,
-                    }}
+                    className="font-[Inter,sans-serif] text-4xl font-light leading-[1.2] m-0"
+                    style={{ color: colors.primary }}
                   >
                     <span className="font-bold">Public Benefit</span>
                     <br />
@@ -2495,34 +2072,18 @@ export default function BRIDGEHomePage() {
                 </div>
                 <div className="flex flex-col items-start">
                   <p
-                    style={{
-                      fontSize: "16px",
-                      lineHeight: "1.6",
-                      color: colors.primary,
-                      fontFamily: "Inter, sans-serif",
-                      marginBottom: "32px",
-                      opacity: 0.85,
-                    }}
+                    className="text-base leading-[1.6] font-[Inter,sans-serif] mb-8 opacity-85"
+                    style={{ color: colors.primary }}
                   >
                     BRIDGE is a development engine — identifying opportunities, connecting resources, and initiating
                     ventures. Let's work together to create a lasting impact.
                   </p>
                   <a href="/services" className="no-underline">
                   <button
+                    className="border-none p-[16px_32px] text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer rounded-[50px] flex items-center gap-2.5 self-end"
                     style={{
                       backgroundColor: colors.primary,
                       color: colors.white,
-                      border: "none",
-                      padding: "16px 32px",
-                      fontSize: "15px",
-                      fontWeight: "600",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      borderRadius: "50px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      alignSelf: "flex-end",
                     }}
                   >
                     Learn More
@@ -2565,14 +2126,10 @@ export default function BRIDGEHomePage() {
               Insights
             </div>
             <h2
+              className="font-[Georgia,serif] font-normal leading-[1.2] m-[0_0_16px_0] italic"
               style={{
-                fontFamily: "Georgia, serif",
                 fontSize: isMobile ? "32px" : "48px",
-                fontWeight: "400",
-                lineHeight: "1.2",
                 color: colors.primary,
-                margin: "0 0 16px 0",
-                fontStyle: "italic",
               }}
             >
               Our Latest Insights

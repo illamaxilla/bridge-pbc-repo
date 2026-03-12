@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 import { Layout } from "@/components/Layout";
 import { IconGraduation, IconBuilding, IconWallet, IconHeart, IconLightbulb, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconSprout, IconCpu, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconCross } from "@/components/icons/SectorIcons";
 import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronLeft, ChevronRight, Clock } from "lucide-react";
@@ -437,39 +438,29 @@ const HeroSection = ({ sector }) => {
   const isMobile = useIsMobile();
   return (
     <section
+      className="relative flex flex-col"
       style={{
         backgroundColor: colors.white,
         padding: isMobile ? "80px 20px 20px" : "112px 80px 20px",
-        position: "relative",
         minHeight: isMobile ? "auto" : "calc(100vh - 100px)",
-        display: "flex",
-        flexDirection: "column",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto", width: "100%" }}>
+      <div className="mx-auto w-full" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         <div
+          className="grid items-start flex-1"
           style={{
-            display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
             gap: isMobile ? "32px" : "60px",
-            alignItems: "start",
-            flex: 1,
           }}
         >
           <div>
             {/* Category Badge */}
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+            <div className="flex items-center gap-3 mb-6">
               <span
+                className="rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif] px-4 py-2"
                 style={{
                   backgroundColor: colors.accentLight,
                   color: colors.primary,
-                  padding: "8px 16px",
-                  borderRadius: "50px",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  fontFamily: "Inter, sans-serif",
                 }}
               >
                 {sector.category}
@@ -478,28 +469,21 @@ const HeroSection = ({ sector }) => {
 
             {/* Title */}
             <h1
+              className="font-[Inter,sans-serif] font-normal leading-[1.1] tracking-[-1px] mb-5 mt-0"
               style={{
-                fontFamily: "Inter, sans-serif",
                 fontSize: isMobile ? "30px" : "52px",
-                fontWeight: "400",
-                lineHeight: "1.1",
                 color: colors.primary,
-                margin: "0 0 20px 0",
-                letterSpacing: "-1px",
               }}
             >
-              <span style={{ fontWeight: "700" }}>Education & Skills</span> Development
+              <span className="font-bold">Education & Skills</span> Development
             </h1>
 
             {/* Subheading */}
             <h2
+              className="font-[Inter,sans-serif] font-semibold leading-[1.3] mt-0 mb-4"
               style={{
-                fontFamily: "Inter, sans-serif",
                 fontSize: isMobile ? "20px" : "24px",
-                fontWeight: "600",
-                lineHeight: "1.3",
                 color: colors.dark,
-                margin: "0 0 16px 0",
               }}
             >
               {sector.problemHeadline}
@@ -507,49 +491,32 @@ const HeroSection = ({ sector }) => {
 
             {/* Description */}
             <p
+              className="font-[Inter,sans-serif] font-normal leading-[1.7] text-[#555] mt-0 mb-9 max-w-[540px]"
               style={{
-                fontFamily: "Inter, sans-serif",
                 fontSize: isMobile ? "15px" : "16px",
-                fontWeight: "400",
-                lineHeight: "1.7",
-                color: "#555",
-                margin: "0 0 36px 0",
-                maxWidth: "540px",
               }}
             >
               {sector.problemSubheadline}
             </p>
 
             {/* CTA Buttons */}
-            <div style={{ display: "flex", gap: "12px", flexWrap: isMobile ? "wrap" : "nowrap" }}>
+            <div className="flex gap-3" style={{ flexWrap: isMobile ? "wrap" : "nowrap" }}>
               <button
+                className="border-none rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center gap-[10px]"
                 style={{
                   backgroundColor: colors.accent,
                   color: colors.primary,
-                  border: "none",
                   padding: isMobile ? "14px 20px" : "16px 24px",
-                  borderRadius: "50px",
                   fontSize: isMobile ? "14px" : "15px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
                   flex: isMobile ? "1 1 100%" : "none",
                   justifyContent: isMobile ? "center" : "flex-start",
                 }}
               >
                 Request Full Analysis
                 <span
+                  className="w-7 h-7 rounded-full flex items-center justify-center"
                   style={{
-                    width: "28px",
-                    height: "28px",
                     backgroundColor: colors.primary,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                     color: colors.white,
                   }}
                 >
@@ -557,16 +524,12 @@ const HeroSection = ({ sector }) => {
                 </span>
               </button>
               <button
+                className="bg-transparent rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer"
                 style={{
-                  backgroundColor: "transparent",
                   color: colors.primary,
                   border: `2px solid ${colors.line}`,
                   padding: isMobile ? "14px 20px" : "16px 24px",
-                  borderRadius: "50px",
                   fontSize: isMobile ? "14px" : "15px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
                   flex: isMobile ? "1 1 100%" : "none",
                 }}
               >
@@ -577,43 +540,23 @@ const HeroSection = ({ sector }) => {
 
           {/* Stats Card */}
           <div
+            className="rounded-[20px]"
             style={{
               backgroundColor: colors.primary,
-              borderRadius: "20px",
               padding: isMobile ? "24px" : "32px",
               minWidth: isMobile ? "auto" : "340px",
             }}
           >
             {/* Header */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  color: "rgba(255,255,255,0.5)",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
+            <div className="flex justify-between items-center">
+              <span className="text-[11px] font-bold text-white/50 uppercase tracking-[1.5px] font-[Inter,sans-serif]">
                 Sector Overview
               </span>
               <span
+                className="rounded-full text-[11px] font-bold uppercase tracking-[1px] px-[14px] py-1.5"
                 style={{
                   backgroundColor: "rgba(184, 217, 53, 0.15)",
                   color: colors.accent,
-                  padding: "6px 14px",
-                  borderRadius: "50px",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
                 }}
               >
                 Active
@@ -621,65 +564,26 @@ const HeroSection = ({ sector }) => {
             </div>
 
             {/* Main Stats Row */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-                marginTop: "20px",
-                paddingBottom: "24px",
-                borderBottom: "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
+            <div className="flex justify-between items-end mt-5 pb-6 border-b border-white/10">
               <div>
                 <div
-                  style={{
-                    fontSize: "36px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    fontFamily: "Inter, sans-serif",
-                    lineHeight: "1",
-                    margin: "0 0 8px 0",
-                    whiteSpace: "nowrap",
-                  }}
+                  className="text-[36px] font-bold font-[Inter,sans-serif] leading-none mb-2 whitespace-nowrap"
+                  style={{ color: colors.accent }}
                 >
                   {sector.capitalRange}
                 </div>
-                <div
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "500",
-                    color: "rgba(255,255,255,0.5)",
-                    fontFamily: "Inter, sans-serif",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <div className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif] whitespace-nowrap">
                   Investment Range
                 </div>
               </div>
-              <div style={{ textAlign: "right" }}>
+              <div className="text-right">
                 <div
-                  style={{
-                    fontSize: "36px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    fontFamily: "Inter, sans-serif",
-                    lineHeight: "1",
-                    margin: "0 0 8px 0",
-                    whiteSpace: "nowrap",
-                  }}
+                  className="text-[36px] font-bold font-[Inter,sans-serif] leading-none mb-2 whitespace-nowrap"
+                  style={{ color: colors.accent }}
                 >
                   {sector.ventures}
                 </div>
-                <div
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "500",
-                    color: "rgba(255,255,255,0.5)",
-                    fontFamily: "Inter, sans-serif",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <div className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif] whitespace-nowrap">
                   Identified Ventures
                 </div>
               </div>
@@ -687,52 +591,20 @@ const HeroSection = ({ sector }) => {
 
             {/* Stat Rows — 4 items */}
             {sector.keyStats.map((stat, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "16px 0",
-                }}
-              >
+              <div key={i} className="flex justify-between items-center py-4">
                 <div>
-                  <span
-                    style={{
-                      fontSize: "15px",
-                      fontWeight: "500",
-                      color: "rgba(255,255,255,0.8)",
-                      fontFamily: "Inter, sans-serif",
-                      display: "block",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
+                  <span className="text-[15px] font-medium text-white/80 font-[Inter,sans-serif] block whitespace-nowrap">
                     {stat.label}
                   </span>
                   {stat.detail && (
-                    <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "400",
-                        color: "rgba(255,255,255,0.35)",
-                        fontFamily: "Inter, sans-serif",
-                        fontStyle: "italic",
-                        marginTop: "2px",
-                        display: "block",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
+                    <span className="text-[12px] font-normal text-white/35 font-[Inter,sans-serif] italic mt-0.5 block whitespace-nowrap">
                       {stat.detail}
                     </span>
                   )}
                 </div>
                 <span
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "600",
-                    color: colors.accent,
-                    fontFamily: "Inter, sans-serif",
-                  }}
+                  className="text-[20px] font-semibold font-[Inter,sans-serif]"
+                  style={{ color: colors.accent }}
                 >
                   {stat.value}
                 </span>
@@ -743,32 +615,11 @@ const HeroSection = ({ sector }) => {
       </div>
       {/* Scroll to Explore — desktop only */}
       {!isMobile && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginTop: "auto",
-            paddingTop: "10px",
-            paddingBottom: "10px",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "13px",
-              color: "#999",
-              marginBottom: "8px",
-            }}
-          >
+        <div className="flex flex-col items-center mt-auto pt-[10px] pb-[10px]">
+          <span className="font-[Inter,sans-serif] text-[13px] text-[#999] mb-2">
             Explore Analysis
           </span>
-          <div
-            style={{
-              color: "#999",
-              animation: "bounce 2s infinite",
-            }}
-          >
+          <div className="text-[#999]" style={{ animation: "bounce 2s infinite" }}>
             <IconArrowDown />
           </div>
         </div>
@@ -862,47 +713,33 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
   return (
     <div
       onClick={onToggle}
+      className="cursor-pointer transition-all duration-300"
       style={{
         backgroundColor: colors.white,
         borderRadius: isMobile ? "16px" : "20px",
         padding: isMobile ? "20px" : "28px",
-        cursor: "pointer",
         border: isExpanded ? `2px solid ${colors.accent}` : `1px solid ${colors.line}`,
-        transition: "all 0.3s ease",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          marginBottom: "12px",
-        }}
-      >
-        <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex-1 min-w-0">
           <h3
+            className="font-[Inter,sans-serif] font-semibold m-0"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "16px" : "18px",
-              fontWeight: "600",
               color: colors.dark,
-              margin: 0,
             }}
           >
             {problem.title}
           </h3>
           <p
+            className="font-[Inter,sans-serif] text-[#666] leading-[1.55] mt-2 mb-0 overflow-hidden"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "13px" : "14px",
-              color: "#666",
-              margin: "8px 0 0 0",
-              lineHeight: "1.55",
               ...(isMobile ? {} : { minHeight: "63px" }),
               display: "-webkit-box",
               WebkitLineClamp: isMobile ? 2 : 3,
               WebkitBoxOrient: "vertical",
-              overflow: "hidden",
             }}
           >
             {problem.description}
@@ -910,17 +747,10 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
         </div>
 
         <span
+          className="font-[Inter,sans-serif] text-[11px] font-bold rounded-[20px] whitespace-nowrap shrink-0 ml-3 px-[14px] py-1.5"
           style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "11px",
-            fontWeight: "700",
             color: problem.severity === "High Priority" ? colors.primary : colors.accentText,
             backgroundColor: problem.severity === "High Priority" ? colors.accentLight : "rgba(184,217,53,0.12)",
-            padding: "6px 14px",
-            borderRadius: "20px",
-            whiteSpace: "nowrap",
-            flexShrink: 0,
-            marginLeft: "12px",
           }}
         >
           {problem.severity}
@@ -928,24 +758,21 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
       </div>
 
       <div
+        className="rounded-xl overflow-hidden"
         style={{
           backgroundColor: colors.accentLight,
           padding: isMobile ? "8px 12px" : "10px 16px",
-          borderRadius: "12px",
           marginBottom: isExpanded ? "16px" : 0,
-          overflow: "hidden",
         }}
       >
         <span
+          className="font-[Inter,sans-serif] font-semibold overflow-hidden"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "13px" : "14px",
-            fontWeight: "600",
             color: colors.primary,
             display: "-webkit-box",
             WebkitLineClamp: 1,
             WebkitBoxOrient: "vertical",
-            overflow: "hidden",
           }}
         >
           Impact: {problem.quantification}
@@ -953,223 +780,100 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
       </div>
 
       {isExpanded && (
-        <div
-          style={{
-            paddingTop: "16px",
-            borderTop: `1px solid ${colors.line}`,
-          }}
-        >
+        <div className="pt-4" style={{ borderTop: `1px solid ${colors.line}` }}>
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: "12px",
-              marginBottom: "16px",
-            }}
+            className="grid gap-3 mb-4"
+            style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}
           >
-            <div
-              style={{
-                backgroundColor: colors.background,
-                borderRadius: "12px",
-                padding: "14px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "10px",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
-                    fontWeight: "600",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                    color: "#888",
-                  }}
-                >
+            <div className="rounded-xl p-[14px]" style={{ backgroundColor: colors.background }}>
+              <div className="flex items-center justify-between mb-[10px]">
+                <span className="font-[Inter,sans-serif] text-[11px] font-semibold uppercase tracking-[0.5px] text-[#888]">
                   Priority
                 </span>
                 <span
+                  className="font-[Inter,sans-serif] text-[12px] font-bold rounded-[20px] px-[10px] py-1"
                   style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "12px",
-                    fontWeight: "700",
                     color: problem.severity === "High Priority" ? colors.primary : colors.accentText,
-                    backgroundColor:
-                      problem.severity === "High Priority" ? colors.accentLight : "rgba(184,217,53,0.12)",
-                    padding: "4px 10px",
-                    borderRadius: "20px",
+                    backgroundColor: problem.severity === "High Priority" ? colors.accentLight : "rgba(184,217,53,0.12)",
                   }}
                 >
                   {problem.severity}
                 </span>
               </div>
-              <div
-                style={{
-                  height: "8px",
-                  backgroundColor: colors.line,
-                  borderRadius: "4px",
-                  overflow: "hidden",
-                }}
-              >
+              <div className="h-2 rounded overflow-hidden" style={{ backgroundColor: colors.line }}>
                 <div
+                  className="h-full rounded transition-[width] duration-500"
                   style={{
-                    height: "100%",
                     width: `${problem.severityScore}%`,
                     backgroundColor: problem.severity === "High Priority" ? colors.primary : colors.accentText,
-                    borderRadius: "4px",
-                    transition: "width 0.5s ease",
                   }}
                 />
               </div>
             </div>
 
-            <div
-              style={{
-                backgroundColor: colors.background,
-                borderRadius: "12px",
-                padding: "14px",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "600",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  color: "#888",
-                  display: "block",
-                  marginBottom: "10px",
-                }}
-              >
+            <div className="rounded-xl p-[14px]" style={{ backgroundColor: colors.background }}>
+              <span className="font-[Inter,sans-serif] text-[11px] font-semibold uppercase tracking-[0.5px] text-[#888] block mb-[10px]">
                 Scale
               </span>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: "8px",
-                }}
-              >
+              <div className="flex items-baseline gap-2">
                 <span
+                  className="font-[Poppins,sans-serif] font-bold"
                   style={{
-                    fontFamily: "Poppins, sans-serif",
                     fontSize: isMobile ? "20px" : "24px",
-                    fontWeight: "700",
                     color: colors.primary,
                   }}
                 >
                   {problem.affectedCount}
                 </span>
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
-                    color: "#666",
-                  }}
-                >
+                <span className="font-[Inter,sans-serif] text-[13px] text-[#666]">
                   {problem.affectedLabel}
                 </span>
               </div>
             </div>
           </div>
 
-          <div style={{ marginBottom: "16px" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                marginBottom: "12px",
-              }}
-            >
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-3">
               <Clock size={16} strokeWidth={2} color="#888" />
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "600",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  color: "#888",
-                }}
-              >
+              <span className="font-[Inter,sans-serif] text-[11px] font-semibold uppercase tracking-[0.5px] text-[#888]">
                 Opportunity Drivers
               </span>
             </div>
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                gap: "10px",
-              }}
+              className="grid gap-[10px]"
+              style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}
             >
               {problem.rootCauses.map((cause, j) => (
                 <div
                   key={j}
+                  className="flex items-center gap-3 rounded-xl"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
                     backgroundColor: colors.background,
-                    borderRadius: "12px",
                     padding: isMobile ? "10px 12px" : "12px 14px",
                   }}
                 >
                   <div
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      backgroundColor: colors.primary,
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
+                    className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: colors.primary }}
                   >
                     <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
-                        fontWeight: "600",
-                        color: colors.white,
-                      }}
+                      className="font-[Inter,sans-serif] text-[13px] font-semibold"
+                      style={{ color: colors.white }}
                     >
                       {j + 1}
                     </span>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "1px",
-                      minWidth: 0,
-                    }}
-                  >
+                  <div className="flex flex-col gap-px min-w-0">
                     <span
+                      className="font-[Inter,sans-serif] font-semibold"
                       style={{
-                        fontFamily: "Inter, sans-serif",
                         fontSize: isMobile ? "13px" : "14px",
-                        fontWeight: "600",
                         color: colors.dark,
                       }}
                     >
                       {cause.title}
                     </span>
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#888",
-                      }}
-                    >
+                    <span className="font-[Inter,sans-serif] text-[12px] text-[#888]">
                       {cause.description}
                     </span>
                   </div>
@@ -1179,59 +883,30 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
           </div>
 
           <div
+            className="flex pt-4"
             style={{
-              display: "flex",
               flexDirection: isMobile ? "column" : "row",
               alignItems: isMobile ? "flex-start" : "center",
               gap: isMobile ? "8px" : "16px",
-              paddingTop: "16px",
               borderTop: `1px solid ${colors.line}`,
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                flexShrink: 0,
-              }}
-            >
+            <div className="flex items-center gap-[10px] shrink-0">
               <Check size={18} strokeWidth={2.5} color={colors.accent} />
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  color: "#888",
-                }}
-              >
+              <span className="font-[Inter,sans-serif] text-[13px] text-[#888]">
                 BRIDGE Solution:
               </span>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flex: 1 }}>
+            <div className="flex items-center gap-2 min-w-0 flex-1">
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  color: colors.primary,
-                  flex: 1,
-                  minWidth: 0,
-                }}
+                className="font-[Inter,sans-serif] text-[14px] font-semibold flex-1 min-w-0"
+                style={{ color: colors.primary }}
               >
                 {problem.bridgeSolution}
               </span>
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  fontWeight: "500",
-                  color: colors.primary,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                  flexShrink: 0,
-                }}
+                className="font-[Inter,sans-serif] text-[13px] font-medium cursor-pointer flex items-center gap-1 shrink-0"
+                style={{ color: colors.primary }}
               >
                 View
                 <ArrowRight size={14} strokeWidth={2} />
@@ -1255,18 +930,12 @@ const ProblemSection = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         <div style={{ marginBottom: isMobile ? "32px" : "60px" }}>
           <span
+            className="rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] px-5 py-[10px]"
             style={{
               backgroundColor: colors.white,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
               color: colors.primary,
               border: `1px solid ${colors.line}`,
             }}
@@ -1274,29 +943,19 @@ const ProblemSection = () => {
             The Opportunity
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[820px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
               margin: "24px 0 20px 0",
-              maxWidth: "820px",
             }}
           >
-            <span style={{ fontWeight: "600" }}>10M+ learners</span> ready to be connected to{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>real economic opportunity</span>
+            <span className="font-semibold">10M+ learners</span> ready to be connected to{" "}
+            <span className="font-semibold" style={{ color: colors.accent }}>real economic opportunity</span>
           </h2>
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "15px" : "16px",
-              lineHeight: "1.65",
-              color: "#666",
-              maxWidth: "680px",
-              margin: 0,
-            }}
+            className="font-[Inter,sans-serif] leading-[1.65] text-[#666] max-w-[680px] m-0"
+            style={{ fontSize: isMobile ? "15px" : "16px" }}
           >
             8.5M primary learners, 1.2M secondary students, and a surging digital economy — Ghana offers extraordinary
             scale for skills-to-employment ventures.
@@ -1337,17 +996,14 @@ const ProblemSection = () => {
         </div>
 
         {isMobile && (
-          <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginTop: "16px" }}>
+          <div className="flex justify-center gap-1.5 mt-4">
             {problemSectionData.map((_, i) => (
               <div
                 key={i}
+                className="h-2 rounded cursor-pointer transition-all duration-300"
                 style={{
                   width: i === 0 ? "24px" : "8px",
-                  height: "8px",
-                  borderRadius: "4px",
                   backgroundColor: i === 0 ? colors.accent : colors.line,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
                 }}
               />
             ))}
@@ -1377,49 +1033,31 @@ const ValueChainSectionPremium = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        <div style={{ marginBottom: isMobile ? "28px" : "40px", textAlign: "center" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
+        <div className="text-center" style={{ marginBottom: isMobile ? "28px" : "40px" }}>
           <span
+            className="rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] px-5 py-[10px]"
             style={{
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
               color: colors.primary,
             }}
           >
             The Process
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[600px] mx-auto"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
               margin: "24px 0 16px 0",
-              maxWidth: "600px",
-              marginLeft: "auto",
-              marginRight: "auto",
             }}
           >
-            From First Lesson to <span style={{ color: colors.accent, fontWeight: "600" }}>First Paycheck</span>
+            From First Lesson to <span className="font-semibold" style={{ color: colors.accent }}>First Paycheck</span>
           </h2>
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "15px" : "16px",
-              lineHeight: "1.65",
-              color: "#666",
-              maxWidth: "750px",
-              margin: "0 auto",
-            }}
+            className="font-[Inter,sans-serif] leading-[1.65] text-[#666] max-w-[750px] mx-auto my-0"
+            style={{ fontSize: isMobile ? "15px" : "16px" }}
           >
             Education is more than schooling — it's apprenticeships, bootcamps, mentorship, and on-the-job learning.
             Click each stage to explore where BRIDGE sees opportunity across the full talent journey.
@@ -1430,35 +1068,30 @@ const ValueChainSectionPremium = () => {
         <div>
           {/* Stage Selector — Horizontal Stepper */}
           <div
-            style={{
-              maxWidth: "900px",
-              margin: isMobile ? "0 auto 16px" : "0 auto 28px",
-            }}
+            className="max-w-[900px]"
+            style={{ margin: isMobile ? "0 auto 16px" : "0 auto 28px" }}
           >
-            <div style={{ position: "relative", padding: isMobile ? "0 8px" : "0 20px" }}>
-              {/* Progress fill — only shows up to active stage, no background track */}
+            <div className="relative" style={{ padding: isMobile ? "0 8px" : "0 20px" }}>
+              {/* Progress fill */}
               {!isMobile && activeStage > 0 && (
                 <div
+                  className="absolute rounded-sm h-[3px] transition-[width] duration-400"
                   style={{
-                    position: "absolute",
                     top: "30px",
                     left: "90px",
                     width: `calc(${(activeStage / (valueChainStages.length - 1)) * 100}% * 0.74)`,
-                    height: "3px",
                     backgroundColor: colors.accent,
-                    borderRadius: "2px",
-                    transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
                   }}
                 />
               )}
 
               {/* Stage nodes */}
               <div
+                className="flex relative"
                 style={{
-                  display: "flex",
                   justifyContent: isMobile ? "center" : "space-between",
                   gap: isMobile ? "8px" : undefined,
-                  position: "relative",
                   ...(isMobile
                     ? { overflowX: "auto", WebkitOverflowScrolling: "touch", margin: "0 -16px", padding: "4px 20px" }
                     : {}),
@@ -1475,45 +1108,31 @@ const ValueChainSectionPremium = () => {
                         setActiveStage(i);
                         setShowMore(false);
                       }}
-                      style={{
-                        cursor: "pointer",
-                        textAlign: "center",
-                        width: isMobile ? "56px" : "110px",
-                        flexShrink: 0,
-                        transition: "all 0.3s ease",
-                      }}
+                      className="cursor-pointer text-center shrink-0 transition-all duration-300"
+                      style={{ width: isMobile ? "56px" : "110px" }}
                     >
                       <div
+                        className="relative mx-auto mb-1.5"
                         style={{
-                          position: "relative",
                           width: isMobile ? "40px" : "60px",
                           height: isMobile ? "40px" : "60px",
-                          margin: "0 auto 6px",
                         }}
                       >
                         {isActive && (
                           <div
+                            className="absolute rounded-[18px] transition-all duration-300"
                             style={{
-                              position: "absolute",
                               inset: "-4px",
-                              borderRadius: "18px",
                               border: `2.5px solid ${colors.primary}`,
-                              transition: "all 0.3s ease",
                             }}
                           />
                         )}
                         <div
+                          className="w-full h-full rounded-[15px] flex items-center justify-center transition-all duration-300"
                           style={{
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: "15px",
                             backgroundColor: isActive ? colors.accent : isPast ? colors.primary : colors.white,
                             border: isFuture ? `1.5px solid ${colors.line}` : "1.5px solid transparent",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
                             color: isActive ? colors.primary : isPast ? colors.white : "#bbb",
-                            transition: "all 0.3s ease",
                             boxShadow: isActive ? "0 4px 16px rgba(27,77,62,0.15)" : "none",
                           }}
                         >
@@ -1521,26 +1140,20 @@ const ValueChainSectionPremium = () => {
                         </div>
                       </div>
                       <div
+                        className="font-[Inter,sans-serif] leading-[1.3] mb-0.5 transition-all duration-300"
                         style={{
-                          fontFamily: "Inter, sans-serif",
                           fontSize: isMobile ? "11px" : "13px",
                           fontWeight: isActive ? "600" : "500",
                           color: isActive ? colors.primary : isPast ? colors.primary : "#999",
-                          marginBottom: "2px",
-                          transition: "all 0.3s ease",
-                          lineHeight: "1.3",
                         }}
                       >
                         {isMobile ? s.stage.split(" ")[0] : s.stage}
                       </div>
                       {!isMobile && (
                         <div
+                          className="font-[Inter,sans-serif] text-[11px] leading-[1.3] transition-all duration-300"
                           style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "11px",
                             color: isActive ? colors.accent : isPast ? "rgba(27,77,62,0.5)" : "#ccc",
-                            transition: "all 0.3s ease",
-                            lineHeight: "1.3",
                           }}
                         >
                           {s.actor}
@@ -1555,59 +1168,33 @@ const ValueChainSectionPremium = () => {
 
           {/* Stage Detail Card */}
           <div
+            className="max-w-[900px] mx-auto overflow-hidden border-none"
             style={{
               backgroundColor: colors.white,
               borderRadius: isMobile ? "16px" : "24px",
-              border: "none",
               boxShadow: "0 2px 20px rgba(0,0,0,0.06)",
-              maxWidth: "900px",
-              margin: "0 auto",
-              overflow: "hidden",
             }}
           >
             {/* Card Header */}
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: isMobile ? "16px" : "18px 32px 12px",
-                borderBottom: "none",
-              }}
+              className="flex items-center justify-between border-b-0"
+              style={{ padding: isMobile ? "16px" : "18px 32px 12px" }}
             >
               <div>
                 <div
+                  className="font-[Inter,sans-serif] font-bold leading-[1.2]"
                   style={{
-                    fontFamily: "Inter, sans-serif",
                     fontSize: isMobile ? "20px" : "24px",
-                    fontWeight: "700",
                     color: colors.primary,
-                    lineHeight: "1.2",
                   }}
                 >
                   {stage.stage}
                 </div>
-                <div
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    color: "#888",
-                    marginTop: "3px",
-                  }}
-                >
+                <div className="font-[Inter,sans-serif] text-[14px] text-[#888] mt-[3px]">
                   {stage.population}
                 </div>
               </div>
-              <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "10px",
-                  fontWeight: "600",
-                  textTransform: "uppercase",
-                  letterSpacing: "2px",
-                  color: "#bbb",
-                }}
-              >
+              <div className="font-[Inter,sans-serif] text-[10px] font-semibold uppercase tracking-[2px] text-[#bbb]">
                 Stage {activeStage + 1} / {valueChainStages.length}
               </div>
             </div>
@@ -1616,100 +1203,58 @@ const ValueChainSectionPremium = () => {
             <div style={{ padding: isMobile ? "8px 16px" : "8px 32px 16px" }}>
               {/* Description */}
               <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  lineHeight: "1.6",
-                  color: "#666",
-                  margin: "0 0 12px 0",
-                  minHeight: isMobile ? "auto" : "45px",
-                }}
+                className="font-[Inter,sans-serif] text-[14px] leading-[1.6] text-[#666] mt-0 mb-3"
+                style={{ minHeight: isMobile ? "auto" : "45px" }}
               >
                 {stage.description}
               </p>
 
-              {/* Metrics + Opportunities — hidden on mobile behind Show more */}
+              {/* Metrics + Opportunities */}
               {(!isMobile || showMore) && (
                 <div>
-                  {/* Metrics Row — stat + value retention side by side */}
                   <div
+                    className="grid mb-3"
                     style={{
-                      display: "grid",
                       gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
                       gap: isMobile ? "10px" : "16px",
-                      marginBottom: "12px",
                     }}
                   >
                     {/* Key Stat */}
                     <div
+                      className="rounded-[14px] flex items-center gap-4"
                       style={{
                         backgroundColor: "rgba(27, 77, 62, 0.04)",
-                        borderRadius: "14px",
                         padding: "14px 20px",
-                        border: `1px solid rgba(27, 77, 62, 0.08)`,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "16px",
+                        border: "1px solid rgba(27, 77, 62, 0.08)",
                       }}
                     >
                       <div
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "32px",
-                          fontWeight: "700",
-                          color: colors.primary,
-                          lineHeight: "1",
-                          flexShrink: 0,
-                        }}
+                        className="font-[Poppins,sans-serif] text-[32px] font-bold leading-none shrink-0"
+                        style={{ color: colors.primary }}
                       >
                         {stage.statNumber}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "#888",
-                          lineHeight: "1.3",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-[#888] leading-[1.3]">
                         {stage.statLabel}
                       </div>
                     </div>
 
                     {/* Value Retention */}
                     <div
+                      className="rounded-[14px] flex flex-col justify-center"
                       style={{
                         backgroundColor: colors.background,
-                        borderRadius: "14px",
                         padding: "14px 20px",
                         border: `1px solid ${colors.line}`,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
                       }}
                     >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "12px",
-                            color: "#888",
-                          }}
-                        >
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-[Inter,sans-serif] text-[12px] text-[#888]">
                           Learner value retained
                         </span>
                         <span
+                          className="font-[Poppins,sans-serif] text-[14px] font-semibold"
                           style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "14px",
-                            fontWeight: "600",
                             color:
                               stage.valueRetained > 60
                                 ? colors.primary
@@ -1721,79 +1266,42 @@ const ValueChainSectionPremium = () => {
                           {stage.valueRetained}%
                         </span>
                       </div>
-                      <div
-                        style={{
-                          height: "6px",
-                          backgroundColor: colors.line,
-                          borderRadius: "3px",
-                          overflow: "hidden",
-                        }}
-                      >
+                      <div className="h-1.5 rounded-[3px] overflow-hidden" style={{ backgroundColor: colors.line }}>
                         <div
+                          className="h-full rounded-[3px] transition-[width] duration-500"
                           style={{
-                            height: "100%",
                             width: `${stage.valueRetained}%`,
                             backgroundColor: colors.accent,
-                            borderRadius: "3px",
-                            transition: "width 0.5s ease",
                           }}
                         />
                       </div>
                     </div>
                   </div>
 
-                  {/* Opportunity Markers — 2×2 grid */}
+                  {/* Opportunity Markers */}
                   <div>
-                    <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "10px",
-                        fontWeight: "700",
-                        textTransform: "uppercase",
-                        letterSpacing: "2px",
-                        color: "#999",
-                        marginBottom: "8px",
-                      }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[2px] text-[#999] mb-2">
                       Opportunity Markers
                     </div>
                     <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                        gap: "6px",
-                      }}
+                      className="grid gap-1.5"
+                      style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}
                     >
                       {stage.painPoints.map((point, i) => (
                         <div
                           key={i}
+                          className="flex items-center gap-[10px] rounded-[10px]"
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
                             backgroundColor: colors.background,
-                            borderRadius: "10px",
                             padding: "10px 14px",
                             border: `1px solid ${colors.line}`,
                           }}
                         >
                           <div
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              backgroundColor: colors.accent,
-                              flexShrink: 0,
-                            }}
+                            className="w-1.5 h-1.5 rounded-full shrink-0"
+                            style={{ backgroundColor: colors.accent }}
                           />
-                          <span
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "13px",
-                              color: "#555",
-                              lineHeight: "1.3",
-                            }}
-                          >
+                          <span className="font-[Inter,sans-serif] text-[13px] text-[#555] leading-[1.3]">
                             {point}
                           </span>
                         </div>
@@ -1806,22 +1314,11 @@ const ValueChainSectionPremium = () => {
               {isMobile && (
                 <button
                   onClick={() => setShowMore(!showMore)}
+                  className="flex items-center justify-center gap-2 w-full bg-transparent rounded-xl font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer p-[14px]"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    width: "100%",
-                    padding: "14px",
                     marginTop: showMore ? "0" : "-8px",
-                    backgroundColor: "transparent",
                     border: `1px solid ${colors.line}`,
-                    borderRadius: "12px",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "600",
                     color: colors.primary,
-                    cursor: "pointer",
                   }}
                 >
                   {showMore ? "Show less" : "Show more details"}
@@ -1832,25 +1329,16 @@ const ValueChainSectionPremium = () => {
 
             {/* Card Footer — Navigation */}
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: isMobile ? "12px 16px" : "14px 32px",
-                borderTop: "none",
-              }}
+              className="flex items-center justify-between border-t-0"
+              style={{ padding: isMobile ? "12px 16px" : "14px 32px" }}
             >
               <div
                 onClick={() => activeStage > 0 && setActiveStage(activeStage - 1)}
+                className="flex items-center gap-2 font-[Inter,sans-serif] text-[13px]"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
                   cursor: activeStage > 0 ? "pointer" : "default",
                   opacity: activeStage > 0 ? 0.6 : 0.15,
                   transition: "opacity 0.2s ease",
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
                   color: colors.primary,
                 }}
               >
@@ -1858,19 +1346,15 @@ const ValueChainSectionPremium = () => {
                 Previous
               </div>
 
-              <div style={{ display: "flex", gap: "8px" }}>
+              <div className="flex gap-2">
                 {valueChainStages.map((_, i) => (
                   <div
                     key={i}
-                    onClick={() => setActiveStage(i)}
+                    className="h-2 rounded cursor-pointer transition-all duration-300"
                     style={{
                       width: activeStage === i ? "24px" : "8px",
-                      height: "8px",
-                      borderRadius: "4px",
                       backgroundColor:
                         activeStage === i ? colors.accent : i < activeStage ? colors.primary : colors.line,
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
                     }}
                   />
                 ))}
@@ -1878,15 +1362,11 @@ const ValueChainSectionPremium = () => {
 
               <div
                 onClick={() => activeStage < valueChainStages.length - 1 && setActiveStage(activeStage + 1)}
+                className="flex items-center gap-2 font-[Inter,sans-serif] text-[13px]"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
                   cursor: activeStage < valueChainStages.length - 1 ? "pointer" : "default",
                   opacity: activeStage < valueChainStages.length - 1 ? 0.6 : 0.15,
                   transition: "opacity 0.2s ease",
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
                   color: colors.primary,
                 }}
               >
@@ -1915,47 +1395,20 @@ const SolutionCard = ({ solution, index }) => {
 
   return (
     <div
-      style={{
-        backgroundColor: colors.white,
-        borderRadius: "20px",
-        padding: "28px",
-        border: "none",
-        display: "flex",
-        flexDirection: "column",
-        transition: "all 0.3s ease",
-      }}
+      className="rounded-[20px] p-7 border-none flex flex-col transition-all duration-300"
+      style={{ backgroundColor: colors.white }}
     >
       {/* Tier + Capital row */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "16px",
-        }}
-      >
+      <div className="flex justify-between items-center mb-4">
         <span
-          style={{
-            backgroundColor: tier.bg,
-            color: tier.text,
-            padding: "5px 12px",
-            borderRadius: "20px",
-            fontSize: "11px",
-            fontWeight: "700",
-            fontFamily: "Inter, sans-serif",
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-          }}
+          className="rounded-[20px] text-[11px] font-bold font-[Inter,sans-serif] uppercase tracking-[0.5px] py-[5px] px-3"
+          style={{ backgroundColor: tier.bg, color: tier.text }}
         >
           Tier {solution.tier} · {tier.label}
         </span>
         <span
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontSize: "16px",
-            fontWeight: "700",
-            color: colors.primary,
-          }}
+          className="font-[Poppins,sans-serif] text-[16px] font-bold"
+          style={{ color: colors.primary }}
         >
           {solution.capital}
         </span>
@@ -1963,63 +1416,32 @@ const SolutionCard = ({ solution, index }) => {
 
       {/* Title */}
       <h3
-        style={{
-          fontFamily: "Inter, sans-serif",
-          fontSize: "18px",
-          fontWeight: "600",
-          color: colors.primary,
-          margin: "0 0 12px 0",
-          lineHeight: "1.3",
-          minHeight: "24px",
-        }}
+        className="font-[Inter,sans-serif] text-[18px] font-semibold leading-[1.3] min-h-[24px] mt-0 mb-3"
+        style={{ color: colors.primary }}
       >
         {solution.name}
       </h3>
 
       {/* Description */}
-      <p
-        style={{
-          fontFamily: "Inter, sans-serif",
-          fontSize: "14px",
-          color: "#666",
-          lineHeight: "1.6",
-          margin: "0 0 20px 0",
-          flex: 1,
-        }}
-      >
+      <p className="font-[Inter,sans-serif] text-[14px] text-[#666] leading-[1.6] mt-0 mb-5 flex-1">
         {solution.description}
       </p>
 
       {/* Impact container */}
       <div
+        className="rounded-xl"
         style={{
           backgroundColor: "rgba(27, 77, 62, 0.06)",
-          borderRadius: "12px",
           padding: "14px 16px",
-          border: `1px solid rgba(27, 77, 62, 0.1)`,
+          border: "1px solid rgba(27, 77, 62, 0.1)",
         }}
       >
-        <div
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "10px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "1px",
-            color: "#999",
-            marginBottom: "5px",
-          }}
-        >
+        <div className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[1px] text-[#999] mb-[5px]">
           Expected Impact
         </div>
         <div
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "13px",
-            color: colors.primary,
-            fontWeight: "600",
-            whiteSpace: "nowrap",
-          }}
+          className="font-[Inter,sans-serif] text-[13px] font-semibold whitespace-nowrap"
+          style={{ color: colors.primary }}
         >
           {solution.impact}
         </div>
@@ -2049,7 +1471,7 @@ const SolutionsSection = ({ sector }) => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Header + Filter row */}
         <div
           style={{
@@ -2059,46 +1481,29 @@ const SolutionsSection = ({ sector }) => {
             marginBottom: isMobile ? "32px" : "60px",
           }}
         >
-          {/* Left: pill + heading + subtitle */}
-          <div style={{ flex: 1, marginBottom: isMobile ? "24px" : 0 }}>
+          <div className="flex-1" style={{ marginBottom: isMobile ? "24px" : 0 }}>
             <span
+              className="rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] px-5 py-[10px]"
               style={{
                 backgroundColor: "rgba(184, 217, 53, 0.15)",
-                padding: "10px 20px",
-                borderRadius: "50px",
-                fontSize: "11px",
-                fontWeight: "700",
-                textTransform: "uppercase",
-                letterSpacing: "2px",
-                fontFamily: "Inter, sans-serif",
                 color: colors.accent,
               }}
             >
               The Pathway to Impact
             </span>
             <h2
+              className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] max-w-[900px]"
               style={{
-                fontFamily: "Inter, sans-serif",
                 fontSize: isMobile ? "28px" : "42px",
-                fontWeight: "300",
-                lineHeight: "1.2",
-                letterSpacing: "-0.5px",
                 color: colors.white,
                 margin: "24px 0 20px 0",
-                maxWidth: "900px",
               }}
             >
-              Ventures That Build Lasting <span style={{ color: colors.accent, fontWeight: "600" }}>Human Capital</span>
+              Ventures That Build Lasting <span className="font-semibold" style={{ color: colors.accent }}>Human Capital</span>
             </h2>
             <p
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "15px" : "16px",
-                lineHeight: "1.65",
-                color: "rgba(255,255,255,0.6)",
-                maxWidth: "700px",
-                margin: 0,
-              }}
+              className="font-[Inter,sans-serif] leading-[1.65] text-white/60 max-w-[700px] m-0"
+              style={{ fontSize: isMobile ? "15px" : "16px" }}
             >
               Nine ventures — each one a bridge from insight to investment to measurable public benefit — leveraging
               diaspora expertise, TVET partnerships, and BRIDGE's integrated portfolio to connect learning with earning.
@@ -2107,21 +1512,10 @@ const SolutionsSection = ({ sector }) => {
 
           {/* Right: Filter container */}
           <div
-            style={{
-              display: "flex",
-              justifyContent: isMobile ? "flex-start" : "flex-end",
-              flexShrink: 0,
-            }}
+            className="flex shrink-0"
+            style={{ justifyContent: isMobile ? "flex-start" : "flex-end" }}
           >
-            <div
-              style={{
-                display: "inline-flex",
-                gap: "4px",
-                padding: "4px",
-                borderRadius: "50px",
-                border: "1px solid rgba(255,255,255,0.15)",
-              }}
-            >
+            <div className="inline-flex gap-1 p-1 rounded-full border border-white/15">
               {tierFilters.map((f) => {
                 const isActive = activeTier === f.key;
                 const count =
@@ -2131,18 +1525,13 @@ const SolutionsSection = ({ sector }) => {
                   <button
                     key={f.key}
                     onClick={() => setActiveTier(String(f.key))}
+                    className="border-none rounded-full font-[Inter,sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap"
                     style={{
                       backgroundColor: isActive ? "rgba(255,255,255,0.12)" : "transparent",
                       color: isActive ? colors.accent : "rgba(255,255,255,0.5)",
-                      border: "none",
-                      borderRadius: "50px",
                       padding: isMobile ? "6px 12px" : "6px 16px",
                       fontSize: isMobile ? "11px" : "12px",
                       fontWeight: isActive ? "700" : "500",
-                      fontFamily: "Inter, sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
                     }}
                   >
                     {f.label}
@@ -2183,17 +1572,14 @@ const SolutionsSection = ({ sector }) => {
         </div>
 
         {isMobile && (
-          <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginTop: "16px" }}>
+          <div className="flex justify-center gap-1.5 mt-4">
             {filteredSolutions.map((_, i) => (
               <div
                 key={i}
+                className="h-2 rounded cursor-pointer transition-all duration-300"
                 style={{
                   width: i === 0 ? "24px" : "8px",
-                  height: "8px",
-                  borderRadius: "4px",
                   backgroundColor: i === 0 ? colors.accent : "rgba(255,255,255,0.2)",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
                 }}
               />
             ))}
@@ -2228,91 +1614,48 @@ const CompetitorAnalysisCard = ({ competitors, currentIndex, setCurrentIndex, hi
 
   return (
     <div
+      className="rounded-[20px] overflow-hidden"
       style={{
         backgroundColor: colors.white,
-        borderRadius: "20px",
         border: `1px solid ${colors.line}`,
-        overflow: "hidden",
       }}
     >
-      <div style={{ padding: "24px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "16px",
-          }}
-        >
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-4">
           <h3
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "18px",
-              fontWeight: "600",
-              color: colors.dark,
-              margin: 0,
-            }}
+            className="font-[Inter,sans-serif] text-[18px] font-semibold m-0"
+            style={{ color: colors.dark }}
           >
             {competitor.name}
           </h3>
           <span
+            className="font-[Inter,sans-serif] text-[12px] font-semibold rounded-[20px] px-3 py-1"
             style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "12px",
-              fontWeight: "600",
               color: colors.primary,
               backgroundColor: colors.accentLight,
-              padding: "4px 12px",
-              borderRadius: "20px",
             }}
           >
             {competitor.priority} Priority
           </span>
         </div>
 
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "14px",
-            color: "#666",
-            margin: "0 0 16px 0",
-            lineHeight: "1.5",
-          }}
-        >
+        <p className="font-[Inter,sans-serif] text-[14px] text-[#666] mt-0 mb-4 leading-[1.5]">
           {competitor.focus}
         </p>
 
         {/* Strengths */}
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb-4">
           {competitor.strengths.map((strength, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "8px",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "13px",
-                  fontFamily: "Inter, sans-serif",
-                  color: "#666",
-                }}
-              >
+            <div key={i} className="flex justify-between items-center mb-2">
+              <span className="text-[13px] font-[Inter,sans-serif] text-[#666]">
                 {strength.name}
               </span>
-              <div style={{ display: "flex", gap: "3px" }}>
+              <div className="flex gap-[3px]">
                 {[1, 2, 3, 4, 5].map((n) => (
                   <div
                     key={n}
-                    style={{
-                      width: "16px",
-                      height: "6px",
-                      borderRadius: "3px",
-                      backgroundColor: n <= strength.rating ? colors.accent : colors.line,
-                    }}
+                    className="w-4 h-1.5 rounded-[3px]"
+                    style={{ backgroundColor: n <= strength.rating ? colors.accent : colors.line }}
                   />
                 ))}
               </div>
@@ -2323,38 +1666,18 @@ const CompetitorAnalysisCard = ({ competitors, currentIndex, setCurrentIndex, hi
         {isExpanded && (
           <>
             {/* Where BRIDGE Helps */}
-            <div style={{ marginBottom: "16px" }}>
-              <div
-                style={{
-                  fontSize: "10px",
-                  fontFamily: "Inter, sans-serif",
-                  color: "#888",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  marginBottom: "12px",
-                  fontWeight: "600",
-                }}
-              >
+            <div className="mb-4">
+              <div className="text-[10px] font-[Inter,sans-serif] text-[#888] uppercase tracking-[1px] mb-3 font-semibold">
                 Where BRIDGE Helps
               </div>
               {competitor.gaps.map((gap, i) => (
                 <div
                   key={i}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    marginBottom: i < competitor.gaps.length - 1 ? "8px" : 0,
-                  }}
+                  className="flex items-center gap-[10px]"
+                  style={{ marginBottom: i < competitor.gaps.length - 1 ? "8px" : 0 }}
                 >
-                  <span style={{ color: colors.accent, fontSize: "12px", fontWeight: "600" }}>→</span>
-                  <span
-                    style={{
-                      fontSize: "13px",
-                      fontFamily: "Inter, sans-serif",
-                      color: "#666",
-                    }}
-                  >
+                  <span className="text-[12px] font-semibold" style={{ color: colors.accent }}>→</span>
+                  <span className="text-[13px] font-[Inter,sans-serif] text-[#666]">
                     {gap}
                   </span>
                 </div>
@@ -2363,56 +1686,29 @@ const CompetitorAnalysisCard = ({ competitors, currentIndex, setCurrentIndex, hi
 
             {/* BRIDGE Opportunity */}
             <div
+              className="rounded-xl p-4"
               style={{
                 backgroundColor: colors.accentLight,
-                borderRadius: "12px",
-                padding: "16px",
                 border: `1px solid ${colors.accent}`,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  marginBottom: "8px",
-                }}
-              >
+              <div className="flex items-center gap-2 mb-2">
                 <span
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: colors.accent,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "10px",
-                  }}
+                  className="w-5 h-5 rounded-full flex items-center justify-center text-[10px]"
+                  style={{ backgroundColor: colors.accent }}
                 >
                   ✦
                 </span>
                 <span
-                  style={{
-                    fontSize: "10px",
-                    fontFamily: "Inter, sans-serif",
-                    color: colors.primary,
-                    textTransform: "uppercase",
-                    letterSpacing: "1px",
-                    fontWeight: "700",
-                  }}
+                  className="text-[10px] font-[Inter,sans-serif] uppercase tracking-[1px] font-bold"
+                  style={{ color: colors.primary }}
                 >
                   BRIDGE Opportunity
                 </span>
               </div>
               <p
-                style={{
-                  fontSize: "13px",
-                  fontFamily: "Inter, sans-serif",
-                  color: colors.primary,
-                  lineHeight: "1.5",
-                  margin: 0,
-                }}
+                className="text-[13px] font-[Inter,sans-serif] leading-[1.5] m-0"
+                style={{ color: colors.primary }}
               >
                 {competitor.bridgeOpportunity}
               </p>
@@ -2423,48 +1719,34 @@ const CompetitorAnalysisCard = ({ competitors, currentIndex, setCurrentIndex, hi
 
       {/* Footer */}
       <div
+        className="flex items-center px-6 py-4"
         style={{
-          padding: "16px 24px",
           borderTop: `1px solid ${colors.line}`,
-          display: "flex",
           justifyContent: hiddenNav ? "center" : "space-between",
-          alignItems: "center",
         }}
       >
         {!hiddenNav && (
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div className="flex items-center gap-2">
             <button
               onClick={prevCompetitor}
+              className="w-8 h-8 rounded-full cursor-pointer flex items-center justify-center"
               style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
                 border: `1px solid ${colors.line}`,
                 backgroundColor: colors.white,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
                 color: colors.primary,
               }}
             >
               <ChevronLeft size={14} strokeWidth={2} />
             </button>
-            <span style={{ fontSize: "12px", fontFamily: "Inter, sans-serif", color: "#888" }}>
+            <span className="text-[12px] font-[Inter,sans-serif] text-[#888]">
               {currentIndex + 1} / {competitors.length}
             </span>
             <button
               onClick={nextCompetitor}
+              className="w-8 h-8 rounded-full cursor-pointer flex items-center justify-center"
               style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
                 border: `1px solid ${colors.line}`,
                 backgroundColor: colors.white,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
                 color: colors.primary,
               }}
             >
@@ -2475,19 +1757,11 @@ const CompetitorAnalysisCard = ({ competitors, currentIndex, setCurrentIndex, hi
 
         <button
           onClick={() => setIsExpanded(!isExpanded)}
+          className="bg-transparent rounded-full text-[12px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center gap-1.5"
           style={{
-            backgroundColor: "transparent",
             color: colors.primary,
             border: `1.5px solid ${colors.primary}`,
             padding: "10px 20px",
-            borderRadius: "50px",
-            fontSize: "12px",
-            fontWeight: "600",
-            fontFamily: "Inter, sans-serif",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
           }}
         >
           {isExpanded ? "Less" : "Analysis"}
@@ -2570,19 +1844,13 @@ const CompetitiveLandscapeSection = ({ sector }) => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        {/* Section Header — full width */}
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
+        {/* Section Header */}
         <div style={{ marginBottom: isMobile ? "32px" : "60px" }}>
           <span
+            className="rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] px-5 py-[10px]"
             style={{
               backgroundColor: colors.white,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
               color: colors.primary,
               border: `1px solid ${colors.line}`,
             }}
@@ -2590,28 +1858,19 @@ const CompetitiveLandscapeSection = ({ sector }) => {
             The Landscape
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
               margin: "24px 0 16px 0",
             }}
           >
             Building With Ghana's{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Strongest Institutions</span>
+            <span className="font-semibold" style={{ color: colors.accent }}>Strongest Institutions</span>
           </h2>
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "15px" : "16px",
-              lineHeight: "1.65",
-              color: "#666",
-              margin: "0",
-              maxWidth: "750px",
-            }}
+            className="font-[Inter,sans-serif] leading-[1.65] text-[#666] max-w-[750px] m-0"
+            style={{ fontSize: isMobile ? "15px" : "16px" }}
           >
             Mastercard Foundation, GIZ, Ghana Skills Development Fund, and many more bring world-class resources to
             education. BRIDGE connects training to employment through its integrated portfolio — combining efforts,
@@ -2621,25 +1880,14 @@ const CompetitiveLandscapeSection = ({ sector }) => {
 
         {/* Mobile: horizontal scroll pills for competitor selection */}
         {isMobile && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              marginBottom: "16px",
-            }}
-          >
+          <div className="flex justify-start mb-4">
             <div
+              className="inline-flex items-center gap-1.5 rounded-full p-1 max-w-full"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
-                padding: "4px",
                 backgroundColor: colors.white,
                 overflowX: "auto",
                 WebkitOverflowScrolling: "touch",
-                maxWidth: "100%",
               }}
             >
               {sector.competitors.map((comp, index) => (
@@ -2649,20 +1897,12 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                     setActiveCompetitorIndex(index);
                     setShowMoreComp(false);
                   }}
+                  className="rounded-full text-[10px] font-[Inter,sans-serif] cursor-pointer whitespace-nowrap shrink-0 transition-all duration-200 py-[5px] px-2"
                   style={{
                     backgroundColor: activeCompetitorIndex === index ? colors.accentLight : "transparent",
                     color: activeCompetitorIndex === index ? colors.primary : "#999",
                     fontWeight: activeCompetitorIndex === index ? "700" : "500",
-                    border:
-                      activeCompetitorIndex === index ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                    borderRadius: "50px",
-                    padding: "5px 8px",
-                    fontSize: "10px",
-                    fontFamily: "Inter, sans-serif",
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
-                    transition: "all 0.2s ease",
+                    border: activeCompetitorIndex === index ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
                   }}
                 >
                   {comp.name}
@@ -2684,7 +1924,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                 }
           }
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          <div className="flex flex-col gap-5">
             <CompetitorAnalysisCard
               competitors={sector.competitors}
               currentIndex={activeCompetitorIndex}
@@ -2692,28 +1932,16 @@ const CompetitiveLandscapeSection = ({ sector }) => {
               hiddenNav={isMobile}
             />
 
-            {/* BRIDGE Position Card — dynamic per competitor */}
             {isMobile && !showMoreComp && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowMoreComp(true);
                 }}
+                className="flex items-center justify-center gap-2 w-full p-[14px] border-none rounded-xl font-[Inter,sans-serif] text-[14px] font-semibold cursor-pointer"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
-                  width: "100%",
-                  padding: "14px",
                   backgroundColor: colors.primary,
-                  border: "none",
-                  borderRadius: "12px",
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "600",
                   color: colors.white,
-                  cursor: "pointer",
                 }}
               >
                 See BRIDGE's Position
@@ -2722,103 +1950,57 @@ const CompetitiveLandscapeSection = ({ sector }) => {
             )}
             {(!isMobile || showMoreComp) && (
               <div
+                className="flex-1 flex flex-col"
                 style={{
                   backgroundColor: colors.primary,
                   borderRadius: isMobile ? "16px" : "20px",
                   padding: isMobile ? "20px" : "28px",
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "16px",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "10px",
-                      fontFamily: "Inter, sans-serif",
-                      fontWeight: "700",
-                      textTransform: "uppercase",
-                      letterSpacing: "2px",
-                      color: "rgba(255,255,255,0.4)",
-                    }}
-                  >
+                <div className="flex justify-between items-center mb-4">
+                  <div className="text-[10px] font-[Inter,sans-serif] font-bold uppercase tracking-[2px] text-white/40">
                     BRIDGE's Position
                   </div>
                   <span
+                    className="text-[11px] font-[Inter,sans-serif] font-semibold rounded-[20px] px-3 py-1"
                     style={{
-                      fontSize: "11px",
-                      fontFamily: "Inter, sans-serif",
-                      fontWeight: "600",
                       color: colors.accent,
                       backgroundColor: "rgba(184, 217, 53, 0.12)",
-                      padding: "4px 12px",
-                      borderRadius: "20px",
                     }}
                   >
                     vs {["Mastercard", "GIZ", "CAMFED", "Ghana Skills", "Chalkboard", "CTVET"][activeCompetitorIndex]}
                   </span>
                 </div>
                 <h4
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "17px",
-                    fontWeight: "600",
-                    color: colors.white,
-                    margin: "0 0 24px 0",
-                    lineHeight: "1.4",
-                    minHeight: "48px",
-                  }}
+                  className="font-[Inter,sans-serif] text-[17px] font-semibold leading-[1.4] min-h-[48px] mt-0 mb-6"
+                  style={{ color: colors.white }}
                 >
                   {currentPosition.headline}
                 </h4>
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+                <div className="flex flex-col gap-[10px] flex-1">
                   {currentPosition.bullets.map((item, i) => (
                     <div
                       key={i}
+                      className="flex rounded-xl"
                       style={{
-                        display: "flex",
                         alignItems: isMobile ? "flex-start" : "center",
                         flexWrap: isMobile ? "wrap" : "nowrap",
                         gap: isMobile ? "8px" : "12px",
                         backgroundColor: "rgba(255,255,255,0.06)",
-                        borderRadius: "12px",
                         padding: isMobile ? "12px 14px" : "14px 16px",
                       }}
                     >
                       <div
+                        className="w-[7px] h-[7px] rounded-full shrink-0"
                         style={{
-                          width: "7px",
-                          height: "7px",
-                          borderRadius: "50%",
                           backgroundColor: colors.accent,
-                          flexShrink: 0,
                           marginTop: isMobile ? "5px" : 0,
                         }}
                       />
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: "600",
-                          color: colors.white,
-                        }}
-                      >
+                      <span className="font-[Inter,sans-serif] text-[13px] font-semibold" style={{ color: colors.white }}>
                         {item.label}
                       </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.4)",
-                        }}
-                      >
+                      <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                         {item.detail}
                       </span>
                     </div>
@@ -2829,13 +2011,7 @@ const CompetitiveLandscapeSection = ({ sector }) => {
           </div>
 
           {!isMobile && (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(2, 1fr)",
-                gap: "16px",
-              }}
-            >
+            <div className="grid grid-cols-2 gap-4">
               {sector.competitors.map((comp, i) => {
                 const shortNames = ["Mastercard Fdn", "GIZ TVET", "CAMFED", "Ghana Skills Fund", "Chalkboard", "CTVET"];
                 const shortDescs = [
@@ -2849,127 +2025,55 @@ const CompetitiveLandscapeSection = ({ sector }) => {
                 return (
                   <div
                     key={i}
+                    className="rounded-2xl p-6 flex flex-col"
                     style={{
                       backgroundColor: colors.white,
-                      borderRadius: "16px",
-                      padding: "24px",
                       border: `1px solid ${colors.line}`,
-                      display: "flex",
-                      flexDirection: "column",
                     }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginBottom: "6px",
-                      }}
-                    >
+                    <div className="flex justify-between items-center mb-1.5">
                       <h4
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          color: colors.dark,
-                          margin: 0,
-                          whiteSpace: "nowrap",
-                        }}
+                        className="font-[Inter,sans-serif] text-[16px] font-semibold whitespace-nowrap m-0"
+                        style={{ color: colors.dark }}
                       >
                         {shortNames[i]}
                       </h4>
                       <span
+                        className="font-[Inter,sans-serif] text-[11px] font-semibold rounded-xl whitespace-nowrap shrink-0 ml-3 px-[10px] py-[3px]"
                         style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          fontWeight: "600",
                           color: colors.primary,
                           backgroundColor: colors.accentLight,
-                          padding: "3px 10px",
-                          borderRadius: "12px",
-                          whiteSpace: "nowrap",
-                          flexShrink: 0,
-                          marginLeft: "12px",
                         }}
                       >
                         {comp.funding}
                       </span>
                     </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "13px",
-                        color: "#888",
-                        margin: "0 0 12px 0",
-                        lineHeight: "1.45",
-                      }}
-                    >
+                    <p className="font-[Inter,sans-serif] text-[13px] text-[#888] mt-0 mb-3 leading-[1.45]">
                       {shortDescs[i]}
                     </p>
 
-                    {/* Top Strength — compact */}
                     <div
+                      className="rounded-[10px] flex flex-col justify-center"
                       style={{
                         backgroundColor: colors.background,
-                        borderRadius: "10px",
                         padding: "10px 14px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
                       }}
                     >
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "10px",
-                          fontWeight: "700",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.5px",
-                          color: "#bbb",
-                          marginBottom: "4px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px] text-[#bbb] mb-1">
                         Top Strength
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: "500",
-                          color: "#555",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] font-medium text-[#555] whitespace-nowrap">
                         {comp.strengths[0].name}
                       </div>
                     </div>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginTop: "auto",
-                        paddingTop: "14px",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#ccc",
-                        }}
-                      >
+                    <div className="flex justify-between items-center mt-auto pt-[14px]">
+                      <span className="font-[Inter,sans-serif] text-[12px] text-[#ccc]">
                         Est. {comp.year}
                       </span>
                       <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          fontWeight: "600",
-                          color: comp.priority === "High" ? colors.primary : "#999",
-                          opacity: 0.6,
-                        }}
+                        className="font-[Inter,sans-serif] text-[11px] font-semibold opacity-60"
+                        style={{ color: comp.priority === "High" ? colors.primary : "#999" }}
                       >
                         {comp.priority} Priority
                       </span>
@@ -3164,55 +2268,36 @@ const GovPolicyCard = ({ policy, index, isExpanded, onToggle }) => {
   return (
     <div
       onClick={onToggle}
+      className="rounded-2xl shrink-0 cursor-pointer transition-all duration-300 flex flex-col"
       style={{
         ...(isMobile
           ? { width: "100%" }
           : { minWidth: isExpanded ? "380px" : "280px", maxWidth: isExpanded ? "380px" : "280px" }),
         backgroundColor: colors.background,
         border: isExpanded ? `2px solid ${colors.accent}` : `1.5px solid ${colors.line}`,
-        borderRadius: "16px",
-        flexShrink: 0,
-        cursor: "pointer",
-        transition: "all 0.3s ease",
-        display: "flex",
-        flexDirection: "column",
       }}
     >
       {/* Main card content */}
-      <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
-        {/* Top row: category badge + relevance pills */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+      <div className="p-5 flex flex-col">
+        <div className="flex justify-between items-center mb-[14px]">
           <span
+            className="text-[9px] font-bold uppercase tracking-[1px] font-[Inter,sans-serif] rounded-full py-1 px-[10px]"
             style={{
-              fontSize: "9px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              fontFamily: "'Inter', sans-serif",
               color: colors.primary,
               backgroundColor: badge.bg,
               border: `1px solid ${badge.border}`,
-              padding: "4px 10px",
-              borderRadius: "50px",
             }}
           >
             {catLabel}
           </span>
-          <div style={{ display: "flex", gap: "4px" }}>
+          <div className="flex gap-1">
             {(policy.relevance || []).map((r) => (
               <span
                 key={r}
+                className="text-[9px] font-semibold uppercase tracking-[0.5px] font-[Inter,sans-serif] text-[#888] rounded-full py-[3px] px-2"
                 style={{
-                  fontSize: "9px",
-                  fontWeight: "600",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  fontFamily: "'Inter', sans-serif",
-                  color: "#888",
                   backgroundColor: colors.white,
                   border: `1px solid ${colors.line}`,
-                  padding: "3px 8px",
-                  borderRadius: "50px",
                 }}
               >
                 {relevanceLabels[r] || r}
@@ -3221,125 +2306,71 @@ const GovPolicyCard = ({ policy, index, isExpanded, onToggle }) => {
           </div>
         </div>
 
-        {/* Policy name */}
-        <div style={{ minHeight: "42px", marginBottom: "8px" }}>
+        <div className="min-h-[42px] mb-2">
           <h4
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "16px",
-              fontWeight: "700",
-              color: colors.primary,
-              margin: 0,
-              lineHeight: "1.35",
-            }}
+            className="font-[Inter,sans-serif] text-[16px] font-bold leading-[1.35] m-0"
+            style={{ color: colors.primary }}
           >
             {policy.policy}
           </h4>
         </div>
 
-        {/* Allocation — plain lime text */}
         <div
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "13px",
-            fontWeight: "700",
-            color: colors.accent,
-            marginBottom: "10px",
-          }}
+          className="font-[Inter,sans-serif] text-[13px] font-bold mb-[10px]"
+          style={{ color: colors.accent }}
         >
           {policy.allocation}
         </div>
 
-        {/* Alignment text */}
-        <div style={{ minHeight: "40px", marginBottom: "12px" }}>
+        <div className="min-h-[40px] mb-3">
           <p
+            className="font-[Inter,sans-serif] text-[13px] text-[#666] leading-[1.5] m-0 overflow-hidden"
             style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "13px",
-              color: "#666",
-              lineHeight: "1.5",
-              margin: 0,
               display: "-webkit-box",
               WebkitLineClamp: 3,
               WebkitBoxOrient: "vertical",
-              overflow: "hidden",
             }}
           >
             {policy.alignment}
           </p>
         </div>
 
-        {/* Expand hint */}
         <div
-          style={{
-            marginTop: "auto",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "12px",
-            fontWeight: "600",
-            color: colors.primary,
-          }}
+          className="mt-auto flex items-center gap-1.5 font-[Inter,sans-serif] text-[12px] font-semibold"
+          style={{ color: colors.primary }}
         >
-          {isExpanded ? "BRIDGE alignment ▾" : "BRIDGE alignment ▸"}
+          {isExpanded ? "BRIDGE alignment \u25BE" : "BRIDGE alignment \u25B8"}
         </div>
       </div>
 
       {/* Expanded content */}
       <div
+        className="overflow-hidden"
         style={{
           maxHeight: isExpanded ? "600px" : "0",
           opacity: isExpanded ? 1 : 0,
-          overflow: "hidden",
           transition: "max-height 0.35s ease, opacity 0.3s ease",
         }}
       >
-        <div style={{ borderTop: `1px solid ${colors.line}`, padding: "20px" }}>
-          {/* Governing body */}
-          <div
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "11px",
-              color: "#888",
-              marginBottom: "10px",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-            }}
-          >
+        <div className="p-5" style={{ borderTop: `1px solid ${colors.line}` }}>
+          <div className="font-[Inter,sans-serif] text-[11px] text-[#888] mb-[10px] uppercase tracking-[0.5px]">
             {policy.body}
           </div>
 
-          {/* BRIDGE role */}
-          <p
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "13px",
-              color: "#444",
-              lineHeight: "1.55",
-              margin: "0 0 14px 0",
-            }}
-          >
+          <p className="font-[Inter,sans-serif] text-[13px] text-[#444] leading-[1.55] mt-0 mb-[14px]">
             {policy.bridgeRole}
           </p>
 
-          {/* Pillars */}
           {policy.pillars && policy.pillars.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "14px" }}>
+            <div className="flex flex-wrap gap-1.5 mb-[14px]">
               {policy.pillars.map((p) => (
                 <span
                   key={p}
+                  className="font-[Inter,sans-serif] text-[10px] font-bold rounded-full uppercase tracking-[0.5px] py-[5px] px-3"
                   style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "10px",
-                    fontWeight: "700",
                     color: colors.primary,
                     backgroundColor: colors.accentLight,
                     border: `1px solid ${colors.accent}`,
-                    padding: "5px 12px",
-                    borderRadius: "50px",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
                   }}
                 >
                   {p}
@@ -3348,37 +2379,24 @@ const GovPolicyCard = ({ policy, index, isExpanded, onToggle }) => {
             </div>
           )}
 
-          {/* BRIDGE Ventures */}
           {policy.bridgeVentures && policy.bridgeVentures.length > 0 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div className="flex flex-col gap-1.5">
               {policy.bridgeVentures.map((v) => (
                 <div
                   key={v}
+                  className="rounded-[10px] flex items-center gap-[10px]"
                   style={{
                     backgroundColor: colors.primary,
-                    borderRadius: "10px",
                     padding: "12px 14px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
                   }}
                 >
                   <div
-                    style={{
-                      width: "7px",
-                      height: "7px",
-                      borderRadius: "50%",
-                      backgroundColor: colors.accent,
-                      flexShrink: 0,
-                    }}
+                    className="w-[7px] h-[7px] rounded-full shrink-0"
+                    style={{ backgroundColor: colors.accent }}
                   />
                   <span
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      color: colors.white,
-                    }}
+                    className="font-[Inter,sans-serif] text-[13px] font-semibold"
+                    style={{ color: colors.white }}
                   >
                     {v}
                   </span>
@@ -3572,17 +2590,14 @@ const PolicyAlignmentSection = () => {
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginBottom: "24px" }}>
+        <div className="flex justify-center gap-1.5 mb-6">
           {visiblePolicies.map((_, i) => (
             <div
               key={i}
+              className="h-2 rounded cursor-pointer transition-all duration-300"
               style={{
                 width: i === 0 ? "24px" : "8px",
-                height: "8px",
-                borderRadius: "4px",
                 backgroundColor: i === 0 ? colors.accent : colors.line,
-                cursor: "pointer",
-                transition: "all 0.3s ease",
               }}
             />
           ))}
@@ -3590,52 +2605,38 @@ const PolicyAlignmentSection = () => {
 
         {/* Bottom CTA Bar */}
         <div
+          className="flex gap-4 text-left"
           style={{
             backgroundColor: colors.primary,
             borderRadius: isMobile ? "12px" : "16px",
             padding: isMobile ? "24px 20px" : "28px 32px",
-            display: "flex",
             flexDirection: isMobile ? "column" : "row",
             justifyContent: isMobile ? "center" : "space-between",
             alignItems: isMobile ? "flex-start" : "center",
-            gap: "16px",
-            textAlign: "left",
           }}
         >
           <div>
             <div
+              className="font-[Inter,sans-serif] font-semibold mb-1"
               style={{
-                fontFamily: "'Inter', sans-serif",
                 fontSize: isMobile ? "16px" : "18px",
-                fontWeight: "600",
                 color: colors.white,
-                marginBottom: "4px",
               }}
             >
               BRIDGE complements — never competes with — government vision.
             </div>
             <div
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: isMobile ? "13px" : "14px",
-                color: "rgba(255,255,255,0.6)",
-              }}
+              className="font-[Inter,sans-serif] text-white/60"
+              style={{ fontSize: isMobile ? "13px" : "14px" }}
             >
               Every venture aligns with at least one active government policy or initiative.
             </div>
           </div>
           <button
+            className="border-none rounded-full text-[13px] font-bold font-[Inter,sans-serif] cursor-pointer whitespace-nowrap px-6 py-3"
             style={{
               backgroundColor: colors.accent,
               color: colors.primary,
-              border: "none",
-              padding: "12px 24px",
-              borderRadius: "50px",
-              fontSize: "13px",
-              fontWeight: "700",
-              fontFamily: "'Inter', sans-serif",
-              cursor: "pointer",
-              whiteSpace: "nowrap",
               ...(isMobile ? { alignSelf: "center" } : {}),
             }}
           >
@@ -5768,98 +4769,63 @@ const FinalCTASection = () => {
 
   return (
     <section
+      className="text-center"
       style={{
         backgroundColor: colors.primary,
         padding: isMobile ? "60px 20px" : "100px 80px",
-        textAlign: "center",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
+        <div className="max-w-[900px] mx-auto text-center">
           <span
+            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
             style={{
-              display: "inline-block",
               backgroundColor: "rgba(184, 217, 53, 0.15)",
               color: colors.accent,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             Be Part of the Journey
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] mt-0 mb-6"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "32px" : "48px",
-              fontWeight: "300",
-              lineHeight: "1.2",
               color: colors.white,
-              margin: "0 0 24px 0",
             }}
           >
-            Let's Build Ghana's <span style={{ color: colors.accent, fontWeight: "600" }}>Talent</span>
+            Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Talent</span>
           </h2>
 
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "15px" : "18px",
-              lineHeight: "1.7",
-              color: "rgba(255,255,255,0.6)",
-              margin: "0 0 40px 0",
-              maxWidth: "680px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
+            className="font-[Inter,sans-serif] leading-[1.7] text-white/60 mt-0 mb-10 max-w-[680px] mx-auto"
+            style={{ fontSize: isMobile ? "15px" : "18px" }}
           >
             Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
             Ghana's next generation of talent and enterprise.
           </p>
 
           <div
+            className="flex gap-4 justify-center"
             style={{
-              display: "flex",
               flexDirection: isMobile ? "column" : "row",
-              gap: "16px",
-              justifyContent: "center",
               alignItems: isMobile ? "stretch" : "center",
             }}
           >
             <button
               onClick={() => navigate("/contact")}
+              className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center justify-center gap-[10px]"
               style={{
                 backgroundColor: colors.accent,
                 color: colors.primary,
-                border: "none",
                 padding: isMobile ? "16px 24px" : "16px 32px",
-                borderRadius: "50px",
-                fontSize: "15px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
               }}
             >
               Start a Conversation
               <span
+                className="w-7 h-7 rounded-full flex items-center justify-center"
                 style={{
-                  width: "28px",
-                  height: "28px",
                   backgroundColor: colors.primary,
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   color: colors.white,
                 }}
               >
@@ -5869,16 +4835,10 @@ const FinalCTASection = () => {
 
             <button
               onClick={() => navigate("/resources")}
+              className="bg-transparent rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer border border-white/30"
               style={{
-                backgroundColor: "transparent",
                 color: colors.white,
-                border: "1px solid rgba(255,255,255,0.3)",
                 padding: isMobile ? "16px 24px" : "16px 32px",
-                borderRadius: "50px",
-                fontSize: "15px",
-                fontWeight: "600",
-                fontFamily: "Inter, sans-serif",
-                cursor: "pointer",
               }}
             >
               Explore the Full Analysis
@@ -5897,7 +4857,7 @@ const FinalCTASection = () => {
 export default function EducationSkillsSectorPage() {
   return (
     <Layout>
-      <div style={{ fontFamily: "Inter, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
+      <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
 
         <HeroSection sector={sectorData} />
         <ProblemSection />
@@ -5913,8 +4873,8 @@ export default function EducationSkillsSectorPage() {
         <ImpactSection />
         <FinalCTASection />
         {/* Pre-footer separator — NOT part of the Footer component */}
-        <div style={{ backgroundColor: colors.primary, padding: "0 80px" }}>
-          <div style={{ height: "0.5px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+        <div className="px-20" style={{ backgroundColor: colors.primary }}>
+          <div className="h-px bg-white/[0.08]" />
         </div>
       </div>
     </Layout>

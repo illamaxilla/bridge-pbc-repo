@@ -492,7 +492,7 @@ function Hero({ activeIdx, setActive }) {
     <section className={cn("relative", isMobile ? "px-5 pt-16 pb-0" : "px-20 pt-20 pb-0")} style={{ background: C.primary }}>
       <div className="max-w-[1200px] mx-auto relative">
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5" style={{ background: "rgba(184,217,53,0.12)", border: "1px solid rgba(184,217,53,0.25)" }}>
+        <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5 bg-[rgba(184,217,53,0.12)] border border-[rgba(184,217,53,0.25)]">
           <div className="w-1.5 h-1.5 rounded-full" style={{ background: C.accent }} />
           <span className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px]" style={{ color: C.accent }}>
             THE BRIDGE PROCESS
@@ -664,8 +664,8 @@ function ProcessTrack({ seg, animKey }) {
         >
           <div>
             <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-4"
-              style={{ background: C.accentDim, border: "1px solid rgba(184,217,53,0.35)" }}
+              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-4 border border-[rgba(184,217,53,0.35)]"
+              style={{ background: C.accentDim }}
             >
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: C.accent }} />
               <span
@@ -866,10 +866,10 @@ function ProcessTrack({ seg, animKey }) {
               <div className="flex flex-col gap-3">
                 <div
                   className={cn(
-                    "rounded-2xl flex-1 flex flex-col justify-center",
+                    "rounded-2xl flex-1 flex flex-col justify-center border border-[rgba(184,217,53,0.3)]",
                     isMobile ? "p-5" : "p-8"
                   )}
-                  style={{ background: C.accentDim, border: "1px solid rgba(184,217,53,0.3)" }}
+                  style={{ background: C.accentDim }}
                 >
                   <div className="flex items-center gap-2 mb-3.5">
                     <Gift size={16} color={C.primary} strokeWidth={2} />
@@ -997,8 +997,8 @@ function ToolkitSection({ seg }) {
               </h2>
             </div>
             <div
-              className="flex items-center gap-1.5 rounded-full py-1.5 px-3.5"
-              style={{ background: C.accentDim, border: "1px solid rgba(184,217,53,0.35)" }}
+              className="flex items-center gap-1.5 rounded-full py-1.5 px-3.5 border border-[rgba(184,217,53,0.35)]"
+              style={{ background: C.accentDim }}
             >
               <seg.Icon size={13} color={C.primary} strokeWidth={2} />
               <span
@@ -1148,8 +1148,8 @@ function DeliverablesSection({ seg }) {
               <div>
                 {!isMobile && (
                   <div
-                    className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5"
-                    style={{ background: C.accentDim, border: "1px solid rgba(184,217,53,0.35)" }}
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5 border border-[rgba(184,217,53,0.35)]"
+                    style={{ background: C.accentDim }}
                   >
                     <div className="w-1.5 h-1.5 rounded-full" style={{ background: C.accent }} />
                     <span
@@ -1488,8 +1488,8 @@ function MobileMethodologyAccordion({ step }) {
       label: "WHAT THIS PRODUCES",
       content: (
         <div
-          className="rounded-[10px] py-4 px-[18px]"
-          style={{ background: C.accentDim, border: "1px solid rgba(184,217,53,0.4)" }}
+          className="rounded-[10px] py-4 px-[18px] border border-[rgba(184,217,53,0.4)]"
+          style={{ background: C.accentDim }}
         >
           <p
             className="font-['DM_Sans',sans-serif] text-sm leading-[1.7] m-0 italic"
@@ -1628,8 +1628,7 @@ function MethodologySection() {
         {/* Step cards */}
         <div className="relative">
           <div
-            className="hide-scrollbar flex gap-4 overflow-x-auto overflow-y-visible snap-x snap-mandatory pb-1"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className="hide-scrollbar flex gap-4 overflow-x-auto overflow-y-visible snap-x snap-mandatory pb-1 [scrollbar-width:none] [-ms-overflow-style:none]"
           >
             {METHODOLOGY_STEPS.map((step, i) => {
               const active = activeStep === i;
@@ -1782,8 +1781,8 @@ function MethodologySection() {
                         ))}
                       </ul>
                       <div
-                        className="rounded-[10px] py-[18px] px-5"
-                        style={{ background: C.accentDim, border: "1px solid rgba(184,217,53,0.4)" }}
+                        className="rounded-[10px] py-[18px] px-5 border border-[rgba(184,217,53,0.4)]"
+                        style={{ background: C.accentDim }}
                       >
                         <div
                           className="font-['DM_Sans',sans-serif] text-[10px] font-bold tracking-[1.2px] mb-2.5"
