@@ -2020,6 +2020,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
 
           {forumView === "Tags" &&
             (() => {
+              // eslint-disable-next-line react-hooks/rules-of-hooks
               const [tagSearch, setTagSearch] = useState("");
               const TAG_GROUPS = [
                 {

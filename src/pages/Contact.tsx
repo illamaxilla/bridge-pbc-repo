@@ -1274,7 +1274,7 @@ const buildMessage = ({ who, sectors, goal, details }) => {
   const sectorLabels = sectors.map((s) => SECTOR_OPTIONS.find((o) => o.id === s)?.label).filter(Boolean);
   const firstName = details.name ? details.name.split(" ")[0] : null;
 
-  let lines = [];
+  const lines = [];
   lines.push(`I am reaching out as a ${whoOption?.title?.toLowerCase() || "professional"}.`);
   if (sectorLabels.length > 0) {
     lines.push(

@@ -65,7 +65,7 @@ describe("ProtectedRoute", () => {
     mockUseAuth.mockReturnValue({ user: null, loading: false });
 
     // Use Routes to capture the redirected location
-    let navigatedTo = "";
+    const navigatedTo = "";
 
     render(
       <MemoryRouter initialEntries={["/intelligence/dashboard"]}>

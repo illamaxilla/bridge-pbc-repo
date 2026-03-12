@@ -7,7 +7,7 @@ import { AuthProvider, useAuth } from "../AuthContext";
 
 const { mockSignInWithPassword, mockSignOut, mockUnsubscribe, getMockSession, setMockSession, getAuthChangeCallback } = vi.hoisted(() => {
   let _mockSession: any = null;
-  let _authChangeCallback: ((event: string, session: any) => void) | null = null;
+  const _authChangeCallback: ((event: string, session: any) => void) | null = null;
   return {
     mockSignInWithPassword: vi.fn(),
     mockSignOut: vi.fn(),

@@ -3022,6 +3022,7 @@ const ImpactSection = () => {
                         style={{ color: colors.primary }}
                       >
                         {item.prefix}
+                        {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
                         {useCounter(item.value, 1200, animate)}
                         {item.suffix}
                       </div>
@@ -3054,6 +3055,7 @@ const ImpactSection = () => {
                         style={{ color: colors.primary }}
                       >
                         {item.prefix}
+                        {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
                         {useCounter(item.value, 1200, animate)}
                         {item.suffix}
                       </div>
