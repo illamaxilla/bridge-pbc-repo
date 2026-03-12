@@ -4885,7 +4885,7 @@ const InvestmentCTASection = ({ sector }) => {
                     flexShrink: 0,
                   }}
                 >
-                  Download Prospectus <span style={{ fontSize: "16px" }}>→</span>
+                  Download Prospectus <span className="text-[16px]">→</span>
                 </a>
               </div>
             </div>
