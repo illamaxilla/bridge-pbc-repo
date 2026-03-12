@@ -3379,15 +3379,7 @@ const CrossSectorSection = () => {
               >
                 <IconLuggage />
               </div>
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  fontWeight: "600",
-                  color: colors.white,
-                  textAlign: "center",
-                }}
-              >
+              <span className="font-[Inter,sans-serif] text-[13px] font-semibold text-center" style={{ color: colors.white }}>
                 Hub
               </span>
             </div>
@@ -3398,54 +3390,28 @@ const CrossSectorSection = () => {
                 <div
                   key={i}
                   onClick={() => setActiveNode(isActive ? null : i)}
-                  style={{
-                    width: "120px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    opacity: activeNode !== null && !isActive ? 0.4 : 1,
-                    transition: "all 0.3s ease",
-                  }}
+                  className="w-[120px] flex flex-col items-center cursor-pointer transition-all duration-300"
+                  style={{ opacity: activeNode !== null && !isActive ? 0.4 : 1 }}
                 >
                   <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-[10px] transition-all duration-300"
                     style={{
-                      width: "56px",
-                      height: "56px",
-                      borderRadius: "16px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
                       backgroundColor: isActive ? colors.accent : "rgba(255,255,255,0.08)",
                       border: isActive ? "none" : "1px solid rgba(255,255,255,0.1)",
                       color: isActive ? colors.primary : "rgba(255,255,255,0.6)",
-                      marginBottom: "10px",
-                      transition: "all 0.3s ease",
                     }}
                   >
                     {p.icon}
                   </div>
                   <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      textAlign: "center",
-                      color: isActive ? colors.white : "rgba(255,255,255,0.5)",
-                      transition: "all 0.3s ease",
-                    }}
+                    className="font-[Inter,sans-serif] text-[13px] font-semibold text-center transition-all duration-300"
+                    style={{ color: isActive ? colors.white : "rgba(255,255,255,0.5)" }}
                   >
                     {p.name}
                   </span>
                   <span
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "20px",
-                      fontWeight: "700",
-                      color: isActive ? colors.accent : "rgba(255,255,255,0.3)",
-                      marginTop: "4px",
-                      transition: "all 0.3s ease",
-                    }}
+                    className="font-[Poppins,sans-serif] text-[20px] font-bold mt-1 transition-all duration-300"
+                    style={{ color: isActive ? colors.accent : "rgba(255,255,255,0.3)" }}
                   >
                     {p.multiplier}
                   </span>

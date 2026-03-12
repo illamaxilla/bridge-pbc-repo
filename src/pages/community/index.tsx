@@ -1835,36 +1835,23 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           <button
                             key={oi}
                             onClick={() => !voted && setVoted(oi)}
-                            style={{
-                              display: "block",
-                              width: "100%",
-                              marginBottom: 10,
-                              padding: 0,
-                              border: "none",
-                              background: "none",
-                              cursor: voted ? "default" : "pointer",
-                              textAlign: "left",
-                            }}
+                            className="block w-full mb-[10px] p-0 border-none bg-none text-left"
+                            style={{ cursor: voted ? "default" : "pointer" }}
                           >
-                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                            <div className="flex justify-between mb-[5px]">
                               <span
+                                className="text-[13px] font-[Inter,sans-serif]"
                                 style={{
-                                  fontSize: 13,
                                   color: isVoted ? C.primary : C.dark,
                                   fontWeight: isVoted ? 700 : 400,
-                                  fontFamily: font.body,
                                 }}
                               >
                                 {opt}
                               </span>
                               {voted !== null && (
                                 <span
-                                  style={{
-                                    fontSize: 12,
-                                    fontWeight: 700,
-                                    color: isLeading ? C.primary : C.muted,
-                                    fontFamily: font.body,
-                                  }}
+                                  className="text-[12px] font-bold font-[Inter,sans-serif]"
+                                  style={{ color: isLeading ? C.primary : C.muted }}
                                 >
                                   {pct}%
                                 </span>

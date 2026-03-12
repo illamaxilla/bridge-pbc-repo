@@ -2308,7 +2308,7 @@ const PolicyAlignmentSection = () => {
                   cursor: "pointer",
                   flexShrink: 0,
                   display: "flex",
-                  flexDirection: "column"
+                  flexDirection: "column",
                   scrollSnapAlign: isMobile ? "start" : "none",
                   ...(!isExpanded && !isMobile ? { minHeight: "280px" } : {})
                 }}

@@ -5124,7 +5124,7 @@ export default function ManufacturingSectorPage() {
       <FinalCTASection />
       {/* Pre-footer separator — NOT part of the Footer component */}
       <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+        <div className="h-px bg-white/[0.08]" />
       </div>
     </Layout>
   );

@@ -1740,13 +1740,9 @@ export default function ServicesSectorsPageV2() {
               <span className="font-bold text-[#B8D935]">Every Sector</span>
             </h2>
             <p
+              className="leading-[1.7] text-[#666] font-['Inter',sans-serif] font-normal max-w-[620px]"
               style={{
                 fontSize: isMobile ? "14px" : "16px",
-                lineHeight: "1.7",
-                color: "#666",
-                fontFamily: "Inter, sans-serif",
-                fontWeight: "400",
-                maxWidth: "620px",
                 margin: isMobile ? "0 auto 24px auto" : "0 auto 36px auto",
                 ...(isMobile
                   ? {

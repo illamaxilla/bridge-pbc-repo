@@ -4802,20 +4802,11 @@ const InvestmentCTASection = ({ sector }) => {
             </div>
 
             {/* Validation Bar */}
-            <div
-              style={{
-                padding: "14px 18px",
-                backgroundColor: "rgba(27, 77, 62, 0.06)",
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <div style={{ color: colors.primary, flexShrink: 0, display: "flex" }}>
+            <div className="p-[14px_18px] bg-[rgba(27,77,62,0.06)] rounded-xl flex items-center gap-3">
+              <div className="shrink-0 flex" style={{ color: colors.primary }}>
                 <IconCheck />
               </div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#444", lineHeight: "1.5" }}>
+              <div className="font-[Inter,sans-serif] text-[13px] text-[#444] leading-[1.5]">
                 <strong style={{ color: colors.primary }}>National Creative Arts Council</strong> aligned with BRIDGE's
                 creative industries development framework
               </div>

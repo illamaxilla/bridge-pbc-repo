@@ -3504,7 +3504,7 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
         >
           {item.label}
         </div>
-        <div style={{ fontSize: "13px", fontFamily: "Inter, sans-serif", color: "#666", lineHeight: "1.5" }}>
+        <div className="text-[13px] font-[Inter,sans-serif] text-[#666] leading-[1.5]">
           {item.description}
         </div>
       </div>
@@ -3520,17 +3520,7 @@ const MetricRow = ({ item, idx, animate, isMobile }) => {
           justifyContent: "center",
         }}
       >
-        <div
-          style={{
-            fontSize: "9px",
-            fontWeight: "700",
-            fontFamily: "Inter, sans-serif",
-            color: "#aaa",
-            textTransform: "uppercase",
-            letterSpacing: "1px",
-            marginBottom: "4px",
-          }}
-        >
+        <div className="text-[9px] font-bold font-[Inter,sans-serif] text-[#aaa] uppercase tracking-[1px] mb-1">
           LINKED VENTURES
         </div>
         <div
