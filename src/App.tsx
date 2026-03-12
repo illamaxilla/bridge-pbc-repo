@@ -40,6 +40,17 @@ const PolicyBriefTeaser = lazy(() => import("./pages/resources/PolicyBriefTeaser
 const AnnualReviewTeaser = lazy(() => import("./pages/resources/AnnualReviewTeaser"));
 const SectorBriefViewer = lazy(() => import("./pages/resources/SectorBriefViewer"));
 
+// BRIDGE document pages
+const BudgetAlignment = lazy(() => import("./pages/BRIDGE_BudgetAlignment_2026"));
+const GhanaIntelligence = lazy(() => import("./pages/BRIDGE_GhanaIntelligence_Q1_2026"));
+const AllSectorsFree = lazy(() => import("./pages/BRIDGE_AllSectors_Free"));
+const AllSectorsPaid = lazy(() => import("./pages/BRIDGE_AllSectors_Paid_version"));
+const WhitePaper = lazy(() => import("./pages/BRIDGE_ResearchBrief_WhitePaper_Public"));
+const AnnualReview2025 = lazy(() => import("./pages/BRIDGE_AnnualReview_2025_Public"));
+const PolicyTracker = lazy(() => import("./pages/BRIDGE_PolicyTracker_2025_2026"));
+const MonthlyDashboard = lazy(() => import("./pages/BRIDGE_MonthlyDashboard_Mar2026"));
+import SectorIntelligenceWrapper from "./components/SectorIntelligenceWrapper";
+
 // Sectors
 const Energy = lazy(() => import("./pages/sectors/Energy"));
 const Technology = lazy(() => import("./pages/sectors/Technology"));
@@ -133,6 +144,50 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/sectors" element={<Sectors />} />
               <Route path="/policy" element={<Policy />} />
+              {/* BRIDGE document pages — sector intelligence with wrapper */}
+              <Route path="/resources/budget-alignment" element={
+                <SectorIntelligenceWrapper title="2026 Budget Alignment" freeDownloadPath="/resources/policy-brief">
+                  <BudgetAlignment />
+                </SectorIntelligenceWrapper>
+              } />
+              <Route path="/resources/ghana-intelligence" element={
+                <SectorIntelligenceWrapper title="Ghana Intelligence Q1 2026" freeDownloadPath="/resources/annual-review">
+                  <GhanaIntelligence />
+                </SectorIntelligenceWrapper>
+              } />
+              <Route path="/resources/sector-briefs" element={
+                <SectorIntelligenceWrapper title="Sector Intelligence Briefs">
+                  <AllSectorsFree />
+                </SectorIntelligenceWrapper>
+              } />
+              <Route path="/resources/sector-briefs-full" element={
+                <ProtectedRoute>
+                  <SectorIntelligenceWrapper title="Sector Intelligence Briefs — Full">
+                    <AllSectorsPaid />
+                  </SectorIntelligenceWrapper>
+                </ProtectedRoute>
+              } />
+              <Route path="/resources/white-paper" element={
+                <SectorIntelligenceWrapper title="BRIDGE Foundational White Paper">
+                  <WhitePaper />
+                </SectorIntelligenceWrapper>
+              } />
+              <Route path="/resources/annual-review-2025" element={
+                <SectorIntelligenceWrapper title="BRIDGE 2025 Annual Review">
+                  <AnnualReview2025 />
+                </SectorIntelligenceWrapper>
+              } />
+              <Route path="/resources/policy-tracker" element={
+                <SectorIntelligenceWrapper title="Ghana Policy Tracker 2025–2026">
+                  <PolicyTracker />
+                </SectorIntelligenceWrapper>
+              } />
+              <Route path="/resources/monthly-dashboard" element={
+                <SectorIntelligenceWrapper title="Monthly Dashboard — March 2026">
+                  <MonthlyDashboard />
+                </SectorIntelligenceWrapper>
+              } />
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

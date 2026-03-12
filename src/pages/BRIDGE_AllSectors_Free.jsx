@@ -824,7 +824,11 @@ const Navigator=({active,onSelect})=>(
    ROOT EXPORT — accepts optional sectorId prop (1–12), defaults to 1
 ═══════════════════════════════════════════════════════════════════════════ */
 export default function SectorBriefAll({sectorId=1}){
-  const[active,setActive]=useState(sectorId);
+  // Read sector from URL query param if available
+  const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const urlSector = urlParams?.get('sector') ? parseInt(urlParams.get('sector'), 10) : null;
+  const initialSector = urlSector && urlSector >= 1 && urlSector <= 12 ? urlSector : sectorId;
+  const[active,setActive]=useState(initialSector);
   const coverLogoRef=useRef(null);
   const sector=SECTORS.find(s=>s.id===active)||SECTORS[0];
 
