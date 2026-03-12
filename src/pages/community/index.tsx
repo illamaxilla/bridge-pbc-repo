@@ -3097,7 +3097,7 @@ function MembersPage({ isMobile }) {
                   <div className="relative">
                     <Avatar initials={m.avatar} size={44} />
                     {sortBy === "points" && idx < 3 && (
-                      <div style={{ position: "absolute", bottom: -2, right: -2, fontSize: 13 }}>
+                      <div className="absolute -bottom-[2px] -right-[2px] text-[13px]">
                         {["🥇", "🥈", "🥉"][idx]}
                       </div>
                     )}

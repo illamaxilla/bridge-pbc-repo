@@ -4043,59 +4043,38 @@ const ImpactSection = () => {
           <div>
             {/* Title + Stat Header */}
             <div
+              className="flex justify-between mb-6"
               style={{
-                display: "flex",
-                justifyContent: "space-between",
                 alignItems: isMobile ? "flex-start" : "center",
                 flexDirection: isMobile ? "column" : "row",
                 gap: isMobile ? "12px" : "0",
-                marginBottom: "24px",
               }}
             >
               <div>
                 <div
+                  className="font-[Inter,sans-serif] font-bold leading-[1.2]"
                   style={{
-                    fontFamily: "'Inter', sans-serif",
                     fontSize: isMobile ? "24px" : "28px",
-                    fontWeight: "700",
                     color: colors.primary,
-                    lineHeight: "1.2",
                   }}
                 >
                   {currentStakeholder.title}
                 </div>
-                <div
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "14px",
-                    color: "#888",
-                    marginTop: "4px",
-                  }}
-                >
+                <div className="font-[Inter,sans-serif] text-sm text-[#888] mt-1">
                   {currentStakeholder.subtitle}
                 </div>
               </div>
               <div style={{ textAlign: isMobile ? "left" : "right" }}>
                 <div
+                  className="font-[Poppins,sans-serif] font-bold tracking-[-1.5px] leading-none"
                   style={{
-                    fontFamily: "Poppins, sans-serif",
                     fontSize: isMobile ? "32px" : "40px",
-                    fontWeight: "700",
                     color: colors.primary,
-                    letterSpacing: "-1.5px",
-                    lineHeight: "1",
                   }}
                 >
                   {currentStakeholder.stat}
                 </div>
-                <div
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "12px",
-                    color: "#888",
-                    marginTop: "4px",
-                  }}
-                >
+                <div className="font-[Inter,sans-serif] text-xs text-[#888] mt-1">
                   {currentStakeholder.statLabel}
                 </div>
               </div>
