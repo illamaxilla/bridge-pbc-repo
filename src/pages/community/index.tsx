@@ -545,24 +545,12 @@ function LoginPage({ onLogin }) {
             background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 100%)`,
           }}
         >
-          <div
-            className="absolute rounded-full"
-            style={{
-              top: -40,
-              right: -40,
-              width: 180,
-              height: 180,
-              border: "1px solid rgba(184,217,53,0.12)",
-            }}
-          />
+          <div className="absolute rounded-full -top-10 -right-10 w-[180px] h-[180px] border border-[rgba(184,217,53,0.12)]" />
           <div className="relative z-[1]">
             <BridgeLogo height={36} />
             <p
-              className="text-[13px] leading-[1.5] max-w-[280px]"
-              style={{
-                color: "rgba(255,255,255,0.55)",
-                margin: "14px 0 0",
-              }}
+              className="text-[13px] leading-[1.5] max-w-[280px] mt-[14px] mb-0"
+              style={{ color: "rgba(255,255,255,0.55)" }}
             >
               Where Ghana's <strong style={{ color: C.accent }}>Builders</strong> Come Together
             </p>
@@ -586,52 +574,15 @@ function LoginPage({ onLogin }) {
       ) : (
         /* Desktop: full left panel */
         <div
-          className="flex-1 flex flex-col justify-between relative overflow-hidden"
+          className="flex-1 flex flex-col justify-between relative overflow-hidden py-[60px] px-16"
           style={{
-            padding: "60px 64px",
             background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 60%, #1e5c4a 100%)`,
           }}
         >
-          <div
-            className="absolute rounded-full"
-            style={{
-              top: -80,
-              left: -80,
-              width: 300,
-              height: 300,
-              border: "1px solid rgba(184,217,53,0.12)",
-            }}
-          />
-          <div
-            className="absolute rounded-full"
-            style={{
-              top: 60,
-              left: 40,
-              width: 180,
-              height: 180,
-              border: "1px solid rgba(184,217,53,0.08)",
-            }}
-          />
-          <div
-            className="absolute rounded-full"
-            style={{
-              bottom: -60,
-              right: -60,
-              width: 400,
-              height: 400,
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          />
-          <div
-            className="absolute rounded-full"
-            style={{
-              bottom: 80,
-              right: 40,
-              width: 200,
-              height: 200,
-              border: "1px solid rgba(184,217,53,0.1)",
-            }}
-          />
+          <div className="absolute rounded-full -top-20 -left-20 w-[300px] h-[300px] border border-[rgba(184,217,53,0.12)]" />
+          <div className="absolute rounded-full top-[60px] left-10 w-[180px] h-[180px] border border-[rgba(184,217,53,0.08)]" />
+          <div className="absolute rounded-full -bottom-[60px] -right-[60px] w-[400px] h-[400px] border border-[rgba(255,255,255,0.06)]" />
+          <div className="absolute rounded-full bottom-20 right-10 w-[200px] h-[200px] border border-[rgba(184,217,53,0.1)]" />
 
           <div className="relative z-[1]">
             <BridgeLogo height={48} />
@@ -676,10 +627,7 @@ function LoginPage({ onLogin }) {
               ))}
             </div>
           </div>
-          <div
-            className="relative z-[1] pt-6"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
-          >
+          <div className="relative z-[1] pt-6 border-t border-[rgba(255,255,255,0.1)]">
             <p className="text-[13px] italic m-0" style={{ color: "rgba(255,255,255,0.35)" }}>
               "Blending Resources and Innovation to Drive Ghana's Empowerment"
             </p>
@@ -2803,14 +2751,8 @@ function MembersPage({ isMobile }) {
           >
             {/* Background watermark circle */}
             <div
-              className="absolute rounded-full"
-              style={{
-                top: -16,
-                right: -16,
-                width: 72,
-                height: 72,
-                background: s.accent + "12",
-              }}
+              className="absolute rounded-full -top-4 -right-4 w-[72px] h-[72px]"
+              style={{ background: s.accent + "12" }}
             />
 
             {/* Top row: icon + trend chip */}
@@ -2858,18 +2800,16 @@ function MembersPage({ isMobile }) {
 
             {/* Mini progress bar */}
             <div>
-              <div style={{ height: 4, borderRadius: 4, background: s.accent + "20", overflow: "hidden" }}>
+              <div className="h-1 rounded overflow-hidden" style={{ background: s.accent + "20" }}>
                 <div
+                  className="h-full rounded transition-[width] duration-[600ms] ease-out"
                   style={{
                     width: `${Math.min(s.progress, 100)}%`,
-                    height: "100%",
-                    borderRadius: 4,
                     background: `linear-gradient(90deg, ${s.accent}, ${s.accent}99)`,
-                    transition: "width 0.6s ease",
                   }}
                 />
               </div>
-              <div style={{ fontSize: 10, color: s.accent, fontWeight: 600, marginTop: 5 }}>{s.progressLabel}</div>
+              <div className="text-[10px] font-semibold mt-[5px]" style={{ color: s.accent }}>{s.progressLabel}</div>
             </div>
           </div>
         ))}
@@ -2919,9 +2859,9 @@ function MembersPage({ isMobile }) {
         </div>
         {/* Filter pills — scroll horizontally on mobile */}
         <div
+          className="flex"
           style={{
             overflowX: isMobile ? "auto" : "visible",
-            display: "flex",
             flexDirection: isMobile ? "row" : "column",
             gap: isMobile ? 6 : 12,
             flexWrap: isMobile ? "nowrap" : "wrap",
@@ -2935,40 +2875,30 @@ function MembersPage({ isMobile }) {
                 <button
                   key={o}
                   onClick={() => setFilterType(o)}
+                  className="rounded-lg font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap shrink-0"
                   style={{
                     padding: "6px 14px",
-                    borderRadius: 8,
                     border: `1.5px solid ${filterType === o ? C.primary : C.line}`,
                     background: filterType === o ? C.primary : C.white,
                     color: filterType === o ? C.white : C.muted,
-                    fontFamily: font.body,
-                    fontSize: 12,
                     fontWeight: filterType === o ? 700 : 400,
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
                   }}
                 >
                   {o}
                 </button>
               ))}
-              <div style={{ width: 1, background: C.line, flexShrink: 0 }} />
+              <div className="w-px shrink-0" style={{ background: C.line }} />
               {["All", "Champion", "Contributor", "Newcomer"].map((o) => (
                 <button
                   key={o}
                   onClick={() => setFilterBadge(o)}
+                  className="rounded-lg font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap shrink-0"
                   style={{
                     padding: "6px 14px",
-                    borderRadius: 8,
                     border: `1.5px solid ${filterBadge === o ? "#2C5F8A" : C.line}`,
                     background: filterBadge === o ? "#2C5F8A" : C.white,
                     color: filterBadge === o ? C.white : C.muted,
-                    fontFamily: font.body,
-                    fontSize: 12,
                     fontWeight: filterBadge === o ? 700 : 400,
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
                   }}
                 >
                   {o}
@@ -2978,20 +2908,20 @@ function MembersPage({ isMobile }) {
           ) : (
             /* Desktop: labeled rows */
             <>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Type</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: C.muted }}>Type</span>
                 <PillToggle opts={["All", "Premium", "Diaspora"]} val={filterType} set={setFilterType} />
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Badge</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: C.muted }}>Badge</span>
                 <PillToggle
                   opts={["All", "Champion", "Contributor", "Newcomer"]}
                   val={filterBadge}
                   set={setFilterBadge}
                 />
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Sector</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: C.muted }}>Sector</span>
                 <PillToggle
                   opts={["All", "Infrastructure", "Agriculture", "Health Systems", "Technology", "Education"]}
                   val={filterSector}
@@ -3029,7 +2959,7 @@ function MembersPage({ isMobile }) {
               }}
             >
               {/* Sector color top bar */}
-              <div style={{ height: 4, background: `linear-gradient(90deg, ${sColor}, ${sColor}60)` }} />
+              <div className="h-1" style={{ background: `linear-gradient(90deg, ${sColor}, ${sColor}60)` }} />
               <div className="p-[22px]">
                 {/* Top row: avatar + name + badge */}
                 <div className="flex items-start gap-3 mb-[14px]">
@@ -3267,50 +3197,33 @@ function ResourcesPage({ isMobile }) {
           />
         </div>
         <div
+          className="flex items-center gap-[6px]"
           style={{
             overflowX: isMobile ? "auto" : "visible",
-            display: "flex",
-            gap: 6,
             flexWrap: isMobile ? "nowrap" : "wrap",
             scrollbarWidth: "none",
-            alignItems: "center",
           }}
         >
           {types.map((t) => (
             <button
               key={t}
               onClick={() => setTypeFilter(t)}
+              className="rounded-lg shrink-0 font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap transition-all duration-150"
               style={{
                 padding: "6px 14px",
-                borderRadius: 8,
-                flexShrink: 0,
                 border: `1.5px solid ${typeFilter === t ? C.primary : C.line}`,
                 background: typeFilter === t ? C.primary : "transparent",
                 color: typeFilter === t ? C.white : C.muted,
-                fontFamily: font.body,
-                fontSize: 12,
                 fontWeight: typeFilter === t ? 700 : 400,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                transition: "all 0.15s",
               }}
             >
               {t !== "All" && (
-                <span style={{ marginRight: 4 }}>{["📊", "📋", "🔬", "⚙️", "🏛️"][types.indexOf(t) - 1] || ""}</span>
+                <span className="mr-1">{["📊", "📋", "🔬", "⚙️", "🏛️"][types.indexOf(t) - 1] || ""}</span>
               )}
               {t}
             </button>
           ))}
-          <span
-            style={{
-              marginLeft: "auto",
-              fontSize: 12,
-              color: C.muted,
-              display: "flex",
-              alignItems: "center",
-              flexShrink: 0,
-            }}
-          >
+          <span className="ml-auto text-[12px] flex items-center shrink-0" style={{ color: C.muted }}>
             {filtered.length} doc{filtered.length !== 1 ? "s" : ""}
           </span>
         </div>
@@ -3318,134 +3231,52 @@ function ResourcesPage({ isMobile }) {
 
       {/* Featured — dark cards */}
       {featured.length > 0 && (
-        <div style={{ marginBottom: 24 }}>
-          <div
-            style={{
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: "1.5px",
-              color: C.muted,
-              textTransform: "uppercase",
-              marginBottom: 12,
-            }}
-          >
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[1.5px] uppercase mb-3" style={{ color: C.muted }}>
             Featured Reports
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 14 }}>
+          <div className="grid gap-[14px]" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}>
             {featured.map((r) => (
               <div
                 key={r.id}
-                style={{
-                  background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
-                  borderRadius: 16,
-                  padding: 26,
-                  cursor: "pointer",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
+                className="rounded-2xl p-[26px] cursor-pointer relative overflow-hidden"
+                style={{ background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)` }}
               >
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -30,
-                    right: -30,
-                    width: 120,
-                    height: 120,
-                    borderRadius: "50%",
-                    border: "1px solid rgba(184,217,53,0.1)",
-                  }}
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    marginBottom: 14,
-                    position: "relative",
-                  }}
-                >
-                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                <div className="absolute -top-[30px] -right-[30px] w-[120px] h-[120px] rounded-full border border-[rgba(184,217,53,0.1)]" />
+                <div className="flex justify-between items-start mb-[14px] relative">
+                  <div className="flex gap-[6px] items-center">
                     <span
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 700,
-                        letterSpacing: "1px",
-                        textTransform: "uppercase",
-                        color: C.accent,
-                        background: "rgba(184,217,53,0.12)",
-                        padding: "3px 10px",
-                        borderRadius: 6,
-                      }}
+                      className="text-[10px] font-bold tracking-[1px] uppercase rounded-[6px] py-[3px] px-[10px]"
+                      style={{ color: C.accent, background: "rgba(184,217,53,0.12)" }}
                     >
                       {r.type}
                     </span>
                     {isNew(r.date) && (
-                      <span
-                        style={{
-                          fontSize: 9,
-                          fontWeight: 700,
-                          letterSpacing: "0.5px",
-                          color: C.white,
-                          background: "#27AE60",
-                          padding: "2px 7px",
-                          borderRadius: 6,
-                        }}
-                      >
+                      <span className="text-[9px] font-bold tracking-[0.5px] py-[2px] px-[7px] rounded-[6px] bg-[#27AE60]" style={{ color: C.white }}>
                         NEW
                       </span>
                     )}
                   </div>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{readTime(r.pages)}</span>
+                  <span className="text-[11px] text-white/35">{readTime(r.pages)}</span>
                 </div>
                 <h3
-                  style={{
-                    fontFamily: font.display,
-                    fontSize: 16,
-                    fontWeight: 700,
-                    color: C.white,
-                    margin: "0 0 10px",
-                    lineHeight: 1.35,
-                    position: "relative",
-                  }}
+                  className="font-[DM_Sans,sans-serif] text-[16px] font-bold leading-[1.35] m-0 mb-[10px] relative"
+                  style={{ color: C.white }}
                 >
                   {r.title}
                 </h3>
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "rgba(255,255,255,0.5)",
-                    margin: "0 0 20px",
-                    lineHeight: 1.55,
-                    position: "relative",
-                  }}
-                >
+                <p className="text-[12px] text-white/50 m-0 mb-5 leading-[1.55] relative">
                   {r.desc}
                 </p>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    position: "relative",
-                  }}
-                >
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
+                <div className="flex items-center justify-between relative">
+                  <span className="text-[11px] text-white/30">
                     {r.pages}p · {r.date}
                   </span>
                   <button
+                    className="py-[7px] px-[18px] rounded-[20px] bg-transparent text-[12px] font-bold cursor-pointer font-[Inter,sans-serif] flex items-center gap-[6px]"
                     style={{
-                      padding: "7px 18px",
-                      borderRadius: 20,
                       border: `1.5px solid ${C.accent}`,
-                      background: "transparent",
                       color: C.accent,
-                      fontSize: 12,
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      fontFamily: font.body,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
                     }}
                   >
                     <BookOpen size={12} /> Read Report
@@ -3460,33 +3291,20 @@ function ResourcesPage({ isMobile }) {
       {/* All remaining docs */}
       {rest.length > 0 && (
         <>
-          <div
-            style={{
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: "1.5px",
-              color: C.muted,
-              textTransform: "uppercase",
-              marginBottom: 12,
-            }}
-          >
+          <div className="text-[10px] font-bold tracking-[1.5px] uppercase mb-3" style={{ color: C.muted }}>
             {typeFilter === "All" ? "All Documents" : typeFilter} ({rest.length})
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="flex flex-col gap-[10px]">
             {rest.map((r) => {
               const tc = TYPE_COLORS[r.type] || C.primary;
               return (
                 <div
                   key={r.id}
+                  className="rounded-[14px] flex overflow-hidden transition-all duration-200 cursor-pointer"
                   style={{
                     background: C.white,
-                    borderRadius: 14,
-                    display: "flex",
-                    overflow: "hidden",
                     boxShadow: C.cardShadow,
                     border: `1px solid transparent`,
-                    transition: "all 0.2s",
-                    cursor: "pointer",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = tc + "40";
@@ -3498,104 +3316,60 @@ function ResourcesPage({ isMobile }) {
                   }}
                 >
                   {/* Colored left accent bar */}
-                  <div style={{ width: 4, background: tc, flexShrink: 0 }} />
+                  <div className="w-1 shrink-0" style={{ background: tc }} />
                   {/* Icon column — hidden on mobile */}
                   {!isMobile && (
                     <div
-                      style={{
-                        width: 56,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        background: tc + "0a",
-                      }}
+                      className="w-14 flex items-center justify-center shrink-0"
+                      style={{ background: tc + "0a" }}
                     >
                       <div style={{ color: tc }}>{DOC_ICONS[r.type] || <BookOpen size={18} />}</div>
                     </div>
                   )}
                   {/* Content */}
-                  <div style={{ flex: 1, padding: isMobile ? "14px 16px" : "18px 20px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5, flexWrap: "wrap" }}>
+                  <div className="flex-1" style={{ padding: isMobile ? "14px 16px" : "18px 20px" }}>
+                    <div className="flex items-center gap-[6px] mb-[5px] flex-wrap">
                       <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          letterSpacing: "0.8px",
-                          textTransform: "uppercase",
-                          color: tc,
-                        }}
+                        className="text-[10px] font-bold tracking-[0.8px] uppercase"
+                        style={{ color: tc }}
                       >
                         {r.type}
                       </span>
-                      <span style={{ fontSize: 10, color: C.muted }}>·</span>
+                      <span className="text-[10px]" style={{ color: C.muted }}>·</span>
                       <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 600,
-                          color: C.primary,
-                          background: `${C.primary}10`,
-                          padding: "1px 7px",
-                          borderRadius: 6,
-                        }}
+                        className="text-[10px] font-semibold rounded-[6px] py-[1px] px-[7px]"
+                        style={{ color: C.primary, background: `${C.primary}10` }}
                       >
                         {r.sector}
                       </span>
                       {isNew(r.date) && (
-                        <span
-                          style={{
-                            fontSize: 9,
-                            fontWeight: 700,
-                            color: C.white,
-                            background: "#27AE60",
-                            padding: "1px 6px",
-                            borderRadius: 4,
-                          }}
-                        >
+                        <span className="text-[9px] font-bold rounded py-[1px] px-[6px] bg-[#27AE60]" style={{ color: C.white }}>
                           NEW
                         </span>
                       )}
                       {isMobile && (
-                        <span style={{ fontSize: 10, color: C.muted, marginLeft: "auto" }}>{readTime(r.pages)}</span>
+                        <span className="text-[10px] ml-auto" style={{ color: C.muted }}>{readTime(r.pages)}</span>
                       )}
                     </div>
                     <h3
-                      style={{
-                        fontSize: isMobile ? 13 : 14,
-                        fontWeight: 700,
-                        color: C.dark,
-                        margin: "0 0 4px",
-                        lineHeight: 1.35,
-                      }}
+                      className="font-bold m-0 mb-1 leading-[1.35]"
+                      style={{ fontSize: isMobile ? 13 : 14, color: C.dark }}
                     >
                       {r.title}
                     </h3>
                     {!isMobile && (
-                      <p style={{ fontSize: 12, color: C.muted, margin: "0 0 0", lineHeight: 1.5 }}>{r.desc}</p>
+                      <p className="text-[12px] m-0 leading-[1.5]" style={{ color: C.muted }}>{r.desc}</p>
                     )}
                     {isMobile && (
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          marginTop: 10,
-                        }}
-                      >
-                        <span style={{ fontSize: 11, color: C.muted }}>
+                      <div className="flex items-center justify-between mt-[10px]">
+                        <span className="text-[11px]" style={{ color: C.muted }}>
                           {r.pages}p · {r.date}
                         </span>
                         <button
+                          className="py-[5px] px-[14px] rounded-[20px] bg-transparent text-[12px] font-semibold cursor-pointer font-[Inter,sans-serif]"
                           style={{
-                            padding: "5px 14px",
-                            borderRadius: 20,
                             border: `1.5px solid ${tc}`,
-                            background: "transparent",
                             color: tc,
-                            fontSize: 12,
-                            fontWeight: 600,
-                            cursor: "pointer",
-                            fontFamily: font.body,
                           }}
                         >
                           Read
@@ -3605,34 +3379,18 @@ function ResourcesPage({ isMobile }) {
                   </div>
                   {/* Right meta + CTA — desktop only */}
                   {!isMobile && (
-                    <div
-                      style={{
-                        padding: "18px 20px",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-end",
-                        justifyContent: "space-between",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <div style={{ textAlign: "right" }}>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{readTime(r.pages)}</div>
-                        <div style={{ fontSize: 11, color: C.muted }}>
+                    <div className="p-[18px_20px] flex flex-col items-end justify-between shrink-0">
+                      <div className="text-right">
+                        <div className="text-[12px] font-semibold" style={{ color: C.dark }}>{readTime(r.pages)}</div>
+                        <div className="text-[11px]" style={{ color: C.muted }}>
                           {r.pages}p · {r.date}
                         </div>
                       </div>
                       <button
+                        className="py-[6px] px-4 rounded-[20px] bg-transparent text-[12px] font-semibold cursor-pointer font-[Inter,sans-serif] whitespace-nowrap"
                         style={{
-                          padding: "6px 16px",
-                          borderRadius: 20,
                           border: `1.5px solid ${tc}`,
-                          background: "transparent",
                           color: tc,
-                          fontSize: 12,
-                          fontWeight: 600,
-                          cursor: "pointer",
-                          fontFamily: font.body,
-                          whiteSpace: "nowrap",
                         }}
                       >
                         Read
@@ -3686,12 +3444,10 @@ function HomePageContent({
           <div className="rounded-2xl p-6" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Today's Featured Insight</SectionLabel>
             <div
+              className="rounded-xl py-4 px-[18px] mb-4"
               style={{
                 background: `linear-gradient(135deg, ${C.primary}12, ${C.accent}10)`,
                 border: `1px solid ${C.primary}20`,
-                borderRadius: 12,
-                padding: "16px 18px",
-                marginBottom: 16,
               }}
             >
               <p className="text-[15px] leading-[1.6] m-0 font-medium" style={{ color: C.dark }}>
