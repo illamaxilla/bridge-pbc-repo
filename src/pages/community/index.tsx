@@ -3102,26 +3102,20 @@ function MembersPage({ isMobile }) {
                       </div>
                     )}
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: C.dark, lineHeight: 1.2 }}>{m.name}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start gap-[6px]">
+                      <div className="text-[14px] font-bold leading-[1.2]" style={{ color: C.dark }}>{m.name}</div>
                       <span
+                        className="text-[9px] font-bold py-[2px] px-[7px] rounded-md whitespace-nowrap tracking-[0.5px] shrink-0"
                         style={{
-                          fontSize: 9,
-                          fontWeight: 700,
                           color: BADGE_COLORS[m.badge],
                           background: BADGE_COLORS[m.badge] + "18",
-                          padding: "2px 7px",
-                          borderRadius: 6,
-                          whiteSpace: "nowrap",
-                          letterSpacing: "0.5px",
-                          flexShrink: 0,
                         }}
                       >
                         {m.badge.toUpperCase()}
                       </span>
                     </div>
-                    <div style={{ fontSize: 12, color: C.muted, marginTop: 3, lineHeight: 1.3 }}>{m.role}</div>
+                    <div className="text-[12px] mt-[3px] leading-[1.3]" style={{ color: C.muted }}>{m.role}</div>
                   </div>
                 </div>
 

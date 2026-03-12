@@ -4081,7 +4081,7 @@ const ImpactSection = () => {
             </div>
 
             {/* Outcome Rows */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div className="flex flex-col gap-[6px]">
               {currentStakeholder.outcomes.map((outcome, i) => {
                 const rowShades = [
                   { bg: "rgba(27, 77, 62, 0.07)", circle: colors.white },
@@ -4093,41 +4093,22 @@ const ImpactSection = () => {
                 return (
                   <div
                     key={i}
+                    className="flex items-center gap-[14px] rounded-xl"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "14px",
                       padding: isMobile ? "12px 16px" : "14px 20px",
-                      borderRadius: "12px",
                       backgroundColor: shade.bg,
                     }}
                   >
                     <span
+                      className="w-7 h-7 rounded-full flex items-center justify-center font-[Inter,sans-serif] text-xs font-bold shrink-0"
                       style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "50%",
                         backgroundColor: shade.circle,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
                         color: colors.primary,
-                        flexShrink: 0,
                       }}
                     >
                       {i + 1}
                     </span>
-                    <span
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: "15px",
-                        color: "#333",
-                        lineHeight: "1.5",
-                      }}
-                    >
+                    <span className="font-[Inter,sans-serif] text-[15px] text-[#333] leading-[1.5]">
                       {outcome}
                     </span>
                   </div>
