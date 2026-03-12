@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { supabase } from "@/integrations/supabase/client";
@@ -97,7 +97,9 @@ function SectorGrid() {
 }
 
 // ─── Main SiteFooter export ───────────────────────────────────────────────────
-export default function SiteFooter() {
+// React.memo: SiteFooter receives no props and is rendered by Layout on every route
+// change. Memo prevents re-renders when Layout's children (page content) change.
+function SiteFooter() {
   const isMobile = useIsMobile();
   const [email, setEmail] = useState("");
   const [subStatus, setSubStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
