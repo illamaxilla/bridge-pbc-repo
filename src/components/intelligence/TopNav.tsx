@@ -220,4 +220,4 @@ export const TopNav = memo(function TopNav({ s, syncing, setSyncing }) {
       </div>
     </div>
   );
-}
+});

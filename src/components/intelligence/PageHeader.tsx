@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { BarChart3, ChevronDown, RefreshCw, Download, Plus } from "lucide-react";
 import { C } from "./constants";
 import { Sector } from "./sectorData";
@@ -11,7 +11,9 @@ interface PageHeaderProps {
   setSyncing: (v: boolean) => void;
 }
 
-export function PageHeader({ s, period, setPeriod, syncing, setSyncing }) {
+// React.memo: PageHeader receives sector, period, and syncing props from the dashboard.
+// Memo prevents re-renders when unrelated dashboard state (e.g. sidebar collapse) changes.
+export const PageHeader = memo(function PageHeader({ s, period, setPeriod, syncing, setSyncing }) {
   const [viewOpen, setViewOpen] = useState(false);
   return (
     <div
