@@ -6,6 +6,7 @@ import { IconArrowRight, IconArrowDown, IconCheck, IconBuilding, IconStorefront,
 import { ArrowRight, Blocks, Check, ChevronDown, Clock, Factory, FileText, GraduationCap, Heart, Hospital, Shield, Truck, Users, Wallet } from "lucide-react";
 import { SECTOR_ROUTES } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
+import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Health Systems & Wellbeing
@@ -1690,7 +1691,7 @@ const policyData = [
     policy: "National Health Insurance Scheme",
     body: "National Health Insurance Authority",
     allocation: "GH\u20B59,000M",
-    categories: ["funding"],
+    category: "funding",
     relevance: ["primary", "pharma"],
     alignment:
       "Primary health financing mechanism covering 68% of the population with provider accreditation framework.",
@@ -1703,7 +1704,7 @@ const policyData = [
     policy: "MahamaCares Medical Trust",
     body: "Ministry of Health",
     allocation: "GH\u20B52,300M",
-    categories: ["infrastructure", "partnerships"],
+    category: "infrastructure",
     relevance: ["specialty"],
     alignment: "PPP diagnostic center network expanding access to laboratory and imaging services across all regions.",
     bridgeRole:
@@ -1715,7 +1716,7 @@ const policyData = [
     policy: "Care24 Extended Service Hours",
     body: "24-Hour Economy Authority",
     allocation: "Multi-year commitment",
-    categories: ["partnerships"],
+    category: "partnerships",
     relevance: ["primary"],
     alignment:
       "Extending healthcare delivery hours as part of the 24-Hour Economy programme for continuous care access.",
@@ -1728,7 +1729,7 @@ const policyData = [
     policy: "CHPS Expansion & Revitalization",
     body: "Ghana Health Service",
     allocation: "GH\u20B5450M",
-    categories: ["infrastructure"],
+    category: "infrastructure",
     relevance: ["primary"],
     alignment: "Strengthening 5,000+ CHPS compounds with equipment, staffing, and service delivery improvements.",
     bridgeRole:
@@ -1740,7 +1741,7 @@ const policyData = [
     policy: "Health Workforce Compensation",
     body: "Ghana Health Service",
     allocation: "GH\u20B56,400M",
-    categories: ["funding", "partnerships"],
+    category: "funding",
     relevance: ["primary", "specialty"],
     alignment: "71% of health budget allocated to salaries — constraining service improvement and retention funding.",
     bridgeRole:
@@ -1752,7 +1753,7 @@ const policyData = [
     policy: "Health Training Institutions",
     body: "Ministry of Education / MOH",
     allocation: "GH\u20B5250M",
-    categories: ["partnerships"],
+    category: "partnerships",
     relevance: ["specialty"],
     alignment: "Medical and nursing school operations and expansion to address critical workforce gaps nationwide.",
     bridgeRole:
@@ -1764,7 +1765,7 @@ const policyData = [
     policy: "Tax Incentives for Health Investment",
     body: "Ghana Revenue Authority / GIPC",
     allocation: "Various exemptions",
-    categories: ["funding"],
+    category: "funding",
     relevance: ["pharma"],
     alignment: "Import duty exemptions on medical equipment and tax holidays for health sector investments under GIPC.",
     bridgeRole:
@@ -1776,7 +1777,7 @@ const policyData = [
     policy: "Digital Health Advancement",
     body: "Ministry of Health",
     allocation: "GH\u20B5110M",
-    categories: ["infrastructure", "partnerships"],
+    category: "infrastructure",
     relevance: ["primary", "specialty"],
     alignment:
       "Digital health infrastructure including telemedicine frameworks and health information systems nationwide.",
