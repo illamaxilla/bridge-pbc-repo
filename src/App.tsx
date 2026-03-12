@@ -35,6 +35,11 @@ const CommunityHome = lazy(() => import("./pages/community/index"));
 // Reports
 const SectorReport = lazy(() => import("./pages/reports/SectorReport"));
 
+// Resource teasers / viewers
+const PolicyBriefTeaser = lazy(() => import("./pages/resources/PolicyBriefTeaser"));
+const AnnualReviewTeaser = lazy(() => import("./pages/resources/AnnualReviewTeaser"));
+const SectorBriefViewer = lazy(() => import("./pages/resources/SectorBriefViewer"));
+
 // Sectors
 const Energy = lazy(() => import("./pages/sectors/Energy"));
 const Technology = lazy(() => import("./pages/sectors/Technology"));
@@ -103,6 +108,15 @@ const App = () => (
               <Route path="/community/forum/members" element={<CommunityHome />} />
               <Route path="/community/members" element={<CommunityHome />} />
               <Route path="/community/resources" element={<CommunityHome />} />
+
+              {/* Resource viewer routes */}
+              {/* Policy brief: public (General Public) */}
+              <Route path="/resources/policy-brief" element={<PolicyBriefTeaser />} />
+              {/* Sector briefs: Free Membership (must sign in) */}
+              <Route path="/resources/sector-brief/:slug" element={<ProtectedRoute><SectorBriefViewer /></ProtectedRoute>} />
+              {/* Annual review: Free Membership (must sign in) */}
+              <Route path="/resources/annual-review" element={<ProtectedRoute><AnnualReviewTeaser /></ProtectedRoute>} />
+
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/sectors" element={<Sectors />} />

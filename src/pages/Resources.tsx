@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
+import { useAuth } from "@/context/AuthContext";
 import {
   Box,
   CreditCard,
@@ -17,6 +18,7 @@ import {
   Settings,
   Truck,
   Lock,
+  Unlock,
   ChevronRight,
   ArrowUpRight,
   BookOpen,
@@ -536,6 +538,7 @@ const updates = [
     date: "March 2026",
     read: "8 min",
     free: true,
+    path: "/resources/policy-brief",
   },
   {
     id: 2,
@@ -544,6 +547,7 @@ const updates = [
     date: "Feb 2026",
     read: "12 min",
     free: false,
+    path: "/resources/sector-brief/agriculture",
   },
   {
     id: 3,
@@ -552,6 +556,7 @@ const updates = [
     date: "Jan 2026",
     read: "20 min",
     free: false,
+    path: "/resources/annual-review",
   },
 ];
 
@@ -624,7 +629,7 @@ function ScoreBar({ score }) {
   );
 }
 
-function SectorRow({ s, expanded, onToggle, mobile, onNavigate }) {
+function SectorRow({ s, expanded, onToggle, mobile, onNavigate, isLoggedIn }) {
   if (mobile) {
     return (
       <div style={{ borderBottom: `1px solid ${C.line}` }}>
@@ -721,6 +726,10 @@ function SectorRow({ s, expanded, onToggle, mobile, onNavigate }) {
               <Tag bg={C.accentBg} color={C.primary}>
                 Free
               </Tag>
+            ) : isLoggedIn ? (
+              <Tag bg={`${C.teal}15`} color={C.teal}>
+                Member
+              </Tag>
             ) : (
               <Tag bg={C.bg} color={C.muted}>
                 Locked
@@ -759,8 +768,8 @@ function SectorRow({ s, expanded, onToggle, mobile, onNavigate }) {
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
-                background: s.free ? C.accent : C.primary,
-                color: s.free ? C.primary : C.white,
+                background: (s.free || isLoggedIn) ? C.accent : C.primary,
+                color: (s.free || isLoggedIn) ? C.primary : C.white,
                 border: "none",
                 padding: "10px 18px",
                 borderRadius: "50px",
@@ -770,8 +779,8 @@ function SectorRow({ s, expanded, onToggle, mobile, onNavigate }) {
                 cursor: "pointer",
               }}
             >
-              {s.free ? <Eye size={12} /> : <Lock size={12} />}
-              {s.free ? "Read Analysis" : "Unlock Analysis"}
+              {(s.free || isLoggedIn) ? <Eye size={12} /> : <Lock size={12} />}
+              {(s.free || isLoggedIn) ? "Read Analysis" : "Sign In to Read"}
               <ArrowUpRight size={12} />
             </button>
           </div>
@@ -853,6 +862,10 @@ function SectorRow({ s, expanded, onToggle, mobile, onNavigate }) {
             <Tag bg={C.accentBg} color={C.primary}>
               Free
             </Tag>
+          ) : isLoggedIn ? (
+            <Tag bg={`${C.teal}15`} color={C.teal}>
+              Member
+            </Tag>
           ) : (
             <Tag bg={C.bg} color={C.muted}>
               Locked
@@ -896,8 +909,8 @@ function SectorRow({ s, expanded, onToggle, mobile, onNavigate }) {
               alignItems: "center",
               gap: "6px",
               flexShrink: 0,
-              background: s.free ? C.accent : C.primary,
-              color: s.free ? C.primary : C.white,
+              background: (s.free || isLoggedIn) ? C.accent : C.primary,
+              color: (s.free || isLoggedIn) ? C.primary : C.white,
               border: "none",
               padding: "10px 18px",
               borderRadius: "50px",
@@ -907,8 +920,8 @@ function SectorRow({ s, expanded, onToggle, mobile, onNavigate }) {
               cursor: "pointer",
             }}
           >
-            {s.free ? <Eye size={12} /> : <Lock size={12} />}
-            {s.free ? "Read Analysis" : "Unlock Analysis"}
+            {(s.free || isLoggedIn) ? <Eye size={12} /> : <Lock size={12} />}
+            {(s.free || isLoggedIn) ? "Read Analysis" : "Sign In to Read"}
             <ArrowUpRight size={12} />
           </button>
         </div>
@@ -985,7 +998,7 @@ function SectorIconBtn({ svgIcon, label, active, onClick }) {
   );
 }
 
-function BridgeTab({ mobile, filter, setFilter, onUnlock, onNavigate }) {
+function BridgeTab({ mobile, filter, setFilter, onUnlock, onNavigate, isLoggedIn }) {
   const [expanded, setExpanded] = useState(null);
   const tags = ["All", "Foundation", "Human Capital", "Economic Engine", "Growth Engine"];
   const shown = filter === "All" ? sectors : sectors.filter((s) => s.full === filter || s.tag === filter);
@@ -1130,58 +1143,107 @@ function BridgeTab({ mobile, filter, setFilter, onUnlock, onNavigate }) {
             onToggle={() => setExpanded(expanded === s.id ? null : s.id)}
             mobile={mobile}
             onNavigate={onNavigate}
+            isLoggedIn={isLoggedIn}
           />
         ))}
       </div>
 
       {/* CTA */}
-      <div style={{ marginTop: "24px", padding: "20px", background: C.primary, borderRadius: "10px" }}>
-        <div style={{ marginBottom: mobile ? "14px" : "8px" }}>
-          <div
+      {!isLoggedIn ? (
+        <div style={{ marginTop: "24px", padding: "20px", background: C.primary, borderRadius: "10px" }}>
+          <div style={{ marginBottom: mobile ? "14px" : "8px" }}>
+            <div
+              style={{
+                fontSize: "15px",
+                fontWeight: "700",
+                color: C.white,
+                fontFamily: "DM Sans,sans-serif",
+                marginBottom: "4px",
+              }}
+            >
+              11 of 12 analyses are subscriber-only
+            </div>
+            <div
+              style={{
+                fontSize: "12px",
+                color: "rgba(255,255,255,0.55)",
+                fontFamily: "Inter,sans-serif",
+                lineHeight: 1.5,
+              }}
+            >
+              Sign in for free to access all 12 sector intelligence briefs with venture portfolios, risk frameworks, and capital breakdowns.
+            </div>
+          </div>
+          <button
+            onClick={onUnlock}
             style={{
-              fontSize: "15px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              background: C.accent,
+              color: C.primary,
+              border: "none",
+              padding: "12px 22px",
+              borderRadius: "50px",
+              fontSize: "14px",
               fontWeight: "700",
-              color: C.white,
-              fontFamily: "DM Sans,sans-serif",
-              marginBottom: "4px",
-            }}
-          >
-            11 of 12 analyses are subscriber-only
-          </div>
-          <div
-            style={{
-              fontSize: "12px",
-              color: "rgba(255,255,255,0.55)",
               fontFamily: "Inter,sans-serif",
-              lineHeight: 1.5,
+              cursor: "pointer",
+              width: mobile ? "100%" : "auto",
             }}
           >
-            Unlock venture portfolios, risk frameworks, capital breakdowns, and implementation playbooks for all 12
-            sectors.
-          </div>
+            Sign In to Unlock <ArrowUpRight size={14} />
+          </button>
         </div>
-        <button
-          onClick={onUnlock}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "8px",
-            background: C.accent,
-            color: C.primary,
-            border: "none",
-            padding: "12px 22px",
-            borderRadius: "50px",
-            fontSize: "14px",
-            fontWeight: "700",
-            fontFamily: "Inter,sans-serif",
-            cursor: "pointer",
-            width: mobile ? "100%" : "auto",
-          }}
-        >
-          Unlock All <ArrowUpRight size={14} />
-        </button>
-      </div>
+      ) : (
+        <div style={{ marginTop: "24px", padding: "20px", background: `${C.primary}08`, border: `1px solid ${C.line}`, borderRadius: "10px" }}>
+          <div style={{ marginBottom: mobile ? "14px" : "8px" }}>
+            <div
+              style={{
+                fontSize: "15px",
+                fontWeight: "700",
+                color: C.primary,
+                fontFamily: "DM Sans,sans-serif",
+                marginBottom: "4px",
+              }}
+            >
+              Upgrade to full access
+            </div>
+            <div
+              style={{
+                fontSize: "12px",
+                color: C.muted,
+                fontFamily: "Inter,sans-serif",
+                lineHeight: 1.5,
+              }}
+            >
+              Paid members get the complete BRIDGE intelligence suite — venture-level data, implementation playbooks, direct introductions, and priority analyst access.
+            </div>
+          </div>
+          <button
+            onClick={onUnlock}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              background: C.primary,
+              color: C.white,
+              border: "none",
+              padding: "12px 22px",
+              borderRadius: "50px",
+              fontSize: "14px",
+              fontWeight: "700",
+              fontFamily: "Inter,sans-serif",
+              cursor: "pointer",
+              width: mobile ? "100%" : "auto",
+            }}
+          >
+            Access Full Report <ArrowUpRight size={14} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -1689,7 +1751,7 @@ function LibraryTab({ mobile }) {
 }
 
 // ─── What's New Strip ─────────────────────────────────────
-function WhatsNew({ mobile }) {
+function WhatsNew({ mobile, onCardClick, isLoggedIn }) {
   const [hov, setHov] = React.useState(null);
   return (
     <div
@@ -1758,6 +1820,7 @@ function WhatsNew({ mobile }) {
                 key={u.id}
                 onMouseEnter={() => setHov(i)}
                 onMouseLeave={() => setHov(null)}
+                onClick={() => onCardClick(u)}
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -1855,21 +1918,25 @@ function WhatsNew({ mobile }) {
                           display: "flex",
                           alignItems: "center",
                           gap: "4px",
-                          background: "rgba(0,0,0,0.04)",
+                          background: isLoggedIn ? `${C.teal}12` : "rgba(0,0,0,0.04)",
                           padding: "4px 9px",
                           borderRadius: "5px",
                         }}
                       >
-                        <Lock size={10} color={C.muted} />
+                        {isLoggedIn ? (
+                          <Eye size={10} color={C.teal} />
+                        ) : (
+                          <Lock size={10} color={C.muted} />
+                        )}
                         <span
                           style={{
                             fontSize: "10px",
                             fontWeight: "600",
-                            color: C.muted,
+                            color: isLoggedIn ? C.teal : C.muted,
                             fontFamily: "Inter,sans-serif",
                           }}
                         >
-                          Members
+                          {isLoggedIn ? "Read" : "Members"}
                         </span>
                       </div>
                     )}
@@ -1896,10 +1963,21 @@ function WhatsNew({ mobile }) {
 
 export default function ResourcesPage() {
   const navigate = useNavigate();
+  const { user, tier } = useAuth();
   const [tab, setTab] = useState("intelligence");
   const [mobile, setMobile] = useState(false);
   const [filter, setFilter] = useState("All");
   const [showAuth, setShowAuth] = useState(false);
+
+  const handleCardClick = (update: typeof updates[number]) => {
+    if (update.free) {
+      navigate(update.path);
+    } else if (user) {
+      navigate(update.path);
+    } else {
+      navigate(`/login?redirect=${encodeURIComponent(update.path)}`);
+    }
+  };
   useEffect(() => {
     const c = () => setMobile(window.innerWidth < 900);
     c();
@@ -2020,7 +2098,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* ── WHAT'S NEW ── */}
-      <WhatsNew mobile={mobile} />
+      <WhatsNew mobile={mobile} onCardClick={handleCardClick} isLoggedIn={!!user} />
 
       {/* ── TAB CONTAINER ── */}
       <section style={{ background: C.bg, padding: mobile ? "24px 20px 48px" : `32px ${PAD} 64px` }}>
@@ -2127,7 +2205,21 @@ export default function ResourcesPage() {
 
             {/* Tab content */}
             <div style={{ padding: mobile ? "20px 16px" : "40px 32px", minHeight: "500px" }}>
-              {tab === "intelligence" && <BridgeTab mobile={mobile} filter={filter} setFilter={setFilter} onUnlock={() => setShowAuth(true)} onNavigate={(slug: string) => navigate(`/reports/${slug}`)} />}
+              {tab === "intelligence" && <BridgeTab mobile={mobile} filter={filter} setFilter={setFilter} isLoggedIn={!!user} onUnlock={() => {
+                if (!user) {
+                  navigate("/login?redirect=/resources");
+                } else {
+                  setShowAuth(true);
+                }
+              }} onNavigate={(slug: string) => {
+                const sector = sectors.find((s) => s.slug === slug);
+                const briefPath = `/resources/sector-brief/${slug}`;
+                if (sector?.free || user) {
+                  navigate(briefPath);
+                } else {
+                  navigate(`/login?redirect=${encodeURIComponent(briefPath)}`);
+                }
+              }} />}
               {tab === "gipc" && <GIPCTab mobile={mobile} />}
               {tab === "library" && <LibraryTab mobile={mobile} />}
             </div>
