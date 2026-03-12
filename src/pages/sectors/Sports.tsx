@@ -14,6 +14,7 @@ import { AlertTriangle, ArrowRight, Check, Globe, GraduationCap, Lock, Music, Pa
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +31,8 @@ const sectorData = {
   shortName: "Creative Industries",
   category: "The Creative Economy",
   categoryColor: "#1565C0",
+  heroTitleBold: "Sports",
+  heroTitleRest: "& Creative Entertainment",
 
   capitalRange: "$10-22M",
   ventures: 22,
@@ -4928,95 +4931,6 @@ const InvestmentCTASection = ({ sector }) => {
 };
 
 // ============================================================================
-// SECTION 10: FINAL CTA
-// ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
-
-  return (
-    <section
-      className="text-center"
-      style={{
-        backgroundColor: colors.primary,
-        padding: isMobile ? "60px 20px" : "100px 80px",
-      }}
-    >
-      <div className="mx-auto text-center" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <span
-          className="inline-block bg-[rgba(184,217,53,0.15)] px-5 py-[10px] rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif] mb-6"
-          style={{ color: colors.accent }}
-        >
-          Be Part of the Journey
-        </span>
-
-        <h2
-          className="font-[Inter,sans-serif] font-light leading-[1.2] -tracking-[0.5px]"
-          style={{
-            fontSize: isMobile ? "32px" : "48px",
-            color: colors.white,
-            margin: "0 0 24px 0",
-          }}
-        >
-          Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Creative Industries</span>
-        </h2>
-
-        <p
-          className="font-[Inter,sans-serif] leading-[1.7] text-white/70 max-w-[620px] mx-auto"
-          style={{
-            fontSize: isMobile ? "16px" : "18px",
-            margin: "0 0 40px 0",
-          }}
-        >
-          Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
-          Ghana's creative future.
-        </p>
-
-        <div
-          className="flex gap-4 justify-center items-center"
-          style={{ flexDirection: isMobile ? "column" : "row" }}
-        >
-          <button
-            onClick={() => navigate("/contact")}
-            className="flex items-center justify-center gap-[10px] border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer"
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              padding: isMobile ? "16px 24px" : "16px 32px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Start a Conversation
-            <span
-              className="w-7 h-7 rounded-full flex items-center justify-center"
-              style={{
-                backgroundColor: colors.primary,
-                color: colors.white,
-              }}
-            >
-              <IconArrowRight />
-            </span>
-          </button>
-
-          <button
-            onClick={() => navigate("/resources")}
-            className="bg-transparent border border-white/30 rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer"
-            style={{
-              color: colors.white,
-              padding: isMobile ? "16px 24px" : "16px 32px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Explore the Full Analysis
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// ============================================================================
 // MAIN PAGE COMPONENT
 // ============================================================================
 
@@ -5028,7 +4942,7 @@ export default function SportsEntertainmentSectorPage() {
       className="font-[Inter,-apple-system,BlinkMacSystemFont,'Segoe_UI',Roboto,Helvetica,Arial,sans-serif] leading-[1.6] antialiased"
       style={{ color: colors.dark }}
     >
-      <HeroSection sector={sectorData} />
+      <SectorHeroSection sector={sectorData} />
       <ProblemSection />
       <ValueChainSection />
       <SolutionsSection />
@@ -5037,7 +4951,10 @@ export default function SportsEntertainmentSectorPage() {
       <CrossSectorSection />
       <InvestmentCTASection sector={sectorData} />
       <ImpactSection />
-      <FinalCTASection />
+      <SectorFinalCTA
+          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Creative Industries</span></>}
+          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's creative future."
+        />
       <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
         <div className="h-px bg-white/[0.08]" />
       </div>

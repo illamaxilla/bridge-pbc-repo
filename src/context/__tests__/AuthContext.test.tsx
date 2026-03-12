@@ -1,35 +1,39 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, act, waitFor } from "@testing-library/react";
 import { AuthProvider, useAuth } from "../AuthContext";
 
-// ---------- Mock supabase client ----------
+// ---------- Mock Supabase ----------
 
-const mockGetSession = vi.fn();
-const mockOnAuthStateChange = vi.fn();
+let mockSession: any = null;
+let authChangeCallback: ((event: string, session: any) => void) | null = null;
+const mockUnsubscribe = vi.fn();
+
 const mockSignInWithPassword = vi.fn();
 const mockSignOut = vi.fn();
 
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
     auth: {
-      getSession: (...args: unknown[]) => mockGetSession(...args),
-      onAuthStateChange: (...args: unknown[]) => mockOnAuthStateChange(...args),
-      signInWithPassword: (...args: unknown[]) => mockSignInWithPassword(...args),
-      signOut: (...args: unknown[]) => mockSignOut(...args),
+      getSession: vi.fn(() => Promise.resolve({ data: { session: mockSession } })),
+      onAuthStateChange: vi.fn((cb: any) => {
+        authChangeCallback = cb;
+        return { data: { subscription: { unsubscribe: mockUnsubscribe } } };
+      }),
+      signInWithPassword: mockSignInWithPassword,
+      signOut: mockSignOut,
     },
   },
 }));
 
-// ---------- Helpers ----------
+// ---------- Helper component to read context ----------
 
-/** A component that exposes auth state for assertions. */
 function AuthConsumer() {
   const { user, loading, tier, signIn, signOut } = useAuth();
   return (
     <div>
       <span data-testid="loading">{String(loading)}</span>
+      <span data-testid="user">{user ? user.id : "null"}</span>
       <span data-testid="tier">{tier}</span>
-      <span data-testid="user">{user ? user.id : "none"}</span>
       <button onClick={() => signIn("a@b.com", "pw")}>Sign In</button>
       <button onClick={() => signOut()}>Sign Out</button>
     </div>
@@ -40,138 +44,150 @@ function AuthConsumer() {
 
 describe("AuthContext", () => {
   beforeEach(() => {
+    mockSession = null;
+    authChangeCallback = null;
     vi.clearAllMocks();
-
-    // Default: no session
-    mockGetSession.mockResolvedValue({ data: { session: null } });
-    mockOnAuthStateChange.mockReturnValue({
-      data: { subscription: { unsubscribe: vi.fn() } },
-    });
-    mockSignInWithPassword.mockResolvedValue({ error: null });
-    mockSignOut.mockResolvedValue({ error: null });
   });
 
-  it("throws when useAuth is used outside AuthProvider", () => {
-    // Suppress console.error from React error boundary
-    const originalConsoleError = console.error;
-    console.error = vi.fn();
+  it("provides default public state when no session exists", async () => {
+    render(
+      <AuthProvider>
+        <AuthConsumer />
+      </AuthProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("loading").textContent).toBe("false");
+    });
+
+    expect(screen.getByTestId("user").textContent).toBe("null");
+    expect(screen.getByTestId("tier").textContent).toBe("public");
+  });
+
+  it("provides user and free tier when session has a user without paid metadata", async () => {
+    mockSession = {
+      user: { id: "user-123", user_metadata: {} },
+    };
+
+    render(
+      <AuthProvider>
+        <AuthConsumer />
+      </AuthProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("loading").textContent).toBe("false");
+    });
+
+    expect(screen.getByTestId("user").textContent).toBe("user-123");
+    expect(screen.getByTestId("tier").textContent).toBe("free");
+  });
+
+  it("resolves paid tier from user metadata", async () => {
+    mockSession = {
+      user: { id: "user-paid", user_metadata: { membership_tier: "paid" } },
+    };
+
+    render(
+      <AuthProvider>
+        <AuthConsumer />
+      </AuthProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("tier").textContent).toBe("paid");
+    });
+  });
+
+  it("calls supabase signInWithPassword when signIn is invoked", async () => {
+    mockSignInWithPassword.mockResolvedValue({ error: null });
+
+    render(
+      <AuthProvider>
+        <AuthConsumer />
+      </AuthProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("loading").textContent).toBe("false");
+    });
+
+    await act(async () => {
+      screen.getByText("Sign In").click();
+    });
+
+    expect(mockSignInWithPassword).toHaveBeenCalledWith({
+      email: "a@b.com",
+      password: "pw",
+    });
+  });
+
+  it("calls supabase signOut when signOut is invoked", async () => {
+    mockSignOut.mockResolvedValue({ error: null });
+
+    render(
+      <AuthProvider>
+        <AuthConsumer />
+      </AuthProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("loading").textContent).toBe("false");
+    });
+
+    await act(async () => {
+      screen.getByText("Sign Out").click();
+    });
+
+    expect(mockSignOut).toHaveBeenCalled();
+  });
+
+  it("updates state when onAuthStateChange fires", async () => {
+    render(
+      <AuthProvider>
+        <AuthConsumer />
+      </AuthProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("loading").textContent).toBe("false");
+    });
+
+    expect(screen.getByTestId("user").textContent).toBe("null");
+
+    // Simulate auth state change
+    await act(async () => {
+      authChangeCallback?.("SIGNED_IN", {
+        user: { id: "new-user", user_metadata: {} },
+      });
+    });
+
+    expect(screen.getByTestId("user").textContent).toBe("new-user");
+    expect(screen.getByTestId("tier").textContent).toBe("free");
+  });
+
+  it("unsubscribes from auth listener on unmount", async () => {
+    const { unmount } = render(
+      <AuthProvider>
+        <AuthConsumer />
+      </AuthProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("loading").textContent).toBe("false");
+    });
+
+    unmount();
+    expect(mockUnsubscribe).toHaveBeenCalled();
+  });
+
+  it("throws when useAuth is called outside AuthProvider", () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     expect(() => render(<AuthConsumer />)).toThrow(
       "useAuth must be used within an AuthProvider"
     );
 
-    console.error = originalConsoleError;
-  });
-
-  it("starts with loading=true", () => {
-    // Prevent getSession from resolving so loading stays true
-    mockGetSession.mockReturnValue(new Promise(() => {}));
-
-    render(
-      <AuthProvider>
-        <AuthConsumer />
-      </AuthProvider>
-    );
-
-    expect(screen.getByTestId("loading").textContent).toBe("true");
-  });
-
-  it('defaults tier to "public" when there is no session', async () => {
-    render(
-      <AuthProvider>
-        <AuthConsumer />
-      </AuthProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId("loading").textContent).toBe("false");
-    });
-
-    expect(screen.getByTestId("tier").textContent).toBe("public");
-    expect(screen.getByTestId("user").textContent).toBe("none");
-  });
-
-  it("signIn calls supabase.auth.signInWithPassword", async () => {
-    render(
-      <AuthProvider>
-        <AuthConsumer />
-      </AuthProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId("loading").textContent).toBe("false");
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: "Sign In" }));
-
-    await waitFor(() => {
-      expect(mockSignInWithPassword).toHaveBeenCalledWith({
-        email: "a@b.com",
-        password: "pw",
-      });
-    });
-  });
-
-  it("signOut calls supabase.auth.signOut", async () => {
-    render(
-      <AuthProvider>
-        <AuthConsumer />
-      </AuthProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId("loading").textContent).toBe("false");
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: "Sign Out" }));
-
-    await waitFor(() => {
-      expect(mockSignOut).toHaveBeenCalled();
-    });
-  });
-
-  it('resolves tier to "free" for authenticated user without tier metadata', async () => {
-    mockGetSession.mockResolvedValue({
-      data: {
-        session: {
-          user: { id: "user-1", user_metadata: {} },
-        },
-      },
-    });
-
-    render(
-      <AuthProvider>
-        <AuthConsumer />
-      </AuthProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId("loading").textContent).toBe("false");
-    });
-
-    expect(screen.getByTestId("tier").textContent).toBe("free");
-    expect(screen.getByTestId("user").textContent).toBe("user-1");
-  });
-
-  it('resolves tier to "paid" for user with membership_tier = "paid"', async () => {
-    mockGetSession.mockResolvedValue({
-      data: {
-        session: {
-          user: { id: "user-2", user_metadata: { membership_tier: "paid" } },
-        },
-      },
-    });
-
-    render(
-      <AuthProvider>
-        <AuthConsumer />
-      </AuthProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId("loading").textContent).toBe("false");
-    });
-
-    expect(screen.getByTestId("tier").textContent).toBe("paid");
+    spy.mockRestore();
   });
 });

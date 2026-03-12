@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, BatteryCharging, Check, ChevronDown, Clock, C
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,8 @@ const sectorData = {
   shortName: "Transportation",
   category: "Enabling Infrastructure",
   categoryColor: "#1B4D3E",
+  heroTitleBold: "Transportation",
+  heroTitleRest: "& Logistics",
   capitalRange: "$14-26M",
 
   ventures: 19,
@@ -3439,71 +3442,6 @@ const ImpactSection = () => {
 };
 
 // ============================================================================
-// 10. CTA — BE PART OF THE JOURNEY (bg: primary)
-// ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  return (
-    <section
-      className="text-center"
-      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}
-    >
-      <div className="max-w-[900px] mx-auto">
-        <div
-          className="inline-flex items-center gap-2 px-5 py-[10px] rounded-full text-[11px] font-bold tracking-[2px] font-[Inter,sans-serif] uppercase mb-6 border border-white/15 bg-white/[0.08]"
-          style={{ color: colors.accent }}
-        >
-          Be Part of the Journey
-        </div>
-        <h2
-          className="font-[Inter,sans-serif] font-light leading-[1.2]"
-          style={{ fontSize: isMobile ? "32px" : "48px", color: colors.white, margin: "0 0 24px 0" }}
-        >
-          Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Logistics Future</span>
-        </h2>
-        <p
-          className="font-[Inter,sans-serif] leading-[1.7] text-white/60 max-w-[680px] mx-auto"
-          style={{ fontSize: isMobile ? "16px" : "18px", margin: "0 auto 40px" }}
-        >
-          Whether you're an investor, operator, or government partner, there's a seat at the table in building Ghana's
-          logistics future.
-        </p>
-        <div
-          className="flex gap-4 justify-center"
-          style={{
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: isMobile ? "stretch" : "center",
-          }}
-        >
-          <button
-            className="cta-lime-swap flex items-center justify-center gap-3 border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer"
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              padding: isMobile ? "16px 24px" : "16px 28px",
-            }}
-          >
-            Start a Conversation
-            <span
-              className="cta-btn-arrow w-9 h-9 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: colors.white }}
-            >
-              <ArrowUpRight size={16} strokeWidth={2.5} color={colors.primary} />
-            </span>
-          </button>
-          <button
-            className="cta-secondary bg-transparent rounded-full text-[14px] font-semibold font-[Inter,sans-serif] cursor-pointer text-white/70 border-[1.5px] border-white/20 px-7 py-[14px]"
-          >
-            Explore the Full Analysis
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// ============================================================================
 
 // ============================================================================
 // MAIN PAGE COMPONENT
@@ -3520,7 +3458,7 @@ export default function TransportationLogisticsSectorPage() {
         .cta-lime-swap { transition: none; }
         .cta-secondary { transition: none; }
       `}</style>
-      <HeroSection sector={sectorData} />
+      <SectorHeroSection sector={sectorData} />
       <OpportunitySection />
       <ProcessSection />
       <PathwaySection sector={sectorData} />
@@ -3529,7 +3467,10 @@ export default function TransportationLogisticsSectorPage() {
       <RippleEffectSection />
       <InvestmentThesisSection />
       <ImpactSection />
-      <FinalCTASection />
+      <SectorFinalCTA
+          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Logistics Future</span></>}
+          description="Whether you're an investor, operator, or government partner, there's a seat at the table in building Ghana's logistics future."
+        />
     </Layout>
   );
 }

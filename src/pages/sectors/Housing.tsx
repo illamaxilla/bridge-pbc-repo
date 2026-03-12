@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, BatteryCharging, Building2, Check, ChevronRig
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,8 @@ const sectorData = {
   shortName: "Housing",
   category: "Shelter & Security",
   categoryColor: "#6B21A8",
+  heroTitleBold: "Housing",
+  heroTitleRest: "& Real Estate",
 
   capitalRange: "$26-48M",
   ventures: 19,
@@ -431,209 +434,6 @@ const solutionIcons = {
   "Tenant Services Platform": <IconHome />,
 };
 
-
-// ============================================================================
-// HERO SECTION — Production Spec (responsive)
-// ============================================================================
-
-const HeroSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  return (
-    <section
-      className="relative flex flex-col"
-      style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "80px 20px 20px" : "112px 80px 20px",
-        minHeight: isMobile ? "auto" : "calc(100vh - 100px)",
-      }}
-    >
-      <div className="mx-auto w-full" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <div
-          className="grid items-start flex-1"
-          style={{
-            gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
-            gap: isMobile ? "32px" : "60px",
-          }}
-        >
-          <div>
-            {/* Category Badge */}
-            <div className="flex items-center gap-3 mb-6">
-              <span
-                className="rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif]"
-                style={{
-                  backgroundColor: colors.accentLight,
-                  color: colors.primary,
-                  padding: "8px 16px",
-                }}
-              >
-                {sector.category}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h1
-              className="font-[Inter,sans-serif] font-normal leading-[1.1] tracking-[-1px]"
-              style={{
-                fontSize: isMobile ? "30px" : "52px",
-                color: colors.primary,
-                margin: "0 0 20px 0",
-              }}
-            >
-              <span className="font-bold">Housing</span> &{!isMobile && <br />} Real Estate
-            </h1>
-
-            {/* Subheading */}
-            <h2
-              className="font-[Inter,sans-serif] font-semibold leading-[1.3]"
-              style={{
-                fontSize: isMobile ? "20px" : "24px",
-                color: colors.dark,
-                margin: "0 0 16px 0",
-              }}
-            >
-              The Foundation Beneath Every Family's Future
-            </h2>
-
-            {/* Description */}
-            <p
-              className="font-[Inter,sans-serif] font-normal leading-[1.7] text-[#555] max-w-[540px]"
-              style={{
-                fontSize: isMobile ? "15px" : "16px",
-                margin: "0 0 36px 0",
-              }}
-            >
-              {sector.problemSubheadline}
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex gap-3" style={{ flexWrap: isMobile ? "wrap" : "nowrap" }}>
-              <button
-                className="border-none rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center gap-[10px]"
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  padding: isMobile ? "14px 20px" : "16px 24px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                  justifyContent: isMobile ? "center" : "flex-start",
-                }}
-              >
-                Request Full Analysis
-                <span
-                  className="w-7 h-7 rounded-full flex items-center justify-center"
-                  style={{
-                    backgroundColor: colors.primary,
-                    color: colors.white,
-                  }}
-                >
-                  <IconArrowRight />
-                </span>
-              </button>
-              <button
-                className="bg-transparent rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer"
-                style={{
-                  color: colors.primary,
-                  border: `2px solid ${colors.line}`,
-                  padding: isMobile ? "14px 20px" : "16px 24px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                }}
-              >
-                Download Summary
-              </button>
-            </div>
-          </div>
-
-          {/* Stats Card */}
-          <div
-            className="rounded-[20px]"
-            style={{
-              backgroundColor: colors.primary,
-              padding: isMobile ? "24px" : "32px",
-              minWidth: isMobile ? "auto" : "340px",
-            }}
-          >
-            {/* Header */}
-            <div className="flex justify-between items-center">
-              <span className="text-[11px] font-bold text-[rgba(255,255,255,0.5)] uppercase tracking-[1.5px] font-[Inter,sans-serif]">
-                Sector Overview
-              </span>
-              <span
-                className="rounded-full text-[11px] font-bold uppercase tracking-[1px]"
-                style={{
-                  backgroundColor: "rgba(184, 217, 53, 0.15)",
-                  color: colors.accent,
-                  padding: "6px 14px",
-                }}
-              >
-                Active
-              </span>
-            </div>
-
-            {/* Main Stats Row */}
-            <div className="flex justify-between mt-5 pb-6" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-              <div>
-                <div
-                  className="text-[42px] font-bold font-[Inter,sans-serif] leading-none"
-                  style={{ color: colors.accent, margin: "0 0 8px 0" }}
-                >
-                  {sector.capitalRange}
-                </div>
-                <div className="text-[13px] font-medium text-[rgba(255,255,255,0.5)] font-[Inter,sans-serif]">
-                  Investment Range
-                </div>
-              </div>
-              <div className="text-right">
-                <div
-                  className="text-[42px] font-bold font-[Inter,sans-serif] leading-none"
-                  style={{ color: colors.accent, margin: "0 0 8px 0" }}
-                >
-                  {sector.ventures}
-                </div>
-                <div className="text-[13px] font-medium text-[rgba(255,255,255,0.5)] font-[Inter,sans-serif]">
-                  Identified Ventures
-                </div>
-              </div>
-            </div>
-
-            {/* Stat Rows — 4 items */}
-            {sector.keyStats.map((stat, i) => (
-              <div key={i} className="flex justify-between items-center py-4">
-                <div>
-                  <span className="block text-[15px] font-medium text-[rgba(255,255,255,0.8)] font-[Inter,sans-serif]">
-                    {stat.label}
-                  </span>
-                  {stat.detail && (
-                    <span className="block text-[12px] font-normal text-[rgba(255,255,255,0.35)] font-[Inter,sans-serif] italic mt-[2px]">
-                      {stat.detail}
-                    </span>
-                  )}
-                </div>
-                <span
-                  className="text-[20px] font-semibold font-[Inter,sans-serif]"
-                  style={{ color: colors.accent }}
-                >
-                  {stat.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* Scroll to Explore — desktop only */}
-      {!isMobile && (
-        <div className="flex flex-col items-center mt-auto pt-[10px] pb-[10px]">
-          <span className="font-[Inter,sans-serif] text-[13px] text-[#999] mb-2">
-            Explore Analysis
-          </span>
-          <div className="text-[#999]" style={{ animation: "bounce 2s infinite" }}>
-            <IconArrowDown />
-          </div>
-        </div>
-      )}
-    </section>
-  );
-};
 
 // ============================================================================
 // SECTION 2: PROBLEM (updated pill to Variant A - Bordered)
@@ -3935,86 +3735,6 @@ const ImpactSection = () => {
     </section>
   );
 };
-// ============================================================================
-// FINAL CTA (v2 - ctaGreen bg, sector-specific for Housing)
-// ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  return (
-    <section
-      className="text-center"
-      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}
-    >
-      <div className="max-w-[900px] mx-auto text-center">
-        <span
-          className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
-          style={{
-            backgroundColor: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.15)",
-            color: colors.accent,
-            padding: "10px 20px",
-          }}
-        >
-          Be Part of the Journey
-        </span>
-        <h2
-          className="font-[Inter,sans-serif] font-light leading-[1.2]"
-          style={{
-            fontSize: isMobile ? "32px" : "48px",
-            color: colors.white,
-            margin: "0 0 24px 0",
-          }}
-        >
-          Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Housing Future</span>
-        </h2>
-        <p
-          className="font-[Inter,sans-serif] leading-[1.7] text-[rgba(255,255,255,0.7)] max-w-[620px] mx-auto"
-          style={{
-            fontSize: isMobile ? "16px" : "18px",
-            margin: "0 0 40px 0",
-          }}
-        >
-          Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
-          sustainable communities.
-        </p>
-        <div
-          className="flex gap-4 justify-center items-center"
-          style={{ flexDirection: isMobile ? "column" : "row" }}
-        >
-          <button
-            className="border-none rounded-full text-[15px] font-bold font-['DM_Sans',sans-serif] cursor-pointer flex items-center justify-center gap-[10px]"
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              padding: isMobile ? "16px 28px" : "14px 28px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Start a Conversation
-            <span
-              className="w-7 h-7 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: colors.white }}
-            >
-              <ArrowUpRight size={14} strokeWidth={2.5} color={colors.primary} />
-            </span>
-          </button>
-          <button
-            className="bg-transparent rounded-full text-[14px] font-semibold font-['DM_Sans',sans-serif] cursor-pointer"
-            style={{
-              color: "rgba(255,255,255,0.8)",
-              border: "1.5px solid rgba(255,255,255,0.25)",
-              padding: isMobile ? "16px 28px" : "14px 28px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Explore the Full Analysis
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 
 // ============================================================================
@@ -4026,7 +3746,7 @@ export default function HousingRealEstateSectorPage() {
   return (
     <Layout>
       <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-        <HeroSection sector={sectorData} />
+        <SectorHeroSection sector={sectorData} />
         <ProblemSection sector={sectorData} />
         <ValueChainSectionPremium />
         <SolutionsSection sector={sectorData} />
@@ -4035,7 +3755,10 @@ export default function HousingRealEstateSectorPage() {
         <CrossSectorSection />
         <InvestmentCTASection sector={sectorData} />
         <ImpactSection />
-        <FinalCTASection />
+        <SectorFinalCTA
+          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Housing Future</span></>}
+          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building sustainable communities."
+        />
       </div>
     </Layout>
   );

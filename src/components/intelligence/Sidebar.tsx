@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import {
   ChevronRight,
   ChevronLeft,
@@ -67,7 +67,10 @@ export function BridgeLogo() {
   );
 }
 
-export function Sidebar({
+// React.memo: Sidebar receives many props (collapsed, activePage, activeSector, etc.)
+// and renders an expensive sorted sector list. Memo prevents re-renders when unrelated
+// dashboard state (e.g. period toggle, syncing indicator) changes in the parent.
+export const Sidebar = memo(function Sidebar({
   collapsed,
   setCollapsed,
   activePage,
@@ -403,4 +406,4 @@ export function Sidebar({
       )}
     </div>
   );
-}
+});

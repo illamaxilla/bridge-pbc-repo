@@ -18,6 +18,7 @@ import { useCounter } from "@/hooks/useCounter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 
 // ============================================================================
 // SECTOR DATA
@@ -30,6 +31,8 @@ const sectorData = {
   shortName: "Health",
   category: "Essential Care",
   categoryColor: "#1B4D3E",
+  heroTitleBold: "Health",
+  heroTitleRest: "Systems & Wellbeing",
   capitalRange: "$12-40M",
   ventures: 19,
   jobsImpact: "32M+ citizens",
@@ -438,188 +441,6 @@ const footerLinkHref = (link: string): string => {
 };
 
 
-
-// ============================================================================
-// HERO SECTION — Responsive
-// ============================================================================
-
-const HeroSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  return (
-    <section
-      className="relative flex flex-col" style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "80px 20px 20px" : "112px 80px 20px",
-        minHeight: isMobile ? "auto" : "calc(100vh - 100px)"
-                }}
-    >
-      <div
-        className="max-w-[1200px] mx-auto w-full grid items-start flex-1" style={{
-          gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
-          gap: isMobile ? "32px" : "60px"
-                }}
-      >
-        {/* Left Column */}
-        <div>
-          <span
-            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif] px-4 py-2" style={{
-              backgroundColor: colors.accentLight,
-              color: colors.primary,
-              marginBottom: isMobile ? "16px" : "24px"
-                }}
-          >
-            {sector.category}
-          </span>
-          <h1
-            className="font-[Inter,sans-serif] font-normal leading-[1.1] mb-5 mt-0 ml-0 mr-0 tracking-[-1px]" style={{
-              fontSize: isMobile ? "36px" : "52px",
-              color: colors.primary
-                }}
-          >
-            <span className="font-bold">Health</span> Systems &{isMobile ? " " : <br />}Wellbeing
-          </h1>
-          <h2
-            className="font-[Inter,sans-serif] font-semibold leading-[1.3] mt-0 ml-0 mr-0 mb-4" style={{
-              fontSize: isMobile ? "20px" : "24px",
-              color: colors.dark
-                }}
-          >
-            {sector.problemHeadline}
-          </h2>
-          <p
-            className="font-[Inter,sans-serif] text-[#555] leading-[1.7] mt-0 ml-0 mr-0 mb-8 max-w-[540px]" style={{
-              fontSize: isMobile ? "15px" : "16px"
-                }}
-          >
-            {sector.problemSubheadline}
-          </p>
-          <div className="flex gap-3 items-center flex-wrap">
-            <button
-              className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer inline-flex items-center gap-[10px] px-6 py-4" style={{
-                backgroundColor: colors.accent,
-                color: colors.primary,
-                ...(isMobile ? { width: "100%", justifyContent: "center" } : {})
-                }}
-            >
-              Request Full Analysis
-              <span
-                className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: colors.primary }}
-              >
-                <ArrowRight size={14} strokeWidth={2.5} color="white" />
-              </span>
-            </button>
-            <button
-              className="bg-transparent rounded-full text-[15px] font-medium font-[Inter,sans-serif] cursor-pointer px-6 py-4" style={{
-                color: colors.dark,
-                border: `2px solid ${colors.line}`,
-                ...(isMobile ? { width: "100%", textAlign: "center" } : {})
-                }}
-            >
-              Download Summary
-            </button>
-          </div>
-        </div>
-
-        {/* Right Column — Stats Card */}
-        <div
-          style={{
-            backgroundColor: colors.primary,
-            borderRadius: isMobile ? "16px" : "20px",
-            padding: isMobile ? "24px" : "32px"
-                }}
-        >
-          <div className="flex justify-between items-center">
-            <span
-              className="text-[11px] font-bold text-white/50 uppercase tracking-[1.5px] font-[Inter,sans-serif]"
-            >
-              Sector Overview
-            </span>
-            <span
-              className="py-[6px] px-[14px] rounded-full text-[11px] font-bold uppercase tracking-[1px] bg-[rgba(184,217,53,0.15)]" style={{ color: colors.accent }}
-            >
-              Active
-            </span>
-          </div>
-          <div
-            className="flex mt-5 pb-6 justify-between" style={{
-                  gap: isMobile ? "24px" : "40px",
-                  borderBottom: "1px solid rgba(255,255,255,0.1)"
-                }}
-          >
-            <div>
-              <div
-                className="font-bold font-[Inter,sans-serif] leading-[1] mt-0 ml-0 mr-0 mb-2" style={{
-                  fontSize: isMobile ? "32px" : "42px",
-                  color: colors.accent
-                }}
-              >
-                {sector.capitalRange}
-              </div>
-              <div
-                className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif]"
-              >
-                Investment Range
-              </div>
-            </div>
-            <div className="text-right">
-              <div
-                className="font-bold font-[Inter,sans-serif] leading-[1] mt-0 ml-0 mr-0 mb-2" style={{
-                  fontSize: isMobile ? "32px" : "42px",
-                  color: colors.accent
-                }}
-              >
-                {sector.ventures}
-              </div>
-              <div
-                className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif]"
-              >
-                Identified Ventures
-              </div>
-            </div>
-          </div>
-          {sector.keyStats.map((stat, i) => (
-            <div
-              key={i}
-              className="flex justify-between items-center py-4"
-            >
-              <div>
-                <span
-                  className="text-[15px] font-medium text-white/80 font-[Inter,sans-serif] block"
-                >
-                  {stat.label}
-                </span>
-                <span
-                  className="text-[12px] text-white/[0.35] font-[Inter,sans-serif] italic mt-0.5 block"
-                >
-                  {stat.detail}
-                </span>
-              </div>
-              <span
-                className="text-xl font-semibold font-[Inter,sans-serif]" style={{ color: colors.accent }}
-              >
-                {stat.value}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Scroll Indicator — desktop only */}
-      {!isMobile && (
-        <div
-          className="mt-auto pt-10 relative flex flex-col items-center gap-2 text-[#999] left-1/2 -translate-x-1/2"
-        >
-          <span className="font-[Inter,sans-serif] text-[13px] text-[#999] mb-0">
-            Explore Analysis
-          </span>
-          <div className="animate-bounce flex">
-            <IconArrowDown />
-          </div>
-        </div>
-      )}
-    </section>
-  );
-};
 
 // ============================================================================
 // PROBLEM SECTION — Horizontal Scroll Carousel on Mobile (Pattern C)
@@ -3997,7 +3818,7 @@ export default function HealthSystemsSectorPage() {
   return (
     <Layout>
       <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-        <HeroSection sector={sectorData} />
+        <SectorHeroSection sector={sectorData} />
         <ProblemSection />
         <ValueChainSectionPremium />
         <SolutionsSection sector={sectorData} />

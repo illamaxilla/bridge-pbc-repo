@@ -193,4 +193,4 @@ export const PageHeader = memo(function PageHeader({ s, period, setPeriod, synci
       </div>
     </div>
   );
-}
+});

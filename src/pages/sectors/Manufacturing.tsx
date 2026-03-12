@@ -17,6 +17,7 @@ import { useCounter } from "@/hooks/useCounter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -31,6 +32,8 @@ const sectorData = {
   shortName: "Manufacturing",
   category: "Economic Engines",
   categoryColor: "#2E7D32",
+  heroTitleBold: "Manufacturing",
+  heroTitleRest: "& Light Industry",
 
   capitalRange: "$15-30M",
   ventures: 18,
@@ -583,213 +586,6 @@ const footerLinkHref = (link: string): string => {
   return map[link] || "#";
 };
 
-
-// ============================================================================
-// HERO SECTION — Production Handoff
-// ============================================================================
-
-const HeroSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  return (
-    <section
-      className="relative flex flex-col"
-      style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "80px 20px 20px" : "112px 80px 20px",
-        minHeight: isMobile ? "auto" : "calc(100vh - 100px)",
-      }}
-    >
-      <div className="mx-auto w-full" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <div
-          className="grid items-start flex-1"
-          style={{
-            gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
-            gap: isMobile ? "32px" : "60px",
-          }}
-        >
-          <div>
-            {/* Category Badge */}
-            <div className="flex items-center gap-3 mb-6">
-              <span
-                className="rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif] px-4 py-2"
-                style={{
-                  backgroundColor: colors.accentLight,
-                  color: colors.primary,
-                }}
-              >
-                {sector.category}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h1
-              className="font-[Inter,sans-serif] font-normal leading-[1.1] tracking-[-1px] mb-5 mt-0"
-              style={{
-                fontSize: isMobile ? "30px" : "52px",
-                color: colors.primary,
-              }}
-            >
-              <span className="font-bold">Manufacturing</span> &{!isMobile && <br />} Light Industry
-            </h1>
-
-            {/* Subheading */}
-            <h2
-              className="font-[Inter,sans-serif] font-semibold leading-[1.3] mt-0 mb-4"
-              style={{
-                fontSize: isMobile ? "20px" : "24px",
-                color: colors.dark,
-              }}
-            >
-              {sector.problemHeadline}
-            </h2>
-
-            {/* Description */}
-            <p
-              className="font-[Inter,sans-serif] font-normal leading-[1.7] text-[#555] max-w-[540px] mt-0 mb-9"
-              style={{
-                fontSize: isMobile ? "15px" : "16px",
-              }}
-            >
-              {sector.problemSubheadline}
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex gap-3" style={{ flexWrap: isMobile ? "wrap" : "nowrap" }}>
-              <button
-                className="border-none rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center gap-[10px]"
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  padding: isMobile ? "14px 20px" : "16px 24px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                  justifyContent: isMobile ? "center" : "flex-start",
-                }}
-              >
-                Request Full Analysis
-                <span
-                  className="w-7 h-7 rounded-full flex items-center justify-center"
-                  style={{
-                    backgroundColor: colors.primary,
-                    color: colors.white,
-                  }}
-                >
-                  <IconArrowRight />
-                </span>
-              </button>
-              <button
-                className="bg-transparent rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer"
-                style={{
-                  color: colors.primary,
-                  border: `2px solid ${colors.line}`,
-                  padding: isMobile ? "14px 20px" : "16px 24px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                }}
-              >
-                Download Summary
-              </button>
-            </div>
-          </div>
-
-          {/* Stats Card */}
-          <div
-            className="rounded-[20px]"
-            style={{
-              backgroundColor: colors.primary,
-              padding: isMobile ? "24px" : "32px",
-              minWidth: isMobile ? "auto" : "340px",
-            }}
-          >
-            {/* Header */}
-            <div className="flex justify-between items-center">
-              <span className="text-[11px] font-bold text-white/50 uppercase tracking-[1.5px] font-[Inter,sans-serif]">
-                Sector Overview
-              </span>
-              <span
-                className="rounded-full text-[11px] font-bold uppercase tracking-[1px] px-[14px] py-[6px]"
-                style={{
-                  backgroundColor: "rgba(184, 217, 53, 0.15)",
-                  color: colors.accent,
-                }}
-              >
-                Active
-              </span>
-            </div>
-
-            {/* Main Stats Row */}
-            <div className="flex justify-between mt-5 pb-6 border-b border-white/10">
-              <div>
-                <div
-                  className="font-bold font-[Inter,sans-serif] leading-none mb-2"
-                  style={{
-                    fontSize: isMobile ? "28px" : "42px",
-                    color: colors.accent,
-                  }}
-                >
-                  {sector.capitalRange}
-                </div>
-                <div
-                  className="font-medium text-white/50 font-[Inter,sans-serif]"
-                  style={{ fontSize: isMobile ? "12px" : "13px" }}
-                >
-                  Investment Range
-                </div>
-              </div>
-              <div className="text-right">
-                <div
-                  className="font-bold font-[Inter,sans-serif] leading-none mb-2"
-                  style={{
-                    fontSize: isMobile ? "28px" : "42px",
-                    color: colors.accent,
-                  }}
-                >
-                  {sector.ventures}
-                </div>
-                <div className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif]">
-                  Identified Ventures
-                </div>
-              </div>
-            </div>
-
-            {/* Stat Rows — 4 items */}
-            {sector.keyStats.map((stat, i) => (
-              <div key={i} className="flex justify-between items-center py-4">
-                <div>
-                  <span className="block text-[15px] font-medium text-white/80 font-[Inter,sans-serif]">
-                    {stat.label}
-                  </span>
-                  {stat.detail && (
-                    <span className="block text-[12px] font-normal text-white/35 font-[Inter,sans-serif] italic mt-[2px]">
-                      {stat.detail}
-                    </span>
-                  )}
-                </div>
-                <span
-                  className="text-[20px] font-semibold font-[Inter,sans-serif]"
-                  style={{ color: colors.accent }}
-                >
-                  {stat.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* Scroll to Explore — desktop only */}
-      {!isMobile && (
-        <div className="flex flex-col items-center mt-auto pt-[10px] pb-[10px]">
-          <span className="font-[Inter,sans-serif] text-[13px] text-[#999] mb-2">
-            Explore Analysis
-          </span>
-          <div className="text-[#999]" style={{ animation: "bounce 2s infinite" }}>
-            <IconArrowDown />
-          </div>
-        </div>
-      )}
-    </section>
-  );
-};
 
 // ============================================================================
 // PROBLEM SECTION — Pill Variant A (Bordered on light bg)
@@ -4953,87 +4749,6 @@ const InvestmentCTASection = () => {
 };
 
 // ============================================================================
-// FINAL CTA SECTION (v2 — #2E5A4D bg, sector-specific content)
-// ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  return (
-    <section
-      className="text-center"
-      style={{ backgroundColor: colors.primary, padding: isMobile ? "60px 20px" : "100px 80px" }}
-    >
-      <div className="max-w-[900px] mx-auto text-center">
-        <span
-          className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
-          style={{
-            backgroundColor: "rgba(184, 217, 53, 0.15)",
-            color: colors.accent,
-          }}
-        >
-          Let's Build Ghana's Industrial Future
-        </span>
-        <h2
-          className="font-[Inter,sans-serif] font-light leading-[1.2] mt-0 mb-6"
-          style={{
-            fontSize: isMobile ? "32px" : "48px",
-            color: colors.white,
-          }}
-        >
-          Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Industrial Future</span>
-        </h2>
-        <p
-          className="font-[Inter,sans-serif] leading-[1.7] text-white/70 max-w-[680px] mx-auto mt-0 mb-10"
-          style={{ fontSize: isMobile ? "16px" : "18px" }}
-        >
-          Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
-          Ghana's local production capacity.
-        </p>
-        <div
-          className="flex gap-4 justify-center items-center"
-          style={{ flexDirection: isMobile ? "column" : "row" }}
-        >
-          <button
-            onClick={() => navigate("/contact")}
-            className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center justify-center gap-[10px]"
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              padding: isMobile ? "16px 24px" : "16px 32px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Start a Conversation
-            <span
-              className="w-7 h-7 rounded-full flex items-center justify-center"
-              style={{
-                backgroundColor: colors.primary,
-                color: colors.white,
-              }}
-            >
-              <IconArrowRight />
-            </span>
-          </button>
-          <button
-            onClick={() => navigate("/resources")}
-            className="bg-transparent rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer"
-            style={{
-              color: colors.white,
-              border: "1px solid rgba(255,255,255,0.3)",
-              padding: isMobile ? "16px 24px" : "16px 32px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Explore the Full Analysis
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// ============================================================================
 // FOOTER COMPONENTS — Exact Production Code
 const SectorGrid = () => {
   const [hovered, setHovered] = useState(null);
@@ -5111,7 +4826,7 @@ export default function ManufacturingSectorPage() {
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
       `}</style>
-      <HeroSection sector={sectorData} />
+      <SectorHeroSection sector={sectorData} />
       <ProblemSection sector={sectorData} />
       <ValueChainSectionPremium />
       <SolutionsSection sector={sectorData} />
@@ -5120,7 +4835,11 @@ export default function ManufacturingSectorPage() {
       <CrossSectorSection />
       <InvestmentCTASection />
       <ImpactSection />
-      <FinalCTASection />
+      <SectorFinalCTA
+          pillText="Let's Build Ghana's Industrial Future"
+          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Industrial Future</span></>}
+          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's local production capacity."
+        />
       {/* Pre-footer separator — NOT part of the Footer component */}
       <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
         <div className="h-px bg-white/[0.08]" />

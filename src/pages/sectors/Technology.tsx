@@ -16,6 +16,7 @@ import { useCounter } from "@/hooks/useCounter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -30,6 +31,8 @@ const sectorData = {
   shortName: "Technology",
   category: "Innovation",
   categoryColor: "#7C3AED",
+  heroTitleBold: "Technology",
+  heroTitleRest: "& Innovation",
 
   capitalRange: "$8-15M",
   ventures: 21,
@@ -4741,79 +4744,6 @@ const ImpactSection = () => {
   );
 };
 
-// ============================================================================
-// FINAL CTA SECTION
-// ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  return (
-    <section
-      className="text-center"
-      style={{
-        backgroundColor: colors.primary,
-        padding: isMobile ? "60px 20px" : "100px 80px",
-      }}
-    >
-      <div className="max-w-[900px] mx-auto text-center">
-        <span
-          className="inline-block bg-white/[0.08] border border-white/15 rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-[24px] px-[20px] py-[10px]"
-          style={{ color: colors.accent }}
-        >
-          Be Part of the Journey
-        </span>
-
-        <h2
-          className="font-[Inter,sans-serif] font-light leading-[1.2] text-white mt-0 mx-0 mb-[24px]"
-          style={{ fontSize: isMobile ? "32px" : "48px" }}
-        >
-          Let's Build Ghana's <span style={{ color: colors.accent }} className="font-bold">Technology</span>
-        </h2>
-
-        <p
-          className="font-[Inter,sans-serif] leading-[1.7] text-white/60 max-w-[680px] mx-auto mt-0 mb-[40px]"
-          style={{ fontSize: isMobile ? "15px" : "18px" }}
-        >
-          Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
-          Ghana's digital future
-        </p>
-
-        <div
-          className="flex gap-[16px] justify-center"
-          style={{ flexDirection: isMobile ? "column" : "row" }}
-        >
-          <button
-            onClick={() => navigate("/contact")}
-            className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center justify-center gap-[10px]"
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              padding: isMobile ? "16px 24px" : "16px 32px",
-            }}
-          >
-            Start a Conversation
-            <span
-              className="w-[28px] h-[28px] rounded-full flex items-center justify-center text-white"
-              style={{ backgroundColor: colors.primary }}
-            >
-              <IconArrowRight />
-            </span>
-          </button>
-
-          <button
-            onClick={() => navigate("/resources")}
-            className="bg-transparent text-white border border-white/30 rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer"
-            style={{ padding: isMobile ? "16px 24px" : "16px 32px" }}
-          >
-            Download Sector Brief
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 // CTA-to-Footer separator
 const CTAFooterSeparator = () => {
   const isMobile = useIsMobile();
@@ -4832,7 +4762,7 @@ export default function TechnologyInnovationSectorPage() {
   return (
     <Layout>
     <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-      <HeroSection sector={sectorData} />
+      <SectorHeroSection sector={sectorData} />
       <ProblemSection />
 
       {/* ★ PREMIUM VALUE CHAIN SECTION ★ */}
@@ -4844,7 +4774,11 @@ export default function TechnologyInnovationSectorPage() {
       <CrossSectorSection />
       <InvestmentCTASection />
       <ImpactSection />
-      <FinalCTASection />
+      <SectorFinalCTA
+          heading={<>Let's Build Ghana's <span className="font-bold" style={{ color: colors.accent }}>Technology</span></>}
+          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's digital future"
+          secondaryButtonText="Download Sector Brief"
+        />
       <CTAFooterSeparator />
     </div>
     </Layout>

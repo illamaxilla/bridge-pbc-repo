@@ -17,6 +17,7 @@ import { useCounter } from "@/hooks/useCounter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -30,6 +31,8 @@ const sectorData = {
   name: "Education & Skills",
   shortName: "Education",
   category: "The Talent Engine",
+  heroTitleBold: "Education & Skills",
+  heroTitleRest: "Development",
 
   capitalRange: "$16.5-33.5M",
   ventures: 19,
@@ -430,204 +433,6 @@ const footerLinkHref = (link: string): string => {
   return map[link] || "#";
 };
 
-
-// ============================================================================
-// HERO SECTION
-// ============================================================================
-
-const HeroSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  return (
-    <section
-      className="relative flex flex-col"
-      style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "80px 20px 20px" : "112px 80px 20px",
-        minHeight: isMobile ? "auto" : "calc(100vh - 100px)",
-      }}
-    >
-      <div className="mx-auto w-full" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <div
-          className="grid items-start flex-1"
-          style={{
-            gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
-            gap: isMobile ? "32px" : "60px",
-          }}
-        >
-          <div>
-            {/* Category Badge */}
-            <div className="flex items-center gap-3 mb-6">
-              <span
-                className="rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif] px-4 py-2"
-                style={{
-                  backgroundColor: colors.accentLight,
-                  color: colors.primary,
-                }}
-              >
-                {sector.category}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h1
-              className="font-[Inter,sans-serif] font-normal leading-[1.1] tracking-[-1px] mb-5 mt-0"
-              style={{
-                fontSize: isMobile ? "30px" : "52px",
-                color: colors.primary,
-              }}
-            >
-              <span className="font-bold">Education & Skills</span> Development
-            </h1>
-
-            {/* Subheading */}
-            <h2
-              className="font-[Inter,sans-serif] font-semibold leading-[1.3] mt-0 mb-4"
-              style={{
-                fontSize: isMobile ? "20px" : "24px",
-                color: colors.dark,
-              }}
-            >
-              {sector.problemHeadline}
-            </h2>
-
-            {/* Description */}
-            <p
-              className="font-[Inter,sans-serif] font-normal leading-[1.7] text-[#555] mt-0 mb-9 max-w-[540px]"
-              style={{
-                fontSize: isMobile ? "15px" : "16px",
-              }}
-            >
-              {sector.problemSubheadline}
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex gap-3" style={{ flexWrap: isMobile ? "wrap" : "nowrap" }}>
-              <button
-                className="border-none rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center gap-[10px]"
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  padding: isMobile ? "14px 20px" : "16px 24px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                  justifyContent: isMobile ? "center" : "flex-start",
-                }}
-              >
-                Request Full Analysis
-                <span
-                  className="w-7 h-7 rounded-full flex items-center justify-center"
-                  style={{
-                    backgroundColor: colors.primary,
-                    color: colors.white,
-                  }}
-                >
-                  <IconArrowRight />
-                </span>
-              </button>
-              <button
-                className="bg-transparent rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer"
-                style={{
-                  color: colors.primary,
-                  border: `2px solid ${colors.line}`,
-                  padding: isMobile ? "14px 20px" : "16px 24px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                }}
-              >
-                Download Summary
-              </button>
-            </div>
-          </div>
-
-          {/* Stats Card */}
-          <div
-            className="rounded-[20px]"
-            style={{
-              backgroundColor: colors.primary,
-              padding: isMobile ? "24px" : "32px",
-              minWidth: isMobile ? "auto" : "340px",
-            }}
-          >
-            {/* Header */}
-            <div className="flex justify-between items-center">
-              <span className="text-[11px] font-bold text-white/50 uppercase tracking-[1.5px] font-[Inter,sans-serif]">
-                Sector Overview
-              </span>
-              <span
-                className="rounded-full text-[11px] font-bold uppercase tracking-[1px] px-[14px] py-1.5"
-                style={{
-                  backgroundColor: "rgba(184, 217, 53, 0.15)",
-                  color: colors.accent,
-                }}
-              >
-                Active
-              </span>
-            </div>
-
-            {/* Main Stats Row */}
-            <div className="flex justify-between items-end mt-5 pb-6 border-b border-white/10">
-              <div>
-                <div
-                  className="text-[36px] font-bold font-[Inter,sans-serif] leading-none mb-2 whitespace-nowrap"
-                  style={{ color: colors.accent }}
-                >
-                  {sector.capitalRange}
-                </div>
-                <div className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif] whitespace-nowrap">
-                  Investment Range
-                </div>
-              </div>
-              <div className="text-right">
-                <div
-                  className="text-[36px] font-bold font-[Inter,sans-serif] leading-none mb-2 whitespace-nowrap"
-                  style={{ color: colors.accent }}
-                >
-                  {sector.ventures}
-                </div>
-                <div className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif] whitespace-nowrap">
-                  Identified Ventures
-                </div>
-              </div>
-            </div>
-
-            {/* Stat Rows — 4 items */}
-            {sector.keyStats.map((stat, i) => (
-              <div key={i} className="flex justify-between items-center py-4">
-                <div>
-                  <span className="text-[15px] font-medium text-white/80 font-[Inter,sans-serif] block whitespace-nowrap">
-                    {stat.label}
-                  </span>
-                  {stat.detail && (
-                    <span className="text-[12px] font-normal text-white/35 font-[Inter,sans-serif] italic mt-0.5 block whitespace-nowrap">
-                      {stat.detail}
-                    </span>
-                  )}
-                </div>
-                <span
-                  className="text-[20px] font-semibold font-[Inter,sans-serif]"
-                  style={{ color: colors.accent }}
-                >
-                  {stat.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* Scroll to Explore — desktop only */}
-      {!isMobile && (
-        <div className="flex flex-col items-center mt-auto pt-[10px] pb-[10px]">
-          <span className="font-[Inter,sans-serif] text-[13px] text-[#999] mb-2">
-            Explore Analysis
-          </span>
-          <div className="text-[#999] animate-bounce">
-            <IconArrowDown />
-          </div>
-        </div>
-      )}
-    </section>
-  );
-};
 
 // ============================================================================
 // PROBLEM SECTION
@@ -4101,96 +3906,6 @@ const ImpactSection = () => {
   );
 };
 
-// FINAL CTA SECTION
-// ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
-
-  return (
-    <section
-      className="text-center"
-      style={{
-        backgroundColor: colors.primary,
-        padding: isMobile ? "60px 20px" : "100px 80px",
-      }}
-    >
-      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <div className="max-w-[900px] mx-auto text-center">
-          <span
-            className="inline-block rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6 px-5 py-[10px]"
-            style={{
-              backgroundColor: "rgba(184, 217, 53, 0.15)",
-              color: colors.accent,
-            }}
-          >
-            Be Part of the Journey
-          </span>
-
-          <h2
-            className="font-[Inter,sans-serif] font-light leading-[1.2] mt-0 mb-6"
-            style={{
-              fontSize: isMobile ? "32px" : "48px",
-              color: colors.white,
-            }}
-          >
-            Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Talent</span>
-          </h2>
-
-          <p
-            className="font-[Inter,sans-serif] leading-[1.7] text-white/60 mt-0 mb-10 max-w-[680px] mx-auto"
-            style={{ fontSize: isMobile ? "15px" : "18px" }}
-          >
-            Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
-            Ghana's next generation of talent and enterprise.
-          </p>
-
-          <div
-            className="flex gap-4 justify-center"
-            style={{
-              flexDirection: isMobile ? "column" : "row",
-              alignItems: isMobile ? "stretch" : "center",
-            }}
-          >
-            <button
-              onClick={() => navigate("/contact")}
-              className="border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center justify-center gap-[10px]"
-              style={{
-                backgroundColor: colors.accent,
-                color: colors.primary,
-                padding: isMobile ? "16px 24px" : "16px 32px",
-              }}
-            >
-              Start a Conversation
-              <span
-                className="w-7 h-7 rounded-full flex items-center justify-center"
-                style={{
-                  backgroundColor: colors.primary,
-                  color: colors.white,
-                }}
-              >
-                <IconArrowRight />
-              </span>
-            </button>
-
-            <button
-              onClick={() => navigate("/resources")}
-              className="bg-transparent rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer border border-white/30"
-              style={{
-                color: colors.white,
-                padding: isMobile ? "16px 24px" : "16px 32px",
-              }}
-            >
-              Explore the Full Analysis
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 // ============================================================================
 // MAIN PAGE COMPONENT
 // ============================================================================
@@ -4200,7 +3915,7 @@ export default function EducationSkillsSectorPage() {
     <Layout>
       <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
 
-        <HeroSection sector={sectorData} />
+        <SectorHeroSection sector={sectorData} />
         <ProblemSection />
 
         {/* ★ PREMIUM VALUE CHAIN SECTION ★ */}
@@ -4212,7 +3927,10 @@ export default function EducationSkillsSectorPage() {
         <CrossSectorSection />
         <InvestmentCTASection />
         <ImpactSection />
-        <FinalCTASection />
+        <SectorFinalCTA
+          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Talent</span></>}
+          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's next generation of talent and enterprise."
+        />
         {/* Pre-footer separator — NOT part of the Footer component */}
         <div className="px-20" style={{ backgroundColor: colors.primary }}>
           <div className="h-px bg-white/[0.08]" />

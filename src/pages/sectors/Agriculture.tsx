@@ -17,6 +17,7 @@ import { useCounter } from "@/hooks/useCounter";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -31,6 +32,9 @@ const sectorData = {
   shortName: "Agriculture",
   category: "Economic Engines",
   categoryColor: "#2E7D32",
+  heroTitleBold: "Agriculture",
+  heroTitleRest: "& Value Chains",
+  problemHeadline: "The Engine of Shared Prosperity",
 
   capitalRange: "$12-22M",
   ventures: 18,
@@ -531,202 +535,6 @@ const footerLinkHref = (link: string): string => {
     "Policy Updates": "/policy", "Annual Review": "/resources",
   };
   return map[link] || "#";
-};
-
-// ============================================================================
-// HERO SECTION
-// ============================================================================
-
-const HeroSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  return (
-    <section
-      className="relative flex flex-col overflow-hidden"
-      style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "80px 20px 20px" : "112px 80px 20px",
-        minHeight: isMobile ? "auto" : "calc(100vh - 100px)",
-      }}
-    >
-      <div className="mx-auto w-full" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
-        <div
-          className="grid items-start flex-1"
-          style={{
-            gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
-            gap: isMobile ? "32px" : "60px",
-          }}
-        >
-          <div>
-            {/* Category Badge */}
-            <div className="flex items-center gap-3 mb-6">
-              <span
-                className="px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif]"
-                style={{
-                  backgroundColor: colors.accentLight,
-                  color: colors.primary,
-                }}
-              >
-                {sector.category}
-              </span>
-            </div>
-
-            {/* Title — conditional line break */}
-            <h1
-              className="font-[Inter,sans-serif] font-normal leading-[1.1] tracking-[-1px] m-0 mb-5"
-              style={{
-                fontSize: isMobile ? "30px" : "52px",
-                color: colors.primary,
-              }}
-            >
-              <span className="font-bold">Agriculture</span> &{!isMobile && <br />} Value Chains
-            </h1>
-
-            {/* Subheading */}
-            <h2
-              className="font-[Inter,sans-serif] font-semibold leading-[1.3] m-0 mb-4"
-              style={{
-                fontSize: isMobile ? "20px" : "24px",
-                color: colors.dark,
-              }}
-            >
-              The Engine of Shared Prosperity
-            </h2>
-
-            {/* Description */}
-            <p
-              className="font-[Inter,sans-serif] font-normal leading-[1.7] text-[#555] m-0 mb-9 max-w-[540px]"
-              style={{
-                fontSize: isMobile ? "15px" : "16px",
-              }}
-            >
-              {sector.problemSubheadline}
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex gap-3" style={{ flexWrap: isMobile ? "wrap" : "nowrap" }}>
-              <button
-                className="cta-lime-swap border-none rounded-full font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center gap-3"
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  padding: isMobile ? "14px 20px" : "16px 28px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                  justifyContent: isMobile ? "center" : "flex-start",
-                }}
-              >
-                Request Full Analysis
-                <span
-                  className="cta-btn-arrow w-9 h-9 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: colors.white }}
-                >
-                  <ArrowUpRight size={16} strokeWidth={2.5} color={colors.primary} />
-                </span>
-              </button>
-              <button
-                className="cta-secondary bg-transparent rounded-full text-sm font-medium font-[Inter,sans-serif] cursor-pointer"
-                style={{
-                  color: colors.dark,
-                  border: `1.5px solid ${colors.line}`,
-                  padding: isMobile ? "14px 20px" : "14px 28px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                }}
-              >
-                Download Summary
-              </button>
-            </div>
-          </div>
-
-          {/* Stats Card */}
-          <div
-            className="rounded-[20px]"
-            style={{
-              backgroundColor: colors.primary,
-              padding: isMobile ? "24px" : "32px",
-              color: colors.white,
-              minWidth: isMobile ? "auto" : "340px",
-            }}
-          >
-            {/* Header Row */}
-            <div className="flex justify-between items-center mb-6">
-              <span className="text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] text-white/50">
-                Sector Overview
-              </span>
-              <span
-                className="py-1.5 px-3.5 rounded-full text-[11px] font-bold font-[Inter,sans-serif]"
-                style={{
-                  backgroundColor: "rgba(184,217,53,0.15)",
-                  color: colors.accent,
-                }}
-              >
-                Active
-              </span>
-            </div>
-
-            {/* Main Stats Row */}
-            <div className="flex justify-between pb-6 mb-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-              <div>
-                <div
-                  className="text-[42px] font-bold font-[Inter,sans-serif] leading-none m-0 mb-2"
-                  style={{ color: colors.accent }}
-                >
-                  {sector.capitalRange}
-                </div>
-                <div className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif]">
-                  Investment Range
-                </div>
-              </div>
-              <div className="text-right">
-                <div
-                  className="text-[42px] font-bold font-[Inter,sans-serif] leading-none m-0 mb-2"
-                  style={{ color: colors.accent }}
-                >
-                  {sector.ventures}
-                </div>
-                <div className="text-[13px] font-medium text-white/50 font-[Inter,sans-serif]">
-                  Identified Ventures
-                </div>
-              </div>
-            </div>
-
-            {/* Stat Rows — 4 items */}
-            {sector.keyStats.map((stat, i) => (
-              <div key={i} className="flex justify-between items-center py-4">
-                <div>
-                  <span className="block text-[15px] font-medium text-white/80 font-[Inter,sans-serif]">
-                    {stat.label}
-                  </span>
-                  {stat.detail && (
-                    <span className="block text-xs font-normal text-white/35 font-[Inter,sans-serif] italic mt-0.5">
-                      {stat.detail}
-                    </span>
-                  )}
-                </div>
-                <span
-                  className="text-[20px] font-semibold font-[Inter,sans-serif]"
-                  style={{ color: colors.accent }}
-                >
-                  {stat.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* Scroll to Explore — desktop only */}
-      {!isMobile && (
-        <div className="flex flex-col items-center mt-auto pt-2.5 pb-2.5">
-          <span className="font-[Inter,sans-serif] text-[13px] text-[#999] mb-2">
-            Explore Analysis
-          </span>
-          <div className="text-[#999]" style={{ animation: "bounce 2s infinite" }}>
-            <IconArrowDown />
-          </div>
-        </div>
-      )}
-
-    </section>
-  );
 };
 
 // ============================================================================
@@ -4647,92 +4455,6 @@ const InvestmentThesisSection = () => {
   );
 };
 
-// FINAL CTA SECTION
-// ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  return (
-    <section
-      className="text-center"
-      style={{
-        backgroundColor: colors.primary,
-        padding: isMobile ? "60px 20px" : "100px 80px",
-      }}
-    >
-      <div className="max-w-[900px] mx-auto text-center">
-        {/* Pill — dark variant (on green) */}
-        <div
-          className="inline-block py-2.5 px-5 rounded-full text-[11px] font-bold tracking-[2px] font-[Inter,sans-serif] uppercase mb-6"
-          style={{
-            backgroundColor: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.15)",
-            color: colors.accent,
-          }}
-        >
-          Be Part of the Journey
-        </div>
-
-        <h2
-          className="font-[Inter,sans-serif] font-light leading-[1.2] tracking-[-0.5px] m-0 mb-5 max-w-[900px] mx-auto"
-          style={{
-            fontSize: isMobile ? "32px" : "42px",
-            color: colors.white,
-          }}
-        >
-          Ready to Grow Ghana's <span style={{ color: colors.accent }} className="font-semibold">Agricultural Future?</span>
-        </h2>
-
-        <p
-          className="font-[Inter,sans-serif] leading-[1.65] text-white/60 m-0 mb-10 max-w-[680px] mx-auto"
-          style={{ fontSize: isMobile ? "15px" : "16px" }}
-        >
-          Whether you're an investor, partner, or government stakeholder, there's a role for you in transforming food
-          systems.
-        </p>
-
-        <div
-          className="flex gap-4 justify-center flex-wrap items-center"
-          style={{ flexDirection: isMobile ? "column" : "row" }}
-        >
-          <button
-            className="cta-lime-swap border-none rounded-full text-[15px] font-semibold font-[Inter,sans-serif] cursor-pointer flex items-center justify-center gap-3"
-            onClick={() => navigate("/contact")}
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              padding: isMobile ? "16px 24px" : "16px 28px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Start a Conversation
-            <span
-              className="cta-btn-arrow w-9 h-9 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: colors.white }}
-            >
-              <ArrowUpRight size={16} strokeWidth={2.5} color={colors.primary} />
-            </span>
-          </button>
-
-          <button
-            className="cta-secondary bg-transparent rounded-full text-sm font-semibold font-[Inter,sans-serif] cursor-pointer transition-all duration-300 ease-in-out"
-            onClick={() => navigate("/resources")}
-            style={{
-              color: "rgba(255,255,255,0.7)",
-              border: "1.5px solid rgba(255,255,255,0.2)",
-              padding: "14px 28px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Download Sector Brief
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 // ============================================================================
 // FOOTER COMPONENTS
 const SectorGrid = () => {
@@ -4809,7 +4531,7 @@ export default function AgricultureSectorPageIntegrated() {
           }
         `}</style>
 
-        <HeroSection sector={sectorData} />
+        <SectorHeroSection sector={sectorData} />
         <OpportunitySection />
 
         {/* ★ THE PROCESS - Value Chain Section ★ */}
@@ -4821,7 +4543,11 @@ export default function AgricultureSectorPageIntegrated() {
         <ImpactDashboardSection />
         <RippleEffectSection />
         <InvestmentThesisSection />
-        <FinalCTASection />
+        <SectorFinalCTA
+          heading={<>Ready to Grow Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Agricultural Future?</span></>}
+          description="Whether you're an investor, partner, or government stakeholder, there's a role for you in transforming food systems."
+          secondaryButtonText="Download Sector Brief"
+        />
 
       </div>
     </Layout>
