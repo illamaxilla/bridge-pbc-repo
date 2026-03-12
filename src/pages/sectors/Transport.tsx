@@ -2443,39 +2443,19 @@ const RippleEffectSection = () => {
                 {(!isMobile || showMoreRipple) && (
                   <div>
                     <h4
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        textTransform: "uppercase",
-                        letterSpacing: "1px",
-                        color: colors.accent,
-                        marginBottom: "16px",
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-bold uppercase tracking-[1px] mb-4"
+                      style={{ color: colors.accent }}
                     >
                       Synergy Pathways
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {pathways[activeNode].synergies.map((s, si) => (
                         <div
                           key={si}
-                          style={{
-                            display: "flex",
-                            gap: "12px",
-                            padding: "12px 16px",
-                            borderRadius: "10px",
-                            backgroundColor: "rgba(255,255,255,0.05)",
-                            border: "1px solid rgba(255,255,255,0.06)",
-                          }}
+                          className="flex gap-3 px-4 py-3 rounded-[10px] bg-white/5 border border-white/[0.06]"
                         >
-                          <span style={{ color: colors.accent, fontSize: "8px", marginTop: "4px" }}>●</span>
-                          <span
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "14px",
-                              color: "rgba(255,255,255,0.75)",
-                            }}
-                          >
+                          <span className="text-[8px] mt-1" style={{ color: colors.accent }}>●</span>
+                          <span className="font-[Inter,sans-serif] text-[14px] text-white/75">
                             {s}
                           </span>
                         </div>

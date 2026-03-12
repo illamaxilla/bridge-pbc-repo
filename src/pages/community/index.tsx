@@ -3091,10 +3091,10 @@ function MembersPage({ isMobile }) {
             >
               {/* Sector color top bar */}
               <div style={{ height: 4, background: `linear-gradient(90deg, ${sColor}, ${sColor}60)` }} />
-              <div style={{ padding: 22 }}>
+              <div className="p-[22px]">
                 {/* Top row: avatar + name + badge */}
-                <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 14 }}>
-                  <div style={{ position: "relative" }}>
+                <div className="flex items-start gap-3 mb-[14px]">
+                  <div className="relative">
                     <Avatar initials={m.avatar} size={44} />
                     {sortBy === "points" && idx < 3 && (
                       <div style={{ position: "absolute", bottom: -2, right: -2, fontSize: 13 }}>

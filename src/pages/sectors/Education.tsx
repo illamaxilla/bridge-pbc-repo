@@ -4026,11 +4026,10 @@ const ImpactSection = () => {
         {/* ── Metrics View ── */}
         {view === "metrics" && (
           <div
+            className="rounded-[20px] overflow-hidden"
             style={{
               backgroundColor: colors.background,
-              borderRadius: "20px",
               border: `2px solid ${colors.primary}`,
-              overflow: "hidden",
             }}
           >
             {impactMetrics[activeCategory].items.map((item, idx) => (
