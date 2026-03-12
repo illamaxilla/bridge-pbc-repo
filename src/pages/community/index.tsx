@@ -3128,13 +3128,13 @@ function MembersPage({ isMobile }) {
                     <MapPin size={11} color={sColor} />
                     <span>{m.location}</span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                  <div className="flex items-center gap-[6px] text-[12px]" style={{ color: C.muted }}>
                     <Briefcase size={11} color={sColor} />
-                    <span style={{ color: sColor, fontWeight: 600 }}>{m.sector}</span>
+                    <span className="font-semibold" style={{ color: sColor }}>{m.sector}</span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                  <div className="flex items-center gap-[6px] text-[12px]" style={{ color: C.muted }}>
                     <Shield size={11} color={m.type === "Diaspora" ? "#2C5F8A" : C.primary} />
-                    <span style={{ color: m.type === "Diaspora" ? "#2C5F8A" : C.primary, fontWeight: 600 }}>
+                    <span className="font-semibold" style={{ color: m.type === "Diaspora" ? "#2C5F8A" : C.primary }}>
                       {m.type}
                     </span>
                     <span>· Joined {m.joined}</span>

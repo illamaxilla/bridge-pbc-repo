@@ -2223,58 +2223,29 @@ const RippleEffectSection = () => {
                 <button
                   key={i}
                   onClick={() => setActiveNode(isActive ? null : i)}
+                  className="w-[120px] flex flex-col items-center bg-none border-none cursor-pointer p-0 transition-all duration-300 ease-in-out"
                   style={{
-                    width: "120px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: "0",
                     opacity: activeNode !== null && !isActive ? 0.4 : 1,
-                    transition: "all 0.3s ease",
                   }}
                 >
                   <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ease-in-out mb-[10px]"
                     style={{
-                      width: "56px",
-                      height: "56px",
-                      borderRadius: "16px",
                       backgroundColor: isActive ? colors.accent : "rgba(255,255,255,0.08)",
                       border: isActive ? "none" : "1px solid rgba(255,255,255,0.1)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      transition: "all 0.3s ease",
-                      marginBottom: "10px",
                     }}
                   >
                     {crossSectorIcons[p.sectorId](isActive ? colors.primary : "rgba(255,255,255,0.6)")}
                   </div>
                   <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      color: isActive ? colors.white : "rgba(255,255,255,0.5)",
-                      textAlign: "center",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      maxWidth: "120px",
-                    }}
+                    className="font-[Inter,sans-serif] text-[13px] font-semibold text-center whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]"
+                    style={{ color: isActive ? colors.white : "rgba(255,255,255,0.5)" }}
                   >
                     {crossSectorShortNames[i]}
                   </span>
                   <span
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "20px",
-                      fontWeight: "700",
-                      color: isActive ? colors.accent : "rgba(255,255,255,0.3)",
-                      marginTop: "4px",
-                    }}
+                    className="font-[Poppins,sans-serif] text-[20px] font-bold mt-1"
+                    style={{ color: isActive ? colors.accent : "rgba(255,255,255,0.3)" }}
                   >
                     {p.multiplier}
                   </span>
@@ -2299,13 +2270,7 @@ const RippleEffectSection = () => {
           {activeNode === null ? (
             isMobile ? (
               <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "15px",
-                  color: "rgba(255,255,255,0.5)",
-                  textAlign: "center",
-                  padding: "20px 0",
-                }}
+                className="font-[Inter,sans-serif] text-[15px] text-white/50 text-center py-5"
               >
                 Tap a sector above to explore how transport amplifies its impact
               </p>
