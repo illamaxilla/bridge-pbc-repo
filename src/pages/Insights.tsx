@@ -250,29 +250,9 @@ const compRows = [
 
 function SectionLabel({ children }) {
   return (
-    <div
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "8px",
-        background: C.white,
-        border: `1px solid ${C.line}`,
-        borderRadius: "50px",
-        padding: "8px 18px",
-        marginBottom: "22px",
-      }}
-    >
-      <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.accent, flexShrink: 0 }} />
-      <span
-        style={{
-          fontFamily: "Inter,sans-serif",
-          fontSize: "11px",
-          fontWeight: "700",
-          color: C.primary,
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-        }}
-      >
+    <div className="inline-flex items-center gap-2 bg-white border border-[#DEDEDE] rounded-[50px] px-[18px] py-2 mb-[22px]">
+      <span className="w-1.5 h-1.5 rounded-full bg-[#B8D935] shrink-0" />
+      <span className="font-['Inter',sans-serif] text-[11px] font-bold text-[#1B4D3E] uppercase tracking-[2px]">
         {children}
       </span>
     </div>
@@ -281,17 +261,7 @@ function SectionLabel({ children }) {
 
 function SectionHeading({ children }) {
   return (
-    <h2
-      style={{
-        fontFamily: "DM Sans,sans-serif",
-        fontSize: "40px",
-        fontWeight: "300",
-        color: C.primary,
-        lineHeight: 1.1,
-        letterSpacing: "-0.8px",
-        margin: "0 0 18px",
-      }}
-    >
+    <h2 className="font-['DM_Sans',sans-serif] text-[40px] font-light text-[#1B4D3E] leading-[1.1] tracking-[-0.8px] mt-0 mb-[18px] mx-0">
       {children}
     </h2>
   );
@@ -299,72 +269,37 @@ function SectionHeading({ children }) {
 
 function ProcessStep({ step, idx, active, onClick, last }) {
   return (
-    <div style={{ display: "flex", gap: "20px", position: "relative", paddingBottom: last ? 0 : "4px" }}>
+    <div className={`flex gap-5 relative ${last ? "pb-0" : "pb-1"}`}>
       {!last && (
         <div
-          style={{
-            position: "absolute",
-            left: "23px",
-            top: "52px",
-            width: "2px",
-            bottom: 0,
-            background: active ? C.accent : C.line,
-            transition: "background .3s",
-          }}
+          className="absolute left-[23px] top-[52px] w-0.5 bottom-0 transition-colors duration-300"
+          style={{ background: active ? C.accent : C.line }}
         />
       )}
       <button
         onClick={onClick}
+        className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 cursor-pointer transition-all duration-200 z-[1]"
         style={{
-          width: "48px",
-          height: "48px",
-          borderRadius: "50%",
           border: `2px solid ${active ? C.accent : C.line}`,
           background: active ? C.accent : C.white,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexShrink: 0,
-          cursor: "pointer",
-          transition: "all .2s",
-          zIndex: 1,
         }}
       >
         <span
-          style={{
-            fontSize: "12px",
-            fontWeight: "800",
-            color: active ? C.primary : C.muted,
-            fontFamily: "Inter,sans-serif",
-          }}
+          className="text-xs font-extrabold font-['Inter',sans-serif]"
+          style={{ color: active ? C.primary : C.muted }}
         >
           {step.num}
         </span>
       </button>
-      <div style={{ paddingTop: "10px", flex: 1, paddingBottom: "10px" }}>
+      <div className="pt-2.5 flex-1 pb-2.5">
         <div
-          style={{
-            fontSize: "14px",
-            fontWeight: "700",
-            color: active ? C.primary : C.muted,
-            fontFamily: "Inter,sans-serif",
-            letterSpacing: "0.4px",
-            textTransform: "uppercase",
-            transition: "color .2s",
-          }}
+          className="text-sm font-bold font-['Inter',sans-serif] tracking-[0.4px] uppercase transition-colors duration-200"
+          style={{ color: active ? C.primary : C.muted }}
         >
           {step.label}
         </div>
         {active && (
-          <div
-            style={{
-              fontSize: "13px",
-              color: C.muted,
-              fontFamily: "Inter,sans-serif",
-              lineHeight: 1.5,
-              marginTop: "4px",
-            }}
-          >
+          <div className="text-[13px] text-[#6B7280] font-['Inter',sans-serif] leading-[1.5] mt-1">
             {step.title}
           </div>
         )}
@@ -377,55 +312,30 @@ function ScoreDimension({ dim, idx, active, onClick }) {
   return (
     <div
       onClick={onClick}
+      className="px-5 py-[18px] rounded-[10px] cursor-pointer transition-all duration-200 mb-2"
       style={{
-        padding: "18px 20px",
-        borderRadius: "10px",
         border: `1px solid ${active ? C.accent : C.line}`,
         background: active ? C.accentBg : C.white,
-        cursor: "pointer",
-        transition: "all .2s",
-        marginBottom: "8px",
       }}
     >
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: active ? "10px" : 0,
-        }}
+        className={`flex items-center justify-between ${active ? "mb-2.5" : "mb-0"}`}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div className="flex items-center gap-2.5">
           <div
-            style={{
-              width: "32px",
-              height: "32px",
-              borderRadius: "8px",
-              background: active ? C.accent : C.bg,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "background .2s",
-            }}
+            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-200"
+            style={{ background: active ? C.accent : C.bg }}
           >
             <span
-              style={{
-                fontSize: "11px",
-                fontWeight: "800",
-                color: active ? C.primary : C.muted,
-                fontFamily: "Inter,sans-serif",
-              }}
+              className="text-[11px] font-extrabold font-['Inter',sans-serif]"
+              style={{ color: active ? C.primary : C.muted }}
             >
               {dim.weight}
             </span>
           </div>
           <span
-            style={{
-              fontSize: "13px",
-              fontWeight: "700",
-              color: active ? C.primary : C.mutedDark,
-              fontFamily: "Inter,sans-serif",
-            }}
+            className="text-[13px] font-bold font-['Inter',sans-serif]"
+            style={{ color: active ? C.primary : C.mutedDark }}
           >
             {dim.label}
           </span>
@@ -433,36 +343,19 @@ function ScoreDimension({ dim, idx, active, onClick }) {
         <ChevronRight
           size={14}
           color={active ? C.primary : C.muted}
-          style={{ transform: active ? "rotate(90deg)" : "none", transition: "transform .2s" }}
+          className={`transition-transform duration-200 ${active ? "rotate-90" : "rotate-0"}`}
         />
       </div>
       {active && (
         <div>
-          <p
-            style={{
-              margin: "0 0 12px",
-              fontSize: "13px",
-              color: C.muted,
-              fontFamily: "Inter,sans-serif",
-              lineHeight: 1.65,
-            }}
-          >
+          <p className="mx-0 mt-0 mb-3 text-[13px] text-[#6B7280] font-['Inter',sans-serif] leading-[1.65]">
             {dim.desc}
           </p>
-          <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+          <div className="flex gap-1.5 flex-wrap">
             {dim.criteria.map((c) => (
               <span
                 key={c}
-                style={{
-                  fontSize: "11px",
-                  fontWeight: "600",
-                  padding: "3px 10px",
-                  borderRadius: "20px",
-                  background: C.white,
-                  border: `1px solid ${C.line}`,
-                  color: C.primary,
-                  fontFamily: "Inter,sans-serif",
-                }}
+                className="text-[11px] font-semibold px-2.5 py-[3px] rounded-[20px] bg-white border border-[#DEDEDE] text-[#1B4D3E] font-['Inter',sans-serif]"
               >
                 {c}
               </span>
@@ -477,53 +370,23 @@ function ScoreDimension({ dim, idx, active, onClick }) {
 function CompCell({ val }) {
   if (val === "y")
     return (
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div
-          style={{
-            width: "26px",
-            height: "26px",
-            borderRadius: "50%",
-            background: C.accentBg,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+      <div className="flex justify-center">
+        <div className="w-[26px] h-[26px] rounded-full bg-[#EBF5B0] flex items-center justify-center">
           <Check size={13} color={C.primary} strokeWidth={2.5} />
         </div>
       </div>
     );
   if (val === "p")
     return (
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div
-          style={{
-            width: "26px",
-            height: "26px",
-            borderRadius: "50%",
-            background: "rgba(202,138,4,0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+      <div className="flex justify-center">
+        <div className="w-[26px] h-[26px] rounded-full bg-[rgba(202,138,4,0.1)] flex items-center justify-center">
           <Minus size={13} color="#CA8A04" strokeWidth={2.5} />
         </div>
       </div>
     );
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <div
-        style={{
-          width: "26px",
-          height: "26px",
-          borderRadius: "50%",
-          background: "rgba(220,38,38,0.07)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+    <div className="flex justify-center">
+      <div className="w-[26px] h-[26px] rounded-full bg-[rgba(220,38,38,0.07)] flex items-center justify-center">
         <X size={13} color="#DC2626" strokeWidth={2.5} />
       </div>
     </div>
@@ -558,64 +421,26 @@ function WhyInsightSection({ mobile }) {
 
   if (mobile) {
     return (
-      <section style={{ padding: "56px 0 48px", background: C.white, overflow: "hidden" }}>
+      <section className="pt-14 pb-12 bg-white overflow-hidden">
         {/* Text block */}
-        <div style={{ padding: "0 20px", marginBottom: "32px" }}>
+        <div className="px-5 mb-8">
           <SectionLabel>Why Insight</SectionLabel>
-          <h2
-            style={{
-              fontFamily: "DM Sans,sans-serif",
-              fontSize: "32px",
-              fontWeight: "300",
-              color: C.primary,
-              lineHeight: 1.15,
-              letterSpacing: "-0.5px",
-              margin: "0 0 16px",
-            }}
-          >
-            Ghana needs <strong style={{ fontWeight: "700" }}>intelligence built for builders.</strong>
+          <h2 className="font-['DM_Sans',sans-serif] text-[32px] font-light text-[#1B4D3E] leading-[1.15] tracking-[-0.5px] mt-0 mb-4 mx-0">
+            Ghana needs <strong className="font-bold">intelligence built for builders.</strong>
           </h2>
-          <p
-            style={{
-              margin: "0 0 14px",
-              fontSize: "15px",
-              color: C.muted,
-              lineHeight: 1.75,
-              fontFamily: "Inter,sans-serif",
-            }}
-          >
+          <p className="mt-0 mb-3.5 mx-0 text-[15px] text-[#6B7280] leading-[1.75] font-['Inter',sans-serif]">
             Most development intelligence is written for conference rooms in London and Washington — macro by design,
             generic by necessity.
           </p>
-          <p
-            style={{
-              margin: "0 0 24px",
-              fontSize: "15px",
-              color: C.dark,
-              lineHeight: 1.75,
-              fontFamily: "Inter,sans-serif",
-            }}
-          >
+          <p className="mt-0 mb-6 mx-0 text-[15px] text-[#191919] leading-[1.75] font-['Inter',sans-serif]">
             BRIDGE produces practitioner-grade intelligence:{" "}
-            <strong style={{ fontWeight: "700", color: C.primary }}>
+            <strong className="font-bold text-[#1B4D3E]">
               here is what to build, here is why, here is how.
             </strong>
           </p>
           <a
             href="/resources"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              background: C.accent,
-              color: C.primary,
-              textDecoration: "none",
-              padding: "12px 22px",
-              borderRadius: "50px",
-              fontSize: "14px",
-              fontWeight: "700",
-              fontFamily: "Inter,sans-serif",
-            }}
+            className="inline-flex items-center gap-2 bg-[#B8D935] text-[#1B4D3E] no-underline px-[22px] py-3 rounded-[50px] text-sm font-bold font-['Inter',sans-serif]"
           >
             Explore the Research <ArrowUpRight size={14} />
           </a>
@@ -625,70 +450,37 @@ function WhyInsightSection({ mobile }) {
         <div
           ref={scrollRef}
           onScroll={handleMobileScroll}
-          style={{
-            display: "flex",
-            overflowX: "auto",
-            scrollSnapType: "x mandatory",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            paddingLeft: "20px",
-            gap: "12px",
-            boxSizing: "border-box",
-          }}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none pl-5 gap-3 box-border"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           <style>{`.why-scroll::-webkit-scrollbar{display:none}`}</style>
           {whyItems.map((item, i) => (
             <div
               key={i}
-              style={{
-                minWidth: "calc(100vw - 64px)",
-                maxWidth: "calc(100vw - 64px)",
-                scrollSnapAlign: "start",
-                flexShrink: 0,
-                padding: "24px",
-                background: C.bg,
-                borderRadius: "14px",
-                border: `1px solid ${C.line}`,
-              }}
+              className="min-w-[calc(100vw-64px)] max-w-[calc(100vw-64px)] snap-start shrink-0 p-6 bg-[#F3F5F2] rounded-[14px] border border-[#DEDEDE]"
             >
-              <div
-                style={{
-                  fontSize: "15px",
-                  fontWeight: "700",
-                  color: C.primary,
-                  fontFamily: "DM Sans,sans-serif",
-                  marginBottom: "10px",
-                  lineHeight: 1.3,
-                }}
-              >
+              <div className="text-[15px] font-bold text-[#1B4D3E] font-['DM_Sans',sans-serif] mb-2.5 leading-[1.3]">
                 {item.title}
               </div>
-              <p
-                style={{ margin: 0, fontSize: "14px", color: C.muted, lineHeight: 1.7, fontFamily: "Inter,sans-serif" }}
-              >
+              <p className="m-0 text-sm text-[#6B7280] leading-[1.7] font-['Inter',sans-serif]">
                 {item.body}
               </p>
             </div>
           ))}
           {/* trailing spacer */}
-          <div style={{ minWidth: "8px", flexShrink: 0 }} />
+          <div className="min-w-2 shrink-0" />
         </div>
 
         {/* Dots */}
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", marginTop: "20px" }}>
+        <div className="flex justify-center items-center gap-2 mt-5">
           {whyItems.map((_, i) => (
             <button
               key={i}
               onClick={() => scrollToCard(i)}
+              className="h-2 rounded border-none cursor-pointer p-0 transition-all duration-300 ease-in-out"
               style={{
                 width: i === mobileIdx ? "24px" : "8px",
-                height: "8px",
-                borderRadius: "4px",
                 background: i === mobileIdx ? C.accent : C.line,
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-                transition: "all 0.3s ease",
               }}
             />
           ))}
@@ -698,149 +490,80 @@ function WhyInsightSection({ mobile }) {
   }
 
   return (
-    <section style={{ padding: `80px ${PAD}`, background: C.white }}>
-      <div style={{ maxWidth: MAX, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "56px", alignItems: "center" }}>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+    <section className="bg-white" style={{ padding: `80px ${PAD}` }}>
+      <div className="mx-auto" style={{ maxWidth: MAX }}>
+        <div className="grid grid-cols-2 gap-14 items-center">
+          <div className="flex flex-col items-start">
             <SectionLabel>Why Insight</SectionLabel>
             <SectionHeading>
-              Ghana needs <strong style={{ fontWeight: "700" }}>intelligence built for builders.</strong>
+              Ghana needs <strong className="font-bold">intelligence built for builders.</strong>
             </SectionHeading>
-            <p
-              style={{
-                margin: "0 0 20px",
-                fontSize: "16px",
-                color: C.muted,
-                lineHeight: 1.75,
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
+            <p className="mt-0 mb-5 mx-0 text-base text-[#6B7280] leading-[1.75] font-['Inter',sans-serif]">
               Most development intelligence is written for conference rooms in London and Washington. It's macro by
               design, generic by necessity, and operationally useless for anyone who wants to actually build something
               in Ghana.
             </p>
-            <p
-              style={{
-                margin: "0 0 32px",
-                fontSize: "16px",
-                color: C.dark,
-                lineHeight: 1.75,
-                fontFamily: "Inter,sans-serif",
-              }}
-            >
+            <p className="mt-0 mb-8 mx-0 text-base text-[#191919] leading-[1.75] font-['Inter',sans-serif]">
               BRIDGE exists to change that. We produce practitioner-grade intelligence — the kind you can hand to a
               founding team, a fund manager, or a government partner and say:{" "}
-              <strong style={{ fontWeight: "700", color: C.primary }}>
+              <strong className="font-bold text-[#1B4D3E]">
                 here is what to build, here is why, here is how.
               </strong>
             </p>
             <a
               href="/resources"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                background: C.accent,
-                color: C.primary,
-                textDecoration: "none",
-                padding: "13px 24px",
-                borderRadius: "50px",
-                fontSize: "14px",
-                fontWeight: "700",
-                fontFamily: "Inter,sans-serif",
-                alignSelf: "flex-start",
-              }}
+              className="inline-flex items-center gap-2 bg-[#B8D935] text-[#1B4D3E] no-underline py-[13px] px-6 rounded-[50px] text-sm font-bold font-['Inter',sans-serif] self-start"
             >
               Explore the Research <ArrowUpRight size={14} />
             </a>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div style={{ height: `${CARDS_H}px`, overflow: "hidden" }}>
+          <div className="flex flex-col gap-4">
+            <div className="overflow-hidden" style={{ height: `${CARDS_H}px` }}>
               <div
+                className="flex flex-col transition-transform duration-[450ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
                   gap: `${GAP}px`,
                   transform: `translateY(-${offset * (CARD_H + GAP)}px)`,
-                  transition: "transform 0.45s cubic-bezier(0.4,0,0.2,1)",
                 }}
               >
                 {whyItems.map((item, i) => (
                   <div
                     key={i}
-                    style={{
-                      height: `${CARD_H}px`,
-                      flexShrink: 0,
-                      padding: "22px 24px",
-                      background: C.bg,
-                      borderRadius: "12px",
-                      border: `1px solid ${C.line}`,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
+                    className="shrink-0 px-6 py-[22px] bg-[#F3F5F2] rounded-xl border border-[#DEDEDE] flex flex-col justify-center"
+                    style={{ height: `${CARD_H}px` }}
                   >
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "700",
-                        color: C.primary,
-                        fontFamily: "DM Sans,sans-serif",
-                        marginBottom: "8px",
-                        lineHeight: 1.3,
-                      }}
-                    >
+                    <div className="text-sm font-bold text-[#1B4D3E] font-['DM_Sans',sans-serif] mb-2 leading-[1.3]">
                       {item.title}
                     </div>
-                    <p
-                      style={{
-                        margin: 0,
-                        fontSize: "13px",
-                        color: C.muted,
-                        lineHeight: 1.65,
-                        fontFamily: "Inter,sans-serif",
-                      }}
-                    >
+                    <p className="m-0 text-[13px] text-[#6B7280] leading-[1.65] font-['Inter',sans-serif]">
                       {item.body}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px" }}>
+            <div className="flex items-center justify-center gap-3">
               <button
                 onClick={prev}
                 disabled={offset === 0}
+                className="w-8 h-8 rounded-full bg-transparent flex items-center justify-center transition-all duration-200"
                 style={{
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "50%",
                   border: `1px solid ${offset === 0 ? C.line : C.primary}`,
-                  background: "transparent",
                   cursor: offset === 0 ? "default" : "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   opacity: offset === 0 ? 0.35 : 1,
-                  transition: "all 0.2s",
                 }}
               >
-                <ChevronRight size={14} color={C.primary} style={{ transform: "rotate(180deg)" }} />
+                <ChevronRight size={14} color={C.primary} className="rotate-180" />
               </button>
-              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+              <div className="flex gap-2 items-center">
                 {Array.from({ length: pages }).map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setOffset(i)}
+                    className="h-2 rounded border-none cursor-pointer transition-all duration-300 ease-in-out p-0"
                     style={{
                       width: i === offset ? "24px" : "8px",
-                      height: "8px",
-                      borderRadius: "4px",
                       background: i === offset ? C.accent : C.line,
-                      border: "none",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                      padding: 0,
                     }}
                   />
                 ))}
@@ -848,18 +571,11 @@ function WhyInsightSection({ mobile }) {
               <button
                 onClick={next}
                 disabled={offset === pages - 1}
+                className="w-8 h-8 rounded-full bg-transparent flex items-center justify-center transition-all duration-200"
                 style={{
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "50%",
                   border: `1px solid ${offset === pages - 1 ? C.line : C.primary}`,
-                  background: "transparent",
                   cursor: offset === pages - 1 ? "default" : "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   opacity: offset === pages - 1 ? 0.35 : 1,
-                  transition: "all 0.2s",
                 }}
               >
                 <ChevronRight size={14} color={C.primary} />
@@ -881,7 +597,6 @@ export default function InsightsPage() {
   const [activeStep, setActiveStep] = useState(0);
   const [activeDim, setActiveDim] = useState(0);
   const [activeComp, setActiveComp] = useState("All");
-  const [hovRow, setHovRow] = useState(null);
   const [mobile, setMobile] = useState(false);
   const [openPanel, setOpenPanel] = useState(null);
   const [showAllRows, setShowAllRows] = useState(false);
@@ -896,93 +611,56 @@ export default function InsightsPage() {
 
   return (
     <Layout>
-    <div style={{ background: C.bg, fontFamily: "DM Sans,sans-serif" }}>
+    <div className="bg-[#F3F5F2] font-['DM_Sans',sans-serif]">
 
       {/* ── HERO ──────────────────────────────────────────── */}
-      <section style={{ background: C.primary, padding: mobile ? "60px 20px 52px" : `80px ${PAD} 80px` }}>
-        <div style={{ maxWidth: MAX, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              background: "transparent",
-              border: `1px solid ${C.accent}`,
-              borderRadius: "50px",
-              padding: "8px 18px",
-              marginBottom: "20px",
-            }}
-          >
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.accent, flexShrink: 0 }} />
-            <span
-              style={{
-                fontFamily: "Inter,sans-serif",
-                fontSize: "11px",
-                fontWeight: "700",
-                color: C.accent,
-                textTransform: "uppercase",
-                letterSpacing: "2px",
-              }}
-            >
+      <section
+        className="bg-[#1B4D3E]"
+        style={{ padding: mobile ? "60px 20px 52px" : `80px ${PAD} 80px` }}
+      >
+        <div className="mx-auto" style={{ maxWidth: MAX }}>
+          <div className="inline-flex items-center gap-2 bg-transparent border border-[#B8D935] rounded-[50px] px-[18px] py-2 mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B8D935] shrink-0" />
+            <span className="font-['Inter',sans-serif] text-[11px] font-bold text-[#B8D935] uppercase tracking-[2px]">
               BRIDGE Insights
             </span>
           </div>
           <div
+            className="grid items-center"
             style={{
-              display: "grid",
               gridTemplateColumns: mobile ? "1fr" : "2fr 1fr",
               gap: "56px",
-              alignItems: "center",
             }}
           >
             <div>
               <h1
+                className="font-['DM_Sans',sans-serif] font-light text-white mt-0 mb-[18px] mx-0"
                 style={{
-                  margin: "0 0 18px",
                   fontSize: mobile ? "36px" : "58px",
-                  fontWeight: "300",
-                  color: C.white,
                   lineHeight: 1.15,
                   letterSpacing: mobile ? "-0.8px" : "-1.5px",
-                  fontFamily: "DM Sans,sans-serif",
                 }}
               >
                 Empirical analysis
                 <br />
                 Structured methodology
                 <br />
-                <strong style={{ fontWeight: "700" }}>Investable outcomes.</strong>
+                <strong className="font-bold">Investable outcomes.</strong>
               </h1>
               <p
-                style={{
-                  margin: "0 0 28px",
-                  fontSize: mobile ? "15px" : "17px",
-                  color: "rgba(255,255,255,0.6)",
-                  lineHeight: 1.75,
-                  fontFamily: "Inter,sans-serif",
-                  maxWidth: "680px",
-                }}
+                className="mt-0 mb-7 mx-0 text-[rgba(255,255,255,0.6)] leading-[1.75] font-['Inter',sans-serif] max-w-[680px]"
+                style={{ fontSize: mobile ? "15px" : "17px" }}
               >
                 Rigorous sector analysis, venture scoring, and policy intelligence — the research infrastructure behind
                 every BRIDGE deployment decision.
               </p>
               <a
                 href="/login"
+                className="inline-flex items-center gap-2 bg-[#B8D935] text-[#1B4D3E] no-underline rounded-[50px] text-sm font-bold font-['Inter',sans-serif] box-border"
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  background: C.accent,
-                  color: C.primary,
-                  textDecoration: "none",
                   padding: mobile ? "12px 22px" : "13px 24px",
-                  borderRadius: "50px",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  fontFamily: "Inter,sans-serif",
                   width: mobile ? "100%" : "auto",
                   justifyContent: mobile ? "center" : "flex-start",
-                  boxSizing: "border-box",
                 }}
               >
                 Access Dashboard <ArrowUpRight size={14} />
@@ -996,22 +674,23 @@ export default function InsightsPage() {
       <WhyInsightSection mobile={mobile} />
 
       {/* ── THE PROCESS ───────────────────────────────────── */}
-      <section id="process" style={{ padding: mobile ? "56px 0" : `80px ${PAD}`, background: C.bg }}>
+      <section
+        id="process"
+        className="bg-[#F3F5F2]"
+        style={{ padding: mobile ? "56px 0" : `80px ${PAD}` }}
+      >
         <div style={{ maxWidth: MAX, margin: mobile ? "0" : "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: mobile ? "32px" : "52px", padding: mobile ? "0 20px" : 0 }}>
+          <div
+            className="text-center"
+            style={{ marginBottom: mobile ? "32px" : "52px", padding: mobile ? "0 20px" : 0 }}
+          >
             <SectionLabel>The Process</SectionLabel>
             <SectionHeading>
-              Six stages. One <strong style={{ fontWeight: "700" }}>investment-grade</strong> output.
+              Six stages. One <strong className="font-bold">investment-grade</strong> output.
             </SectionHeading>
             <p
-              style={{
-                margin: "0 auto",
-                maxWidth: "680px",
-                fontSize: mobile ? "15px" : "16px",
-                color: C.muted,
-                lineHeight: 1.7,
-                fontFamily: "Inter,sans-serif",
-              }}
+              className="mx-auto max-w-[680px] text-[#6B7280] leading-[1.7] font-['Inter',sans-serif] mt-0 mb-0"
+              style={{ fontSize: mobile ? "15px" : "16px" }}
             >
               From citizen-level gap identification to a fully scored, portfolio-integrated venture — every BRIDGE
               analysis follows the same rigorous six-stage methodology.
@@ -1023,218 +702,96 @@ export default function InsightsPage() {
             <div>
               {/* Step selector — horizontal scroll */}
               <div
-                style={{
-                  overflowX: "auto",
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                  paddingLeft: "20px",
-                  paddingBottom: "4px",
-                  marginBottom: "20px",
-                }}
+                className="overflow-x-auto pl-5 pb-1 mb-5"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
-                <div style={{ display: "flex", gap: "8px", width: "max-content" }}>
+                <div className="flex gap-2 w-max">
                   {process.map((step, idx) => (
                     <button
                       key={idx}
                       onClick={() => setActiveStep(idx)}
+                      className="flex items-center gap-2 px-4 py-[9px] rounded-[50px] border-none cursor-pointer transition-all duration-200 shrink-0"
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        padding: "9px 16px",
-                        borderRadius: "50px",
-                        border: "none",
-                        cursor: "pointer",
                         background: activeStep === idx ? C.primary : C.white,
                         boxShadow: activeStep === idx ? "none" : `0 0 0 1px ${C.line}`,
-                        transition: "all 0.2s",
-                        flexShrink: 0,
                       }}
                     >
                       <span
-                        style={{
-                          width: "22px",
-                          height: "22px",
-                          borderRadius: "50%",
-                          background: activeStep === idx ? C.accent : C.bg,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
+                        className="w-[22px] h-[22px] rounded-full flex items-center justify-center shrink-0"
+                        style={{ background: activeStep === idx ? C.accent : C.bg }}
                       >
                         <span
-                          style={{
-                            fontSize: "10px",
-                            fontWeight: "800",
-                            color: activeStep === idx ? C.primary : C.muted,
-                            fontFamily: "Inter,sans-serif",
-                          }}
+                          className="text-[10px] font-extrabold font-['Inter',sans-serif]"
+                          style={{ color: activeStep === idx ? C.primary : C.muted }}
                         >
                           {step.num}
                         </span>
                       </span>
                       <span
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "700",
-                          color: activeStep === idx ? C.white : C.muted,
-                          fontFamily: "Inter,sans-serif",
-                          whiteSpace: "nowrap",
-                        }}
+                        className="text-xs font-bold font-['Inter',sans-serif] whitespace-nowrap"
+                        style={{ color: activeStep === idx ? C.white : C.muted }}
                       >
                         {step.label}
                       </span>
                     </button>
                   ))}
-                  <div style={{ minWidth: "12px" }} />
+                  <div className="min-w-3" />
                 </div>
               </div>
 
               {/* Detail card */}
-              <div
-                style={{
-                  margin: "0 20px",
-                  background: C.white,
-                  borderRadius: "16px",
-                  border: `1px solid ${C.line}`,
-                  padding: "24px",
-                  boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-                  <div
-                    style={{
-                      width: "44px",
-                      height: "44px",
-                      borderRadius: "12px",
-                      background: C.accentBg,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
+              <div className="mx-5 bg-white rounded-2xl border border-[#DEDEDE] p-6 shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-11 h-11 rounded-xl bg-[#EBF5B0] flex items-center justify-center shrink-0">
                     {React.createElement(process[activeStep].icon, { size: 20, color: C.primary })}
                   </div>
                   <div>
-                    <div
-                      style={{
-                        fontSize: "11px",
-                        fontWeight: "700",
-                        color: C.muted,
-                        fontFamily: "Inter,sans-serif",
-                        letterSpacing: "0.8px",
-                        textTransform: "uppercase",
-                      }}
-                    >
+                    <div className="text-[11px] font-bold text-[#6B7280] font-['Inter',sans-serif] tracking-[0.8px] uppercase">
                       Stage {process[activeStep].num}
                     </div>
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "700",
-                        color: C.primary,
-                        fontFamily: "DM Sans,sans-serif",
-                      }}
-                    >
+                    <div className="text-sm font-bold text-[#1B4D3E] font-['DM_Sans',sans-serif]">
                       {process[activeStep].label}
                     </div>
                   </div>
                 </div>
-                <h3
-                  style={{
-                    margin: "0 0 10px",
-                    fontSize: "18px",
-                    fontWeight: "700",
-                    color: C.dark,
-                    fontFamily: "DM Sans,sans-serif",
-                    lineHeight: 1.3,
-                  }}
-                >
+                <h3 className="mt-0 mb-2.5 mx-0 text-lg font-bold text-[#191919] font-['DM_Sans',sans-serif] leading-[1.3]">
                   {process[activeStep].title}
                 </h3>
-                <p
-                  style={{
-                    margin: "0 0 18px",
-                    fontSize: "14px",
-                    color: C.muted,
-                    lineHeight: 1.75,
-                    fontFamily: "Inter,sans-serif",
-                  }}
-                >
+                <p className="mt-0 mb-[18px] mx-0 text-sm text-[#6B7280] leading-[1.75] font-['Inter',sans-serif]">
                   {process[activeStep].body}
                 </p>
-                <div style={{ borderTop: `1px solid ${C.line}`, paddingTop: "16px", marginBottom: "16px" }}>
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "700",
-                      color: C.muted,
-                      letterSpacing: "0.8px",
-                      textTransform: "uppercase",
-                      fontFamily: "Inter,sans-serif",
-                      marginBottom: "10px",
-                    }}
-                  >
+                <div className="border-t border-[#DEDEDE] pt-4 mb-4">
+                  <div className="text-[11px] font-bold text-[#6B7280] tracking-[0.8px] uppercase font-['Inter',sans-serif] mb-2.5">
                     Outputs
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+                  <div className="flex flex-col gap-[7px]">
                     {process[activeStep].outputs.map((o) => (
-                      <div key={o} style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                        <div
-                          style={{
-                            width: "6px",
-                            height: "6px",
-                            borderRadius: "50%",
-                            background: C.accent,
-                            flexShrink: 0,
-                          }}
-                        />
-                        <span style={{ fontSize: "13px", color: C.mutedDark, fontFamily: "Inter,sans-serif" }}>
+                      <div key={o} className="flex items-center gap-[9px]">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#B8D935] shrink-0" />
+                        <span className="text-[13px] text-[#4B5563] font-['Inter',sans-serif]">
                           {o}
                         </span>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div
-                  style={{
-                    padding: "14px 16px",
-                    background: C.accentBg,
-                    borderRadius: "8px",
-                    border: `1px solid rgba(184,217,53,0.3)`,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      color: C.primary,
-                      fontFamily: "Inter,sans-serif",
-                      lineHeight: 1.6,
-                    }}
-                  >
+                <div className="p-[14px_16px] bg-[#EBF5B0] rounded-lg border border-[rgba(184,217,53,0.3)]">
+                  <span className="text-xs font-bold text-[#1B4D3E] font-['Inter',sans-serif] leading-[1.6]">
                     {process[activeStep].highlight}
                   </span>
                 </div>
               </div>
 
               {/* Mobile step dots */}
-              <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "20px" }}>
+              <div className="flex justify-center gap-2 mt-5">
                 {process.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveStep(i)}
+                    className="h-2 rounded border-none cursor-pointer p-0 transition-all duration-300 ease-in-out"
                     style={{
                       width: i === activeStep ? "24px" : "8px",
-                      height: "8px",
-                      borderRadius: "4px",
                       background: i === activeStep ? C.accent : C.line,
-                      border: "none",
-                      cursor: "pointer",
-                      padding: 0,
-                      transition: "all 0.3s ease",
                     }}
                   />
                 ))}
@@ -1242,16 +799,8 @@ export default function InsightsPage() {
             </div>
           ) : (
             /* DESKTOP PROCESS: two-column */
-            <div style={{ display: "grid", gridTemplateColumns: "480px 1fr", gap: "56px", alignItems: "stretch" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0px",
-                  justifyContent: "space-between",
-                  height: "100%",
-                }}
-              >
+            <div className="grid items-stretch" style={{ gridTemplateColumns: "480px 1fr", gap: "56px" }}>
+              <div className="flex flex-col gap-0 justify-between h-full">
                 {process.map((step, idx) => (
                   <ProcessStep
                     key={idx}
@@ -1263,110 +812,36 @@ export default function InsightsPage() {
                   />
                 ))}
               </div>
-              <div
-                style={{
-                  background: C.white,
-                  borderRadius: "16px",
-                  border: `1px solid ${C.line}`,
-                  padding: "32px",
-                  boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  minHeight: "480px",
-                }}
-              >
+              <div className="bg-white rounded-2xl border border-[#DEDEDE] p-8 shadow-[0_2px_12px_rgba(0,0,0,0.04)] flex flex-col justify-between min-h-[480px]">
                 <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "18px" }}>
-                    <div
-                      style={{
-                        width: "44px",
-                        height: "44px",
-                        borderRadius: "12px",
-                        background: C.accentBg,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
-                    >
+                  <div className="flex items-center gap-3 mb-[18px]">
+                    <div className="w-11 h-11 rounded-xl bg-[#EBF5B0] flex items-center justify-center shrink-0">
                       {React.createElement(process[activeStep].icon, { size: 20, color: C.primary })}
                     </div>
                     <div>
-                      <div
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "700",
-                          color: C.muted,
-                          fontFamily: "Inter,sans-serif",
-                          letterSpacing: "0.8px",
-                          textTransform: "uppercase",
-                        }}
-                      >
+                      <div className="text-[11px] font-bold text-[#6B7280] font-['Inter',sans-serif] tracking-[0.8px] uppercase">
                         Stage {process[activeStep].num}
                       </div>
-                      <div
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "700",
-                          color: C.primary,
-                          fontFamily: "DM Sans,sans-serif",
-                        }}
-                      >
+                      <div className="text-sm font-bold text-[#1B4D3E] font-['DM_Sans',sans-serif]">
                         {process[activeStep].label}
                       </div>
                     </div>
                   </div>
-                  <h3
-                    style={{
-                      margin: "0 0 12px",
-                      fontSize: "20px",
-                      fontWeight: "700",
-                      color: C.dark,
-                      fontFamily: "DM Sans,sans-serif",
-                      lineHeight: 1.3,
-                    }}
-                  >
+                  <h3 className="mt-0 mb-3 mx-0 text-xl font-bold text-[#191919] font-['DM_Sans',sans-serif] leading-[1.3]">
                     {process[activeStep].title}
                   </h3>
-                  <p
-                    style={{
-                      margin: "0 0 20px",
-                      fontSize: "14px",
-                      color: C.muted,
-                      lineHeight: 1.75,
-                      fontFamily: "Inter,sans-serif",
-                    }}
-                  >
+                  <p className="mt-0 mb-5 mx-0 text-sm text-[#6B7280] leading-[1.75] font-['Inter',sans-serif]">
                     {process[activeStep].body}
                   </p>
-                  <div style={{ borderTop: `1px solid ${C.line}`, paddingTop: "18px" }}>
-                    <div
-                      style={{
-                        fontSize: "11px",
-                        fontWeight: "700",
-                        color: C.muted,
-                        letterSpacing: "0.8px",
-                        textTransform: "uppercase",
-                        fontFamily: "Inter,sans-serif",
-                        marginBottom: "10px",
-                      }}
-                    >
+                  <div className="border-t border-[#DEDEDE] pt-[18px]">
+                    <div className="text-[11px] font-bold text-[#6B7280] tracking-[0.8px] uppercase font-['Inter',sans-serif] mb-2.5">
                       Outputs
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+                    <div className="flex flex-col gap-[7px]">
                       {process[activeStep].outputs.map((o) => (
-                        <div key={o} style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <div
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              background: C.accent,
-                              flexShrink: 0,
-                            }}
-                          />
-                          <span style={{ fontSize: "13px", color: C.mutedDark, fontFamily: "Inter,sans-serif" }}>
+                        <div key={o} className="flex items-center gap-[9px]">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#B8D935] shrink-0" />
+                          <span className="text-[13px] text-[#4B5563] font-['Inter',sans-serif]">
                             {o}
                           </span>
                         </div>
@@ -1374,24 +849,8 @@ export default function InsightsPage() {
                     </div>
                   </div>
                 </div>
-                <div
-                  style={{
-                    marginTop: "20px",
-                    padding: "14px 16px",
-                    background: C.accentBg,
-                    borderRadius: "8px",
-                    border: `1px solid rgba(184,217,53,0.3)`,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      color: C.primary,
-                      fontFamily: "Inter,sans-serif",
-                      lineHeight: 1.6,
-                    }}
-                  >
+                <div className="mt-5 p-[14px_16px] bg-[#EBF5B0] rounded-lg border border-[rgba(184,217,53,0.3)]">
+                  <span className="text-xs font-bold text-[#1B4D3E] font-['Inter',sans-serif] leading-[1.6]">
                     {process[activeStep].highlight}
                   </span>
                 </div>
@@ -1402,22 +861,19 @@ export default function InsightsPage() {
       </section>
 
       {/* ── IMPACT SCORE ──────────────────────────────────── */}
-      <section style={{ padding: mobile ? "56px 20px" : `80px ${PAD}`, background: C.white }}>
-        <div style={{ maxWidth: MAX, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: mobile ? "32px" : "52px" }}>
+      <section
+        className="bg-white"
+        style={{ padding: mobile ? "56px 20px" : `80px ${PAD}` }}
+      >
+        <div className="mx-auto" style={{ maxWidth: MAX }}>
+          <div className="text-center" style={{ marginBottom: mobile ? "32px" : "52px" }}>
             <SectionLabel>BRIDGE Impact Score™</SectionLabel>
             <SectionHeading>
-              A framework built for a <strong style={{ fontWeight: "700" }}>complex ecosystem.</strong>
+              A framework built for a <strong className="font-bold">complex ecosystem.</strong>
             </SectionHeading>
             <p
-              style={{
-                margin: "0 auto",
-                maxWidth: "740px",
-                fontSize: mobile ? "15px" : "16px",
-                color: C.muted,
-                lineHeight: 1.7,
-                fontFamily: "Inter,sans-serif",
-              }}
+              className="mx-auto max-w-[740px] text-[#6B7280] leading-[1.7] font-['Inter',sans-serif] mt-0 mb-0"
+              style={{ fontSize: mobile ? "15px" : "16px" }}
             >
               Most frameworks collapse under complexity. The BRIDGE Impact Score™ was built for it — four weighted
               dimensions evaluated across 174+ ventures in 12 sectors, producing a single composite score that is
@@ -1427,20 +883,10 @@ export default function InsightsPage() {
 
           {mobile ? (
             /* MOBILE IMPACT SCORE: fully stacked */
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div className="flex flex-col gap-4">
               {/* Dimensions */}
               <div>
-                <p
-                  style={{
-                    margin: "0 0 10px",
-                    fontSize: "12px",
-                    fontWeight: "700",
-                    color: C.muted,
-                    fontFamily: "Inter,sans-serif",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.8px",
-                  }}
-                >
+                <p className="mt-0 mb-2.5 mx-0 text-xs font-bold text-[#6B7280] font-['Inter',sans-serif] uppercase tracking-[0.8px]">
                   Tap a dimension to expand
                 </p>
                 {scoreDimensions.map((dim, i) => (
@@ -1449,38 +895,22 @@ export default function InsightsPage() {
               </div>
 
               {/* Score tiers — collapsible */}
-              <div
-                style={{ background: C.bg, borderRadius: "12px", border: `1px solid ${C.line}`, overflow: "hidden" }}
-              >
+              <div className="bg-[#F3F5F2] rounded-xl border border-[#DEDEDE] overflow-hidden">
                 <button
                   onClick={() => togglePanel("tiers")}
-                  style={{
-                    width: "100%",
-                    padding: "16px 20px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    background: "transparent",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
+                  className="w-full px-5 py-4 flex items-center justify-between bg-transparent border-none cursor-pointer"
                 >
-                  <span
-                    style={{ fontSize: "13px", fontWeight: "700", color: C.primary, fontFamily: "DM Sans,sans-serif" }}
-                  >
+                  <span className="text-[13px] font-bold text-[#1B4D3E] font-['DM_Sans',sans-serif]">
                     Score Tiers
                   </span>
                   <ChevronRight
                     size={16}
                     color={C.muted}
-                    style={{
-                      transform: openPanel === "tiers" ? "rotate(90deg)" : "none",
-                      transition: "transform 0.2s",
-                    }}
+                    className={`transition-transform duration-200 ${openPanel === "tiers" ? "rotate-90" : "rotate-0"}`}
                   />
                 </button>
                 {openPanel === "tiers" && (
-                  <div style={{ padding: "0 20px 20px", display: "flex", flexDirection: "column", gap: "14px" }}>
+                  <div className="px-5 pb-5 pt-0 flex flex-col gap-3.5">
                     {[
                       ["88–100", "Tier I Priority", "Top priority for capital deployment"],
                       ["75–87", "Tier II Medium-term", "Strong opportunity, secondary sequencing"],
@@ -1488,37 +918,17 @@ export default function InsightsPage() {
                     ].map(([range, tier, desc]) => (
                       <div
                         key={range}
-                        style={{
-                          display: "grid",
-                          gridTemplateColumns: "88px 1fr",
-                          gap: "12px",
-                          alignItems: "flex-start",
-                        }}
+                        className="grid items-start"
+                        style={{ gridTemplateColumns: "88px 1fr", gap: "12px" }}
                       >
-                        <span
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "800",
-                            color: C.primary,
-                            fontFamily: "Inter,sans-serif",
-                            paddingTop: "1px",
-                          }}
-                        >
+                        <span className="text-[13px] font-extrabold text-[#1B4D3E] font-['Inter',sans-serif] pt-px">
                           {range}
                         </span>
                         <div>
-                          <div
-                            style={{
-                              fontSize: "13px",
-                              fontWeight: "700",
-                              color: C.dark,
-                              fontFamily: "Inter,sans-serif",
-                              marginBottom: "2px",
-                            }}
-                          >
+                          <div className="text-[13px] font-bold text-[#191919] font-['Inter',sans-serif] mb-0.5">
                             {tier}
                           </div>
-                          <div style={{ fontSize: "12px", color: C.muted, fontFamily: "Inter,sans-serif" }}>{desc}</div>
+                          <div className="text-xs text-[#6B7280] font-['Inter',sans-serif]">{desc}</div>
                         </div>
                       </div>
                     ))}
@@ -1527,72 +937,46 @@ export default function InsightsPage() {
               </div>
 
               {/* Weight distribution — collapsible */}
-              <div
-                style={{ background: C.bg, borderRadius: "12px", border: `1px solid ${C.line}`, overflow: "hidden" }}
-              >
+              <div className="bg-[#F3F5F2] rounded-xl border border-[#DEDEDE] overflow-hidden">
                 <button
                   onClick={() => togglePanel("weights")}
-                  style={{
-                    width: "100%",
-                    padding: "16px 20px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    background: "transparent",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
+                  className="w-full px-5 py-4 flex items-center justify-between bg-transparent border-none cursor-pointer"
                 >
-                  <span
-                    style={{ fontSize: "13px", fontWeight: "700", color: C.primary, fontFamily: "DM Sans,sans-serif" }}
-                  >
+                  <span className="text-[13px] font-bold text-[#1B4D3E] font-['DM_Sans',sans-serif]">
                     Score Weight Distribution
                   </span>
                   <ChevronRight
                     size={16}
                     color={C.muted}
-                    style={{
-                      transform: openPanel === "weights" ? "rotate(90deg)" : "none",
-                      transition: "transform 0.2s",
-                    }}
+                    className={`transition-transform duration-200 ${openPanel === "weights" ? "rotate-90" : "rotate-0"}`}
                   />
                 </button>
                 {openPanel === "weights" && (
-                  <div style={{ padding: "0 20px 20px" }}>
+                  <div className="px-5 pb-5 pt-0">
                     {scoreDimensions.map((dim, i) => {
                       const pct = parseInt(dim.weight);
                       return (
-                        <div key={i} style={{ marginBottom: "12px" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
+                        <div key={i} className="mb-3">
+                          <div className="flex justify-between mb-[5px]">
                             <span
-                              style={{
-                                fontSize: "12px",
-                                fontWeight: "600",
-                                color: activeDim === i ? C.primary : C.mutedDark,
-                                fontFamily: "Inter,sans-serif",
-                              }}
+                              className="text-xs font-semibold font-['Inter',sans-serif]"
+                              style={{ color: activeDim === i ? C.primary : C.mutedDark }}
                             >
                               {dim.label}
                             </span>
                             <span
-                              style={{
-                                fontSize: "12px",
-                                fontWeight: "800",
-                                color: activeDim === i ? C.primary : C.muted,
-                                fontFamily: "Inter,sans-serif",
-                              }}
+                              className="text-xs font-extrabold font-['Inter',sans-serif]"
+                              style={{ color: activeDim === i ? C.primary : C.muted }}
                             >
                               {dim.weight}
                             </span>
                           </div>
-                          <div style={{ height: "8px", background: C.line, borderRadius: "4px", overflow: "hidden" }}>
+                          <div className="h-2 bg-[#DEDEDE] rounded overflow-hidden">
                             <div
+                              className="h-full rounded transition-colors duration-200"
                               style={{
                                 width: `${pct * 3}%`,
-                                height: "100%",
                                 background: activeDim === i ? C.accent : C.primary,
-                                borderRadius: "4px",
-                                transition: "background .2s",
                               }}
                             />
                           </div>
@@ -1604,51 +988,28 @@ export default function InsightsPage() {
               </div>
 
               {/* Portfolio breakdown — collapsible */}
-              <div style={{ background: C.primary, borderRadius: "12px", overflow: "hidden" }}>
+              <div className="bg-[#1B4D3E] rounded-xl overflow-hidden">
                 <button
                   onClick={() => togglePanel("portfolio")}
-                  style={{
-                    width: "100%",
-                    padding: "16px 20px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    background: "transparent",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
+                  className="w-full px-5 py-4 flex items-center justify-between bg-transparent border-none cursor-pointer"
                 >
                   <div>
-                    <div
-                      style={{
-                        fontSize: "10px",
-                        fontWeight: "700",
-                        color: "rgba(255,255,255,0.4)",
-                        fontFamily: "Inter,sans-serif",
-                        letterSpacing: "1.5px",
-                        textTransform: "uppercase",
-                        marginBottom: "2px",
-                      }}
-                    >
+                    <div className="text-[10px] font-bold text-[rgba(255,255,255,0.4)] font-['Inter',sans-serif] tracking-[1.5px] uppercase mb-0.5">
                       Portfolio Breakdown
                     </div>
-                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", fontFamily: "Inter,sans-serif" }}>
+                    <div className="text-xs text-[rgba(255,255,255,0.5)] font-['Inter',sans-serif]">
                       174+ ventures · 12 sectors
                     </div>
                   </div>
                   <ChevronRight
                     size={16}
                     color="rgba(255,255,255,0.4)"
-                    style={{
-                      transform: openPanel === "portfolio" ? "rotate(90deg)" : "none",
-                      transition: "transform 0.2s",
-                      flexShrink: 0,
-                    }}
+                    className={`transition-transform duration-200 shrink-0 ${openPanel === "portfolio" ? "rotate-90" : "rotate-0"}`}
                   />
                 </button>
                 {openPanel === "portfolio" && (
-                  <div style={{ padding: "0 20px 20px" }}>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "20px" }}>
+                  <div className="px-5 pb-5 pt-0">
+                    <div className="flex flex-col gap-3.5 mb-5">
                       {[
                         { count: "23", tier: "Tier I", label: "Priority", bar: 23 / 174, color: C.accent },
                         {
@@ -1668,69 +1029,28 @@ export default function InsightsPage() {
                       ].map(({ count, tier, label, bar, color }) => (
                         <div
                           key={tier}
-                          style={{
-                            display: "grid",
-                            gridTemplateColumns: "48px 1fr",
-                            gap: "14px",
-                            alignItems: "center",
-                          }}
+                          className="grid items-center"
+                          style={{ gridTemplateColumns: "48px 1fr", gap: "14px" }}
                         >
-                          <div
-                            style={{
-                              fontSize: "18px",
-                              fontWeight: "800",
-                              color: "rgba(255,255,255,0.9)",
-                              fontFamily: "Inter,sans-serif",
-                              lineHeight: 1,
-                            }}
-                          >
+                          <div className="text-lg font-extrabold text-[rgba(255,255,255,0.9)] font-['Inter',sans-serif] leading-none">
                             {count}
                           </div>
                           <div>
-                            <span
-                              style={{
-                                fontSize: "11px",
-                                fontWeight: "700",
-                                color: "rgba(255,255,255,0.6)",
-                                fontFamily: "Inter,sans-serif",
-                                display: "block",
-                                marginBottom: "5px",
-                              }}
-                            >
+                            <span className="text-[11px] font-bold text-[rgba(255,255,255,0.6)] font-['Inter',sans-serif] block mb-[5px]">
                               {tier} · {label}
                             </span>
-                            <div
-                              style={{
-                                height: "8px",
-                                background: "rgba(255,255,255,0.08)",
-                                borderRadius: "4px",
-                                overflow: "hidden",
-                              }}
-                            >
+                            <div className="h-2 bg-[rgba(255,255,255,0.08)] rounded overflow-hidden">
                               <div
-                                style={{
-                                  width: `${bar * 100}%`,
-                                  height: "100%",
-                                  background: color,
-                                  borderRadius: "4px",
-                                }}
+                                className="h-full rounded"
+                                style={{ width: `${bar * 100}%`, background: color }}
                               />
                             </div>
                           </div>
                         </div>
                       ))}
                     </div>
-                    <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "14px" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          height: "10px",
-                          borderRadius: "6px",
-                          overflow: "hidden",
-                          gap: "2px",
-                          marginBottom: "10px",
-                        }}
-                      >
+                    <div className="border-t border-[rgba(255,255,255,0.1)] pt-3.5">
+                      <div className="flex h-2.5 rounded-[6px] overflow-hidden gap-0.5 mb-2.5">
                         {[
                           { pct: 30, color: C.accent },
                           { pct: 25, color: "rgba(255,255,255,0.25)" },
@@ -1739,29 +1059,24 @@ export default function InsightsPage() {
                         ].map((s, i) => (
                           <div
                             key={i}
-                            style={{ width: `${s.pct}%`, height: "100%", background: s.color, borderRadius: "3px" }}
+                            className="h-full rounded-[3px]"
+                            style={{ width: `${s.pct}%`, background: s.color }}
                           />
                         ))}
                       </div>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 12px" }}>
+                      <div className="flex flex-wrap gap-x-3 gap-y-2">
                         {[
                           ["P&P Alignment", "30%", C.accent],
                           ["Strategic Fit", "25%", "rgba(255,255,255,0.5)"],
                           ["Feasibility", "25%", "rgba(184,217,53,0.6)"],
                           ["Scalability", "20%", "rgba(255,255,255,0.3)"],
                         ].map(([l, w, c]) => (
-                          <div key={l} style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                          <div key={l} className="flex items-center gap-[5px]">
                             <div
-                              style={{ width: "8px", height: "8px", borderRadius: "2px", background: c, flexShrink: 0 }}
+                              className="w-2 h-2 rounded-sm shrink-0"
+                              style={{ background: c as string }}
                             />
-                            <span
-                              style={{
-                                fontSize: "10px",
-                                fontWeight: "600",
-                                color: "rgba(255,255,255,0.6)",
-                                fontFamily: "Inter,sans-serif",
-                              }}
-                            >
+                            <span className="text-[10px] font-semibold text-[rgba(255,255,255,0.6)] font-['Inter',sans-serif]">
                               {l} · {w}
                             </span>
                           </div>
@@ -1774,20 +1089,10 @@ export default function InsightsPage() {
             </div>
           ) : (
             /* DESKTOP IMPACT SCORE: two-column */
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "56px", alignItems: "stretch" }}>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div className="grid grid-cols-2 gap-14 items-stretch">
+              <div className="flex flex-col justify-between">
                 <div>
-                  <p
-                    style={{
-                      margin: "0 0 10px",
-                      fontSize: "13px",
-                      fontWeight: "700",
-                      color: C.muted,
-                      fontFamily: "Inter,sans-serif",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.8px",
-                    }}
-                  >
+                  <p className="mt-0 mb-2.5 mx-0 text-[13px] font-bold text-[#6B7280] font-['Inter',sans-serif] uppercase tracking-[0.8px]">
                     Click a dimension to expand
                   </p>
                   {scoreDimensions.map((dim, i) => (
@@ -1800,29 +1105,11 @@ export default function InsightsPage() {
                     />
                   ))}
                 </div>
-                <div
-                  style={{
-                    marginTop: "20px",
-                    padding: "20px 24px",
-                    background: C.bg,
-                    borderRadius: "12px",
-                    border: `1px solid ${C.line}`,
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "700",
-                      color: C.muted,
-                      letterSpacing: "1.2px",
-                      textTransform: "uppercase",
-                      fontFamily: "Inter,sans-serif",
-                      marginBottom: "16px",
-                    }}
-                  >
+                <div className="mt-5 p-[20px_24px] bg-[#F3F5F2] rounded-xl border border-[#DEDEDE]">
+                  <div className="text-[11px] font-bold text-[#6B7280] tracking-[1.2px] uppercase font-['Inter',sans-serif] mb-4">
                     Score Tiers
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                  <div className="flex flex-col gap-3.5">
                     {[
                       ["88–100", "Tier I Priority", "Top priority for capital deployment"],
                       ["75–87", "Tier II Medium-term", "Strong opportunity, secondary sequencing"],
@@ -1830,91 +1117,52 @@ export default function InsightsPage() {
                     ].map(([range, tier, desc]) => (
                       <div
                         key={range}
-                        style={{
-                          display: "grid",
-                          gridTemplateColumns: "88px 1fr",
-                          gap: "16px",
-                          alignItems: "flex-start",
-                        }}
+                        className="grid items-start"
+                        style={{ gridTemplateColumns: "88px 1fr", gap: "16px" }}
                       >
-                        <span
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "800",
-                            color: C.primary,
-                            fontFamily: "Inter,sans-serif",
-                            paddingTop: "1px",
-                          }}
-                        >
+                        <span className="text-[13px] font-extrabold text-[#1B4D3E] font-['Inter',sans-serif] pt-px">
                           {range}
                         </span>
                         <div>
-                          <div
-                            style={{
-                              fontSize: "13px",
-                              fontWeight: "700",
-                              color: C.dark,
-                              fontFamily: "Inter,sans-serif",
-                              marginBottom: "2px",
-                            }}
-                          >
+                          <div className="text-[13px] font-bold text-[#191919] font-['Inter',sans-serif] mb-0.5">
                             {tier}
                           </div>
-                          <div style={{ fontSize: "12px", color: C.muted, fontFamily: "Inter,sans-serif" }}>{desc}</div>
+                          <div className="text-xs text-[#6B7280] font-['Inter',sans-serif]">{desc}</div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "20px", paddingTop: "33px" }}>
-                <div style={{ background: C.bg, borderRadius: "16px", border: `1px solid ${C.line}`, padding: "28px" }}>
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: "700",
-                      color: C.primary,
-                      fontFamily: "DM Sans,sans-serif",
-                      marginBottom: "20px",
-                    }}
-                  >
+              <div className="flex flex-col gap-5 pt-[33px]">
+                <div className="bg-[#F3F5F2] rounded-2xl border border-[#DEDEDE] p-7">
+                  <div className="text-[13px] font-bold text-[#1B4D3E] font-['DM_Sans',sans-serif] mb-5">
                     Score Weight Distribution
                   </div>
                   {scoreDimensions.map((dim, i) => {
                     const pct = parseInt(dim.weight);
                     return (
-                      <div key={i} style={{ marginBottom: "14px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
+                      <div key={i} className="mb-3.5">
+                        <div className="flex justify-between mb-[5px]">
                           <span
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: "600",
-                              color: activeDim === i ? C.primary : C.mutedDark,
-                              fontFamily: "Inter,sans-serif",
-                              transition: "color .2s",
-                            }}
+                            className="text-xs font-semibold font-['Inter',sans-serif] transition-colors duration-200"
+                            style={{ color: activeDim === i ? C.primary : C.mutedDark }}
                           >
                             {dim.label}
                           </span>
                           <span
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: "800",
-                              color: activeDim === i ? C.primary : C.muted,
-                              fontFamily: "Inter,sans-serif",
-                            }}
+                            className="text-xs font-extrabold font-['Inter',sans-serif]"
+                            style={{ color: activeDim === i ? C.primary : C.muted }}
                           >
                             {dim.weight}
                           </span>
                         </div>
-                        <div style={{ height: "8px", background: C.line, borderRadius: "4px", overflow: "hidden" }}>
+                        <div className="h-2 bg-[#DEDEDE] rounded overflow-hidden">
                           <div
+                            className="h-full rounded transition-colors duration-200"
                             style={{
                               width: `${pct * 3}%`,
-                              height: "100%",
                               background: activeDim === i ? C.accent : C.primary,
-                              borderRadius: "4px",
-                              transition: "background .2s",
                             }}
                           />
                         </div>
@@ -1922,42 +1170,15 @@ export default function InsightsPage() {
                     );
                   })}
                 </div>
-                <div
-                  style={{
-                    flex: 1,
-                    background: C.primary,
-                    borderRadius: "12px",
-                    padding: "24px 28px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
-                >
+                <div className="flex-1 bg-[#1B4D3E] rounded-xl p-[24px_28px] flex flex-col justify-between">
                   <div>
-                    <div
-                      style={{
-                        fontSize: "10px",
-                        fontWeight: "700",
-                        color: "rgba(255,255,255,0.4)",
-                        fontFamily: "Inter,sans-serif",
-                        letterSpacing: "1.5px",
-                        textTransform: "uppercase",
-                        marginBottom: "4px",
-                      }}
-                    >
+                    <div className="text-[10px] font-bold text-[rgba(255,255,255,0.4)] font-['Inter',sans-serif] tracking-[1.5px] uppercase mb-1">
                       Portfolio Breakdown
                     </div>
-                    <div
-                      style={{
-                        fontSize: "12px",
-                        color: "rgba(255,255,255,0.35)",
-                        fontFamily: "Inter,sans-serif",
-                        marginBottom: "20px",
-                      }}
-                    >
+                    <div className="text-xs text-[rgba(255,255,255,0.35)] font-['Inter',sans-serif] mb-5">
                       174+ ventures scored across 12 sectors
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                    <div className="flex flex-col gap-3.5">
                       {[
                         { count: "23", tier: "Tier I", label: "Priority", bar: 23 / 174, color: C.accent },
                         {
@@ -1977,52 +1198,22 @@ export default function InsightsPage() {
                       ].map(({ count, tier, label, bar, color }) => (
                         <div
                           key={tier}
-                          style={{
-                            display: "grid",
-                            gridTemplateColumns: "48px 1fr",
-                            gap: "16px",
-                            alignItems: "center",
-                          }}
+                          className="grid items-center"
+                          style={{ gridTemplateColumns: "48px 1fr", gap: "16px" }}
                         >
-                          <div
-                            style={{
-                              fontSize: "18px",
-                              fontWeight: "800",
-                              color: "rgba(255,255,255,0.9)",
-                              fontFamily: "Inter,sans-serif",
-                              lineHeight: 1,
-                            }}
-                          >
+                          <div className="text-lg font-extrabold text-[rgba(255,255,255,0.9)] font-['Inter',sans-serif] leading-none">
                             {count}
                           </div>
                           <div>
-                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
-                              <span
-                                style={{
-                                  fontSize: "11px",
-                                  fontWeight: "700",
-                                  color: "rgba(255,255,255,0.6)",
-                                  fontFamily: "Inter,sans-serif",
-                                }}
-                              >
+                            <div className="flex justify-between mb-[5px]">
+                              <span className="text-[11px] font-bold text-[rgba(255,255,255,0.6)] font-['Inter',sans-serif]">
                                 {tier} · {label}
                               </span>
                             </div>
-                            <div
-                              style={{
-                                height: "8px",
-                                background: "rgba(255,255,255,0.08)",
-                                borderRadius: "4px",
-                                overflow: "hidden",
-                              }}
-                            >
+                            <div className="h-2 bg-[rgba(255,255,255,0.08)] rounded overflow-hidden">
                               <div
-                                style={{
-                                  width: `${bar * 100}%`,
-                                  height: "100%",
-                                  background: color,
-                                  borderRadius: "4px",
-                                }}
+                                className="h-full rounded"
+                                style={{ width: `${bar * 100}%`, background: color }}
                               />
                             </div>
                           </div>
@@ -2030,23 +1221,11 @@ export default function InsightsPage() {
                       ))}
                     </div>
                   </div>
-                  <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "16px" }}>
-                    <div
-                      style={{
-                        fontSize: "10px",
-                        fontWeight: "700",
-                        color: "rgba(255,255,255,0.4)",
-                        fontFamily: "Inter,sans-serif",
-                        letterSpacing: "1.5px",
-                        textTransform: "uppercase",
-                        marginBottom: "10px",
-                      }}
-                    >
+                  <div className="border-t border-[rgba(255,255,255,0.1)] pt-4">
+                    <div className="text-[10px] font-bold text-[rgba(255,255,255,0.4)] font-['Inter',sans-serif] tracking-[1.5px] uppercase mb-2.5">
                       Weight Distribution
                     </div>
-                    <div
-                      style={{ display: "flex", height: "10px", borderRadius: "6px", overflow: "hidden", gap: "2px" }}
-                    >
+                    <div className="flex h-2.5 rounded-[6px] overflow-hidden gap-0.5">
                       {[
                         { pct: 30, color: C.accent },
                         { pct: 25, color: "rgba(255,255,255,0.25)" },
@@ -2055,29 +1234,24 @@ export default function InsightsPage() {
                       ].map((s, i) => (
                         <div
                           key={i}
-                          style={{ width: `${s.pct}%`, height: "100%", background: s.color, borderRadius: "3px" }}
+                          className="h-full rounded-[3px]"
+                          style={{ width: `${s.pct}%`, background: s.color }}
                         />
                       ))}
                     </div>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 14px", marginTop: "10px" }}>
+                    <div className="flex flex-wrap gap-x-3.5 gap-y-2 mt-2.5">
                       {[
                         ["P&P Alignment", "30%", C.accent],
                         ["Strategic Fit", "25%", "rgba(255,255,255,0.5)"],
                         ["Feasibility", "25%", "rgba(184,217,53,0.6)"],
                         ["Scalability", "20%", "rgba(255,255,255,0.3)"],
                       ].map(([l, w, c]) => (
-                        <div key={l} style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <div key={l} className="flex items-center gap-[5px]">
                           <div
-                            style={{ width: "8px", height: "8px", borderRadius: "2px", background: c, flexShrink: 0 }}
+                            className="w-2 h-2 rounded-sm shrink-0"
+                            style={{ background: c as string }}
                           />
-                          <span
-                            style={{
-                              fontSize: "10px",
-                              fontWeight: "600",
-                              color: "rgba(255,255,255,0.6)",
-                              fontFamily: "Inter,sans-serif",
-                            }}
-                          >
+                          <span className="text-[10px] font-semibold text-[rgba(255,255,255,0.6)] font-['Inter',sans-serif]">
                             {l} · {w}
                           </span>
                         </div>
@@ -2092,141 +1266,69 @@ export default function InsightsPage() {
       </section>
 
       {/* ── BUILT ON GIPC ─────────────────────────────────── */}
-      <section id="compare" style={{ padding: mobile ? "56px 20px" : `80px ${PAD}`, background: C.bg }}>
-        <div style={{ maxWidth: MAX, margin: "0 auto" }}>
+      <section
+        id="compare"
+        className="bg-[#F3F5F2]"
+        style={{ padding: mobile ? "56px 20px" : `80px ${PAD}` }}
+      >
+        <div className="mx-auto" style={{ maxWidth: MAX }}>
           {/* Header */}
           {mobile ? (
-            <div style={{ marginBottom: "28px" }}>
+            <div className="mb-7">
               <SectionLabel>Built on GIPC</SectionLabel>
-              <h2
-                style={{
-                  fontFamily: "DM Sans,sans-serif",
-                  fontSize: "30px",
-                  fontWeight: "300",
-                  color: C.primary,
-                  lineHeight: 1.15,
-                  letterSpacing: "-0.5px",
-                  margin: "0 0 14px",
-                }}
-              >
+              <h2 className="font-['DM_Sans',sans-serif] text-[30px] font-light text-[#1B4D3E] leading-[1.15] tracking-[-0.5px] mt-0 mb-3.5 mx-0">
                 GIPC provides the foundation.
                 <br />
-                <strong style={{ fontWeight: "700" }}>BRIDGE builds on top.</strong>
+                <strong className="font-bold">BRIDGE builds on top.</strong>
               </h2>
-              <p
-                style={{
-                  margin: "0 0 20px",
-                  fontSize: "14px",
-                  color: C.muted,
-                  lineHeight: 1.75,
-                  fontFamily: "Inter,sans-serif",
-                }}
-              >
+              <p className="mt-0 mb-5 mx-0 text-sm text-[#6B7280] leading-[1.75] font-['Inter',sans-serif]">
                 GIPC produces Ghana's authoritative investment climate profiles — the official macro layer every serious
                 investor starts with. BRIDGE extends it to the venture level.
               </p>
-              <div style={{ background: C.primary, borderRadius: "12px", padding: "18px 20px" }}>
-                <div
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    color: "rgba(255,255,255,0.45)",
-                    fontFamily: "Inter,sans-serif",
-                    letterSpacing: "1.2px",
-                    textTransform: "uppercase",
-                    marginBottom: "8px",
-                  }}
-                >
+              <div className="bg-[#1B4D3E] rounded-xl p-[18px_20px]">
+                <div className="text-[11px] font-bold text-[rgba(255,255,255,0.45)] font-['Inter',sans-serif] tracking-[1.2px] uppercase mb-2">
                   Our Position
                 </div>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "13px",
-                    color: C.white,
-                    lineHeight: 1.7,
-                    fontFamily: "Inter,sans-serif",
-                  }}
-                >
+                <p className="mt-0 mb-3 mx-0 text-[13px] text-white leading-[1.7] font-['Inter',sans-serif]">
                   BRIDGE incorporates GIPC sector profiles as the regulatory and macroeconomic foundation for every
                   analysis.
                 </p>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <div
-                    style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.accent, flexShrink: 0 }}
-                  />
-                  <span
-                    style={{ fontSize: "12px", fontWeight: "600", color: C.accent, fontFamily: "Inter,sans-serif" }}
-                  >
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#B8D935] shrink-0" />
+                  <span className="text-xs font-semibold text-[#B8D935] font-['Inter',sans-serif]">
                     GIPC macro layer + BRIDGE venture layer = complete intelligence
                   </span>
                 </div>
               </div>
             </div>
           ) : (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "40px",
-                alignItems: "flex-end",
-                marginBottom: "40px",
-              }}
-            >
+            <div className="grid grid-cols-2 gap-10 items-end mb-10">
               <div>
                 <SectionLabel>Built on GIPC</SectionLabel>
                 <SectionHeading>
                   GIPC provides the foundation.
                   <br />
-                  <strong style={{ fontWeight: "700" }}>BRIDGE builds on top.</strong>
+                  <strong className="font-bold">BRIDGE builds on top.</strong>
                 </SectionHeading>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: "16px",
-                    color: C.muted,
-                    lineHeight: 1.75,
-                    fontFamily: "Inter,sans-serif",
-                  }}
-                >
+                <p className="m-0 text-base text-[#6B7280] leading-[1.75] font-['Inter',sans-serif]">
                   The GIPC produces Ghana's authoritative investment climate profiles — the official macro layer every
                   serious investor starts with. BRIDGE takes that foundation and extends it to the venture level:
                   scoring, structuring, and sequencing specific opportunities for deployment. We rely on GIPC data. We
                   don't replace it.
                 </p>
               </div>
-              <div style={{ background: C.primary, borderRadius: "14px", padding: "24px 28px" }}>
-                <div
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    color: "rgba(255,255,255,0.45)",
-                    fontFamily: "Inter,sans-serif",
-                    letterSpacing: "1.2px",
-                    textTransform: "uppercase",
-                    marginBottom: "10px",
-                  }}
-                >
+              <div className="bg-[#1B4D3E] rounded-[14px] p-[24px_28px]">
+                <div className="text-[11px] font-bold text-[rgba(255,255,255,0.45)] font-['Inter',sans-serif] tracking-[1.2px] uppercase mb-2.5">
                   Our Position
                 </div>
-                <p
-                  style={{
-                    margin: "0 0 16px",
-                    fontSize: "15px",
-                    color: C.white,
-                    lineHeight: 1.7,
-                    fontFamily: "Inter,sans-serif",
-                  }}
-                >
+                <p className="mt-0 mb-4 mx-0 text-[15px] text-white leading-[1.7] font-['Inter',sans-serif]">
                   BRIDGE actively incorporates GIPC sector profiles as the regulatory and macroeconomic foundation for
                   every analysis. Together, they form a complete picture — from policy environment to investable
                   venture.
                 </p>
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: C.accent }} />
-                  <span
-                    style={{ fontSize: "13px", fontWeight: "600", color: C.accent, fontFamily: "Inter,sans-serif" }}
-                  >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-2 h-2 rounded-full bg-[#B8D935]" />
+                  <span className="text-[13px] font-semibold text-[#B8D935] font-['Inter',sans-serif]">
                     GIPC macro layer + BRIDGE venture layer = complete intelligence
                   </span>
                 </div>
@@ -2238,17 +1340,10 @@ export default function InsightsPage() {
           {mobile ? (
             /* Mobile: horizontally scrollable pills, no outer container */
             <div
-              style={{
-                overflowX: "auto",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-                marginBottom: "16px",
-                marginLeft: "-20px",
-                marginRight: "-20px",
-                paddingLeft: "20px",
-              }}
+              className="overflow-x-auto mb-4 -mx-5 pl-5"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              <div style={{ display: "flex", gap: "6px", width: "max-content", paddingRight: "20px" }}>
+              <div className="flex gap-1.5 w-max pr-5">
                 {compCategories.map((cat) => (
                   <button
                     key={cat}
@@ -2256,19 +1351,11 @@ export default function InsightsPage() {
                       setActiveComp(cat);
                       setShowAllRows(false);
                     }}
+                    className="px-4 py-[7px] rounded-[50px] text-xs font-bold font-['Inter',sans-serif] cursor-pointer transition-all duration-200 whitespace-nowrap shrink-0"
                     style={{
-                      padding: "7px 16px",
-                      borderRadius: "50px",
                       border: `1px solid ${activeComp === cat ? C.primary : C.line}`,
                       background: activeComp === cat ? C.primary : C.white,
                       color: activeComp === cat ? C.white : C.muted,
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      fontFamily: "Inter,sans-serif",
-                      cursor: "pointer",
-                      transition: "all 0.2s",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
                     }}
                   >
                     {cat}
@@ -2277,33 +1364,15 @@ export default function InsightsPage() {
               </div>
             </div>
           ) : (
-            <div
-              style={{
-                display: "inline-flex",
-                gap: "6px",
-                flexWrap: "wrap",
-                marginBottom: "20px",
-                padding: "6px",
-                borderRadius: "50px",
-                border: `1px solid ${C.line}`,
-                background: C.white,
-              }}
-            >
+            <div className="inline-flex gap-1.5 flex-wrap mb-5 p-1.5 rounded-[50px] border border-[#DEDEDE] bg-white">
               {compCategories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveComp(cat)}
+                  className="px-[18px] py-[7px] rounded-[50px] border-none text-xs font-bold font-['Inter',sans-serif] cursor-pointer transition-all duration-200"
                   style={{
-                    padding: "7px 18px",
-                    borderRadius: "50px",
-                    border: "none",
                     background: activeComp === cat ? C.primary : "transparent",
                     color: activeComp === cat ? C.white : C.muted,
-                    fontSize: "12px",
-                    fontWeight: "700",
-                    fontFamily: "Inter,sans-serif",
-                    cursor: "pointer",
-                    transition: "all 0.2s",
                   }}
                 >
                   {cat}
@@ -2315,7 +1384,7 @@ export default function InsightsPage() {
           {/* Table / Card list */}
           {mobile ? (
             /* Mobile: each row becomes a card, 3 shown by default */
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div className="flex flex-col gap-2.5">
               {(() => {
                 const filtered = compRows.filter((r) => activeComp === "All" || r.category === activeComp);
                 const visible = showAllRows ? filtered : filtered.slice(0, 3);
@@ -2324,110 +1393,35 @@ export default function InsightsPage() {
                     {visible.map((row, i) => (
                       <div
                         key={i}
-                        style={{
-                          background: C.white,
-                          borderRadius: "12px",
-                          border: `1px solid ${C.line}`,
-                          overflow: "hidden",
-                        }}
+                        className="bg-white rounded-xl border border-[#DEDEDE] overflow-hidden"
                       >
-                        <div
-                          style={{
-                            padding: "12px 16px",
-                            borderBottom: `1px solid ${C.line}`,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "13px",
-                              fontWeight: "700",
-                              color: C.dark,
-                              fontFamily: "Inter,sans-serif",
-                            }}
-                          >
+                        <div className="p-[12px_16px] border-b border-[#DEDEDE] flex items-center justify-between">
+                          <span className="text-[13px] font-bold text-[#191919] font-['Inter',sans-serif]">
                             {row.dimension}
                           </span>
-                          <span
-                            style={{
-                              fontSize: "10px",
-                              fontWeight: "700",
-                              color: C.accent,
-                              fontFamily: "Inter,sans-serif",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.6px",
-                              background: C.accentBg,
-                              padding: "3px 8px",
-                              borderRadius: "20px",
-                            }}
-                          >
+                          <span className="text-[10px] font-bold text-[#B8D935] font-['Inter',sans-serif] uppercase tracking-[0.6px] bg-[#EBF5B0] px-2 py-[3px] rounded-[20px]">
                             {row.category}
                           </span>
                         </div>
-                        <div
-                          style={{
-                            padding: "12px 16px",
-                            borderBottom: `1px solid ${C.line}`,
-                            display: "flex",
-                            gap: "10px",
-                          }}
-                        >
-                          <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: "80px" }}>
+                        <div className="p-[12px_16px] border-b border-[#DEDEDE] flex gap-2.5">
+                          <div className="flex items-center gap-[5px] min-w-[80px]">
                             <FileText size={11} color={C.muted} />
-                            <span
-                              style={{
-                                fontSize: "11px",
-                                fontWeight: "700",
-                                color: C.muted,
-                                fontFamily: "Inter,sans-serif",
-                              }}
-                            >
+                            <span className="text-[11px] font-bold text-[#6B7280] font-['Inter',sans-serif]">
                               GIPC
                             </span>
                           </div>
-                          <span
-                            style={{
-                              fontSize: "13px",
-                              color: C.muted,
-                              fontFamily: "Inter,sans-serif",
-                              lineHeight: 1.5,
-                            }}
-                          >
+                          <span className="text-[13px] text-[#6B7280] font-['Inter',sans-serif] leading-[1.5]">
                             {row.gipc}
                           </span>
                         </div>
-                        <div
-                          style={{
-                            padding: "12px 16px",
-                            background: "rgba(235,245,176,0.2)",
-                            display: "flex",
-                            gap: "10px",
-                          }}
-                        >
-                          <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: "80px" }}>
+                        <div className="p-[12px_16px] bg-[rgba(235,245,176,0.2)] flex gap-2.5">
+                          <div className="flex items-center gap-[5px] min-w-[80px]">
                             <BarChart3 size={11} color={C.primary} />
-                            <span
-                              style={{
-                                fontSize: "11px",
-                                fontWeight: "700",
-                                color: C.primary,
-                                fontFamily: "Inter,sans-serif",
-                              }}
-                            >
+                            <span className="text-[11px] font-bold text-[#1B4D3E] font-['Inter',sans-serif]">
                               BRIDGE
                             </span>
                           </div>
-                          <span
-                            style={{
-                              fontSize: "13px",
-                              color: C.primary,
-                              fontFamily: "Inter,sans-serif",
-                              lineHeight: 1.5,
-                              fontWeight: "500",
-                            }}
-                          >
+                          <span className="text-[13px] text-[#1B4D3E] font-['Inter',sans-serif] leading-[1.5] font-medium">
                             {row.bridge}
                           </span>
                         </div>
@@ -2437,36 +1431,15 @@ export default function InsightsPage() {
                     {filtered.length > 3 && (
                       <button
                         onClick={() => setShowAllRows((v) => !v)}
-                        style={{
-                          width: "100%",
-                          padding: "13px",
-                          borderRadius: "12px",
-                          border: `1px solid ${C.line}`,
-                          background: C.white,
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "6px",
-                        }}
+                        className="w-full p-[13px] rounded-xl border border-[#DEDEDE] bg-white cursor-pointer flex items-center justify-center gap-1.5"
                       >
-                        <span
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "700",
-                            color: C.primary,
-                            fontFamily: "Inter,sans-serif",
-                          }}
-                        >
+                        <span className="text-[13px] font-bold text-[#1B4D3E] font-['Inter',sans-serif]">
                           {showAllRows ? "Show less" : `Show ${filtered.length - 3} more`}
                         </span>
                         <ChevronRight
                           size={14}
                           color={C.primary}
-                          style={{
-                            transform: showAllRows ? "rotate(-90deg)" : "rotate(90deg)",
-                            transition: "transform 0.2s",
-                          }}
+                          className={`transition-transform duration-200 ${showAllRows ? "-rotate-90" : "rotate-90"}`}
                         />
                       </button>
                     )}
@@ -2474,41 +1447,14 @@ export default function InsightsPage() {
                 );
               })()}
               {/* Footer */}
-              <div
-                style={{
-                  padding: "16px",
-                  background: C.white,
-                  borderRadius: "12px",
-                  border: `1px solid ${C.line}`,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "12px",
-                    color: C.muted,
-                    fontFamily: "Inter,sans-serif",
-                    fontStyle: "italic",
-                    lineHeight: 1.6,
-                  }}
-                >
+              <div className="p-4 bg-white rounded-xl border border-[#DEDEDE] flex flex-col gap-2.5">
+                <span className="text-xs text-[#6B7280] font-['Inter',sans-serif] italic leading-[1.6]">
                   BRIDGE and GIPC intelligence are designed to work together — macro foundation meets venture-level
                   precision.
                 </span>
                 <a
                   href="/resources"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    fontSize: "13px",
-                    fontWeight: "700",
-                    color: C.primary,
-                    textDecoration: "none",
-                    fontFamily: "Inter,sans-serif",
-                  }}
+                  className="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#1B4D3E] no-underline font-['Inter',sans-serif]"
                 >
                   Access the Resource Library <ArrowUpRight size={12} />
                 </a>
@@ -2516,75 +1462,32 @@ export default function InsightsPage() {
             </div>
           ) : (
             /* Desktop: table */
-            <div
-              style={{
-                background: C.white,
-                borderRadius: "14px",
-                border: `1px solid ${C.line}`,
-                overflow: "hidden",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-              }}
-            >
+            <div className="bg-white rounded-[14px] border border-[#DEDEDE] overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
               <div
-                style={{ display: "grid", gridTemplateColumns: "200px 1fr 1fr", borderBottom: `2px solid ${C.line}` }}
+                className="grid border-b-2 border-[#DEDEDE]"
+                style={{ gridTemplateColumns: "200px 1fr 1fr" }}
               >
-                <div
-                  style={{
-                    padding: "16px 24px",
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    color: C.muted,
-                    fontFamily: "Inter,sans-serif",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.8px",
-                  }}
-                >
+                <div className="p-[16px_24px] text-[11px] font-bold text-[#6B7280] font-['Inter',sans-serif] uppercase tracking-[0.8px]">
                   Dimension
                 </div>
-                <div
-                  style={{
-                    padding: "16px 20px",
-                    borderLeft: `1px solid ${C.line}`,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                  }}
-                >
+                <div className="p-[16px_20px] border-l border-[#DEDEDE] flex items-center gap-2">
                   <FileText size={13} color={C.muted} />
                   <div>
-                    <div
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: "700",
-                        color: C.mutedDark,
-                        fontFamily: "Inter,sans-serif",
-                      }}
-                    >
+                    <div className="text-[13px] font-bold text-[#4B5563] font-['Inter',sans-serif]">
                       GIPC Provides
                     </div>
-                    <div style={{ fontSize: "10px", color: C.muted, fontFamily: "Inter,sans-serif" }}>
+                    <div className="text-[10px] text-[#6B7280] font-['Inter',sans-serif]">
                       Official foundation layer
                     </div>
                   </div>
                 </div>
-                <div
-                  style={{
-                    padding: "16px 20px",
-                    borderLeft: `1px solid ${C.line}`,
-                    background: C.accentBg,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                  }}
-                >
+                <div className="p-[16px_20px] border-l border-[#DEDEDE] bg-[#EBF5B0] flex items-center gap-2">
                   <BarChart3 size={13} color={C.primary} />
                   <div>
-                    <div
-                      style={{ fontSize: "13px", fontWeight: "700", color: C.primary, fontFamily: "Inter,sans-serif" }}
-                    >
+                    <div className="text-[13px] font-bold text-[#1B4D3E] font-['Inter',sans-serif]">
                       BRIDGE Extends
                     </div>
-                    <div style={{ fontSize: "10px", color: C.primary, fontFamily: "Inter,sans-serif", opacity: 0.7 }}>
+                    <div className="text-[10px] text-[#1B4D3E] font-['Inter',sans-serif] opacity-70">
                       Venture intelligence layer
                     </div>
                   </div>
@@ -2595,99 +1498,36 @@ export default function InsightsPage() {
                 .map((row, i, arr) => (
                   <div
                     key={i}
-                    onMouseEnter={() => setHovRow(i)}
-                    onMouseLeave={() => setHovRow(null)}
+                    className="grid transition-colors duration-150 hover:bg-[#FAFCF7]"
                     style={{
-                      display: "grid",
                       gridTemplateColumns: "200px 1fr 1fr",
                       borderBottom: i < arr.length - 1 ? `1px solid ${C.line}` : "none",
-                      background: hovRow === i ? "#FAFCF7" : "transparent",
-                      transition: "background .15s",
                     }}
                   >
-                    <div
-                      style={{
-                        padding: "14px 24px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        borderRight: `1px solid ${C.line}`,
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: "10px",
-                          fontWeight: "700",
-                          color: C.accent,
-                          fontFamily: "Inter,sans-serif",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.6px",
-                          marginBottom: "2px",
-                        }}
-                      >
+                    <div className="p-[14px_24px] flex flex-col justify-center border-r border-[#DEDEDE]">
+                      <span className="text-[10px] font-bold text-[#B8D935] font-['Inter',sans-serif] uppercase tracking-[0.6px] mb-0.5">
                         {row.category}
                       </span>
-                      <span
-                        style={{ fontSize: "13px", fontWeight: "600", color: C.dark, fontFamily: "Inter,sans-serif" }}
-                      >
+                      <span className="text-[13px] font-semibold text-[#191919] font-['Inter',sans-serif]">
                         {row.dimension}
                       </span>
                     </div>
-                    <div
-                      style={{
-                        padding: "14px 20px",
-                        fontSize: "13px",
-                        color: C.muted,
-                        fontFamily: "Inter,sans-serif",
-                        lineHeight: 1.6,
-                        borderRight: `1px solid ${C.line}`,
-                      }}
-                    >
+                    <div className="p-[14px_20px] text-[13px] text-[#6B7280] font-['Inter',sans-serif] leading-[1.6] border-r border-[#DEDEDE]">
                       {row.gipc}
                     </div>
-                    <div
-                      style={{
-                        padding: "14px 20px",
-                        fontSize: "13px",
-                        color: C.primary,
-                        fontFamily: "Inter,sans-serif",
-                        lineHeight: 1.6,
-                        background: "rgba(235,245,176,0.15)",
-                        fontWeight: hovRow === i ? "600" : "400",
-                      }}
-                    >
+                    <div className="p-[14px_20px] text-[13px] text-[#1B4D3E] font-['Inter',sans-serif] leading-[1.6] bg-[rgba(235,245,176,0.15)] hover:font-semibold">
                       {row.bridge}
                     </div>
                   </div>
                 ))}
-              <div
-                style={{
-                  padding: "16px 24px",
-                  background: C.bg,
-                  borderTop: `1px solid ${C.line}`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                  gap: "12px",
-                }}
-              >
-                <span style={{ fontSize: "12px", color: C.muted, fontFamily: "Inter,sans-serif", fontStyle: "italic" }}>
+              <div className="p-[16px_24px] bg-[#F3F5F2] border-t border-[#DEDEDE] flex items-center justify-between flex-wrap gap-3">
+                <span className="text-xs text-[#6B7280] font-['Inter',sans-serif] italic">
                   BRIDGE and GIPC intelligence are designed to work together — macro foundation meets venture-level
                   precision.
                 </span>
                 <a
                   href="/resources"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    fontSize: "12px",
-                    fontWeight: "700",
-                    color: C.primary,
-                    textDecoration: "none",
-                    fontFamily: "Inter,sans-serif",
-                  }}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1B4D3E] no-underline font-['Inter',sans-serif]"
                 >
                   Access the Resource Library <ArrowUpRight size={11} />
                 </a>
@@ -2698,12 +1538,14 @@ export default function InsightsPage() {
       </section>
 
       {/* ── CTA ───────────────────────────────────────────── */}
-      <section style={{ padding: mobile ? "0 20px 56px" : `0px ${PAD} 80px`, background: C.bg }}>
-        <div style={{ maxWidth: MAX, margin: "0 auto" }}>
+      <section
+        className="bg-[#F3F5F2]"
+        style={{ padding: mobile ? "0 20px 56px" : `0px ${PAD} 80px` }}
+      >
+        <div className="mx-auto" style={{ maxWidth: MAX }}>
           <div
+            className="bg-[#1B4D3E] rounded-2xl"
             style={{
-              background: C.primary,
-              borderRadius: "16px",
               padding: mobile ? "32px 24px" : "40px 56px",
               display: "flex",
               flexDirection: mobile ? "column" : "row",
@@ -2714,45 +1556,30 @@ export default function InsightsPage() {
           >
             <div>
               <div
-                style={{
-                  fontSize: mobile ? "24px" : "28px",
-                  fontWeight: "700",
-                  color: C.white,
-                  fontFamily: "DM Sans,sans-serif",
-                  marginBottom: "10px",
-                }}
+                className="font-bold text-white font-['DM_Sans',sans-serif] mb-2.5"
+                style={{ fontSize: mobile ? "24px" : "28px" }}
               >
                 Explore the full research
               </div>
               <div
-                style={{
-                  fontSize: mobile ? "14px" : "15px",
-                  color: "rgba(255,255,255,0.55)",
-                  fontFamily: "Inter,sans-serif",
-                  lineHeight: 1.7,
-                }}
+                className="text-[rgba(255,255,255,0.55)] font-['Inter',sans-serif] leading-[1.7]"
+                style={{ fontSize: mobile ? "14px" : "15px" }}
               >
                 The complete sector analyses — including every scored venture, implementation framework, and capital
                 breakdown — are available in the BRIDGE Resource Library.
               </div>
             </div>
-            <div style={{ display: "flex", gap: "10px", flexDirection: mobile ? "column" : "row", flexShrink: 0 }}>
+            <div
+              className="shrink-0"
+              style={{
+                display: "flex",
+                gap: "10px",
+                flexDirection: mobile ? "column" : "row",
+              }}
+            >
               <a
                 href="/resources"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "7px",
-                  background: C.accent,
-                  color: C.primary,
-                  textDecoration: "none",
-                  padding: "13px 24px",
-                  borderRadius: "50px",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  fontFamily: "Inter,sans-serif",
-                }}
+                className="inline-flex items-center justify-center gap-[7px] bg-[#B8D935] text-[#1B4D3E] no-underline py-[13px] px-6 rounded-[50px] text-sm font-bold font-['Inter',sans-serif]"
               >
                 <Eye size={14} />
                 View Resources
@@ -2760,21 +1587,7 @@ export default function InsightsPage() {
               </a>
               <a
                 href="/login"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "7px",
-                  background: "rgba(255,255,255,0.08)",
-                  color: C.white,
-                  textDecoration: "none",
-                  padding: "13px 24px",
-                  borderRadius: "50px",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  fontFamily: "Inter,sans-serif",
-                  border: "1px solid rgba(255,255,255,0.14)",
-                }}
+                className="inline-flex items-center justify-center gap-[7px] bg-[rgba(255,255,255,0.08)] text-white no-underline py-[13px] px-6 rounded-[50px] text-sm font-semibold font-['Inter',sans-serif] border border-[rgba(255,255,255,0.14)]"
               >
                 <Lock size={14} />
                 Get Full Access
