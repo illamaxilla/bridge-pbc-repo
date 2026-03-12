@@ -867,7 +867,10 @@ const Footer=({sector})=>(
    ROOT EXPORT
 ═══════════════════════════════════════════════════════════════════════════ */
 export default function SectorBriefFull({sectorId=1}){
-  const[active,setActive]=useState(sectorId);
+  const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const urlSector = urlParams?.get('sector') ? parseInt(urlParams.get('sector'), 10) : null;
+  const initialSector = urlSector && urlSector >= 1 && urlSector <= 12 ? urlSector : sectorId;
+  const[active,setActive]=useState(initialSector);
   const coverLogoRef=useRef(null);
   const sector=SECTORS.find(s=>s.id===active)||SECTORS[0];
   const handleSelect=(id)=>{setActive(id);window.scrollTo({top:0,behavior:'smooth'});};

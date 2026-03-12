@@ -42,6 +42,11 @@ import {
   Folder,
   BookCopy,
   Layers,
+  Bell,
+  Printer,
+  ArrowLeft,
+  X,
+  LayoutDashboard,
 } from "lucide-react";
 
 // ─── Design System ────────────────────────────────────────
@@ -462,11 +467,13 @@ const docs = [
     label: "White Paper",
     title: "BRIDGE PBC Foundational White Paper",
     desc: "Complete intellectual foundation — methodology, sector framework, and theory of change for Ghana's development ecosystem.",
-    tag: "Free Download",
+    tag: "Free Preview",
     free: true,
     pages: "48 pages",
-    action: "Download PDF",
+    action: "Preview",
     soon: false,
+    path: "/resources/white-paper",
+    noDownload: true,
   },
   {
     id: 2,
@@ -479,6 +486,9 @@ const docs = [
     pages: "12 reports",
     action: "Unlock Access",
     soon: false,
+    path: "/resources/sector-briefs",
+    paidPath: "/resources/sector-briefs-full",
+    requiresSignIn: true,
   },
   {
     id: 3,
@@ -486,11 +496,12 @@ const docs = [
     label: "Data & Reports",
     title: "BRIDGE Portfolio Data — 174+ Ventures",
     desc: "Full venture pipeline data across all sectors including scoring matrices, capital ranges by tier, and priority rankings.",
-    tag: "Subscription",
+    tag: "Coming Soon",
     free: false,
     pages: "174 ventures",
-    action: "Unlock Access",
+    action: "Notify Me",
     soon: false,
+    notifyMe: true,
   },
   {
     id: 4,
@@ -502,7 +513,8 @@ const docs = [
     free: false,
     pages: null,
     action: "Notify Me",
-    soon: true,
+    soon: false,
+    notifyMe: true,
   },
   {
     id: 5,
@@ -515,6 +527,8 @@ const docs = [
     pages: "32 pages",
     action: "Unlock Access",
     soon: false,
+    path: "/resources/annual-review-2025",
+    paidOnly: true,
   },
   {
     id: 6,
@@ -527,6 +541,20 @@ const docs = [
     pages: "Ongoing",
     action: "Unlock Access",
     soon: false,
+    path: "/resources/policy-tracker",
+  },
+  {
+    id: 7,
+    icon: LayoutDashboard,
+    label: "Monthly Dashboard",
+    title: "BRIDGE Monthly Dashboard — March 2026",
+    desc: "Monthly intelligence snapshot with sector pulse, policy signals, and market movements. Free preview of the full dashboard experience.",
+    tag: "Free",
+    free: true,
+    pages: "Monthly",
+    action: "View Dashboard",
+    soon: false,
+    path: "/resources/monthly-dashboard",
   },
 ];
 
@@ -538,7 +566,7 @@ const updates = [
     date: "March 2026",
     read: "8 min",
     free: true,
-    path: "/resources/policy-brief",
+    path: "/resources/budget-alignment",
   },
   {
     id: 2,
@@ -547,7 +575,7 @@ const updates = [
     date: "Feb 2026",
     read: "12 min",
     free: false,
-    path: "/resources/sector-brief/agriculture",
+    path: "/resources/sector-briefs?sector=6",
   },
   {
     id: 3,
@@ -556,13 +584,13 @@ const updates = [
     date: "Jan 2026",
     read: "20 min",
     free: false,
-    path: "/resources/annual-review",
+    path: "/resources/ghana-intelligence",
   },
 ];
 
 // ─── Tag Variants by doc type ─────────────────────────────
 function docTagStyle(tag) {
-  if (tag === "Free Download") return { bg: C.accentBg, color: C.primary };
+  if (tag === "Free Download" || tag === "Free Preview" || tag === "Free") return { bg: C.accentBg, color: C.primary };
   if (tag === "New") return { bg: `${C.teal}18`, color: C.teal };
   if (tag === "Coming Soon") return { bg: `${C.muted}14`, color: C.muted };
   if (tag === "Subscription") return { bg: `${C.primary}10`, color: C.primary };
@@ -1502,7 +1530,7 @@ function GIPCTab({ mobile }) {
 }
 
 // ─── Document Library Tab ─────────────────────────────────
-function DocRow({ doc, mobile }) {
+function DocRow({ doc, mobile, onNavigate, onNotifyMe }) {
   const Icon = doc.icon;
   const ts = docTagStyle(doc.tag);
 
@@ -1573,14 +1601,15 @@ function DocRow({ doc, mobile }) {
               )}
               <button
                 disabled={doc.soon}
+                onClick={() => doc.notifyMe ? onNotifyMe?.(doc) : onNavigate?.(doc)}
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: "5px",
                   marginLeft: "auto",
-                  background: doc.soon ? "transparent" : doc.free ? C.accent : C.primary,
-                  color: doc.soon ? C.muted : doc.free ? C.primary : C.white,
-                  border: doc.soon ? `1px solid ${C.line}` : "none",
+                  background: doc.notifyMe ? "transparent" : doc.soon ? "transparent" : doc.free ? C.accent : C.primary,
+                  color: doc.notifyMe ? C.muted : doc.soon ? C.muted : doc.free ? C.primary : C.white,
+                  border: (doc.notifyMe || doc.soon) ? `1px solid ${C.line}` : "none",
                   padding: "8px 16px",
                   borderRadius: "50px",
                   fontSize: "12px",
@@ -1591,7 +1620,7 @@ function DocRow({ doc, mobile }) {
                   whiteSpace: "nowrap",
                 }}
               >
-                {!doc.soon && (doc.free ? <Download size={11} /> : <Lock size={11} />)}
+                {doc.notifyMe ? <Bell size={11} /> : !doc.soon && (doc.free ? (doc.noDownload ? <Eye size={11} /> : <Download size={11} />) : <Lock size={11} />)}
                 {doc.action}
               </button>
             </div>
@@ -1670,13 +1699,14 @@ function DocRow({ doc, mobile }) {
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <button
           disabled={doc.soon}
+          onClick={() => doc.notifyMe ? onNotifyMe?.(doc) : onNavigate?.(doc)}
           style={{
             display: "flex",
             alignItems: "center",
             gap: "6px",
-            background: doc.soon ? "transparent" : doc.free ? C.accent : C.primary,
-            color: doc.soon ? C.muted : doc.free ? C.primary : C.white,
-            border: doc.soon ? `1px solid ${C.line}` : "none",
+            background: doc.notifyMe ? "transparent" : doc.soon ? "transparent" : doc.free ? C.accent : C.primary,
+            color: doc.notifyMe ? C.muted : doc.soon ? C.muted : doc.free ? C.primary : C.white,
+            border: (doc.notifyMe || doc.soon) ? `1px solid ${C.line}` : "none",
             padding: "9px 16px",
             borderRadius: "50px",
             fontSize: "12px",
@@ -1687,7 +1717,7 @@ function DocRow({ doc, mobile }) {
             whiteSpace: "nowrap",
           }}
         >
-          {!doc.soon && (doc.free ? <Download size={11} /> : <Lock size={11} />)}
+          {doc.notifyMe ? <Bell size={11} /> : !doc.soon && (doc.free ? (doc.noDownload ? <Eye size={11} /> : <Download size={11} />) : <Lock size={11} />)}
           {doc.action}
         </button>
       </div>
@@ -1695,7 +1725,7 @@ function DocRow({ doc, mobile }) {
   );
 }
 
-function LibraryTab({ mobile }) {
+function LibraryTab({ mobile, onNavigate, onNotifyMe }) {
   return (
     <div>
       {/* Column headers — desktop only */}
@@ -1739,12 +1769,12 @@ function LibraryTab({ mobile }) {
               textTransform: "uppercase",
             }}
           >
-            6 Documents
+            {docs.length} Documents
           </span>
         </div>
       )}
       {docs.map((doc) => (
-        <DocRow key={doc.id} doc={doc} mobile={mobile} />
+        <DocRow key={doc.id} doc={doc} mobile={mobile} onNavigate={onNavigate} onNotifyMe={onNotifyMe} />
       ))}
     </div>
   );
@@ -1961,6 +1991,174 @@ function WhatsNew({ mobile, onCardClick, isLoggedIn }) {
   );
 }
 
+// ─── Notify Me Modal ─────────────────────────────────────
+function NotifyMeModal({ isOpen, onClose, docTitle, isLoggedIn }) {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        background: "rgba(0,0,0,0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: C.white,
+          borderRadius: "12px",
+          maxWidth: "420px",
+          width: "100%",
+          padding: "32px",
+          position: "relative",
+          boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+        }}
+      >
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: "14px",
+            right: "14px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            padding: "4px",
+          }}
+        >
+          <X size={18} color={C.muted} />
+        </button>
+        <div
+          style={{
+            width: "48px",
+            height: "48px",
+            borderRadius: "10px",
+            background: C.accentBg,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "16px",
+          }}
+        >
+          <Bell size={22} color={C.primary} />
+        </div>
+        <h3
+          style={{
+            fontSize: "18px",
+            fontWeight: "700",
+            color: C.dark,
+            fontFamily: "DM Sans,sans-serif",
+            marginBottom: "8px",
+          }}
+        >
+          Get Notified
+        </h3>
+        <p
+          style={{
+            fontSize: "13px",
+            color: C.muted,
+            fontFamily: "Inter,sans-serif",
+            lineHeight: 1.6,
+            marginBottom: "20px",
+          }}
+        >
+          We'll notify you when <strong style={{ color: C.dark }}>{docTitle}</strong> becomes available.
+        </p>
+        {submitted ? (
+          <div
+            style={{
+              padding: "14px",
+              background: `${C.teal}10`,
+              border: `1px solid ${C.teal}30`,
+              borderRadius: "8px",
+              fontSize: "13px",
+              fontWeight: "600",
+              color: C.teal,
+              fontFamily: "Inter,sans-serif",
+              textAlign: "center",
+            }}
+          >
+            You're on the list! We'll be in touch.
+          </div>
+        ) : isLoggedIn ? (
+          <button
+            onClick={() => setSubmitted(true)}
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              background: C.primary,
+              color: C.white,
+              border: "none",
+              padding: "12px",
+              borderRadius: "8px",
+              fontSize: "14px",
+              fontWeight: "700",
+              fontFamily: "Inter,sans-serif",
+              cursor: "pointer",
+            }}
+          >
+            <Bell size={14} /> Notify Me When Available
+          </button>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <input
+              type="email"
+              placeholder="Your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                border: `1px solid ${C.line}`,
+                borderRadius: "8px",
+                fontSize: "13px",
+                fontFamily: "Inter,sans-serif",
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+            <button
+              onClick={() => { if (email) setSubmitted(true); }}
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                background: C.primary,
+                color: C.white,
+                border: "none",
+                padding: "12px",
+                borderRadius: "8px",
+                fontSize: "14px",
+                fontWeight: "700",
+                fontFamily: "Inter,sans-serif",
+                cursor: "pointer",
+                opacity: email ? 1 : 0.5,
+              }}
+            >
+              <Bell size={14} /> Notify Me
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function ResourcesPage() {
   const navigate = useNavigate();
   const { user, tier } = useAuth();
@@ -1968,6 +2166,7 @@ export default function ResourcesPage() {
   const [mobile, setMobile] = useState(false);
   const [filter, setFilter] = useState("All");
   const [showAuth, setShowAuth] = useState(false);
+  const [notifyModal, setNotifyModal] = useState<{ open: boolean; title: string }>({ open: false, title: "" });
 
   const handleCardClick = (update: typeof updates[number]) => {
     if (update.free) {
@@ -1977,6 +2176,53 @@ export default function ResourcesPage() {
     } else {
       navigate(`/login?redirect=${encodeURIComponent(update.path)}`);
     }
+  };
+
+  const handleDocNavigate = (doc: typeof docs[number]) => {
+    if (!doc.path) return;
+    // White paper: free to preview (no login required)
+    if (doc.noDownload) {
+      navigate(doc.path);
+      return;
+    }
+    // Free docs: navigate directly
+    if (doc.free) {
+      navigate(doc.path);
+      return;
+    }
+    // Paid-only: require paid tier
+    if (doc.paidOnly) {
+      if (tier === "paid") {
+        navigate(doc.path);
+      } else if (user) {
+        // Show upgrade prompt - navigate to login with redirect
+        navigate(`/login?redirect=${encodeURIComponent(doc.path)}&upgrade=true`);
+      } else {
+        navigate(`/login?redirect=${encodeURIComponent(doc.path)}`);
+      }
+      return;
+    }
+    // Subscription docs with free/paid tiers
+    if (doc.requiresSignIn) {
+      if (tier === "paid" && doc.paidPath) {
+        navigate(doc.paidPath);
+      } else if (user) {
+        navigate(doc.path);
+      } else {
+        navigate(`/login?redirect=${encodeURIComponent(doc.path)}`);
+      }
+      return;
+    }
+    // Default: require login
+    if (user) {
+      navigate(doc.path);
+    } else {
+      navigate(`/login?redirect=${encodeURIComponent(doc.path)}`);
+    }
+  };
+
+  const handleNotifyMe = (doc: typeof docs[number]) => {
+    setNotifyModal({ open: true, title: doc.title });
   };
   useEffect(() => {
     const c = () => setMobile(window.innerWidth < 900);
@@ -1997,7 +2243,7 @@ export default function ResourcesPage() {
       count: "12 sectors",
     },
     { id: "gipc", label: "GIPC Profiles", mobileLabel: "GIPC Profile", icon: BookCopy, count: "13 profiles" },
-    { id: "library", label: "Document Library", mobileLabel: "Library", icon: Folder, count: "6 resources" },
+    { id: "library", label: "Document Library", mobileLabel: "Library", icon: Folder, count: `${docs.length} resources` },
   ];
 
   return (
@@ -2213,7 +2459,9 @@ export default function ResourcesPage() {
                 }
               }} onNavigate={(slug: string) => {
                 const sector = sectors.find((s) => s.slug === slug);
-                const briefPath = `/resources/sector-brief/${slug}`;
+                const sectorIndex = sectors.findIndex((s) => s.slug === slug);
+                const sectorId = sectorIndex + 1;
+                const briefPath = `/resources/sector-briefs?sector=${sectorId}`;
                 if (sector?.free || user) {
                   navigate(briefPath);
                 } else {
@@ -2221,7 +2469,7 @@ export default function ResourcesPage() {
                 }
               }} />}
               {tab === "gipc" && <GIPCTab mobile={mobile} />}
-              {tab === "library" && <LibraryTab mobile={mobile} />}
+              {tab === "library" && <LibraryTab mobile={mobile} onNavigate={handleDocNavigate} onNotifyMe={handleNotifyMe} />}
             </div>
           </div>
         </div>
@@ -2315,6 +2563,12 @@ export default function ResourcesPage() {
         onSignInSuccess={() => {
           setShowAuth(false);
         }}
+      />
+      <NotifyMeModal
+        isOpen={notifyModal.open}
+        onClose={() => setNotifyModal({ open: false, title: "" })}
+        docTitle={notifyModal.title}
+        isLoggedIn={!!user}
       />
     </div>
   );
