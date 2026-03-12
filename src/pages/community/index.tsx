@@ -2967,19 +2967,14 @@ function MembersPage({ isMobile }) {
           </div>
           {!isMobile && (
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                borderLeft: `1px solid ${C.line}`,
-                paddingLeft: 12,
-              }}
+              className="flex items-center gap-[6px] pl-3"
+              style={{ borderLeft: `1px solid ${C.line}` }}
             >
-              <span style={{ fontSize: 11, color: C.muted, whiteSpace: "nowrap" }}>Sort:</span>
+              <span className="text-[11px] whitespace-nowrap" style={{ color: C.muted }}>Sort:</span>
               <PillToggle opts={["points", "name"]} val={sortBy} set={setSortBy} />
             </div>
           )}
-          <span style={{ fontSize: 12, color: C.muted, whiteSpace: "nowrap" }}>
+          <span className="text-[12px] whitespace-nowrap" style={{ color: C.muted }}>
             {filtered.length} result{filtered.length !== 1 ? "s" : ""}
           </span>
         </div>

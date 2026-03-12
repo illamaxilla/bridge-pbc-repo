@@ -3948,12 +3948,9 @@ const ImpactSection = () => {
           >
             {/* View Toggle */}
             <div
+              className="inline-flex rounded-full overflow-hidden shrink-0"
               style={{
-                display: "inline-flex",
                 backgroundColor: colors.background,
-                borderRadius: "50px",
-                overflow: "hidden",
-                flexShrink: 0,
                 padding: isMobile ? "2px" : "3px",
               }}
             >
@@ -3964,18 +3961,14 @@ const ImpactSection = () => {
                     setView(v);
                     triggerAnimate();
                   }}
+                  className="border-none font-[Inter,sans-serif] cursor-pointer transition-all duration-200 rounded-full"
                   style={{
                     backgroundColor: view === v ? colors.white : "transparent",
                     color: view === v ? colors.primary : "#999",
                     fontWeight: view === v ? "700" : "500",
-                    border: "none",
                     padding: isMobile ? "5px 10px" : "6px 14px",
                     fontSize: isMobile ? "11px" : "12px",
-                    fontFamily: "Inter, sans-serif",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
                     boxShadow: view === v ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
-                    borderRadius: "50px",
                   }}
                 >
                   {v === "metrics" ? (isMobile ? "Metric" : "By Metric") : isMobile ? "Stakeholder" : "By Stakeholder"}
@@ -3984,7 +3977,7 @@ const ImpactSection = () => {
             </div>
 
             {/* Vertical Divider */}
-            <div style={{ width: "1px", height: "20px", backgroundColor: colors.line, flexShrink: 0 }} />
+            <div className="w-px h-5 shrink-0" style={{ backgroundColor: colors.line }} />
 
             {/* Sub-filter Pills */}
             {view === "metrics"

@@ -2422,11 +2422,7 @@ const RippleEffectSection = () => {
                     Why It Matters
                   </h4>
                   <p
-                    className="font-[Inter,sans-serif] text-[15px] text-white/70"
-                    style={{
-                      lineHeight: "1.6",
-                      marginBottom: "20px",
-                    }}
+                    className="font-[Inter,sans-serif] text-[15px] text-white/70 leading-[1.6] mb-5"
                   >
                     {pathways[activeNode].impact}
                   </p>
