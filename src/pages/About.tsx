@@ -944,7 +944,7 @@ function ThreeGapsSection({ isMobile }) {
       {/* Horizontal scroll — full width, no padding clipping */}
       <div
         ref={scrollRef}
-        className="hide-scrollbar"
+        className={`hide-scrollbar flex overflow-x-auto snap-x snap-mandatory [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none] ${isMobile ? "gap-3 px-5" : "gap-5 px-20"}`}
         onScroll={() => {
           if (scrollRef.current) {
             const cardWidth = isMobile ? scrollRef.current.offsetWidth * 0.82 + 12 : 380 + 20;
@@ -952,7 +952,6 @@ function ThreeGapsSection({ isMobile }) {
             setActiveCard(idx);
           }
         }}
-        className={`flex overflow-x-auto snap-x snap-mandatory [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none] ${isMobile ? "gap-3 px-5" : "gap-5 px-20"}`}
       >
         {filtered.map((s, i) => {
           const isDark = i === 0 && activeFilter !== "All";

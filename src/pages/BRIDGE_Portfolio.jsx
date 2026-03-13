@@ -84,7 +84,7 @@ function MobileSectorCard({ sector, isOpen, onToggle }) {
       </div>
 
       {isOpen && (
-        <div style={{ background: C.white, borderTop: `1px solid ${C.line}`, padding: '16px 16px', border: `1px solid ${C.primary}`, borderTop: 'none', borderRadius: '0 0 10px 10px' }}>
+        <div style={{ background: C.white, padding: '16px 16px', border: `1px solid ${C.primary}`, borderTop: 'none', borderRadius: '0 0 10px 10px' }}>
           <p style={{ fontSize: 12, lineHeight: 1.75, color: C.subtle, margin: '0 0 14px' }}>{sector.body}</p>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.primary, marginBottom: 8 }}>Indicative Venture Categories</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>

@@ -1806,7 +1806,7 @@ export default function ServicesSectorsPageV2() {
             <>
               <div
                 ref={sectorScrollRef}
-                className="sector-scroll flex overflow-x-auto gap-0"
+                className="sector-scroll flex overflow-x-auto gap-0 snap-x snap-mandatory"
                 onScroll={() => {
                   const el = sectorScrollRef.current;
                   if (el) {
@@ -1814,7 +1814,7 @@ export default function ServicesSectorsPageV2() {
                     setSectorScrollIndex(idx);
                   }
                 }}
-                className="snap-x snap-mandatory" style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
+                style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
                 <style>{`
                   .sector-scroll::-webkit-scrollbar { display: none; }

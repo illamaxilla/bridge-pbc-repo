@@ -419,7 +419,6 @@ export default function SearchPage() {
                         alignItems: "flex-start",
                         gap: mobile ? 12 : 16,
                         padding: mobile ? "16px 0" : "20px 0",
-                        borderBottom: `1px solid ${colors.line}`,
                         background: "transparent",
                         border: "none",
                         borderBottom: `1px solid ${colors.line}`,
