@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
+import { resetPassword } from "@/services/supabase";
 import { Field } from "./FormField";
 
 const forgotPasswordSchema = z.object({
@@ -29,10 +29,7 @@ export const ForgotPasswordForm = ({ onBack }: ForgotPasswordFormProps) => {
     setError(null);
     setLoading(true);
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
-        redirectTo: `${window.location.origin}/login`,
-      });
-      if (error) throw error;
+      await resetPassword(data.email);
       setSent(true);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "An unexpected error occurred.";
