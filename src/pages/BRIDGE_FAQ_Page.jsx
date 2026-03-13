@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Layout } from "@/components/Layout";
+import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // ============================================================================
 // BRIDGE PBC — FAQ Page
@@ -23,33 +26,10 @@ const colors = {
 
 const CONTENT_MAX_WIDTH = '1200px';
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-  return isMobile;
-}
-
-// ─── Global Styles ────────────────────────────────────────────────────────────
-const GlobalStyles = () => (
+// ─── Scoped Styles ────────────────────────────────────────────────────────────
+const FAQStyles = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
-
-    /* ── Reset ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
-    body { background: ${colors.background}; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
-    ::selection { background: ${colors.accent}; color: ${colors.ink}; }
-    button, input { -webkit-appearance: none; appearance: none; font-family: inherit; }
-    a { -webkit-tap-highlight-color: transparent; }
-
-    /* ── Visibility helpers ── */
-    .mob-show { display: none !important; }
-    .mob-hide { display: block; }
 
     /* ── Interactions ── */
     .faq-search-input::placeholder { color: ${colors.faint}; }
@@ -77,19 +57,6 @@ const GlobalStyles = () => (
 
     .cta-btn { transition: all 0.2s ease; cursor: pointer; }
     .cta-btn:hover { transform: translateY(-2px); }
-    .nav-link { transition: color 0.2s ease; }
-    .nav-link:hover { color: ${colors.primary} !important; }
-
-    /* Mobile overlay nav */
-    .mob-nav-overlay {
-      position: fixed; inset: 0; z-index: 200;
-      background: ${colors.ink};
-      display: flex; flex-direction: column;
-      padding: 0;
-      transform: translateX(100%);
-      transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
-    }
-    .mob-nav-overlay.open { transform: translateX(0); }
 
     /* Stat strip 2×2 on mobile */
     @media (max-width: 600px) {
@@ -102,8 +69,6 @@ const GlobalStyles = () => (
 
     /* ── Tablet ≤900px ── */
     @media (max-width: 900px) {
-      .nav-desktop     { display: none !important; }
-      .mob-show        { display: flex !important; }
       .hero-section    { padding: 60px 32px 52px !important; }
       .hero-search     { max-width: 100% !important; }
       .stat-strip-wrap { padding: 16px 32px !important; }
@@ -120,17 +85,10 @@ const GlobalStyles = () => (
       .mem-card-sticky { position: static !important; }
       .mem-tiers       { grid-template-columns: 1fr !important; }
       .cta-section     { padding: 64px 32px !important; }
-      .footer-pad      { padding: 44px 32px 32px !important; }
-      .footer-grid     { grid-template-columns: 1fr 1fr !important; gap: 36px !important; }
-      .footer-brand    { grid-column: 1 / -1 !important; }
     }
 
     /* ── Mobile ≤600px ── */
     @media (max-width: 600px) {
-      /* Header */
-      .header-inner    { padding: 0 18px !important; height: 58px !important; }
-
-      /* Hero */
       .hero-section    { padding: 44px 18px 36px !important; }
       .hero-heading    { font-size: 32px !important; white-space: normal !important; letter-spacing: -0.8px !important; }
       .hero-sub        { font-size: 14px !important; margin-bottom: 24px !important; max-width: 100% !important; }
@@ -138,25 +96,17 @@ const GlobalStyles = () => (
       .hero-search-row { display: flex !important; align-items: center !important; gap: 8px !important; }
       .hero-search-btn { width: 100% !important; padding: 13px !important; border-radius: 10px !important; font-size: 14px !important; }
       .hero-hints      { margin-top: 10px !important; font-size: 11px !important; }
-
-      /* Stat strip */
       .stat-strip-wrap { padding: 0 !important; }
       .stat-strip      { flex-wrap: wrap !important; padding: 0 18px !important; }
       .stat-divider    { display: none !important; }
-
-      /* Action cards */
       .action-pad      { padding: 24px 18px 0 !important; }
       .action-card     { padding: 18px 20px !important; }
-
-      /* Topic grid */
       .topic-pad       { padding: 28px 18px 32px !important; }
       .topic-grid      { gap: 8px !important; }
       .topic-label-row { margin-bottom: 16px !important; }
       .cat-card        { padding: 14px 12px !important; }
       .cat-desc        { display: none !important; }
       .cat-icon-wrap   { width: 34px !important; height: 34px !important; margin-bottom: 8px !important; }
-
-      /* FAQ body */
       .faq-body-pad    { padding: 0 18px 52px !important; }
       .faq-section-hd  { padding: 32px 0 24px !important; }
       .faq-section-h2  { font-size: 22px !important; }
@@ -167,11 +117,7 @@ const GlobalStyles = () => (
       .faq-num         { display: none !important; }
       .faq-q-text      { font-size: 14px !important; }
       .faq-toggle-btn  { width: 28px !important; height: 28px !important; flex-shrink: 0; }
-
-      /* Mobile cat strip */
       .mob-cat-strip   { margin-top: 16px !important; margin-bottom: 0 !important; }
-
-      /* Membership */
       .mem-section     { padding: 52px 18px !important; }
       .mem-headline    { font-size: 30px !important; margin-bottom: 14px !important; }
       .mem-sub         { font-size: 14px !important; margin-bottom: 32px !important; }
@@ -184,91 +130,14 @@ const GlobalStyles = () => (
       .mem-paid-footer { padding: 16px 18px !important; }
       .mem-paid-ctas   { flex-direction: column !important; gap: 8px !important; }
       .mem-paid-ctas button { width: 100% !important; justify-content: center !important; }
-
-      /* CTA section */
       .cta-section     { padding: 52px 18px !important; }
       .cta-h2          { font-size: 26px !important; }
       .cta-sub         { font-size: 14px !important; margin-bottom: 32px !important; }
       .cta-buttons     { flex-direction: column !important; align-items: stretch !important; gap: 10px !important; }
       .cta-buttons button { width: 100% !important; padding: 16px !important; text-align: center !important; }
-
-      /* Footer */
-      .footer-pad      { padding: 36px 18px 28px !important; }
-      .footer-grid     { grid-template-columns: 1fr !important; gap: 24px !important; }
-      .footer-links    { display: none !important; }
-      .footer-bottom   { padding: 16px 18px !important; flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
-      .footer-bottom-links { display: none !important; }
     }
   `}</style>
 );
-
-// ─── Logo ─────────────────────────────────────────────────────────────────────
-function BridgeLogo({ variant = 'dark' }) {
-  const textColor = variant === 'white' ? '#FFFFFF' : colors.primary;
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-      <div style={{
-        width: '38px', height: '38px',
-        backgroundColor: variant === 'white' ? 'rgba(255,255,255,0.1)' : colors.primary,
-        border: variant === 'white' ? '1px solid rgba(255,255,255,0.14)' : 'none',
-        borderRadius: '9px',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-      }}>
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L2 7L12 12L22 7L12 2Z" fill={colors.accent} />
-          <path d="M2 17L12 22L22 17" stroke={colors.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M2 12L12 17L22 12" stroke="rgba(184,217,53,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
-      <div>
-        <div style={{ fontSize: '18px', fontWeight: '800', color: textColor, lineHeight: 1, letterSpacing: '-0.3px' }}>BRIDGE</div>
-        <div style={{ fontSize: '9px', fontWeight: '600', color: variant === 'white' ? 'rgba(255,255,255,0.4)' : colors.muted, letterSpacing: '1.5px' }}>PUBLIC BENEFIT CORP</div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Header ───────────────────────────────────────────────────────────────────
-function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', h);
-    return () => window.removeEventListener('scroll', h);
-  }, []);
-  const navItems = ['About', 'Sectors', 'Services', 'Insights', 'FAQ', 'Contact'];
-  return (
-    <header style={{
-      position: 'sticky', top: 0, zIndex: 100,
-      backgroundColor: scrolled ? 'rgba(255,255,255,0.97)' : colors.white,
-      borderBottom: `1px solid ${scrolled ? colors.line : colors.line}`,
-      backdropFilter: scrolled ? 'blur(8px)' : 'none',
-      transition: 'all 0.3s ease',
-    }}>
-      {/* Main nav */}
-      <div style={{ padding: '0 56px', height: '68px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <BridgeLogo variant="dark" />
-        <nav style={{ display: 'flex', gap: '28px', alignItems: 'center' }}>
-          {navItems.map(item => (
-            <a key={item} href="#" className="nav-link" style={{
-              color: item === 'FAQ' ? colors.primary : '#888',
-              textDecoration: 'none', fontSize: '13px', fontWeight: item === 'FAQ' ? '700' : '500',
-              borderBottom: item === 'FAQ' ? `2px solid ${colors.accent}` : '2px solid transparent',
-              paddingBottom: '2px',
-            }}>{item}</a>
-          ))}
-          <div style={{ width: '1px', height: '22px', background: colors.line }} />
-          <button className="cta-btn" style={{
-            background: colors.accent, color: colors.primary, border: 'none',
-            padding: '9px 22px', fontSize: '13px', fontWeight: '700',
-            borderRadius: '50px', letterSpacing: '0.2px',
-          }}>Get Started →</button>
-        </nav>
-      </div>
-    </header>
-  );
-}
 
 // ─── FAQ Data ─────────────────────────────────────────────────────────────────
 const FAQ_DATA = {
@@ -1044,7 +913,7 @@ function FAQBody({ activeCategory, setActiveCategory, searchQuery }) {
 
 
 // ─── Membership Teaser ────────────────────────────────────────────────────────
-function MembershipTeaser() {
+function MembershipTeaser({ onApplyPaid, onApplyFree }) {
   const [askOpen, setAskOpen]     = useState(false);
   const [question, setQuestion]   = useState('');
   const [answer, setAnswer]       = useState('');
@@ -1411,7 +1280,7 @@ Keep answers short (2-4 sentences), direct, and warm. Do not use markdown. Do no
 
             {/* CTAs */}
             <div style={{ padding: '16px', background: 'rgba(255,255,255,0.03)', borderRadius: '0 0 20px 20px', border: '1px solid rgba(255,255,255,0.07)', borderTop: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <button style={{
+              <button onClick={onApplyPaid} style={{
                 width: '100%', padding: '13px', background: colors.accent,
                 color: colors.primary, border: 'none', borderRadius: '50px',
                 fontSize: '13px', fontWeight: '800', cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
@@ -1420,7 +1289,7 @@ Keep answers short (2-4 sentences), direct, and warm. Do not use markdown. Do no
                 Apply for Paid Membership
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </button>
-              <button style={{
+              <button onClick={onApplyFree} style={{
                 width: '100%', padding: '11px', background: 'transparent',
                 color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.12)',
                 borderRadius: '50px', fontSize: '12px', fontWeight: '600', cursor: 'pointer',
@@ -1439,7 +1308,7 @@ Keep answers short (2-4 sentences), direct, and warm. Do not use markdown. Do no
 
 
 // ─── Still Need Help CTA ──────────────────────────────────────────────────────
-function NeedHelpCTA() {
+function NeedHelpCTA({ onContact }) {
   const [hov, setHov] = useState(null);
   return (
     <section className="cta-section" style={{ background: colors.primary, padding: '80px 56px', position: 'relative', overflow: 'hidden' }}>
@@ -1487,6 +1356,7 @@ function NeedHelpCTA() {
           <button
             onMouseEnter={() => setHov(0)} onMouseLeave={() => setHov(null)}
             className="cta-btn"
+            onClick={onContact}
             style={{
               background: hov === 0 ? '#a5c42e' : colors.accent,
               color: colors.primary, border: 'none', borderRadius: '50px',
@@ -1498,6 +1368,7 @@ function NeedHelpCTA() {
           <button
             onMouseEnter={() => setHov(1)} onMouseLeave={() => setHov(null)}
             className="cta-btn"
+            onClick={onContact}
             style={{
               background: hov === 1 ? 'rgba(255,255,255,0.1)' : 'transparent',
               color: colors.white, border: '1.5px solid rgba(255,255,255,0.2)', borderRadius: '50px',
@@ -1511,63 +1382,9 @@ function NeedHelpCTA() {
   );
 }
 
-// ─── Footer ───────────────────────────────────────────────────────────────────
-function Footer() {
-  const cols = [
-    { title: 'Sectors', links: ['Infrastructure', 'Financial Inclusion', 'Health Systems', 'Technology', 'Education', 'Agriculture'] },
-    { title: 'Company', links: ['About BRIDGE', 'How We Work', 'Our Team', 'Careers', 'Press', 'Contact'] },
-    { title: 'Resources', links: ['Intelligence Briefs', 'Impact Score', 'Budget Report', 'Insights', 'FAQ', 'Members'] },
-  ];
-  return (
-    <footer style={{ background: colors.ink }}>
-      <div className="footer-pad footer-grid" style={{ padding: '56px 56px 40px', maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px' }}>
-        {/* Brand */}
-        <div className="footer-brand">
-          <BridgeLogo variant="white" />
-          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.8, margin: '20px 0 24px', maxWidth: '300px' }}>
-            Delivering intelligence, resources, and strategies that bridge the gap between opportunity and outcome for Ghana.
-          </p>
-          <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginBottom: '4px' }}>Accra, Ghana</div>
-          <div style={{ fontSize: '13px', color: colors.accent, fontWeight: '600' }}>info@bridgepbc.com</div>
-          {/* Newsletter */}
-          <div style={{ marginTop: '28px' }}>
-            <div style={{ fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.35)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '10px' }}>Subscribe to Insights</div>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <input placeholder="Your email" style={{ flex: 1, padding: '10px 14px', borderRadius: '7px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: colors.white, fontSize: '13px', fontFamily: "'DM Sans', sans-serif", outline: 'none' }} />
-              <button style={{ background: colors.accent, color: colors.primary, border: 'none', padding: '10px 18px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', borderRadius: '7px' }}>→</button>
-            </div>
-          </div>
-        </div>
-
-        {/* Link columns */}
-        {cols.map(col => (
-          <div key={col.title} className="footer-links">
-            <div style={{ fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.35)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '16px' }}>{col.title}</div>
-            {col.links.map(link => (
-              <a key={link} href="#" style={{ display: 'block', fontSize: '13px', color: 'rgba(255,255,255,0.55)', textDecoration: 'none', marginBottom: '10px', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.target.style.color = colors.white} onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.55)'}>
-                {link}
-              </a>
-            ))}
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom bar */}
-      <div className="footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.07)', padding: '18px 56px', maxWidth: CONTENT_MAX_WIDTH, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>© 2026 BRIDGE PBC. All rights reserved.</span>
-        <div className="footer-bottom-links" style={{ display: 'flex', gap: '24px' }}>
-          {['Privacy Policy', 'Terms of Use', 'Cookie Policy'].map(t => (
-            <a key={t} href="#" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>{t}</a>
-          ))}
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 // ─── Main Export ──────────────────────────────────────────────────────────────
 export default function FAQPage() {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('about');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -1576,15 +1393,21 @@ export default function FAQPage() {
     if (!searchQuery) setActiveCategory('about');
   }, [searchQuery]);
 
+  const goContact = () => navigate('/contact');
+  const goMembership = () => navigate('/membership');
+  const goLogin = () => navigate('/login');
+
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '100vh' }}>
-      <GlobalStyles />
-      <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      {!searchQuery && <ActionRow />}
-      {!searchQuery && <TopicGrid activeCategory={activeCategory} setActiveCategory={setActiveCategory} />}
-      <FAQBody activeCategory={activeCategory} setActiveCategory={setActiveCategory} searchQuery={searchQuery} />
-      <MembershipTeaser />
-      <NeedHelpCTA />
-    </div>
+    <Layout>
+      <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '100vh' }}>
+        <FAQStyles />
+        <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        {!searchQuery && <ActionRow />}
+        {!searchQuery && <TopicGrid activeCategory={activeCategory} setActiveCategory={setActiveCategory} />}
+        <FAQBody activeCategory={activeCategory} setActiveCategory={setActiveCategory} searchQuery={searchQuery} />
+        <MembershipTeaser onApplyPaid={goMembership} onApplyFree={goLogin} />
+        <NeedHelpCTA onContact={goContact} />
+      </div>
+    </Layout>
   );
 }

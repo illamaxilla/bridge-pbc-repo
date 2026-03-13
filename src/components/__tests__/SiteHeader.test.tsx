@@ -77,24 +77,24 @@ describe("SiteHeader", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Search"));
 
-    expect(screen.getByPlaceholderText("Search pages and sectors...")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Search pages, sectors, reports...")).toBeInTheDocument();
     expect(screen.getByLabelText("Close search")).toBeInTheDocument();
   });
 
   it("closes search overlay when close button is clicked", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Search"));
-    expect(screen.getByPlaceholderText("Search pages and sectors...")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Search pages, sectors, reports...")).toBeInTheDocument();
 
     fireEvent.click(screen.getByLabelText("Close search"));
-    expect(screen.queryByPlaceholderText("Search pages and sectors...")).not.toBeInTheDocument();
+    expect(screen.queryByPlaceholderText("Search pages, sectors, reports...")).not.toBeInTheDocument();
   });
 
   it("filters search results by query", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Search"));
 
-    const input = screen.getByPlaceholderText("Search pages and sectors...");
+    const input = screen.getByPlaceholderText("Search pages, sectors, reports...");
     fireEvent.change(input, { target: { value: "Energy" } });
 
     // Should show Energy & Renewables but not e.g. "About"
@@ -107,7 +107,7 @@ describe("SiteHeader", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Search"));
 
-    const input = screen.getByPlaceholderText("Search pages and sectors...");
+    const input = screen.getByPlaceholderText("Search pages, sectors, reports...");
     fireEvent.change(input, { target: { value: "xyznonexistent" } });
 
     expect(screen.getByText(/No results for/)).toBeInTheDocument();

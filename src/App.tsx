@@ -52,6 +52,17 @@ const PolicyTracker = lazy(() => import("./pages/BRIDGE_PolicyTracker_2025_2026"
 const MonthlyDashboard = lazy(() => import("./pages/BRIDGE_MonthlyDashboard_Mar2026"));
 import SectorIntelligenceWrapper from "./components/SectorIntelligenceWrapper";
 
+// New pages: FAQ, Membership, Search
+const FAQPage = lazy(() => import("./pages/BRIDGE_FAQ_Page"));
+const MembershipPage = lazy(() => import("./pages/BRIDGE_MembershipPage"));
+const SearchPage = lazy(() => import("./pages/Search"));
+
+// Paid member document library + paid-only report pages
+const PaidDocumentLibrary = lazy(() => import("./pages/BRIDGE_PAID_Document_Library"));
+const ImpactScore = lazy(() => import("./pages/BRIDGE_ImpactScore"));
+const PeaceProsperity = lazy(() => import("./pages/BRIDGE_PeaceProsperity"));
+const Portfolio = lazy(() => import("./pages/BRIDGE_Portfolio"));
+
 // Sectors
 const Energy = lazy(() => import("./pages/sectors/Energy"));
 const Technology = lazy(() => import("./pages/sectors/Technology"));
@@ -202,6 +213,51 @@ const App = () => (
                   <SectorIntelligenceWrapper title="Monthly Dashboard — March 2026">
                     <MonthlyDashboard />
                   </SectorIntelligenceWrapper>
+                </ErrorBoundary>
+              } />
+
+              {/* New public pages: FAQ, Membership, Search */}
+              <Route path="/faq" element={<ErrorBoundary><FAQPage /></ErrorBoundary>} />
+              <Route path="/membership" element={<ErrorBoundary><MembershipPage /></ErrorBoundary>} />
+              <Route path="/search" element={<ErrorBoundary><SearchPage /></ErrorBoundary>} />
+
+              {/* Paid member document library */}
+              <Route path="/resources/document-library" element={
+                <ErrorBoundary>
+                  <ProtectedRoute>
+                    <SectorIntelligenceWrapper title="Member Document Dashboard">
+                      <PaidDocumentLibrary />
+                    </SectorIntelligenceWrapper>
+                  </ProtectedRoute>
+                </ErrorBoundary>
+              } />
+
+              {/* Paid-only report pages */}
+              <Route path="/resources/impact-score" element={
+                <ErrorBoundary>
+                  <ProtectedRoute>
+                    <SectorIntelligenceWrapper title="BRIDGE Impact Score™ Methodology">
+                      <ImpactScore />
+                    </SectorIntelligenceWrapper>
+                  </ProtectedRoute>
+                </ErrorBoundary>
+              } />
+              <Route path="/resources/peace-prosperity" element={
+                <ErrorBoundary>
+                  <ProtectedRoute>
+                    <SectorIntelligenceWrapper title="Peace & Prosperity Framework">
+                      <PeaceProsperity />
+                    </SectorIntelligenceWrapper>
+                  </ProtectedRoute>
+                </ErrorBoundary>
+              } />
+              <Route path="/resources/portfolio" element={
+                <ErrorBoundary>
+                  <ProtectedRoute>
+                    <SectorIntelligenceWrapper title="BRIDGE Venture Portfolio Overview">
+                      <Portfolio />
+                    </SectorIntelligenceWrapper>
+                  </ProtectedRoute>
                 </ErrorBoundary>
               } />
 
