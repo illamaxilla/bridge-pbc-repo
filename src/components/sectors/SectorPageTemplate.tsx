@@ -55,6 +55,8 @@ export interface SectorPageConfig {
     bridgeVentures: string[];
     pillars?: string[];
   }>;
+  /** Policy pill label override */
+  policyPillLabel?: string;
   /** Policy section title (JSX) */
   policyTitle: React.ReactNode;
   /** Policy section subtitle */
@@ -84,6 +86,8 @@ export interface SectorPageConfig {
   // ── Section ordering override ────────────────────────────────────────────
   /** If true, policy section renders before ecosystem section (Manufacturing) */
   policyBeforeEcosystem?: boolean;
+  /** If true, impact section renders before cross-sector section (Tourism) */
+  impactBeforeCrossSector?: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -101,6 +105,7 @@ export default function SectorPageTemplate({
   solutionFilters,
   maxSolutions,
   policies,
+  policyPillLabel,
   policyTitle,
   policySubtitle,
   policyCategories,
@@ -114,12 +119,14 @@ export default function SectorPageTemplate({
   ctaSecondaryButtonText,
   ctaSecondaryButtonLink,
   policyBeforeEcosystem = false,
+  impactBeforeCrossSector = false,
 }: SectorPageConfig) {
   const isMobile = useIsMobile();
 
   const policySection = (
     <SectorPolicySection
       policies={policies ?? sector.policies}
+      pillLabel={policyPillLabel}
       title={policyTitle}
       subtitle={policySubtitle}
       categories={policyCategories}
@@ -162,14 +169,20 @@ export default function SectorPageTemplate({
           </>
         )}
 
-        {/* 7. Cross-Sector (optional — some pages omit this) */}
-        {renderCrossSectorSection?.()}
-
-        {/* 8. Investment CTA */}
-        {renderInvestmentSection()}
-
-        {/* 9. Impact */}
-        {renderImpactSection()}
+        {/* 7–9. Cross-Sector / Investment / Impact (order configurable) */}
+        {impactBeforeCrossSector ? (
+          <>
+            {renderImpactSection()}
+            {renderCrossSectorSection?.()}
+            {renderInvestmentSection()}
+          </>
+        ) : (
+          <>
+            {renderCrossSectorSection?.()}
+            {renderInvestmentSection()}
+            {renderImpactSection()}
+          </>
+        )}
 
         {/* 10. Final CTA */}
         <SectorFinalCTA

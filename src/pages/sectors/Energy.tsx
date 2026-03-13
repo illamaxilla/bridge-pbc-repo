@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { IconArrowRight, IconArrowDown, IconCheck, IconTarget, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconBatteryCharging, IconBlocks, IconSprout, IconCross, IconFactory, IconTruck, IconChevronDown } from "@/components/icons/SectorIcons";
 import { ChevronDown, ChevronRight, Coins, Home, Sun, Wrench, Zap } from "lucide-react";
 import { FOOTER_SECTOR_ICONS } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
 import { energySector } from "@/data/sectors/energy";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Energy & Renewable Resources
@@ -16,9 +14,7 @@ import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
 import { cn } from "@/lib/utils";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -3362,26 +3358,34 @@ const ImpactSection = ({ sector }) => {
 
 export default function EnergySectorPage() {
   return (
-    <Layout>
-    <div className="font-[Inter,sans-serif]">
-      <SectorHeroSection sector={sectorData} />
-      <OpportunitySection sector={sectorData} />
-      <ValueChainSection sector={sectorData} />
-      <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Scaling", tier: 2 }, { key: 3, label: "Emerging", tier: 3 }]} />
-      <LandscapeSection sector={sectorData} />
-      <SectorPolicySection
-        policies={sectorData.policies}
-        title={<>Moving in Step with Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Energy Transition</span></>}
-        subtitle="Every BRIDGE energy venture aligns with at least one active government policy, from the Green Transition Fund to the $200M Clean Cooking Outcome Bond."
-      />
-      <RippleEffectSection sector={sectorData} />
-      <InvestmentCTASection sector={sectorData} />
-      <ImpactSection sector={sectorData} />
-      <SectorFinalCTA
-          heading={<>Let's Power Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Clean Energy Future</span></>}
-          description="Whether you're an investor, entrepreneur, or government partner — there's a seat at the table in building Ghana's clean energy transformation."
-        />
-    </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => <OpportunitySection sector={sectorData} />}
+      renderValueChainSection={() => <ValueChainSection sector={sectorData} />}
+      renderEcosystemSection={() => <LandscapeSection sector={sectorData} />}
+      renderCrossSectorSection={() => <RippleEffectSection sector={sectorData} />}
+      renderInvestmentSection={() => <InvestmentCTASection sector={sectorData} />}
+      renderImpactSection={() => <ImpactSection sector={sectorData} />}
+      solutionFilters={[
+        { key: "all", label: "All", tier: "all" },
+        { key: 1, label: "Flagship", tier: 1 },
+        { key: 2, label: "Scaling", tier: 2 },
+        { key: 3, label: "Emerging", tier: 3 },
+      ]}
+      policyTitle={
+        <>
+          Moving in Step with Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Energy Transition</span>
+        </>
+      }
+      policySubtitle="Every BRIDGE energy venture aligns with at least one active government policy, from the Green Transition Fund to the $200M Clean Cooking Outcome Bond."
+      ctaHeading={
+        <>
+          Let's Power Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Clean Energy Future</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, entrepreneur, or government partner — there's a seat at the table in building Ghana's clean energy transformation."
+    />
   );
 }

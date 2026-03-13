@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Layout } from "@/components/Layout";
 import { IconWheat, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconSproutHub, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark } from "@/components/icons/SectorIcons";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
 import { ArrowUpRight, Clock, Check, ArrowRight, ArrowUp, ChevronLeft, ChevronRight, ChevronDown, Pause, Play, Sprout, Warehouse, Factory, Truck, Users, Blocks, Wallet, BatteryCharging, X } from "lucide-react";
@@ -16,10 +15,7 @@ import { useCounter } from "@/hooks/useCounter";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -3959,53 +3955,44 @@ const SectorGrid = () => {
 
 export default function AgricultureSectorPageIntegrated() {
   return (
-    <Layout>
-      <div
-        className="font-[Inter,sans-serif] m-0 p-0"
-        style={{
-          backgroundColor: colors.white,
-          overflowX: "clip",
-        }}
-      >
-
-
-        {/* Design System CSS Classes */}
-        <style>{`
-          *, *::before, *::after { box-sizing: border-box; }
-          .cta-btn-arrow { transition: background-color 0.3s ease; }
-          .cta-btn-arrow svg { transition: stroke 0.3s ease; }
-          .cta-primary { transition: all 0.3s ease; }
-          .cta-lime-swap { transition: all 0.3s ease; }
-          .cta-secondary { transition: all 0.3s ease; }
-          .value-card {
-            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-          }
-        `}</style>
-
-        <SectorHeroSection sector={sectorData} />
-        <OpportunitySection />
-
-        {/* ★ THE PROCESS - Value Chain Section ★ */}
-        <ValueChainSectionPremium />
-
-        <SectorSolutionsSection sector={sectorData} />
-        <CompetitiveLandscapeSection sector={sectorData} />
-        <SectorPolicySection
-          policies={governancePolicies}
-          title={<>Moving in Step with Ghana's <span className="font-semibold">Agricultural</span>{" "}<span style={{ color: colors.accent }} className="font-semibold">Renaissance</span></>}
-          subtitle="Every BRIDGE agriculture venture aligns with active government programs under the Grow24 and Fund24 pillars, ensuring complementary investment."
-        />
-        <ImpactDashboardSection />
-        <RippleEffectSection />
-        <InvestmentThesisSection />
-        <SectorFinalCTA
-          heading={<>Ready to Grow Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Agricultural Future?</span></>}
-          description="Whether you're an investor, partner, or government stakeholder, there's a role for you in transforming food systems."
-          secondaryButtonText="Download Sector Brief"
-        />
-
-      </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => (
+        <>
+          <style>{`
+            *, *::before, *::after { box-sizing: border-box; }
+            .cta-btn-arrow { transition: background-color 0.3s ease; }
+            .cta-btn-arrow svg { transition: stroke 0.3s ease; }
+            .cta-primary { transition: all 0.3s ease; }
+            .cta-lime-swap { transition: all 0.3s ease; }
+            .cta-secondary { transition: all 0.3s ease; }
+            .value-card { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+          `}</style>
+          <OpportunitySection />
+        </>
+      )}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <CompetitiveLandscapeSection sector={sectorData} />}
+      renderCrossSectorSection={() => <RippleEffectSection />}
+      renderInvestmentSection={() => <InvestmentThesisSection />}
+      renderImpactSection={() => <ImpactDashboardSection />}
+      impactBeforeCrossSector
+      policies={governancePolicies}
+      policyTitle={
+        <>
+          Moving in Step with Ghana's <span className="font-semibold">Agricultural</span>{" "}
+          <span style={{ color: colors.accent }} className="font-semibold">Renaissance</span>
+        </>
+      }
+      policySubtitle="Every BRIDGE agriculture venture aligns with active government programs under the Grow24 and Fund24 pillars, ensuring complementary investment."
+      ctaHeading={
+        <>
+          Ready to Grow Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Agricultural Future?</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, partner, or government stakeholder, there's a role for you in transforming food systems."
+      ctaSecondaryButtonText="Download Sector Brief"
+    />
   );
 }

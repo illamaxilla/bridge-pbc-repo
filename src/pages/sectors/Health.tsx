@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { cn } from "@/lib/utils";
 import { IconArrowRight, IconArrowDown, IconCheck, IconBuilding, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconCross } from "@/components/icons/SectorIcons";
 import { ArrowRight, Blocks, Check, ChevronDown, Clock, Factory, FileText, GraduationCap, Heart, Hospital, Shield, Truck, Users, Wallet } from "lucide-react";
 import { SECTOR_ROUTES } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Health Systems & Wellbeing
@@ -18,9 +16,7 @@ import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 // ============================================================================
 // SECTOR DATA
@@ -3292,37 +3288,37 @@ const ImpactSection = () => {
 
 export default function HealthSystemsSectorPage() {
   return (
-    <Layout>
-      <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-        <SectorHeroSection sector={sectorData} />
-        <ProblemSection />
-        <ValueChainSectionPremium />
-        <SectorSolutionsSection sector={sectorData} />
-        <CompetitiveLandscapeSection sector={sectorData} />
-        <SectorPolicySection
-          policies={policyData}
-          title={<>Moving in Step with Ghana{"\u2019"}s <span className="font-semibold" style={{ color: colors.accent }}>Healthcare Priorities</span></>}
-          subtitle="BRIDGE ventures align directly with GH&#8373;19.5+ billion in government health commitments and the Care24 pillar of the 24-Hour Economy — creating pathways for public-private collaboration."
-          categories={[
-            { id: "all", label: "All", short: "All" },
-            { id: "funding", label: "Funding & Incentives", short: "Funding" },
-            { id: "infrastructure", label: "Infrastructure", short: "Infra" },
-            { id: "partnerships", label: "Partnerships", short: "Partners" },
-          ]}
-        />
-        <CrossSectorSection />
-        <InvestmentCTASection />
-        <ImpactSection />
-        <SectorFinalCTA
-          heading={<>From Understanding to <span className="font-bold" style={{ color: colors.accent }}>Action</span></>}
-          description="Our health systems analysis maps every opportunity, every alignment, every pathway to wellbeing. Request access to explore the complete research."
-          primaryButtonText="Request Full Access"
-          primaryButtonLink="/login"
-        />
-        <div className="px-20" style={{ backgroundColor: colors.primary }}>
-          <div className="h-px bg-white/[0.08]" />
-        </div>
-      </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => <ProblemSection />}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <CompetitiveLandscapeSection sector={sectorData} />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection />}
+      renderImpactSection={() => <ImpactSection />}
+      policies={policyData}
+      policyTitle={
+        <>
+          Moving in Step with Ghana{"\u2019"}s{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Healthcare Priorities</span>
+        </>
+      }
+      policySubtitle="BRIDGE ventures align directly with GH&#8373;19.5+ billion in government health commitments and the Care24 pillar of the 24-Hour Economy — creating pathways for public-private collaboration."
+      policyCategories={[
+        { id: "all", label: "All", short: "All" },
+        { id: "funding", label: "Funding & Incentives", short: "Funding" },
+        { id: "infrastructure", label: "Infrastructure", short: "Infra" },
+        { id: "partnerships", label: "Partnerships", short: "Partners" },
+      ]}
+      ctaHeading={
+        <>
+          From Understanding to{" "}
+          <span className="font-bold" style={{ color: colors.accent }}>Action</span>
+        </>
+      }
+      ctaDescription="Our health systems analysis maps every opportunity, every alignment, every pathway to wellbeing. Request access to explore the complete research."
+      ctaPrimaryButtonText="Request Full Access"
+      ctaPrimaryButtonLink="/login"
+    />
   );
 }
