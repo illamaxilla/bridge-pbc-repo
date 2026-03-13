@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const C = {
   primary: '#1B4D3E', accent: '#B8D935', bg: '#F3F5F2',
@@ -7,9 +8,6 @@ const C = {
 };
 const FONTS = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
-  *, *::before, *::after { box-sizing: border-box; }
-  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  ::selection { background: rgba(184,217,53,0.22); color: #111; }
 
   /* Transitions */
   .accord-header { transition: background 0.18s; }
@@ -20,12 +18,6 @@ const FONTS = `
   .white-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); transform: translateY(-1px); }
   .cta-link { transition: opacity 0.15s, letter-spacing 0.18s; }
   .cta-link:hover { opacity: 0.85; letter-spacing: 0.06em !important; }
-  .nav-crumb { transition: color 0.15s; }
-  .nav-crumb:hover { color: rgba(255,255,255,0.75) !important; }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { display: none; }
-  * { -ms-overflow-style: none; scrollbar-width: none; }
 `;
 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
@@ -147,12 +139,6 @@ function MobileImpactScore() {
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: C.bg, minHeight: '100vh', color: C.text }}>
       <style>{FONTS}</style>
-
-      {/* Nav */}
-      <div style={{ background: C.cover, padding: '0 20px', height: 50, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-        <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: 15, color: C.white }}>BRIDGE PBC</span>
-        <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.accent }}>Doc 01/23</span>
-      </div>
 
       {/* Cover */}
       <div style={{ background: C.cover, padding: '44px 20px 40px' }}>
@@ -356,15 +342,6 @@ function MobileImpactScore() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div style={{ background: C.cover, padding: '32px 20px 28px' }}>
-        <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 16, color: C.white, marginBottom: 6 }}>BRIDGE PBC</div>
-        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.32)', lineHeight: 1.65, marginBottom: 16 }}>Delivering the intelligence, resources, and strategies that bridge the gap between opportunity and outcome.</div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 16 }}>
-          <div style={{ fontSize: 11, fontWeight: 600, color: C.accent }}>bridge-pbc.com</div>
-          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.22)' }}>Doc 01/23 · March 2026</div>
-        </div>
-      </div>
     </div>
   );
 }
@@ -376,20 +353,6 @@ function DesktopImpactScore() {
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: C.bg, minHeight: '100vh', color: C.text }}>
       <style>{FONTS}</style>
-
-      {/* Nav */}
-      <div style={{ background: C.cover, borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '0 64px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56 }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: 15, color: C.white, marginRight: 10, letterSpacing: '-0.01em' }}>BRIDGE PBC</span>
-            <span className="nav-crumb" style={{ color: 'rgba(255,255,255,0.2)', marginRight: 10, fontSize: 12 }}>›</span>
-            <span className="nav-crumb" style={{ color: 'rgba(255,255,255,0.35)', fontSize: 12, marginRight: 10 }}>Document Library</span>
-            <span style={{ color: 'rgba(255,255,255,0.2)', marginRight: 10, fontSize: 12 }}>›</span>
-            <span style={{ fontSize: 12, color: C.accent, fontWeight: 600, letterSpacing: '0.01em' }}>BRIDGE Impact Score™ Methodology</span>
-          </div>
-          <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>bridge-pbc.com</span>
-        </div>
-      </div>
 
       {/* Cover */}
       <div style={{ background: C.cover, padding: '80px 64px 72px' }}>
@@ -612,19 +575,6 @@ function DesktopImpactScore() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div style={{ background: C.cover, borderTop: `3px solid rgba(184,217,53,0.18)`, padding: '48px 64px 36px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <div>
-            <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 20, color: C.white, marginBottom: 6, letterSpacing: '-0.01em' }}>BRIDGE PBC</div>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6, maxWidth: 440 }}>Delivering the intelligence, resources, and strategies that bridge the gap between opportunity and outcome.</div>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 12, fontWeight: 600, color: C.accent, marginBottom: 4, letterSpacing: '0.04em' }}>bridge-pbc.com</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.22)' }}>General Series — Document 01/23 · March 2026</div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

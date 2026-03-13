@@ -22,6 +22,7 @@ const FOOTER_LINKS: Record<string, string> = {
   "Our Approach": "/methodology",
   "Sectors": "/sectors",
   "Contact Us": "/contact",
+  "FAQ": "/faq",
   "Research & Guidance": "/services",
   "Venture Development": "/services",
   "Direct Investment": "/services",
@@ -34,6 +35,7 @@ const FOOTER_LINKS: Record<string, string> = {
   "Sector Briefs": "/sectors",
   "Policy Updates": "/policy",
   "Annual Review": "/resources",
+  "Membership": "/membership",
 };
 
 const footerLinkHref = (link: string): string => FOOTER_LINKS[link] || "#";
@@ -261,9 +263,9 @@ function SiteFooter() {
             <div className="flex flex-col justify-between">
               <div className="flex justify-between">
                 {[
-                  { title: "Company", links: ["About BRIDGE", "Our Approach", "Sectors", "Contact Us"] },
+                  { title: "Company", links: ["About BRIDGE", "Our Approach", "Sectors", "Contact Us", "FAQ"] },
                   { title: "Services", links: ["Research & Guidance", "Venture Development", "Direct Investment", "Strategic Partnerships"] },
-                  { title: "Resources", links: ["White Paper", "Case Studies", "Research Library", "Data & Reports"] },
+                  { title: "Resources", links: ["White Paper", "Case Studies", "Research Library", "Membership"] },
                   { title: "Insights", links: ["Insights & Analysis", "Sector Briefs", "Policy Updates", "Annual Review"] },
                 ].map((col) => (
                   <div key={col.title}>

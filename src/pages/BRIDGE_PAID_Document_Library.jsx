@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react";
-
-function useIsMobile() {
-  const [mob, setMob] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768);
-  useEffect(() => {
-    const fn = () => setMob(window.innerWidth <= 768);
-    window.addEventListener('resize', fn);
-    return () => window.removeEventListener('resize', fn);
-  }, []);
-  return mob;
-}
+import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const C = {
   primary: '#1B4D3E',
@@ -24,9 +16,8 @@ const C = {
   card: '#F7F7F4',
 };
 
-const fonts = `
+const scopedStyles = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
-  *, *::before, *::after { box-sizing: border-box; }
 
   .feat-card { transition: box-shadow 0.25s, transform 0.2s; }
   .feat-card:hover { box-shadow: 0 12px 48px rgba(0,0,0,0.13); transform: translateY(-3px); }
@@ -55,10 +46,6 @@ const fonts = `
 
   /* ── MOBILE ── */
   @media (max-width: 768px) {
-
-    /* Nav */
-    .nav-inner { padding: 0 20px !important; }
-    .nav-cta { display: none !important; }
 
     /* Hero */
     .hero-inner { padding: 44px 20px 40px !important; }
@@ -107,9 +94,6 @@ const fonts = `
     /* CTA box */
     .roadmap-cta { padding: 24px 20px !important; flex-direction: column !important; align-items: flex-start !important; }
     .roadmap-cta-btn { width: 100% !important; justify-content: center !important; }
-
-    /* Footer */
-    .footer-inner { padding: 24px 20px !important; flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
   }
 `;
 
@@ -126,6 +110,7 @@ const published = [
     body: 'A complete account of the four-dimensional framework behind BRIDGE\'s venture evaluation process. Covers scoring weights, sub-components, qualifying thresholds, the five-stage pipeline, and the structural features that make the Score independently auditable.',
     stat1: { num: '100', label: 'Point Scale' },
     stat2: { num: '174+', label: 'Ventures Scored' },
+    route: '/resources/impact-score',
   },
   {
     cat: 'Methodology', tag: 'Framework',
@@ -134,6 +119,7 @@ const published = [
     body: 'Defines what BRIDGE means by dignity, security, and thriving — and why GDP growth alone is insufficient. Covers all five dimensions of Peace, the three domains of Prosperity, and the direct connection between all 12 sectors and human flourishing outcomes.',
     stat1: { num: '5', label: 'Dimensions of Peace' },
     stat2: { num: '12', label: 'Sector Mappings' },
+    route: '/resources/peace-prosperity',
   },
   // ── Portfolio
   {
@@ -143,6 +129,7 @@ const published = [
     body: 'A curated overview of every sector in the BRIDGE portfolio — capital ranges, venture counts, Impact Score benchmarks, and the 36+ cross-sector integration points that produce compounding returns. Full sector analyses and individual venture profiles available to qualified partners.',
     stat1: { num: '$135–259M', label: 'Indicative Capital' },
     stat2: { num: '36+', label: 'Integration Points' },
+    route: '/resources/portfolio',
   },
   // ── Sector Briefs
   {
@@ -152,6 +139,7 @@ const published = [
     body: 'Original research across Infrastructure, Financial Inclusion, Health Systems, Technology & Innovation, Education & Skills, Agriculture & Value Chains, Creative Industries, Housing, Tourism, Energy, Manufacturing, and Transportation. Each brief includes the BRIDGE Impact Score™ ranking, capital range, and cross-sector integration points.',
     stat1: { num: '12', label: 'Sector Briefs' },
     stat2: { num: '60K+', label: 'Words of Research' },
+    route: '/resources/sector-briefs-full',
   },
   // ── Reports
   {
@@ -161,6 +149,7 @@ const published = [
     body: 'The comprehensive white paper laying out BRIDGE\'s full theory of change, the Peace & Prosperity measurement framework, the Impact Score™ methodology, and the strategic rationale for a 12-sector Ghana-first investment architecture. Essential reading for government and institutional partners.',
     stat1: { num: '80+', label: 'Pages' },
     stat2: { num: '12', label: 'Sectors Covered' },
+    route: '/resources/white-paper',
   },
   {
     cat: 'Reports', tag: 'Annual Review',
@@ -169,6 +158,7 @@ const published = [
     body: 'A sector-by-sector analysis of Ghana\'s 2025 investment landscape. Includes revised Impact Score™ rankings, emerging venture opportunities identified in the second half of the year, policy shifts and their downstream effects, and the BRIDGE team\'s forward outlook for each sector heading into 2026.',
     stat1: { num: '12', label: 'Sectors Reviewed' },
     stat2: { num: '2025', label: 'Annual Edition' },
+    route: '/resources/annual-review-2025',
   },
   {
     cat: 'Reports', tag: 'Investment Report',
@@ -177,6 +167,7 @@ const published = [
     body: 'Identifies every allocation in Ghana\'s 2026 National Budget with direct implications for BRIDGE ventures — sector-by-sector capital flow analysis, policy tailwinds and headwinds, and priority opportunities created by the 24-Hour Economy, Sankofa Initiative, and infrastructure commitments. Includes a ranked table of budget-accelerated ventures.',
     stat1: { num: 'GH₵', label: '2026 National Budget' },
     stat2: { num: '12', label: 'Sectors Mapped' },
+    route: '/resources/budget-alignment',
   },
   {
     cat: 'Reports', tag: 'Regulatory Guide',
@@ -185,6 +176,7 @@ const published = [
     body: 'Essential reference for international investors and diaspora partners entering the Ghanaian market. Covers GIPC registration requirements, minimum capital thresholds by sector, investment guarantees, profit repatriation rights, and the specific provisions applicable to BRIDGE-facilitated ventures.',
     stat1: { num: 'GIPC', label: 'Certified' },
     stat2: { num: '12', label: 'Sectors Covered' },
+    route: '/resources?tab=gipc',
   },
   {
     cat: 'Reports', tag: 'Monthly Dashboard',
@@ -193,6 +185,7 @@ const published = [
     body: 'The March 2026 edition covers Ghana\'s Q1 economic performance, sector-level developments across the BRIDGE portfolio, key policy signals from the 2026 Budget implementation, and new venture opportunities entering the evaluation pipeline. Published on the first Monday of each month.',
     stat1: { num: 'March', label: '2026 Edition' },
     stat2: { num: '12', label: 'Sectors Tracked' },
+    route: '/resources/monthly-dashboard',
   },
   // ── Policy
   {
@@ -202,6 +195,7 @@ const published = [
     body: 'A continuously updated tracking document covering every policy development with implications for BRIDGE ventures — 2026 National Budget breakdown, Sankofa Initiative implementation status, 24-Hour Economy progress, and ministry-level policy signals. Updated when significant policy events occur.',
     stat1: { num: 'Live', label: 'Updated Monthly' },
     stat2: { num: '12', label: 'Sectors Tracked' },
+    route: '/resources/policy-tracker',
   },
 ];
 
@@ -243,24 +237,7 @@ const catColors = {
 
 // ─── COMPONENTS ─────────────────────────────────────────────────────────────
 
-function NavBar() {
-  return (
-    <div style={{ background: C.cover, borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-      <div className="nav-inner" style={{ maxWidth: 1160, margin: '0 auto', padding: '0 48px', height: 54, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: 17, color: C.white, letterSpacing: '-0.01em' }}>BRIDGE</span>
-          <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.18)', margin: '0 4px' }}>·</span>
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.40)', letterSpacing: '0.02em' }}>Document Dashboard</span>
-        </div>
-        <a href="mailto:intelligence@bridge-pbc.com" className="nav-link nav-cta" style={{ fontSize: 12, color: 'rgba(255,255,255,0.38)', textDecoration: 'none', letterSpacing: '0.03em' }}>
-          Request a Briefing →
-        </a>
-      </div>
-    </div>
-  );
-}
-
-function FeatureCard({ doc, index }) {
+function FeatureCard({ doc, index, onReadDocument }) {
   const isMobile = useIsMobile();
   const [expanded, setExpanded] = useState(false);
 
@@ -341,7 +318,7 @@ function FeatureCard({ doc, index }) {
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: C.accent }} />
               <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.accent }}>Available Now</span>
             </div>
-            <button className="read-btn" style={{
+            <button className="read-btn" onClick={() => onReadDocument(doc.route)} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
               width: '100%', padding: '14px 20px', borderRadius: 32,
               background: C.accent, color: C.deep,
@@ -356,7 +333,7 @@ function FeatureCard({ doc, index }) {
     );
   }
 
-  // ── DESKTOP LAYOUT (unchanged) ────────────────────────────────────────────
+  // ── DESKTOP LAYOUT ────────────────────────────────────────────────────────
   return (
     <div className="feat-card" style={{
       background: C.deep,
@@ -404,7 +381,7 @@ function FeatureCard({ doc, index }) {
             <p className="feat-body" style={{ fontSize: 14, lineHeight: 1.82, color: 'rgba(255,255,255,0.45)', margin: 0, maxWidth: 560 }}>{doc.body}</p>
           </div>
           <div style={{ marginTop: 36 }}>
-            <button className="read-btn" style={{
+            <button className="read-btn" onClick={() => onReadDocument(doc.route)} style={{
               display: 'inline-flex', alignItems: 'center', gap: 10,
               padding: '13px 28px', borderRadius: 32,
               background: C.accent, color: C.deep,
@@ -543,6 +520,7 @@ function RoadmapSection({ rows, filterCat }) {
 const allCats = ['All', 'Government', 'Investments', 'Entrepreneurship', 'Business Entities', 'General'];
 
 export default function DocumentLibrary() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('All');
   const [roadmapCat, setRoadmapCat] = useState('All');
   const [pubCat, setPubCat] = useState('All');
@@ -553,10 +531,17 @@ export default function DocumentLibrary() {
   const visibleDocs = (pubCat === 'All' && !showAllDocs) ? filteredPublished.slice(0, INITIAL_SHOW) : filteredPublished;
   const hiddenCount = filteredPublished.length - INITIAL_SHOW;
 
+  const handleReadDocument = (route) => {
+    navigate(route);
+  };
+
+  const handleContactUs = () => {
+    navigate('/contact');
+  };
+
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: C.bg, minHeight: '100vh', color: C.text }}>
-      <style>{fonts}</style>
-      <NavBar />
+      <style>{scopedStyles}</style>
 
       {/* ── HERO ── */}
       <div className="hero-inner" style={{ background: C.cover, padding: '80px 48px 72px' }}>
@@ -638,7 +623,7 @@ export default function DocumentLibrary() {
           </div>
 
           {visibleDocs.map((doc, i) => (
-            <FeatureCard key={doc.title} doc={doc} index={i} />
+            <FeatureCard key={doc.title} doc={doc} index={i} onReadDocument={handleReadDocument} />
           ))}
 
           {pubCat === 'All' && !showAllDocs && hiddenCount > 0 && (
@@ -732,29 +717,15 @@ export default function DocumentLibrary() {
               <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 20, color: C.white, marginBottom: 6 }}>Request advance access to any document in development.</div>
               <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)' }}>Ministries, sector agencies, DFI partners, and qualified investors may request pre-publication access.</div>
             </div>
-            <a href="mailto:intelligence@bridge-pbc.com" className="roadmap-cta-btn" style={{
+            <button onClick={handleContactUs} className="roadmap-cta-btn" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               padding: '12px 28px', borderRadius: 28, background: C.accent,
-              color: C.deep, fontSize: 12, fontWeight: 700, textDecoration: 'none',
+              color: C.deep, fontSize: 12, fontWeight: 700,
               letterSpacing: '0.05em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+              border: 'none', cursor: 'pointer',
             }}>
               Contact Us
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* ── FOOTER ── */}
-      <div style={{ background: C.cover, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="footer-inner" style={{ maxWidth: 1160, margin: '0 auto', padding: '28px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap', gap: 12 }}>
-            <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: 15, color: C.white, letterSpacing: '-0.01em' }}>BRIDGE PBC</span>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.18)' }}>·</span>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.02em' }}>Document Dashboard</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-            <a href="mailto:intelligence@bridge-pbc.com" style={{ fontSize: 11, color: 'rgba(255,255,255,0.30)', textDecoration: 'none', letterSpacing: '0.02em' }}>intelligence@bridge-pbc.com</a>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.15)' }}>© 2026 BRIDGE PBC</span>
+            </button>
           </div>
         </div>
       </div>

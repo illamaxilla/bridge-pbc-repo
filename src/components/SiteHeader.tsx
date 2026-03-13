@@ -21,9 +21,12 @@ const ALL_NAV = [
   { label: "Policy Updates",     to: "/policy", badge: true },
 ];
 
-// ── Search items (nav + all 12 sector pages) ──────────────────────────────────
+// ── Search items (nav + sectors + new pages) ─────────────────────────────────
 const SEARCH_ITEMS = [
   ...ALL_NAV,
+  { label: "FAQ & Help Centre",           to: "/faq" },
+  { label: "Membership",                  to: "/membership" },
+  { label: "Search",                      to: "/search" },
   { label: "Energy & Renewables",         to: "/sectors/energy" },
   { label: "Technology & Innovation",     to: "/sectors/technology" },
   { label: "Agriculture & Value Chains",  to: "/sectors/agriculture" },
@@ -170,7 +173,13 @@ function SiteHeader() {
               ref={searchInputRef}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search pages and sectors..."
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && searchQuery.trim()) {
+                  setSearchOpen(false);
+                  navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+                }
+              }}
+              placeholder="Search pages, sectors, reports..."
               className="flex-1 bg-transparent border-none outline-none text-white text-[clamp(18px,3vw,28px)] font-light font-[DM_Sans,sans-serif] tracking-[-0.3px]"
             />
             <button
@@ -207,10 +216,21 @@ function SiteHeader() {
           </div>
 
           {/* Footer hint */}
-          <div className="py-4 px-[clamp(20px,5vw,80px)] border-t border-white/[0.06] shrink-0">
+          <div className="py-4 px-[clamp(20px,5vw,80px)] border-t border-white/[0.06] shrink-0 flex items-center justify-between">
             <span className="text-xs text-white/20 font-[DM_Sans,sans-serif]">
-              Press ESC to close
+              {searchQuery.trim() ? "Press Enter to search all content" : "Press ESC to close"}
             </span>
+            {searchQuery.trim() && (
+              <button
+                onClick={() => {
+                  setSearchOpen(false);
+                  navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+                }}
+                className="text-xs text-[#B8D935] font-semibold font-[DM_Sans,sans-serif] bg-transparent border-none cursor-pointer hover:underline"
+              >
+                See all results →
+              </button>
+            )}
           </div>
         </div>
       )}

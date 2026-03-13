@@ -1,22 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import {
   Check, Lock, Globe, Users, Star, ArrowRight, ChevronDown,
-  BarChart2, FileText, Shield, BookOpen, Zap, TrendingUp, Layout,
-  MessageSquare, Briefcase, Database
+  BarChart2, FileText, Shield, BookOpen, Zap, TrendingUp,
+  Layout as LayoutIcon, MessageSquare, Briefcase, Database
 } from "lucide-react";
-
-/* ─────────────────────────────────────────────
-   FONT LOADER
-───────────────────────────────────────────── */
-const FontLoader = () => {
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
-  }, []);
-  return null;
-};
+import { Layout } from "@/components/Layout";
+import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { useAuth } from "@/context/AuthContext";
+import { BRIDGEAuthModal } from "@/components/AuthModal";
+import { BRIDGEPaidMemberModal } from "./BRIDGE_PaidMemberModal";
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS
@@ -40,16 +33,13 @@ const F = {
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 /* ─────────────────────────────────────────────
-   GLOBAL STYLES
+   COMPONENT-SCOPED STYLES (injected once)
 ───────────────────────────────────────────── */
-const GlobalStyles = () => {
+const ScopedStyles = () => {
   useEffect(() => {
     const s = document.createElement("style");
+    s.setAttribute("data-bridge-membership", "");
     s.textContent = `
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-      html { scroll-behavior: smooth; overflow-x: hidden; }
-      body { background: ${C.bg}; overflow-x: hidden; }
-      ::selection { background: ${C.accent}; color: ${C.primary}; }
       @keyframes fadeUp {
         from { opacity: 0; transform: translateY(30px); }
         to   { opacity: 1; transform: translateY(0); }
@@ -68,30 +58,6 @@ const GlobalStyles = () => {
   }, []);
   return null;
 };
-
-/* ─────────────────────────────────────────────
-   BRIDGE LOGO
-───────────────────────────────────────────── */
-const BridgeLogo = ({ height = 36 }) => (
-  <svg height={height} viewBox="0 0 3258.5 932.3" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-    <defs>
-      <style>{`.cls-1{fill:none;stroke:#fff;stroke-width:80px;}.cls-1,.cls-2,.cls-3{stroke-miterlimit:10;}.cls-4,.cls-3{fill:#b8d935;}.cls-5,.cls-2{fill:#fff;}.cls-2{stroke:#000;stroke-width:.5px;}.cls-3{stroke:#1b4d3e;}.cls-6{fill:#74914a;}`}</style>
-    </defs>
-    <path className="cls-5" d="M1853.1,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.6,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1h0v.1Z"/>
-    <path className="cls-2" d="M1431.7,224.5h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5h.1v.1Z"/>
-    <path className="cls-2" d="M1488.1,578.7v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"/>
-    <rect className="cls-4" x="1427.4" y="17.4" width="205.2" height="145"/>
-    <rect className="cls-5" x="1427.5" y="221.8" width="205.2" height="693.2" rx="9.6" ry="9.6"/>
-    <path className="cls-5" d="M2757.3,19.1h491.3c5.4,0,9.8,4.4,9.8,9.8v218.7c0,5.4-4.4,9.8-9.8,9.8h-507.4c-57,0-108.5,23-145.9,60.4-37.3,37.2-60.5,88.8-60.5,145.7,0,113.7,92.4,206,206.3,206h12.9c2.9,0,5.1,2.3,5.1,5.1v236.7c0,1.1-.9,1.9-1.9,1.9h0c-242.2,0-438.5-196-438.5-437.8v-18.5c0-241.8,196.3-437.8,438.5-437.8h.1Z"/>
-    <rect className="cls-5" x="2812.8" y="339.5" width="216.8" height="572.6" rx="9.6" ry="9.6"/>
-    <rect className="cls-4" x="3083.4" y="339.5" width="175.1" height="257.7"/>
-    <rect className="cls-4" x="3083.4" y="654.4" width="175.1" height="257.7"/>
-    <rect className="cls-1" x="40" y="40" width="843.9" height="852.3" rx="36.6" ry="36.6"/>
-    <polygon className="cls-3" points="722.6 322.1 462.3 452.8 202 322.8 461.3 192.5 722.6 322.1"/>
-    <path className="cls-6" d="M197.9,426.8c3.9-.5,7,.8,10.7,1.4l252.5,125.7c84.5-40,167.7-83.8,251.9-124.8,33.1-11.5,50.1,34.2,18.5,49.1l-259.2,129.1c-10.2,3.7-14.1,2.6-23.9-1.3l-264.2-133c-17-14.4-8-43.2,13.6-46.1h.1v-.1Z"/>
-    <path className="cls-4" d="M195.3,558c3.7-.6,7.4-.4,11.1-.2,86.1,40.5,170.4,85.1,255.9,126.8l252.9-126c29.5-7.2,45.4,28.7,22.3,46.5l-270.4,134.4-8.6.3c-91.6-42.2-181.1-89.9-271.7-134.4-18.7-12.1-13.3-43.6,8.5-47.4h0Z"/>
-  </svg>
-);
 
 /* ─────────────────────────────────────────────
    HOOKS
@@ -277,7 +243,7 @@ const Hero = ({ isMobile, onApplyFree, onCompare }) => {
           </div>
         </div>
 
-        {/* ── RIGHT: 2×2 image grid ── */}
+        {/* ── RIGHT: 2x2 image grid ── */}
         <div style={{
           animation: vis ? `fadeUp .9s ${EASE} .35s both` : "none",
           flexShrink: 0,
@@ -321,7 +287,7 @@ const SLabel = ({ text, light }) => (
 );
 
 /* ─────────────────────────────────────────────
-   TIER CARDS — ASYMMETRIC LAYOUT
+   TIER CARDS
 ───────────────────────────────────────────── */
 const SmallCheck = ({ text, dark }) => (
   <div style={{ display: "flex", gap: 10, alignItems: "flex-start", padding: "5px 0" }}>
@@ -336,7 +302,6 @@ const SmallCheck = ({ text, dark }) => (
       color: dark ? "rgba(255,255,255,.7)" : C.muted, fontWeight: "300" }}>{text}</span>
   </div>
 );
-
 
 /* ── MOBILE TIER TAB WIDGET ─────────────────── */
 const mobileTiers = [
@@ -478,8 +443,6 @@ const MobileTierWidget = ({ onApplyFree, onApplyPaid, selected, onSelect }) => {
     </div>
   );
 };
-
-const tierIcons = [<Globe size={20}/>, <Users size={20}/>, <Star size={20}/>];
 
 const TierSection = ({ isMobile, onApplyFree, onApplyPaid, selected, onSelect }) => {
   const [ref, vis] = useVisible(.08);
@@ -730,10 +693,9 @@ const PathSection = ({ isMobile }) => {
   return (
     <section ref={ref} style={{ display: "flex", minHeight: 680, backgroundColor: C.white, overflow: "hidden" }}>
 
-      {/* LEFT — full-bleed image panel, no padding, no radius on outer edges */}
+      {/* LEFT — full-bleed image panel */}
       <div style={{ width: "40%", flexShrink: 0, position: "relative", backgroundColor: C.bg }}>
         <ImgPlaceholderLight label="Photo" radius={0} />
-        {/* lime foot strip */}
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 4, backgroundColor: C.accent }} />
       </div>
 
@@ -809,7 +771,7 @@ const PathSection = ({ isMobile }) => {
    INSIDE PAID — DARK CINEMATIC
 ───────────────────────────────────────────── */
 const insideItems = [
-  { icon: <Layout size={22}/>,        title: "Intelligence Dashboard",     stat: "174+ ventures scored",  body: "A private analytics platform tracking Ghana's opportunity landscape. Live metrics, sector scorecards, and the proprietary BRIDGE Impact Score™ across 12 sectors." },
+  { icon: <LayoutIcon size={22}/>,   title: "Intelligence Dashboard",     stat: "174+ ventures scored",  body: "A private analytics platform tracking Ghana's opportunity landscape. Live metrics, sector scorecards, and the proprietary BRIDGE Impact Score\u2122 across 12 sectors." },
   { icon: <Database size={22}/>,      title: "Restricted Document Library", stat: "50+ documents",         body: "12 sector deep-dives, white papers, government alignment strategies, budget analyses, and the full BRIDGE Integrated Assessment Framework." },
   { icon: <MessageSquare size={22}/>, title: "BRIDGE Community",            stat: "Invite-only",           body: "High-trust forums for investors, founders, policymakers, and diaspora professionals building Ghana's future together." },
   { icon: <TrendingUp size={22}/>,    title: "Investment Pipeline",         stat: "Active deal flow",      body: "BRIDGE-evaluated opportunities across sectors, with full Impact Scores and investment theses. Visibility reserved for Paid Members." },
@@ -826,6 +788,24 @@ const GridBg = () => (
     <rect width="100%" height="100%" fill="url(#gr)"/>
   </svg>
 );
+
+/* ─────────────────────────────────────────────
+   COMPARISON TABLE
+───────────────────────────────────────────── */
+const compareRows = [
+  { label: "Public website & 12 sector overviews",    pub: true,  free: true,  paid: true  },
+  { label: "BRIDGE newsletter & sector updates",       pub: false, free: true,  paid: true  },
+  { label: "Event & webinar access",                   pub: false, free: true,  paid: true  },
+  { label: "Free resource library",                    pub: false, free: true,  paid: true  },
+  { label: "Basic intelligence reports",               pub: false, free: true,  paid: true  },
+  { label: "Full restricted document library",         pub: false, free: false, paid: true  },
+  { label: "BRIDGE Intelligence Dashboard",            pub: false, free: false, paid: true  },
+  { label: "All 12 sector deep-dive reports",          pub: false, free: false, paid: true  },
+  { label: "BRIDGE Community — forums",                pub: false, free: false, paid: true  },
+  { label: "Investment opportunity pipeline",           pub: false, free: false, paid: true  },
+  { label: "Monthly analyst briefings",                pub: false, free: false, paid: true  },
+  { label: "Priority partnership introductions",       pub: false, free: false, paid: true  },
+];
 
 /* ── MOBILE INTEL WIDGET (Inside + Compare combined) ── */
 const MobileIntelWidget = ({ tab, setTab }) => {
@@ -1132,33 +1112,13 @@ const InsideSection = ({ isMobile, tab, setTab }) => {
 };
 
 /* ─────────────────────────────────────────────
-   COMPARISON TABLE
-───────────────────────────────────────────── */
-const compareRows = [
-  { label: "Public website & 12 sector overviews",    pub: true,  free: true,  paid: true  },
-  { label: "BRIDGE newsletter & sector updates",       pub: false, free: true,  paid: true  },
-  { label: "Event & webinar access",                   pub: false, free: true,  paid: true  },
-  { label: "Free resource library",                    pub: false, free: true,  paid: true  },
-  { label: "Basic intelligence reports",               pub: false, free: true,  paid: true  },
-  { label: "Full restricted document library",         pub: false, free: false, paid: true  },
-  { label: "BRIDGE Intelligence Dashboard",            pub: false, free: false, paid: true  },
-  { label: "All 12 sector deep-dive reports",          pub: false, free: false, paid: true  },
-  { label: "BRIDGE Community — forums",                pub: false, free: false, paid: true  },
-  { label: "Investment opportunity pipeline",           pub: false, free: false, paid: true  },
-  { label: "Monthly analyst briefings",                pub: false, free: false, paid: true  },
-  { label: "Priority partnership introductions",       pub: false, free: false, paid: true  },
-];
-
-const CompareSection = () => null;
-
-/* ─────────────────────────────────────────────
    FAQ
 ───────────────────────────────────────────── */
 const faqs = [
   { q: "Why the 30-day wait before applying for Paid Membership?",
     a: "BRIDGE is a community of committed stakeholders, not a subscription. The 30-day period lets you genuinely understand our work before committing — and it ensures the community remains high-trust. Every Paid Member knows what BRIDGE is before they arrive." },
   { q: "What exactly is the BRIDGE Intelligence Dashboard?",
-    a: "A private, data-rich platform tracking Ghana's opportunity landscape across all 12 sectors. It includes live metrics, sector scorecards, investment pipeline visibility, and BRIDGE's proprietary BRIDGE Impact Score™ across 174+ evaluated ventures. Not publicly accessible." },
+    a: "A private, data-rich platform tracking Ghana's opportunity landscape across all 12 sectors. It includes live metrics, sector scorecards, investment pipeline visibility, and BRIDGE's proprietary BRIDGE Impact Score\u2122 across 174+ evaluated ventures. Not publicly accessible." },
   { q: "What's in the restricted document library?",
     a: "All 12 sector deep-dive analyses, white papers, government partnership strategies, agricultural positioning documents, budget alignment reports, and the full BRIDGE Integrated Assessment Framework — research that takes months to produce." },
   { q: "What does Paid Membership cost?",
@@ -1169,7 +1129,7 @@ const faqs = [
     a: "Apply for Free Membership today. Engage for 30 days. Then apply for Paid Membership. The path is clear and the timeline is short — nothing stops you from beginning right now." },
 ];
 
-const FAQSection = ({ isMobile }) => {
+const FAQSection = ({ isMobile, onContact, onApplyFree }) => {
   const [open, setOpen]       = useState(null);
   const [showAll, setShowAll] = useState(false);
   const [ref, vis]            = useVisible(.1);
@@ -1190,7 +1150,7 @@ const FAQSection = ({ isMobile }) => {
         Our team responds to every inquiry. Reach out directly and we'll give you a clear, honest answer.
       </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        <button className="hov-btn" style={{
+        <button className="hov-btn" onClick={onContact} style={{
           backgroundColor: C.accent, color: C.primary, border: "none",
           borderRadius: 100, padding: "11px 22px",
           fontSize: 13, fontWeight: "800", fontFamily: F.sans, cursor: "pointer",
@@ -1199,7 +1159,7 @@ const FAQSection = ({ isMobile }) => {
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Contact Us
         </button>
-        <button className="hov-btn hov-outline" style={{
+        <button className="hov-btn hov-outline" onClick={onApplyFree} style={{
           backgroundColor: "transparent", color: "rgba(255,255,255,.8)",
           border: "1.5px solid rgba(255,255,255,.2)", borderRadius: 100,
           padding: "11px 22px", fontSize: 13, fontWeight: "500", fontFamily: F.sans,
@@ -1417,25 +1377,20 @@ const BottomCTA = ({ isMobile, onApplyFree, onApplyPaid }) => {
 };
 
 /* ─────────────────────────────────────────────
-   FOOTER
-───────────────────────────────────────────── */
-
-/* ─────────────────────────────────────────────
    ROOT
 ───────────────────────────────────────────── */
-export default function MembershipPage({ onApplyPaid, onApplyFree }) {
-  const [isMobile, setM]      = useState(false);
-  const [tierSel, setTierSel] = useState(1);   // default: Free
-  const [intelTab, setIntelTab] = useState(0); // default: What's Unlocked
+export default function MembershipPage() {
+  const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-  useEffect(() => {
-    const fn = () => setM(window.innerWidth < 768);
-    fn(); window.addEventListener("resize", fn);
-    return () => window.removeEventListener("resize", fn);
-  }, []);
+  const [showAuth, setShowAuth] = useState(false);
+  const [showPaidModal, setShowPaidModal] = useState(false);
+  const [tierSel, setTierSel] = useState(1);     // default: Free
+  const [intelTab, setIntelTab] = useState(0);    // default: What's Unlocked
 
-  const hFree = onApplyFree || (() => {});
-  const hPaid = onApplyPaid || (() => {});
+  const handleApplyFree = () => setShowAuth(true);
+  const handleApplyPaid = () => setShowPaidModal(true);
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -1452,20 +1407,31 @@ export default function MembershipPage({ onApplyPaid, onApplyFree }) {
     setTimeout(() => scrollTo("tier-section"), 50);
   };
 
+  const handleContact = () => navigate("/contact");
+
   return (
-    <>
-      <FontLoader/>
-      <GlobalStyles/>
-      <div style={{ backgroundColor: C.bg, minHeight: "100vh" }}>
-        <Hero isMobile={isMobile} onApplyFree={hFree} onCompare={handleCompare}/>
-        <TierSection isMobile={isMobile} onApplyFree={hFree} onApplyPaid={hPaid}
-          selected={tierSel} onSelect={setTierSel}/>
-        <PathSection isMobile={isMobile}/>
-        <InsideSection isMobile={isMobile} tab={intelTab} setTab={setIntelTab}/>
-        <CompareSection isMobile={isMobile}/>
-        <FAQSection isMobile={isMobile}/>
-        <BottomCTA isMobile={isMobile} onApplyFree={hFree} onApplyPaid={handleViewPaid}/>
+    <Layout>
+      <ScopedStyles />
+      <div style={{ backgroundColor: C.bg }}>
+        <Hero isMobile={isMobile} onApplyFree={handleApplyFree} onCompare={handleCompare} />
+        <TierSection isMobile={isMobile} onApplyFree={handleApplyFree} onApplyPaid={handleApplyPaid}
+          selected={tierSel} onSelect={setTierSel} />
+        <PathSection isMobile={isMobile} />
+        <InsideSection isMobile={isMobile} tab={intelTab} setTab={setIntelTab} />
+        <FAQSection isMobile={isMobile} onContact={handleContact} onApplyFree={handleApplyFree} />
+        <BottomCTA isMobile={isMobile} onApplyFree={handleApplyFree} onApplyPaid={handleViewPaid} />
       </div>
-    </>
+
+      <BRIDGEAuthModal
+        isOpen={showAuth}
+        onClose={() => setShowAuth(false)}
+        defaultTab="request"
+      />
+      <BRIDGEPaidMemberModal
+        isOpen={showPaidModal}
+        onClose={() => setShowPaidModal(false)}
+        onApplyFreeInstead={() => { setShowPaidModal(false); setShowAuth(true); }}
+      />
+    </Layout>
   );
 }

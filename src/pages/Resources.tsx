@@ -46,6 +46,7 @@ import {
   ArrowLeft,
   X,
   LayoutDashboard,
+  Crown,
 } from "lucide-react";
 
 // ─── Design System ────────────────────────────────────────
@@ -1622,6 +1623,131 @@ function NotifyMeModal({ isOpen, onClose, docTitle, isLoggedIn }) {
   );
 }
 
+// ─── Resource Hub Tab (Paid Only) ─────────────────────────
+function ResourceHubTab({ mobile, isPaid, onUnlock, onNavigate }: { mobile: boolean; isPaid: boolean; onUnlock: () => void; onNavigate: () => void }) {
+  if (!isPaid) {
+    return (
+      <div style={{ textAlign: "center", padding: mobile ? "40px 16px" : "64px 32px" }}>
+        <div
+          style={{
+            width: 72, height: 72, borderRadius: "50%",
+            background: "rgba(184,217,53,0.12)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            margin: "0 auto 24px",
+          }}
+        >
+          <Crown size={32} color={C.primary} />
+        </div>
+        <h3
+          style={{
+            margin: "0 0 12px", fontSize: mobile ? "20px" : "24px",
+            fontWeight: 700, color: "#111827",
+            fontFamily: "'DM Sans', sans-serif",
+          }}
+        >
+          Resource Hub — Paid Members Only
+        </h3>
+        <p
+          style={{
+            margin: "0 auto 8px", fontSize: "15px",
+            color: C.muted, lineHeight: 1.65,
+            maxWidth: 460, fontFamily: "'Inter', sans-serif",
+          }}
+        >
+          Access the full BRIDGE Member Document Dashboard — intelligence, methodology reports,
+          portfolio overview, sector data, and the complete research archive.
+        </p>
+        <div
+          style={{
+            display: "flex", flexWrap: "wrap", justifyContent: "center",
+            gap: 8, margin: "20px auto 28px", maxWidth: 400,
+          }}
+        >
+          {[
+            "Impact Score™ Methodology",
+            "Peace & Prosperity Framework",
+            "Venture Portfolio Overview",
+            "All 12 Sector Briefs",
+            "Budget Alignment Report",
+            "Monthly Dashboards",
+          ].map((item) => (
+            <span
+              key={item}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 4,
+                fontSize: "11px", fontWeight: 600,
+                color: C.primary, background: "rgba(27,77,62,0.06)",
+                padding: "4px 10px", borderRadius: 20,
+                fontFamily: "'Inter', sans-serif",
+              }}
+            >
+              <Lock size={9} /> {item}
+            </span>
+          ))}
+        </div>
+        <button
+          onClick={onUnlock}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "14px 32px", borderRadius: 100,
+            background: C.primary, color: C.white,
+            border: "none", fontSize: "14px", fontWeight: 700,
+            fontFamily: "'Inter', sans-serif", cursor: "pointer",
+          }}
+        >
+          <Lock size={14} /> Unlock Resource Hub
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ textAlign: "center", padding: mobile ? "40px 16px" : "48px 32px" }}>
+      <div
+        style={{
+          width: 64, height: 64, borderRadius: "50%",
+          background: "rgba(184,217,53,0.15)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          margin: "0 auto 20px",
+        }}
+      >
+        <Crown size={28} color={C.primary} />
+      </div>
+      <h3
+        style={{
+          margin: "0 0 8px", fontSize: mobile ? "20px" : "24px",
+          fontWeight: 700, color: "#111827",
+          fontFamily: "'DM Sans', sans-serif",
+        }}
+      >
+        Member Document Dashboard
+      </h3>
+      <p
+        style={{
+          margin: "0 auto 24px", fontSize: "15px",
+          color: C.muted, lineHeight: 1.65,
+          maxWidth: 460, fontFamily: "'Inter', sans-serif",
+        }}
+      >
+        Your complete intelligence library — methodology reports, portfolio data, sector analyses,
+        policy tracking, and the full research archive.
+      </p>
+      <button
+        onClick={onNavigate}
+        style={{
+          display: "inline-flex", alignItems: "center", gap: 8,
+          padding: "14px 32px", borderRadius: 100,
+          background: C.accent, color: C.primary,
+          border: "none", fontSize: "14px", fontWeight: 700,
+          fontFamily: "'Inter', sans-serif", cursor: "pointer",
+        }}
+      >
+        Open Resource Hub <ArrowUpRight size={15} />
+      </button>
+    </div>
+  );
+}
+
 export default function ResourcesPage() {
   const navigate = useNavigate();
   const { user, tier } = useAuth();
@@ -1707,6 +1833,7 @@ export default function ResourcesPage() {
     },
     { id: "gipc", label: "GIPC Profiles", mobileLabel: "GIPC Profile", icon: BookCopy, count: "13 profiles" },
     { id: "library", label: "Document Library", mobileLabel: "Library", icon: Folder, count: `${docs.length} resources` },
+    { id: "resourcehub", label: "Resource Hub", mobileLabel: "Resource Hub", icon: Crown, count: "Paid", isPaid: true },
   ];
 
   return (
@@ -1824,8 +1951,12 @@ export default function ResourcesPage() {
                         <span
                           className="py-[2px] px-[7px] rounded-[20px] text-[10px] font-bold font-[Inter,sans-serif] transition-all duration-[180ms]"
                           style={{
-                            background: isActive ? "rgba(255,255,255,0.18)" : C.bg,
-                            color: isActive ? C.white : C.muted,
+                            background: (t as any).isPaid
+                              ? (isActive ? "rgba(184,217,53,0.3)" : "rgba(184,217,53,0.15)")
+                              : (isActive ? "rgba(255,255,255,0.18)" : C.bg),
+                            color: (t as any).isPaid
+                              ? (isActive ? C.accent : C.primary)
+                              : (isActive ? C.white : C.muted),
                           }}
                         >
                           {t.count}
@@ -1867,6 +1998,13 @@ export default function ResourcesPage() {
               }} />}
               {tab === "gipc" && <GIPCTab mobile={mobile} />}
               {tab === "library" && <LibraryTab mobile={mobile} onNavigate={handleDocNavigate} onNotifyMe={handleNotifyMe} />}
+              {tab === "resourcehub" && <ResourceHubTab mobile={mobile} isPaid={tier === "paid"} onUnlock={() => {
+                if (!user) {
+                  navigate("/login?redirect=/resources");
+                } else {
+                  navigate("/membership");
+                }
+              }} onNavigate={() => navigate("/resources/document-library")} />}
             </div>
           </div>
         </div>
