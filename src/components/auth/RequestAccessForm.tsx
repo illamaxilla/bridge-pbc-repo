@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
+import { submitAccessRequest } from "@/services/supabase";
 import { Field, SelectField, TextareaField } from "./FormField";
 import type { SelectOption } from "./FormField";
 
@@ -105,7 +105,7 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
     setError(null);
     setLoading(true);
     try {
-      const { error } = await supabase.from("access_requests").insert({
+      await submitAccessRequest({
         name: data.name,
         email: data.email,
         country: data.country,
@@ -115,7 +115,6 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
         connection: data.connection,
         description: data.description || null,
       });
-      if (error) throw error;
       onSuccess?.("request");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "An unexpected error occurred.";

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { IconWheat, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconWarning, IconUsers, IconLightbulb, IconPlane, IconMusic, IconGraduationCap, IconCpu } from "@/components/icons/SectorIcons";
 import { AlertTriangle, ArrowRight, Check, Globe, GraduationCap, Lock, Music, Palette, Search, Shield, Star, Trophy, Users } from "lucide-react";
 
@@ -13,12 +12,9 @@ import { AlertTriangle, ArrowRight, Check, Globe, GraduationCap, Lock, Music, Pa
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -4122,34 +4118,31 @@ const InvestmentCTASection = ({ sector }) => {
 // ============================================================================
 
 export default function SportsEntertainmentSectorPage() {
-  const isMobile = useIsMobile();
   return (
-    <Layout>
-    <div
-      className="font-[Inter,-apple-system,BlinkMacSystemFont,'Segoe_UI',Roboto,Helvetica,Arial,sans-serif] leading-[1.6] antialiased"
-      style={{ color: colors.dark }}
-    >
-      <SectorHeroSection sector={sectorData} />
-      <ProblemSection />
-      <ValueChainSection />
-      <SectorSolutionsSection sector={sectorData} maxSolutions={9} />
-      <MarketEcosystemSection />
-      <SectorPolicySection
-        policies={governancePolicies}
-        title={<>Moving in Step with Ghana's <span className="font-semibold">Creative</span>{" "}<span className="font-semibold" style={{ color: colors.accent }}>Vision</span></>}
-        subtitle="The Black Star Experience and 2026 Budget create an unprecedented policy environment. BRIDGE doesn't replace government initiatives — it complements them with diaspora capital, expertise, and implementation capacity."
-      />
-      <CrossSectorSection />
-      <InvestmentCTASection sector={sectorData} />
-      <ImpactSection />
-      <SectorFinalCTA
-          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Creative Industries</span></>}
-          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's creative future."
-        />
-      <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div className="h-px bg-white/[0.08]" />
-      </div>
-    </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => <ProblemSection />}
+      renderValueChainSection={() => <ValueChainSection />}
+      renderEcosystemSection={() => <MarketEcosystemSection />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection sector={sectorData} />}
+      renderImpactSection={() => <ImpactSection />}
+      maxSolutions={9}
+      policies={governancePolicies}
+      policyTitle={
+        <>
+          Moving in Step with Ghana's <span className="font-semibold">Creative</span>{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Vision</span>
+        </>
+      }
+      policySubtitle="The Black Star Experience and 2026 Budget create an unprecedented policy environment. BRIDGE doesn't replace government initiatives — it complements them with diaspora capital, expertise, and implementation capacity."
+      ctaHeading={
+        <>
+          Let's Build Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Creative Industries</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's creative future."
+    />
   );
 }

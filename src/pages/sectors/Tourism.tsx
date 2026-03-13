@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { IconPlane, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconPalette, IconGraduation, IconSprout, IconLuggage, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconCheckSmall } from "@/components/icons/SectorIcons";
 import { ArrowRight, BarChart3, Building2, Check, ChevronDown, Clock, Compass, Globe, Plane, Users } from "lucide-react";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -3360,30 +3356,43 @@ const InvestmentCTASection = () => {
 
 export default function TourismHospitalitySectorPage() {
   return (
-    <Layout>
-      <SectorHeroSection sector={sectorData} />
-      <ProblemSection />
-      <ValueChainSectionPremium />
-      <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Growth", tier: 2 }, { key: 3, label: "Strategic", tier: 3 }]} />
-      <CompetitiveLandscapeSection sector={sectorData} />
-      <SectorPolicySection
-        policies={governancePolicies}
-        title={<>Moving in Step with Ghana's{" "}<span className="font-semibold" style={{ color: colors.accent }}>Tourism Strategy</span></>}
-        subtitle="BRIDGE ventures align directly with the Mahama administration's Black Star Experience, Beyond the Return, and tourism infrastructure commitments — creating pathways for public-private collaboration."
-        categories={[
-          { id: "all", label: "All", short: "All" },
-          { id: "funding", label: "Direct Funding", short: "Funding" },
-          { id: "infrastructure", label: "Infrastructure", short: "Infra" },
-          { id: "partnerships", label: "Partnerships", short: "Partners" },
-        ]}
-      />
-      <ImpactSection />
-      <CrossSectorSection />
-      <InvestmentCTASection />
-      <SectorFinalCTA
-          heading={<>Let's <span className="font-bold">Welcome</span> the World{" "}<span className="font-bold">to</span>{" "}<span className="font-bold" style={{ color: colors.accent }}>Ghana</span></>}
-          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's tourism future."
-        />
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => <ProblemSection />}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <CompetitiveLandscapeSection sector={sectorData} />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection />}
+      renderImpactSection={() => <ImpactSection />}
+      impactBeforeCrossSector
+      solutionFilters={[
+        { key: "all", label: "All", tier: "all" },
+        { key: 1, label: "Flagship", tier: 1 },
+        { key: 2, label: "Growth", tier: 2 },
+        { key: 3, label: "Strategic", tier: 3 },
+      ]}
+      policies={governancePolicies}
+      policyTitle={
+        <>
+          Moving in Step with Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Tourism Strategy</span>
+        </>
+      }
+      policySubtitle="BRIDGE ventures align directly with the Mahama administration's Black Star Experience, Beyond the Return, and tourism infrastructure commitments — creating pathways for public-private collaboration."
+      policyCategories={[
+        { id: "all", label: "All", short: "All" },
+        { id: "funding", label: "Direct Funding", short: "Funding" },
+        { id: "infrastructure", label: "Infrastructure", short: "Infra" },
+        { id: "partnerships", label: "Partnerships", short: "Partners" },
+      ]}
+      ctaHeading={
+        <>
+          Let's <span className="font-bold">Welcome</span> the World{" "}
+          <span className="font-bold">to</span>{" "}
+          <span className="font-bold" style={{ color: colors.accent }}>Ghana</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's tourism future."
+    />
   );
 }

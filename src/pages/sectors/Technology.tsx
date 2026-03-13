@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { cn } from "@/lib/utils";
 import { IconCode, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconCpu, IconStorefront, IconOfficeBuilding, IconLandmark, IconTrendingUp, IconCross } from "@/components/icons/SectorIcons";
 import { ArrowRight, BarChart3, Blocks, Check, ChevronDown, GraduationCap, Lightbulb, Sprout, Users, Wifi } from "lucide-react";
@@ -15,10 +14,7 @@ import { useCounter } from "@/hooks/useCounter";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -3872,46 +3868,45 @@ const ImpactSection = () => {
 };
 
 // CTA-to-Footer separator
-const CTAFooterSeparator = () => {
-  const isMobile = useIsMobile();
-  return (
-    <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-      <div className="h-px bg-white/[0.08]" />
-    </div>
-  );
-};
-
 // ============================================================================
 // MAIN PAGE COMPONENT
 // ============================================================================
 
 export default function TechnologyInnovationSectorPage() {
   return (
-    <Layout>
-    <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-      <SectorHeroSection sector={sectorData} />
-      <ProblemSection />
-
-      {/* ★ PREMIUM VALUE CHAIN SECTION ★ */}
-      <ValueChainSectionPremium />
-
-      <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Priority", tier: 1 }, { key: 2, label: "Growth", tier: 2 }]} />
-      <CompetitiveLandscapeSection sector={sectorData} />
-      <SectorPolicySection
-        policies={techPolicies}
-        title={<>Moving in Step with Ghana's{" "}<span style={{ color: colors.accent }} className="font-semibold">Digital Ambition</span></>}
-        subtitle="BRIDGE ventures align directly with Ghana's digital transformation agenda — from the $50M Fintech Fund to the Innovation & Startup Act — creating pathways for public-private collaboration."
-      />
-      <CrossSectorSection />
-      <InvestmentCTASection />
-      <ImpactSection />
-      <SectorFinalCTA
-          heading={<>Let's Build Ghana's <span className="font-bold" style={{ color: colors.accent }}>Technology</span></>}
-          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's digital future"
-          secondaryButtonText="Download Sector Brief"
-        />
-      <CTAFooterSeparator />
-    </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => <ProblemSection />}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <CompetitiveLandscapeSection sector={sectorData} />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection />}
+      renderImpactSection={() => <ImpactSection />}
+      solutionFilters={[
+        { key: "all", label: "All", tier: "all" },
+        { key: 1, label: "Priority", tier: 1 },
+        { key: 2, label: "Growth", tier: 2 },
+      ]}
+      policies={techPolicies}
+      policyTitle={
+        <>
+          Moving in Step with Ghana's{" "}
+          <span style={{ color: colors.accent }} className="font-semibold">
+            Digital Ambition
+          </span>
+        </>
+      }
+      policySubtitle="BRIDGE ventures align directly with Ghana's digital transformation agenda — from the $50M Fintech Fund to the Innovation & Startup Act — creating pathways for public-private collaboration."
+      ctaHeading={
+        <>
+          Let's Build Ghana's{" "}
+          <span className="font-bold" style={{ color: colors.accent }}>
+            Technology
+          </span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's digital future"
+      ctaSecondaryButtonText="Download Sector Brief"
+    />
   );
 }

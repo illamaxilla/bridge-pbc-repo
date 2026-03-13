@@ -17,7 +17,7 @@ const C = {
 };
 
 const scopedStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+
 
   .feat-card { transition: box-shadow 0.25s, transform 0.2s; }
   .feat-card:hover { box-shadow: 0 12px 48px rgba(0,0,0,0.13); transform: translateY(-3px); }

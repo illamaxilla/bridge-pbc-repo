@@ -1,7 +1,7 @@
 import React, { useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { supabase } from "@/integrations/supabase/client";
+import { subscribe } from "@/services/supabase";
 import { colors } from "@/lib/theme";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
 import { BridgeLogoWhite } from "@/components/BridgeLogo";
@@ -113,12 +113,12 @@ function SiteFooter() {
       return;
     }
     setSubStatus("loading");
-    const { error } = await supabase.from("subscribers").insert({ email: trimmed });
-    if (error && error.code !== "23505") {
-      setSubStatus("error");
-    } else {
+    try {
+      await subscribe(trimmed);
       setSubStatus("success");
       setEmail("");
+    } catch {
+      setSubStatus("error");
     }
   };
 

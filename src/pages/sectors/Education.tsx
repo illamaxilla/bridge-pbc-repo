@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Layout } from "@/components/Layout";
 import { IconGraduation, IconBuilding, IconWallet, IconHeart, IconLightbulb, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconSprout, IconCpu, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconCross } from "@/components/icons/SectorIcons";
 import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronLeft, ChevronRight, Clock } from "lucide-react";
 import { SECTOR_ROUTES } from "@/data/sectorIcons";
@@ -16,10 +15,7 @@ import { useCounter } from "@/hooks/useCounter";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -3330,34 +3326,35 @@ const ImpactSection = () => {
 
 export default function EducationSkillsSectorPage() {
   return (
-    <Layout>
-      <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-
-        <SectorHeroSection sector={sectorData} />
-        <ProblemSection />
-
-        {/* ★ PREMIUM VALUE CHAIN SECTION ★ */}
-        <ValueChainSectionPremium />
-
-        <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All Ventures", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Scaling", tier: 2 }, { key: 3, label: "Strategic", tier: 3 }]} />
-        <CompetitiveLandscapeSection sector={sectorData} />
-        <SectorPolicySection
-          policies={govPolicies}
-          title={<>Moving in Step with Ghana's <span className="font-semibold">Education</span>{" "}<span className="font-semibold" style={{ color: colors.accent }}>Reform</span></>}
-          subtitle="From the World Bank's $200M Skills Development Fund to the GH&#8373;4.2B Free SHS commitment, every BRIDGE venture maps to an active government policy or institutional priority."
-        />
-        <CrossSectorSection />
-        <InvestmentCTASection />
-        <ImpactSection />
-        <SectorFinalCTA
-          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Talent</span></>}
-          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's next generation of talent and enterprise."
-        />
-        {/* Pre-footer separator — NOT part of the Footer component */}
-        <div className="px-20" style={{ backgroundColor: colors.primary }}>
-          <div className="h-px bg-white/[0.08]" />
-        </div>
-      </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => <ProblemSection />}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <CompetitiveLandscapeSection sector={sectorData} />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection />}
+      renderImpactSection={() => <ImpactSection />}
+      solutionFilters={[
+        { key: "all", label: "All Ventures", tier: "all" },
+        { key: 1, label: "Flagship", tier: 1 },
+        { key: 2, label: "Scaling", tier: 2 },
+        { key: 3, label: "Strategic", tier: 3 },
+      ]}
+      policies={govPolicies}
+      policyTitle={
+        <>
+          Moving in Step with Ghana's <span className="font-semibold">Education</span>{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Reform</span>
+        </>
+      }
+      policySubtitle="From the World Bank's $200M Skills Development Fund to the GH&#8373;4.2B Free SHS commitment, every BRIDGE venture maps to an active government policy or institutional priority."
+      ctaHeading={
+        <>
+          Let's Build Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Talent</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's next generation of talent and enterprise."
+    />
   );
 }

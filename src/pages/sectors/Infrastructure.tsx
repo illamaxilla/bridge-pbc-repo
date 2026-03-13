@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { IconBuilding, IconBlocks, IconWallet, IconCross, IconCpu, IconGraduationCap, IconSprout, IconCamera, IconHome, IconLuggage, IconBatteryCharging, IconFactory, IconTruck, IconWheat, IconZap, IconDroplet, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconUsers, IconShield, IconSun, IconDollar, IconTarget, IconStorefront, IconOfficeBuilding, IconLandmark, IconTrendingUp } from "@/components/icons/SectorIcons";
 import { ArrowRight, Building2, Check, ChevronDown, Clock, DollarSign, Settings, Users, Wrench } from "lucide-react";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
@@ -16,10 +15,7 @@ import { useCounter } from "@/hooks/useCounter";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -3204,83 +3200,48 @@ const SectorGrid = () => {
 };
 
 export default function InfrastructureSectorPage() {
-  const isMobile = useIsMobile();
   return (
-    <Layout>
-    <div className="font-[Helvetica,Arial,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-
-
-      {/* Production CSS: Animations & Hover States */}
-      <style>{`
-        .cta-primary {
-          transition: all 0.3s ease;
-        }
-        .cta-primary:hover {
-          background-color: #B8D935 !important;
-          color: #1B4D3E !important;
-          transform: translateY(-1px);
-          box-shadow: 0 4px 16px rgba(184,217,53,0.3);
-        }
-        .cta-primary:hover .cta-btn-arrow {
-          background-color: rgba(27, 77, 62, 0.15) !important;
-        }
-        .cta-primary:hover .cta-btn-arrow svg {
-          stroke: #1B4D3E !important;
-        }
-        .cta-lime-swap {
-          transition: all 0.3s ease;
-        }
-        .cta-lime-swap:hover {
-          background-color: #1B4D3E !important;
-          color: #FFFFFF !important;
-          transform: translateY(-1px);
-          box-shadow: 0 4px 16px rgba(27,77,62,0.3);
-        }
-        .cta-lime-swap:hover .cta-btn-arrow {
-          background-color: rgba(255, 255, 255, 0.2) !important;
-        }
-        .cta-lime-swap:hover .cta-btn-arrow svg {
-          stroke: #FFFFFF !important;
-        }
-        .cta-secondary {
-          transition: all 0.3s ease;
-        }
-        .cta-secondary:hover {
-          border-color: #1B4D3E !important;
-          color: #1B4D3E !important;
-          transform: translateY(-1px);
-        }
-        .value-card {
-          transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                      box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .value-card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 20px 48px rgba(27, 77, 62, 0.12);
-        }
-      `}</style>
-
-      <SectorHeroSection sector={sectorData} />
-      <ProblemSection sector={sectorData} />
-      <ValueChainSectionPremium />
-      <SectorSolutionsSection sector={sectorData} />
-      <MarketEcosystemSection sector={sectorData} />
-      <SectorPolicySection
-        policies={sectorData.policyAlignment}
-        title={<><span className="font-semibold">Moving</span> in Step with Ghana's <span className="font-semibold">Infrastructure</span>{" "}<span style={{ color: colors.accent }} className="font-semibold">Transformation</span></>}
-        subtitle="BRIDGE ventures align directly with Build24 infrastructure priorities and the Model Market mandate — creating pathways for public-private collaboration across 260+ districts."
-      />
-      <CrossSectorSection />
-      <InvestmentCTASection sector={sectorData} />
-      <ImpactSection />
-      <SectorFinalCTA
-          heading={<>Let's <span className="font-semibold">Build</span> Ghana's{" "}<span style={{ color: colors.accent }} className="font-semibold">Infrastructure</span></>}
-          description="Whether you're an investor, institutional partner, or government stakeholder — there's a seat at the table in building Ghana's infrastructure future."
-        />
-      <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div className="h-px bg-white/[0.08]" />
-      </div>
-    </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => (
+        <>
+          <style>{`
+            .cta-primary { transition: all 0.3s ease; }
+            .cta-primary:hover { background-color: #B8D935 !important; color: #1B4D3E !important; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(184,217,53,0.3); }
+            .cta-primary:hover .cta-btn-arrow { background-color: rgba(27, 77, 62, 0.15) !important; }
+            .cta-primary:hover .cta-btn-arrow svg { stroke: #1B4D3E !important; }
+            .cta-lime-swap { transition: all 0.3s ease; }
+            .cta-lime-swap:hover { background-color: #1B4D3E !important; color: #FFFFFF !important; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(27,77,62,0.3); }
+            .cta-lime-swap:hover .cta-btn-arrow { background-color: rgba(255, 255, 255, 0.2) !important; }
+            .cta-lime-swap:hover .cta-btn-arrow svg { stroke: #FFFFFF !important; }
+            .cta-secondary { transition: all 0.3s ease; }
+            .cta-secondary:hover { border-color: #1B4D3E !important; color: #1B4D3E !important; transform: translateY(-1px); }
+            .value-card { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+            .value-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(27, 77, 62, 0.12); }
+          `}</style>
+          <ProblemSection sector={sectorData} />
+        </>
+      )}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <MarketEcosystemSection sector={sectorData} />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection sector={sectorData} />}
+      renderImpactSection={() => <ImpactSection />}
+      policyTitle={
+        <>
+          <span className="font-semibold">Moving</span> in Step with Ghana's{" "}
+          <span className="font-semibold">Infrastructure</span>{" "}
+          <span style={{ color: colors.accent }} className="font-semibold">Transformation</span>
+        </>
+      }
+      policySubtitle="BRIDGE ventures align directly with Build24 infrastructure priorities and the Model Market mandate — creating pathways for public-private collaboration across 260+ districts."
+      ctaHeading={
+        <>
+          Let's <span className="font-semibold">Build</span> Ghana's{" "}
+          <span style={{ color: colors.accent }} className="font-semibold">Infrastructure</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, institutional partner, or government stakeholder — there's a seat at the table in building Ghana's infrastructure future."
+    />
   );
 }
