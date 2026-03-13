@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconWallet, IconBuilding, IconGraduation, IconShield, IconKey, IconClipboard, IconTool, IconTarget, IconSearch, IconCreditCard, IconUsers, IconHome, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconChevronDown } from "@/components/icons/SectorIcons";
 import { ArrowRight, ArrowUpRight, BatteryCharging, Building2, Check, ChevronRight, Clock, Cpu, Hammer, Home, Landmark, LayoutGrid } from "lucide-react";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -3190,35 +3186,42 @@ const ImpactSection = () => {
 // ============================================================================
 
 export default function HousingRealEstateSectorPage() {
-  const isMobile = useIsMobile();
   return (
-    <Layout>
-      <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-        <SectorHeroSection sector={sectorData} />
-        <ProblemSection sector={sectorData} />
-        <ValueChainSectionPremium />
-        <SectorSolutionsSection sector={sectorData} filters={[{ key: "all", label: "All Ventures", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Scaling", tier: 2 }]} />
-        <MarketEcosystemSection sector={sectorData} />
-        <SectorPolicySection
-          policies={housingPolicies}
-          title={<>Moving in Step with Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Housing Agenda</span></>}
-          subtitle="BRIDGE housing ventures align directly with current government priorities — from the Big Push Programme to the Rent Control Bill — creating pathways for public-private collaboration."
-          categories={[
-            { id: "all", label: "All", short: "All" },
-            { id: "funding", label: "Direct Funding", short: "Funding" },
-            { id: "regulatory", label: "Regulatory", short: "Regulatory" },
-            { id: "infrastructure", label: "Infrastructure", short: "Infra" },
-            { id: "partnerships", label: "Partnerships", short: "Partners" },
-          ]}
-        />
-        <CrossSectorSection />
-        <InvestmentCTASection sector={sectorData} />
-        <ImpactSection />
-        <SectorFinalCTA
-          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Housing Future</span></>}
-          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building sustainable communities."
-        />
-      </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => <ProblemSection sector={sectorData} />}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <MarketEcosystemSection sector={sectorData} />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection sector={sectorData} />}
+      renderImpactSection={() => <ImpactSection />}
+      solutionFilters={[
+        { key: "all", label: "All Ventures", tier: "all" },
+        { key: 1, label: "Flagship", tier: 1 },
+        { key: 2, label: "Scaling", tier: 2 },
+      ]}
+      policies={housingPolicies}
+      policyTitle={
+        <>
+          Moving in Step with Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Housing Agenda</span>
+        </>
+      }
+      policySubtitle="BRIDGE housing ventures align directly with current government priorities — from the Big Push Programme to the Rent Control Bill — creating pathways for public-private collaboration."
+      policyCategories={[
+        { id: "all", label: "All", short: "All" },
+        { id: "funding", label: "Direct Funding", short: "Funding" },
+        { id: "regulatory", label: "Regulatory", short: "Regulatory" },
+        { id: "infrastructure", label: "Infrastructure", short: "Infra" },
+        { id: "partnerships", label: "Partnerships", short: "Partners" },
+      ]}
+      ctaHeading={
+        <>
+          Let's Build Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Housing Future</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building sustainable communities."
+    />
   );
 }

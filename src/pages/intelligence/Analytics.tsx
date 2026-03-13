@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { Database, TrendingUp, Target } from "lucide-react";
 import { C } from "@/components/intelligence/constants";
@@ -13,8 +13,12 @@ import { ActivityHeatmap } from "@/components/intelligence/analytics/ActivityHea
 import { SourceBreakdown } from "@/components/intelligence/analytics/SourceBreakdown";
 import { CompaniesTable } from "@/components/intelligence/analytics/CompaniesTable";
 import { EngagementMetrics } from "@/components/intelligence/analytics/EngagementMetrics";
-import { WorldMap } from "@/components/intelligence/analytics/WorldMap";
 import { MobileApp } from "@/components/intelligence/mobile/MobileAnalytics";
+
+// Lazy-load WorldMap to defer loading the 5,000+ line worldMapData module
+const WorldMap = lazy(() =>
+  import("@/components/intelligence/analytics/WorldMap").then((m) => ({ default: m.WorldMap }))
+);
 
 export default function BridgeAnalyticsPage() {
   const isMobile = useIsMobile();
@@ -106,7 +110,9 @@ export default function BridgeAnalyticsPage() {
               <EngagementMetrics s={s} />
             </div>
             <div className="col-span-full min-w-0 min-h-[340px]">
-              <WorldMap s={s} />
+              <Suspense fallback={<div className="flex items-center justify-center h-[340px] text-sm text-gray-400">Loading map…</div>}>
+                <WorldMap s={s} />
+              </Suspense>
             </div>
             <div className="col-span-full h-2" />
           </div>

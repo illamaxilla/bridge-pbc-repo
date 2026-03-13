@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { IconArrowDown, IconCheck, IconLightbulb, IconWheat, IconHeart, IconFactory, IconAnchor, IconTrain, IconWarehouse, IconSnowflake, IconGraduation, IconTools, IconBox, IconPhone, IconTruck, IconShield, IconDollar, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark } from "@/components/icons/SectorIcons";
 import { ArrowRight, ArrowUpRight, BatteryCharging, Check, ChevronDown, Clock, Cross, Factory, Package, Route, Sprout, Truck, Users, Wallet, Warehouse } from "lucide-react";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -2806,33 +2802,42 @@ const ImpactSection = () => {
 
 export default function TransportationLogisticsSectorPage() {
   return (
-    <Layout>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; }
-        .cta-btn-arrow { transition: none; }
-        .cta-btn-arrow svg { transition: none; }
-        .cta-primary { transition: none; }
-        .cta-lime-swap { transition: none; }
-        .cta-secondary { transition: none; }
-      `}</style>
-      <SectorHeroSection sector={sectorData} />
-      <OpportunitySection />
-      <ProcessSection />
-      <SectorSolutionsSection sector={sectorData} />
-      <LandscapeSection sector={sectorData} />
-      <SectorPolicySection
-        policies={transportPolicies}
-        pillLabel="Policy & Governance"
-        title={<>Moving in Step with Ghana's <span className="font-semibold">Transport</span>{" "}<span className="font-semibold" style={{ color: colors.accent }}>Vision</span></>}
-        subtitle="Connect24 creates the corridors — BRIDGE builds the services, technology, and human capital that make them work for ordinary Ghanaians."
-      />
-      <RippleEffectSection />
-      <InvestmentThesisSection />
-      <ImpactSection />
-      <SectorFinalCTA
-          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Logistics Future</span></>}
-          description="Whether you're an investor, operator, or government partner, there's a seat at the table in building Ghana's logistics future."
-        />
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => (
+        <>
+          <style>{`
+            *, *::before, *::after { box-sizing: border-box; }
+            .cta-btn-arrow { transition: none; }
+            .cta-btn-arrow svg { transition: none; }
+            .cta-primary { transition: none; }
+            .cta-lime-swap { transition: none; }
+            .cta-secondary { transition: none; }
+          `}</style>
+          <OpportunitySection />
+        </>
+      )}
+      renderValueChainSection={() => <ProcessSection />}
+      renderEcosystemSection={() => <LandscapeSection sector={sectorData} />}
+      renderCrossSectorSection={() => <RippleEffectSection />}
+      renderInvestmentSection={() => <InvestmentThesisSection />}
+      renderImpactSection={() => <ImpactSection />}
+      policies={transportPolicies}
+      policyPillLabel="Policy & Governance"
+      policyTitle={
+        <>
+          Moving in Step with Ghana's <span className="font-semibold">Transport</span>{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Vision</span>
+        </>
+      }
+      policySubtitle="Connect24 creates the corridors — BRIDGE builds the services, technology, and human capital that make them work for ordinary Ghanaians."
+      ctaHeading={
+        <>
+          Let's Build Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Logistics Future</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, operator, or government partner, there's a seat at the table in building Ghana's logistics future."
+    />
   );
 }

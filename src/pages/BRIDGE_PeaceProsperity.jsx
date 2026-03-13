@@ -7,7 +7,7 @@ const C = {
   line: '#E0E0E0', white: '#FFFFFF', cover: '#0B1510',
 };
 const FONTS = `
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+
 
   /* Transitions */
   .peace-dim { transition: box-shadow 0.2s, transform 0.18s; }

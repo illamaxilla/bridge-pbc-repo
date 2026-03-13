@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { IconBuilding, IconWallet, IconWheat, IconCpu, IconBank, IconPhone, IconHandshake, IconGlobe, IconStore, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconTrendingUp, IconShield, IconDollar, IconTarget, IconChevronDown, IconExternalLink, IconArrowUpRight, IconStorefront, IconOfficeBuilding, IconLandmark, IconCross } from "@/components/icons/SectorIcons";
 import { ArrowRight, Blocks, Check, ChevronDown, ChevronUp, Clock, Cpu, GraduationCap, Sprout, Wallet } from "lucide-react";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
 import { useCounter } from "@/hooks/useCounter";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Financial Inclusion & Economic Security
@@ -17,9 +15,7 @@ import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
 import { cn } from "@/lib/utils";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -3813,32 +3809,29 @@ const SectorGrid = () => {
 
 
 export default function FinancialInclusionSectorPage() {
-  const isMobile = useIsMobile();
   return (
-    <Layout>
-      <div className="font-[Inter,sans-serif] m-0 p-0" style={{ backgroundColor: colors.white }}>
-
-        <SectorHeroSection sector={sectorData} />
-        <ProblemSection sector={sectorData} />
-        <ValueChainSectionPremium />
-        <SectorSolutionsSection sector={sectorData} />
-        <MarketEcosystemSection sector={sectorData} />
-        <SectorPolicySection
-          policies={sectorData.policyAlignment}
-          title={<>Moving in Step With the <span style={{ color: colors.accent, fontWeight: "600" }}>National Vision</span></>}
-          subtitle="BRIDGE ventures align directly with Ghana's financial inclusion priorities — creating pathways for public-private collaboration that accelerates shared goals."
-        />
-        <CrossSectorSection />
-        <InvestmentCTASection sector={sectorData} />
-        <ImpactSection />
-        <SectorFinalCTA
-          heading={<>Let's Build Ghana's <span style={{ color: colors.accent }} className="font-semibold">Financial Future</span></>}
-          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's financial future."
-        />
-        <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-          <div className="h-px bg-white/[0.08]" />
-        </div>
-      </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => <ProblemSection sector={sectorData} />}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <MarketEcosystemSection sector={sectorData} />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection sector={sectorData} />}
+      renderImpactSection={() => <ImpactSection />}
+      policyTitle={
+        <>
+          Moving in Step With the{" "}
+          <span style={{ color: colors.accent, fontWeight: "600" }}>National Vision</span>
+        </>
+      }
+      policySubtitle="BRIDGE ventures align directly with Ghana's financial inclusion priorities — creating pathways for public-private collaboration that accelerates shared goals."
+      ctaHeading={
+        <>
+          Let's Build Ghana's{" "}
+          <span style={{ color: colors.accent }} className="font-semibold">Financial Future</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's financial future."
+    />
   );
 }

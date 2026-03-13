@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout } from "@/components/Layout";
 import { cn } from "@/lib/utils";
 import { IconArrowRight, IconArrowDown, IconCheck, IconWallet, IconGraduation, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark } from "@/components/icons/SectorIcons";
 import { ArrowRight, BatteryCharging, Blocks, Check, ChevronDown, ChevronUp, Clock, Factory, GraduationCap, Sprout, Truck, Users, Wallet, Warehouse } from "lucide-react";
@@ -16,10 +15,7 @@ import { useCounter } from "@/hooks/useCounter";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
-import SectorHeroSection from "@/components/sectors/SectorHeroSection";
-import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
-import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
+import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -4207,37 +4203,49 @@ const SectorGrid = () => {
 };
 
 export default function ManufacturingSectorPage() {
-  const isMobile = useIsMobile();
   return (
-    <Layout>
-      <style>{`
-        * { -webkit-tap-highlight-color: transparent; }
-        ::-webkit-scrollbar { height: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
-      `}</style>
-      <SectorHeroSection sector={sectorData} />
-      <ProblemSection sector={sectorData} />
-      <ValueChainSectionPremium />
-      <SectorSolutionsSection sector={sectorData} maxSolutions={9} filters={[{ key: "all", label: "All", tier: "all" }, { key: 1, label: "Flagship", tier: 1 }, { key: 2, label: "Growth", tier: 2 }, { key: 3, label: "Emerging", tier: 3 }]} />
-      <SectorPolicySection
-        policies={governancePolicies}
-        title={<>Moving in Step with Ghana's{" "}<span className="font-semibold" style={{ color: colors.accent }}>Industrial Ambition</span></>}
-        subtitle="BRIDGE's manufacturing ventures align directly with Ghana's flagship industrial policies, the 24-Hour Economy, and AfCFTA positioning — creating pathways for public-private collaboration."
-      />
-      <CompetitiveLandscapeSection sector={sectorData} />
-      <CrossSectorSection />
-      <InvestmentCTASection />
-      <ImpactSection />
-      <SectorFinalCTA
-          pillText="Let's Build Ghana's Industrial Future"
-          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Industrial Future</span></>}
-          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's local production capacity."
-        />
-      {/* Pre-footer separator — NOT part of the Footer component */}
-      <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div className="h-px bg-white/[0.08]" />
-      </div>
-    </Layout>
+    <SectorPageTemplate
+      sector={sectorData}
+      renderProblemSection={() => (
+        <>
+          <style>{`
+            * { -webkit-tap-highlight-color: transparent; }
+            ::-webkit-scrollbar { height: 4px; }
+            ::-webkit-scrollbar-track { background: transparent; }
+            ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
+          `}</style>
+          <ProblemSection sector={sectorData} />
+        </>
+      )}
+      renderValueChainSection={() => <ValueChainSectionPremium />}
+      renderEcosystemSection={() => <CompetitiveLandscapeSection sector={sectorData} />}
+      renderCrossSectorSection={() => <CrossSectorSection />}
+      renderInvestmentSection={() => <InvestmentCTASection />}
+      renderImpactSection={() => <ImpactSection />}
+      policyBeforeEcosystem
+      maxSolutions={9}
+      solutionFilters={[
+        { key: "all", label: "All", tier: "all" },
+        { key: 1, label: "Flagship", tier: 1 },
+        { key: 2, label: "Growth", tier: 2 },
+        { key: 3, label: "Emerging", tier: 3 },
+      ]}
+      policies={governancePolicies}
+      policyTitle={
+        <>
+          Moving in Step with Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Industrial Ambition</span>
+        </>
+      }
+      policySubtitle="BRIDGE's manufacturing ventures align directly with Ghana's flagship industrial policies, the 24-Hour Economy, and AfCFTA positioning — creating pathways for public-private collaboration."
+      ctaPillText="Let's Build Ghana's Industrial Future"
+      ctaHeading={
+        <>
+          Let's Build Ghana's{" "}
+          <span className="font-semibold" style={{ color: colors.accent }}>Industrial Future</span>
+        </>
+      }
+      ctaDescription="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's local production capacity."
+    />
   );
 }
