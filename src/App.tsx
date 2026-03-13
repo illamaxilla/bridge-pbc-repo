@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { PaidRoute } from "./components/PaidRoute";
 import NotFound from "./pages/NotFound";
 
 // Lazy-loaded pages for code splitting
@@ -180,11 +181,11 @@ const App = () => (
               } />
               <Route path="/resources/sector-briefs-full" element={
                 <ErrorBoundary>
-                  <ProtectedRoute>
+                  <PaidRoute>
                     <SectorIntelligenceWrapper title="Sector Intelligence Briefs — Full">
                       <AllSectorsPaid />
                     </SectorIntelligenceWrapper>
-                  </ProtectedRoute>
+                  </PaidRoute>
                 </ErrorBoundary>
               } />
               <Route path="/resources/white-paper" element={
@@ -224,40 +225,40 @@ const App = () => (
               {/* Paid member document library */}
               <Route path="/resources/document-library" element={
                 <ErrorBoundary>
-                  <ProtectedRoute>
+                  <PaidRoute>
                     <SectorIntelligenceWrapper title="Member Document Dashboard">
                       <PaidDocumentLibrary />
                     </SectorIntelligenceWrapper>
-                  </ProtectedRoute>
+                  </PaidRoute>
                 </ErrorBoundary>
               } />
 
               {/* Paid-only report pages */}
               <Route path="/resources/impact-score" element={
                 <ErrorBoundary>
-                  <ProtectedRoute>
+                  <PaidRoute>
                     <SectorIntelligenceWrapper title="BRIDGE Impact Score™ Methodology">
                       <ImpactScore />
                     </SectorIntelligenceWrapper>
-                  </ProtectedRoute>
+                  </PaidRoute>
                 </ErrorBoundary>
               } />
               <Route path="/resources/peace-prosperity" element={
                 <ErrorBoundary>
-                  <ProtectedRoute>
+                  <PaidRoute>
                     <SectorIntelligenceWrapper title="Peace & Prosperity Framework">
                       <PeaceProsperity />
                     </SectorIntelligenceWrapper>
-                  </ProtectedRoute>
+                  </PaidRoute>
                 </ErrorBoundary>
               } />
               <Route path="/resources/portfolio" element={
                 <ErrorBoundary>
-                  <ProtectedRoute>
+                  <PaidRoute>
                     <SectorIntelligenceWrapper title="BRIDGE Venture Portfolio Overview">
                       <Portfolio />
                     </SectorIntelligenceWrapper>
-                  </ProtectedRoute>
+                  </PaidRoute>
                 </ErrorBoundary>
               } />
 
