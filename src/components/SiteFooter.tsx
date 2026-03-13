@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { supabase } from "@/integrations/supabase/client";
 import { colors } from "@/lib/theme";
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
 import { BridgeLogoWhite } from "@/components/BridgeLogo";
+import { cn } from "@/lib/utils";
 
 // ============================================================================
 // BRIDGE SHARED FOOTER COMPONENT
@@ -43,7 +44,7 @@ const footerLinkHref = (link: string): string => FOOTER_LINKS[link] || "#";
 function FooterLogo() {
   const navigate = useNavigate();
   return (
-    <a href="/" onClick={(e) => { e.preventDefault(); navigate("/"); }} style={{ display: "flex", alignItems: "center", height: "40px", textDecoration: "none" }}>
+    <a href="/" onClick={(e) => { e.preventDefault(); navigate("/"); }} className="flex items-center h-[40px] no-underline">
       <BridgeLogoWhite height={36} />
     </a>
   );
@@ -55,22 +56,14 @@ function SectorGrid() {
   return (
     <div>
       <div
-        style={{
-          fontSize: "12px",
-          fontWeight: "600",
-          color: hovered !== null ? ACCENT : "rgba(255,255,255,0.4)",
-          fontFamily: "'DM Sans', sans-serif",
-          textTransform: "uppercase",
-          letterSpacing: "1.5px",
-          marginBottom: "12px",
-          transition: "color 0.25s ease",
-          lineHeight: "1",
-          minHeight: "12px",
-        }}
+        className={cn(
+          "text-[12px] font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-3 transition-colors duration-[250ms] leading-[1] min-h-[12px]",
+          hovered !== null ? "text-[#B8D935]" : "text-[rgba(255,255,255,0.4)]"
+        )}
       >
         {hovered !== null ? FOOTER_SECTOR_ICONS[hovered].label : "Explore 12 Sectors"}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="flex justify-between items-center">
         {FOOTER_SECTOR_ICONS.map((sector, i) => {
           const isH = hovered === i;
           return (
@@ -80,31 +73,18 @@ function SectorGrid() {
               title={sector.label}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "44px",
-                height: "44px",
-                borderRadius: "10px",
-                backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)",
-                border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`,
-                cursor: "pointer",
-                textDecoration: "none",
-                transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                transform: isH ? "translateY(-2px)" : "none",
-                boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
-                boxSizing: "border-box",
-              }}
+              className={cn(
+                "flex items-center justify-center w-[44px] h-[44px] rounded-[10px] cursor-pointer no-underline transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] box-border",
+                isH
+                  ? "bg-[rgba(184,217,53,0.12)] border border-[rgba(184,217,53,0.35)] -translate-y-0.5 shadow-[0_6px_16px_rgba(0,0,0,0.2),0_0_0_1px_rgba(184,217,53,0.15)]"
+                  : "bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.07)] translate-y-0 shadow-none"
+              )}
             >
               <div
-                style={{
-                  opacity: isH ? 1 : 0.5,
-                  transition: "opacity 0.25s ease",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className={cn(
+                  "flex items-center justify-center transition-opacity duration-[250ms]",
+                  isH ? "opacity-100" : "opacity-50"
+                )}
               >
                 {sector.icon(isH ? ACCENT : "rgba(255,255,255,0.85)")}
               </div>
@@ -114,10 +94,12 @@ function SectorGrid() {
       </div>
     </div>
   );
-};
+}
 
 // ─── Main SiteFooter export ───────────────────────────────────────────────────
-export default function SiteFooter() {
+// React.memo: SiteFooter receives no props and is rendered by Layout on every route
+// change. Memo prevents re-renders when Layout's children (page content) change.
+function SiteFooter() {
   const isMobile = useIsMobile();
   const [email, setEmail] = useState("");
   const [subStatus, setSubStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -141,21 +123,21 @@ export default function SiteFooter() {
   const trimEmail = (v: string) => v.trim().toLowerCase();
 
   return (
-    <footer style={{ backgroundColor: PRIMARY, padding: "0" }}>
+    <footer className="bg-[#1B4D3E] p-0">
       {/* Section separator */}
-      <div style={{ padding: "0 80px" }}>
-        <div style={{ height: "0.5px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+      <div className="px-[80px]">
+        <div className="h-[0.5px] bg-[rgba(255,255,255,0.08)]" />
       </div>
 
       {isMobile ? (
         /* ═══ MOBILE FOOTER ═══ */
-        <div style={{ padding: "32px 20px 16px", display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div className="pt-8 px-5 pb-4 flex flex-col gap-6">
           {/* Row 1: Logo + Nav labels */}
-          <div style={{ display: "flex", alignItems: "flex-end", gap: "0" }}>
-            <div style={{ flexShrink: 0 }}>
+          <div className="flex items-end gap-0">
+            <div className="shrink-0">
               <FooterLogo />
             </div>
-            <div style={{ display: "flex", gap: "8px", flexWrap: "nowrap", marginLeft: "auto", alignItems: "flex-end", overflow: "hidden" }}>
+            <div className="flex gap-2 flex-nowrap ml-auto items-end overflow-hidden">
               {(["Company", "Services", "Insight"] as const).map((label) => {
                 const href: Record<string, string> = {
                   Company: "/about",
@@ -166,17 +148,7 @@ export default function SiteFooter() {
                   <a
                     key={label}
                     href={href[label]}
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "11px",
-                      fontWeight: "600",
-                      color: "rgba(255,255,255,0.5)",
-                      letterSpacing: "0px",
-                      textDecoration: "none",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
-                      lineHeight: "1",
-                    }}
+                    className="font-['DM_Sans',sans-serif] text-[11px] font-semibold text-[rgba(255,255,255,0.5)] tracking-[0px] no-underline whitespace-nowrap shrink-0 leading-[1]"
                   >
                     {label}
                   </a>
@@ -185,116 +157,78 @@ export default function SiteFooter() {
             </div>
           </div>
           {/* Row 2: Subscribe inline */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <div style={{ display: "flex", gap: "8px" }}>
+          <div className="flex flex-col gap-1.5">
+            <div className="flex gap-2">
               <input
                 placeholder="Subscribe to insights"
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setSubStatus("idle"); }}
                 onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
-                style={{
-                  flex: 1,
-                  padding: "11px 14px",
-                  borderRadius: "8px",
-                  border: `1px solid ${subStatus === "error" ? "rgba(255,80,80,0.5)" : "rgba(255,255,255,0.12)"}`,
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  color: WHITE,
-                  fontSize: "12px",
-                  fontFamily: "'DM Sans', sans-serif",
-                  outline: "none",
-                }}
+                className={cn(
+                  "flex-1 py-[11px] px-[14px] rounded-lg bg-[rgba(255,255,255,0.05)] text-white text-[12px] font-['DM_Sans',sans-serif] outline-none border",
+                  subStatus === "error" ? "border-[rgba(255,80,80,0.5)]" : "border-[rgba(255,255,255,0.12)]"
+                )}
               />
               <button
                 onClick={handleSubscribe}
                 disabled={subStatus === "loading" || subStatus === "success"}
-                style={{
-                  backgroundColor: subStatus === "success" ? "#4caf50" : ACCENT,
-                  color: PRIMARY,
-                  border: "none",
-                  padding: "11px 18px",
-                  fontSize: "12px",
-                  fontWeight: "700",
-                  fontFamily: "'DM Sans', sans-serif",
-                  cursor: subStatus === "loading" || subStatus === "success" ? "default" : "pointer",
-                  borderRadius: "8px",
-                  opacity: subStatus === "loading" ? 0.7 : 1,
-                  transition: "background-color 0.2s ease",
-                }}
+                className={cn(
+                  "border-none py-[11px] px-[18px] text-[12px] font-bold font-['DM_Sans',sans-serif] rounded-lg text-[#1B4D3E] transition-colors duration-200",
+                  subStatus === "success" ? "bg-[#4caf50]" : "bg-[#B8D935]",
+                  subStatus === "loading" || subStatus === "success" ? "cursor-default" : "cursor-pointer",
+                  subStatus === "loading" ? "opacity-70" : "opacity-100"
+                )}
               >
                 {subStatus === "loading" ? "..." : subStatus === "success" ? "✓" : "→"}
               </button>
             </div>
             {subStatus === "success" && (
-              <span style={{ fontSize: "11px", color: "#8dc63f", fontFamily: "'DM Sans', sans-serif" }}>
+              <span className="text-[11px] text-[#8dc63f] font-['DM_Sans',sans-serif]">
                 You're subscribed! Thanks.
               </span>
             )}
             {subStatus === "error" && (
-              <span style={{ fontSize: "11px", color: "rgba(255,100,100,0.9)", fontFamily: "'DM Sans', sans-serif" }}>
+              <span className="text-[11px] text-[rgba(255,100,100,0.9)] font-['DM_Sans',sans-serif]">
                 Please enter a valid email address.
               </span>
             )}
           </div>
           {/* Row 3: Contact + Social */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", fontFamily: "'DM Sans', sans-serif" }}>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <span className="text-[12px] text-[rgba(255,255,255,0.4)] font-['DM_Sans',sans-serif]">
                 Accra, Ghana
               </span>
-              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.15)" }}>·</span>
-              <span style={{ fontSize: "12px", color: ACCENT, fontWeight: "600", fontFamily: "'DM Sans', sans-serif" }}>
+              <span className="text-[12px] text-[rgba(255,255,255,0.15)]">·</span>
+              <span className="text-[12px] text-[#B8D935] font-semibold font-['DM_Sans',sans-serif]">
                 info@bridgepbc.com
               </span>
             </div>
-            <div style={{ display: "flex", gap: "6px" }}>
+            <div className="flex gap-1.5">
               {SOCIAL_ICONS.map((icon, i) => (
                 <a
                   key={i}
                   href={SOCIAL_HREFS[i]}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    borderRadius: "6px",
-                    backgroundColor: "rgba(255,255,255,0.06)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    color: "rgba(255,255,255,0.4)",
-                    textDecoration: "none",
-                  }}
+                  className="w-7 h-7 rounded-md bg-[rgba(255,255,255,0.06)] flex items-center justify-center cursor-pointer text-[rgba(255,255,255,0.4)] no-underline"
                 >
-                  <span style={{ transform: "scale(0.8125)", display: "flex" }}>{icon}</span>
+                  <span className="scale-[0.8125] flex">{icon}</span>
                 </a>
               ))}
             </div>
           </div>
           {/* Bottom bar */}
-          <div
-            style={{
-              paddingTop: "16px",
-              borderTop: "1px solid rgba(255,255,255,0.06)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontFamily: "'DM Sans', sans-serif" }}>
+          <div className="pt-4 border-t border-[rgba(255,255,255,0.06)] flex justify-between items-center">
+            <span className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif]">
               © 2026 BRIDGE PBC
             </span>
-            <div style={{ display: "flex", gap: "12px" }}>
+            <div className="flex gap-3">
               {["Terms", "Privacy", "Accessibility"].map((link) => (
                 <a
                   key={link}
                   href="#"
-                  style={{
-                    fontSize: "11px",
-                    color: "rgba(255,255,255,0.25)",
-                    fontFamily: "'DM Sans', sans-serif",
-                    textDecoration: "none",
-                  }}
+                  className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif] no-underline"
                 >
                   {link}
                 </a>
@@ -305,36 +239,27 @@ export default function SiteFooter() {
       ) : (
         /* ═══ DESKTOP FOOTER ═══ */
         <>
-          <div style={{ padding: "64px 80px 32px", display: "grid", gridTemplateColumns: "325px 1fr", gap: "220px" }}>
+          <div className="pt-16 px-[80px] pb-8 grid grid-cols-[325px_1fr] gap-x-[220px]">
             {/* Left: Logo + description + contact */}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div className="flex flex-col justify-between">
               <div>
-                <div style={{ marginBottom: "24px" }}>
+                <div className="mb-6">
                   <FooterLogo />
                 </div>
-                <p
-                  style={{
-                    fontSize: "14px",
-                    color: "rgba(255,255,255,0.5)",
-                    fontFamily: "'DM Sans', sans-serif",
-                    lineHeight: "1.8",
-                    margin: "0 0 28px",
-                    maxWidth: "320px",
-                  }}
-                >
+                <p className="text-sm text-[rgba(255,255,255,0.5)] font-['DM_Sans',sans-serif] leading-[1.8] mt-0 mb-7 mr-0 ml-0 max-w-[320px]">
                   Blending resources and innovation across the integrated sectors for development, growth, and empowerment.
                 </p>
-                <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", fontFamily: "'DM Sans', sans-serif", margin: "0 0 4px", lineHeight: "1.7" }}>
+                <p className="text-sm text-[rgba(255,255,255,0.55)] font-['DM_Sans',sans-serif] mt-0 mb-1 leading-[1.7]">
                   Accra, Ghana
                 </p>
-                <p style={{ fontSize: "14px", color: ACCENT, fontFamily: "'DM Sans', sans-serif", margin: "0", fontWeight: "600" }}>
+                <p className="text-sm text-[#B8D935] font-['DM_Sans',sans-serif] m-0 font-semibold">
                   info@bridgepbc.com
                 </p>
               </div>
             </div>
             {/* Right: Nav columns */}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="flex flex-col justify-between">
+              <div className="flex justify-between">
                 {[
                   { title: "Company", links: ["About BRIDGE", "Our Approach", "Sectors", "Contact Us"] },
                   { title: "Services", links: ["Research & Guidance", "Venture Development", "Direct Investment", "Strategic Partnerships"] },
@@ -342,32 +267,14 @@ export default function SiteFooter() {
                   { title: "Insights", links: ["Insights & Analysis", "Sector Briefs", "Policy Updates", "Annual Review"] },
                 ].map((col) => (
                   <div key={col.title}>
-                    <h4
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: ACCENT,
-                        fontFamily: "'DM Sans', sans-serif",
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        marginBottom: "24px",
-                        margin: "0 0 24px",
-                      }}
-                    >
+                    <h4 className="text-[12px] font-bold text-[#B8D935] font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mt-0 mb-6">
                       {col.title}
                     </h4>
                     {col.links.map((link) => (
                       <a
                         key={link}
                         href={footerLinkHref(link)}
-                        style={{
-                          display: "block",
-                          fontSize: "14px",
-                          color: "rgba(255,255,255,0.6)",
-                          fontFamily: "'DM Sans', sans-serif",
-                          textDecoration: "none",
-                          marginBottom: "14px",
-                        }}
+                        className="block text-sm text-[rgba(255,255,255,0.6)] font-['DM_Sans',sans-serif] no-underline mb-3.5"
                       >
                         {link}
                       </a>
@@ -379,106 +286,57 @@ export default function SiteFooter() {
           </div>
 
           {/* ═══ Subscribe row + Sector Grid ═══ */}
-          <div
-            style={{
-              padding: "0 80px 20px",
-              display: "grid",
-              gridTemplateColumns: "325px 1fr",
-              gap: "220px",
-              alignItems: "start",
-            }}
-          >
+          <div className="px-[80px] pb-5 grid grid-cols-[325px_1fr] gap-x-[220px] items-start">
             {/* Subscribe */}
             <div>
-              <span
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  color: "rgba(255,255,255,0.4)",
-                  fontFamily: "'DM Sans', sans-serif",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  display: "block",
-                  marginBottom: "12px",
-                  lineHeight: "1",
-                }}
-              >
+              <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.4)] font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] block mb-3 leading-[1]">
                 Subscribe to Insights
               </span>
-              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                <div style={{ display: "flex", gap: "8px" }}>
+              <div className="flex flex-col gap-1.5">
+                <div className="flex gap-2">
                   <input
                     placeholder="Your email address"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setSubStatus("idle"); }}
                     onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
-                    style={{
-                      flex: 1,
-                      padding: "12px 16px",
-                      borderRadius: "8px",
-                      border: `1px solid ${subStatus === "error" ? "rgba(255,80,80,0.5)" : "rgba(255,255,255,0.12)"}`,
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      color: WHITE,
-                      fontSize: "13px",
-                      fontFamily: "'DM Sans', sans-serif",
-                      outline: "none",
-                      height: "44px",
-                      boxSizing: "border-box",
-                    }}
+                    className={cn(
+                      "flex-1 py-3 px-4 rounded-lg bg-[rgba(255,255,255,0.05)] text-white text-[13px] font-['DM_Sans',sans-serif] outline-none h-[44px] box-border border",
+                      subStatus === "error" ? "border-[rgba(255,80,80,0.5)]" : "border-[rgba(255,255,255,0.12)]"
+                    )}
                   />
                   <button
                     onClick={handleSubscribe}
                     disabled={subStatus === "loading" || subStatus === "success"}
-                    style={{
-                      backgroundColor: subStatus === "success" ? "#4caf50" : ACCENT,
-                      color: PRIMARY,
-                      border: "none",
-                      padding: "12px 20px",
-                      fontSize: "13px",
-                      fontWeight: "700",
-                      fontFamily: "'DM Sans', sans-serif",
-                      cursor: subStatus === "loading" || subStatus === "success" ? "default" : "pointer",
-                      borderRadius: "8px",
-                      height: "44px",
-                      boxSizing: "border-box",
-                      opacity: subStatus === "loading" ? 0.7 : 1,
-                      transition: "background-color 0.2s ease",
-                    }}
+                    className={cn(
+                      "border-none py-3 px-5 text-[13px] font-bold font-['DM_Sans',sans-serif] rounded-lg h-[44px] box-border text-[#1B4D3E] transition-colors duration-200",
+                      subStatus === "success" ? "bg-[#4caf50]" : "bg-[#B8D935]",
+                      subStatus === "loading" || subStatus === "success" ? "cursor-default" : "cursor-pointer",
+                      subStatus === "loading" ? "opacity-70" : "opacity-100"
+                    )}
                   >
                     {subStatus === "loading" ? "..." : subStatus === "success" ? "✓" : "→"}
                   </button>
                 </div>
                 {subStatus === "success" && (
-                  <span style={{ fontSize: "11px", color: "#8dc63f", fontFamily: "'DM Sans', sans-serif" }}>
+                  <span className="text-[11px] text-[#8dc63f] font-['DM_Sans',sans-serif]">
                     You're subscribed! Thanks.
                   </span>
                 )}
                 {subStatus === "error" && (
-                  <span style={{ fontSize: "11px", color: "rgba(255,100,100,0.9)", fontFamily: "'DM Sans', sans-serif" }}>
+                  <span className="text-[11px] text-[rgba(255,100,100,0.9)] font-['DM_Sans',sans-serif]">
                     Please enter a valid email address.
                   </span>
                 )}
               </div>
               {/* Social icons */}
-              <div style={{ display: "flex", gap: "10px", marginTop: "16px" }}>
+              <div className="flex gap-2.5 mt-4">
                 {SOCIAL_ICONS.map((icon, i) => (
                   <a
                     key={i}
                     href={SOCIAL_HREFS[i]}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{
-                      width: "34px",
-                      height: "34px",
-                      borderRadius: "8px",
-                      backgroundColor: "rgba(255,255,255,0.06)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "rgba(255,255,255,0.45)",
-                      textDecoration: "none",
-                    }}
+                    className="w-[34px] h-[34px] rounded-lg bg-[rgba(255,255,255,0.06)] flex items-center justify-center cursor-pointer text-[rgba(255,255,255,0.45)] no-underline"
                   >
                     {icon}
                   </a>
@@ -492,29 +350,16 @@ export default function SiteFooter() {
           </div>
 
           {/* Bottom bar */}
-          <div
-            style={{
-              padding: "20px 80px",
-              borderTop: "1px solid rgba(255,255,255,0.06)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontFamily: "'DM Sans', sans-serif" }}>
+          <div className="py-5 px-[80px] border-t border-[rgba(255,255,255,0.06)] flex justify-between items-center">
+            <span className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif]">
               © 2026 BRIDGE PBC
             </span>
-            <div style={{ display: "flex", gap: "20px" }}>
+            <div className="flex gap-5">
               {["Terms", "Privacy", "Accessibility"].map((link) => (
                 <a
                   key={link}
                   href="#"
-                  style={{
-                    fontSize: "11px",
-                    color: "rgba(255,255,255,0.25)",
-                    fontFamily: "'DM Sans', sans-serif",
-                    textDecoration: "none",
-                  }}
+                  className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif] no-underline"
                 >
                   {link}
                 </a>
@@ -526,3 +371,5 @@ export default function SiteFooter() {
     </footer>
   );
 }
+
+export default memo(SiteFooter);

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 import {
   Bell,
   MessageCircle,
@@ -334,7 +335,7 @@ function BridgeLogo({ height = 40, dark = false }) {
       viewBox="0 0 4113.8 932.3"
       width={w}
       height={height}
-      style={{ display: "block" }}
+      className="block"
     >
       <defs>
         <style>{`.bl1{stroke-width:80px;}.bl1,.bl2{fill:none;stroke:${textColor};}.bl1,.bl2,.bl3,.bl4{stroke-miterlimit:10;}.bl2{stroke-width:5px;}.bl5,.bl4{fill:#b8d935;}.bl6,.bl3{fill:${textColor};}.bl3{stroke:#000;stroke-width:.5px;}.bl4{stroke:#1b4d3e;}.bl7{fill:#74914a;}`}</style>
@@ -399,20 +400,13 @@ function BridgeLogo({ height = 40, dark = false }) {
 function Avatar({ initials, size = 36, bg = C.primary, color = C.accent }) {
   return (
     <div
+      className="rounded-full flex items-center justify-center font-[Inter,sans-serif] font-bold shrink-0 tracking-[0.5px]"
       style={{
         width: size,
         height: size,
-        borderRadius: "50%",
         background: bg,
         color,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: font.body,
         fontSize: size * 0.33,
-        fontWeight: 700,
-        flexShrink: 0,
-        letterSpacing: "0.5px",
       }}
     >
       {initials}
@@ -424,17 +418,10 @@ function Avatar({ initials, size = 36, bg = C.primary, color = C.accent }) {
 function Pill({ children, color = C.primary, bg = "transparent", border = true, small }) {
   return (
     <span
+      className="inline-flex items-center gap-1 rounded-full font-bold font-[Inter,sans-serif] tracking-[0.8px] uppercase"
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 4,
         padding: small ? "3px 10px" : "5px 14px",
-        borderRadius: 50,
         fontSize: small ? 10 : 11,
-        fontWeight: 700,
-        fontFamily: font.body,
-        letterSpacing: "0.8px",
-        textTransform: "uppercase",
         color,
         background: bg,
         border: border ? `1.5px solid ${color}` : "none",
@@ -448,14 +435,12 @@ function Pill({ children, color = C.primary, bg = "transparent", border = true, 
 // ─── PROGRESS BAR ──────────────────────────────────────────────
 function ProgressBar({ value, height = 6, color = C.accent }) {
   return (
-    <div style={{ width: "100%", height, borderRadius: 10, background: C.line, overflow: "hidden" }}>
+    <div className="w-full rounded-[10px] overflow-hidden" style={{ height, background: C.line }}>
       <div
+        className="h-full rounded-[10px] transition-[width] duration-[800ms] ease-[ease]"
         style={{
           width: `${value}%`,
-          height: "100%",
-          borderRadius: 10,
           background: `linear-gradient(90deg, ${C.primary}, ${color})`,
-          transition: "width 0.8s ease",
         }}
       />
     </div>
@@ -465,36 +450,29 @@ function ProgressBar({ value, height = 6, color = C.accent }) {
 // ─── STEP TRACKER ──────────────────────────────────────────────
 function StepTracker({ steps, current }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 0, width: "100%" }}>
+    <div className="flex items-center gap-0 w-full">
       {steps.map((step, i) => {
         const done = i < current;
         const active = i === current;
         return (
-          <div key={step} style={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "none" }}>
+          <div key={step} className="flex items-center flex-1">
+            <div className="flex flex-col items-center flex-none">
               <div
+                className="rounded-full transition-all duration-300 flex items-center justify-center"
                 style={{
                   width: active ? 20 : 14,
                   height: active ? 20 : 14,
-                  borderRadius: "50%",
                   background: done ? C.primary : active ? C.accent : C.line,
                   border: active ? `3px solid ${C.primary}` : done ? "none" : `2px solid ${C.line}`,
-                  transition: "all 0.3s",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                 }}
               >
                 {done && <Check size={8} color={C.white} strokeWidth={3} />}
               </div>
               <span
+                className="text-[10px] font-[Inter,sans-serif] mt-[6px] whitespace-nowrap"
                 style={{
-                  fontSize: 10,
                   fontWeight: active ? 700 : 500,
-                  fontFamily: font.body,
                   color: active ? C.primary : done ? C.muted : C.line,
-                  marginTop: 6,
-                  whiteSpace: "nowrap",
                 }}
               >
                 {step}
@@ -502,12 +480,9 @@ function StepTracker({ steps, current }) {
             </div>
             {i < steps.length - 1 && (
               <div
+                className="flex-1 h-[2px] mb-4 transition-[background] duration-300"
                 style={{
-                  flex: 1,
-                  height: 2,
                   background: done ? C.primary : C.line,
-                  marginBottom: 16,
-                  transition: "background 0.3s",
                 }}
               />
             )}
@@ -521,17 +496,11 @@ function StepTracker({ steps, current }) {
 // ─── SECTION LABEL ─────────────────────────────────────────────
 function SectionLabel({ children }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-      <span style={{ width: 3, height: 16, borderRadius: 2, background: C.accent, display: "block" }} />
+    <div className="flex items-center gap-2 mb-4">
+      <span className="block w-[3px] h-4 rounded-sm" style={{ background: C.accent }} />
       <span
-        style={{
-          fontFamily: font.body,
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: "1.5px",
-          textTransform: "uppercase",
-          color: C.primary,
-        }}
+        className="font-[Inter,sans-serif] text-[11px] font-bold tracking-[1.5px] uppercase"
+        style={{ color: C.primary }}
       >
         {children}
       </span>
@@ -560,61 +529,43 @@ function LoginPage({ onLogin }) {
 
   return (
     <div
+      className="min-h-screen flex font-[Inter,sans-serif]"
       style={{
-        minHeight: "100vh",
-        display: "flex",
         flexDirection: isMobile ? "column" : "row",
         background: C.primary,
-        fontFamily: font.body,
       }}
     >
       {/* ── BRAND PANEL (full on desktop, compact header on mobile) ── */}
       {isMobile ? (
         /* Mobile: compact brand header */
         <div
+          className="relative overflow-hidden"
           style={{
             padding: "32px 24px 28px",
             background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 100%)`,
-            position: "relative",
-            overflow: "hidden",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: -40,
-              right: -40,
-              width: 180,
-              height: 180,
-              borderRadius: "50%",
-              border: "1px solid rgba(184,217,53,0.12)",
-            }}
-          />
-          <div style={{ position: "relative", zIndex: 1 }}>
+          <div className="absolute rounded-full -top-10 -right-10 w-[180px] h-[180px] border border-[rgba(184,217,53,0.12)]" />
+          <div className="relative z-[1]">
             <BridgeLogo height={36} />
             <p
-              style={{
-                fontSize: 13,
-                color: "rgba(255,255,255,0.55)",
-                margin: "14px 0 0",
-                lineHeight: 1.5,
-                maxWidth: 280,
-              }}
+              className="text-[13px] leading-[1.5] max-w-[280px] mt-[14px] mb-0"
+              style={{ color: "rgba(255,255,255,0.55)" }}
             >
               Where Ghana's <strong style={{ color: C.accent }}>Builders</strong> Come Together
             </p>
             {/* Mini stats row */}
-            <div style={{ display: "flex", gap: 24, marginTop: 18 }}>
+            <div className="flex gap-6 mt-[18px]">
               {[
                 { val: "174+", label: "Ventures" },
                 { val: "6,200+", label: "Traders" },
                 { val: "23%", label: "Yield Growth" },
               ].map((s) => (
                 <div key={s.val}>
-                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 18, color: C.accent }}>
+                  <div className="font-[DM_Sans,sans-serif] font-extrabold text-[18px]" style={{ color: C.accent }}>
                     {s.val}
                   </div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.3px" }}>{s.label}</div>
+                  <div className="text-[10px] tracking-[0.3px]" style={{ color: "rgba(255,255,255,0.4)" }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -623,104 +574,52 @@ function LoginPage({ onLogin }) {
       ) : (
         /* Desktop: full left panel */
         <div
+          className="flex-1 flex flex-col justify-between relative overflow-hidden py-[60px] px-16"
           style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            padding: "60px 64px",
             background: `linear-gradient(160deg, #0e2e24 0%, ${C.primary} 60%, #1e5c4a 100%)`,
-            position: "relative",
-            overflow: "hidden",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: -80,
-              left: -80,
-              width: 300,
-              height: 300,
-              borderRadius: "50%",
-              border: "1px solid rgba(184,217,53,0.12)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              top: 60,
-              left: 40,
-              width: 180,
-              height: 180,
-              borderRadius: "50%",
-              border: "1px solid rgba(184,217,53,0.08)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: -60,
-              right: -60,
-              width: 400,
-              height: 400,
-              borderRadius: "50%",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: 80,
-              right: 40,
-              width: 200,
-              height: 200,
-              borderRadius: "50%",
-              border: "1px solid rgba(184,217,53,0.1)",
-            }}
-          />
+          <div className="absolute rounded-full -top-20 -left-20 w-[300px] h-[300px] border border-[rgba(184,217,53,0.12)]" />
+          <div className="absolute rounded-full top-[60px] left-10 w-[180px] h-[180px] border border-[rgba(184,217,53,0.08)]" />
+          <div className="absolute rounded-full -bottom-[60px] -right-[60px] w-[400px] h-[400px] border border-[rgba(255,255,255,0.06)]" />
+          <div className="absolute rounded-full bottom-20 right-10 w-[200px] h-[200px] border border-[rgba(184,217,53,0.1)]" />
 
-          <div style={{ position: "relative", zIndex: 1 }}>
+          <div className="relative z-[1]">
             <BridgeLogo height={48} />
           </div>
-          <div style={{ position: "relative", zIndex: 1 }}>
-            <div style={{ marginBottom: 24 }}>
+          <div className="relative z-[1]">
+            <div className="mb-6">
               <Pill color={C.accent} bg="rgba(184,217,53,0.12)" border={false} small>
                 Ghana-First Community
               </Pill>
             </div>
             <h1
-              style={{
-                fontFamily: font.display,
-                fontWeight: 300,
-                fontSize: 52,
-                color: C.white,
-                lineHeight: 1.1,
-                letterSpacing: "-1.5px",
-                margin: "0 0 24px 0",
-              }}
+              className="font-[DM_Sans,sans-serif] font-light text-[52px] leading-[1.1] tracking-[-1.5px] m-0 mb-6"
+              style={{ color: C.white }}
             >
               Where Ghana's
               <br />
-              <span style={{ fontWeight: 800, color: C.accent }}>Builders</span>
+              <span className="font-extrabold" style={{ color: C.accent }}>Builders</span>
               <br />
               Come Together
             </h1>
-            <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, maxWidth: 380, margin: 0 }}>
+            <p className="text-[16px] leading-[1.7] max-w-[380px] m-0" style={{ color: "rgba(255,255,255,0.6)" }}>
               Join a community of investors, innovators, and development professionals working to drive Peace &
               Prosperity across the nation.
             </p>
-            <div style={{ display: "flex", gap: 40, marginTop: 48 }}>
+            <div className="flex gap-10 mt-12">
               {[
                 { val: "174+", label: "Active Ventures" },
                 { val: "6,200+", label: "Traders Onboarded" },
                 { val: "23%", label: "Avg. Yield Growth" },
               ].map((s) => (
                 <div key={s.val}>
-                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 28, color: C.accent }}>
+                  <div className="font-[DM_Sans,sans-serif] font-extrabold text-[28px]" style={{ color: C.accent }}>
                     {s.val}
                   </div>
                   <div
-                    style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 500, letterSpacing: "0.5px" }}
+                    className="text-[12px] font-medium tracking-[0.5px]"
+                    style={{ color: "rgba(255,255,255,0.45)" }}
                   >
                     {s.label}
                   </div>
@@ -728,10 +627,8 @@ function LoginPage({ onLogin }) {
               ))}
             </div>
           </div>
-          <div
-            style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 24 }}
-          >
-            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", fontStyle: "italic", margin: 0 }}>
+          <div className="relative z-[1] pt-6 border-t border-[rgba(255,255,255,0.1)]">
+            <p className="text-[13px] italic m-0" style={{ color: "rgba(255,255,255,0.35)" }}>
               "Blending Resources and Innovation to Drive Ghana's Empowerment"
             </p>
           </div>
@@ -740,53 +637,41 @@ function LoginPage({ onLogin }) {
 
       {/* ── FORM PANEL ── */}
       <div
+        className="flex flex-col overflow-y-auto"
         style={{
           width: isMobile ? "100%" : 480,
           background: C.bg,
           flex: isMobile ? 1 : "none",
-          display: "flex",
-          flexDirection: "column",
           justifyContent: isMobile ? "flex-start" : "center",
           padding: isMobile ? "32px 24px 40px" : "60px 52px",
-          overflowY: "auto",
         }}
       >
-        <div style={{ marginBottom: 28 }}>
+        <div className="mb-7">
           <h2
+            className="font-[DM_Sans,sans-serif] font-bold tracking-[-0.5px]"
             style={{
-              fontFamily: font.display,
-              fontWeight: 700,
               fontSize: isMobile ? 26 : 32,
               color: C.primary,
               margin: "0 0 6px 0",
-              letterSpacing: "-0.5px",
             }}
           >
             Welcome back
           </h2>
-          <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>Sign in to your BRIDGE community account</p>
+          <p className="text-[14px] m-0" style={{ color: C.muted }}>Sign in to your BRIDGE community account</p>
         </div>
 
         {/* Member Type Toggle */}
-        <div style={{ marginBottom: 24 }}>
+        <div className="mb-6">
           <div
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "1px",
-              color: C.muted,
-              textTransform: "uppercase",
-              marginBottom: 8,
-            }}
+            className="text-[11px] font-bold tracking-[1px] uppercase mb-2"
+            style={{ color: C.muted }}
           >
             Account Type
           </div>
           <div
+            className="flex rounded-xl overflow-hidden"
             style={{
-              display: "flex",
-              borderRadius: 12,
               border: `1.5px solid ${C.line}`,
-              overflow: "hidden",
               background: C.white,
             }}
           >
@@ -797,15 +682,8 @@ function LoginPage({ onLogin }) {
               <button
                 key={t.key}
                 onClick={() => setMemberType(t.key)}
+                className="flex-1 py-3 px-4 border-none cursor-pointer font-[Inter,sans-serif] text-[13px] font-semibold transition-all duration-200"
                 style={{
-                  flex: 1,
-                  padding: "12px 16px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  transition: "all 0.2s",
                   background: memberType === t.key ? C.primary : "transparent",
                   color: memberType === t.key ? C.white : C.muted,
                 }}
@@ -817,31 +695,27 @@ function LoginPage({ onLogin }) {
         </div>
 
         {/* Fields */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 20 }}>
+        <div className="flex flex-col gap-[14px] mb-5">
           <div>
-            <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
               Email Address
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <Mail
                 size={16}
-                style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+                className="absolute left-[14px] top-1/2 -translate-y-1/2"
+                style={{ color: C.muted }}
               />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
+                className="w-full rounded-[10px] font-[Inter,sans-serif] text-[15px] outline-none box-border"
                 style={{
-                  width: "100%",
                   padding: "13px 14px 13px 42px",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
-                  fontFamily: font.body,
-                  fontSize: 15,
                   background: C.white,
-                  outline: "none",
-                  boxSizing: "border-box",
                   color: C.dark,
                 }}
                 onFocus={(e) => (e.target.style.borderColor = C.primary)}
@@ -850,29 +724,25 @@ function LoginPage({ onLogin }) {
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
               Password
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <Lock
                 size={16}
-                style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+                className="absolute left-[14px] top-1/2 -translate-y-1/2"
+                style={{ color: C.muted }}
               />
               <input
                 type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                className="w-full rounded-[10px] font-[Inter,sans-serif] text-[15px] outline-none box-border"
                 style={{
-                  width: "100%",
                   padding: "13px 42px 13px 42px",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
-                  fontFamily: font.body,
-                  fontSize: 15,
                   background: C.white,
-                  outline: "none",
-                  boxSizing: "border-box",
                   color: C.dark,
                 }}
                 onFocus={(e) => (e.target.style.borderColor = C.primary)}
@@ -881,17 +751,8 @@ function LoginPage({ onLogin }) {
               />
               <button
                 onClick={() => setShowPass(!showPass)}
-                style={{
-                  position: "absolute",
-                  right: 14,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  color: C.muted,
-                  padding: 0,
-                }}
+                className="absolute right-[14px] top-1/2 -translate-y-1/2 bg-none border-none cursor-pointer p-0"
+                style={{ color: C.muted }}
               >
                 {showPass ? <Eye size={16} /> : <Lock size={16} />}
               </button>
@@ -899,28 +760,21 @@ function LoginPage({ onLogin }) {
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-          <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+        <div className="flex justify-between items-center mb-6">
+          <label className="flex items-center gap-2 cursor-pointer">
             <div
               onClick={() => setRemember(!remember)}
+              className="w-5 h-5 rounded-[5px] flex items-center justify-center shrink-0 transition-all duration-200"
               style={{
-                width: 20,
-                height: 20,
-                borderRadius: 5,
                 border: `1.5px solid ${remember ? C.primary : C.line}`,
                 background: remember ? C.primary : "transparent",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                transition: "all 0.2s",
               }}
             >
               {remember && <Check size={11} color={C.white} strokeWidth={3} />}
             </div>
-            <span style={{ fontSize: 13, color: C.text }}>Remember me</span>
+            <span className="text-[13px]" style={{ color: C.text }}>Remember me</span>
           </label>
-          <a href="/login" style={{ fontSize: 13, color: C.primary, textDecoration: "none", fontWeight: 600 }}>
+          <a href="/login" className="text-[13px] no-underline font-semibold" style={{ color: C.primary }}>
             Forgot password?
           </a>
         </div>
@@ -928,35 +782,20 @@ function LoginPage({ onLogin }) {
         <button
           onClick={handleLogin}
           disabled={loading}
+          className="w-full py-[15px] px-6 rounded-xl border-none font-[Inter,sans-serif] text-[15px] font-bold flex items-center justify-center gap-2 transition-all duration-200 min-h-[52px]"
           style={{
-            width: "100%",
-            padding: "15px 24px",
-            borderRadius: 12,
-            border: "none",
             cursor: loading ? "not-allowed" : "pointer",
-            fontFamily: font.body,
-            fontSize: 15,
-            fontWeight: 700,
             background: loading ? C.muted : C.primary,
             color: C.white,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            transition: "all 0.2s",
-            minHeight: 52,
           }}
         >
           {loading ? (
             <>
               <div
+                className="w-4 h-4 rounded-full animate-spin"
                 style={{
-                  width: 16,
-                  height: 16,
                   border: "2px solid rgba(255,255,255,0.3)",
                   borderTop: "2px solid white",
-                  borderRadius: "50%",
-                  animation: "spin 0.8s linear infinite",
                 }}
               />
               Signing in...
@@ -969,36 +808,25 @@ function LoginPage({ onLogin }) {
           )}
         </button>
 
-        <div style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: C.muted }}>
+        <div className="text-center mt-5 text-[13px]" style={{ color: C.muted }}>
           Don't have an account?{" "}
-          <a href="/login" style={{ color: C.primary, fontWeight: 700, textDecoration: "none" }}>
+          <a href="/login" className="font-bold no-underline" style={{ color: C.primary }}>
             Request Access
           </a>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "24px 0" }}>
-          <div style={{ flex: 1, height: 1, background: C.line }} />
-          <span style={{ fontSize: 12, color: C.muted }}>or</span>
-          <div style={{ flex: 1, height: 1, background: C.line }} />
+        <div className="flex items-center gap-3 my-6">
+          <div className="flex-1 h-px" style={{ background: C.line }} />
+          <span className="text-[12px]" style={{ color: C.muted }}>or</span>
+          <div className="flex-1 h-px" style={{ background: C.line }} />
         </div>
 
         <button
+          className="w-full py-[13px] px-5 rounded-xl cursor-pointer font-[Inter,sans-serif] text-[14px] font-semibold flex items-center justify-center gap-[10px] min-h-[48px]"
           style={{
-            width: "100%",
-            padding: "13px 20px",
-            borderRadius: 12,
             border: `1.5px solid ${C.line}`,
             background: C.white,
-            cursor: "pointer",
-            fontFamily: font.body,
-            fontSize: 14,
-            fontWeight: 600,
             color: C.text,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
-            minHeight: 48,
           }}
         >
           <Globe size={16} color={C.primary} />
@@ -1007,13 +835,8 @@ function LoginPage({ onLogin }) {
 
         {isMobile && (
           <p
-            style={{
-              textAlign: "center",
-              fontSize: 11,
-              color: "rgba(27,77,62,0.35)",
-              fontStyle: "italic",
-              marginTop: 32,
-            }}
+            className="text-center text-[11px] italic mt-8"
+            style={{ color: "rgba(27,77,62,0.35)" }}
           >
             "Blending Resources and Innovation to Drive Ghana's Empowerment"
           </p>
@@ -1100,34 +923,26 @@ function CommunityDashboard({ memberType, onLogout }) {
   ];
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: font.body }}>
+    <div className="min-h-screen font-[Inter,sans-serif]" style={{ background: C.bg }}>
       {/* ── HEADER ── */}
       <header
+        className="sticky top-0 z-[100] flex items-center justify-between"
         style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 100,
           background: C.white,
           borderBottom: `1px solid ${C.line}`,
           padding: isMobile ? "0 16px" : "0 32px",
           height: isMobile ? 56 : 64,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
           boxShadow: "0 2px 12px rgba(27,77,62,0.06)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 40 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="flex items-center" style={{ gap: isMobile ? 10 : 40 }}>
+          <div className="flex items-center gap-[10px]">
             <BridgeLogo height={isMobile ? 24 : 28} dark />
             <span
+              className="text-[8px] font-bold tracking-[2px] pl-[10px]"
               style={{
-                fontSize: 8,
-                fontWeight: 700,
-                letterSpacing: "2px",
                 color: C.muted,
                 borderLeft: `1px solid ${C.line}`,
-                paddingLeft: 10,
               }}
             >
               COMMUNITY
@@ -1135,18 +950,13 @@ function CommunityDashboard({ memberType, onLogout }) {
           </div>
           {/* Desktop nav */}
           {!isMobile && (
-            <nav style={{ display: "flex", gap: 4 }}>
+            <nav className="flex gap-1">
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.key}
                   onClick={() => handleNavChange(item.key)}
+                  className="py-[6px] px-[14px] rounded-lg border-none cursor-pointer font-[Inter,sans-serif] text-[13px]"
                   style={{
-                    padding: "6px 14px",
-                    borderRadius: 8,
-                    border: "none",
-                    cursor: "pointer",
-                    fontFamily: font.body,
-                    fontSize: 13,
                     background: currentPage === item.key ? `rgba(27,77,62,0.08)` : "transparent",
                     color: currentPage === item.key ? C.primary : C.text,
                     fontWeight: currentPage === item.key ? 700 : 500,
@@ -1159,50 +969,39 @@ function CommunityDashboard({ memberType, onLogout }) {
           )}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 16 }}>
+        <div className="flex items-center" style={{ gap: isMobile ? 8 : 16 }}>
           {!isMobile && (
             <div
+              className="flex items-center gap-[6px] py-[5px] px-3 rounded-[20px]"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                padding: "5px 12px",
-                borderRadius: 20,
                 background: mType.color + "18",
                 border: `1.5px solid ${mType.color}30`,
               }}
             >
               <Shield size={12} color={mType.color} />
-              <span style={{ fontSize: 11, fontWeight: 700, color: mType.color, letterSpacing: "0.5px" }}>
+              <span className="text-[11px] font-bold tracking-[0.5px]" style={{ color: mType.color }}>
                 {mType.badge}
               </span>
             </div>
           )}
-          <button style={{ background: "none", border: "none", cursor: "pointer", padding: 6, position: "relative" }}>
+          <button className="bg-none border-none cursor-pointer p-[6px] relative">
             <Bell size={isMobile ? 20 : 18} color={C.text} />
             <span
+              className="absolute top-1 right-1 w-[7px] h-[7px] rounded-full"
               style={{
-                position: "absolute",
-                top: 4,
-                right: 4,
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
                 background: C.accent,
                 border: `2px solid ${C.white}`,
               }}
             />
           </button>
           {!isMobile && (
-            <button style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}>
+            <button className="bg-none border-none cursor-pointer p-[6px]">
               <MessageCircle size={18} color={C.text} />
             </button>
           )}
           <div
+            className="flex items-center gap-2"
             style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
               paddingLeft: isMobile ? 4 : 16,
               borderLeft: isMobile ? "none" : `1px solid ${C.line}`,
             }}
@@ -1210,15 +1009,15 @@ function CommunityDashboard({ memberType, onLogout }) {
             <Avatar initials={user.initials} size={isMobile ? 30 : 32} />
             {!isMobile && (
               <div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: C.dark, lineHeight: 1.2 }}>{user.name}</div>
-                <div style={{ fontSize: 10, color: C.muted }}>2,840 pts</div>
+                <div className="text-[13px] font-semibold leading-[1.2]" style={{ color: C.dark }}>{user.name}</div>
+                <div className="text-[10px]" style={{ color: C.muted }}>2,840 pts</div>
               </div>
             )}
           </div>
           {isMobile ? (
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}
+              className="bg-none border-none cursor-pointer p-[6px]"
             >
               {mobileMenuOpen ? <X size={22} color={C.dark} /> : <Menu size={22} color={C.dark} />}
             </button>
@@ -1226,7 +1025,7 @@ function CommunityDashboard({ memberType, onLogout }) {
             <button
               onClick={onLogout}
               title="Sign out"
-              style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}
+              className="bg-none border-none cursor-pointer p-[6px]"
             >
               <LogOut size={16} color={C.muted} />
             </button>
@@ -1237,33 +1036,26 @@ function CommunityDashboard({ memberType, onLogout }) {
       {/* ── MOBILE SLIDE-DOWN MENU ── */}
       {isMobile && mobileMenuOpen && (
         <div
+          className="fixed top-[56px] left-0 right-0 z-[99]"
           style={{
-            position: "fixed",
-            top: 56,
-            left: 0,
-            right: 0,
-            zIndex: 99,
             background: C.white,
             borderBottom: `1px solid ${C.line}`,
             boxShadow: "0 8px 32px rgba(27,77,62,0.12)",
             padding: "8px 0 12px",
           }}
         >
-          <div style={{ padding: "8px 16px 12px", borderBottom: `1px solid ${C.line}`, marginBottom: 8 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div className="mb-2" style={{ padding: "8px 16px 12px", borderBottom: `1px solid ${C.line}` }}>
+            <div className="flex items-center gap-2">
               <Avatar initials={user.initials} size={36} />
               <div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: C.dark }}>{user.name}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontSize: 11, color: C.primary, fontWeight: 600 }}>2,840 pts</span>
+                <div className="text-[14px] font-bold" style={{ color: C.dark }}>{user.name}</div>
+                <div className="flex items-center gap-[6px]">
+                  <span className="text-[11px] font-semibold" style={{ color: C.primary }}>2,840 pts</span>
                   <span
+                    className="text-[9px] font-bold py-px px-[7px] rounded-[10px]"
                     style={{
-                      fontSize: 9,
-                      fontWeight: 700,
                       color: mType.color,
                       background: mType.color + "18",
-                      padding: "1px 7px",
-                      borderRadius: 10,
                     }}
                   >
                     {mType.badge}
@@ -1276,19 +1068,10 @@ function CommunityDashboard({ memberType, onLogout }) {
             <button
               key={item.key}
               onClick={() => handleNavChange(item.key)}
+              className="flex items-center gap-[14px] w-full py-[13px] px-5 border-none cursor-pointer text-left font-[Inter,sans-serif] text-[15px]"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                width: "100%",
-                padding: "13px 20px",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "left",
                 background: currentPage === item.key ? `${C.primary}08` : "transparent",
                 color: currentPage === item.key ? C.primary : C.text,
-                fontFamily: font.body,
-                fontSize: 15,
                 fontWeight: currentPage === item.key ? 700 : 400,
               }}
             >
@@ -1296,22 +1079,11 @@ function CommunityDashboard({ memberType, onLogout }) {
               {item.label}
             </button>
           ))}
-          <div style={{ borderTop: `1px solid ${C.line}`, marginTop: 8, padding: "8px 0 0" }}>
+          <div className="mt-2 pt-2" style={{ borderTop: `1px solid ${C.line}` }}>
             <button
               onClick={onLogout}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                width: "100%",
-                padding: "12px 20px",
-                border: "none",
-                cursor: "pointer",
-                background: "transparent",
-                color: C.muted,
-                fontFamily: font.body,
-                fontSize: 14,
-              }}
+              className="flex items-center gap-[14px] w-full py-3 px-5 border-none cursor-pointer bg-transparent font-[Inter,sans-serif] text-[14px]"
+              style={{ color: C.muted }}
             >
               <LogOut size={18} color={C.muted} /> Sign Out
             </button>
@@ -1321,9 +1093,9 @@ function CommunityDashboard({ memberType, onLogout }) {
 
       {/* ── PAGE CONTENT ── */}
       <div
+        className="mx-auto"
         style={{
           maxWidth: isMobile ? "100%" : 1280,
-          margin: "0 auto",
           padding: isMobile ? "16px 16px 88px" : "32px 32px 80px",
         }}
       >
@@ -1365,16 +1137,10 @@ function CommunityDashboard({ memberType, onLogout }) {
       {/* ── MOBILE BOTTOM TAB BAR ── */}
       {isMobile && (
         <div
+          className="fixed bottom-0 left-0 right-0 z-[100] flex h-16"
           style={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 100,
             background: C.white,
             borderTop: `1px solid ${C.line}`,
-            display: "flex",
-            height: 64,
             boxShadow: "0 -4px 20px rgba(27,77,62,0.08)",
           }}
         >
@@ -1384,43 +1150,19 @@ function CommunityDashboard({ memberType, onLogout }) {
               <button
                 key={item.key}
                 onClick={() => handleNavChange(item.key)}
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 3,
-                  border: "none",
-                  cursor: "pointer",
-                  background: "transparent",
-                  padding: "8px 0",
-                  color: active ? C.primary : C.muted,
-                  position: "relative",
-                }}
+                className="flex-1 flex flex-col items-center justify-center gap-[3px] border-none cursor-pointer bg-transparent py-2 px-0 relative"
+                style={{ color: active ? C.primary : C.muted }}
               >
                 {active && (
                   <div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      width: 32,
-                      height: 3,
-                      borderRadius: "0 0 3px 3px",
-                      background: C.accent,
-                    }}
+                    className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] rounded-b-[3px]"
+                    style={{ background: C.accent }}
                   />
                 )}
-                <div style={{ color: active ? C.primary : C.muted, transition: "color 0.15s" }}>{item.icon}</div>
+                <div className="transition-colors duration-150" style={{ color: active ? C.primary : C.muted }}>{item.icon}</div>
                 <span
-                  style={{
-                    fontSize: 10,
-                    fontWeight: active ? 700 : 400,
-                    fontFamily: font.body,
-                    letterSpacing: "0.2px",
-                  }}
+                  className="text-[10px] font-[Inter,sans-serif] tracking-[0.2px]"
+                  style={{ fontWeight: active ? 700 : 400 }}
                 >
                   {item.label}
                 </span>
@@ -1432,15 +1174,10 @@ function CommunityDashboard({ memberType, onLogout }) {
       {/* ── CREATE GOAL MODAL ── */}
       {showGoalModal && (
         <div
+          className="fixed inset-0 flex justify-center z-[200] backdrop-blur-[4px]"
           style={{
-            position: "fixed",
-            inset: 0,
             background: "rgba(27,77,62,0.5)",
-            display: "flex",
             alignItems: isMobile ? "flex-end" : "center",
-            justifyContent: "center",
-            zIndex: 200,
-            backdropFilter: "blur(4px)",
           }}
           onClick={() => setShowGoalModal(false)}
         >
@@ -1454,87 +1191,60 @@ function CommunityDashboard({ memberType, onLogout }) {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-              <h2 style={{ fontFamily: font.display, fontSize: 20, fontWeight: 700, color: C.primary, margin: 0 }}>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="font-[DM_Sans,sans-serif] text-[20px] font-bold m-0" style={{ color: C.primary }}>
                 Create New Goal
               </h2>
               <button
                 onClick={() => setShowGoalModal(false)}
-                style={{ background: "none", border: "none", cursor: "pointer" }}
+                className="bg-none border-none cursor-pointer"
               >
                 <X size={20} color={C.muted} />
               </button>
             </div>
             {["Goal Name", "Details", "Deadline"].map((field) => (
-              <div key={field} style={{ marginBottom: 14 }}>
-                <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+              <div key={field} className="mb-[14px]">
+                <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
                   {field}
                 </label>
                 {field === "Details" ? (
                   <textarea
                     placeholder={`Enter ${field.toLowerCase()}...`}
+                    className="w-full rounded-[10px] font-[Inter,sans-serif] text-[14px] resize-none min-h-[80px] outline-none box-border"
                     style={{
-                      width: "100%",
-                      borderRadius: 10,
                       border: `1.5px solid ${C.line}`,
                       padding: "10px 12px",
-                      fontFamily: font.body,
-                      fontSize: 14,
-                      resize: "none",
-                      minHeight: 80,
-                      outline: "none",
-                      boxSizing: "border-box",
                     }}
                   />
                 ) : (
                   <input
                     type={field === "Deadline" ? "date" : "text"}
                     placeholder={`Enter ${field.toLowerCase()}...`}
+                    className="w-full p-3 rounded-[10px] font-[Inter,sans-serif] text-[14px] outline-none box-border"
                     style={{
-                      width: "100%",
-                      padding: "12px",
-                      borderRadius: 10,
                       border: `1.5px solid ${C.line}`,
-                      fontFamily: font.body,
-                      fontSize: 14,
-                      outline: "none",
-                      boxSizing: "border-box",
                     }}
                   />
                 )}
               </div>
             ))}
-            <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+            <div className="flex gap-[10px] mt-2">
               <button
                 onClick={() => setShowGoalModal(false)}
+                className="flex-1 p-[13px] rounded-[10px] bg-transparent cursor-pointer font-[Inter,sans-serif] text-[14px] font-semibold"
                 style={{
-                  flex: 1,
-                  padding: "13px",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
-                  background: "transparent",
                   color: C.text,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 600,
                 }}
               >
                 Cancel
               </button>
               <button
                 onClick={() => setShowGoalModal(false)}
+                className="flex-[2] p-[13px] rounded-[10px] border-none cursor-pointer font-[Inter,sans-serif] text-[14px] font-bold"
                 style={{
-                  flex: 2,
-                  padding: "13px",
-                  borderRadius: 10,
-                  border: "none",
                   background: C.primary,
                   color: C.white,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 700,
                 }}
               >
                 Create Goal
@@ -1547,15 +1257,10 @@ function CommunityDashboard({ memberType, onLogout }) {
       {/* ── ASK QUESTION MODAL ── */}
       {showQuestionModal && (
         <div
+          className="fixed inset-0 flex justify-center z-[200] backdrop-blur-[4px]"
           style={{
-            position: "fixed",
-            inset: 0,
             background: "rgba(27,77,62,0.5)",
-            display: "flex",
             alignItems: isMobile ? "flex-end" : "center",
-            justifyContent: "center",
-            zIndex: 200,
-            backdropFilter: "blur(4px)",
           }}
           onClick={() => setShowQuestionModal(false)}
         >
@@ -1569,72 +1274,52 @@ function CommunityDashboard({ memberType, onLogout }) {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <h2 style={{ fontFamily: font.display, fontSize: 20, fontWeight: 700, color: C.primary, margin: 0 }}>
+            <div className="flex justify-between items-center mb-5">
+              <h2 className="font-[DM_Sans,sans-serif] text-[20px] font-bold m-0" style={{ color: C.primary }}>
                 Ask the Community
               </h2>
               <button
                 onClick={() => setShowQuestionModal(false)}
-                style={{ background: "none", border: "none", cursor: "pointer" }}
+                className="bg-none border-none cursor-pointer"
               >
                 <X size={20} color={C.muted} />
               </button>
             </div>
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <div className="mb-[14px]">
+              <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
                 Question
               </label>
               <input
                 placeholder="What would you like to ask the BRIDGE community?"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  borderRadius: 10,
-                  border: `1.5px solid ${C.line}`,
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  outline: "none",
-                  boxSizing: "border-box",
-                }}
+                className="w-full p-3 rounded-[10px] font-[Inter,sans-serif] text-[14px] outline-none box-border"
+                style={{ border: `1.5px solid ${C.line}` }}
               />
             </div>
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 6 }}>
+            <div className="mb-[14px]">
+              <label className="text-[12px] font-semibold block mb-[6px]" style={{ color: C.text }}>
                 Details
               </label>
               <textarea
                 placeholder="Add context, background, or supporting information..."
+                className="w-full rounded-[10px] font-[Inter,sans-serif] text-[14px] resize-none min-h-[80px] outline-none box-border"
                 style={{
-                  width: "100%",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
                   padding: "10px 12px",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  resize: "none",
-                  minHeight: 80,
-                  outline: "none",
-                  boxSizing: "border-box",
                 }}
               />
             </div>
-            <div style={{ marginBottom: 18 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: C.text, display: "block", marginBottom: 8 }}>
+            <div className="mb-[18px]">
+              <label className="text-[12px] font-semibold block mb-2" style={{ color: C.text }}>
                 Sector Tag
               </label>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              <div className="flex flex-wrap gap-[6px]">
                 {["Infrastructure", "Agriculture", "Health", "Technology", "Education", "Energy"].map((s) => (
                   <button
                     key={s}
+                    className="py-[7px] px-[14px] rounded-[20px] bg-transparent cursor-pointer font-[Inter,sans-serif] text-[13px]"
                     style={{
-                      padding: "7px 14px",
-                      borderRadius: 20,
                       border: `1.5px solid ${C.line}`,
-                      background: "transparent",
                       color: C.text,
-                      cursor: "pointer",
-                      fontFamily: font.body,
-                      fontSize: 13,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = C.primary;
@@ -1650,41 +1335,23 @@ function CommunityDashboard({ memberType, onLogout }) {
                 ))}
               </div>
             </div>
-            <div style={{ display: "flex", gap: 10 }}>
+            <div className="flex gap-[10px]">
               <button
                 onClick={() => setShowQuestionModal(false)}
+                className="flex-1 p-[13px] rounded-[10px] bg-transparent cursor-pointer font-[Inter,sans-serif] text-[14px] font-semibold"
                 style={{
-                  flex: 1,
-                  padding: "13px",
-                  borderRadius: 10,
                   border: `1.5px solid ${C.line}`,
-                  background: "transparent",
                   color: C.text,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 600,
                 }}
               >
                 Cancel
               </button>
               <button
                 onClick={() => setShowQuestionModal(false)}
+                className="flex-[2] p-[13px] rounded-[10px] border-none cursor-pointer font-[Inter,sans-serif] text-[14px] font-bold flex items-center justify-center gap-2"
                 style={{
-                  flex: 2,
-                  padding: "13px",
-                  borderRadius: 10,
-                  border: "none",
                   background: C.accent,
                   color: C.primary,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 14,
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
                 }}
               >
                 <Send size={14} /> Post Question
@@ -1761,28 +1428,22 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
     : sortedQs;
 
   return (
-    <div style={{ background: C.white, borderRadius: isMobile ? 16 : 20, overflow: "hidden", boxShadow: C.cardShadow }}>
+    <div className="overflow-hidden" style={{ background: C.white, borderRadius: isMobile ? 16 : 20, boxShadow: C.cardShadow }}>
       {/* Header */}
       <div
+        className="flex justify-between items-center gap-3"
         style={{
           padding: isMobile ? "20px 16px 16px" : "28px 32px 20px",
           borderBottom: `1px solid ${C.line}`,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 12,
         }}
       >
         <div>
           <SectionLabel>Discussion Board</SectionLabel>
           <h2
+            className="font-[DM_Sans,sans-serif] font-bold m-0 tracking-[-0.3px]"
             style={{
-              fontFamily: font.display,
               fontSize: isMobile ? 22 : 28,
-              fontWeight: 700,
               color: C.primary,
-              margin: 0,
-              letterSpacing: "-0.3px",
             }}
           >
             Sector <span style={{ color: C.accent }}>Q&A Forum</span>
@@ -1790,21 +1451,12 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
         </div>
         <button
           onClick={() => setShowQuestionModal(true)}
+          className="rounded-[20px] border-none cursor-pointer font-[Inter,sans-serif] font-bold flex items-center gap-[6px] whitespace-nowrap shrink-0"
           style={{
             padding: isMobile ? "9px 14px" : "11px 22px",
-            borderRadius: 20,
-            border: "none",
-            cursor: "pointer",
             background: C.accent,
             color: C.primary,
-            fontFamily: font.body,
             fontSize: isMobile ? 12 : 13,
-            fontWeight: 700,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            whiteSpace: "nowrap",
-            flexShrink: 0,
           }}
         >
           <Plus size={14} />
@@ -1815,10 +1467,8 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
       {/* Mobile: horizontal scrolling pill nav */}
       {isMobile && (
         <div
+          className="overflow-x-auto flex gap-[6px] scrollbar-none"
           style={{
-            overflowX: "auto",
-            display: "flex",
-            gap: 6,
             padding: "12px 16px",
             borderBottom: `1px solid ${C.line}`,
             scrollbarWidth: "none",
@@ -1831,21 +1481,12 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               <button
                 key={item.label}
                 onClick={() => handleForumNav(item.label)}
+                className="flex items-center gap-[5px] py-[7px] px-[14px] rounded-[20px] font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap shrink-0"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                  padding: "7px 14px",
-                  borderRadius: 20,
                   border: `1.5px solid ${isActive ? C.primary : C.line}`,
                   background: isActive ? C.primary : "transparent",
                   color: isActive ? C.white : C.muted,
-                  fontFamily: font.body,
-                  fontSize: 12,
                   fontWeight: isActive ? 700 : 400,
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  flexShrink: 0,
                 }}
               >
                 {item.icon}
@@ -1856,10 +1497,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "220px 1fr 260px" }}>
+      <div className="grid" style={{ gridTemplateColumns: isMobile ? "1fr" : "220px 1fr 260px" }}>
         {/* Left Nav — hidden on mobile (replaced by pill strip above) */}
         {!isMobile && (
-          <div style={{ borderRight: `1px solid ${C.line}`, padding: "24px 16px" }}>
+          <div className="py-6 px-4" style={{ borderRight: `1px solid ${C.line}` }}>
             {FORUM_NAV.map((item) => {
               const isActive = forumView === item.label;
               const goesToMembers = item.label === "Members";
@@ -1867,23 +1508,11 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                 <button
                   key={item.label}
                   onClick={() => handleForumNav(item.label)}
+                  className="flex items-center gap-[10px] w-full py-[9px] px-3 rounded-lg border-none cursor-pointer font-[Inter,sans-serif] text-[13px] text-left mb-[2px] transition-all duration-150"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    width: "100%",
-                    padding: "9px 12px",
-                    borderRadius: 8,
-                    border: "none",
-                    cursor: "pointer",
                     background: isActive ? `${C.primary}10` : "transparent",
                     color: isActive ? C.primary : C.muted,
-                    fontFamily: font.body,
-                    fontSize: 13,
                     fontWeight: isActive ? 700 : 400,
-                    textAlign: "left",
-                    marginBottom: 2,
-                    transition: "all 0.15s",
                   }}
                 >
                   {item.icon}
@@ -1892,47 +1521,28 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               );
             })}
 
-            <div style={{ marginTop: 24, borderTop: `1px solid ${C.line}`, paddingTop: 16 }}>
+            <div className="mt-6 pt-4" style={{ borderTop: `1px solid ${C.line}` }}>
               <div
-                style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  letterSpacing: "1.5px",
-                  color: C.muted,
-                  textTransform: "uppercase",
-                  padding: "0 12px",
-                  marginBottom: 10,
-                }}
+                className="text-[10px] font-bold tracking-[1.5px] uppercase px-3 mb-[10px]"
+                style={{ color: C.muted }}
               >
                 Sectors
               </div>
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.name}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    padding: "6px 12px",
-                    border: "none",
-                    cursor: "pointer",
-                    background: "transparent",
-                    color: C.text,
-                    fontFamily: font.body,
-                    fontSize: 12,
-                    textAlign: "left",
-                    borderRadius: 6,
-                  }}
+                  className="flex items-center justify-between w-full py-[6px] px-3 border-none cursor-pointer bg-transparent font-[Inter,sans-serif] text-[12px] text-left rounded-md"
+                  style={{ color: C.text }}
                   onMouseEnter={(e) => (e.currentTarget.style.background = C.bg)}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
-                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <span className="flex items-center gap-[6px]">
                     <span style={{ color: C.primary }}>{cat.icon}</span>
                     {cat.name}
                   </span>
                   <span
-                    style={{ fontSize: 11, color: C.muted, background: C.bg, padding: "1px 6px", borderRadius: 10 }}
+                    className="text-[11px] py-px px-[6px] rounded-[10px]"
+                    style={{ color: C.muted, background: C.bg }}
                   >
                     {cat.count}
                   </span>
@@ -1945,24 +1555,20 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
         {/* Main Content */}
         <div style={{ padding: isMobile ? "16px" : "24px", minHeight: isMobile ? "auto" : 600 }}>
           {/* Search */}
-          <div style={{ position: "relative", marginBottom: 16 }}>
+          <div className="relative mb-4">
             <Search
               size={15}
-              style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+              className="absolute left-[14px] top-1/2 -translate-y-1/2"
+              style={{ color: C.muted }}
             />
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Have a question? Ask or enter a keyword..."
+              className="w-full rounded-[10px] font-[Inter,sans-serif] text-[13px] outline-none box-border"
               style={{
-                width: "100%",
                 padding: "11px 14px 11px 42px",
-                borderRadius: 10,
                 border: `1.5px solid ${C.line}`,
-                fontFamily: font.body,
-                fontSize: 13,
-                outline: "none",
-                boxSizing: "border-box",
                 background: C.bg,
                 color: C.dark,
               }}
@@ -1974,37 +1580,28 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
           {/* Sub-views */}
           {(forumView === "Questions" || forumView === "Home" || forumView === "Most Answered") && (
             <>
-              <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
+              <div className="flex gap-[6px] mb-5">
                 {["Recent", "Most Answered", "Unanswered", "Featured"].map((f) => (
                   <button
                     key={f}
                     onClick={() => setForumFilter(f)}
+                    className="py-[6px] px-[14px] rounded-[20px] font-[Inter,sans-serif] text-[12px] font-semibold cursor-pointer"
                     style={{
-                      padding: "6px 14px",
-                      borderRadius: 20,
                       border: `1.5px solid ${forumFilter === f ? C.primary : C.line}`,
                       background: forumFilter === f ? C.primary : "transparent",
                       color: forumFilter === f ? C.white : C.muted,
-                      fontFamily: font.body,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      cursor: "pointer",
                     }}
                   >
                     {f}
                   </button>
                 ))}
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div className="flex flex-col gap-3">
                 {filteredQs.map((q) => (
                   <div
                     key={q.id}
-                    style={{
-                      border: `1.5px solid ${C.line}`,
-                      borderRadius: 14,
-                      padding: 20,
-                      transition: "border-color 0.2s, box-shadow 0.2s",
-                    }}
+                    className="rounded-[14px] p-5 transition-[border-color,box-shadow] duration-200"
+                    style={{ border: `1.5px solid ${C.line}` }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = C.primary;
                       e.currentTarget.style.boxShadow = C.cardShadow;
@@ -2014,58 +1611,36 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                       e.currentTarget.style.boxShadow = "none";
                     }}
                   >
-                    <div style={{ display: "flex", gap: 12 }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          gap: 4,
-                          flexShrink: 0,
-                        }}
-                      >
+                    <div className="flex gap-3">
+                      <div className="flex flex-col items-center gap-1 shrink-0">
                         <button
                           onClick={() => handleVote(q.id, "up")}
+                          className="rounded-md w-7 h-7 flex items-center justify-center cursor-pointer"
                           style={{
                             background: q.userVote === "up" ? C.primary : C.bg,
                             border: `1.5px solid ${q.userVote === "up" ? C.primary : C.line}`,
-                            borderRadius: 6,
-                            width: 28,
-                            height: 28,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
                           }}
                         >
                           <ThumbsUp size={12} color={q.userVote === "up" ? C.white : C.muted} />
                         </button>
-                        <span style={{ fontSize: 13, fontWeight: 700, color: C.primary }}>{q.votes}</span>
+                        <span className="text-[13px] font-bold" style={{ color: C.primary }}>{q.votes}</span>
                         <button
                           onClick={() => handleVote(q.id, "down")}
+                          className="rounded-md w-7 h-7 flex items-center justify-center cursor-pointer"
                           style={{
                             background: q.userVote === "down" ? "#e74c3c" : C.bg,
                             border: `1.5px solid ${q.userVote === "down" ? "#e74c3c" : C.line}`,
-                            borderRadius: 6,
-                            width: 28,
-                            height: 28,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
                           }}
                         >
                           <ThumbsDown size={12} color={q.userVote === "down" ? C.white : C.muted} />
                         </button>
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <div
-                          style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}
-                        >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
                           <Avatar initials={q.avatar} size={24} />
-                          <span style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{q.author}</span>
-                          <span style={{ fontSize: 11, color: C.muted }}>· Asked {q.time}</span>
-                          <span style={{ fontSize: 11, color: C.muted }}>· {q.views} views</span>
+                          <span className="text-[12px] font-semibold" style={{ color: C.dark }}>{q.author}</span>
+                          <span className="text-[11px]" style={{ color: C.muted }}>· Asked {q.time}</span>
+                          <span className="text-[11px]" style={{ color: C.muted }}>· {q.views} views</span>
                           <Pill color={C.primary} small>
                             {q.tag}
                           </Pill>
@@ -2076,78 +1651,40 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           )}
                         </div>
                         <h3
-                          style={{ fontSize: 14, fontWeight: 700, color: C.dark, margin: "0 0 6px", lineHeight: 1.4 }}
+                          className="text-[14px] font-bold leading-[1.4]"
+                          style={{ color: C.dark, margin: "0 0 6px" }}
                         >
                           {q.title}
                         </h3>
-                        <p style={{ fontSize: 12, color: C.muted, margin: "0 0 12px", lineHeight: 1.5 }}>{q.preview}</p>
-                        <div style={{ display: "flex", gap: 8 }}>
+                        <p className="text-[12px] leading-[1.5]" style={{ color: C.muted, margin: "0 0 12px" }}>{q.preview}</p>
+                        <div className="flex gap-2">
                           <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
+                            className="flex items-center gap-1 py-[5px] px-3 rounded-md bg-transparent cursor-pointer text-[11px] font-[Inter,sans-serif]"
+                            style={{ border: `1px solid ${C.line}`, color: C.muted }}
                           >
                             <MessageSquare size={11} />
                             {q.answers} Answers
                           </button>
                           <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
+                            className="flex items-center gap-1 py-[5px] px-3 rounded-md bg-transparent cursor-pointer text-[11px] font-[Inter,sans-serif]"
+                            style={{ border: `1px solid ${C.line}`, color: C.muted }}
                           >
                             <Bookmark size={11} />
                             Follow
                           </button>
                           <button
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "5px 12px",
-                              borderRadius: 6,
-                              border: `1px solid ${C.line}`,
-                              background: "transparent",
-                              cursor: "pointer",
-                              fontSize: 11,
-                              color: C.muted,
-                              fontFamily: font.body,
-                            }}
+                            className="flex items-center gap-1 py-[5px] px-3 rounded-md bg-transparent cursor-pointer text-[11px] font-[Inter,sans-serif]"
+                            style={{ border: `1px solid ${C.line}`, color: C.muted }}
                           >
                             <Share2 size={11} />
                             Share
                           </button>
                           <button
+                            className="ml-auto py-[5px] px-[14px] rounded-md cursor-pointer text-[11px] font-bold font-[Inter,sans-serif]"
                             style={{
-                              marginLeft: "auto",
-                              padding: "5px 14px",
-                              borderRadius: 6,
                               border: `1.5px solid ${C.accent}`,
                               background: C.accent,
-                              cursor: "pointer",
-                              fontSize: 11,
-                              fontWeight: 700,
                               color: C.primary,
-                              fontFamily: font.body,
                             }}
                           >
                             Answer
@@ -2214,42 +1751,26 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                 const total = liveVotes.reduce((a, b) => a + b, 0);
                 return (
                   <div
+                    className="rounded-2xl overflow-hidden"
                     style={{
                       background: C.white,
                       border: `1.5px solid ${C.line}`,
-                      borderRadius: 16,
-                      overflow: "hidden",
                       boxShadow: C.cardShadow,
                     }}
                   >
                     <div style={{ padding: "20px 24px 16px", borderBottom: `1px solid ${C.line}` }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-start",
-                          marginBottom: 12,
-                        }}
-                      >
+                      <div className="flex justify-between items-start mb-3">
                         <span
-                          style={{
-                            fontSize: 10,
-                            fontWeight: 700,
-                            letterSpacing: "1px",
-                            textTransform: "uppercase",
-                            color: C.primary,
-                            background: `${C.primary}10`,
-                            padding: "3px 10px",
-                            borderRadius: 6,
-                          }}
+                          className="text-[10px] font-bold tracking-[1px] uppercase py-[3px] px-[10px] rounded-md"
+                          style={{ color: C.primary, background: `${C.primary}10` }}
                         >
                           {poll.sector}
                         </span>
-                        <span style={{ fontSize: 11, color: C.muted, display: "flex", alignItems: "center", gap: 4 }}>
+                        <span className="text-[11px] flex items-center gap-1" style={{ color: C.muted }}>
                           <Clock size={11} /> Closes {poll.closes}
                         </span>
                       </div>
-                      <h3 style={{ fontSize: 15, fontWeight: 700, color: C.dark, margin: 0, lineHeight: 1.45 }}>
+                      <h3 className="text-[15px] font-bold m-0 leading-[1.45]" style={{ color: C.dark }}>
                         {poll.q}
                       </h3>
                     </div>
@@ -2262,55 +1783,39 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           <button
                             key={oi}
                             onClick={() => !voted && setVoted(oi)}
-                            style={{
-                              display: "block",
-                              width: "100%",
-                              marginBottom: 10,
-                              padding: 0,
-                              border: "none",
-                              background: "none",
-                              cursor: voted ? "default" : "pointer",
-                              textAlign: "left",
-                            }}
+                            className="block w-full mb-[10px] p-0 border-none bg-none text-left"
+                            style={{ cursor: voted ? "default" : "pointer" }}
                           >
-                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                            <div className="flex justify-between mb-[5px]">
                               <span
+                                className="text-[13px] font-[Inter,sans-serif]"
                                 style={{
-                                  fontSize: 13,
                                   color: isVoted ? C.primary : C.dark,
                                   fontWeight: isVoted ? 700 : 400,
-                                  fontFamily: font.body,
                                 }}
                               >
                                 {opt}
                               </span>
                               {voted !== null && (
                                 <span
-                                  style={{
-                                    fontSize: 12,
-                                    fontWeight: 700,
-                                    color: isLeading ? C.primary : C.muted,
-                                    fontFamily: font.body,
-                                  }}
+                                  className="text-[12px] font-bold font-[Inter,sans-serif]"
+                                  style={{ color: isLeading ? C.primary : C.muted }}
                                 >
                                   {pct}%
                                 </span>
                               )}
                             </div>
                             <div
+                              className="h-[9px] rounded-md overflow-hidden"
                               style={{
-                                height: 9,
-                                borderRadius: 6,
                                 background: C.bg,
-                                overflow: "hidden",
                                 border: `1px solid ${isVoted ? C.primary + "40" : C.line}`,
                               }}
                             >
                               <div
+                                className="h-full rounded-md"
                                 style={{
                                   width: voted !== null ? `${pct}%` : "0%",
-                                  height: "100%",
-                                  borderRadius: 6,
                                   background: isVoted
                                     ? `linear-gradient(90deg, ${C.primary}, #2E7D5E)`
                                     : isLeading
@@ -2323,12 +1828,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           </button>
                         );
                       })}
-                      <div
-                        style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}
-                      >
-                        <span style={{ fontSize: 12, color: C.muted }}>{total} votes</span>
+                      <div className="flex justify-between items-center mt-1">
+                        <span className="text-[12px]" style={{ color: C.muted }}>{total} votes</span>
                         {voted !== null && (
-                          <span style={{ fontSize: 11, fontWeight: 700, color: "#27AE60" }}>✓ Your vote recorded</span>
+                          <span className="text-[11px] font-bold text-[#27AE60]">✓ Your vote recorded</span>
                         )}
                       </div>
                     </div>
@@ -2336,7 +1839,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                 );
               };
               return (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                <div className="grid grid-cols-2 gap-4">
                   {POLLS.map((p) => (
                     <PollCard key={p.id} poll={p} />
                   ))}
@@ -2345,7 +1848,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
             })()}
 
           {forumView === "Groups" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div className="grid grid-cols-2 gap-4">
               {[
                 {
                   name: "Kejetia Market Digitization",
@@ -2410,13 +1913,11 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               ].map((g, i) => (
                 <div
                   key={i}
+                  className="rounded-2xl overflow-hidden transition-[box-shadow,border-color] duration-200"
                   style={{
                     background: C.white,
                     border: `1.5px solid ${C.line}`,
-                    borderRadius: 16,
-                    overflow: "hidden",
                     boxShadow: C.cardShadow,
-                    transition: "box-shadow 0.2s, border-color 0.2s",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = g.sectorColor;
@@ -2431,78 +1932,47 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                   <div
                     style={{ height: 4, background: `linear-gradient(90deg, ${g.sectorColor}, ${g.sectorColor}80)` }}
                   />
-                  <div style={{ padding: "18px 20px 16px" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        marginBottom: 12,
-                      }}
-                    >
+                  <div className="py-[18px] px-5 pb-4">
+                    <div className="flex justify-between items-start mb-3">
                       <span
+                        className="text-[10px] font-bold tracking-[0.8px] uppercase py-[3px] px-[9px] rounded-md"
                         style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          letterSpacing: "0.8px",
-                          textTransform: "uppercase",
                           color: g.sectorColor,
                           background: g.sectorColor + "14",
-                          padding: "3px 9px",
-                          borderRadius: 6,
                         }}
                       >
                         {g.sector}
                       </span>
                       <span
+                        className="text-[10px] font-bold py-[3px] px-[9px] rounded-[20px] flex items-center gap-1"
                         style={{
-                          fontSize: 10,
-                          fontWeight: 700,
                           color: g.active ? "#27AE60" : C.muted,
                           background: g.active ? "#27AE6012" : C.bg,
-                          padding: "3px 9px",
-                          borderRadius: 20,
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
                         }}
                       >
                         <span
-                          style={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: "50%",
-                            background: g.active ? "#27AE60" : C.muted,
-                            display: "inline-block",
-                          }}
+                          className="w-[6px] h-[6px] rounded-full inline-block"
+                          style={{ background: g.active ? "#27AE60" : C.muted }}
                         />
                         {g.active ? "Active" : "Inactive"}
                       </span>
                     </div>
-                    <h3 style={{ fontSize: 15, fontWeight: 700, color: C.dark, margin: "0 0 8px", lineHeight: 1.3 }}>
+                    <h3 className="text-[15px] font-bold leading-[1.3]" style={{ color: C.dark, margin: "0 0 8px" }}>
                       {g.name}
                     </h3>
-                    <p style={{ fontSize: 12, color: C.muted, margin: "0 0 16px", lineHeight: 1.55 }}>{g.desc}</p>
+                    <p className="text-[12px] leading-[1.55]" style={{ color: C.muted, margin: "0 0 16px" }}>{g.desc}</p>
 
                     {/* Member avatars + stats */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <div style={{ display: "flex" }}>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-[10px]">
+                        <div className="flex">
                           {g.avatars.slice(0, 4).map((av, ai) => (
                             <div
                               key={ai}
+                              className="w-[26px] h-[26px] rounded-full text-[9px] font-bold font-[Inter,sans-serif] flex items-center justify-center"
                               style={{
-                                width: 26,
-                                height: 26,
-                                borderRadius: "50%",
                                 background: g.sectorColor,
                                 color: C.white,
-                                fontSize: 9,
-                                fontWeight: 700,
-                                fontFamily: font.body,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
                                 marginLeft: ai > 0 ? -8 : 0,
                                 border: `2px solid ${C.white}`,
                                 zIndex: 4 - ai,
@@ -2513,19 +1983,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                           ))}
                           {g.avatars.length > 4 && (
                             <div
+                              className="w-[26px] h-[26px] rounded-full text-[9px] font-bold font-[Inter,sans-serif] flex items-center justify-center -ml-2"
                               style={{
-                                width: 26,
-                                height: 26,
-                                borderRadius: "50%",
                                 background: C.bg,
                                 color: C.muted,
-                                fontSize: 9,
-                                fontWeight: 700,
-                                fontFamily: font.body,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginLeft: -8,
                                 border: `2px solid ${C.white}`,
                               }}
                             >
@@ -2533,24 +1994,18 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                             </div>
                           )}
                         </div>
-                        <span style={{ fontSize: 12, color: C.muted }}>{g.members} members</span>
+                        <span className="text-[12px]" style={{ color: C.muted }}>{g.members} members</span>
                       </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        <span style={{ fontSize: 11, color: C.muted }}>
-                          <MessageSquare size={10} style={{ display: "inline", marginRight: 3 }} />
+                      <div className="flex items-center gap-3">
+                        <span className="text-[11px]" style={{ color: C.muted }}>
+                          <MessageSquare size={10} className="inline mr-[3px]" />
                           {g.posts} this week
                         </span>
                         <button
+                          className="py-[6px] px-[14px] rounded-[20px] bg-transparent text-[12px] font-semibold cursor-pointer font-[Inter,sans-serif]"
                           style={{
-                            padding: "6px 14px",
-                            borderRadius: 20,
                             border: `1.5px solid ${g.sectorColor}`,
-                            background: "transparent",
                             color: g.sectorColor,
-                            fontSize: 12,
-                            fontWeight: 600,
-                            cursor: "pointer",
-                            fontFamily: font.body,
                           }}
                         >
                           Join
@@ -2565,6 +2020,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
 
           {forumView === "Tags" &&
             (() => {
+              // eslint-disable-next-line react-hooks/rules-of-hooks
               const [tagSearch, setTagSearch] = useState("");
               const TAG_GROUPS = [
                 {
@@ -2655,30 +2111,20 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               return (
                 <div>
                   {/* Search */}
-                  <div style={{ position: "relative", marginBottom: 20 }}>
+                  <div className="relative mb-5">
                     <Search
                       size={14}
-                      style={{
-                        position: "absolute",
-                        left: 12,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        color: C.muted,
-                      }}
+                      className="absolute left-3 top-1/2 -translate-y-1/2"
+                      style={{ color: C.muted }}
                     />
                     <input
                       value={tagSearch}
                       onChange={(e) => setTagSearch(e.target.value)}
                       placeholder="Search tags..."
+                      className="w-full rounded-[10px] font-[Inter,sans-serif] text-[13px] outline-none box-border"
                       style={{
-                        width: "100%",
                         padding: "9px 12px 9px 36px",
-                        borderRadius: 10,
                         border: `1.5px solid ${C.line}`,
-                        fontFamily: font.body,
-                        fontSize: 13,
-                        outline: "none",
-                        boxSizing: "border-box",
                         background: C.bg,
                       }}
                       onFocus={(e) => (e.target.style.borderColor = C.primary)}
@@ -2698,32 +2144,19 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                       }}
                     >
                       <div
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          letterSpacing: "1.5px",
-                          textTransform: "uppercase",
-                          color: C.primary,
-                          marginBottom: 10,
-                        }}
+                        className="text-[10px] font-bold tracking-[1.5px] uppercase mb-[10px]"
+                        style={{ color: C.primary }}
                       >
                         🔥 Trending This Week
                       </div>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                      <div className="flex flex-wrap gap-2">
                         {trending.map((t, i) => (
                           <button
                             key={i}
+                            className="py-[6px] px-[14px] rounded-lg cursor-pointer font-[Inter,sans-serif] flex items-center gap-[7px] transition-all duration-200"
                             style={{
-                              padding: "6px 14px",
-                              borderRadius: 8,
                               border: `1.5px solid ${t.color}40`,
                               background: t.color + "10",
-                              cursor: "pointer",
-                              fontFamily: font.body,
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 7,
-                              transition: "all 0.2s",
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.background = t.color + "20";
@@ -2734,16 +2167,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                               e.currentTarget.style.borderColor = t.color + "40";
                             }}
                           >
-                            <span style={{ fontSize: 12, fontWeight: 600, color: t.color }}>{t.t}</span>
+                            <span className="text-[12px] font-semibold" style={{ color: t.color }}>{t.t}</span>
                             <span
-                              style={{
-                                fontSize: 10,
-                                fontWeight: 700,
-                                color: C.white,
-                                background: t.color,
-                                padding: "1px 6px",
-                                borderRadius: 4,
-                              }}
+                              className="text-[10px] font-bold py-px px-[6px] rounded"
+                              style={{ color: C.white, background: t.color }}
                             >
                               {t.n}
                             </span>
@@ -2754,45 +2181,33 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                   )}
 
                   {/* Grouped tags */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                  <div className="flex flex-col gap-5">
                     {filtered.map((group, gi) => (
                       <div key={gi}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                          <div style={{ width: 3, height: 16, borderRadius: 2, background: group.color }} />
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-[3px] h-4 rounded-sm" style={{ background: group.color }} />
                           <span
-                            style={{
-                              fontSize: 11,
-                              fontWeight: 700,
-                              letterSpacing: "1px",
-                              textTransform: "uppercase",
-                              color: group.color,
-                            }}
+                            className="text-[11px] font-bold tracking-[1px] uppercase"
+                            style={{ color: group.color }}
                           >
                             {group.sector}
                           </span>
-                          <span style={{ fontSize: 11, color: C.muted }}>— {group.tags.length} tags</span>
+                          <span className="text-[11px]" style={{ color: C.muted }}>— {group.tags.length} tags</span>
                         </div>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                        <div className="flex flex-wrap gap-2">
                           {group.tags.map((t, ti) => {
                             const intensity = Math.min(t.n / 50, 1);
                             return (
                               <button
                                 key={ti}
+                                className="py-[7px] px-[14px] rounded-lg cursor-pointer font-[Inter,sans-serif] flex items-center gap-2 transition-all duration-[180ms]"
                                 style={{
-                                  padding: "7px 14px",
-                                  borderRadius: 8,
                                   border: `1.5px solid ${group.color}${Math.round(30 + intensity * 60).toString(16)}`,
                                   background:
                                     group.color +
                                     Math.round(8 + intensity * 18)
                                       .toString(16)
                                       .padStart(2, "0"),
-                                  cursor: "pointer",
-                                  fontFamily: font.body,
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: 8,
-                                  transition: "all 0.18s",
                                 }}
                                 onMouseEnter={(e) => {
                                   e.currentTarget.style.background = group.color + "28";
@@ -2809,20 +2224,12 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                                   e.currentTarget.style.transform = "none";
                                 }}
                               >
-                                <span style={{ fontSize: 12, fontWeight: t.n > 25 ? 700 : 500, color: group.color }}>
+                                <span className="text-[12px]" style={{ fontWeight: t.n > 25 ? 700 : 500, color: group.color }}>
                                   {t.t}
                                 </span>
                                 <span
-                                  style={{
-                                    fontSize: 10,
-                                    fontWeight: 700,
-                                    color: C.white,
-                                    background: group.color + "cc",
-                                    padding: "1px 6px",
-                                    borderRadius: 4,
-                                    minWidth: 18,
-                                    textAlign: "center",
-                                  }}
+                                  className="text-[10px] font-bold py-px px-[6px] rounded min-w-[18px] text-center"
+                                  style={{ color: C.white, background: group.color + "cc" }}
                                 >
                                   {t.n}
                                 </span>
@@ -2838,7 +2245,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
             })()}
 
           {forumView === "Sectors" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+            <div className="grid grid-cols-3 gap-[14px]">
               {[
                 { ...CATEGORIES[0], members: 31, trending: "kejetia-market", hot: true },
                 { ...CATEGORIES[1], members: 24, trending: "mobile-money", hot: true },
@@ -2855,13 +2262,10 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
               ].map((cat, i) => (
                 <div
                   key={i}
+                  className="rounded-[14px] p-5 transition-all duration-200 cursor-pointer"
                   style={{
                     background: C.white,
                     border: `1.5px solid ${C.line}`,
-                    borderRadius: 14,
-                    padding: 20,
-                    transition: "all 0.2s",
-                    cursor: "pointer",
                     boxShadow: C.cardShadow,
                   }}
                   onMouseEnter={(e) => {
@@ -2875,53 +2279,28 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                     e.currentTarget.style.transform = "none";
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      marginBottom: 12,
-                    }}
-                  >
+                  <div className="flex justify-between items-start mb-3">
                     <div
-                      style={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: 10,
-                        background: `${C.primary}10`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: C.primary,
-                      }}
+                      className="w-[38px] h-[38px] rounded-[10px] flex items-center justify-center"
+                      style={{ background: `${C.primary}10`, color: C.primary }}
                     >
                       {cat.icon}
                     </div>
                     {cat.hot && (
-                      <span
-                        style={{
-                          fontSize: 9,
-                          fontWeight: 700,
-                          letterSpacing: "0.5px",
-                          color: "#E07020",
-                          background: "#E0702012",
-                          padding: "2px 7px",
-                          borderRadius: 6,
-                        }}
-                      >
+                      <span className="text-[9px] font-bold tracking-[0.5px] py-[2px] px-[7px] rounded-[6px] text-[#E07020] bg-[#E0702012]">
                         🔥 HOT
                       </span>
                     )}
                   </div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: C.dark, marginBottom: 4 }}>{cat.name}</div>
-                  <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.muted, marginBottom: 10 }}>
+                  <div className="text-[14px] font-bold mb-1" style={{ color: C.dark }}>{cat.name}</div>
+                  <div className="flex gap-3 text-[11px] mb-[10px]" style={{ color: C.muted }}>
                     <span>{cat.count} posts</span>
                     <span>·</span>
                     <span>{cat.members} members</span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <div className="flex items-center gap-[6px]">
                     <Tag size={10} color={C.accent} />
-                    <span style={{ fontSize: 11, color: C.primary, fontWeight: 600 }}>{cat.trending}</span>
+                    <span className="text-[11px] font-semibold" style={{ color: C.primary }}>{cat.trending}</span>
                   </div>
                 </div>
               ))}
@@ -3031,33 +2410,27 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                 },
               ];
               return (
-                <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+                <div className="flex flex-col gap-7">
                   {TIERS.map((tier, ti) => (
                     <div key={ti}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-                        <div style={{ width: 4, height: 18, borderRadius: 2, background: tier.color }} />
+                      <div className="flex items-center gap-[10px] mb-[14px]">
+                        <div className="w-1 h-[18px] rounded-sm" style={{ background: tier.color }} />
                         <div>
-                          <span style={{ fontSize: 13, fontWeight: 700, color: tier.color }}>{tier.tier} Tier</span>
-                          <span style={{ fontSize: 12, color: C.muted, marginLeft: 8 }}>— {tier.desc}</span>
+                          <span className="text-[13px] font-bold" style={{ color: tier.color }}>{tier.tier} Tier</span>
+                          <span className="text-[12px] ml-2" style={{ color: C.muted }}>— {tier.desc}</span>
                         </div>
                       </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+                      <div className="grid grid-cols-4 gap-3">
                         {tier.badges.map((b, bi) => (
                           <div
                             key={bi}
+                            className="rounded-[14px] p-[18px] flex flex-col transition-all duration-200 relative overflow-hidden"
                             style={{
                               background: b.earned
                                 ? `linear-gradient(135deg, ${tier.color}0a, ${tier.color}18)`
                                 : C.white,
                               border: `1.5px solid ${b.earned ? tier.color + "50" : C.line}`,
-                              borderRadius: 14,
-                              padding: 18,
-                              display: "flex",
-                              flexDirection: "column",
                               opacity: b.earned ? 1 : 0.8,
-                              transition: "all 0.2s",
-                              position: "relative",
-                              overflow: "hidden",
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.borderColor = tier.color;
@@ -3069,56 +2442,29 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                             }}
                           >
                             {b.earned && (
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  top: 10,
-                                  right: 10,
-                                  width: 16,
-                                  height: 16,
-                                  borderRadius: "50%",
-                                  background: "#27AE60",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}
-                              >
+                              <div className="absolute top-[10px] right-[10px] w-4 h-4 rounded-full bg-[#27AE60] flex items-center justify-center">
                                 <Check size={9} color={C.white} strokeWidth={3} />
                               </div>
                             )}
-                            <div style={{ fontSize: 28, marginBottom: 10 }}>{b.icon}</div>
+                            <div className="text-[28px] mb-[10px]">{b.icon}</div>
                             <div
-                              style={{
-                                fontSize: 13,
-                                fontWeight: 700,
-                                color: b.earned ? tier.color : C.dark,
-                                marginBottom: 4,
-                                lineHeight: 1.2,
-                              }}
+                              className="text-[13px] font-bold mb-1 leading-[1.2]"
+                              style={{ color: b.earned ? tier.color : C.dark }}
                             >
                               {b.name}
                             </div>
-                            <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.4, flex: 1 }}>{b.desc}</div>
+                            <div className="text-[11px] leading-[1.4] flex-1" style={{ color: C.muted }}>{b.desc}</div>
                             {!b.earned && b.progress !== null && (
-                              <div style={{ marginTop: 12 }}>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontSize: 10,
-                                    color: C.muted,
-                                    marginBottom: 4,
-                                  }}
-                                >
+                              <div className="mt-3">
+                                <div className="flex justify-between text-[10px] mb-1" style={{ color: C.muted }}>
                                   <span>Progress</span>
-                                  <span style={{ fontWeight: 700, color: tier.color }}>{b.progress}%</span>
+                                  <span className="font-bold" style={{ color: tier.color }}>{b.progress}%</span>
                                 </div>
-                                <div style={{ height: 4, borderRadius: 4, background: C.bg }}>
+                                <div className="h-1 rounded-[4px]" style={{ background: C.bg }}>
                                   <div
+                                    className="h-full rounded-[4px]"
                                     style={{
                                       width: `${b.progress}%`,
-                                      height: "100%",
-                                      borderRadius: 4,
                                       background: tier.color,
                                     }}
                                   />
@@ -3126,7 +2472,7 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
                               </div>
                             )}
                             {b.earned && (
-                              <div style={{ marginTop: 10, fontSize: 10, fontWeight: 700, color: "#27AE60" }}>
+                              <div className="mt-[10px] text-[10px] font-bold text-[#27AE60]">
                                 ✓ Earned
                               </div>
                             )}
@@ -3142,37 +2488,32 @@ function ForumPage({ isMobile, questions, setQuestions, setShowQuestionModal, se
 
         {/* Right Sidebar — hidden on mobile */}
         {!isMobile && (
-          <div style={{ borderLeft: `1px solid ${C.line}`, padding: "24px 16px" }}>
+          <div className="py-6 px-4" style={{ borderLeft: `1px solid ${C.line}` }}>
             <SectionLabel>All Sectors</SectionLabel>
             {CATEGORIES.map((cat) => (
               <div
                 key={cat.name}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "6px 0",
-                  borderBottom: `1px solid ${C.line}20`,
-                }}
+                className="flex justify-between items-center py-[6px]"
+                style={{ borderBottom: `1px solid ${C.line}20` }}
               >
-                <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.text }}>
+                <span className="flex items-center gap-[6px] text-[12px]" style={{ color: C.text }}>
                   <span style={{ color: C.primary }}>{cat.icon}</span>
                   {cat.name}
                 </span>
-                <span style={{ fontSize: 11, color: C.muted }}>{cat.count}</span>
+                <span className="text-[11px]" style={{ color: C.muted }}>{cat.count}</span>
               </div>
             ))}
-            <div style={{ marginTop: 24 }}>
+            <div className="mt-6">
               <SectionLabel>Top Members</SectionLabel>
               {MEMBERS.map((m, i) => (
-                <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: C.muted, minWidth: 16 }}>#{i + 1}</span>
+                <div key={m.id} className="flex items-center gap-2 mb-3">
+                  <span className="text-[12px] font-bold min-w-4" style={{ color: C.muted }}>#{i + 1}</span>
                   <Avatar initials={m.avatar} size={28} />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
-                    <div style={{ fontSize: 10, color: C.muted }}>{m.role}</div>
+                  <div className="flex-1">
+                    <div className="text-[12px] font-semibold" style={{ color: C.dark }}>{m.name}</div>
+                    <div className="text-[10px]" style={{ color: C.muted }}>{m.role}</div>
                   </div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
+                  <span className="text-[11px] font-bold" style={{ color: C.primary }}>{m.points.toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -3313,23 +2654,17 @@ function MembersPage({ isMobile }) {
   }).sort((a, b) => (sortBy === "points" ? b.points - a.points : a.name.localeCompare(b.name)));
 
   const PillToggle = ({ opts, val, set }) => (
-    <div style={{ display: "flex", gap: 4 }}>
+    <div className="flex gap-1">
       {opts.map((o) => (
         <button
           key={o}
           onClick={() => set(o)}
+          className="py-[5px] px-3 rounded-lg font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap transition-all duration-150"
           style={{
-            padding: "5px 12px",
-            borderRadius: 8,
             border: `1.5px solid ${val === o ? C.primary : C.line}`,
             background: val === o ? C.primary : C.white,
             color: val === o ? C.white : C.muted,
-            fontFamily: font.body,
-            fontSize: 12,
             fontWeight: val === o ? 700 : 400,
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-            transition: "all 0.15s",
           }}
         >
           {o}
@@ -3341,33 +2676,23 @@ function MembersPage({ isMobile }) {
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 24 }}>
+      <div className="mb-6">
         <SectionLabel>Community</SectionLabel>
         <h2
-          style={{
-            fontFamily: font.display,
-            fontSize: 32,
-            fontWeight: 700,
-            color: C.primary,
-            margin: "0 0 6px",
-            letterSpacing: "-0.5px",
-          }}
+          className="font-[DM_Sans,sans-serif] text-[32px] font-bold tracking-[-0.5px]"
+          style={{ color: C.primary, margin: "0 0 6px" }}
         >
           Member <span style={{ color: C.accent }}>Directory</span>
         </h2>
-        <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>
+        <p className="text-[14px] m-0" style={{ color: C.muted }}>
           {ALL_MEMBERS.length} members building Ghana's future across 12 sectors
         </p>
       </div>
 
       {/* Stats strip */}
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)",
-          gap: 12,
-          marginBottom: 20,
-        }}
+        className="grid gap-3 mb-5"
+        style={{ gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)" }}
       >
         {[
           {
@@ -3417,80 +2742,46 @@ function MembersPage({ isMobile }) {
         ].map((s) => (
           <div
             key={s.label}
+            className="rounded-2xl relative overflow-hidden"
             style={{
-              borderRadius: 16,
               padding: "20px 20px 18px",
               background: `linear-gradient(135deg, ${s.accent}14 0%, ${s.accent}06 100%)`,
               border: `1.5px solid ${s.accent}22`,
               boxShadow: C.cardShadow,
-              position: "relative",
-              overflow: "hidden",
             }}
           >
             {/* Background watermark circle */}
             <div
-              style={{
-                position: "absolute",
-                top: -16,
-                right: -16,
-                width: 72,
-                height: 72,
-                borderRadius: "50%",
-                background: s.accent + "12",
-              }}
+              className="absolute rounded-full -top-4 -right-4 w-[72px] h-[72px]"
+              style={{ background: s.accent + "12" }}
             />
 
             {/* Top row: icon + trend chip */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                marginBottom: 14,
-                position: "relative",
-              }}
-            >
+            <div className="flex justify-between items-start mb-[14px] relative">
               <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 10,
-                  background: s.accent + "20",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: s.accent,
-                }}
+                className="w-9 h-9 rounded-[10px] flex items-center justify-center"
+                style={{ background: s.accent + "20", color: s.accent }}
               >
                 {s.icon}
               </div>
               {s.trendUp !== null ? (
                 <span
+                  className="text-[10px] font-bold py-[3px] px-2 rounded-[20px] flex items-center gap-[3px]"
                   style={{
-                    fontSize: 10,
-                    fontWeight: 700,
                     color: s.trendUp ? "#27AE60" : C.muted,
                     background: s.trendUp ? "#27AE6014" : C.bg,
                     border: `1px solid ${s.trendUp ? "#27AE6030" : C.line}`,
-                    padding: "3px 8px",
-                    borderRadius: 20,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 3,
                   }}
                 >
                   {s.trendUp ? "↑" : ""} {s.trend}
                 </span>
               ) : (
                 <span
+                  className="text-[10px] font-semibold py-[3px] px-2 rounded-[20px]"
                   style={{
-                    fontSize: 10,
-                    fontWeight: 600,
                     color: s.accent,
                     background: s.accent + "14",
                     border: `1px solid ${s.accent}30`,
-                    padding: "3px 8px",
-                    borderRadius: 20,
                   }}
                 >
                   {s.trend}
@@ -3500,35 +2791,26 @@ function MembersPage({ isMobile }) {
 
             {/* Value + Label */}
             <div
-              style={{
-                fontFamily: font.display,
-                fontSize: 34,
-                fontWeight: 800,
-                color: s.accent,
-                lineHeight: 1,
-                marginBottom: 4,
-                position: "relative",
-              }}
+              className="font-[DM_Sans,sans-serif] text-[34px] font-extrabold leading-none mb-1 relative"
+              style={{ color: s.accent }}
             >
               {s.val}
             </div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: C.dark, marginBottom: 2 }}>{s.label}</div>
-            <div style={{ fontSize: 11, color: C.muted, marginBottom: 14 }}>{s.sub}</div>
+            <div className="text-[13px] font-bold mb-[2px]" style={{ color: C.dark }}>{s.label}</div>
+            <div className="text-[11px] mb-[14px]" style={{ color: C.muted }}>{s.sub}</div>
 
             {/* Mini progress bar */}
             <div>
-              <div style={{ height: 4, borderRadius: 4, background: s.accent + "20", overflow: "hidden" }}>
+              <div className="h-1 rounded overflow-hidden" style={{ background: s.accent + "20" }}>
                 <div
+                  className="h-full rounded transition-[width] duration-[600ms] ease-out"
                   style={{
                     width: `${Math.min(s.progress, 100)}%`,
-                    height: "100%",
-                    borderRadius: 4,
                     background: `linear-gradient(90deg, ${s.accent}, ${s.accent}99)`,
-                    transition: "width 0.6s ease",
                   }}
                 />
               </div>
-              <div style={{ fontSize: 10, color: s.accent, fontWeight: 600, marginTop: 5 }}>{s.progressLabel}</div>
+              <div className="text-[10px] font-semibold mt-[5px]" style={{ color: s.accent }}>{s.progressLabel}</div>
             </div>
           </div>
         ))}
@@ -3536,36 +2818,28 @@ function MembersPage({ isMobile }) {
 
       {/* Filter bar */}
       <div
+        className="rounded-[14px] flex flex-col gap-3 mb-5"
         style={{
           background: C.white,
-          borderRadius: 14,
           padding: isMobile ? "14px 16px" : "16px 20px",
           boxShadow: C.cardShadow,
-          marginBottom: 20,
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
         }}
       >
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <div style={{ position: "relative", flex: 1 }}>
+        <div className="flex gap-3 items-center">
+          <div className="relative flex-1">
             <Search
               size={14}
-              style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+              className="absolute left-3 top-1/2 -translate-y-1/2"
+              style={{ color: C.muted }}
             />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or role..."
+              className="w-full rounded-[10px] font-[Inter,sans-serif] text-[13px] outline-none box-border"
               style={{
-                width: "100%",
                 padding: "9px 12px 9px 36px",
-                borderRadius: 10,
                 border: `1.5px solid ${C.line}`,
-                fontFamily: font.body,
-                fontSize: 13,
-                outline: "none",
-                boxSizing: "border-box",
               }}
               onFocus={(e) => (e.target.style.borderColor = C.primary)}
               onBlur={(e) => (e.target.style.borderColor = C.line)}
@@ -3573,27 +2847,22 @@ function MembersPage({ isMobile }) {
           </div>
           {!isMobile && (
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                borderLeft: `1px solid ${C.line}`,
-                paddingLeft: 12,
-              }}
+              className="flex items-center gap-[6px] pl-3"
+              style={{ borderLeft: `1px solid ${C.line}` }}
             >
-              <span style={{ fontSize: 11, color: C.muted, whiteSpace: "nowrap" }}>Sort:</span>
+              <span className="text-[11px] whitespace-nowrap" style={{ color: C.muted }}>Sort:</span>
               <PillToggle opts={["points", "name"]} val={sortBy} set={setSortBy} />
             </div>
           )}
-          <span style={{ fontSize: 12, color: C.muted, whiteSpace: "nowrap" }}>
+          <span className="text-[12px] whitespace-nowrap" style={{ color: C.muted }}>
             {filtered.length} result{filtered.length !== 1 ? "s" : ""}
           </span>
         </div>
         {/* Filter pills — scroll horizontally on mobile */}
         <div
+          className="flex"
           style={{
             overflowX: isMobile ? "auto" : "visible",
-            display: "flex",
             flexDirection: isMobile ? "row" : "column",
             gap: isMobile ? 6 : 12,
             flexWrap: isMobile ? "nowrap" : "wrap",
@@ -3607,40 +2876,30 @@ function MembersPage({ isMobile }) {
                 <button
                   key={o}
                   onClick={() => setFilterType(o)}
+                  className="rounded-lg font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap shrink-0"
                   style={{
                     padding: "6px 14px",
-                    borderRadius: 8,
                     border: `1.5px solid ${filterType === o ? C.primary : C.line}`,
                     background: filterType === o ? C.primary : C.white,
                     color: filterType === o ? C.white : C.muted,
-                    fontFamily: font.body,
-                    fontSize: 12,
                     fontWeight: filterType === o ? 700 : 400,
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
                   }}
                 >
                   {o}
                 </button>
               ))}
-              <div style={{ width: 1, background: C.line, flexShrink: 0 }} />
+              <div className="w-px shrink-0" style={{ background: C.line }} />
               {["All", "Champion", "Contributor", "Newcomer"].map((o) => (
                 <button
                   key={o}
                   onClick={() => setFilterBadge(o)}
+                  className="rounded-lg font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap shrink-0"
                   style={{
                     padding: "6px 14px",
-                    borderRadius: 8,
                     border: `1.5px solid ${filterBadge === o ? "#2C5F8A" : C.line}`,
                     background: filterBadge === o ? "#2C5F8A" : C.white,
                     color: filterBadge === o ? C.white : C.muted,
-                    fontFamily: font.body,
-                    fontSize: 12,
                     fontWeight: filterBadge === o ? 700 : 400,
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
                   }}
                 >
                   {o}
@@ -3650,20 +2909,20 @@ function MembersPage({ isMobile }) {
           ) : (
             /* Desktop: labeled rows */
             <>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Type</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: C.muted }}>Type</span>
                 <PillToggle opts={["All", "Premium", "Diaspora"]} val={filterType} set={setFilterType} />
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Badge</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: C.muted }}>Badge</span>
                 <PillToggle
                   opts={["All", "Champion", "Contributor", "Newcomer"]}
                   val={filterBadge}
                   set={setFilterBadge}
                 />
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, whiteSpace: "nowrap" }}>Sector</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: C.muted }}>Sector</span>
                 <PillToggle
                   opts={["All", "Infrastructure", "Agriculture", "Health Systems", "Technology", "Education"]}
                   val={filterSector}
@@ -3677,20 +2936,19 @@ function MembersPage({ isMobile }) {
 
       {/* Member grid */}
       <div
-        style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 12 : 14 }}
+        className="grid"
+        style={{ gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 12 : 14 }}
       >
         {filtered.map((m, idx) => {
           const sColor = SECTOR_COLORS[m.sector] || C.primary;
           return (
             <div
               key={m.id}
+              className="rounded-2xl overflow-hidden transition-all duration-200"
               style={{
                 background: C.white,
-                borderRadius: 16,
-                overflow: "hidden",
                 boxShadow: C.cardShadow,
                 border: `1.5px solid transparent`,
-                transition: "all 0.2s",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = sColor + "60";
@@ -3702,64 +2960,51 @@ function MembersPage({ isMobile }) {
               }}
             >
               {/* Sector color top bar */}
-              <div style={{ height: 4, background: `linear-gradient(90deg, ${sColor}, ${sColor}60)` }} />
-              <div style={{ padding: 22 }}>
+              <div className="h-1" style={{ background: `linear-gradient(90deg, ${sColor}, ${sColor}60)` }} />
+              <div className="p-[22px]">
                 {/* Top row: avatar + name + badge */}
-                <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 14 }}>
-                  <div style={{ position: "relative" }}>
+                <div className="flex items-start gap-3 mb-[14px]">
+                  <div className="relative">
                     <Avatar initials={m.avatar} size={44} />
                     {sortBy === "points" && idx < 3 && (
-                      <div style={{ position: "absolute", bottom: -2, right: -2, fontSize: 13 }}>
+                      <div className="absolute -bottom-[2px] -right-[2px] text-[13px]">
                         {["🥇", "🥈", "🥉"][idx]}
                       </div>
                     )}
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: C.dark, lineHeight: 1.2 }}>{m.name}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start gap-[6px]">
+                      <div className="text-[14px] font-bold leading-[1.2]" style={{ color: C.dark }}>{m.name}</div>
                       <span
+                        className="text-[9px] font-bold py-[2px] px-[7px] rounded-md whitespace-nowrap tracking-[0.5px] shrink-0"
                         style={{
-                          fontSize: 9,
-                          fontWeight: 700,
                           color: BADGE_COLORS[m.badge],
                           background: BADGE_COLORS[m.badge] + "18",
-                          padding: "2px 7px",
-                          borderRadius: 6,
-                          whiteSpace: "nowrap",
-                          letterSpacing: "0.5px",
-                          flexShrink: 0,
                         }}
                       >
                         {m.badge.toUpperCase()}
                       </span>
                     </div>
-                    <div style={{ fontSize: 12, color: C.muted, marginTop: 3, lineHeight: 1.3 }}>{m.role}</div>
+                    <div className="text-[12px] mt-[3px] leading-[1.3]" style={{ color: C.muted }}>{m.role}</div>
                   </div>
                 </div>
 
                 {/* Meta details */}
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 5,
-                    marginBottom: 16,
-                    padding: "12px 14px",
-                    background: C.bg,
-                    borderRadius: 10,
-                  }}
+                  className="flex flex-col gap-[5px] mb-4 py-3 px-[14px] rounded-[10px]"
+                  style={{ background: C.bg }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                  <div className="flex items-center gap-[6px] text-[12px]" style={{ color: C.muted }}>
                     <MapPin size={11} color={sColor} />
                     <span>{m.location}</span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                  <div className="flex items-center gap-[6px] text-[12px]" style={{ color: C.muted }}>
                     <Briefcase size={11} color={sColor} />
-                    <span style={{ color: sColor, fontWeight: 600 }}>{m.sector}</span>
+                    <span className="font-semibold" style={{ color: sColor }}>{m.sector}</span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                  <div className="flex items-center gap-[6px] text-[12px]" style={{ color: C.muted }}>
                     <Shield size={11} color={m.type === "Diaspora" ? "#2C5F8A" : C.primary} />
-                    <span style={{ color: m.type === "Diaspora" ? "#2C5F8A" : C.primary, fontWeight: 600 }}>
+                    <span className="font-semibold" style={{ color: m.type === "Diaspora" ? "#2C5F8A" : C.primary }}>
                       {m.type}
                     </span>
                     <span>· Joined {m.joined}</span>
@@ -3767,24 +3012,18 @@ function MembersPage({ isMobile }) {
                 </div>
 
                 {/* Points + CTA */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div className="flex justify-between items-center">
                   <div>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: sColor, fontFamily: font.display }}>
+                    <div className="text-[16px] font-extrabold font-[DM_Sans,sans-serif]" style={{ color: sColor }}>
                       {m.points.toLocaleString()}
                     </div>
-                    <div style={{ fontSize: 10, color: C.muted }}>points</div>
+                    <div className="text-[10px]" style={{ color: C.muted }}>points</div>
                   </div>
                   <button
+                    className="py-[7px] px-4 rounded-[20px] bg-transparent text-[12px] font-semibold cursor-pointer font-[Inter,sans-serif]"
                     style={{
-                      padding: "7px 16px",
-                      borderRadius: 20,
                       border: `1.5px solid ${sColor}`,
-                      background: "transparent",
                       color: sColor,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      fontFamily: font.body,
                     }}
                   >
                     View Profile
@@ -3917,106 +3156,75 @@ function ResourcesPage({ isMobile }) {
 
   return (
     <div>
-      <div style={{ marginBottom: 24 }}>
+      <div className="mb-6">
         <SectionLabel>Knowledge Hub</SectionLabel>
         <h2
-          style={{
-            fontFamily: font.display,
-            fontSize: 32,
-            fontWeight: 700,
-            color: C.primary,
-            margin: "0 0 6px",
-            letterSpacing: "-0.5px",
-          }}
+          className="font-[DM_Sans,sans-serif] text-[32px] font-bold tracking-[-0.5px]"
+          style={{ color: C.primary, margin: "0 0 6px" }}
         >
           BRIDGE <span style={{ color: C.accent }}>Resources</span>
         </h2>
-        <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>
+        <p className="text-[14px] m-0" style={{ color: C.muted }}>
           Sector analyses, strategy briefs, frameworks, and policy documents
         </p>
       </div>
 
       {/* Search + Type filters */}
       <div
+        className="rounded-[14px] flex flex-col gap-3 mb-5"
         style={{
           background: C.white,
-          borderRadius: 14,
           padding: isMobile ? "14px 16px" : "16px 20px",
           boxShadow: C.cardShadow,
-          marginBottom: 20,
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
         }}
       >
-        <div style={{ position: "relative" }}>
+        <div className="relative">
           <Search
             size={14}
-            style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: C.muted }}
+            className="absolute left-3 top-1/2 -translate-y-1/2"
+            style={{ color: C.muted }}
           />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by title or sector..."
+            className="w-full rounded-[10px] font-[Inter,sans-serif] text-[13px] outline-none box-border"
             style={{
-              width: "100%",
               padding: "9px 12px 9px 36px",
-              borderRadius: 10,
               border: `1.5px solid ${C.line}`,
-              fontFamily: font.body,
-              fontSize: 13,
-              outline: "none",
-              boxSizing: "border-box",
             }}
             onFocus={(e) => (e.target.style.borderColor = C.primary)}
             onBlur={(e) => (e.target.style.borderColor = C.line)}
           />
         </div>
         <div
+          className="flex items-center gap-[6px]"
           style={{
             overflowX: isMobile ? "auto" : "visible",
-            display: "flex",
-            gap: 6,
             flexWrap: isMobile ? "nowrap" : "wrap",
             scrollbarWidth: "none",
-            alignItems: "center",
           }}
         >
           {types.map((t) => (
             <button
               key={t}
               onClick={() => setTypeFilter(t)}
+              className="rounded-lg shrink-0 font-[Inter,sans-serif] text-[12px] cursor-pointer whitespace-nowrap transition-all duration-150"
               style={{
                 padding: "6px 14px",
-                borderRadius: 8,
-                flexShrink: 0,
                 border: `1.5px solid ${typeFilter === t ? C.primary : C.line}`,
                 background: typeFilter === t ? C.primary : "transparent",
                 color: typeFilter === t ? C.white : C.muted,
-                fontFamily: font.body,
-                fontSize: 12,
                 fontWeight: typeFilter === t ? 700 : 400,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                transition: "all 0.15s",
               }}
             >
               {t !== "All" && (
-                <span style={{ marginRight: 4 }}>{["📊", "📋", "🔬", "⚙️", "🏛️"][types.indexOf(t) - 1] || ""}</span>
+                <span className="mr-1">{["📊", "📋", "🔬", "⚙️", "🏛️"][types.indexOf(t) - 1] || ""}</span>
               )}
               {t}
             </button>
           ))}
-          <span
-            style={{
-              marginLeft: "auto",
-              fontSize: 12,
-              color: C.muted,
-              display: "flex",
-              alignItems: "center",
-              flexShrink: 0,
-            }}
-          >
+          <span className="ml-auto text-[12px] flex items-center shrink-0" style={{ color: C.muted }}>
             {filtered.length} doc{filtered.length !== 1 ? "s" : ""}
           </span>
         </div>
@@ -4024,134 +3232,52 @@ function ResourcesPage({ isMobile }) {
 
       {/* Featured — dark cards */}
       {featured.length > 0 && (
-        <div style={{ marginBottom: 24 }}>
-          <div
-            style={{
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: "1.5px",
-              color: C.muted,
-              textTransform: "uppercase",
-              marginBottom: 12,
-            }}
-          >
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[1.5px] uppercase mb-3" style={{ color: C.muted }}>
             Featured Reports
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 14 }}>
+          <div className="grid gap-[14px]" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}>
             {featured.map((r) => (
               <div
                 key={r.id}
-                style={{
-                  background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
-                  borderRadius: 16,
-                  padding: 26,
-                  cursor: "pointer",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
+                className="rounded-2xl p-[26px] cursor-pointer relative overflow-hidden"
+                style={{ background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)` }}
               >
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -30,
-                    right: -30,
-                    width: 120,
-                    height: 120,
-                    borderRadius: "50%",
-                    border: "1px solid rgba(184,217,53,0.1)",
-                  }}
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    marginBottom: 14,
-                    position: "relative",
-                  }}
-                >
-                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                <div className="absolute -top-[30px] -right-[30px] w-[120px] h-[120px] rounded-full border border-[rgba(184,217,53,0.1)]" />
+                <div className="flex justify-between items-start mb-[14px] relative">
+                  <div className="flex gap-[6px] items-center">
                     <span
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 700,
-                        letterSpacing: "1px",
-                        textTransform: "uppercase",
-                        color: C.accent,
-                        background: "rgba(184,217,53,0.12)",
-                        padding: "3px 10px",
-                        borderRadius: 6,
-                      }}
+                      className="text-[10px] font-bold tracking-[1px] uppercase rounded-[6px] py-[3px] px-[10px]"
+                      style={{ color: C.accent, background: "rgba(184,217,53,0.12)" }}
                     >
                       {r.type}
                     </span>
                     {isNew(r.date) && (
-                      <span
-                        style={{
-                          fontSize: 9,
-                          fontWeight: 700,
-                          letterSpacing: "0.5px",
-                          color: C.white,
-                          background: "#27AE60",
-                          padding: "2px 7px",
-                          borderRadius: 6,
-                        }}
-                      >
+                      <span className="text-[9px] font-bold tracking-[0.5px] py-[2px] px-[7px] rounded-[6px] bg-[#27AE60]" style={{ color: C.white }}>
                         NEW
                       </span>
                     )}
                   </div>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{readTime(r.pages)}</span>
+                  <span className="text-[11px] text-white/35">{readTime(r.pages)}</span>
                 </div>
                 <h3
-                  style={{
-                    fontFamily: font.display,
-                    fontSize: 16,
-                    fontWeight: 700,
-                    color: C.white,
-                    margin: "0 0 10px",
-                    lineHeight: 1.35,
-                    position: "relative",
-                  }}
+                  className="font-[DM_Sans,sans-serif] text-[16px] font-bold leading-[1.35] m-0 mb-[10px] relative"
+                  style={{ color: C.white }}
                 >
                   {r.title}
                 </h3>
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "rgba(255,255,255,0.5)",
-                    margin: "0 0 20px",
-                    lineHeight: 1.55,
-                    position: "relative",
-                  }}
-                >
+                <p className="text-[12px] text-white/50 m-0 mb-5 leading-[1.55] relative">
                   {r.desc}
                 </p>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    position: "relative",
-                  }}
-                >
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
+                <div className="flex items-center justify-between relative">
+                  <span className="text-[11px] text-white/30">
                     {r.pages}p · {r.date}
                   </span>
                   <button
+                    className="py-[7px] px-[18px] rounded-[20px] bg-transparent text-[12px] font-bold cursor-pointer font-[Inter,sans-serif] flex items-center gap-[6px]"
                     style={{
-                      padding: "7px 18px",
-                      borderRadius: 20,
                       border: `1.5px solid ${C.accent}`,
-                      background: "transparent",
                       color: C.accent,
-                      fontSize: 12,
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      fontFamily: font.body,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
                     }}
                   >
                     <BookOpen size={12} /> Read Report
@@ -4166,33 +3292,20 @@ function ResourcesPage({ isMobile }) {
       {/* All remaining docs */}
       {rest.length > 0 && (
         <>
-          <div
-            style={{
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: "1.5px",
-              color: C.muted,
-              textTransform: "uppercase",
-              marginBottom: 12,
-            }}
-          >
+          <div className="text-[10px] font-bold tracking-[1.5px] uppercase mb-3" style={{ color: C.muted }}>
             {typeFilter === "All" ? "All Documents" : typeFilter} ({rest.length})
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="flex flex-col gap-[10px]">
             {rest.map((r) => {
               const tc = TYPE_COLORS[r.type] || C.primary;
               return (
                 <div
                   key={r.id}
+                  className="rounded-[14px] flex overflow-hidden transition-all duration-200 cursor-pointer"
                   style={{
                     background: C.white,
-                    borderRadius: 14,
-                    display: "flex",
-                    overflow: "hidden",
                     boxShadow: C.cardShadow,
                     border: `1px solid transparent`,
-                    transition: "all 0.2s",
-                    cursor: "pointer",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = tc + "40";
@@ -4204,104 +3317,60 @@ function ResourcesPage({ isMobile }) {
                   }}
                 >
                   {/* Colored left accent bar */}
-                  <div style={{ width: 4, background: tc, flexShrink: 0 }} />
+                  <div className="w-1 shrink-0" style={{ background: tc }} />
                   {/* Icon column — hidden on mobile */}
                   {!isMobile && (
                     <div
-                      style={{
-                        width: 56,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        background: tc + "0a",
-                      }}
+                      className="w-14 flex items-center justify-center shrink-0"
+                      style={{ background: tc + "0a" }}
                     >
                       <div style={{ color: tc }}>{DOC_ICONS[r.type] || <BookOpen size={18} />}</div>
                     </div>
                   )}
                   {/* Content */}
-                  <div style={{ flex: 1, padding: isMobile ? "14px 16px" : "18px 20px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5, flexWrap: "wrap" }}>
+                  <div className="flex-1" style={{ padding: isMobile ? "14px 16px" : "18px 20px" }}>
+                    <div className="flex items-center gap-[6px] mb-[5px] flex-wrap">
                       <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          letterSpacing: "0.8px",
-                          textTransform: "uppercase",
-                          color: tc,
-                        }}
+                        className="text-[10px] font-bold tracking-[0.8px] uppercase"
+                        style={{ color: tc }}
                       >
                         {r.type}
                       </span>
-                      <span style={{ fontSize: 10, color: C.muted }}>·</span>
+                      <span className="text-[10px]" style={{ color: C.muted }}>·</span>
                       <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 600,
-                          color: C.primary,
-                          background: `${C.primary}10`,
-                          padding: "1px 7px",
-                          borderRadius: 6,
-                        }}
+                        className="text-[10px] font-semibold rounded-[6px] py-[1px] px-[7px]"
+                        style={{ color: C.primary, background: `${C.primary}10` }}
                       >
                         {r.sector}
                       </span>
                       {isNew(r.date) && (
-                        <span
-                          style={{
-                            fontSize: 9,
-                            fontWeight: 700,
-                            color: C.white,
-                            background: "#27AE60",
-                            padding: "1px 6px",
-                            borderRadius: 4,
-                          }}
-                        >
+                        <span className="text-[9px] font-bold rounded py-[1px] px-[6px] bg-[#27AE60]" style={{ color: C.white }}>
                           NEW
                         </span>
                       )}
                       {isMobile && (
-                        <span style={{ fontSize: 10, color: C.muted, marginLeft: "auto" }}>{readTime(r.pages)}</span>
+                        <span className="text-[10px] ml-auto" style={{ color: C.muted }}>{readTime(r.pages)}</span>
                       )}
                     </div>
                     <h3
-                      style={{
-                        fontSize: isMobile ? 13 : 14,
-                        fontWeight: 700,
-                        color: C.dark,
-                        margin: "0 0 4px",
-                        lineHeight: 1.35,
-                      }}
+                      className="font-bold m-0 mb-1 leading-[1.35]"
+                      style={{ fontSize: isMobile ? 13 : 14, color: C.dark }}
                     >
                       {r.title}
                     </h3>
                     {!isMobile && (
-                      <p style={{ fontSize: 12, color: C.muted, margin: "0 0 0", lineHeight: 1.5 }}>{r.desc}</p>
+                      <p className="text-[12px] m-0 leading-[1.5]" style={{ color: C.muted }}>{r.desc}</p>
                     )}
                     {isMobile && (
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          marginTop: 10,
-                        }}
-                      >
-                        <span style={{ fontSize: 11, color: C.muted }}>
+                      <div className="flex items-center justify-between mt-[10px]">
+                        <span className="text-[11px]" style={{ color: C.muted }}>
                           {r.pages}p · {r.date}
                         </span>
                         <button
+                          className="py-[5px] px-[14px] rounded-[20px] bg-transparent text-[12px] font-semibold cursor-pointer font-[Inter,sans-serif]"
                           style={{
-                            padding: "5px 14px",
-                            borderRadius: 20,
                             border: `1.5px solid ${tc}`,
-                            background: "transparent",
                             color: tc,
-                            fontSize: 12,
-                            fontWeight: 600,
-                            cursor: "pointer",
-                            fontFamily: font.body,
                           }}
                         >
                           Read
@@ -4311,34 +3380,18 @@ function ResourcesPage({ isMobile }) {
                   </div>
                   {/* Right meta + CTA — desktop only */}
                   {!isMobile && (
-                    <div
-                      style={{
-                        padding: "18px 20px",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-end",
-                        justifyContent: "space-between",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <div style={{ textAlign: "right" }}>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{readTime(r.pages)}</div>
-                        <div style={{ fontSize: 11, color: C.muted }}>
+                    <div className="p-[18px_20px] flex flex-col items-end justify-between shrink-0">
+                      <div className="text-right">
+                        <div className="text-[12px] font-semibold" style={{ color: C.dark }}>{readTime(r.pages)}</div>
+                        <div className="text-[11px]" style={{ color: C.muted }}>
                           {r.pages}p · {r.date}
                         </div>
                       </div>
                       <button
+                        className="py-[6px] px-4 rounded-[20px] bg-transparent text-[12px] font-semibold cursor-pointer font-[Inter,sans-serif] whitespace-nowrap"
                         style={{
-                          padding: "6px 16px",
-                          borderRadius: 20,
                           border: `1.5px solid ${tc}`,
-                          background: "transparent",
                           color: tc,
-                          fontSize: 12,
-                          fontWeight: 600,
-                          cursor: "pointer",
-                          fontFamily: font.body,
-                          whiteSpace: "nowrap",
                         }}
                       >
                         Read
@@ -4379,70 +3432,48 @@ function HomePageContent({
     <>
       {/* ── WIDGET ROW: 3-col on desktop, single-col on mobile ── */}
       <div
+        className="grid"
         style={{
-          display: "grid",
           gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 320px",
           gap: isMobile ? 16 : 20,
           marginBottom: isMobile ? 20 : 28,
         }}
       >
         {/* LEFT COLUMN */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div className="flex flex-col gap-5">
           {/* Featured Insight */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-6" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Today's Featured Insight</SectionLabel>
             <div
+              className="rounded-xl py-4 px-[18px] mb-4"
               style={{
                 background: `linear-gradient(135deg, ${C.primary}12, ${C.accent}10)`,
                 border: `1px solid ${C.primary}20`,
-                borderRadius: 12,
-                padding: "16px 18px",
-                marginBottom: 16,
               }}
             >
-              <p style={{ fontSize: 15, color: C.dark, lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
+              <p className="text-[15px] leading-[1.6] m-0 font-medium" style={{ color: C.dark }}>
                 "{INSIGHTS[0]}"
               </p>
             </div>
-            <div style={{ display: "flex", gap: 10 }}>
+            <div className="flex gap-[10px]">
               <button
                 onClick={() => setSavedInsight(!savedInsight)}
+                className="flex-1 py-[9px] px-4 rounded-lg cursor-pointer font-[Inter,sans-serif] text-[13px] font-semibold flex items-center justify-center gap-[6px]"
                 style={{
-                  flex: 1,
-                  padding: "9px 16px",
-                  borderRadius: 8,
                   border: `1.5px solid ${savedInsight ? C.primary : C.line}`,
                   background: savedInsight ? C.primary : "transparent",
                   color: savedInsight ? C.white : C.text,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
                 }}
               >
                 <Bookmark size={14} />
                 {savedInsight ? "Saved" : "Save"}
               </button>
               <button
+                className="flex-1 py-[9px] px-4 rounded-lg cursor-pointer font-[Inter,sans-serif] text-[13px] font-bold flex items-center justify-center gap-[6px]"
                 style={{
-                  flex: 1,
-                  padding: "9px 16px",
-                  borderRadius: 8,
                   border: `1.5px solid ${C.accent}`,
                   background: C.accent,
                   color: C.primary,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 13,
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
                 }}
               >
                 <Heart size={14} />
@@ -4452,39 +3483,31 @@ function HomePageContent({
           </div>
 
           {/* Active Contributions */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-6" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Your Active Contributions</SectionLabel>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
+            <div className="flex flex-col gap-[10px] mb-4">
               {contributions.map((item, i) => (
                 <div
                   key={i}
                   onClick={() =>
                     setContributions((prev) => prev.map((c, j) => (j === i ? { ...c, done: !c.done } : c)))
                   }
-                  style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
+                  className="flex items-center gap-3 cursor-pointer"
                 >
                   <div
+                    className="w-5 h-5 rounded flex items-center justify-center shrink-0 transition-all duration-200"
                     style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 4,
                       border: `1.5px solid ${item.done ? C.primary : C.line}`,
                       background: item.done ? C.primary : "transparent",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      transition: "all 0.2s",
                     }}
                   >
                     {item.done && <Check size={11} color={C.white} strokeWidth={3} />}
                   </div>
                   <span
+                    className="text-[13px] transition-all duration-200"
                     style={{
-                      fontSize: 13,
                       color: item.done ? C.muted : C.dark,
                       textDecoration: item.done ? "line-through" : "none",
-                      transition: "all 0.2s",
                     }}
                   >
                     {item.label}
@@ -4493,17 +3516,10 @@ function HomePageContent({
               ))}
             </div>
             <button
+              className="w-full py-[9px] rounded-lg bg-transparent cursor-pointer font-[Inter,sans-serif] text-[13px] font-semibold"
               style={{
-                width: "100%",
-                padding: "9px",
-                borderRadius: 8,
                 border: `1.5px solid ${C.primary}`,
-                background: "transparent",
                 color: C.primary,
-                cursor: "pointer",
-                fontFamily: font.body,
-                fontSize: 13,
-                fontWeight: 600,
               }}
             >
               Save Progress
@@ -4512,16 +3528,14 @@ function HomePageContent({
 
           {/* This Week's Impact */}
           <div
+            className="rounded-2xl p-6 flex-1"
             style={{
               background: `linear-gradient(135deg, ${C.primary} 0%, #0e2e24 100%)`,
-              borderRadius: 16,
-              padding: 24,
               boxShadow: C.cardShadow,
-              flex: 1,
             }}
           >
-            <SectionLabel children={<span style={{ color: "rgba(255,255,255,0.5)" }}>This Week's Impact</span>} />
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <SectionLabel children={<span className="text-white/50">This Week's Impact</span>} />
+            <div className="flex flex-col gap-[14px]">
               {[
                 { val: "3", label: "Discussions joined", delta: "+1 from last week" },
                 { val: "1", label: "Insights submitted", delta: "On track" },
@@ -4529,33 +3543,25 @@ function HomePageContent({
               ].map((s, i) => (
                 <div
                   key={i}
+                  className="flex justify-between items-center"
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
                     paddingBottom: i < 2 ? 14 : 0,
                     borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.08)" : "none",
                   }}
                 >
                   <div>
                     <div
-                      style={{
-                        fontSize: 22,
-                        fontWeight: 800,
-                        color: C.accent,
-                        fontFamily: font.display,
-                        lineHeight: 1,
-                      }}
+                      className="text-[22px] font-extrabold font-[DM_Sans,sans-serif] leading-none"
+                      style={{ color: C.accent }}
                     >
                       {s.val}
                     </div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>{s.label}</div>
+                    <div className="text-[12px] text-white/50 mt-[3px]">{s.label}</div>
                   </div>
                   <span
+                    className="text-[11px] font-semibold"
                     style={{
-                      fontSize: 11,
                       color: s.delta.startsWith("+") ? C.accent : "rgba(255,255,255,0.35)",
-                      fontWeight: 600,
                     }}
                   >
                     {s.delta}
@@ -4567,34 +3573,32 @@ function HomePageContent({
         </div>
 
         {/* CENTER COLUMN */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div className="flex flex-col gap-5">
           {/* Progress Tracker */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-6" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Community Journey</SectionLabel>
-            <div style={{ marginBottom: 20 }}>
+            <div className="mb-5">
               <StepTracker steps={JOURNEY_STEPS} current={user.journey} />
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-              <span style={{ fontSize: 13, color: C.text, fontWeight: 600 }}>Progress to Leader</span>
-              <span style={{ fontSize: 13, color: C.primary, fontWeight: 700 }}>2,840 / 5,000 pts</span>
+            <div className="flex justify-between mb-2">
+              <span className="text-[13px] font-semibold" style={{ color: C.text }}>Progress to Leader</span>
+              <span className="text-[13px] font-bold" style={{ color: C.primary }}>2,840 / 5,000 pts</span>
             </div>
             <ProgressBar value={56.8} />
-            <p style={{ fontSize: 12, color: C.muted, marginTop: 10 }}>
+            <p className="text-[12px] mt-[10px]" style={{ color: C.muted }}>
               2,160 points needed to reach Leader status. Answer 3 more questions to earn a milestone bonus.
             </p>
           </div>
 
           {/* Weekly Ghana Briefing */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 24, boxShadow: C.cardShadow, flex: 1 }}>
-            <div
-              style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}
-            >
+          <div className="rounded-2xl p-6 flex-1" style={{ background: C.white, boxShadow: C.cardShadow }}>
+            <div className="flex justify-between items-start mb-4">
               <SectionLabel>Weekly Ghana Briefing</SectionLabel>
-              <span style={{ fontSize: 10, fontWeight: 600, color: C.muted, letterSpacing: "0.5px" }}>
+              <span className="text-[10px] font-semibold tracking-[0.5px]" style={{ color: C.muted }}>
                 Mar 3 – 7, 2026
               </span>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 2, overflowY: "auto", maxHeight: 320 }}>
+            <div className="flex flex-col gap-[2px] overflow-y-auto max-h-[320px]">
               {[
                 {
                   tag: "Policy",
@@ -4634,46 +3638,26 @@ function HomePageContent({
                     borderBottom: i < 4 ? `1px solid ${C.line}` : "none",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                  <div className="flex items-center gap-2 mb-[5px]">
                     <span
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 700,
-                        letterSpacing: "0.8px",
-                        textTransform: "uppercase",
-                        color: item.tagColor,
-                        background: item.tagColor + "14",
-                        padding: "2px 8px",
-                        borderRadius: 20,
-                      }}
+                      className="text-[10px] font-bold tracking-[0.8px] uppercase py-[2px] px-2 rounded-[20px]"
+                      style={{ color: item.tagColor, background: item.tagColor + "14" }}
                     >
                       {item.tag}
                     </span>
                   </div>
-                  <p style={{ fontSize: 13, fontWeight: 600, color: C.dark, margin: "0 0 4px", lineHeight: 1.4 }}>
+                  <p className="text-[13px] font-semibold leading-[1.4]" style={{ color: C.dark, margin: "0 0 4px" }}>
                     {item.headline}
                   </p>
-                  <p style={{ fontSize: 11, color: C.muted, margin: 0, fontStyle: "italic" }}>{item.signal}</p>
+                  <p className="text-[11px] m-0 italic" style={{ color: C.muted }}>{item.signal}</p>
                 </div>
               ))}
             </div>
             <button
+              className="mt-[14px] w-full py-[9px] rounded-lg bg-transparent font-[Inter,sans-serif] text-[12px] font-bold cursor-pointer flex items-center justify-center gap-[6px]"
               style={{
-                marginTop: 14,
-                width: "100%",
-                padding: "9px",
-                borderRadius: 8,
                 border: `1.5px solid ${C.line}`,
-                background: "transparent",
                 color: C.primary,
-                fontFamily: font.body,
-                fontSize: 12,
-                fontWeight: 700,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 6,
               }}
             >
               <BookOpen size={13} /> View Full Briefing
@@ -4682,34 +3666,24 @@ function HomePageContent({
         </div>
 
         {/* RIGHT SIDEBAR */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div className="flex flex-col gap-5">
           {/* Community Feed */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-5" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Community Feed</SectionLabel>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: 220, overflowY: "auto" }}>
+            <div className="flex flex-col gap-3 max-h-[220px] overflow-y-auto">
               {FEED_ITEMS.map((item) => (
-                <div key={item.id} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <div key={item.id} className="flex gap-[10px] items-start">
                   <Avatar initials={item.avatar} size={28} />
-                  <div style={{ flex: 1 }}>
-                    <p style={{ margin: 0, fontSize: 12, color: C.dark, lineHeight: 1.4 }}>
+                  <div className="flex-1">
+                    <p className="m-0 text-[12px] leading-[1.4]" style={{ color: C.dark }}>
                       <strong>{item.name}</strong> {item.action}{" "}
-                      <span style={{ color: C.primary, fontWeight: 600 }}>{item.subject}</span>
+                      <span className="font-semibold" style={{ color: C.primary }}>{item.subject}</span>
                     </p>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 4 }}>
-                      <span style={{ fontSize: 10, color: C.muted }}>{item.time}</span>
-                      <button
-                        style={{
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 3,
-                          padding: 0,
-                        }}
-                      >
+                    <div className="flex items-center gap-[10px] mt-1">
+                      <span className="text-[10px]" style={{ color: C.muted }}>{item.time}</span>
+                      <button className="bg-none border-none cursor-pointer flex items-center gap-[3px] p-0">
                         <ThumbsUp size={10} color={C.muted} />
-                        <span style={{ fontSize: 10, color: C.muted }}>{item.likes}</span>
+                        <span className="text-[10px]" style={{ color: C.muted }}>{item.likes}</span>
                       </button>
                     </div>
                   </div>
@@ -4719,7 +3693,7 @@ function HomePageContent({
           </div>
 
           {/* Take a Note */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-5" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Quick Note</SectionLabel>
             <textarea
               value={noteText}
@@ -4728,53 +3702,33 @@ function HomePageContent({
                 setNoteSaved(false);
               }}
               placeholder="Capture an idea, observation, or question..."
+              className="w-full min-h-[80px] resize-none rounded-[10px] font-[Inter,sans-serif] text-[12px] box-border outline-none leading-[1.5]"
               style={{
-                width: "100%",
-                minHeight: 80,
-                resize: "none",
                 border: `1.5px solid ${C.line}`,
-                borderRadius: 10,
                 padding: "10px 12px",
-                fontFamily: font.body,
-                fontSize: 12,
                 color: C.dark,
-                boxSizing: "border-box",
-                outline: "none",
-                lineHeight: 1.5,
               }}
               onFocus={(e) => (e.target.style.borderColor = C.primary)}
               onBlur={(e) => (e.target.style.borderColor = C.line)}
             />
-            <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+            <div className="flex gap-2 mt-2">
               <button
                 onClick={() => setNoteSaved(true)}
+                className="flex-1 py-[7px] rounded-lg cursor-pointer font-[Inter,sans-serif] text-[12px] font-semibold"
                 style={{
-                  flex: 1,
-                  padding: "7px",
-                  borderRadius: 8,
                   border: `1.5px solid ${noteSaved ? C.primary : C.line}`,
                   background: noteSaved ? C.primary : "transparent",
                   color: noteSaved ? C.white : C.text,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 12,
-                  fontWeight: 600,
                 }}
               >
                 {noteSaved ? "✓ Saved" : "Save"}
               </button>
               <button
+                className="flex-1 py-[7px] rounded-lg cursor-pointer font-[Inter,sans-serif] text-[12px] font-semibold"
                 style={{
-                  flex: 1,
-                  padding: "7px",
-                  borderRadius: 8,
                   border: `1.5px solid ${C.accent}`,
                   background: C.accent,
                   color: C.primary,
-                  cursor: "pointer",
-                  fontFamily: font.body,
-                  fontSize: 12,
-                  fontWeight: 600,
                 }}
               >
                 Share
@@ -4783,17 +3737,17 @@ function HomePageContent({
           </div>
 
           {/* Top Contributors */}
-          <div style={{ background: C.white, borderRadius: 16, padding: 20, boxShadow: C.cardShadow }}>
+          <div className="rounded-2xl p-5" style={{ background: C.white, boxShadow: C.cardShadow }}>
             <SectionLabel>Top Contributors Today</SectionLabel>
             {MEMBERS.slice(0, 3).map((m, i) => (
-              <div key={m.id} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: i < 2 ? 12 : 0 }}>
-                <span style={{ fontSize: 16 }}>{["🥇", "🥈", "🥉"][i]}</span>
+              <div key={m.id} className="flex items-center gap-[10px]" style={{ marginBottom: i < 2 ? 12 : 0 }}>
+                <span className="text-[16px]">{["🥇", "🥈", "🥉"][i]}</span>
                 <Avatar initials={m.avatar} size={28} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: C.dark }}>{m.name}</div>
-                  <div style={{ fontSize: 10, color: C.muted }}>{m.sector}</div>
+                <div className="flex-1">
+                  <div className="text-[12px] font-semibold" style={{ color: C.dark }}>{m.name}</div>
+                  <div className="text-[10px]" style={{ color: C.muted }}>{m.sector}</div>
                 </div>
-                <span style={{ fontSize: 12, fontWeight: 700, color: C.primary }}>{m.points.toLocaleString()}</span>
+                <span className="text-[12px] font-bold" style={{ color: C.primary }}>{m.points.toLocaleString()}</span>
               </div>
             ))}
           </div>
@@ -4802,54 +3756,35 @@ function HomePageContent({
 
       {/* ── GOALS SECTION ── */}
       <section
+        className="rounded-[20px]"
         style={{
           background: C.white,
-          borderRadius: 20,
           padding: isMobile ? "20px 16px" : 32,
           boxShadow: C.cardShadow,
           marginBottom: isMobile ? 20 : 28,
         }}
       >
         <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: isMobile ? 16 : 24,
-          }}
+          className="flex justify-between items-center"
+          style={{ marginBottom: isMobile ? 16 : 24 }}
         >
           <div>
             <SectionLabel>Goals & Milestones</SectionLabel>
             <h2
-              style={{
-                fontFamily: font.display,
-                fontSize: isMobile ? 20 : 24,
-                fontWeight: 700,
-                color: C.primary,
-                margin: 0,
-                letterSpacing: "-0.3px",
-              }}
+              className="font-[DM_Sans,sans-serif] font-bold m-0 tracking-[-0.3px]"
+              style={{ fontSize: isMobile ? 20 : 24, color: C.primary }}
             >
               Your Contribution <span style={{ color: C.accent }}>Roadmap</span>
             </h2>
           </div>
           <button
             onClick={() => setShowGoalModal(true)}
+            className="rounded-[20px] border-none cursor-pointer font-[Inter,sans-serif] font-bold flex items-center gap-[6px] whitespace-nowrap shrink-0"
             style={{
               padding: isMobile ? "8px 14px" : "10px 20px",
-              borderRadius: 20,
-              border: "none",
-              cursor: "pointer",
               background: C.primary,
               color: C.white,
-              fontFamily: font.body,
               fontSize: isMobile ? 12 : 13,
-              fontWeight: 700,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              whiteSpace: "nowrap",
-              flexShrink: 0,
             }}
           >
             <Plus size={14} />
@@ -4859,9 +3794,8 @@ function HomePageContent({
 
         {/* Tabs — scroll horizontally on mobile */}
         <div
+          className="flex"
           style={{
-            display: "flex",
-            gap: 0,
             marginBottom: isMobile ? 16 : 24,
             borderBottom: `1px solid ${C.line}`,
             overflowX: isMobile ? "auto" : "visible",
@@ -4872,20 +3806,11 @@ function HomePageContent({
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
+              className="border-none cursor-pointer font-[Inter,sans-serif] text-[13px] font-semibold bg-transparent capitalize whitespace-nowrap shrink-0 transition-all duration-200"
               style={{
                 padding: isMobile ? "8px 16px" : "8px 20px",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: font.body,
-                fontSize: 13,
-                fontWeight: 600,
-                background: "transparent",
-                textTransform: "capitalize",
-                whiteSpace: "nowrap",
                 color: activeTab === tab ? C.primary : C.muted,
                 borderBottom: `2px solid ${activeTab === tab ? C.primary : "transparent"}`,
-                flexShrink: 0,
-                transition: "all 0.2s",
               }}
             >
               {tab}
@@ -4894,110 +3819,71 @@ function HomePageContent({
         </div>
 
         {activeTab === "active" ? (
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 16 }}>
+          <div className="grid" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 12 : 16 }}>
             {GOALS.map((goal) => (
               <div
                 key={goal.id}
-                style={{
-                  border: `1.5px solid ${C.line}`,
-                  borderRadius: 14,
-                  padding: 20,
-                  transition: "border-color 0.2s",
-                }}
+                className="rounded-[14px] p-5 transition-[border-color] duration-200"
+                style={{ border: `1.5px solid ${C.line}` }}
                 onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.primary)}
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.line)}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    marginBottom: 12,
-                  }}
-                >
+                <div className="flex justify-between items-start mb-3">
                   <div>
                     <Pill color={C.primary} small border>
                       {goal.sector}
                     </Pill>
                     <h3
-                      style={{
-                        fontFamily: font.display,
-                        fontSize: 15,
-                        fontWeight: 700,
-                        color: C.dark,
-                        margin: "8px 0 4px",
-                        lineHeight: 1.3,
-                      }}
+                      className="font-[DM_Sans,sans-serif] text-[15px] font-bold leading-[1.3] m-0 mt-2 mb-1"
+                      style={{ color: C.dark }}
                     >
                       {goal.title}
                     </h3>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: C.muted }}>
+                    <div className="flex items-center gap-[6px] text-[12px]" style={{ color: C.muted }}>
                       <Calendar size={11} />
                       <span>{goal.deadline}</span>
-                      <span style={{ color: C.accent, fontWeight: 700 }}>· {goal.daysLeft} days left</span>
+                      <span className="font-bold" style={{ color: C.accent }}>· {goal.daysLeft} days left</span>
                     </div>
                   </div>
                 </div>
 
                 <ProgressBar value={goal.progress} />
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: 6,
-                    fontSize: 11,
-                    color: C.muted,
-                  }}
+                  className="flex justify-between mt-[6px] text-[11px]"
+                  style={{ color: C.muted }}
                 >
                   <span>
                     {goal.steps.filter((s) => s.done).length}/{goal.steps.length} steps
                   </span>
-                  <span style={{ fontWeight: 700, color: C.primary }}>{goal.progress}%</span>
+                  <span className="font-bold" style={{ color: C.primary }}>{goal.progress}%</span>
                 </div>
 
                 {/* Expandable Steps */}
                 <button
                   onClick={() => setExpandedGoal(expandedGoal === goal.id ? null : goal.id)}
-                  style={{
-                    marginTop: 12,
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                    fontSize: 12,
-                    fontWeight: 600,
-                    color: C.primary,
-                    padding: 0,
-                  }}
+                  className="mt-3 bg-none border-none cursor-pointer flex items-center gap-1 text-[12px] font-semibold p-0"
+                  style={{ color: C.primary }}
                 >
                   {expandedGoal === goal.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                   {expandedGoal === goal.id ? "Hide" : "View"} Micro-Steps
                 </button>
 
                 {expandedGoal === goal.id && (
-                  <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div className="mt-[10px] flex flex-col gap-2">
                     {goal.steps.map((step, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div key={i} className="flex items-center gap-2">
                         <div
+                          className="w-4 h-4 rounded-[3px] flex items-center justify-center shrink-0"
                           style={{
-                            width: 16,
-                            height: 16,
-                            borderRadius: 3,
                             border: `1.5px solid ${step.done ? C.primary : C.line}`,
                             background: step.done ? C.primary : "transparent",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexShrink: 0,
                           }}
                         >
                           {step.done && <Check size={9} color={C.white} strokeWidth={3} />}
                         </div>
                         <span
+                          className="text-[12px]"
                           style={{
-                            fontSize: 12,
                             color: step.done ? C.muted : C.dark,
                             textDecoration: step.done ? "line-through" : "none",
                           }}
@@ -5012,29 +3898,20 @@ function HomePageContent({
             ))}
           </div>
         ) : (
-          <div style={{ textAlign: "center", padding: "48px 0" }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🌱</div>
-            <h3 style={{ fontFamily: font.display, fontSize: 20, color: C.primary, margin: "0 0 8px" }}>
+          <div className="text-center py-12">
+            <div className="text-[48px] mb-4">🌱</div>
+            <h3 className="font-[DM_Sans,sans-serif] text-[20px] m-0 mb-2" style={{ color: C.primary }}>
               No {activeTab} goals yet
             </h3>
-            <p style={{ color: C.muted, fontSize: 14, margin: "0 0 24px" }}>
+            <p className="text-[14px] m-0 mb-6" style={{ color: C.muted }}>
               Start contributing and reach the BRIDGE Champion milestone
             </p>
             <button
               onClick={() => setShowGoalModal(true)}
+              className="py-3 px-7 rounded-[20px] bg-transparent font-[Inter,sans-serif] text-[14px] font-bold cursor-pointer inline-flex items-center gap-2"
               style={{
-                padding: "12px 28px",
-                borderRadius: 20,
                 border: `2px solid ${C.primary}`,
-                background: "transparent",
                 color: C.primary,
-                fontFamily: font.body,
-                fontSize: 14,
-                fontWeight: 700,
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
               }}
             >
               <Plus size={14} /> Create Goal

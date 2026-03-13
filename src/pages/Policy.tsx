@@ -1,19 +1,6 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-
-import { colors } from "@/lib/theme";
+import { useState } from "react";
+import { Layout } from "@/components/Layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
-const C = {
-  ...colors,
-  accentBg: "#EBF5B0",
-  bg: colors.background,
-  text: "#4A5A52",
-  muted: "#7A8C83",
-  teal: colors.ctaGreen,
-};
-
 
 // ── Data ────────────────────────────────────────────────────────────
 
@@ -297,12 +284,7 @@ const BRIEFS_PER_PAGE = 6;
 
 function Pill({ label }: { label: string }) {
   return (
-    <span style={{
-      display: "inline-flex", alignItems: "center", gap: "8px",
-      padding: "8px 18px", border: "1px solid rgba(184,217,53,0.35)",
-      borderRadius: "50px", fontSize: "11px", fontWeight: "600",
-      letterSpacing: "1.5px", color: C.accent, textTransform: "uppercase" as const,
-    }}>
+    <span className="inline-flex items-center gap-2 px-[18px] py-2 border border-[rgba(184,217,53,0.35)] rounded-full text-[11px] font-semibold tracking-[1.5px] text-[#B8D935] uppercase">
       {label}
     </span>
   );
@@ -311,17 +293,12 @@ function Pill({ label }: { label: string }) {
 function StatusBadge({ status }: { status: "enacted" | "pending" | "under-review" }) {
   const cfg = STATUS_CONFIG[status];
   const dotEl = cfg.dot === "filled"
-    ? <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: C.accent, display: "inline-block", flexShrink: 0 }} />
+    ? <span className="w-1.5 h-1.5 rounded-full bg-[#B8D935] inline-block shrink-0" />
     : cfg.dot === "empty"
-    ? <span style={{ width: "6px", height: "6px", borderRadius: "50%", border: `1.5px solid ${C.muted}`, display: "inline-block", flexShrink: 0 }} />
-    : <span style={{ width: "8px", height: "1.5px", backgroundColor: C.muted, display: "inline-block", flexShrink: 0 }} />;
+    ? <span className="w-1.5 h-1.5 rounded-full border-[1.5px] border-[#7A8C83] inline-block shrink-0" />
+    : <span className="w-2 h-[1.5px] bg-[#7A8C83] inline-block shrink-0" />;
   return (
-    <span style={{
-      display: "inline-flex", alignItems: "center", gap: "5px",
-      fontSize: "11px", fontWeight: "600", padding: "3px 10px",
-      borderRadius: "20px", color: C.primary, backgroundColor: C.white,
-      border: `1px solid ${C.line}`, letterSpacing: "0.3px", flexShrink: 0,
-    }}>
+    <span className="inline-flex items-center gap-[5px] text-[11px] font-semibold px-2.5 py-[3px] rounded-[20px] text-[#1B4D3E] bg-white border border-[#DEDEDE] tracking-[0.3px] shrink-0">
       {dotEl}{cfg.label}
     </span>
   );
@@ -331,38 +308,34 @@ function BriefCard({ brief }: { brief: PolicyBrief }) {
   const [expanded, setExpanded] = useState(false);
   return (
     <div
-      style={{
-        backgroundColor: C.white, borderRadius: "10px",
-        border: `1px solid ${C.line}`, padding: "20px 24px",
-        transition: "box-shadow 0.2s ease", cursor: "pointer",
-      }}
+      className="bg-white rounded-[10px] border border-[#DEDEDE] px-6 py-5 transition-shadow duration-200 ease-in-out cursor-pointer"
       onClick={() => setExpanded(v => !v)}
     >
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px" }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px", flexWrap: "wrap" as const }}>
-            <span style={{ fontSize: "10px", fontWeight: "700", color: C.muted, textTransform: "uppercase" as const, letterSpacing: "1.2px" }}>{brief.category}</span>
-            <span style={{ color: C.line, fontSize: "10px" }}>·</span>
-            <span style={{ fontSize: "11px", color: C.muted }}>{brief.date}</span>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+            <span className="text-[10px] font-bold text-[#7A8C83] uppercase tracking-[1.2px]">{brief.category}</span>
+            <span className="text-[#DEDEDE] text-[10px]">·</span>
+            <span className="text-[11px] text-[#7A8C83]">{brief.date}</span>
           </div>
-          <h3 style={{ fontSize: "14px", fontWeight: "600", color: C.primary, margin: 0, lineHeight: "1.45", fontFamily: "Inter, sans-serif" }}>
+          <h3 className="text-sm font-semibold text-[#1B4D3E] m-0 leading-[1.45] font-['Inter',sans-serif]">
             {brief.title}
           </h3>
         </div>
-        <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "flex-end", gap: "10px", flexShrink: 0 }}>
+        <div className="flex flex-col items-end gap-2.5 shrink-0">
           <StatusBadge status={brief.status} />
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-            style={{ transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s", marginRight: "2px" }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7A8C83" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            className={`transition-transform duration-200 mr-0.5 ${expanded ? "rotate-180" : ""}`}>
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </div>
       </div>
       {expanded && (
-        <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: `1px solid ${C.line}` }}>
-          <p style={{ fontSize: "14px", color: C.text, lineHeight: "1.7", margin: "0 0 14px" }}>{brief.summary}</p>
-          <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" as const }}>
+        <div className="mt-4 pt-4 border-t border-[#DEDEDE]">
+          <p className="text-sm text-[#4A5A52] leading-[1.7] mb-3.5 mt-0">{brief.summary}</p>
+          <div className="flex gap-1.5 flex-wrap">
             {brief.tags.map(tag => (
-              <span key={tag} style={{ fontSize: "11px", fontWeight: "500", padding: "3px 10px", borderRadius: "4px", background: C.background, border: `1px solid ${C.line}`, color: C.text }}>
+              <span key={tag} className="text-[11px] font-medium px-2.5 py-[3px] rounded bg-[#F3F5F2] border border-[#DEDEDE] text-[#4A5A52]">
                 {tag}
               </span>
             ))}
@@ -375,23 +348,20 @@ function BriefCard({ brief }: { brief: PolicyBrief }) {
 
 function BriefTableRow({ brief }: { brief: PolicyBrief }) {
   return (
-    <tr style={{ borderBottom: `1px solid ${C.line}`, transition: "background 0.15s" }}
-      onMouseEnter={e => (e.currentTarget.style.background = C.background)}
-      onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-    >
-      <td style={{ padding: "14px 16px", verticalAlign: "top" }}>
-        <div style={{ fontSize: "13px", fontWeight: "600", color: C.primary, lineHeight: "1.4", marginBottom: "4px" }}>{brief.title}</div>
-        <div style={{ fontSize: "11px", color: C.muted }}>{brief.category}</div>
+    <tr className="border-b border-[#DEDEDE] transition-colors duration-150 hover:bg-[#F3F5F2]">
+      <td className="p-[14px_16px] align-top">
+        <div className="text-[13px] font-semibold text-[#1B4D3E] leading-[1.4] mb-1">{brief.title}</div>
+        <div className="text-[11px] text-[#7A8C83]">{brief.category}</div>
       </td>
-      <td style={{ padding: "14px 16px", verticalAlign: "middle", whiteSpace: "nowrap" as const }}>
-        <span style={{ fontSize: "11px", fontWeight: "500", color: C.text, background: C.background, padding: "3px 9px", borderRadius: "4px", border: `1px solid ${C.line}`, textTransform: "capitalize" as const }}>
+      <td className="p-[14px_16px] align-middle whitespace-nowrap">
+        <span className="text-[11px] font-medium text-[#4A5A52] bg-[#F3F5F2] px-[9px] py-[3px] rounded border border-[#DEDEDE] capitalize">
           {brief.sector.replace("-", " ")}
         </span>
       </td>
-      <td style={{ padding: "14px 16px", verticalAlign: "middle" }}>
+      <td className="p-[14px_16px] align-middle">
         <StatusBadge status={brief.status} />
       </td>
-      <td style={{ padding: "14px 16px", verticalAlign: "middle", fontSize: "12px", color: C.muted, whiteSpace: "nowrap" as const }}>{brief.date}</td>
+      <td className="p-[14px_16px] align-middle text-xs text-[#7A8C83] whitespace-nowrap">{brief.date}</td>
     </tr>
   );
 }
@@ -400,34 +370,27 @@ function BriefTableRow({ brief }: { brief: PolicyBrief }) {
 function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: boolean }) {
   const typeCfg = EVENT_TYPE_CONFIG[ev.type];
   return (
-    <div style={{
-      backgroundColor: C.white, borderRadius: "10px",
-      border: `1px solid ${C.line}`,
-      padding: isMobile ? "16px" : "20px 24px", display: "flex", gap: "16px",
-    }}>
+    <div className={`bg-white rounded-[10px] border border-[#DEDEDE] flex gap-4 ${isMobile ? "p-4" : "px-6 py-5"}`}>
       {/* Date badge */}
-      <div style={{
-        textAlign: "center", flexShrink: 0, width: "48px",
-        paddingRight: "16px", borderRight: `1px solid ${C.line}`,
-      }}>
-        <div style={{ fontSize: "9px", fontWeight: "700", color: C.muted, letterSpacing: "1px", textTransform: "uppercase" as const, marginBottom: "2px" }}>{ev.month}</div>
-        <div style={{ fontSize: "26px", fontWeight: "700", color: C.primary, lineHeight: "1", fontFamily: "Inter, sans-serif" }}>{ev.day}</div>
+      <div className="text-center shrink-0 w-12 pr-4 border-r border-[#DEDEDE]">
+        <div className="text-[9px] font-bold text-[#7A8C83] tracking-[1px] uppercase mb-0.5">{ev.month}</div>
+        <div className="text-[26px] font-bold text-[#1B4D3E] leading-none font-['Inter',sans-serif]">{ev.day}</div>
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "5px", flexWrap: "wrap" as const }}>
-          <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "4px", color: C.primary, background: C.background, border: `1px solid ${C.line}`, letterSpacing: "0.5px", textTransform: "uppercase" as const }}>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-[5px] flex-wrap">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F3F5F2] border border-[#DEDEDE] tracking-[0.5px] uppercase text-[#1B4D3E]">
             {typeCfg.label}
           </span>
-          <span style={{ fontSize: "11px", color: C.muted }}>{ev.sector}</span>
+          <span className="text-[11px] text-[#7A8C83]">{ev.sector}</span>
         </div>
-        <h4 style={{ fontSize: "13px", fontWeight: "600", color: C.primary, margin: "0 0 5px", lineHeight: "1.4", fontFamily: "Inter, sans-serif" }}>
+        <h4 className="text-[13px] font-semibold text-[#1B4D3E] mb-[5px] mt-0 leading-[1.4] font-['Inter',sans-serif]">
           {ev.title}
         </h4>
-        <p style={{ fontSize: "12px", color: C.text, lineHeight: "1.6", margin: "0 0 10px" }}>{ev.description}</p>
+        <p className="text-xs text-[#4A5A52] leading-[1.6] mb-2.5 mt-0">{ev.description}</p>
         {ev.location && (
-          <div style={{ fontSize: "11px", color: C.muted, marginBottom: "10px", display: "flex", alignItems: "center", gap: "4px" }}>
+          <div className="text-[11px] text-[#7A8C83] mb-2.5 flex items-center gap-1">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
             </svg>
@@ -437,16 +400,7 @@ function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: bool
         {/* .ics download */}
         <button
           onClick={(e) => { e.stopPropagation(); downloadICS(ev); }}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: "5px",
-            padding: "5px 12px", borderRadius: "6px",
-            border: `1px solid ${C.line}`, backgroundColor: "transparent",
-            color: C.primary, fontSize: "11px", fontWeight: "600",
-            cursor: "pointer", fontFamily: "Inter, sans-serif",
-            transition: "all 0.15s ease",
-          }}
-          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.primary; (e.currentTarget as HTMLButtonElement).style.color = C.white; (e.currentTarget as HTMLButtonElement).style.borderColor = C.primary; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = C.primary; (e.currentTarget as HTMLButtonElement).style.borderColor = C.line; }}
+          className="inline-flex items-center gap-[5px] px-3 py-[5px] rounded-md border border-[#DEDEDE] bg-transparent text-[#1B4D3E] text-[11px] font-semibold cursor-pointer font-['Inter',sans-serif] transition-all duration-150 ease-in-out hover:bg-[#1B4D3E] hover:text-white hover:border-[#1B4D3E]"
         >
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
@@ -461,7 +415,6 @@ function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: bool
 // ── Page ─────────────────────────────────────────────────────────────
 
 export default function PolicyPage() {
-  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [activeSector, setActiveSector] = useState("all");
   const [activeCategory, setActiveCategory] = useState("All Types");
@@ -498,47 +451,34 @@ export default function PolicyPage() {
     return acc;
   }, {});
 
-  const HP = isMobile ? "20px" : "48px";
-
   return (
-    <div style={{ fontFamily: "Inter, sans-serif", backgroundColor: C.white, minHeight: "100vh" }}>
-      <SiteHeader />
+    <Layout>
+    <div className="font-['Inter',sans-serif] bg-white min-h-screen">
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: C.primary, padding: isMobile ? "56px 20px 48px" : "80px 48px 72px", textAlign: "center" }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-          <div style={{ marginBottom: "20px" }}>
+      <section className={`bg-[#1B4D3E] text-center ${isMobile ? "px-5 pt-14 pb-12" : "px-12 pt-20 pb-[72px]"}`}>
+        <div className="max-w-[720px] mx-auto">
+          <div className="mb-5">
             <Pill label="Policy & Governance" />
           </div>
-          <h1 style={{
-            fontFamily: "Inter, sans-serif", fontSize: "clamp(28px, 5vw, 52px)",
-            fontWeight: "300", color: C.white, margin: "0 0 16px",
-            lineHeight: "1.15", letterSpacing: "-0.5px",
-          }}>
-            Policy <span style={{ fontWeight: "700", color: C.accent }}>Updates</span>
+          <h1 className="font-['Inter',sans-serif] text-[clamp(28px,5vw,52px)] font-light text-white mb-4 mt-0 leading-[1.15] tracking-[-0.5px]">
+            Policy <span className="font-bold text-[#B8D935]">Updates</span>
           </h1>
-          <p style={{ fontSize: isMobile ? "15px" : "17px", color: "rgba(255,255,255,0.7)", lineHeight: "1.65", margin: "0 0 36px" }}>
+          <p className={`${isMobile ? "text-[15px]" : "text-[17px]"} text-white/70 leading-[1.65] mb-9 mt-0`}>
             Tracking regulatory developments, legislative changes, and policy shifts that shape investment and
             development across Ghana's 12 key sectors.
           </p>
 
           {/* Stats row */}
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
-            gap: isMobile ? "10px" : "16px", maxWidth: "480px", margin: "0 auto",
-          }}>
+          <div className={`grid grid-cols-3 ${isMobile ? "gap-2.5" : "gap-4"} max-w-[480px] mx-auto`}>
             {[
               { val: stats.enacted, label: "Enacted" },
               { val: stats.pending, label: "Pending" },
               { val: stats.underReview, label: "Under Review" },
             ].map(s => (
-              <div key={s.label} style={{
-                borderTop: `2px solid rgba(184,217,53,0.4)`,
-                backgroundColor: "rgba(255,255,255,0.06)",
-                padding: isMobile ? "16px 10px" : "20px 16px",
-              }}>
-                <div style={{ fontSize: isMobile ? "24px" : "30px", fontWeight: "700", color: C.white, marginBottom: "4px", lineHeight: 1 }}>{s.val}</div>
-                <div style={{ fontSize: "10px", fontWeight: "600", color: "rgba(255,255,255,0.45)", textTransform: "uppercase" as const, letterSpacing: "1px" }}>{s.label}</div>
+              <div key={s.label} className={`border-t-2 border-[rgba(184,217,53,0.4)] bg-white/[0.06] ${isMobile ? "px-2.5 py-4" : "px-4 py-5"}`}>
+                <div className={`${isMobile ? "text-2xl" : "text-[30px]"} font-bold text-white mb-1 leading-none`}>{s.val}</div>
+                <div className="text-[10px] font-semibold text-white/[0.45] uppercase tracking-[1px]">{s.label}</div>
               </div>
             ))}
           </div>
@@ -546,48 +486,33 @@ export default function PolicyPage() {
       </section>
 
       {/* ── LEGISLATIVE CALENDAR ──────────────────────────────────── */}
-      <section style={{ backgroundColor: C.background, padding: `${isMobile ? "48px" : "72px"} ${HP}` }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <section className={`bg-[#F3F5F2] ${isMobile ? "py-12 px-5" : "py-[72px] px-12"}`}>
+        <div className="max-w-[1100px] mx-auto">
           {/* Header row */}
-          <div style={{
-            display: "flex", alignItems: isMobile ? "flex-start" : "flex-end",
-            justifyContent: "space-between", marginBottom: "32px",
-            flexDirection: isMobile ? "column" : "row", gap: "16px",
-          }}>
+          <div className={`flex ${isMobile ? "items-start flex-col" : "items-end flex-row"} justify-between mb-8 gap-4`}>
             <div>
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                padding: "5px 14px", background: C.accentBg, borderRadius: "4px",
-                fontSize: "10px", fontWeight: "700", letterSpacing: "1.5px",
-                color: C.primary, marginBottom: "12px", textTransform: "uppercase" as const,
-              }}>
+              <div className="inline-flex items-center gap-2 px-3.5 py-[5px] bg-[#EBF5B0] rounded text-[10px] font-bold tracking-[1.5px] text-[#1B4D3E] mb-3 uppercase">
                 Upcoming
               </div>
-              <h2 style={{
-                fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: "300", color: C.primary,
-                margin: 0, lineHeight: "1.2", fontFamily: "Inter, sans-serif",
-              }}>
-                Legislative <strong style={{ fontWeight: "700" }}>Calendar</strong>
+              <h2 className="text-[clamp(22px,3.5vw,32px)] font-light text-[#1B4D3E] m-0 leading-[1.2] font-['Inter',sans-serif]">
+                Legislative <strong className="font-bold">Calendar</strong>
               </h2>
-              <p style={{ fontSize: "13px", color: C.muted, margin: "8px 0 0", lineHeight: "1.6" }}>
+              <p className="text-[13px] text-[#7A8C83] mt-2 mb-0 leading-[1.6]">
                 Key dates for readings, consultations, deadlines and policy reviews.
               </p>
             </div>
 
             {/* View toggle */}
-            <div style={{ display: "flex", gap: "0", borderRadius: "8px", border: `1px solid ${C.line}`, overflow: "hidden", flexShrink: 0 }}>
+            <div className="flex rounded-lg border border-[#DEDEDE] overflow-hidden shrink-0">
               {(["list", "month"] as const).map(mode => (
                 <button
                   key={mode}
                   onClick={() => setCalendarMode(mode)}
-                  style={{
-                    padding: "9px 18px", border: "none",
-                    backgroundColor: calendarMode === mode ? C.primary : C.white,
-                    color: calendarMode === mode ? C.white : C.muted,
-                    fontSize: "12px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-                    cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
-                    transition: "all 0.15s ease",
-                  }}
+                  className={`px-[18px] py-[9px] border-none text-xs font-semibold font-['Inter',sans-serif] cursor-pointer flex items-center gap-1.5 transition-all duration-150 ease-in-out ${
+                    calendarMode === mode
+                      ? "bg-[#1B4D3E] text-white"
+                      : "bg-white text-[#7A8C83]"
+                  }`}
                 >
                   {mode === "list" ? (
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
@@ -602,7 +527,7 @@ export default function PolicyPage() {
 
           {/* ── LIST VIEW ── */}
           {calendarMode === "list" && (
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(340px, 1fr))", gap: "12px" }}>
+            <div className={`grid gap-3 ${isMobile ? "grid-cols-1" : "grid-cols-[repeat(auto-fill,minmax(340px,1fr))]"}`}>
               {CALENDAR_EVENTS.map(ev => (
                 <CalendarEventCard key={ev.id} ev={ev} isMobile={isMobile} />
               ))}
@@ -611,32 +536,24 @@ export default function PolicyPage() {
 
           {/* ── MONTH VIEW ── */}
           {calendarMode === "month" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+            <div className="flex flex-col gap-8">
               {Object.entries(eventsByMonth).map(([month, events]) => (
                 <div key={month}>
                   {/* Month header */}
-                  <div style={{
-                    display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px",
-                    paddingBottom: "12px", borderBottom: `1px solid ${C.line}`,
-                  }}>
-                    <div style={{
-                      backgroundColor: C.primary, color: C.white,
-                      borderRadius: "6px", padding: "5px 14px",
-                      fontSize: "12px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                      letterSpacing: "0.3px",
-                    }}>
+                  <div className="flex items-center gap-3 mb-3.5 pb-3 border-b border-[#DEDEDE]">
+                    <div className="bg-[#1B4D3E] text-white rounded-md px-3.5 py-[5px] text-xs font-bold font-['Inter',sans-serif] tracking-[0.3px]">
                       {month}
                     </div>
-                    <span style={{ fontSize: "12px", color: C.muted }}>
+                    <span className="text-xs text-[#7A8C83]">
                       {events.length} event{events.length !== 1 ? "s" : ""}
                     </span>
                     {events.some(e => e.urgency === "high") && (
-                      <span style={{ fontSize: "10px", fontWeight: "700", color: C.primary, background: C.accentBg, padding: "2px 8px", borderRadius: "4px", letterSpacing: "0.5px" }}>
+                      <span className="text-[10px] font-bold text-[#1B4D3E] bg-[#EBF5B0] px-2 py-0.5 rounded tracking-[0.5px]">
                         Action Required
                       </span>
                     )}
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(340px, 1fr))", gap: "12px" }}>
+                  <div className={`grid gap-3 ${isMobile ? "grid-cols-1" : "grid-cols-[repeat(auto-fill,minmax(340px,1fr))]"}`}>
                     {events.map(ev => (
                       <CalendarEventCard key={ev.id} ev={ev} isMobile={isMobile} />
                     ))}
@@ -649,14 +566,14 @@ export default function PolicyPage() {
       </section>
 
       {/* ── FILTERS + VIEW TOGGLE ──────────────────────────────────── */}
-      <section style={{ backgroundColor: C.white, padding: `32px ${HP} 0`, borderBottom: `1px solid ${C.line}` }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <section className={`bg-white pt-8 pb-0 border-b border-[#DEDEDE] ${isMobile ? "px-5" : "px-12"}`}>
+        <div className="max-w-[1100px] mx-auto">
           {/* Top row: search + view toggle */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px", flexWrap: "wrap" as const }}>
+          <div className="flex items-center gap-2.5 mb-5 flex-wrap">
             {/* Search */}
-            <div style={{ position: "relative" as const, flex: "1 1 200px", minWidth: 0 }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                style={{ position: "absolute" as const, left: "12px", top: "50%", transform: "translateY(-50%)" }}>
+            <div className="relative flex-[1_1_200px] min-w-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7A8C83" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className="absolute left-3 top-1/2 -translate-y-1/2">
                 <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
               </svg>
               <input
@@ -664,29 +581,21 @@ export default function PolicyPage() {
                 placeholder="Search briefs…"
                 value={searchQuery}
                 onChange={e => { setSearchQuery(e.target.value); setVisibleCount(BRIEFS_PER_PAGE); }}
-                style={{
-                  width: "100%", padding: "10px 14px 10px 36px", borderRadius: "6px",
-                  border: `1px solid ${C.line}`, backgroundColor: C.white,
-                  fontFamily: "Inter, sans-serif", fontSize: "13px", color: C.dark,
-                  outline: "none", boxSizing: "border-box" as const,
-                }}
+                className="w-full py-2.5 pr-3.5 pl-9 rounded-md border border-[#DEDEDE] bg-white font-['Inter',sans-serif] text-[13px] text-[#191919] outline-none box-border"
               />
             </div>
 
             {/* View toggle */}
-            <div style={{ display: "flex", borderRadius: "8px", border: `1px solid ${C.line}`, overflow: "hidden", flexShrink: 0 }}>
+            <div className="flex rounded-lg border border-[#DEDEDE] overflow-hidden shrink-0">
               {(["card", "table"] as const).map(mode => (
                 <button
                   key={mode}
                   onClick={() => setViewMode(mode)}
-                  style={{
-                    padding: "9px 16px", border: "none",
-                    backgroundColor: viewMode === mode ? C.primary : C.white,
-                    color: viewMode === mode ? C.white : C.muted,
-                    fontSize: "12px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-                    cursor: "pointer", display: "flex", alignItems: "center", gap: "5px",
-                    transition: "all 0.15s ease",
-                  }}
+                  className={`px-4 py-[9px] border-none text-xs font-semibold font-['Inter',sans-serif] cursor-pointer flex items-center gap-[5px] transition-all duration-150 ease-in-out ${
+                    viewMode === mode
+                      ? "bg-[#1B4D3E] text-white"
+                      : "bg-white text-[#7A8C83]"
+                  }`}
                 >
                   {mode === "card" ? (
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
@@ -700,20 +609,16 @@ export default function PolicyPage() {
           </div>
 
           {/* Category filters */}
-          <div style={{ display: "flex", gap: "6px", overflowX: "auto" as const, scrollbarWidth: "none" as const, marginBottom: "16px", paddingBottom: "4px" }}>
+          <div className="flex gap-1.5 overflow-x-auto scrollbar-none [scrollbar-width:none] mb-4 pb-1">
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
                 onClick={() => { setActiveCategory(cat); setVisibleCount(BRIEFS_PER_PAGE); }}
-                style={{
-                  padding: "6px 14px", borderRadius: "4px", flexShrink: 0,
-                  border: `1px solid ${activeCategory === cat ? C.primary : C.line}`,
-                  backgroundColor: activeCategory === cat ? C.primary : "transparent",
-                  color: activeCategory === cat ? C.white : C.text,
-                  fontSize: "12px", fontWeight: "500", cursor: "pointer",
-                  fontFamily: "Inter, sans-serif", transition: "all 0.15s ease",
-                  whiteSpace: "nowrap" as const,
-                }}
+                className={`px-3.5 py-1.5 rounded shrink-0 text-xs font-medium cursor-pointer font-['Inter',sans-serif] transition-all duration-150 ease-in-out whitespace-nowrap ${
+                  activeCategory === cat
+                    ? "border border-[#1B4D3E] bg-[#1B4D3E] text-white"
+                    : "border border-[#DEDEDE] bg-transparent text-[#4A5A52]"
+                }`}
               >
                 {cat}
               </button>
@@ -721,23 +626,16 @@ export default function PolicyPage() {
           </div>
 
           {/* Sector scroll tabs */}
-          <div style={{
-            display: "flex", gap: "0", overflowX: "auto" as const,
-            scrollbarWidth: "none" as const, borderBottom: `1px solid ${C.line}`,
-          }}>
+          <div className="flex overflow-x-auto scrollbar-none [scrollbar-width:none] border-b border-[#DEDEDE]">
             {SECTORS.map(s => (
               <button
                 key={s.key}
                 onClick={() => { setActiveSector(s.key); setVisibleCount(BRIEFS_PER_PAGE); }}
-                style={{
-                  padding: "10px 16px", border: "none", flexShrink: 0,
-                  borderBottom: `2px solid ${activeSector === s.key ? C.primary : "transparent"}`,
-                  backgroundColor: "transparent",
-                  color: activeSector === s.key ? C.primary : C.muted,
-                  fontSize: "12px", fontWeight: activeSector === s.key ? "700" : "500",
-                  cursor: "pointer", fontFamily: "Inter, sans-serif",
-                  whiteSpace: "nowrap" as const, transition: "all 0.15s ease",
-                }}
+                className={`px-4 py-2.5 border-none shrink-0 bg-transparent text-xs cursor-pointer font-['Inter',sans-serif] whitespace-nowrap transition-all duration-150 ease-in-out border-b-2 ${
+                  activeSector === s.key
+                    ? "border-b-[#1B4D3E] text-[#1B4D3E] font-bold"
+                    : "border-b-transparent text-[#7A8C83] font-medium"
+                }`}
               >
                 {s.label}
               </button>
@@ -747,44 +645,35 @@ export default function PolicyPage() {
       </section>
 
       {/* ── BRIEFS LIST / TABLE ──────────────────────────────────── */}
-      <section style={{ backgroundColor: C.white, padding: `32px ${HP} 72px` }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontSize: "12px", color: C.muted, marginBottom: "20px", fontFamily: "Inter, sans-serif" }}>
-            Showing <strong style={{ color: C.primary }}>{Math.min(visibleCount, filtered.length)}</strong> of{" "}
-            <strong style={{ color: C.primary }}>{filtered.length}</strong> policy briefs
+      <section className={`bg-white pt-8 pb-[72px] ${isMobile ? "px-5" : "px-12"}`}>
+        <div className="max-w-[1100px] mx-auto">
+          <div className="text-xs text-[#7A8C83] mb-5 font-['Inter',sans-serif]">
+            Showing <strong className="text-[#1B4D3E]">{Math.min(visibleCount, filtered.length)}</strong> of{" "}
+            <strong className="text-[#1B4D3E]">{filtered.length}</strong> policy briefs
           </div>
 
           {filtered.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "72px 24px", backgroundColor: C.background, borderRadius: "10px", border: `1px solid ${C.line}` }}>
-              <h3 style={{ fontSize: "16px", fontWeight: "600", color: C.primary, margin: "0 0 8px" }}>No briefs match your filters</h3>
-              <p style={{ fontSize: "13px", color: C.muted, margin: 0 }}>Try adjusting your sector filter or search query.</p>
+            <div className="text-center py-[72px] px-6 bg-[#F3F5F2] rounded-[10px] border border-[#DEDEDE]">
+              <h3 className="text-base font-semibold text-[#1B4D3E] mb-2 mt-0">No briefs match your filters</h3>
+              <p className="text-[13px] text-[#7A8C83] m-0">Try adjusting your sector filter or search query.</p>
             </div>
           ) : viewMode === "card" ? (
             <>
-              <div style={{ display: "flex", flexDirection: "column" as const, gap: "8px" }}>
+              <div className="flex flex-col gap-2">
                 {visibleBriefs.map(brief => <BriefCard key={brief.id} brief={brief} />)}
               </div>
               {hasMore && (
-                <div style={{ textAlign: "center", marginTop: "32px" }}>
+                <div className="text-center mt-8">
                   <button
                     onClick={() => setVisibleCount(c => c + BRIEFS_PER_PAGE)}
-                    style={{
-                      padding: "11px 32px", borderRadius: "6px",
-                      border: `1px solid ${C.line}`, backgroundColor: "transparent",
-                      color: C.primary, fontFamily: "Inter, sans-serif",
-                      fontSize: "13px", fontWeight: "600", cursor: "pointer",
-                      display: "inline-flex", alignItems: "center", gap: "8px",
-                      transition: "all 0.2s ease",
-                    }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = C.primary; (e.currentTarget as HTMLButtonElement).style.color = C.white; (e.currentTarget as HTMLButtonElement).style.borderColor = C.primary; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = C.primary; (e.currentTarget as HTMLButtonElement).style.borderColor = C.line; }}
+                    className="px-8 py-[11px] rounded-md border border-[#DEDEDE] bg-transparent text-[#1B4D3E] font-['Inter',sans-serif] text-[13px] font-semibold cursor-pointer inline-flex items-center gap-2 transition-all duration-200 ease-in-out hover:bg-[#1B4D3E] hover:text-white hover:border-[#1B4D3E]"
                   >
                     Load more
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
                   </button>
-                  <p style={{ fontSize: "12px", color: C.muted, marginTop: "8px" }}>
+                  <p className="text-xs text-[#7A8C83] mt-2">
                     {filtered.length - Math.min(visibleCount, filtered.length)} more available
                   </p>
                 </div>
@@ -793,22 +682,22 @@ export default function PolicyPage() {
           ) : (
             /* Table view — only on desktop, card fallback on mobile */
             isMobile ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <div className="flex flex-col gap-2">
                 {visibleBriefs.map(brief => <BriefCard key={brief.id} brief={brief} />)}
                 {hasMore && (
                   <button onClick={() => setVisibleCount(c => c + BRIEFS_PER_PAGE)}
-                    style={{ padding: "10px 24px", borderRadius: "6px", border: `1px solid ${C.line}`, backgroundColor: "transparent", color: C.primary, fontSize: "13px", fontWeight: "600", cursor: "pointer", fontFamily: "Inter, sans-serif", marginTop: "8px" }}>
+                    className="px-6 py-2.5 rounded-md border border-[#DEDEDE] bg-transparent text-[#1B4D3E] text-[13px] font-semibold cursor-pointer font-['Inter',sans-serif] mt-2">
                     Load more
                   </button>
                 )}
               </div>
             ) : (
-              <div style={{ backgroundColor: C.white, borderRadius: "10px", border: `1px solid ${C.line}`, overflow: "hidden" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse" as const, fontFamily: "Inter, sans-serif" }}>
+              <div className="bg-white rounded-[10px] border border-[#DEDEDE] overflow-hidden">
+                <table className="w-full border-collapse font-['Inter',sans-serif]">
                   <thead>
-                    <tr style={{ backgroundColor: C.background, borderBottom: `1px solid ${C.line}` }}>
+                    <tr className="bg-[#F3F5F2] border-b border-[#DEDEDE]">
                       {["Brief / Category", "Sector", "Status", "Date"].map(h => (
-                        <th key={h} style={{ padding: "12px 16px", textAlign: "left" as const, fontSize: "10px", fontWeight: "700", color: C.muted, textTransform: "uppercase" as const, letterSpacing: "1px", whiteSpace: "nowrap" as const }}>
+                        <th key={h} className="p-[12px_16px] text-left text-[10px] font-bold text-[#7A8C83] uppercase tracking-[1px] whitespace-nowrap">
                           {h}
                         </th>
                       ))}
@@ -819,9 +708,9 @@ export default function PolicyPage() {
                   </tbody>
                 </table>
                 {hasMore && (
-                  <div style={{ padding: "18px", borderTop: `1px solid ${C.line}`, textAlign: "center" }}>
+                  <div className="p-[18px] border-t border-[#DEDEDE] text-center">
                     <button onClick={() => setVisibleCount(c => c + BRIEFS_PER_PAGE)}
-                      style={{ padding: "9px 24px", borderRadius: "6px", border: `1px solid ${C.line}`, backgroundColor: "transparent", color: C.primary, fontFamily: "Inter, sans-serif", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
+                      className="px-6 py-[9px] rounded-md border border-[#DEDEDE] bg-transparent text-[#1B4D3E] font-['Inter',sans-serif] text-[13px] font-semibold cursor-pointer">
                       Load {Math.min(BRIEFS_PER_PAGE, filtered.length - visibleCount)} more
                     </button>
                   </div>
@@ -833,28 +722,28 @@ export default function PolicyPage() {
       </section>
 
       {/* ── CATEGORIES PREVIEW ──────────────────────────────────── */}
-      <section style={{ backgroundColor: C.background, padding: `${isMobile ? "48px" : "72px"} ${HP}` }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ marginBottom: "32px" }}>
-            <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "300", color: C.primary, margin: "0 0 8px", fontFamily: "Inter, sans-serif" }}>
-              Policy intelligence by <strong style={{ fontWeight: "700" }}>category</strong>
+      <section className={`bg-[#F3F5F2] ${isMobile ? "py-12 px-5" : "py-[72px] px-12"}`}>
+        <div className="max-w-[1100px] mx-auto">
+          <div className="mb-8">
+            <h2 className="text-[clamp(20px,3vw,28px)] font-light text-[#1B4D3E] mb-2 mt-0 font-['Inter',sans-serif]">
+              Policy intelligence by <strong className="font-bold">category</strong>
             </h2>
-            <p style={{ fontSize: "14px", color: C.muted, lineHeight: "1.6", margin: 0, maxWidth: "480px" }}>
+            <p className="text-sm text-[#7A8C83] leading-[1.6] m-0 max-w-[480px]">
               Tracking developments across regulatory, legislative, analytical, and stakeholder dimensions.
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: "1px", backgroundColor: C.line, border: `1px solid ${C.line}`, borderRadius: "10px", overflow: "hidden" }}>
+          <div className={`grid ${isMobile ? "grid-cols-2" : "grid-cols-4"} gap-px bg-[#DEDEDE] border border-[#DEDEDE] rounded-[10px] overflow-hidden`}>
             {[
               { label: "Regulatory Frameworks", desc: "Licensing, compliance, and operating environment analysis.", count: BRIEFS.filter(b => b.category === "Regulatory Framework").length },
               { label: "Legislative Tracker", desc: "Pending and enacted legislation across Ghana's 12 BRIDGE sectors.", count: BRIEFS.filter(b => b.category === "Legislation").length },
               { label: "Policy Briefs", desc: "Concise analyses of policy shifts and economic implications.", count: BRIEFS.filter(b => b.category === "Policy Brief").length },
               { label: "Stakeholder Positions", desc: "Government, private sector, and civil society perspectives.", count: BRIEFS.filter(b => b.category === "Stakeholder Position").length },
             ].map(card => (
-              <div key={card.label} style={{ backgroundColor: C.white, padding: "24px" }}>
-                <div style={{ fontSize: "30px", fontWeight: "700", color: C.primary, fontFamily: "Inter, sans-serif", lineHeight: 1, marginBottom: "12px" }}>{card.count}</div>
-                <h3 style={{ fontSize: "13px", fontWeight: "600", color: C.primary, margin: "0 0 6px", fontFamily: "Inter, sans-serif", lineHeight: "1.3" }}>{card.label}</h3>
-                <p style={{ fontSize: "12px", color: C.muted, lineHeight: "1.55", margin: 0 }}>{card.desc}</p>
+              <div key={card.label} className="bg-white p-6">
+                <div className="text-[30px] font-bold text-[#1B4D3E] font-['Inter',sans-serif] leading-none mb-3">{card.count}</div>
+                <h3 className="text-[13px] font-semibold text-[#1B4D3E] mb-1.5 mt-0 font-['Inter',sans-serif] leading-[1.3]">{card.label}</h3>
+                <p className="text-xs text-[#7A8C83] leading-[1.55] m-0">{card.desc}</p>
               </div>
             ))}
           </div>
@@ -862,56 +751,48 @@ export default function PolicyPage() {
       </section>
 
       {/* ── NEWSLETTER ──────────────────────────────────────────── */}
-      <section style={{ backgroundColor: C.primary, padding: `${isMobile ? "56px" : "80px"} ${HP}` }}>
-        <div style={{ maxWidth: "640px", margin: "0 auto", textAlign: "center" }}>
-          <div style={{ marginBottom: "18px" }}>
+      <section className={`bg-[#1B4D3E] ${isMobile ? "py-14 px-5" : "py-20 px-12"}`}>
+        <div className="max-w-[640px] mx-auto text-center">
+          <div className="mb-[18px]">
             <Pill label="Stay Informed" />
           </div>
-          <h2 style={{ fontSize: "clamp(22px, 4vw, 34px)", fontWeight: "300", color: C.white, margin: "0 0 14px", lineHeight: "1.2", fontFamily: "Inter, sans-serif" }}>
+          <h2 className="text-[clamp(22px,4vw,34px)] font-light text-white mb-3.5 mt-0 leading-[1.2] font-['Inter',sans-serif]">
             Policy updates{" "}
-            <span style={{ fontWeight: "700", color: C.accent }}>delivered to you</span>
+            <span className="font-bold text-[#B8D935]">delivered to you</span>
           </h2>
-          <p style={{ fontSize: isMobile ? "14px" : "15px", color: "rgba(255,255,255,0.6)", lineHeight: "1.7", margin: "0 0 32px" }}>
+          <p className={`${isMobile ? "text-sm" : "text-[15px]"} text-white/60 leading-[1.7] mb-8 mt-0`}>
             Receive concise briefings whenever a significant regulatory change, new legislation, or policy shift affects Ghana's 12 BRIDGE sectors. Only what matters to your work.
           </p>
 
           {subscribed ? (
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", backgroundColor: "rgba(184,217,53,0.12)", border: "1px solid rgba(184,217,53,0.3)", borderRadius: "8px", padding: "14px 28px" }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <div className="inline-flex items-center gap-3 bg-[rgba(184,217,53,0.12)] border border-[rgba(184,217,53,0.3)] rounded-lg px-7 py-3.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8D935" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span style={{ fontSize: "14px", fontWeight: "600", color: C.accent }}>Subscribed — we'll be in touch.</span>
+              <span className="text-sm font-semibold text-[#B8D935]">Subscribed — we'll be in touch.</span>
             </div>
           ) : (
-            <div style={{ display: "flex", gap: "8px", maxWidth: "460px", margin: "0 auto", flexWrap: "wrap" as const }}>
+            <div className="flex gap-2 max-w-[460px] mx-auto flex-wrap">
               <input
                 type="email" placeholder="Your email address" value={email}
                 onChange={e => setEmail(e.target.value)}
-                style={{
-                  flex: "1 1 200px", padding: "12px 18px", borderRadius: "6px",
-                  border: "1px solid rgba(255,255,255,0.15)", backgroundColor: "rgba(255,255,255,0.07)",
-                  color: C.white, fontFamily: "Inter, sans-serif", fontSize: "14px", outline: "none",
-                }}
+                className="flex-[1_1_200px] px-[18px] py-3 rounded-md border border-white/15 bg-white/[0.07] text-white font-['Inter',sans-serif] text-sm outline-none"
               />
               <button
                 onClick={() => { if (email.includes("@")) setSubscribed(true); }}
-                style={{
-                  padding: "12px 24px", borderRadius: "6px", border: "none",
-                  backgroundColor: C.accent, color: C.primary,
-                  fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: "700", cursor: "pointer", flexShrink: 0,
-                }}
+                className="px-6 py-3 rounded-md border-none bg-[#B8D935] text-[#1B4D3E] font-['Inter',sans-serif] text-sm font-bold cursor-pointer shrink-0"
               >
                 Subscribe
               </button>
             </div>
           )}
-          <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", marginTop: "14px" }}>
+          <p className="text-[11px] text-white/30 mt-3.5">
             No spam. Unsubscribe at any time.
           </p>
         </div>
       </section>
 
-      <SiteFooter />
     </div>
+    </Layout>
   );
 }

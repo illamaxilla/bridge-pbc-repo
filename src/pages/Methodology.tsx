@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 import { BridgeLogo } from "@/components/BridgeLogo";
+import { cn } from "@/lib/utils";
 import {
   Lightbulb,
   Building2,
@@ -489,75 +489,43 @@ const colors = { primary: "#1B4D3E", accent: "#B8D935", white: "#FFFFFF", line: 
 function Hero({ activeIdx, setActive }) {
   const isMobile = useIsMobile();
   return (
-    <section style={{ background: C.primary, padding: isMobile ? "64px 20px 0" : "80px 80px 0", position: "relative" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
+    <section className={cn("relative", isMobile ? "px-5 pt-16 pb-0" : "px-20 pt-20 pb-0")} style={{ background: C.primary }}>
+      <div className="max-w-[1200px] mx-auto relative">
         {/* Eyebrow */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            background: "rgba(184,217,53,0.12)",
-            border: `1px solid rgba(184,217,53,0.25)`,
-            borderRadius: 100,
-            padding: "6px 16px",
-            marginBottom: 20,
-          }}
-        >
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.accent }} />
-          <span
-            style={{
-              fontFamily: "'DM Sans',sans-serif",
-              fontSize: 11,
-              fontWeight: 700,
-              color: C.accent,
-              letterSpacing: "1.5px",
-            }}
-          >
+        <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5 bg-[rgba(184,217,53,0.12)] border border-[rgba(184,217,53,0.25)]">
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: C.accent }} />
+          <span className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px]" style={{ color: C.accent }}>
             THE BRIDGE PROCESS
           </span>
         </div>
 
         <h1
-          style={{
-            fontFamily: "'Poppins',sans-serif",
-            fontSize: isMobile ? 36 : 56,
-            fontWeight: 300,
-            color: C.white,
-            margin: "0 0 20px",
-            lineHeight: 1.1,
-            maxWidth: 900,
-            letterSpacing: isMobile ? "-0.5px" : "-1px",
-          }}
+          className={cn(
+            "font-['Poppins',sans-serif] font-light leading-[1.1] max-w-[900px] mb-5",
+            isMobile ? "text-4xl tracking-[-0.5px]" : "text-[56px] tracking-[-1px]"
+          )}
+          style={{ color: C.white }}
         >
           Not one process —<br />
-          <span style={{ fontWeight: 700, color: C.accent }}>one for each of you.</span>
+          <span className="font-bold" style={{ color: C.accent }}>one for each of you.</span>
         </h1>
 
         <p
-          style={{
-            fontFamily: "'DM Sans',sans-serif",
-            fontSize: isMobile ? 15 : 18,
-            fontWeight: 400,
-            color: "rgba(255,255,255,0.65)",
-            maxWidth: 780,
-            lineHeight: 1.7,
-            margin: isMobile ? "0 0 40px" : "0 0 60px",
-          }}
+          className={cn(
+            "font-['DM_Sans',sans-serif] font-normal text-[rgba(255,255,255,0.65)] max-w-[780px] leading-[1.7]",
+            isMobile ? "text-[15px] mb-10" : "text-lg mb-[60px]"
+          )}
         >
           Four segments. Four dedicated processes. One standard of execution.
         </p>
 
         {/* Segment selector */}
         <div
-          style={{
-            margin: isMobile ? "0 -20px" : "0 -80px",
-            padding: isMobile ? "16px 20px 0" : "20px 80px 0",
-            background: C.primary,
-          }}
+          className={cn(isMobile ? "mx-[-20px] px-5 pt-4 pb-0" : "mx-[-80px] px-20 pt-5 pb-0")}
+          style={{ background: C.primary }}
         >
-          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <div style={{ display: "flex", gap: isMobile ? 4 : 6, borderRadius: "12px 12px 0 0", overflow: "hidden" }}>
+          <div className="max-w-[1200px] mx-auto">
+            <div className={cn("flex rounded-t-xl overflow-hidden", isMobile ? "gap-1" : "gap-1.5")}>
               {SEGMENTS.map((seg, i) => {
                 const active = activeIdx === i;
                 const Icon = seg.Icon;
@@ -565,32 +533,21 @@ function Hero({ activeIdx, setActive }) {
                   <button
                     key={seg.id}
                     onClick={() => setActive(i)}
+                    className={cn(
+                      "flex-1 border-b-0 rounded-t-[10px] cursor-pointer flex flex-col items-center justify-center transition-all duration-[250ms] ease-in-out",
+                      isMobile ? "py-3 px-0 gap-1" : "py-4 px-0 gap-1.5",
+                      active ? "border-none" : "border border-solid border-[rgba(255,255,255,0.09)]"
+                    )}
                     style={{
-                      flex: 1,
                       background: active ? C.white : "rgba(255,255,255,0.06)",
-                      border: active ? "none" : "1px solid rgba(255,255,255,0.09)",
-                      borderBottom: "none",
-                      borderRadius: "10px 10px 0 0",
-                      padding: isMobile ? "12px 0 10px" : "16px 0 14px",
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: isMobile ? 4 : 6,
-                      transition: "all 0.25s ease",
                     }}
                   >
                     <div
-                      style={{
-                        width: isMobile ? 28 : 36,
-                        height: isMobile ? 28 : 36,
-                        borderRadius: 8,
-                        background: active ? C.bg : "rgba(255,255,255,0.08)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
+                      className={cn(
+                        "rounded-lg flex items-center justify-center",
+                        isMobile ? "w-7 h-7" : "w-9 h-9"
+                      )}
+                      style={{ background: active ? C.bg : "rgba(255,255,255,0.08)" }}
                     >
                       <Icon
                         size={isMobile ? 13 : 17}
@@ -599,14 +556,11 @@ function Hero({ activeIdx, setActive }) {
                       />
                     </div>
                     <span
-                      style={{
-                        fontFamily: "'Inter',sans-serif",
-                        fontSize: isMobile ? 8 : 10,
-                        fontWeight: 600,
-                        letterSpacing: "0.4px",
-                        color: active ? C.textMid : "rgba(255,255,255,0.35)",
-                        transition: "color 0.25s ease",
-                      }}
+                      className={cn(
+                        "font-['Inter',sans-serif] font-semibold tracking-[0.4px] transition-colors duration-[250ms] ease-in-out",
+                        isMobile ? "text-[8px]" : "text-[10px]"
+                      )}
+                      style={{ color: active ? C.textMid : "rgba(255,255,255,0.35)" }}
                     >
                       {seg.label.split(" ")[0].toUpperCase()}
                     </span>
@@ -630,95 +584,68 @@ function ProcessTrack({ seg, animKey }) {
   }, [animKey]);
 
   return (
-    <section style={{ background: C.white, padding: isMobile ? "0 20px 48px" : "0 80px 80px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <section className={cn(isMobile ? "px-5 pb-12" : "px-20 pb-20")} style={{ background: C.white }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Segment identity bar */}
         <div
-          style={{
-            background: C.bg,
-            borderRadius: "0 0 16px 16px",
-            padding: isMobile ? "16px 20px" : "24px 40px",
-            marginBottom: isMobile ? 56 : 80,
-          }}
+          className={cn("rounded-b-2xl", isMobile ? "p-4 mb-14" : "px-10 py-6 mb-20")}
+          style={{ background: C.bg }}
         >
           <div
-            style={{
-              display: "flex",
-              flexDirection: isMobile ? "column" : "row",
-              alignItems: isMobile ? "flex-start" : "center",
-              justifyContent: "space-between",
-              gap: isMobile ? 16 : 24,
-            }}
+            className={cn(
+              "flex justify-between",
+              isMobile ? "flex-col items-start gap-4" : "flex-row items-center gap-6"
+            )}
           >
             {/* Left: icon + label */}
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div className="flex items-center gap-4">
               <div
-                style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 12,
-                  background: C.white,
-                  border: `1px solid ${C.line}`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
+                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: C.white, border: `1px solid ${C.line}` }}
               >
                 <seg.Icon size={22} color={C.primary} strokeWidth={1.5} />
               </div>
               <div>
                 <div
-                  style={{
-                    fontFamily: "'Poppins',sans-serif",
-                    fontSize: isMobile ? 17 : 20,
-                    fontWeight: 700,
-                    color: C.primary,
-                    letterSpacing: "-0.3px",
-                    lineHeight: 1.2,
-                  }}
+                  className={cn(
+                    "font-['Poppins',sans-serif] font-bold tracking-[-0.3px] leading-[1.2]",
+                    isMobile ? "text-[17px]" : "text-xl"
+                  )}
+                  style={{ color: C.primary }}
                 >
                   {seg.label}
                 </div>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: C.textMid, fontWeight: 500 }}>
+                <div className="font-['DM_Sans',sans-serif] text-[13px] font-medium" style={{ color: C.textMid }}>
                   {seg.tagline}
                 </div>
               </div>
             </div>
             {/* Stat cards */}
-            <div style={{ display: "flex", gap: isMobile ? 6 : 8, flexShrink: 0, width: isMobile ? "100%" : "auto" }}>
+            <div className={cn("flex shrink-0", isMobile ? "gap-1.5 w-full" : "gap-2 w-auto")}>
               {seg.stats.map((s, i) => (
                 <div
                   key={i}
-                  style={{
-                    background: C.white,
-                    border: `1px solid ${C.line}`,
-                    borderRadius: 10,
-                    padding: isMobile ? "8px 12px" : "10px 20px",
-                    textAlign: "center",
-                    flex: isMobile ? 1 : "none",
-                    minWidth: isMobile ? 0 : 120,
-                  }}
+                  className={cn(
+                    "rounded-[10px] text-center",
+                    isMobile ? "py-2 px-3 flex-1 min-w-0" : "py-2.5 px-5 flex-none min-w-[120px]"
+                  )}
+                  style={{ background: C.white, border: `1px solid ${C.line}` }}
                 >
                   <div
-                    style={{
-                      fontFamily: "'Poppins',sans-serif",
-                      fontSize: isMobile ? 12 : 15,
-                      fontWeight: 700,
-                      color: C.primary,
-                      letterSpacing: "-0.3px",
-                    }}
+                    className={cn(
+                      "font-['Poppins',sans-serif] font-bold tracking-[-0.3px]",
+                      isMobile ? "text-xs" : "text-[15px]"
+                    )}
+                    style={{ color: C.primary }}
                   >
                     {s.val}
                   </div>
                   <div
-                    style={{
-                      fontFamily: "'DM Sans',sans-serif",
-                      fontSize: isMobile ? 9 : 11,
-                      color: C.textMid,
-                      fontWeight: 500,
-                      marginTop: 2,
-                    }}
+                    className={cn(
+                      "font-['DM_Sans',sans-serif] font-medium mt-0.5",
+                      isMobile ? "text-[9px]" : "text-[11px]"
+                    )}
+                    style={{ color: C.textMid }}
                   >
                     {s.lbl}
                   </div>
@@ -730,66 +657,41 @@ function ProcessTrack({ seg, animKey }) {
 
         {/* Section header */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "5fr 4fr",
-            gap: isMobile ? 16 : 80,
-            alignItems: "flex-end",
-            marginBottom: isMobile ? 32 : 56,
-          }}
+          className={cn(
+            "grid items-end",
+            isMobile ? "grid-cols-1 gap-4 mb-8" : "grid-cols-[5fr_4fr] gap-20 mb-14"
+          )}
         >
           <div>
             <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                background: C.accentDim,
-                border: `1px solid rgba(184,217,53,0.35)`,
-                borderRadius: 100,
-                padding: "6px 16px",
-                marginBottom: 16,
-              }}
+              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-4 border border-[rgba(184,217,53,0.35)]"
+              style={{ background: C.accentDim }}
             >
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.accent }} />
+              <div className="w-1.5 h-1.5 rounded-full" style={{ background: C.accent }} />
               <span
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: C.primary,
-                  letterSpacing: "1.5px",
-                }}
+                className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px]"
+                style={{ color: C.primary }}
               >
                 {seg.pathwayHeader.eyebrow}
               </span>
             </div>
             <h2
-              style={{
-                fontFamily: "'Poppins',sans-serif",
-                fontSize: isMobile ? 30 : 42,
-                fontWeight: 300,
-                color: C.primary,
-                margin: 0,
-                lineHeight: 1.1,
-                letterSpacing: "-0.5px",
-              }}
+              className={cn(
+                "font-['Poppins',sans-serif] font-light m-0 leading-[1.1] tracking-[-0.5px]",
+                isMobile ? "text-[30px]" : "text-[42px]"
+              )}
+              style={{ color: C.primary }}
             >
               {seg.pathwayHeader.headline[0]}
               <br />
-              <span style={{ fontWeight: 700 }}>{seg.pathwayHeader.headline[1]}</span>
+              <span className="font-bold">{seg.pathwayHeader.headline[1]}</span>
             </h2>
           </div>
           {!isMobile && (
             <div>
               <p
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 16,
-                  color: C.textMid,
-                  lineHeight: 1.8,
-                  margin: 0,
-                }}
+                className="font-['DM_Sans',sans-serif] text-base leading-[1.8] m-0"
+                style={{ color: C.textMid }}
               >
                 {seg.pathwayHeader.desc}
               </p>
@@ -798,18 +700,12 @@ function ProcessTrack({ seg, animKey }) {
         </div>
 
         {/* Step rail — horizontal on desktop, scrollable on mobile */}
-        <div style={{ marginBottom: isMobile ? 24 : 48 }}>
+        <div className={cn(isMobile ? "mb-6" : "mb-12")}>
           {isMobile ? (
             /* Mobile: horizontal scroll pill tabs */
             <div
-              style={{
-                background: C.bg,
-                border: `1px solid ${C.line}`,
-                borderRadius: 50,
-                padding: "4px",
-                display: "flex",
-                gap: 4,
-              }}
+              className="rounded-full p-1 flex gap-1"
+              style={{ background: C.bg, border: `1px solid ${C.line}` }}
             >
               {seg.steps.map((step, i) => {
                 const active = activeStep === i;
@@ -818,27 +714,12 @@ function ProcessTrack({ seg, animKey }) {
                   <button
                     key={i}
                     onClick={() => setActiveStep(i)}
-                    style={{
-                      flex: 1,
-                      background: active ? C.primary : "transparent",
-                      border: "none",
-                      borderRadius: 50,
-                      padding: "8px 4px",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      transition: "all 0.25s",
-                    }}
+                    className="flex-1 border-none rounded-full py-2 px-1 cursor-pointer flex items-center justify-center transition-all duration-[250ms]"
+                    style={{ background: active ? C.primary : "transparent" }}
                   >
                     <span
-                      style={{
-                        fontFamily: "'Poppins',sans-serif",
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: active ? C.white : done ? C.teal : C.textMid,
-                        whiteSpace: "nowrap",
-                      }}
+                      className="font-['Poppins',sans-serif] text-[11px] font-bold whitespace-nowrap"
+                      style={{ color: active ? C.white : done ? C.teal : C.textMid }}
                     >
                       {step.title}
                     </span>
@@ -849,7 +730,7 @@ function ProcessTrack({ seg, animKey }) {
           ) : (
             /* Desktop: icon rail */
             <>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+              <div className="flex items-center justify-center mb-3">
                 {seg.steps.map((step, i) => {
                   const active = activeStep === i;
                   const done = i < activeStep;
@@ -858,31 +739,17 @@ function ProcessTrack({ seg, animKey }) {
                     <React.Fragment key={i}>
                       <button
                         onClick={() => setActiveStep(i)}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          flex: 1,
-                        }}
+                        className="flex items-center justify-center bg-none border-none cursor-pointer flex-1"
                       >
                         <div
+                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out"
                           style={{
-                            width: 56,
-                            height: 56,
-                            borderRadius: "50%",
                             background: active ? C.primary : done ? C.teal : "transparent",
                             border: active
                               ? `3px solid ${C.accent}`
                               : done
                                 ? `3px solid ${C.teal}`
                                 : `2px solid ${C.line}`,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            transition: "all 0.3s ease",
                             boxShadow: active ? `0 0 0 6px ${C.accentDim}, 0 4px 20px rgba(27,77,62,0.2)` : "none",
                           }}
                         >
@@ -894,30 +761,18 @@ function ProcessTrack({ seg, animKey }) {
                         </div>
                       </button>
                       {i < seg.steps.length - 1 && (
-                        <div
-                          style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 2, userSelect: "none" }}
+                        <div className="shrink-0 flex items-center gap-0.5 select-none"
                         >
                           {[0, 1, 2].map((d) => (
                             <div
                               key={d}
-                              style={{
-                                width: 4,
-                                height: 2,
-                                borderRadius: 1,
-                                background: done ? C.accent : C.line,
-                                transition: "background 0.3s ease",
-                              }}
+                              className="w-1 h-0.5 rounded-[1px] transition-[background] duration-300 ease-in-out"
+                              style={{ background: done ? C.accent : C.line }}
                             />
                           ))}
                           <div
-                            style={{
-                              width: 0,
-                              height: 0,
-                              borderTop: "4px solid transparent",
-                              borderBottom: "4px solid transparent",
-                              borderLeft: `5px solid ${done ? C.accent : C.line}`,
-                              transition: "border-color 0.3s ease",
-                            }}
+                            className="w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent transition-[border-color] duration-300 ease-in-out"
+                            style={{ borderLeft: `5px solid ${done ? C.accent : C.line}` }}
                           />
                         </div>
                       )}
@@ -925,7 +780,7 @@ function ProcessTrack({ seg, animKey }) {
                   );
                 })}
               </div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
+              <div className="flex justify-center">
                 {seg.steps.map((step, i) => {
                   const active = activeStep === i;
                   const done = i < activeStep;
@@ -933,32 +788,17 @@ function ProcessTrack({ seg, animKey }) {
                     <button
                       key={i}
                       onClick={() => setActiveStep(i)}
-                      style={{
-                        flex: 1,
-                        textAlign: "center",
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: "0 4px",
-                      }}
+                      className="flex-1 text-center bg-none border-none cursor-pointer px-1 py-0"
                     >
                       <div
-                        style={{
-                          fontFamily: "'Poppins',sans-serif",
-                          fontSize: 13,
-                          fontWeight: 700,
-                          color: active ? C.primary : done ? C.teal : C.textMid,
-                        }}
+                        className="font-['Poppins',sans-serif] text-[13px] font-bold"
+                        style={{ color: active ? C.primary : done ? C.teal : C.textMid }}
                       >
                         {step.title}
                       </div>
                       <div
-                        style={{
-                          fontFamily: "'DM Sans',sans-serif",
-                          fontSize: 11,
-                          color: active ? C.textMid : "rgba(74,106,94,0.6)",
-                          fontWeight: 500,
-                        }}
+                        className="font-['DM_Sans',sans-serif] text-[11px] font-medium"
+                        style={{ color: active ? C.textMid : "rgba(74,106,94,0.6)" }}
                       >
                         {step.sub}
                       </div>
@@ -977,156 +817,103 @@ function ProcessTrack({ seg, animKey }) {
           return (
             <div
               key={`${seg.id}-${activeStep}`}
-              style={{
-                display: "grid",
-                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                gap: isMobile ? 16 : 24,
-                animation: "fadeSlideUp 0.4s ease forwards",
-                alignItems: isMobile ? "stretch" : "stretch",
-              }}
+              className={cn(
+                "grid items-stretch animate-[fadeSlideUp_0.4s_ease_forwards]",
+                isMobile ? "grid-cols-1 gap-4" : "grid-cols-2 gap-6"
+              )}
             >
               {/* Left: Step body */}
               <div
-                style={{
-                  background: C.primary,
-                  borderRadius: 16,
-                  padding: isMobile ? 24 : 40,
-                  display: "flex",
-                  flexDirection: "column",
-                  minHeight: isMobile ? "auto" : 260,
-                }}
+                className={cn(
+                  "rounded-2xl flex flex-col",
+                  isMobile ? "p-6 min-h-[auto]" : "p-10 min-h-[260px]"
+                )}
+                style={{ background: C.primary }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 10,
-                      background: "rgba(184,217,53,0.15)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-[10px] bg-[rgba(184,217,53,0.15)] flex items-center justify-center shrink-0">
                     <SIcon size={18} color={C.accent} strokeWidth={1.5} />
                   </div>
                   <div>
                     <div
-                      style={{
-                        fontFamily: "'DM Sans',sans-serif",
-                        fontSize: 10,
-                        fontWeight: 700,
-                        color: C.accent,
-                        letterSpacing: "1.5px",
-                      }}
+                      className="font-['DM_Sans',sans-serif] text-[10px] font-bold tracking-[1.5px]"
+                      style={{ color: C.accent }}
                     >
                       STEP {step.num}
                     </div>
                     <div
-                      style={{
-                        fontFamily: "'Poppins',sans-serif",
-                        fontSize: isMobile ? 15 : 18,
-                        fontWeight: 700,
-                        color: C.white,
-                      }}
+                      className={cn(
+                        "font-['Poppins',sans-serif] font-bold",
+                        isMobile ? "text-[15px]" : "text-lg"
+                      )}
+                      style={{ color: C.white }}
                     >
                       {step.title} — {step.sub}
                     </div>
                   </div>
                 </div>
                 <p
-                  style={{
-                    fontFamily: "'DM Sans',sans-serif",
-                    fontSize: isMobile ? 14 : 15,
-                    color: "rgba(255,255,255,0.75)",
-                    lineHeight: 1.75,
-                    margin: 0,
-                    flex: 1,
-                  }}
+                  className={cn(
+                    "font-['DM_Sans',sans-serif] text-[rgba(255,255,255,0.75)] leading-[1.75] m-0 flex-1",
+                    isMobile ? "text-sm" : "text-[15px]"
+                  )}
                 >
                   {step.body}
                 </p>
               </div>
 
               {/* Right: Output + nav */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div className="flex flex-col gap-3">
                 <div
-                  style={{
-                    background: C.accentDim,
-                    border: `1px solid rgba(184,217,53,0.3)`,
-                    borderRadius: 16,
-                    padding: isMobile ? 20 : 32,
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
+                  className={cn(
+                    "rounded-2xl flex-1 flex flex-col justify-center border border-[rgba(184,217,53,0.3)]",
+                    isMobile ? "p-5" : "p-8"
+                  )}
+                  style={{ background: C.accentDim }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                  <div className="flex items-center gap-2 mb-3.5">
                     <Gift size={16} color={C.primary} strokeWidth={2} />
                     <span
-                      style={{
-                        fontFamily: "'DM Sans',sans-serif",
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: C.primary,
-                        letterSpacing: "1.2px",
-                      }}
+                      className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.2px]"
+                      style={{ color: C.primary }}
                     >
                       WHAT YOU RECEIVE
                     </span>
                   </div>
                   <p
-                    style={{
-                      fontFamily: "'DM Sans',sans-serif",
-                      fontSize: isMobile ? 14 : 15,
-                      color: C.textDark,
-                      lineHeight: 1.65,
-                      margin: "0 0 16px",
-                      fontWeight: 500,
-                    }}
+                    className={cn(
+                      "font-['DM_Sans',sans-serif] leading-[1.65] mb-4 font-medium",
+                      isMobile ? "text-sm" : "text-[15px]"
+                    )}
+                    style={{ color: C.textDark }}
                   >
                     {step.output}
                   </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <div className="flex items-center gap-1.5">
                     <div
-                      style={{
-                        width: 20,
-                        height: 20,
-                        borderRadius: "50%",
-                        background: C.primary,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
+                      className="w-5 h-5 rounded-full flex items-center justify-center"
+                      style={{ background: C.primary }}
                     >
                       <ArrowRight size={10} color={C.accent} />
                     </div>
                     <span
-                      style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: C.textMid, fontWeight: 600 }}
+                      className="font-['DM_Sans',sans-serif] text-[11px] font-semibold"
+                      style={{ color: C.textMid }}
                     >
                       Delivered before the next step begins
                     </span>
                   </div>
                 </div>
 
-                <div style={{ display: "flex", gap: 8 }}>
+                <div className="flex gap-2">
                   <button
                     onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
                     disabled={activeStep === 0}
+                    className="flex-1 p-3 rounded-full bg-transparent font-['DM_Sans',sans-serif] text-[13px] font-semibold transition-all duration-200"
                     style={{
-                      flex: 1,
-                      padding: "12px",
-                      borderRadius: 50,
-                      background: "transparent",
                       border: `1px solid ${C.line}`,
                       cursor: activeStep === 0 ? "default" : "pointer",
-                      fontFamily: "'DM Sans',sans-serif",
-                      fontSize: 13,
-                      fontWeight: 600,
                       color: activeStep === 0 ? "#C8C8C8" : C.textMid,
-                      transition: "all 0.2s",
                     }}
                   >
                     ← Prev
@@ -1134,18 +921,11 @@ function ProcessTrack({ seg, animKey }) {
                   <button
                     onClick={() => setActiveStep(Math.min(seg.steps.length - 1, activeStep + 1))}
                     disabled={activeStep === seg.steps.length - 1}
+                    className="flex-1 p-3 rounded-full bg-transparent font-['DM_Sans',sans-serif] text-[13px] font-semibold transition-all duration-200"
                     style={{
-                      flex: 1,
-                      padding: "12px",
-                      borderRadius: 50,
-                      background: "transparent",
                       border: `1px solid ${activeStep === seg.steps.length - 1 ? C.line : C.textMid}`,
                       cursor: activeStep === seg.steps.length - 1 ? "default" : "pointer",
-                      fontFamily: "'DM Sans',sans-serif",
-                      fontSize: 13,
-                      fontWeight: 600,
                       color: activeStep === seg.steps.length - 1 ? "#C8C8C8" : C.textMid,
-                      transition: "all 0.2s",
                     }}
                   >
                     Next →
@@ -1166,55 +946,31 @@ function ToolkitSection({ seg }) {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   return (
-    <section style={{ background: C.white, padding: isMobile ? "0 20px 0" : "0 80px 80px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <section className={cn(isMobile ? "px-5 py-0" : "px-20 pt-0 pb-20")} style={{ background: C.white }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Section header / mobile toggle */}
         {isMobile ? (
           <button
             onClick={() => setOpen((o) => !o)}
-            style={{
-              width: "100%",
-              padding: "24px 0",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              background: "none",
-              border: "none",
-              borderBottom: open ? "none" : `1px solid ${C.line}`,
-              cursor: "pointer",
-            }}
+            className="w-full py-6 px-0 flex items-center justify-between bg-none border-none cursor-pointer"
+            style={{ borderBottom: open ? "none" : `1px solid ${C.line}` }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div className="flex items-center gap-2.5">
               <div
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: open ? C.accent : C.line,
-                  transition: "background 0.2s",
-                  flexShrink: 0,
-                }}
+                className="w-1.5 h-1.5 rounded-full shrink-0 transition-[background] duration-200"
+                style={{ background: open ? C.accent : C.line }}
               />
               <span
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: open ? C.primary : C.textMid,
-                  letterSpacing: "1.5px",
-                }}
+                className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px]"
+                style={{ color: open ? C.primary : C.textMid }}
               >
                 WHAT BRIDGE BRINGS
               </span>
             </div>
             <span
+              className="text-lg font-light leading-none inline-block transition-transform duration-200"
               style={{
-                fontSize: 18,
                 color: open ? C.primary : C.textMid,
-                fontWeight: 300,
-                lineHeight: 1,
-                display: "inline-block",
-                transition: "transform 0.2s",
                 transform: open ? "rotate(45deg)" : "none",
               }}
             >
@@ -1223,61 +979,31 @@ function ToolkitSection({ seg }) {
           </button>
         ) : (
           <div
-            style={{
-              padding: "56px 0 36px",
-              borderBottom: `1px solid ${C.line}`,
-              marginBottom: 36,
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "space-between",
-            }}
+            className="pt-14 pb-9 mb-9 flex items-end justify-between"
+            style={{ borderBottom: `1px solid ${C.line}` }}
           >
             <div>
               <div
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: C.textMid,
-                  letterSpacing: "1.5px",
-                  marginBottom: 10,
-                }}
+                className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px] mb-2.5"
+                style={{ color: C.textMid }}
               >
                 WHAT BRIDGE BRINGS
               </div>
               <h2
-                style={{
-                  fontFamily: "'Poppins',sans-serif",
-                  fontSize: 30,
-                  fontWeight: 600,
-                  color: C.primary,
-                  margin: 0,
-                  letterSpacing: "-0.4px",
-                }}
+                className="font-['Poppins',sans-serif] text-[30px] font-semibold m-0 tracking-[-0.4px]"
+                style={{ color: C.primary }}
               >
                 {toolkit.heading}
               </h2>
             </div>
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                background: C.accentDim,
-                border: `1px solid rgba(184,217,53,0.35)`,
-                borderRadius: 100,
-                padding: "6px 14px",
-              }}
+              className="flex items-center gap-1.5 rounded-full py-1.5 px-3.5 border border-[rgba(184,217,53,0.35)]"
+              style={{ background: C.accentDim }}
             >
               <seg.Icon size={13} color={C.primary} strokeWidth={2} />
               <span
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: C.primary,
-                  letterSpacing: "0.5px",
-                }}
+                className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[0.5px]"
+                style={{ color: C.primary }}
               >
                 {seg.label}
               </span>
@@ -1287,21 +1013,17 @@ function ToolkitSection({ seg }) {
         {/* Content — always visible on desktop, toggled on mobile */}
         {(!isMobile || open) && (
           <div
-            style={{
-              animation: isMobile ? "fadeSlideUp 0.25s ease forwards" : "none",
-              paddingBottom: isMobile ? 32 : 0,
-            }}
+            className={cn(
+              isMobile ? "animate-[fadeSlideUp_0.25s_ease_forwards] pb-8" : "pb-0"
+            )}
           >
             {/* 4-column card grid */}
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)",
-                border: `1px solid ${C.line}`,
-                borderRadius: 14,
-                overflow: "hidden",
-                marginBottom: 0,
-              }}
+              className={cn(
+                "grid rounded-[14px] overflow-hidden mb-0",
+                isMobile ? "grid-cols-2" : "grid-cols-4"
+              )}
+              style={{ border: `1px solid ${C.line}` }}
             >
               {toolkit.cards.map((card, i) => {
                 const CardIcon = card.Icon;
@@ -1310,52 +1032,28 @@ function ToolkitSection({ seg }) {
                 return (
                   <div
                     key={i}
+                    className={cn(
+                      "transition-[background] duration-200",
+                      isMobile ? "p-5" : "py-8 px-7"
+                    )}
                     style={{
-                      padding: isMobile ? "24px 20px" : "32px 28px",
-                      borderRight: isLastCol ? "none" : `1px solid rgba(255,255,255,0.08)`,
-                      borderBottom: isMobile && !isLastRow ? `1px solid rgba(255,255,255,0.08)` : "none",
+                      borderRight: isLastCol ? "none" : "1px solid rgba(255,255,255,0.08)",
+                      borderBottom: isMobile && !isLastRow ? "1px solid rgba(255,255,255,0.08)" : "none",
                       background: C.primary,
-                      transition: "background 0.2s",
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = C.teal)}
                     onMouseLeave={(e) => (e.currentTarget.style.background = C.primary)}
                   >
-                    <div
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 10,
-                        background: "rgba(184,217,53,0.12)",
-                        border: "1px solid rgba(184,217,53,0.2)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginBottom: 16,
-                      }}
-                    >
+                    <div className="w-11 h-11 rounded-[10px] bg-[rgba(184,217,53,0.12)] border border-[rgba(184,217,53,0.2)] flex items-center justify-center mb-4">
                       <CardIcon size={18} color={C.accent} strokeWidth={1.5} />
                     </div>
                     <div
-                      style={{
-                        fontFamily: "'DM Sans',sans-serif",
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: C.white,
-                        marginBottom: 8,
-                        letterSpacing: "-0.1px",
-                      }}
+                      className="font-['DM_Sans',sans-serif] text-sm font-bold mb-2 tracking-[-0.1px]"
+                      style={{ color: C.white }}
                     >
                       {card.title}
                     </div>
-                    <p
-                      style={{
-                        fontFamily: "'DM Sans',sans-serif",
-                        fontSize: 13,
-                        color: "rgba(255,255,255,0.55)",
-                        lineHeight: 1.7,
-                        margin: 0,
-                      }}
-                    >
+                    <p className="font-['DM_Sans',sans-serif] text-[13px] text-[rgba(255,255,255,0.55)] leading-[1.7] m-0">
                       {card.body}
                     </p>
                   </div>
@@ -1365,45 +1063,25 @@ function ToolkitSection({ seg }) {
 
             {/* Qualifier + CTA footer bar */}
             <div
-              style={{
-                background: C.bg,
-                borderRadius: "0 0 14px 14px",
-                padding: isMobile ? "16px 20px" : "18px 28px",
-                display: "flex",
-                flexDirection: isMobile ? "column" : "row",
-                alignItems: isMobile ? "flex-start" : "center",
-                justifyContent: "space-between",
-                gap: isMobile ? 12 : 0,
-                border: `1px solid ${C.line}`,
-                borderTop: "none",
-              }}
+              className={cn(
+                "rounded-b-[14px] flex justify-between border-t-0",
+                isMobile ? "p-4 flex-col items-start gap-3" : "py-[18px] px-7 flex-row items-center gap-0"
+              )}
+              style={{ background: C.bg, border: `1px solid ${C.line}`, borderTop: "none" }}
             >
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                <Info size={14} color={C.primary} strokeWidth={2} style={{ flexShrink: 0, marginTop: 1 }} />
-                <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: C.textMid }}>
-                  <span style={{ fontWeight: 700, color: C.textDark }}>Qualifier: </span>
+              <div className="flex items-start gap-2">
+                <Info size={14} color={C.primary} strokeWidth={2} className="shrink-0 mt-px" />
+                <span className="font-['DM_Sans',sans-serif] text-xs" style={{ color: C.textMid }}>
+                  <span className="font-bold" style={{ color: C.textDark }}>Qualifier: </span>
                   {toolkit.qualifier}
                 </span>
               </div>
               <button
-                style={{
-                  background: C.accent,
-                  color: C.primary,
-                  border: "none",
-                  borderRadius: 50,
-                  padding: "10px 22px",
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontWeight: 800,
-                  fontSize: 13,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  whiteSpace: "nowrap",
-                  flexShrink: 0,
-                  width: isMobile ? "100%" : "auto",
-                  justifyContent: isMobile ? "center" : "flex-start",
-                }}
+                className={cn(
+                  "border-none rounded-full py-2.5 px-[22px] font-['DM_Sans',sans-serif] font-extrabold text-[13px] cursor-pointer flex items-center gap-2 whitespace-nowrap shrink-0",
+                  isMobile ? "w-full justify-center" : "w-auto justify-start"
+                )}
+                style={{ background: C.accent, color: C.primary }}
               >
                 {toolkit.cta} <ArrowRight size={13} />
               </button>
@@ -1421,55 +1099,31 @@ function DeliverablesSection({ seg }) {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   return (
-    <section style={{ background: C.bg, padding: isMobile ? "0 20px" : "80px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <section className={cn(isMobile ? "px-5 py-0" : "p-20")} style={{ background: C.bg }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Mobile toggle header */}
         {isMobile ? (
           <button
             onClick={() => setOpen((o) => !o)}
-            style={{
-              width: "100%",
-              padding: "24px 0",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              background: "none",
-              border: "none",
-              borderBottom: open ? "none" : `1px solid ${C.line}`,
-              cursor: "pointer",
-            }}
+            className="w-full py-6 px-0 flex items-center justify-between bg-none border-none cursor-pointer"
+            style={{ borderBottom: open ? "none" : `1px solid ${C.line}` }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div className="flex items-center gap-2.5">
               <div
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: open ? C.accent : C.line,
-                  transition: "background 0.2s",
-                  flexShrink: 0,
-                }}
+                className="w-1.5 h-1.5 rounded-full shrink-0 transition-[background] duration-200"
+                style={{ background: open ? C.accent : C.line }}
               />
               <span
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: open ? C.primary : C.textMid,
-                  letterSpacing: "1.5px",
-                }}
+                className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px]"
+                style={{ color: open ? C.primary : C.textMid }}
               >
                 WHAT YOU RECEIVE
               </span>
             </div>
             <span
+              className="text-lg font-light leading-none inline-block transition-transform duration-200"
               style={{
-                fontSize: 18,
                 color: open ? C.primary : C.textMid,
-                fontWeight: 300,
-                lineHeight: 1,
-                display: "inline-block",
-                transition: "transform 0.2s",
                 transform: open ? "rotate(45deg)" : "none",
               }}
             >
@@ -1480,102 +1134,63 @@ function DeliverablesSection({ seg }) {
         {/* Content */}
         {(!isMobile || open) && (
           <div
-            style={{
-              animation: isMobile ? "fadeSlideUp 0.25s ease forwards" : "none",
-              paddingBottom: isMobile ? 32 : 0,
-            }}
+            className={cn(
+              isMobile ? "animate-[fadeSlideUp_0.25s_ease_forwards] pb-8" : "pb-0"
+            )}
           >
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                gap: isMobile ? 40 : 80,
-                alignItems: "center",
-              }}
+              className={cn(
+                "grid items-center",
+                isMobile ? "grid-cols-1 gap-10" : "grid-cols-2 gap-20"
+              )}
             >
               {/* Left copy */}
               <div>
                 {!isMobile && (
                   <div
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 8,
-                      background: C.accentDim,
-                      border: `1px solid rgba(184,217,53,0.35)`,
-                      borderRadius: 100,
-                      padding: "6px 16px",
-                      marginBottom: 20,
-                    }}
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5 border border-[rgba(184,217,53,0.35)]"
+                    style={{ background: C.accentDim }}
                   >
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.accent }} />
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: C.accent }} />
                     <span
-                      style={{
-                        fontFamily: "'DM Sans',sans-serif",
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: C.primary,
-                        letterSpacing: "1.5px",
-                      }}
+                      className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px]"
+                      style={{ color: C.primary }}
                     >
                       WHAT YOU RECEIVE
                     </span>
                   </div>
                 )}
                 <h2
-                  style={{
-                    fontFamily: "'Poppins',sans-serif",
-                    fontSize: isMobile ? 28 : 38,
-                    fontWeight: 300,
-                    color: C.primary,
-                    margin: "0 0 20px",
-                    lineHeight: 1.15,
-                    letterSpacing: "-0.5px",
-                  }}
+                  className={cn(
+                    "font-['Poppins',sans-serif] font-light mb-5 leading-[1.15] tracking-[-0.5px]",
+                    isMobile ? "text-[28px]" : "text-[38px]"
+                  )}
+                  style={{ color: C.primary }}
                 >
-                  Every engagement delivers <span style={{ fontWeight: 700 }}>tangible outputs</span>
+                  Every engagement delivers <span className="font-bold">tangible outputs</span>
                 </h2>
                 <p
-                  style={{
-                    fontFamily: "'DM Sans',sans-serif",
-                    fontSize: isMobile ? 14 : 16,
-                    color: C.textMid,
-                    lineHeight: 1.75,
-                    margin: isMobile ? "0" : "0 0 32px",
-                  }}
+                  className={cn(
+                    "font-['DM_Sans',sans-serif] leading-[1.75]",
+                    isMobile ? "text-sm m-0" : "text-base mb-8"
+                  )}
+                  style={{ color: C.textMid }}
                 >
                   {seg.desc}
                 </p>
                 {!isMobile && (
                   <button
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 10,
-                      background: C.primary,
-                      border: "none",
-                      borderRadius: 50,
-                      padding: "14px 28px",
-                      cursor: "pointer",
-                      transition: "all 0.2s",
-                    }}
+                    className="inline-flex items-center gap-2.5 border-none rounded-full py-3.5 px-7 cursor-pointer transition-all duration-200"
+                    style={{ background: C.primary }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = C.teal)}
                     onMouseLeave={(e) => (e.currentTarget.style.background = C.primary)}
                   >
-                    <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 700, color: C.white }}>
+                    <span className="font-['DM_Sans',sans-serif] text-sm font-bold" style={{ color: C.white }}>
                       {seg.cta}
                     </span>
                     <div
-                      style={{
-                        width: 24,
-                        height: 24,
-                        borderRadius: "50%",
-                        background: C.accent,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
+                      className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
+                      style={{ background: C.accent }}
                     >
                       <ArrowRight size={13} color={C.primary} strokeWidth={2.5} />
                     </div>
@@ -1584,43 +1199,29 @@ function DeliverablesSection({ seg }) {
               </div>
 
               {/* Right deliverables grid */}
-              <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 12 : 0 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: isMobile ? 8 : 12 }}>
+              <div className={cn("flex flex-col", isMobile ? "gap-3" : "gap-0")}>
+                <div className={cn("grid grid-cols-2", isMobile ? "gap-2" : "gap-3")}>
                   {seg.deliverables.map((d, i) => (
                     <div
                       key={i}
-                      style={{
-                        background: C.white,
-                        border: `1px solid ${C.line}`,
-                        borderRadius: 12,
-                        padding: isMobile ? "12px 14px" : "16px 18px",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 10,
-                        transition: "all 0.2s",
-                      }}
+                      className={cn(
+                        "rounded-xl flex items-center gap-2.5 transition-all duration-200",
+                        isMobile ? "py-3 px-3.5" : "py-4 px-[18px]"
+                      )}
+                      style={{ background: C.white, border: `1px solid ${C.line}` }}
                     >
                       <div
-                        style={{
-                          width: 28,
-                          height: 28,
-                          borderRadius: 6,
-                          background: C.accentDim,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
+                        className="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
+                        style={{ background: C.accentDim }}
                       >
                         <Check size={14} color={C.primary} strokeWidth={2.5} />
                       </div>
                       <span
-                        style={{
-                          fontFamily: "'DM Sans',sans-serif",
-                          fontSize: isMobile ? 12 : 13,
-                          fontWeight: 600,
-                          color: C.textDark,
-                        }}
+                        className={cn(
+                          "font-['DM_Sans',sans-serif] font-semibold",
+                          isMobile ? "text-xs" : "text-[13px]"
+                        )}
+                        style={{ color: C.textDark }}
                       >
                         {d}
                       </span>
@@ -1629,37 +1230,17 @@ function DeliverablesSection({ seg }) {
                 </div>
                 {isMobile && (
                   <button
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 10,
-                      background: C.primary,
-                      border: "none",
-                      borderRadius: 50,
-                      padding: "14px 28px",
-                      cursor: "pointer",
-                      transition: "all 0.2s",
-                      width: "100%",
-                      marginTop: 4,
-                    }}
+                    className="inline-flex items-center justify-center gap-2.5 border-none rounded-full py-3.5 px-7 cursor-pointer transition-all duration-200 w-full mt-1"
+                    style={{ background: C.primary }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = C.teal)}
                     onMouseLeave={(e) => (e.currentTarget.style.background = C.primary)}
                   >
-                    <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 700, color: C.white }}>
+                    <span className="font-['DM_Sans',sans-serif] text-sm font-bold" style={{ color: C.white }}>
                       {seg.cta}
                     </span>
                     <div
-                      style={{
-                        width: 24,
-                        height: 24,
-                        borderRadius: "50%",
-                        background: C.accent,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
+                      className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
+                      style={{ background: C.accent }}
                     >
                       <ArrowRight size={13} color={C.primary} strokeWidth={2.5} />
                     </div>
@@ -1880,7 +1461,7 @@ function MobileMethodologyAccordion({ step }) {
     {
       label: "OVERVIEW",
       content: (
-        <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 14, color: C.textMid, lineHeight: 1.8, margin: 0 }}>
+        <p className="font-['DM_Sans',sans-serif] text-sm leading-[1.8] m-0" style={{ color: C.textMid }}>
           {step.body}
         </p>
       ),
@@ -1888,21 +1469,14 @@ function MobileMethodologyAccordion({ step }) {
     {
       label: "METHODS APPLIED",
       content: (
-        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+        <ul className="m-0 p-0 list-none flex flex-col gap-2.5">
           {step.methods.map((m, mi) => (
-            <li key={mi} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+            <li key={mi} className="flex gap-2.5 items-start">
               <div
-                style={{
-                  width: 5,
-                  height: 5,
-                  borderRadius: "50%",
-                  background: C.accent,
-                  marginTop: 7,
-                  flexShrink: 0,
-                  border: `1px solid ${C.primary}`,
-                }}
+                className="w-[5px] h-[5px] rounded-full mt-[7px] shrink-0"
+                style={{ background: C.accent, border: `1px solid ${C.primary}` }}
               />
-              <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: C.textMid, lineHeight: 1.65 }}>
+              <span className="font-['DM_Sans',sans-serif] text-[13px] leading-[1.65]" style={{ color: C.textMid }}>
                 {m}
               </span>
             </li>
@@ -1914,22 +1488,12 @@ function MobileMethodologyAccordion({ step }) {
       label: "WHAT THIS PRODUCES",
       content: (
         <div
-          style={{
-            background: C.accentDim,
-            border: `1px solid rgba(184,217,53,0.4)`,
-            borderRadius: 10,
-            padding: "16px 18px",
-          }}
+          className="rounded-[10px] py-4 px-[18px] border border-[rgba(184,217,53,0.4)]"
+          style={{ background: C.accentDim }}
         >
           <p
-            style={{
-              fontFamily: "'DM Sans',sans-serif",
-              fontSize: 14,
-              color: C.textDark,
-              lineHeight: 1.7,
-              margin: 0,
-              fontStyle: "italic",
-            }}
+            className="font-['DM_Sans',sans-serif] text-sm leading-[1.7] m-0 italic"
+            style={{ color: C.textDark }}
           >
             {step.output}
           </p>
@@ -1939,31 +1503,22 @@ function MobileMethodologyAccordion({ step }) {
     {
       label: "FRAMEWORKS & THEORY",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div className="flex flex-col gap-2.5">
           {step.frameworks.map((fw, fi) => (
             <div
               key={fi}
-              style={{ background: C.bg, border: `1px solid ${C.line}`, borderRadius: 10, padding: "16px 18px" }}
+              className="rounded-[10px] py-4 px-[18px]"
+              style={{ background: C.bg, border: `1px solid ${C.line}` }}
             >
               <div
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: C.primary,
-                  marginBottom: 6,
-                }}
+                className="font-['DM_Sans',sans-serif] text-[13px] font-bold mb-1.5"
+                style={{ color: C.primary }}
               >
                 {fw.title}
               </div>
               <p
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 12,
-                  color: C.textMid,
-                  lineHeight: 1.7,
-                  margin: 0,
-                }}
+                className="font-['DM_Sans',sans-serif] text-xs leading-[1.7] m-0"
+                style={{ color: C.textMid }}
               >
                 {fw.body}
               </p>
@@ -1975,7 +1530,7 @@ function MobileMethodologyAccordion({ step }) {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div className="flex flex-col">
       {SECTIONS.map((sec, i) => {
         const isOpen = openSection === i;
         const isLast = i === SECTIONS.length - 1;
@@ -1984,50 +1539,26 @@ function MobileMethodologyAccordion({ step }) {
             {/* Accordion header */}
             <button
               onClick={() => toggle(i)}
-              style={{
-                width: "100%",
-                padding: "16px 20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                background: isOpen ? C.bg : C.white,
-                border: "none",
-                cursor: "pointer",
-                transition: "background 0.2s",
-              }}
+              className="w-full py-4 px-5 flex items-center justify-between border-none cursor-pointer transition-[background] duration-200"
+              style={{ background: isOpen ? C.bg : C.white }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div className="flex items-center gap-2.5">
                 <div
-                  style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: isOpen ? C.accent : C.line,
-                    transition: "background 0.2s",
-                    flexShrink: 0,
-                  }}
+                  className="w-1.5 h-1.5 rounded-full shrink-0 transition-[background] duration-200"
+                  style={{ background: isOpen ? C.accent : C.line }}
                 />
                 <span
-                  style={{
-                    fontFamily: "'DM Sans',sans-serif",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    color: isOpen ? C.primary : C.textMid,
-                    letterSpacing: "1.2px",
-                  }}
+                  className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.2px]"
+                  style={{ color: isOpen ? C.primary : C.textMid }}
                 >
                   {sec.label}
                 </span>
               </div>
               <span
+                className="text-base leading-none font-light inline-block transition-transform duration-200"
                 style={{
-                  fontSize: 16,
                   color: isOpen ? C.primary : C.textMid,
-                  lineHeight: 1,
-                  fontWeight: 300,
-                  transition: "transform 0.2s",
                   transform: isOpen ? "rotate(45deg)" : "none",
-                  display: "inline-block",
                 }}
               >
                 +
@@ -2035,7 +1566,7 @@ function MobileMethodologyAccordion({ step }) {
             </button>
             {/* Accordion body */}
             {isOpen && (
-              <div style={{ padding: "4px 20px 20px", animation: "fadeSlideUp 0.25s ease forwards" }}>
+              <div className="pt-1 px-5 pb-5 animate-[fadeSlideUp_0.25s_ease_forwards]">
                 {sec.content}
               </div>
             )}
@@ -2052,57 +1583,39 @@ function MethodologySection() {
   const toggle = (i) => setActiveStep((prev) => (prev === i ? null : i));
 
   return (
-    <section style={{ background: C.white, padding: isMobile ? "48px 20px 0" : "80px 80px 0" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <section className={cn(isMobile ? "pt-12 px-5 pb-0" : "pt-20 px-20 pb-0")} style={{ background: C.white }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Header */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-            gap: isMobile ? 16 : 60,
-            alignItems: "flex-start",
-            marginBottom: isMobile ? 32 : 64,
-          }}
+          className={cn(
+            "grid items-start",
+            isMobile ? "grid-cols-1 gap-4 mb-8" : "grid-cols-2 gap-[60px] mb-16"
+          )}
         >
           <div>
             <div
-              style={{
-                fontFamily: "'DM Sans',sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                color: C.textMid,
-                letterSpacing: "1.5px",
-                marginBottom: 16,
-              }}
+              className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px] mb-4"
+              style={{ color: C.textMid }}
             >
               OUR METHODOLOGY
             </div>
             <h2
-              style={{
-                fontFamily: "'Poppins',sans-serif",
-                fontSize: isMobile ? 32 : 48,
-                fontWeight: 300,
-                color: C.primary,
-                margin: 0,
-                lineHeight: 1.1,
-                letterSpacing: "-1px",
-              }}
+              className={cn(
+                "font-['Poppins',sans-serif] font-light m-0 leading-[1.1] tracking-[-1px]",
+                isMobile ? "text-[32px]" : "text-5xl"
+              )}
+              style={{ color: C.primary }}
             >
               One process.
               <br />
-              <span style={{ fontWeight: 700 }}>Six disciplines.</span>
+              <span className="font-bold">Six disciplines.</span>
             </h2>
           </div>
           {!isMobile && (
-            <div style={{ paddingTop: 8 }}>
+            <div className="pt-2">
               <p
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 17,
-                  color: C.textMid,
-                  lineHeight: 1.75,
-                  margin: 0,
-                }}
+                className="font-['DM_Sans',sans-serif] text-[17px] leading-[1.75] m-0"
+                style={{ color: C.textMid }}
               >
                 Every BRIDGE engagement — regardless of who you are — is grounded in the same diagnostic sequence. We
                 don't impose solutions. We uncover root causes, measure economic scale, and match resources with
@@ -2113,19 +1626,9 @@ function MethodologySection() {
         </div>
 
         {/* Step cards */}
-        <div style={{ position: "relative" }}>
+        <div className="relative">
           <div
-            className="hide-scrollbar"
-            style={{
-              display: "flex",
-              gap: 16,
-              overflowX: "auto",
-              overflowY: "visible",
-              scrollSnapType: "x mandatory",
-              paddingBottom: 4,
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
+            className="hide-scrollbar flex gap-4 overflow-x-auto overflow-y-visible snap-x snap-mandatory pb-1 [scrollbar-width:none] [-ms-overflow-style:none]"
           >
             {METHODOLOGY_STEPS.map((step, i) => {
               const active = activeStep === i;
@@ -2134,114 +1637,62 @@ function MethodologySection() {
                 <div
                   key={i}
                   onClick={() => toggle(i)}
+                  className={cn(
+                    "min-w-0 snap-start rounded-2xl cursor-pointer transition-all duration-[250ms] ease-in-out flex flex-col justify-between",
+                    isMobile ? "flex-[0_0_calc(80%-8px)] p-5 min-h-[220px]" : "flex-[0_0_calc(33.333%-11px)] pt-7 px-7 pb-6 min-h-[260px]"
+                  )}
                   style={{
-                    flex: isMobile ? "0 0 calc(80% - 8px)" : "0 0 calc(33.333% - 11px)",
-                    minWidth: 0,
-                    scrollSnapAlign: "start",
                     background: active ? C.primary : C.bg,
                     border: `1px solid ${active ? C.primary : C.line}`,
-                    borderRadius: 16,
-                    padding: isMobile ? "24px 20px 20px" : "28px 28px 24px",
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    minHeight: isMobile ? 220 : 260,
                   }}
                 >
                   <div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        marginBottom: 20,
-                      }}
-                    >
+                    <div className="flex items-center justify-between mb-5">
                       <div
+                        className="w-11 h-11 rounded-[10px] flex items-center justify-center"
                         style={{
-                          width: 44,
-                          height: 44,
-                          borderRadius: 10,
                           background: active ? "rgba(255,255,255,0.1)" : C.white,
                           border: `1px solid ${active ? "rgba(255,255,255,0.15)" : C.line}`,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
                         }}
                       >
                         <SIcon size={20} color={active ? C.accent : C.primary} strokeWidth={1.5} />
                       </div>
                       <span
-                        style={{
-                          fontFamily: "'Inter',sans-serif",
-                          fontSize: 11,
-                          fontWeight: 700,
-                          color: active ? "rgba(255,255,255,0.3)" : C.line,
-                          letterSpacing: "1px",
-                        }}
+                        className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[1px]"
+                        style={{ color: active ? "rgba(255,255,255,0.3)" : C.line }}
                       >
                         {step.num}
                       </span>
                     </div>
                     <div
-                      style={{
-                        fontFamily: "'Poppins',sans-serif",
-                        fontSize: 17,
-                        fontWeight: 700,
-                        color: active ? C.white : C.primary,
-                        marginBottom: 10,
-                        letterSpacing: "-0.3px",
-                      }}
+                      className="font-['Poppins',sans-serif] text-[17px] font-bold mb-2.5 tracking-[-0.3px]"
+                      style={{ color: active ? C.white : C.primary }}
                     >
                       {step.title}
                     </div>
                     <p
-                      style={{
-                        fontFamily: "'DM Sans',sans-serif",
-                        fontSize: 13,
-                        color: active ? "rgba(255,255,255,0.6)" : C.textMid,
-                        lineHeight: 1.7,
-                        margin: 0,
-                      }}
+                      className="font-['DM_Sans',sans-serif] text-[13px] leading-[1.7] m-0"
+                      style={{ color: active ? "rgba(255,255,255,0.6)" : C.textMid }}
                     >
                       {step.cardDesc}
                     </p>
                   </div>
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginTop: 24,
-                      paddingTop: 16,
-                      borderTop: `1px solid ${active ? "rgba(255,255,255,0.1)" : C.line}`,
-                    }}
+                    className="flex items-center justify-between mt-6 pt-4"
+                    style={{ borderTop: `1px solid ${active ? "rgba(255,255,255,0.1)" : C.line}` }}
                   >
                     <span
-                      style={{
-                        fontFamily: "'DM Sans',sans-serif",
-                        fontSize: 12,
-                        fontWeight: 700,
-                        color: active ? C.accent : C.primary,
-                      }}
+                      className="font-['DM_Sans',sans-serif] text-xs font-bold"
+                      style={{ color: active ? C.accent : C.primary }}
                     >
-                      {active ? "Close ↑" : "Deep dive ↓"}
+                      {active ? "Close \u2191" : "Deep dive \u2193"}
                     </span>
                     {active && (
                       <div
-                        style={{
-                          width: 24,
-                          height: 24,
-                          borderRadius: "50%",
-                          background: C.accent,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
+                        className="w-6 h-6 rounded-full flex items-center justify-center"
+                        style={{ background: C.accent }}
                       >
-                        <span style={{ fontSize: 10, color: C.primary, fontWeight: 700 }}>✓</span>
+                        <span className="text-[10px] font-bold" style={{ color: C.primary }}>✓</span>
                       </div>
                     )}
                   </div>
@@ -2259,62 +1710,36 @@ function MethodologySection() {
             return (
               <div
                 key={activeStep}
-                style={{
-                  background: C.white,
-                  borderRadius: 16,
-                  marginTop: 32,
-                  overflow: "hidden",
-                  animation: "fadeSlideUp 0.35s ease forwards",
-                  border: `2px solid ${C.primary}`,
-                }}
+                className="rounded-2xl mt-8 overflow-hidden animate-[fadeSlideUp_0.35s_ease_forwards]"
+                style={{ background: C.white, border: `2px solid ${C.primary}` }}
               >
                 {/* Panel header */}
                 <div
-                  style={{
-                    padding: isMobile ? "24px 20px 20px" : "32px 40px 24px",
-                    borderBottom: `1px solid ${C.line}`,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 16,
-                  }}
+                  className={cn(
+                    "flex items-center gap-4",
+                    isMobile ? "pt-6 px-5 pb-5" : "pt-8 px-10 pb-6"
+                  )}
+                  style={{ borderBottom: `1px solid ${C.line}` }}
                 >
                   <div
-                    style={{
-                      width: 48,
-                      height: 48,
-                      borderRadius: 10,
-                      background: C.primary,
-                      flexShrink: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="w-12 h-12 rounded-[10px] shrink-0 flex items-center justify-center"
+                    style={{ background: C.primary }}
                   >
                     <SIcon size={20} color={C.accent} strokeWidth={1.5} />
                   </div>
                   <div>
                     <div
-                      style={{
-                        fontFamily: "'DM Sans',sans-serif",
-                        fontSize: 10,
-                        fontWeight: 700,
-                        color: C.textMid,
-                        letterSpacing: "1.5px",
-                        marginBottom: 4,
-                      }}
+                      className="font-['DM_Sans',sans-serif] text-[10px] font-bold tracking-[1.5px] mb-1"
+                      style={{ color: C.textMid }}
                     >
                       STEP {step.num} — {step.title.toUpperCase()}
                     </div>
                     <h3
-                      style={{
-                        fontFamily: "'Poppins',sans-serif",
-                        fontSize: isMobile ? 17 : 22,
-                        fontWeight: 700,
-                        color: C.primary,
-                        margin: 0,
-                        letterSpacing: "-0.3px",
-                        lineHeight: 1.2,
-                      }}
+                      className={cn(
+                        "font-['Poppins',sans-serif] font-bold m-0 tracking-[-0.3px] leading-[1.2]",
+                        isMobile ? "text-[17px]" : "text-[22px]"
+                      )}
+                      style={{ color: C.primary }}
                     >
                       {step.headline}
                     </h3>
@@ -2325,61 +1750,30 @@ function MethodologySection() {
                 {isMobile ? (
                   <MobileMethodologyAccordion step={step} />
                 ) : (
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
-                    <div style={{ padding: "32px 40px", borderRight: `1px solid ${C.line}` }}>
+                  <div className="grid grid-cols-2 gap-0">
+                    <div className="py-8 px-10" style={{ borderRight: `1px solid ${C.line}` }}>
                       <p
-                        style={{
-                          fontFamily: "'DM Sans',sans-serif",
-                          fontSize: 15,
-                          color: C.textMid,
-                          lineHeight: 1.8,
-                          margin: "0 0 28px",
-                        }}
+                        className="font-['DM_Sans',sans-serif] text-[15px] leading-[1.8] mb-7"
+                        style={{ color: C.textMid }}
                       >
                         {step.body}
                       </p>
                       <div
-                        style={{
-                          fontFamily: "'DM Sans',sans-serif",
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: C.primary,
-                          letterSpacing: "1.2px",
-                          marginBottom: 14,
-                        }}
+                        className="font-['DM_Sans',sans-serif] text-[10px] font-bold tracking-[1.2px] mb-3.5"
+                        style={{ color: C.primary }}
                       >
                         METHODS APPLIED
                       </div>
-                      <ul
-                        style={{
-                          margin: "0 0 28px",
-                          padding: 0,
-                          listStyle: "none",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: 10,
-                        }}
-                      >
+                      <ul className="mb-7 p-0 list-none flex flex-col gap-2.5">
                         {step.methods.map((m, mi) => (
-                          <li key={mi} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                          <li key={mi} className="flex gap-2.5 items-start">
                             <div
-                              style={{
-                                width: 5,
-                                height: 5,
-                                borderRadius: "50%",
-                                background: C.accent,
-                                marginTop: 7,
-                                flexShrink: 0,
-                                border: `1px solid ${C.primary}`,
-                              }}
+                              className="w-[5px] h-[5px] rounded-full mt-[7px] shrink-0"
+                              style={{ background: C.accent, border: `1px solid ${C.primary}` }}
                             />
                             <span
-                              style={{
-                                fontFamily: "'DM Sans',sans-serif",
-                                fontSize: 13,
-                                color: C.textMid,
-                                lineHeight: 1.65,
-                              }}
+                              className="font-['DM_Sans',sans-serif] text-[13px] leading-[1.65]"
+                              style={{ color: C.textMid }}
                             >
                               {m}
                             </span>
@@ -2387,82 +1781,46 @@ function MethodologySection() {
                         ))}
                       </ul>
                       <div
-                        style={{
-                          background: C.accentDim,
-                          border: `1px solid rgba(184,217,53,0.4)`,
-                          borderRadius: 10,
-                          padding: "18px 20px",
-                        }}
+                        className="rounded-[10px] py-[18px] px-5 border border-[rgba(184,217,53,0.4)]"
+                        style={{ background: C.accentDim }}
                       >
                         <div
-                          style={{
-                            fontFamily: "'DM Sans',sans-serif",
-                            fontSize: 10,
-                            fontWeight: 700,
-                            color: C.primary,
-                            letterSpacing: "1.2px",
-                            marginBottom: 10,
-                          }}
+                          className="font-['DM_Sans',sans-serif] text-[10px] font-bold tracking-[1.2px] mb-2.5"
+                          style={{ color: C.primary }}
                         >
                           WHAT THIS PRODUCES
                         </div>
                         <p
-                          style={{
-                            fontFamily: "'DM Sans',sans-serif",
-                            fontSize: 14,
-                            color: C.textDark,
-                            lineHeight: 1.7,
-                            margin: 0,
-                            fontStyle: "italic",
-                          }}
+                          className="font-['DM_Sans',sans-serif] text-sm leading-[1.7] m-0 italic"
+                          style={{ color: C.textDark }}
                         >
                           {step.output}
                         </p>
                       </div>
                     </div>
-                    <div style={{ padding: "32px 40px", background: C.bg }}>
+                    <div className="py-8 px-10" style={{ background: C.bg }}>
                       <div
-                        style={{
-                          fontFamily: "'DM Sans',sans-serif",
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: C.textMid,
-                          letterSpacing: "1.2px",
-                          marginBottom: 16,
-                        }}
+                        className="font-['DM_Sans',sans-serif] text-[10px] font-bold tracking-[1.2px] mb-4"
+                        style={{ color: C.textMid }}
                       >
                         FRAMEWORKS & THEORY
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                      <div className="flex flex-col gap-3">
                         {step.frameworks.map((fw, fi) => (
                           <div
                             key={fi}
-                            style={{
-                              background: C.white,
-                              border: `1px solid ${C.line}`,
-                              borderRadius: 10,
-                              padding: "18px 20px",
-                            }}
+                            className="rounded-[10px] py-[18px] px-5"
+                            style={{ background: C.white, border: `1px solid ${C.line}` }}
                           >
                             <div
-                              style={{
-                                fontFamily: "'DM Sans',sans-serif",
-                                fontSize: 13,
-                                fontWeight: 700,
-                                color: C.primary,
-                                marginBottom: 6,
-                              }}
+                              className="font-['DM_Sans',sans-serif] text-[13px] font-bold mb-1.5"
+                              style={{ color: C.primary }}
                             >
                               {fw.title}
                             </div>
                             <p
-                              style={{
-                                fontFamily: "'DM Sans',sans-serif",
-                                fontSize: 12,
-                                color: C.textMid,
-                                lineHeight: 1.7,
-                                margin: 0,
-                              }}
+                              className="font-['DM_Sans',sans-serif] text-xs leading-[1.7] m-0"
+                              style={{ color: C.textMid }}
                             >
                               {fw.body}
                             </p>
@@ -2476,7 +1834,7 @@ function MethodologySection() {
             );
           })()}
 
-        <div style={{ height: isMobile ? 48 : 80 }} />
+        <div className={cn(isMobile ? "h-12" : "h-20")} />
       </div>
     </section>
   );
@@ -2495,107 +1853,64 @@ function CTASection({ seg }) {
     Investors: "Request authenticated portal access. Our first deals are already impact-scored and investor-ready.",
   };
   return (
-    <section style={{ background: C.white, padding: isMobile ? "40px 20px" : "80px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <section className={cn(isMobile ? "py-10 px-5" : "p-20")} style={{ background: C.white }}>
+      <div className="max-w-[1200px] mx-auto">
         <div
-          style={{
-            background: `linear-gradient(135deg, ${C.primary} 0%, ${C.teal} 100%)`,
-            borderRadius: isMobile ? 16 : 20,
-            padding: isMobile ? "40px 24px" : "64px 80px",
-            position: "relative",
-          }}
+          className={cn(
+            "relative",
+            isMobile ? "rounded-2xl p-6" : "rounded-[20px] py-16 px-20"
+          )}
+          style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.teal} 100%)` }}
         >
           <div
-            style={{
-              display: "flex",
-              flexDirection: isMobile ? "column" : "row",
-              alignItems: isMobile ? "flex-start" : "center",
-              justifyContent: "space-between",
-              gap: isMobile ? 32 : 40,
-            }}
+            className={cn(
+              "flex justify-between",
+              isMobile ? "flex-col items-start gap-8" : "flex-row items-center gap-10"
+            )}
           >
-            <div style={{ maxWidth: isMobile ? "100%" : 560 }}>
+            <div className={cn(isMobile ? "max-w-full" : "max-w-[560px]")}>
               <div
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: C.accent,
-                  letterSpacing: "1.5px",
-                  marginBottom: 16,
-                }}
+                className="font-['DM_Sans',sans-serif] text-[11px] font-bold tracking-[1.5px] mb-4"
+                style={{ color: C.accent }}
               >
                 NEXT STEP
               </div>
               <h2
-                style={{
-                  fontFamily: "'Poppins',sans-serif",
-                  fontSize: isMobile ? 26 : 36,
-                  fontWeight: 700,
-                  color: C.white,
-                  margin: "0 0 16px",
-                  letterSpacing: "-0.5px",
-                  lineHeight: 1.2,
-                }}
+                className={cn(
+                  "font-['Poppins',sans-serif] font-bold mb-4 tracking-[-0.5px] leading-[1.2]",
+                  isMobile ? "text-[26px]" : "text-4xl"
+                )}
+                style={{ color: C.white }}
               >
                 Ready to begin your BRIDGE journey?
               </h2>
               <p
-                style={{
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontSize: isMobile ? 14 : 16,
-                  color: "rgba(255,255,255,0.65)",
-                  margin: 0,
-                  lineHeight: 1.65,
-                }}
+                className={cn(
+                  "font-['DM_Sans',sans-serif] text-[rgba(255,255,255,0.65)] m-0 leading-[1.65]",
+                  isMobile ? "text-sm" : "text-base"
+                )}
               >
                 {ctaText[seg.label]}
               </p>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 12,
-                flexShrink: 0,
-                width: isMobile ? "100%" : "auto",
-              }}
-            >
+            <div className={cn("flex flex-col gap-3 shrink-0", isMobile ? "w-full" : "w-auto")}>
               <button
                 onClick={() => navigate("/contact")}
-                style={{
-                  background: C.accent,
-                  color: C.primary,
-                  border: "none",
-                  borderRadius: 50,
-                  padding: isMobile ? "16px 28px" : "18px 36px",
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontWeight: 800,
-                  fontSize: isMobile ? 14 : 15,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 10,
-                  width: isMobile ? "100%" : "auto",
-                }}
+                className={cn(
+                  "border-none rounded-full font-['DM_Sans',sans-serif] font-extrabold cursor-pointer flex items-center justify-center gap-2.5",
+                  isMobile ? "py-4 px-7 text-sm w-full" : "py-[18px] px-9 text-[15px] w-auto"
+                )}
+                style={{ background: C.accent, color: C.primary }}
               >
                 {seg.cta} <ArrowRight size={16} />
               </button>
               <button
                 onClick={() => navigate("/resources")}
-                style={{
-                  background: "transparent",
-                  color: C.white,
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  borderRadius: 50,
-                  padding: isMobile ? "14px 28px" : "14px 36px",
-                  fontFamily: "'DM Sans',sans-serif",
-                  fontWeight: 600,
-                  fontSize: 14,
-                  cursor: "pointer",
-                  width: isMobile ? "100%" : "auto",
-                }}
+                className={cn(
+                  "bg-transparent border border-[rgba(255,255,255,0.25)] rounded-full font-['DM_Sans',sans-serif] font-semibold text-sm cursor-pointer",
+                  isMobile ? "py-3.5 px-7 w-full" : "py-3.5 px-9 w-auto"
+                )}
+                style={{ color: C.white }}
               >
                 Download Process Guide
               </button>
@@ -2643,16 +1958,16 @@ export default function HowWeWorkPage() {
   return (
     <>
       <style>{GLOBAL_CSS}</style>
-      <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', sans-serif" }}>
-        <SiteHeader />
+      <Layout>
+      <div className="min-h-screen font-['DM_Sans',sans-serif]">
         <Hero activeIdx={activeIdx} setActive={handleSetActive} />
         <ProcessTrack key={animKey} seg={seg} animKey={animKey} />
         <ToolkitSection seg={seg} />
         <DeliverablesSection seg={seg} />
         <MethodologySection />
         <CTASection seg={seg} />
-        <SiteFooter />
       </div>
+      </Layout>
     </>
   );
 }

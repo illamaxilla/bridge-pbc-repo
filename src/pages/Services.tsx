@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
+import { Layout } from "@/components/Layout";
 
-import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
+import { FOOTER_SECTOR_ICONS, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
 // BRIDGE Design System - Consistent with Homepage
-import { colors, layout } from "@/lib/theme";
-const CONTENT_MAX_WIDTH = layout.maxWidth;
+import { colors } from "@/lib/theme";
 
 // 4 Services Data - Enhanced for focused view
 const servicesData = [
@@ -529,65 +528,27 @@ const IconTruck = () => (
 // FLOATING SECTOR CARD COMPONENT
 // ============================================
 const FloatingSectorCard = ({ sector, icon }) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-
   return (
     <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        flex: "1",
-        maxWidth: "200px",
-        backgroundColor: isHovered ? colors.accent : "rgba(255,255,255,0.95)",
-        borderRadius: "16px",
-        padding: "18px",
-        cursor: "pointer",
-        transition: "all 0.3s ease",
-        transform: isHovered ? "translateY(-6px)" : "translateY(0)",
-        boxShadow: isHovered ? "0 16px 48px rgba(0,0,0,0.25)" : "0 4px 24px rgba(0,0,0,0.12)",
-      }}
+      className="group flex-1 max-w-[200px] bg-white/95 hover:bg-[#B8D935] rounded-2xl p-[18px] cursor-pointer transition-all duration-300 ease-in-out translate-y-0 hover:-translate-y-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.25)]"
     >
       {/* Icon */}
       <div
-        style={{
-          width: "44px",
-          height: "44px",
-          backgroundColor: isHovered ? colors.primary : colors.background,
-          borderRadius: "12px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: "12px",
-          color: isHovered ? colors.accent : colors.primary,
-          transition: "all 0.3s ease",
-        }}
+        className="w-[44px] h-[44px] bg-[#F3F5F2] group-hover:bg-[#1B4D3E] rounded-xl flex items-center justify-center mb-3 text-[#1B4D3E] group-hover:text-[#B8D935] transition-all duration-300 ease-in-out"
       >
         {icon}
       </div>
 
       {/* Sector Name */}
       <div
-        style={{
-          fontSize: "13px",
-          fontWeight: "600",
-          color: colors.primary,
-          fontFamily: "Inter, sans-serif",
-          marginBottom: "4px",
-          lineHeight: "1.3",
-        }}
+        className="text-[13px] font-semibold text-[#1B4D3E] font-['Inter',sans-serif] mb-1 leading-[1.3]"
       >
         {sector.shortName}
       </div>
 
       {/* Solutions Count */}
       <div
-        style={{
-          fontSize: "12px",
-          color: isHovered ? colors.primary : "#666",
-          fontFamily: "Inter, sans-serif",
-          opacity: isHovered ? 0.7 : 1,
-          transition: "all 0.3s ease",
-        }}
+        className="text-xs text-[#666] group-hover:text-[#1B4D3E] font-['Inter',sans-serif] opacity-100 group-hover:opacity-70 transition-all duration-300 ease-in-out"
       >
         {sector.ventures}+ solutions
       </div>
@@ -600,17 +561,7 @@ const FloatingSectorCard = ({ sector, icon }) => {
 // ============================================
 const IconCircle = ({ icon, isFirst = false }) => (
   <div
-    style={{
-      width: "48px",
-      height: "48px",
-      backgroundColor: isFirst ? colors.accent : colors.background,
-      borderRadius: "12px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: colors.primary,
-      flexShrink: 0,
-    }}
+    className={`w-12 h-12 ${isFirst ? "bg-[#B8D935]" : "bg-[#F3F5F2]"} rounded-xl flex items-center justify-center text-[#1B4D3E] shrink-0`}
   >
     {icon}
   </div>
@@ -621,16 +572,7 @@ const IconCircle = ({ icon, isFirst = false }) => (
 // ============================================
 const DottedLine = () => (
   <div
-    style={{
-      flex: "1",
-      minWidth: "24px",
-      maxWidth: "48px",
-      height: "2px",
-      backgroundImage: `linear-gradient(to right, ${colors.primary}40 50%, transparent 50%)`,
-      backgroundSize: "8px 2px",
-      backgroundRepeat: "repeat-x",
-      margin: "0 4px",
-    }}
+    className="flex-1 min-w-[24px] max-w-[48px] h-0.5 bg-repeat-x mx-1 bg-[length:8px_2px] bg-[linear-gradient(to_right,#1B4D3E40_50%,transparent_50%)]"
   />
 );
 
@@ -1014,8 +956,8 @@ export default function ServicesSectorsPageV2() {
       ),
       headline: (
         <>
-          Build <span style={{ fontWeight: "700" }}>Ventures</span> That Address{" "}
-          <span style={{ fontWeight: "700", color: colors.accent }}>Real Gaps</span>
+          Build <span className="font-bold">Ventures</span> That Address{" "}
+          <span className="font-bold text-[#B8D935]">Real Gaps</span>
         </>
       ),
       description:
@@ -1051,8 +993,8 @@ export default function ServicesSectorsPageV2() {
       ),
       headline: (
         <>
-          Expand into <span style={{ fontWeight: "700" }}>High-Growth Markets</span> with{" "}
-          <span style={{ fontWeight: "700", color: colors.accent }}>Local Expertise</span>
+          Expand into <span className="font-bold">High-Growth Markets</span> with{" "}
+          <span className="font-bold text-[#B8D935]">Local Expertise</span>
         </>
       ),
       description:
@@ -1083,8 +1025,8 @@ export default function ServicesSectorsPageV2() {
       ),
       headline: (
         <>
-          Deploy <span style={{ fontWeight: "700" }}>Capital</span> Where It Creates{" "}
-          <span style={{ fontWeight: "700", color: colors.accent }}>Real Impact</span>
+          Deploy <span className="font-bold">Capital</span> Where It Creates{" "}
+          <span className="font-bold text-[#B8D935]">Real Impact</span>
         </>
       ),
       description:
@@ -1120,8 +1062,8 @@ export default function ServicesSectorsPageV2() {
       ),
       headline: (
         <>
-          Accelerate <span style={{ fontWeight: "700" }}>Development Goals</span> Through{" "}
-          <span style={{ fontWeight: "700", color: colors.accent }}>Strategic Alignment</span>
+          Accelerate <span className="font-bold">Development Goals</span> Through{" "}
+          <span className="font-bold text-[#B8D935]">Strategic Alignment</span>
         </>
       ),
       description:
@@ -1240,8 +1182,9 @@ export default function ServicesSectorsPageV2() {
   const totalVentures = sectorsData.reduce((sum, s) => sum + s.ventures, 0);
 
   return (
+    <Layout hideFooter>
     <div
-      style={{ fontFamily: "Helvetica, Arial, sans-serif", margin: 0, padding: 0, backgroundColor: colors.background }}
+      className="font-['Helvetica',Arial,sans-serif] m-0 p-0 bg-[#F3F5F2]"
     >
 
       <style>{`
@@ -1255,48 +1198,22 @@ export default function ServicesSectorsPageV2() {
         .cta-lime:hover { background-color: #1B4D3E !important; color: #FFFFFF !important; }
       `}</style>
 
-      <SiteHeader />
       {/* ============================================ */}
       {/* SECTION 1: Audience-Focused Hero */}
       {/* ============================================ */}
       <section
-        style={{
-          backgroundColor: colors.background,
-          padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px",
-        }}
+        className="bg-[#F3F5F2]" style={{ padding: isMobile ? "40px 20px 40px 20px" : "60px 80px 56px 80px" }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div className="max-w-[1200px] mx-auto">
           {/* Pill Badge */}
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              backgroundColor: colors.white,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              marginBottom: "24px",
-              border: `1px solid ${colors.line}`,
-            }}
+            className="inline-flex items-center gap-2 rounded-full mb-6 bg-white px-5 py-2.5 border border-[#DEDEDE]"
           >
             <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                backgroundColor: colors.accent,
-                display: "inline-block",
-              }}
+              className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
             />
             <span
-              style={{
-                fontSize: "12px",
-                fontWeight: "600",
-                letterSpacing: "1.5px",
-                color: colors.primary,
-                fontFamily: "Inter, sans-serif",
-                textTransform: "uppercase",
-              }}
+              className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
             >
               Your Bridge to Impact
             </span>
@@ -1304,36 +1221,19 @@ export default function ServicesSectorsPageV2() {
 
           {/* Main Headline - Static */}
           <h1
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "32px" : "56px",
-              fontWeight: "300",
-              lineHeight: "1.12",
-              color: colors.primary,
-              margin: isMobile ? "0 0 32px 0" : "0 0 48px 0",
-              letterSpacing: "-1px",
-              maxWidth: "900px",
-            }}
+            className="font-['Inter',sans-serif] font-light leading-[1.12] tracking-[-1px] max-w-[900px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "32px" : "56px", margin: isMobile ? "0 0 32px 0" : "0 0 48px 0" }}
           >
-            We <span style={{ fontWeight: "700" }}>connect</span> the people, capital, and expertise that create{" "}
-            <span style={{ fontWeight: "700", color: colors.accent }}>measurable, lasting impact.</span>
+            We <span className="font-bold">connect</span> the people, capital, and expertise that create{" "}
+            <span className="font-bold text-[#B8D935]">measurable, lasting impact.</span>
           </h1>
 
           {/* Audience Selector + Dynamic Content Container */}
           <div
-            style={{
-              backgroundColor: colors.white,
-              borderRadius: "24px",
-              overflow: "hidden",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
-            }}
+            className="rounded-3xl overflow-hidden bg-white shadow-[0_4px_24px_rgba(0,0,0,0.06)]"
           >
             {/* Audience Tabs */}
             <div
-              style={{
-                display: "flex",
-                borderBottom: `1px solid ${colors.line}`,
-              }}
+              className="flex border-b border-[#DEDEDE]"
             >
               {audienceData.map((audience) => {
                 const isActive = activeAudience === audience.id;
@@ -1341,39 +1241,16 @@ export default function ServicesSectorsPageV2() {
                   <button
                     key={audience.id}
                     onClick={() => setActiveAudience(audience.id)}
-                    style={{
-                      flex: 1,
-                      padding: isMobile ? "16px 12px" : "24px 32px",
-                      backgroundColor: isActive ? colors.primary : "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: isMobile ? "0" : "12px",
-                      transition: "all 0.3s ease",
-                      borderBottom: isActive ? `3px solid ${colors.white}` : "3px solid transparent",
-                    }}
+                    className="border-none cursor-pointer flex flex-1 items-center justify-center transition-all duration-300 ease-in-out" style={{ padding: isMobile ? "16px 12px" : "24px 32px", backgroundColor: isActive ? "#1B4D3E" : "transparent", gap: isMobile ? "0" : "12px", borderBottom: isActive ? "3px solid #FFFFFF" : "3px solid transparent" }}
                   >
                     <span
-                      style={{
-                        color: isActive ? colors.white : "#999",
-                        display: "flex",
-                        alignItems: "center",
-                        transition: "color 0.3s ease",
-                      }}
+                      className="flex items-center transition-colors duration-300 ease-in-out" style={{ color: isActive ? "#FFFFFF" : "#999" }}
                     >
                       {audience.icon}
                     </span>
                     {!isMobile && (
                       <span
-                        style={{
-                          fontSize: "15px",
-                          fontWeight: "600",
-                          fontFamily: "Inter, sans-serif",
-                          color: isActive ? colors.white : "#666",
-                          transition: "color 0.3s ease",
-                        }}
+                        className="text-[15px] font-semibold font-['Inter',sans-serif] transition-colors duration-300 ease-in-out" style={{ color: isActive ? "#FFFFFF" : "#666" }}
                       >
                         {audience.label}
                       </span>
@@ -1385,84 +1262,34 @@ export default function ServicesSectorsPageV2() {
 
             {/* Dynamic Content Area */}
             <div
-              style={{
-                display: isMobile ? "flex" : "grid",
-                flexDirection: "column",
-                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                height: isMobile ? "auto" : "420px",
-              }}
+              className="flex-col" style={{ display: isMobile ? "flex" : "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", height: isMobile ? "auto" : "420px" }}
             >
               {/* Left - Text Content */}
               <div
-                style={{
-                  padding: isMobile ? "32px 24px" : "48px 56px 48px 56px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  gap: "32px",
-                }}
+                className="flex flex-col justify-center gap-8" style={{ padding: isMobile ? "32px 24px" : "48px 56px 48px 56px" }}
               >
                 {/* Top content */}
                 <div>
                   <h2
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: isMobile ? "24px" : "36px",
-                      fontWeight: "300",
-                      lineHeight: "1.2",
-                      color: colors.primary,
-                      margin: "0 0 24px 0",
-                      letterSpacing: "-0.5px",
-                    }}
+                    className="font-['Inter',sans-serif] font-light leading-[1.2] tracking-[-0.5px] text-[#1B4D3E] mb-6 mt-0 mx-0" style={{ fontSize: isMobile ? "24px" : "36px" }}
                   >
                     {currentAudience.headline}
                   </h2>
                   <p
-                    style={{
-                      fontSize: "16px",
-                      lineHeight: "1.7",
-                      color: "#666",
-                      fontFamily: "Inter, sans-serif",
-                      margin: "0",
-                      maxWidth: "480px",
-                    }}
+                    className="text-base leading-[1.7] text-[#666] font-['Inter',sans-serif] m-0 max-w-[480px]"
                   >
                     {currentAudience.description}
                   </p>
                 </div>
 
                 {/* CTA Button - pushed to bottom */}
-                <a href="/contact" style={{ textDecoration: "none" }}>
+                <a href="/contact" className="no-underline">
                 <button
-                  className="cta-lime"
-                  style={{
-                    backgroundColor: colors.accent,
-                    color: colors.primary,
-                    border: "none",
-                    padding: "16px 28px",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    fontFamily: "Inter, sans-serif",
-                    cursor: "pointer",
-                    borderRadius: "50px",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    alignSelf: "flex-start",
-                    transition: "all 0.3s ease",
-                  }}
+                  className="cta-lime border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full inline-flex items-center gap-2.5 self-start transition-all duration-300 ease-in-out bg-[#B8D935] text-[#1B4D3E] px-7 py-4"
                 >
                   Explore Opportunities
                   <span
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      backgroundColor: "rgba(27,77,62,0.15)",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="w-7 h-7 bg-[rgba(27,77,62,0.15)] rounded-full flex items-center justify-center"
                   >
                     <svg
                       width="14"
@@ -1481,39 +1308,18 @@ export default function ServicesSectorsPageV2() {
 
               {/* Right - Sector Icons Grid + Highlight Tags */}
               <div
-                style={{
-                  backgroundColor: colors.primary,
-                  padding: isMobile ? "20px 16px 16px 16px" : "76px 40px 40px 40px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                }}
+                className="flex flex-col justify-start bg-[#1B4D3E]" style={{ padding: isMobile ? "20px 16px 16px 16px" : "76px 40px 40px 40px" }}
               >
                 {/* Section Label - Shows sector name on hover */}
                 <div
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: "700",
-                    fontFamily: "DM Sans, sans-serif",
-                    color: heroSectorHovered !== null ? colors.accent : "rgba(255,255,255,0.4)",
-                    letterSpacing: "2px",
-                    textTransform: "uppercase",
-                    marginBottom: isMobile ? "10px" : "16px",
-                    transition: "color 0.25s ease",
-                    minHeight: "15px",
-                  }}
+                  className="text-[10px] font-bold tracking-[2px] uppercase transition-colors duration-[250ms] ease-in-out min-h-[15px] font-['DM_Sans',sans-serif]" style={{ color: heroSectorHovered !== null ? "#B8D935" : "rgba(255,255,255,0.4)", marginBottom: isMobile ? "10px" : "16px" }}
                 >
                   {heroSectorHovered !== null ? FOOTER_SECTOR_ICONS[heroSectorHovered].label : "12 Integrated Sectors"}
                 </div>
 
                 {/* Sector Icons Grid - responsive layout */}
                 <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: isMobile ? "repeat(4, 1fr)" : "repeat(6, 1fr)",
-                    gap: isMobile ? "6px" : "10px",
-                    marginBottom: isMobile ? "14px" : "20px",
-                  }}
+                  className="grid" style={{ gridTemplateColumns: isMobile ? "repeat(4, 1fr)" : "repeat(6, 1fr)", gap: isMobile ? "6px" : "10px", marginBottom: isMobile ? "14px" : "20px" }}
                 >
                   {FOOTER_SECTOR_ICONS.map((sector, i) => {
                     const isHovered = heroSectorHovered === i;
@@ -1523,30 +1329,10 @@ export default function ServicesSectorsPageV2() {
                         onMouseEnter={() => setHeroSectorHovered(i)}
                         onMouseLeave={() => setHeroSectorHovered(null)}
                         onDoubleClick={() => navigate(sector.to)}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          aspectRatio: isMobile ? "auto" : "1",
-                          height: isMobile ? "56px" : "auto",
-                          borderRadius: isMobile ? "10px" : "12px",
-                          backgroundColor: isHovered ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.05)",
-                          border: `1px solid ${isHovered ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.08)"}`,
-                          cursor: "pointer",
-                          transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                          transform: isHovered ? "translateY(-2px)" : "none",
-                          boxShadow: isHovered ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
-                        }}
+                        className="flex items-center justify-center cursor-pointer transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]" style={{ aspectRatio: isMobile ? "auto" : "1", height: isMobile ? "56px" : "auto", borderRadius: isMobile ? "10px" : "12px", backgroundColor: isHovered ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.05)", border: `1px solid ${isHovered ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.08)"}`, transform: isHovered ? "translateY(-2px)" : "none", boxShadow: isHovered ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none" }}
                       >
                         <div
-                          style={{
-                            opacity: isHovered ? 1 : 0.6,
-                            transition: "opacity 0.25s ease",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            transform: isMobile ? "scale(1.2)" : "scale(1.25)",
-                          }}
+                          className="transition-opacity duration-[250ms] ease-in-out flex items-center justify-center" style={{ opacity: isHovered ? 1 : 0.6, transform: isMobile ? "scale(1.2)" : "scale(1.25)" }}
                         >
                           {sector.icon(isHovered ? colors.accent : "rgba(255,255,255,0.9)")}
                         </div>
@@ -1557,16 +1343,7 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Dynamic audience × sector hover text */}
                 <div
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    fontFamily: "Inter, sans-serif",
-                    color: heroSectorHovered !== null ? colors.accent : "rgba(255,255,255,0.3)",
-                    transition: "all 0.3s ease",
-                    minHeight: "20px",
-                    lineHeight: "1.4",
-                    textAlign: "center",
-                  }}
+                  className="text-sm font-medium font-['Inter',sans-serif] transition-all duration-300 ease-in-out min-h-[20px] leading-[1.4] text-center" style={{ color: heroSectorHovered !== null ? "#B8D935" : "rgba(255,255,255,0.3)" }}
                 >
                   {heroSectorHovered !== null
                     ? sectorAudienceText[activeAudience][heroSectorHovered]
@@ -1582,42 +1359,18 @@ export default function ServicesSectorsPageV2() {
       {/* SECTION 2: What We Do */}
       {/* ============================================ */}
       <section
-        style={{
-          backgroundColor: colors.white,
-          padding: isMobile ? "60px 20px" : "100px 80px",
-        }}
+        className="bg-white" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div className="max-w-[1200px] mx-auto">
           {/* Pill Badge - Variant A (Light Background) */}
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px 20px",
-              borderRadius: "50px",
-              marginBottom: "24px",
-              border: `1px solid ${colors.line}`,
-            }}
+            className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5 border border-[#DEDEDE]"
           >
             <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                backgroundColor: colors.accent,
-                display: "inline-block",
-              }}
+              className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
             />
             <span
-              style={{
-                fontSize: "12px",
-                fontWeight: "600",
-                letterSpacing: "1.5px",
-                color: colors.primary,
-                fontFamily: "Inter, sans-serif",
-                textTransform: "uppercase",
-              }}
+              className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
             >
               What We Do
             </span>
@@ -1625,56 +1378,29 @@ export default function ServicesSectorsPageV2() {
 
           {/* Two Column: Headline + Description */}
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: isMobile ? "24px" : "80px",
-              alignItems: "flex-start",
-            }}
+            className="grid items-start" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "24px" : "80px" }}
           >
             {/* Left - Headline */}
             <h2
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "28px" : "44px",
-                fontWeight: "300",
-                lineHeight: "1.2",
-                color: colors.primary,
-                margin: 0,
-                letterSpacing: "-0.5px",
-              }}
+              className="font-['Inter',sans-serif] font-light leading-[1.2] m-0 tracking-[-0.5px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "28px" : "44px" }}
             >
-              We <span style={{ fontWeight: "700" }}>Bridge</span> the Gaps Between{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Insight</span>,{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Opportunity</span>, and{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Impact</span>
+              We <span className="font-bold">Bridge</span> the Gaps Between{" "}
+              <span className="font-bold text-[#B8D935]">Insight</span>,{" "}
+              <span className="font-bold text-[#B8D935]">Opportunity</span>, and{" "}
+              <span className="font-bold text-[#B8D935]">Impact</span>
             </h2>
 
             {/* Right - Description Paragraphs */}
-            <div style={{ maxWidth: "480px" }}>
+            <div className="max-w-[480px]">
               <p
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "1.7",
-                  color: "#666",
-                  fontFamily: "Inter, sans-serif",
-                  fontWeight: "400",
-                  margin: "0 0 20px 0",
-                }}
+                className="text-base leading-[1.7] text-[#666] font-['Inter',sans-serif] font-normal mb-5 mt-0 mx-0"
               >
                 Different stakeholders, same mission. We connect investors to vetted opportunities. We help businesses
                 navigate new markets. We mobilize private capital toward government priorities. We give entrepreneurs
                 the resources to build what's missing.
               </p>
               <p
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "1.7",
-                  color: "#666",
-                  fontFamily: "Inter, sans-serif",
-                  fontWeight: "400",
-                  margin: 0,
-                }}
+                className="text-base leading-[1.7] text-[#666] font-['Inter',sans-serif] font-normal m-0"
               >
                 It all starts with understanding—12 sectors mapped, gaps quantified, opportunities identified. Then we
                 act: incubating ventures, deploying capital, and building partnerships that turn analysis into outcomes.
@@ -1688,30 +1414,14 @@ export default function ServicesSectorsPageV2() {
       {/* REFINED SERVICES SECTION - Focused Single View */}
       {/* ============================================ */}
       <section
-        style={{
-          backgroundColor: colors.primary,
-          padding: isMobile ? "0 20px" : "0 80px",
-        }}
+        className="bg-[#1B4D3E]" style={{ padding: isMobile ? "0 20px" : "0 80px" }}
       >
         <div
-          style={{
-            maxWidth: CONTENT_MAX_WIDTH,
-            margin: "0 auto",
-            display: isMobile ? "flex" : "grid",
-            flexDirection: "column",
-            gridTemplateColumns: isMobile ? "1fr" : "280px 1fr",
-            minHeight: isMobile ? "auto" : "680px",
-            height: isMobile ? "auto" : "680px",
-          }}
+          className="max-w-[1200px] flex-col mx-auto" style={{ display: isMobile ? "flex" : "grid", gridTemplateColumns: isMobile ? "1fr" : "280px 1fr", minHeight: isMobile ? "auto" : "680px", height: isMobile ? "auto" : "680px" }}
         >
           {/* Left Side - Service Navigation */}
           <div
-            style={{
-              backgroundColor: isMobile ? "transparent" : "rgba(0,0,0,0.15)",
-              padding: isMobile ? "32px 0 0 0" : "48px 0",
-              display: "flex",
-              flexDirection: "column",
-            }}
+            className="flex flex-col" style={{ backgroundColor: isMobile ? "transparent" : "rgba(0,0,0,0.15)", padding: isMobile ? "32px 0 0 0" : "48px 0" }}
           >
             {/* Section Label */}
             <div
@@ -1721,14 +1431,7 @@ export default function ServicesSectorsPageV2() {
               }}
             >
               <span
-                style={{
-                  fontSize: isMobile ? "12px" : "11px",
-                  fontWeight: "700",
-                  letterSpacing: "2px",
-                  color: isMobile ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.4)",
-                  fontFamily: "Inter, sans-serif",
-                  textTransform: "uppercase",
-                }}
+                className="font-bold tracking-[2px] font-['Inter',sans-serif] uppercase" style={{ fontSize: isMobile ? "12px" : "11px", color: isMobile ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.4)" }}
               >
                 Our Services
               </span>
@@ -1761,38 +1464,16 @@ export default function ServicesSectorsPageV2() {
                     setActiveService(service.id);
                     setShowFeatures(false);
                   }}
-                  style={{
-                    width: isMobile ? "auto" : "100%",
-                    padding: isMobile ? "10px 20px" : "24px 40px",
-                    backgroundColor:
-                      activeService === service.id ? (isMobile ? colors.primary : colors.primary) : "transparent",
-                    border: isMobile ? "none" : "none",
-                    borderLeft: isMobile
+                  className="cursor-pointer text-left transition-all duration-300 ease-in-out flex items-center shrink-0 border-none" style={{ width: isMobile ? "auto" : "100%", padding: isMobile ? "10px 20px" : "24px 40px", backgroundColor: activeService === service.id ? "#1B4D3E" : "transparent", borderLeft: isMobile
                       ? undefined
                       : activeService === service.id
-                        ? `4px solid ${colors.accent}`
-                        : "4px solid transparent",
-                    cursor: "pointer",
-                    textAlign: "left",
-                    transition: "all 0.3s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: isMobile ? "8px" : "16px",
-                    borderRadius: isMobile ? "50px" : "0",
-                    whiteSpace: isMobile ? "nowrap" : "normal",
-                    flexShrink: 0,
-                  }}
+                        ? "4px solid #B8D935"
+                        : "4px solid transparent", gap: isMobile ? "8px" : "16px", borderRadius: isMobile ? "50px" : "0", whiteSpace: isMobile ? "nowrap" : "normal" }}
                 >
                   {/* Number */}
                   {!isMobile && (
                     <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: activeService === service.id ? colors.accent : "rgba(255,255,255,0.3)",
-                        fontFamily: "Inter, sans-serif",
-                        minWidth: "24px",
-                      }}
+                      className="text-xs font-semibold font-['Inter',sans-serif] min-w-[24px]" style={{ color: activeService === service.id ? "#B8D935" : "rgba(255,255,255,0.3)" }}
                     >
                       {service.number}
                     </span>
@@ -1802,26 +1483,13 @@ export default function ServicesSectorsPageV2() {
                   <div>
                     {!isMobile && (
                       <div
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "500",
-                          color: activeService === service.id ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.4)",
-                          fontFamily: "Inter, sans-serif",
-                          textTransform: "uppercase",
-                          letterSpacing: "1px",
-                          marginBottom: "4px",
-                        }}
+                        className="text-[11px] font-medium font-['Inter',sans-serif] uppercase tracking-[1px] mb-1" style={{ color: activeService === service.id ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.4)" }}
                       >
                         {service.subtitle}
                       </div>
                     )}
                     <div
-                      style={{
-                        fontSize: isMobile ? "14px" : "20px",
-                        fontWeight: "600",
-                        color: activeService === service.id ? colors.white : "rgba(255,255,255,0.6)",
-                        fontFamily: "Inter, sans-serif",
-                      }}
+                      className="font-semibold font-['Inter',sans-serif]" style={{ fontSize: isMobile ? "14px" : "20px", color: activeService === service.id ? "#FFFFFF" : "rgba(255,255,255,0.6)" }}
                     >
                       {service.title}
                     </div>
@@ -1836,7 +1504,7 @@ export default function ServicesSectorsPageV2() {
                       fill="none"
                       stroke={colors.accent}
                       strokeWidth="2"
-                      style={{ marginLeft: "auto" }}
+                      className="ml-auto"
                     >
                       <path d="M9 18l6-6-6-6" />
                     </svg>
@@ -1848,106 +1516,64 @@ export default function ServicesSectorsPageV2() {
 
           {/* Right Side - Service Content */}
           <div
-            style={{
-              padding: isMobile ? "32px 20px 40px 20px" : "60px 80px 60px 100px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              overflow: "hidden",
-            }}
+            className="flex flex-col justify-center overflow-hidden" style={{ padding: isMobile ? "32px 20px 40px 20px" : "60px 80px 60px 100px" }}
           >
             {/* Headline - Dynamic with 300/700 weight pattern */}
             <h2
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "26px" : "44px",
-                fontWeight: "300",
-                color: colors.white,
-                margin: "0 0 24px 0",
-                letterSpacing: "-0.5px",
-                lineHeight: "1.2",
-              }}
+              className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2] text-white mb-6 mt-0 mx-0" style={{ fontSize: isMobile ? "26px" : "44px" }}
             >
               {currentService.id === "research" && (
                 <>
-                  The <span style={{ fontWeight: "700" }}>Foundation</span> for Every{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Decision</span>
+                  The <span className="font-bold">Foundation</span> for Every{" "}
+                  <span className="font-bold text-[#B8D935]">Decision</span>
                 </>
               )}
               {currentService.id === "ventures" && (
                 <>
-                  From <span style={{ fontWeight: "700" }}>Ideas</span> to{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Impactful Solutions</span>
+                  From <span className="font-bold">Ideas</span> to{" "}
+                  <span className="font-bold text-[#B8D935]">Impactful Solutions</span>
                 </>
               )}
               {currentService.id === "investment" && (
                 <>
-                  <span style={{ fontWeight: "700" }}>Deploying Capital</span> Where It{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Matters</span>
+                  <span className="font-bold">Deploying Capital</span> Where It{" "}
+                  <span className="font-bold text-[#B8D935]">Matters</span>
                 </>
               )}
               {currentService.id === "partnerships" && (
                 <>
-                  <span style={{ fontWeight: "700" }}>Building Relationships</span> That{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Work</span>
+                  <span className="font-bold">Building Relationships</span> That{" "}
+                  <span className="font-bold text-[#B8D935]">Work</span>
                 </>
               )}
               {currentService.id === "advisory" && (
                 <>
-                  <span style={{ fontWeight: "700" }}>Building Systems</span> That{" "}
-                  <span style={{ fontWeight: "700", color: colors.accent }}>Outlast Us</span>
+                  <span className="font-bold">Building Systems</span> That{" "}
+                  <span className="font-bold text-[#B8D935]">Outlast Us</span>
                 </>
               )}
             </h2>
 
             {/* Description */}
             <p
-              style={{
-                fontSize: "16px",
-                lineHeight: "1.7",
-                color: "rgba(255,255,255,0.5)",
-                fontFamily: "Inter, sans-serif",
-                fontWeight: "400",
-                margin: "0 0 36px 0",
-                maxWidth: "580px",
-              }}
+              className="text-base leading-[1.7] font-['Inter',sans-serif] font-normal max-w-[580px] text-white/50 mb-9 mt-0 mx-0"
             >
               {currentService.description}
             </p>
 
             {/* Stats Row */}
             <div
-              style={{
-                display: isMobile ? "grid" : "flex",
-                gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : undefined,
-                gap: isMobile ? "16px" : "48px",
-                marginBottom: isMobile ? "28px" : "40px",
-                paddingBottom: isMobile ? "28px" : "40px",
-                borderBottom: "1px solid rgba(255,255,255,0.1)",
-              }}
+              className="border-b border-b-white/10" style={{ display: isMobile ? "grid" : "flex", gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : undefined, gap: isMobile ? "16px" : "48px", marginBottom: isMobile ? "28px" : "40px", paddingBottom: isMobile ? "28px" : "40px" }}
             >
               {currentService.stats.map((stat, index) => (
                 <div key={index} style={{ textAlign: isMobile ? "center" : "left" }}>
                   <div
-                    style={{
-                      fontSize: isMobile ? "22px" : "32px",
-                      fontWeight: "700",
-                      color: colors.accent,
-                      fontFamily: "Inter, sans-serif",
-                      lineHeight: "1",
-                      marginBottom: "8px",
-                    }}
+                    className="font-bold font-['Inter',sans-serif] leading-none mb-2 text-[#B8D935]" style={{ fontSize: isMobile ? "22px" : "32px" }}
                   >
                     {stat.value}
                   </div>
                   <div
-                    style={{
-                      fontSize: isMobile ? "10px" : "13px",
-                      color: "rgba(255,255,255,0.5)",
-                      fontFamily: "Inter, sans-serif",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.5px",
-                    }}
+                    className="font-['Inter',sans-serif] uppercase tracking-[0.5px] text-white/50" style={{ fontSize: isMobile ? "10px" : "13px" }}
                   >
                     {stat.label}
                   </div>
@@ -1960,25 +1586,10 @@ export default function ServicesSectorsPageV2() {
               <div>
                 <button
                   onClick={() => setShowFeatures(!showFeatures)}
-                  style={{
-                    width: "100%",
-                    padding: "14px 20px",
-                    backgroundColor: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    borderRadius: "14px",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
+                  className="w-full bg-white/[0.06] rounded-[14px] cursor-pointer flex items-center justify-between px-5 py-3.5 border border-white/[0.12]"
                 >
                   <span
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      color: colors.white,
-                      fontFamily: "Inter, sans-serif",
-                    }}
+                    className="text-sm font-semibold font-['Inter',sans-serif] text-white"
                   >
                     Our Approach & Methodology
                   </span>
@@ -2000,36 +1611,15 @@ export default function ServicesSectorsPageV2() {
                 </button>
                 {showFeatures && (
                   <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr",
-                      gap: "16px",
-                      marginTop: "16px",
-                      paddingTop: "16px",
-                      borderTop: "1px solid rgba(255,255,255,0.08)",
-                    }}
+                    className="grid gap-4 mt-4 pt-4 grid-cols-1 border-t border-t-white/[0.08]"
                   >
                     {currentService.features.map((feature, index) => (
                       <div
                         key={index}
-                        style={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "16px",
-                        }}
+                        className="flex items-start gap-4"
                       >
                         <div
-                          style={{
-                            width: "24px",
-                            height: "24px",
-                            backgroundColor: "rgba(184, 217, 53, 0.15)",
-                            borderRadius: "50%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexShrink: 0,
-                            marginTop: "2px",
-                          }}
+                          className="w-6 h-6 bg-[rgba(184,217,53,0.15)] rounded-full flex items-center justify-center shrink-0 mt-0.5"
                         >
                           <svg
                             width="12"
@@ -2044,22 +1634,12 @@ export default function ServicesSectorsPageV2() {
                         </div>
                         <div>
                           <div
-                            style={{
-                              fontSize: "15px",
-                              fontWeight: "600",
-                              color: colors.white,
-                              fontFamily: "Inter, sans-serif",
-                              marginBottom: "4px",
-                            }}
+                            className="text-[15px] font-semibold font-['Inter',sans-serif] mb-1 text-white"
                           >
                             {feature.label}
                           </div>
                           <div
-                            style={{
-                              fontSize: "13px",
-                              color: "rgba(255,255,255,0.5)",
-                              fontFamily: "Inter, sans-serif",
-                            }}
+                            className="text-[13px] font-['Inter',sans-serif] text-white/50"
                           >
                             {feature.detail}
                           </div>
@@ -2071,33 +1651,15 @@ export default function ServicesSectorsPageV2() {
               </div>
             ) : (
               <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "24px",
-                }}
+                className="grid gap-6 grid-cols-2"
               >
                 {currentService.features.map((feature, index) => (
                   <div
                     key={index}
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "16px",
-                    }}
+                    className="flex items-start gap-4"
                   >
                     <div
-                      style={{
-                        width: "24px",
-                        height: "24px",
-                        backgroundColor: "rgba(184, 217, 53, 0.15)",
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        marginTop: "2px",
-                      }}
+                      className="w-6 h-6 bg-[rgba(184,217,53,0.15)] rounded-full flex items-center justify-center shrink-0 mt-0.5"
                     >
                       <svg
                         width="12"
@@ -2112,22 +1674,12 @@ export default function ServicesSectorsPageV2() {
                     </div>
                     <div>
                       <div
-                        style={{
-                          fontSize: "15px",
-                          fontWeight: "600",
-                          color: colors.white,
-                          fontFamily: "Inter, sans-serif",
-                          marginBottom: "4px",
-                        }}
+                        className="text-[15px] font-semibold font-['Inter',sans-serif] mb-1 text-white"
                       >
                         {feature.label}
                       </div>
                       <div
-                        style={{
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.5)",
-                          fontFamily: "Inter, sans-serif",
-                        }}
+                        className="text-[13px] font-['Inter',sans-serif] text-white/50"
                       >
                         {feature.detail}
                       </div>
@@ -2139,37 +1691,13 @@ export default function ServicesSectorsPageV2() {
 
             {/* CTA Button */}
             <div style={{ marginTop: isMobile ? "28px" : "40px" }}>
-              <a href="/contact" style={{ textDecoration: "none", width: isMobile ? "100%" : "auto" }}>
+              <a href="/contact" className="no-underline" style={{ width: isMobile ? "100%" : "auto" }}>
               <button
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  border: "none",
-                  padding: isMobile ? "16px 24px" : "16px 28px",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "10px",
-                  width: isMobile ? "100%" : "auto",
-                }}
+                className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5 bg-[#B8D935] text-[#1B4D3E]" style={{ padding: isMobile ? "16px 24px" : "16px 28px", width: isMobile ? "100%" : "auto" }}
               >
                 Learn More About {currentService.title}
                 <span
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    backgroundColor: "rgba(27,77,62,0.15)",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
+                  className="w-7 h-7 bg-[rgba(27,77,62,0.15)] rounded-full flex items-center justify-center shrink-0"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
@@ -2184,75 +1712,36 @@ export default function ServicesSectorsPageV2() {
 
       {/* Sectors Section */}
       <section
-        style={{
-          backgroundColor: colors.white,
-          padding: isMobile ? "60px 20px" : "100px 80px",
-        }}
+        className="bg-white" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div className="max-w-[1200px] mx-auto">
           {/* Section Header */}
           <div
-            style={{
-              textAlign: "center",
-              marginBottom: isMobile ? "36px" : "60px",
-            }}
+            className="text-center" style={{ marginBottom: isMobile ? "36px" : "60px" }}
           >
             {/* Pill Badge - Variant A */}
             <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "10px 20px",
-                borderRadius: "50px",
-                marginBottom: "24px",
-                border: `1px solid ${colors.line}`,
-              }}
+              className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5 border border-[#DEDEDE]"
             >
               <span
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                  display: "inline-block",
-                }}
+                className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
               />
               <span
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  letterSpacing: "1.5px",
-                  color: colors.primary,
-                  fontFamily: "Inter, sans-serif",
-                  textTransform: "uppercase",
-                }}
+                className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
               >
                 Where We Work
               </span>
             </div>
             <h2
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "24px" : "48px",
-                fontWeight: "300",
-                color: colors.primary,
-                margin: isMobile ? "0 0 12px 0" : "0 0 24px 0",
-                letterSpacing: "-0.5px",
-                lineHeight: "1.15",
-              }}
+              className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.15] text-[#1B4D3E]" style={{ fontSize: isMobile ? "24px" : "48px", margin: isMobile ? "0 0 12px 0" : "0 0 24px 0" }}
             >
-              <span style={{ fontWeight: "700" }}>Opportunity</span> Across{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Every Sector</span>
+              <span className="font-bold">Opportunity</span> Across{" "}
+              <span className="font-bold text-[#B8D935]">Every Sector</span>
             </h2>
             <p
+              className="leading-[1.7] text-[#666] font-['Inter',sans-serif] font-normal max-w-[620px]"
               style={{
                 fontSize: isMobile ? "14px" : "16px",
-                lineHeight: "1.7",
-                color: "#666",
-                fontFamily: "Inter, sans-serif",
-                fontWeight: "400",
-                maxWidth: "620px",
                 margin: isMobile ? "0 auto 24px auto" : "0 auto 36px auto",
                 ...(isMobile
                   ? {
@@ -2271,24 +1760,10 @@ export default function ServicesSectorsPageV2() {
 
           {/* Filter Tabs */}
           <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: "24px",
-              overflowX: isMobile ? "auto" : "visible",
-              WebkitOverflowScrolling: "touch",
-            }}
+            className="flex justify-center mb-6" style={{ overflowX: isMobile ? "auto" : "visible", WebkitOverflowScrolling: "touch" }}
           >
             <div
-              style={{
-                display: "inline-flex",
-                gap: "8px",
-                backgroundColor: colors.white,
-                padding: "8px",
-                borderRadius: "50px",
-                border: `1px solid ${colors.line}`,
-                flexShrink: 0,
-              }}
+              className="inline-flex gap-2 rounded-full shrink-0 bg-white p-2 border border-[#DEDEDE]"
             >
               {categories.map((cat) => (
                 <button
@@ -2298,28 +1773,12 @@ export default function ServicesSectorsPageV2() {
                     setSectorScrollIndex(0);
                     if (sectorScrollRef.current) sectorScrollRef.current.scrollTo({ left: 0 });
                   }}
-                  style={{
-                    backgroundColor: filterCategory === cat.id ? colors.primary : "transparent",
-                    color: filterCategory === cat.id ? colors.white : colors.dark,
-                    border: "none",
-                    padding: isMobile ? "10px 16px" : "12px 24px",
-                    fontSize: isMobile ? "13px" : "14px",
-                    fontWeight: filterCategory === cat.id ? "600" : "500",
-                    fontFamily: "Inter, sans-serif",
-                    cursor: "pointer",
-                    borderRadius: "50px",
-                    transition: "all 0.3s ease",
-                    whiteSpace: "nowrap",
-                  }}
+                  className="border-none font-['Inter',sans-serif] cursor-pointer rounded-full transition-all duration-300 ease-in-out whitespace-nowrap" style={{ backgroundColor: filterCategory === cat.id ? "#1B4D3E" : "transparent", color: filterCategory === cat.id ? "#FFFFFF" : "#191919", padding: isMobile ? "10px 16px" : "12px 24px", fontSize: isMobile ? "13px" : "14px", fontWeight: filterCategory === cat.id ? "600" : "500" }}
                 >
                   {isMobile ? cat.mobileLabel : cat.label}
                   {cat.id !== "all" && !isMobile && (
                     <span
-                      style={{
-                        marginLeft: "8px",
-                        opacity: 0.6,
-                        fontSize: "12px",
-                      }}
+                      className="text-xs opacity-60 ml-2"
                     >
                       ({cat.sectors.length})
                     </span>
@@ -2332,18 +1791,10 @@ export default function ServicesSectorsPageV2() {
           {/* Category Description */}
           {filterCategory !== "all" && (
             <div
-              style={{
-                textAlign: "center",
-                marginBottom: "48px",
-              }}
+              className="text-center mb-12"
             >
               <p
-                style={{
-                  fontSize: "16px",
-                  color: "#666",
-                  fontFamily: "Inter, sans-serif",
-                  fontStyle: "italic",
-                }}
+                className="text-base text-[#666] font-['Inter',sans-serif] italic"
               >
                 {categories.find((c) => c.id === filterCategory)?.description}
               </p>
@@ -2355,7 +1806,7 @@ export default function ServicesSectorsPageV2() {
             <>
               <div
                 ref={sectorScrollRef}
-                className="sector-scroll"
+                className="sector-scroll flex overflow-x-auto gap-0"
                 onScroll={() => {
                   const el = sectorScrollRef.current;
                   if (el) {
@@ -2363,15 +1814,7 @@ export default function ServicesSectorsPageV2() {
                     setSectorScrollIndex(idx);
                   }
                 }}
-                style={{
-                  display: "flex",
-                  overflowX: "auto",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                  gap: "0px",
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                }}
+                className="snap-x snap-mandatory" style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
                 <style>{`
                   .sector-scroll::-webkit-scrollbar { display: none; }
@@ -2380,101 +1823,43 @@ export default function ServicesSectorsPageV2() {
                   <div
                     key={sector.id}
                     onClick={() => setSelectedSector(selectedSector === sector.id ? null : sector.id)}
-                    style={{
-                      flex: "0 0 100%",
-                      scrollSnapAlign: "start",
-                      backgroundColor: colors.background,
-                      borderRadius: "20px",
-                      padding: "24px",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                      border: selectedSector === sector.id ? `2px solid ${colors.accent}` : "2px solid transparent",
-                      position: "relative",
-                      overflow: "hidden",
-                      display: "flex",
-                      flexDirection: "column",
-                      minHeight: "160px",
-                      boxSizing: "border-box",
-                    }}
+                    className="rounded-[20px] cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col box-border bg-[#F3F5F2] p-6 flex-[0_0_100%] snap-start min-h-40" style={{ border: selectedSector === sector.id ? "2px solid #B8D935" : "2px solid transparent" }}
                   >
                     {/* Sector Icon Badge */}
                     <div
-                      style={{
-                        position: "absolute",
-                        top: "20px",
-                        right: "20px",
-                        width: "40px",
-                        height: "40px",
-                        backgroundColor: selectedSector === sector.id ? colors.accent : colors.white,
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: colors.primary,
-                      }}
+                      className="absolute w-10 h-10 rounded-full flex items-center justify-center text-[#1B4D3E] top-5 right-5" style={{ backgroundColor: selectedSector === sector.id ? "#B8D935" : "#FFFFFF" }}
                     >
                       {FOOTER_SECTOR_ICONS[sector.id - 1]?.icon(colors.primary)}
                     </div>
 
                     {/* Sector Name */}
                     <h3
-                      style={{
-                        fontSize: "18px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                        margin: "0",
-                        paddingRight: "56px",
-                        lineHeight: "1.3",
-                      }}
+                      className="text-lg font-semibold font-['Inter',sans-serif] m-0 leading-[1.3] text-[#1B4D3E] pr-14"
                     >
                       {sector.name}
                     </h3>
 
                     {/* Problem text - visible in carousel */}
                     <p
-                      style={{
-                        fontSize: "13px",
-                        lineHeight: "1.5",
-                        color: "#666",
-                        fontFamily: "Inter, sans-serif",
-                        margin: "12px 0 0 0",
-                      }}
+                      className="text-[13px] leading-normal text-[#666] font-['Inter',sans-serif] mt-3 mb-0 mx-0"
                     >
                       {sector.problem}
                     </p>
 
                     {/* Spacer */}
-                    <div style={{ flex: 1 }} />
+                    <div className="flex-1" />
 
                     {/* Stats row */}
                     <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        paddingTop: "16px",
-                        borderTop: `1px solid ${colors.line}`,
-                        marginTop: "16px",
-                      }}
+                      className="flex justify-between items-center pt-4 mt-4 border-t border-[#DEDEDE]"
                     >
                       <span
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                        }}
+                        className="text-sm font-semibold font-['Inter',sans-serif] text-[#1B4D3E]"
                       >
                         ${sector.capitalLow}-{sector.capitalHigh}M
                       </span>
                       <span
-                        style={{
-                          fontSize: "13px",
-                          color: colors.accent,
-                          fontFamily: "Inter, sans-serif",
-                          fontWeight: "600",
-                        }}
+                        className="text-[13px] font-['Inter',sans-serif] font-semibold text-[#B8D935]"
                       >
                         {sector.ventures}+ solutions
                       </span>
@@ -2483,62 +1868,26 @@ export default function ServicesSectorsPageV2() {
                     {/* Expanded Content */}
                     {selectedSector === sector.id && (
                       <div
-                        style={{
-                          marginTop: "16px",
-                          paddingTop: "16px",
-                          borderTop: `1px solid ${colors.line}`,
-                        }}
+                        className="mt-4 pt-4 border-t border-[#DEDEDE]"
                       >
                         <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "600",
-                            color: "#999",
-                            fontFamily: "Inter, sans-serif",
-                            textTransform: "uppercase",
-                            letterSpacing: "1px",
-                            marginBottom: "12px",
-                          }}
+                          className="text-[11px] font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[1px] mb-3"
                         >
                           Key Statistics
                         </div>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                        <div className="flex flex-wrap gap-2">
                           {sector.keyStats.map((stat, idx) => (
                             <span
                               key={idx}
-                              style={{
-                                backgroundColor: colors.white,
-                                padding: "6px 12px",
-                                borderRadius: "50px",
-                                fontSize: "12px",
-                                color: colors.primary,
-                                fontFamily: "Inter, sans-serif",
-                                fontWeight: "500",
-                              }}
+                              className="rounded-full text-xs font-['Inter',sans-serif] font-medium bg-white text-[#1B4D3E] px-3 py-1.5"
                             >
                               {stat}
                             </span>
                           ))}
                         </div>
-                        <a href="/login" style={{ textDecoration: "none", width: "100%" }}>
+                        <a href="/login" className="no-underline w-full">
                         <button
-                          style={{
-                            backgroundColor: colors.accent,
-                            color: colors.primary,
-                            border: "none",
-                            padding: "12px 20px",
-                            fontSize: "13px",
-                            fontWeight: "600",
-                            fontFamily: "Inter, sans-serif",
-                            cursor: "pointer",
-                            borderRadius: "50px",
-                            marginTop: "16px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            width: "100%",
-                            justifyContent: "center",
-                          }}
+                          className="border-none text-[13px] font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full mt-4 flex items-center gap-2 w-full justify-center bg-[#B8D935] text-[#1B4D3E] px-5 py-3"
                         >
                           View Full Analysis
                           <svg
@@ -2561,13 +1910,7 @@ export default function ServicesSectorsPageV2() {
 
               {/* Scroll Dots */}
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "6px",
-                  marginTop: "20px",
-                }}
+                className="flex justify-center items-center gap-1.5 mt-5"
               >
                 {filteredSectors.map((_, i) => (
                   <div
@@ -2579,92 +1922,42 @@ export default function ServicesSectorsPageV2() {
                         setSectorScrollIndex(i);
                       }
                     }}
-                    style={{
-                      width: sectorScrollIndex === i ? "24px" : "8px",
-                      height: "8px",
-                      borderRadius: "4px",
-                      backgroundColor: sectorScrollIndex === i ? colors.accent : colors.line,
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                    }}
+                    className="rounded cursor-pointer transition-all duration-300 ease-in-out" style={{ width: sectorScrollIndex === i ? "24px" : "8px", height: "8px", backgroundColor: sectorScrollIndex === i ? "#B8D935" : "#DEDEDE" }}
                   />
                 ))}
               </div>
             </>
           ) : (
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: filterCategory === "all" ? "repeat(4, 1fr)" : "repeat(3, 1fr)",
-                gap: "24px",
-              }}
+              className="grid gap-6" style={{ gridTemplateColumns: filterCategory === "all" ? "repeat(4, 1fr)" : "repeat(3, 1fr)" }}
             >
               {filteredSectors.map((sector) => (
                 <div
                   key={sector.id}
                   onClick={() => setSelectedSector(selectedSector === sector.id ? null : sector.id)}
-                  style={{
-                    backgroundColor: colors.background,
-                    borderRadius: isMobile ? "16px" : "24px",
-                    padding: isMobile ? "16px" : filterCategory === "all" ? "24px" : "32px",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    border: selectedSector === sector.id ? `2px solid ${colors.accent}` : "2px solid transparent",
-                    position: "relative",
-                    overflow: "hidden",
-                    display: "flex",
-                    flexDirection: "column",
-                    minHeight: isMobile ? "130px" : filterCategory === "all" ? "160px" : "auto",
-                  }}
+                  className="cursor-pointer transition-all duration-300 ease-in-out relative overflow-hidden flex flex-col bg-[#F3F5F2]" style={{ borderRadius: isMobile ? "16px" : "24px", padding: isMobile ? "16px" : filterCategory === "all" ? "24px" : "32px", border: selectedSector === sector.id ? "2px solid #B8D935" : "2px solid transparent", minHeight: isMobile ? "130px" : filterCategory === "all" ? "160px" : "auto" }}
                 >
                   {/* Sector Icon Badge */}
                   <div
-                    style={{
-                      position: "absolute",
-                      top: isMobile ? "14px" : "24px",
-                      right: isMobile ? "14px" : "24px",
-                      width: isMobile ? "32px" : "40px",
-                      height: isMobile ? "32px" : "40px",
-                      backgroundColor: selectedSector === sector.id ? colors.accent : colors.white,
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: colors.primary,
-                    }}
+                    className="absolute rounded-full flex items-center justify-center text-[#1B4D3E]" style={{ top: isMobile ? "14px" : "24px", right: isMobile ? "14px" : "24px", width: isMobile ? "32px" : "40px", height: isMobile ? "32px" : "40px", backgroundColor: selectedSector === sector.id ? "#B8D935" : "#FFFFFF" }}
                   >
                     {FOOTER_SECTOR_ICONS[sector.id - 1]?.icon(colors.primary)}
                   </div>
 
                   {/* Sector Name */}
                   <h3
-                    style={{
-                      fontSize: isMobile ? "13px" : filterCategory === "all" ? "16px" : "22px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      fontFamily: "Inter, sans-serif",
-                      margin: "0",
-                      paddingRight: isMobile ? "40px" : "56px",
-                      lineHeight: "1.3",
-                      minHeight: isMobile ? "34px" : filterCategory === "all" ? "42px" : "auto",
-                    }}
+                    className="font-semibold font-['Inter',sans-serif] m-0 leading-[1.3] text-[#1B4D3E]" style={{ fontSize: isMobile ? "13px" : filterCategory === "all" ? "16px" : "22px", paddingRight: isMobile ? "40px" : "56px", minHeight: isMobile ? "34px" : filterCategory === "all" ? "42px" : "auto" }}
                   >
                     {sector.name}
                   </h3>
 
                   {/* Spacer pushes stats to bottom */}
-                  <div style={{ flex: 1 }} />
+                  <div className="flex-1" />
 
                   {/* Problem - Hidden in "all" view and mobile for cleaner look */}
                   {filterCategory !== "all" && !isMobile && (
                     <p
-                      style={{
-                        fontSize: "14px",
-                        lineHeight: "1.6",
-                        color: "#666",
-                        fontFamily: "Inter, sans-serif",
-                        margin: "0 0 20px 0",
-                      }}
+                      className="text-sm leading-[1.6] text-[#666] font-['Inter',sans-serif] mb-5 mt-0 mx-0"
                     >
                       {sector.problem}
                     </p>
@@ -2673,34 +1966,15 @@ export default function ServicesSectorsPageV2() {
                   {/* Compact stats for "all" view */}
                   {filterCategory === "all" ? (
                     <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: isMobile ? "flex-start" : "center",
-                        paddingTop: isMobile ? "12px" : "16px",
-                        borderTop: `1px solid ${colors.line}`,
-                        marginTop: isMobile ? "12px" : "16px",
-                        flexDirection: isMobile ? "column" : "row",
-                        gap: isMobile ? "4px" : "0",
-                      }}
+                      className="flex justify-between border-t border-[#DEDEDE]" style={{ alignItems: isMobile ? "flex-start" : "center", paddingTop: isMobile ? "12px" : "16px", marginTop: isMobile ? "12px" : "16px", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "4px" : "0" }}
                     >
                       <span
-                        style={{
-                          fontSize: isMobile ? "12px" : "14px",
-                          fontWeight: "600",
-                          color: colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                        }}
+                        className="font-semibold font-['Inter',sans-serif] text-[#1B4D3E]" style={{ fontSize: isMobile ? "12px" : "14px" }}
                       >
                         ${sector.capitalLow}-{sector.capitalHigh}M
                       </span>
                       <span
-                        style={{
-                          fontSize: isMobile ? "11px" : "13px",
-                          color: colors.accent,
-                          fontFamily: "Inter, sans-serif",
-                          fontWeight: "600",
-                        }}
+                        className="font-['Inter',sans-serif] font-semibold text-[#B8D935]" style={{ fontSize: isMobile ? "11px" : "13px" }}
                       >
                         {sector.ventures}+ solutions
                       </span>
@@ -2709,33 +1983,15 @@ export default function ServicesSectorsPageV2() {
                     <>
                       {/* Focus Areas - Full view */}
                       <div
-                        style={{
-                          backgroundColor: colors.white,
-                          borderRadius: "12px",
-                          padding: "16px",
-                          marginBottom: "20px",
-                        }}
+                        className="rounded-xl mb-5 bg-white p-4"
                       >
                         <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "600",
-                            color: "#999",
-                            fontFamily: "Inter, sans-serif",
-                            textTransform: "uppercase",
-                            letterSpacing: "1px",
-                            marginBottom: "8px",
-                          }}
+                          className="text-[11px] font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[1px] mb-2"
                         >
                           BRIDGE Focus
                         </div>
                         <div
-                          style={{
-                            fontSize: "13px",
-                            color: colors.primary,
-                            fontFamily: "Inter, sans-serif",
-                            lineHeight: "1.5",
-                          }}
+                          className="text-[13px] font-['Inter',sans-serif] leading-normal text-[#1B4D3E]"
                         >
                           {sector.focus}
                         </div>
@@ -2743,55 +1999,28 @@ export default function ServicesSectorsPageV2() {
 
                       {/* Stats Row */}
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          paddingTop: "16px",
-                          borderTop: `1px solid ${colors.line}`,
-                        }}
+                        className="flex justify-between pt-4 border-t border-[#DEDEDE]"
                       >
                         <div>
                           <div
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "700",
-                              color: colors.primary,
-                              fontFamily: "Inter, sans-serif",
-                            }}
+                            className="text-xl font-bold font-['Inter',sans-serif] text-[#1B4D3E]"
                           >
                             ${sector.capitalLow}-{sector.capitalHigh}M
                           </div>
                           <div
-                            style={{
-                              fontSize: "11px",
-                              color: "#999",
-                              fontFamily: "Inter, sans-serif",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.5px",
-                            }}
+                            className="text-[11px] text-[#999] font-['Inter',sans-serif] uppercase tracking-[0.5px]"
                           >
                             Capital Range
                           </div>
                         </div>
-                        <div style={{ textAlign: "right" }}>
+                        <div className="text-right">
                           <div
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "700",
-                              color: colors.primary,
-                              fontFamily: "Inter, sans-serif",
-                            }}
+                            className="text-xl font-bold font-['Inter',sans-serif] text-[#1B4D3E]"
                           >
                             {sector.ventures}+
                           </div>
                           <div
-                            style={{
-                              fontSize: "11px",
-                              color: "#999",
-                              fontFamily: "Inter, sans-serif",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.5px",
-                            }}
+                            className="text-[11px] text-[#999] font-['Inter',sans-serif] uppercase tracking-[0.5px]"
                           >
                             Solutions
                           </div>
@@ -2803,53 +2032,27 @@ export default function ServicesSectorsPageV2() {
                   {/* Expanded Content */}
                   {selectedSector === sector.id && (
                     <div
-                      style={{
-                        marginTop: "20px",
-                        paddingTop: "20px",
-                        borderTop: `1px solid ${colors.line}`,
-                      }}
+                      className="pt-5 mt-5 border-t border-[#DEDEDE]"
                     >
                       {/* Show problem if in "all" view */}
                       {filterCategory === "all" && (
                         <p
-                          style={{
-                            fontSize: "13px",
-                            lineHeight: "1.6",
-                            color: "#666",
-                            fontFamily: "Inter, sans-serif",
-                            margin: "0 0 16px 0",
-                          }}
+                          className="text-[13px] leading-[1.6] text-[#666] font-['Inter',sans-serif] mb-4 mt-0 mx-0"
                         >
                           {sector.problem}
                         </p>
                       )}
 
                       <div
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "600",
-                          color: "#999",
-                          fontFamily: "Inter, sans-serif",
-                          textTransform: "uppercase",
-                          letterSpacing: "1px",
-                          marginBottom: "12px",
-                        }}
+                        className="text-[11px] font-semibold text-[#999] font-['Inter',sans-serif] uppercase tracking-[1px] mb-3"
                       >
                         Key Statistics
                       </div>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                      <div className="flex flex-wrap gap-2">
                         {sector.keyStats.map((stat, idx) => (
                           <span
                             key={idx}
-                            style={{
-                              backgroundColor: colors.white,
-                              padding: "6px 12px",
-                              borderRadius: "50px",
-                              fontSize: "12px",
-                              color: colors.primary,
-                              fontFamily: "Inter, sans-serif",
-                              fontWeight: "500",
-                            }}
+                            className="rounded-full text-xs font-['Inter',sans-serif] font-medium bg-white text-[#1B4D3E] px-3 py-1.5"
                           >
                             {stat}
                           </span>
@@ -2857,25 +2060,9 @@ export default function ServicesSectorsPageV2() {
                       </div>
 
                       {/* View Full Analysis Button */}
-                      <a href="/login" style={{ textDecoration: "none", width: "100%" }}>
+                      <a href="/login" className="no-underline w-full">
                       <button
-                        style={{
-                          backgroundColor: colors.accent,
-                          color: colors.primary,
-                          border: "none",
-                          padding: "12px 20px",
-                          fontSize: "13px",
-                          fontWeight: "600",
-                          fontFamily: "Inter, sans-serif",
-                          cursor: "pointer",
-                          borderRadius: "50px",
-                          marginTop: "16px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                          width: "100%",
-                          justifyContent: "center",
-                        }}
+                        className="border-none text-[13px] font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full mt-4 flex items-center gap-2 w-full justify-center bg-[#B8D935] text-[#1B4D3E] px-5 py-3"
                       >
                         View Full Analysis
                         <svg
@@ -2901,81 +2088,35 @@ export default function ServicesSectorsPageV2() {
 
       {/* Cross-Sector Integration Section */}
       <section
-        style={{
-          backgroundColor: colors.background,
-          padding: isMobile ? "60px 20px" : "100px 80px",
-        }}
+        className="bg-[#F3F5F2]" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div className="max-w-[1200px] mx-auto">
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: isMobile ? "40px" : "80px",
-              alignItems: "flex-start",
-            }}
+            className="grid items-start" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "40px" : "80px" }}
           >
             {/* Left - Content */}
             <div>
               {/* Pill Badge - Light Background Variant */}
               <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  backgroundColor: colors.white,
-                  padding: "10px 20px",
-                  borderRadius: "50px",
-                  marginBottom: "24px",
-                  border: `1px solid ${colors.line}`,
-                }}
+                className="inline-flex items-center gap-2 rounded-full mb-6 bg-white px-5 py-2.5 border border-[#DEDEDE]"
               >
                 <span
-                  style={{
-                    width: "6px",
-                    height: "6px",
-                    borderRadius: "50%",
-                    backgroundColor: colors.accent,
-                    display: "inline-block",
-                  }}
+                  className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
                 />
                 <span
-                  style={{
-                    fontSize: "12px",
-                    fontWeight: "600",
-                    letterSpacing: "1.5px",
-                    color: colors.primary,
-                    fontFamily: "Inter, sans-serif",
-                    textTransform: "uppercase",
-                  }}
+                  className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
                 >
                   Connected Solutions
                 </span>
               </div>
               <h2
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: isMobile ? "28px" : "44px",
-                  fontWeight: "300",
-                  color: colors.primary,
-                  margin: "0 0 24px 0",
-                  letterSpacing: "-0.5px",
-                  lineHeight: "1.2",
-                }}
+                className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2] text-[#1B4D3E] mb-6 mt-0 mx-0" style={{ fontSize: isMobile ? "28px" : "44px" }}
               >
-                <span style={{ fontWeight: "700" }}>Progressive Systems</span>, Not{" "}
-                <span style={{ fontWeight: "700", color: colors.accent }}>Silos</span>
+                <span className="font-bold">Progressive Systems</span>, Not{" "}
+                <span className="font-bold text-[#B8D935]">Silos</span>
               </h2>
               <p
-                style={{
-                  fontSize: "16px",
-                  lineHeight: "1.7",
-                  color: "#666",
-                  fontFamily: "Inter, sans-serif",
-                  fontWeight: "400",
-                  margin: isMobile ? "0 0 24px 0" : "0 0 48px 0",
-                  maxWidth: "420px",
-                }}
+                className="text-base leading-[1.7] text-[#666] font-['Inter',sans-serif] font-normal max-w-[420px]" style={{ margin: isMobile ? "0 0 24px 0" : "0 0 48px 0" }}
               >
                 Addressing one sector while ignoring connected sectors creates partial solutions that don't hold. BRIDGE
                 thinks in systems—understanding how interventions in one area create ripple effects across others.
@@ -2983,21 +2124,10 @@ export default function ServicesSectorsPageV2() {
 
               {/* Quote */}
               <div
-                style={{
-                  borderLeft: `4px solid ${colors.accent}`,
-                  paddingLeft: "24px",
-                  marginBottom: isMobile ? "24px" : "52px",
-                }}
+                className="pl-6 border-l-4 border-l-[#B8D935]" style={{ marginBottom: isMobile ? "24px" : "52px" }}
               >
                 <p
-                  style={{
-                    fontSize: "18px",
-                    fontStyle: "italic",
-                    color: colors.primary,
-                    fontFamily: "Georgia, serif",
-                    margin: 0,
-                    lineHeight: "1.6",
-                  }}
+                  className="text-lg italic font-['Georgia',serif] m-0 leading-[1.6] text-[#1B4D3E]"
                 >
                   "A hospital means nothing without power, roads, trained staff, and pharmaceutical supply chains. Every
                   sector depends on others."
@@ -3006,34 +2136,13 @@ export default function ServicesSectorsPageV2() {
 
               {/* CTA - hidden on mobile, shown after pathways */}
               {!isMobile && (
-                <a href="/methodology" style={{ textDecoration: "none" }}>
+                <a href="/methodology" className="no-underline">
                 <button
-                  style={{
-                    backgroundColor: colors.primary,
-                    color: colors.white,
-                    border: "none",
-                    padding: "16px 28px",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    fontFamily: "Inter, sans-serif",
-                    cursor: "pointer",
-                    borderRadius: "50px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
+                  className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center gap-2.5 bg-[#1B4D3E] text-white px-7 py-4"
                 >
                   See How It Works
                   <span
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      backgroundColor: "rgba(255,255,255,0.15)",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="w-7 h-7 bg-white/[0.15] rounded-full flex items-center justify-center"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.white} strokeWidth="2.5">
                       <path d="M7 17L17 7M17 7H7M17 7V17" />
@@ -3049,29 +2158,11 @@ export default function ServicesSectorsPageV2() {
               <div>
                 <button
                   onClick={() => setShowPathways(!showPathways)}
-                  style={{
-                    width: "100%",
-                    padding: "16px 20px",
-                    backgroundColor: colors.white,
-                    border: `1px solid ${colors.line}`,
-                    borderRadius: "16px",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
+                  className="w-full rounded-2xl cursor-pointer flex items-center justify-between bg-white px-5 py-4 border border-[#DEDEDE]"
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div className="flex items-center gap-3">
                     <div
-                      style={{
-                        width: "32px",
-                        height: "32px",
-                        backgroundColor: "rgba(27,77,62,0.08)",
-                        borderRadius: "8px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
+                      className="w-8 h-8 bg-[rgba(27,77,62,0.08)] rounded-lg flex items-center justify-center"
                     >
                       <svg
                         width="16"
@@ -3086,12 +2177,7 @@ export default function ServicesSectorsPageV2() {
                       </svg>
                     </div>
                     <span
-                      style={{
-                        fontSize: "15px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                      }}
+                      className="text-[15px] font-semibold font-['Inter',sans-serif] text-[#1B4D3E]"
                     >
                       {showPathways ? "Hide" : "View"} Integration Pathways
                     </span>
@@ -3114,34 +2200,18 @@ export default function ServicesSectorsPageV2() {
                 </button>
                 {showPathways && (
                   <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "16px",
-                      marginTop: "16px",
-                    }}
+                    className="flex flex-col gap-4 mt-4"
                   >
                     {/* Farm to Fork */}
                     <div
-                      style={{
-                        backgroundColor: colors.white,
-                        borderRadius: "16px",
-                        padding: "20px",
-                        border: `1px solid ${colors.line}`,
-                      }}
+                      className="rounded-2xl bg-white p-5 border border-[#DEDEDE]"
                     >
                       <div
-                        style={{
-                          fontSize: "17px",
-                          fontWeight: "600",
-                          color: colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                          marginBottom: "16px",
-                        }}
+                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
                       >
                         Farm to Fork
                       </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0", marginBottom: "14px" }}>
+                      <div className="flex items-center gap-0 mb-3.5">
                         <IconCircle icon={<IconWheat />} isFirst />
                         <DottedLine />
                         <IconCircle icon={<IconFactory />} />
@@ -3152,32 +2222,21 @@ export default function ServicesSectorsPageV2() {
                         <DottedLine />
                         <IconCircle icon={<IconWallet />} />
                       </div>
-                      <div style={{ fontSize: "13px", color: "#666", fontFamily: "Inter, sans-serif" }}>
+                      <div className="text-[13px] text-[#666] font-['Inter',sans-serif]">
                         Production → Processing → Cold Chain → Markets → Credit
                       </div>
                     </div>
 
                     {/* Healthcare Delivery */}
                     <div
-                      style={{
-                        backgroundColor: colors.white,
-                        borderRadius: "16px",
-                        padding: "20px",
-                        border: `1px solid ${colors.line}`,
-                      }}
+                      className="rounded-2xl bg-white p-5 border border-[#DEDEDE]"
                     >
                       <div
-                        style={{
-                          fontSize: "17px",
-                          fontWeight: "600",
-                          color: colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                          marginBottom: "16px",
-                        }}
+                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
                       >
                         Healthcare Delivery
                       </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0", marginBottom: "14px" }}>
+                      <div className="flex items-center gap-0 mb-3.5">
                         <IconCircle icon={<IconHeart />} isFirst />
                         <DottedLine />
                         <IconCircle icon={<IconFactory />} />
@@ -3188,32 +2247,21 @@ export default function ServicesSectorsPageV2() {
                         <DottedLine />
                         <IconCircle icon={<IconWallet />} />
                       </div>
-                      <div style={{ fontSize: "13px", color: "#666", fontFamily: "Inter, sans-serif" }}>
+                      <div className="text-[13px] text-[#666] font-['Inter',sans-serif]">
                         Facilities → Pharmaceuticals → Distribution → Telemedicine → Insurance
                       </div>
                     </div>
 
                     {/* Skills to Jobs */}
                     <div
-                      style={{
-                        backgroundColor: colors.white,
-                        borderRadius: "16px",
-                        padding: "20px",
-                        border: `1px solid ${colors.line}`,
-                      }}
+                      className="rounded-2xl bg-white p-5 border border-[#DEDEDE]"
                     >
                       <div
-                        style={{
-                          fontSize: "17px",
-                          fontWeight: "600",
-                          color: colors.primary,
-                          fontFamily: "Inter, sans-serif",
-                          marginBottom: "16px",
-                        }}
+                        className="text-[17px] font-semibold font-['Inter',sans-serif] mb-4 text-[#1B4D3E]"
                       >
                         Skills to Jobs
                       </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0", marginBottom: "14px" }}>
+                      <div className="flex items-center gap-0 mb-3.5">
                         <IconCircle icon={<IconGraduation />} isFirst />
                         <DottedLine />
                         <IconCircle icon={<IconCpu />} />
@@ -3224,7 +2272,7 @@ export default function ServicesSectorsPageV2() {
                         <DottedLine />
                         <IconCircle icon={<IconWallet />} />
                       </div>
-                      <div style={{ fontSize: "13px", color: "#666", fontFamily: "Inter, sans-serif" }}>
+                      <div className="text-[13px] text-[#666] font-['Inter',sans-serif]">
                         Training → Digital Skills → Connectivity → Employment → Enterprise Credit
                       </div>
                     </div>
@@ -3232,37 +2280,13 @@ export default function ServicesSectorsPageV2() {
                 )}
 
                 {/* Mobile CTA - below pathways */}
-                <a href="/contact" style={{ textDecoration: "none", width: "100%" }}>
+                <a href="/contact" className="no-underline w-full">
                 <button
-                  style={{
-                    backgroundColor: colors.primary,
-                    color: colors.white,
-                    border: "none",
-                    padding: "16px 28px",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    fontFamily: "Inter, sans-serif",
-                    cursor: "pointer",
-                    borderRadius: "50px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "10px",
-                    marginTop: "24px",
-                    width: "100%",
-                  }}
+                  className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5 mt-6 w-full bg-[#1B4D3E] text-white px-7 py-4"
                 >
                   Let's Build Something Together
                   <span
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      backgroundColor: "rgba(255,255,255,0.15)",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="w-7 h-7 bg-white/[0.15] rounded-full flex items-center justify-center"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.white} strokeWidth="2.5">
                       <path d="M7 17L17 7M17 7H7M17 7V17" />
@@ -3273,41 +2297,21 @@ export default function ServicesSectorsPageV2() {
               </div>
             ) : (
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "20px",
-                }}
+                className="flex flex-col gap-5"
               >
                 {/* Farm to Fork */}
                 <div
-                  style={{
-                    backgroundColor: colors.white,
-                    borderRadius: "20px",
-                    padding: "28px",
-                    border: `1px solid ${colors.line}`,
-                  }}
+                  className="rounded-[20px] bg-white p-7 border border-[#DEDEDE]"
                 >
                   <div
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      fontFamily: "Inter, sans-serif",
-                      marginBottom: "20px",
-                    }}
+                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
                   >
                     Farm to Fork
                   </div>
 
                   {/* Icon Pathway */}
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0",
-                      marginBottom: "20px",
-                    }}
+                    className="flex items-center gap-0 mb-5"
                   >
                     <IconCircle icon={<IconWheat />} isFirst />
                     <DottedLine />
@@ -3321,11 +2325,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
 
                   <div
-                    style={{
-                      fontSize: "14px",
-                      color: "#666",
-                      fontFamily: "Inter, sans-serif",
-                    }}
+                    className="text-sm text-[#666] font-['Inter',sans-serif]"
                   >
                     Production → Processing → Cold Chain → Markets → Credit
                   </div>
@@ -3333,33 +2333,17 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Healthcare Delivery */}
                 <div
-                  style={{
-                    backgroundColor: colors.white,
-                    borderRadius: "20px",
-                    padding: "28px",
-                    border: `1px solid ${colors.line}`,
-                  }}
+                  className="rounded-[20px] bg-white p-7 border border-[#DEDEDE]"
                 >
                   <div
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      fontFamily: "Inter, sans-serif",
-                      marginBottom: "20px",
-                    }}
+                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
                   >
                     Healthcare Delivery
                   </div>
 
                   {/* Icon Pathway */}
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0",
-                      marginBottom: "20px",
-                    }}
+                    className="flex items-center gap-0 mb-5"
                   >
                     <IconCircle icon={<IconHeart />} isFirst />
                     <DottedLine />
@@ -3373,11 +2357,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
 
                   <div
-                    style={{
-                      fontSize: "14px",
-                      color: "#666",
-                      fontFamily: "Inter, sans-serif",
-                    }}
+                    className="text-sm text-[#666] font-['Inter',sans-serif]"
                   >
                     Facilities → Pharmaceuticals → Distribution → Telemedicine → Insurance
                   </div>
@@ -3385,33 +2365,17 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Skills to Jobs */}
                 <div
-                  style={{
-                    backgroundColor: colors.white,
-                    borderRadius: "20px",
-                    padding: "28px",
-                    border: `1px solid ${colors.line}`,
-                  }}
+                  className="rounded-[20px] bg-white p-7 border border-[#DEDEDE]"
                 >
                   <div
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      fontFamily: "Inter, sans-serif",
-                      marginBottom: "20px",
-                    }}
+                    className="text-xl font-semibold font-['Inter',sans-serif] mb-5 text-[#1B4D3E]"
                   >
                     Skills to Jobs
                   </div>
 
                   {/* Icon Pathway */}
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0",
-                      marginBottom: "20px",
-                    }}
+                    className="flex items-center gap-0 mb-5"
                   >
                     <IconCircle icon={<IconGraduation />} isFirst />
                     <DottedLine />
@@ -3425,11 +2389,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
 
                   <div
-                    style={{
-                      fontSize: "14px",
-                      color: "#666",
-                      fontFamily: "Inter, sans-serif",
-                    }}
+                    className="text-sm text-[#666] font-['Inter',sans-serif]"
                   >
                     Training → Digital Skills → Connectivity → Employment → Enterprise Credit
                   </div>
@@ -3444,44 +2404,20 @@ export default function ServicesSectorsPageV2() {
       {/* AUDIENCE SERVICES SECTION                          */}
       {/* ═══════════════════════════════════════════════════ */}
       <section
-        style={{
-          backgroundColor: colors.white,
-          padding: isMobile ? "60px 20px" : "100px 80px",
-        }}
+        className="bg-white" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div className="max-w-[1200px] mx-auto">
           {/* Section Header */}
           <div style={{ marginBottom: isMobile ? "32px" : "44px" }}>
             {/* Pill Badge */}
             <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "10px 20px",
-                borderRadius: "50px",
-                marginBottom: "24px",
-                border: `1px solid ${colors.line}`,
-              }}
+              className="inline-flex items-center gap-2 rounded-full mb-6 px-5 py-2.5 border border-[#DEDEDE]"
             >
               <span
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                  display: "inline-block",
-                }}
+                className="w-1.5 h-1.5 rounded-full inline-block bg-[#B8D935]"
               />
               <span
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  letterSpacing: "1.5px",
-                  color: colors.primary,
-                  fontFamily: "Inter, sans-serif",
-                  textTransform: "uppercase",
-                }}
+                className="text-xs font-semibold tracking-[1.5px] font-['Inter',sans-serif] uppercase text-[#1B4D3E]"
               >
                 BRIDGE
               </span>
@@ -3489,39 +2425,19 @@ export default function ServicesSectorsPageV2() {
 
             {/* Two Column: Headline + Description */}
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                gap: isMobile ? "24px" : "80px",
-                alignItems: "flex-start",
-              }}
+              className="grid items-start" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "24px" : "80px" }}
             >
               <h2
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: isMobile ? "28px" : "44px",
-                  fontWeight: "300",
-                  lineHeight: "1.2",
-                  color: colors.primary,
-                  margin: 0,
-                  letterSpacing: "-0.5px",
-                }}
+                className="font-['Inter',sans-serif] font-light leading-[1.2] m-0 tracking-[-0.5px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "28px" : "44px" }}
               >
-                Your <span style={{ fontWeight: "700" }}>Tool</span>. Your{" "}
-                <span style={{ fontWeight: "700" }}>Resource</span>.
+                Your <span className="font-bold">Tool</span>. Your{" "}
+                <span className="font-bold">Resource</span>.
                 <br />
-                Your <span style={{ fontWeight: "700", color: colors.accent }}>Solution</span>.
+                Your <span className="font-bold text-[#B8D935]">Solution</span>.
               </h2>
-              <div style={{ maxWidth: "480px" }}>
+              <div className="max-w-[480px]">
                 <p
-                  style={{
-                    fontSize: "16px",
-                    lineHeight: "1.7",
-                    color: "#6B7B76",
-                    fontFamily: "Inter, sans-serif",
-                    fontWeight: "400",
-                    margin: 0,
-                  }}
+                  className="text-base leading-[1.7] text-[#6B7B76] font-['Inter',sans-serif] font-normal m-0"
                 >
                   Whether you need market intelligence, structured capital, operational support, or policy-aligned
                   partnerships — BRIDGE meets you where you are.
@@ -3532,8 +2448,8 @@ export default function ServicesSectorsPageV2() {
 
           {/* Audience Tabs */}
           <div
+            className="flex box-border"
             style={{
-              display: "flex",
               gap: isMobile ? "8px" : "4px",
               marginBottom: isMobile ? "28px" : "36px",
               ...(isMobile
@@ -3541,10 +2457,9 @@ export default function ServicesSectorsPageV2() {
                     justifyContent: "center",
                   }
                 : {
-                    backgroundColor: colors.background,
+                    backgroundColor: "#F3F5F2",
                     borderRadius: "12px",
                     padding: "5px",
-                    boxSizing: "border-box",
                     width: "100%",
                   }),
             }}
@@ -3563,17 +2478,12 @@ export default function ServicesSectorsPageV2() {
                       setShowAllAudSvc(false);
                     }
                   }}
+                  className="flex items-center justify-center border-none cursor-pointer transition-all duration-[250ms] ease-in-out"
                   style={{
                     flex: isMobile ? "0 0 auto" : "1",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                     gap: isMobile ? "0" : "9px",
                     padding: isMobile ? "12px" : "13px 20px",
-                    border: "none",
                     borderRadius: isMobile ? "12px" : "9px",
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
                     backgroundColor: isActive ? colors.white : "transparent",
                     boxShadow: isActive && !isMobile ? "0 1px 4px rgba(0,0,0,0.06)" : "none",
                     ...(isMobile
@@ -3586,7 +2496,7 @@ export default function ServicesSectorsPageV2() {
                       : {}),
                   }}
                 >
-                  <span style={{ display: "flex", transition: "all 0.25s ease" }}>
+                  <span className="flex transition-all duration-[250ms] ease-in-out">
                     {aud.icon(
                       isMobile
                         ? isActive
@@ -3599,15 +2509,7 @@ export default function ServicesSectorsPageV2() {
                   </span>
                   {!isMobile && (
                     <span
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: isActive ? "700" : "500",
-                        color: isActive ? colors.primary : "rgba(27,77,62,0.4)",
-                        fontFamily: "'DM Sans', sans-serif",
-                        letterSpacing: "0.2px",
-                        whiteSpace: "nowrap",
-                        transition: "all 0.25s ease",
-                      }}
+                      className="text-[13px] font-['DM_Sans',sans-serif] tracking-[0.2px] whitespace-nowrap transition-all duration-[250ms] ease-in-out" style={{ fontWeight: isActive ? "700" : "500", color: isActive ? "#1B4D3E" : "rgba(27,77,62,0.4)" }}
                     >
                       {aud.label}
                     </span>
@@ -3622,14 +2524,9 @@ export default function ServicesSectorsPageV2() {
             (() => {
               const aud = audienceServicesData.find((a) => a.id === activeAudSvc);
               return (
-                <div style={{ textAlign: "center", marginTop: "-16px", marginBottom: "24px" }}>
+                <div className="text-center mb-6 -mt-4">
                   <span
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: "700",
-                      color: colors.primary,
-                      fontFamily: "'DM Sans', sans-serif",
-                    }}
+                    className="text-[13px] font-bold font-['DM_Sans',sans-serif] text-[#1B4D3E]"
                   >
                     {aud.label}
                   </span>
@@ -3651,73 +2548,30 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Tagline + Stat row */}
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: isMobile ? "flex-start" : "center",
-                    flexDirection: isMobile ? "column" : "row",
-                    gap: isMobile ? "16px" : "0",
-                    marginBottom: "24px",
-                  }}
+                  className="flex justify-between mb-6" style={{ alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "16px" : "0" }}
                 >
                   <div>
                     <div
-                      style={{
-                        fontSize: "11px",
-                        fontWeight: "600",
-                        color: "rgba(27,77,62,0.35)",
-                        textTransform: "uppercase",
-                        letterSpacing: "2px",
-                        fontFamily: "Inter, sans-serif",
-                        marginBottom: "6px",
-                      }}
+                      className="text-[11px] font-semibold uppercase tracking-[2px] font-['Inter',sans-serif] mb-1.5 text-[rgba(27,77,62,0.35)]"
                     >
                       How We Serve
                     </div>
                     <div
-                      style={{
-                        fontSize: isMobile ? "22px" : "26px",
-                        fontWeight: "300",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                        lineHeight: "1.2",
-                        letterSpacing: "-0.3px",
-                      }}
+                      className="font-light font-['Inter',sans-serif] leading-[1.2] tracking-[-0.3px] text-[#1B4D3E]" style={{ fontSize: isMobile ? "22px" : "26px" }}
                     >
                       {currentAudSvc.tagline}
                     </div>
                   </div>
                   <div
-                    style={{
-                      textAlign: isMobile ? "left" : "right",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      flexDirection: isMobile ? "row" : "column",
-                    }}
+                    className="flex items-center gap-2" style={{ textAlign: isMobile ? "left" : "right", flexDirection: isMobile ? "row" : "column" }}
                   >
                     <div
-                      style={{
-                        fontSize: isMobile ? "26px" : "34px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                        lineHeight: "1",
-                        textAlign: "center",
-                      }}
+                      className="font-bold font-['Inter',sans-serif] leading-none text-center text-[#1B4D3E]" style={{ fontSize: isMobile ? "26px" : "34px" }}
                     >
                       {currentAudSvc.stat.value}
                     </div>
                     <div
-                      style={{
-                        fontSize: "11px",
-                        color: "rgba(27,77,62,0.4)",
-                        textTransform: "uppercase",
-                        letterSpacing: "1px",
-                        fontFamily: "Inter, sans-serif",
-                        marginTop: isMobile ? "0" : "4px",
-                        textAlign: "center",
-                      }}
+                      className="text-[11px] uppercase tracking-[1px] font-['Inter',sans-serif] text-center text-[rgba(27,77,62,0.4)]" style={{ marginTop: isMobile ? "0" : "4px" }}
                     >
                       {currentAudSvc.stat.label}
                     </div>
@@ -3726,13 +2580,7 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Service Cards */}
                 <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: isMobile ? "1fr" : audSvcExpanded ? "1fr" : "repeat(4, minmax(0, 1fr))",
-                    gap: isMobile ? "12px" : "10px",
-                    alignItems: audSvcExpanded ? "start" : "stretch",
-                    transition: "all 0.3s ease",
-                  }}
+                  className="grid transition-all duration-300 ease-in-out" style={{ gridTemplateColumns: isMobile ? "1fr" : audSvcExpanded ? "1fr" : "repeat(4, minmax(0, 1fr))", gap: isMobile ? "12px" : "10px", alignItems: audSvcExpanded ? "start" : "stretch" }}
                 >
                   {currentAudSvc.services.map((svc, idx) => {
                     const cardKey = `${activeAudSvc}-${idx}`;
@@ -3747,68 +2595,27 @@ export default function ServicesSectorsPageV2() {
                         onMouseEnter={() => setAudSvcHovered(cardKey)}
                         onMouseLeave={() => setAudSvcHovered(null)}
                         onClick={() => setAudSvcExpanded(audSvcExpanded === cardKey ? null : cardKey)}
-                        style={{
-                          backgroundColor: isExpanded
+                        className="rounded-[14px] cursor-pointer transition-all duration-300 ease-in-out flex flex-col min-w-0 overflow-x-hidden box-border" style={{ backgroundColor: isExpanded
                             ? "rgba(27,77,62,0.025)"
                             : isHovered
                               ? "rgba(27,77,62,0.015)"
-                              : colors.white,
-                          border: `2px solid ${isExpanded ? colors.primary : isHovered ? colors.primary : "rgba(27,77,62,0.2)"}`,
-                          borderRadius: "14px",
-                          padding: isExpanded ? (isMobile ? "24px" : "32px 36px") : isMobile ? "18px" : "18px 16px",
-                          cursor: "pointer",
-                          transition: "all 0.3s ease",
-                          transform: isHovered || isExpanded ? "translateY(-2px)" : "none",
-                          boxShadow: isExpanded
+                              : "#FFFFFF", border: `2px solid ${isExpanded ? "#1B4D3E" : isHovered ? "#1B4D3E" : "rgba(27,77,62,0.2)"}`, padding: isExpanded ? (isMobile ? "24px" : "32px 36px") : isMobile ? "18px" : "18px 16px", transform: isHovered || isExpanded ? "translateY(-2px)" : "none", boxShadow: isExpanded
                             ? "0 12px 32px rgba(27,77,62,0.08)"
                             : isHovered
                               ? "0 8px 24px rgba(27,77,62,0.06)"
-                              : "none",
-                          display: "flex",
-                          flexDirection: "column",
-                          minWidth: 0,
-                          overflowX: "hidden",
-                          boxSizing: "border-box",
-                        }}
+                              : "none" }}
                       >
                         {/* Title row with badge */}
                         <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "flex-start",
-                            gap: "12px",
-                            marginBottom: isExpanded ? "12px" : "8px",
-                          }}
+                          className="flex justify-between items-start gap-3" style={{ marginBottom: isExpanded ? "12px" : "8px" }}
                         >
                           <div
-                            style={{
-                              fontSize: isExpanded ? (isMobile ? "20px" : "22px") : isMobile ? "16px" : "14px",
-                              fontWeight: "700",
-                              color: colors.dark,
-                              fontFamily: "'DM Sans', sans-serif",
-                              lineHeight: "1.3",
-                              whiteSpace: isExpanded ? "normal" : "pre-line",
-                              flex: 1,
-                            }}
+                            className="font-bold font-['DM_Sans',sans-serif] leading-[1.3] text-[#191919]" style={{ fontSize: isExpanded ? (isMobile ? "20px" : "22px") : isMobile ? "16px" : "14px", whiteSpace: isExpanded ? "normal" : "pre-line", flex: 1 }}
                           >
                             {isExpanded ? svc.title.replace("\n", " ") : svc.title}
                           </div>
                           <span
-                            style={{
-                              fontSize: "9px",
-                              fontWeight: "600",
-                              color: colors.primary,
-                              fontFamily: "Inter, sans-serif",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.8px",
-                              padding: "3px 8px",
-                              borderRadius: "4px",
-                              backgroundColor: "rgba(184,217,53,0.15)",
-                              whiteSpace: "nowrap",
-                              flexShrink: 0,
-                              marginTop: isExpanded ? "6px" : "2px",
-                            }}
+                            className="text-[9px] font-semibold font-['Inter',sans-serif] uppercase tracking-[0.8px] rounded bg-[rgba(184,217,53,0.15)] whitespace-nowrap shrink-0 text-[#1B4D3E] px-2 py-[3px]" style={{ marginTop: isExpanded ? "6px" : "2px" }}
                           >
                             {svc.source}
                           </span>
@@ -3816,20 +2623,13 @@ export default function ServicesSectorsPageV2() {
 
                         {/* Description */}
                         <div
-                          style={{
-                            fontSize: isExpanded ? (isMobile ? "15px" : "16px") : isMobile ? "13px" : "12.5px",
-                            color: "#6B7B76",
-                            fontFamily: "Inter, sans-serif",
-                            lineHeight: "1.65",
-                            wordBreak: "break-word",
-                            maxWidth: isExpanded ? "720px" : "none",
-                          }}
+                          className="text-[#6B7B76] font-['Inter',sans-serif] leading-[1.65] break-words" style={{ fontSize: isExpanded ? (isMobile ? "15px" : "16px") : isMobile ? "13px" : "12.5px", maxWidth: isExpanded ? "720px" : "none" }}
                         >
                           {svc.desc}
                         </div>
 
                         {/* Expand indicator */}
-                        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "10px" }}>
+                        <div className="flex items-center gap-1.5 mt-2.5">
                           <svg
                             width="14"
                             height="14"
@@ -3847,14 +2647,7 @@ export default function ServicesSectorsPageV2() {
                             <polyline points="6 9 12 15 18 9" />
                           </svg>
                           <span
-                            style={{
-                              fontSize: "11px",
-                              fontWeight: "600",
-                              color: isExpanded ? colors.primary : "rgba(27,77,62,0.3)",
-                              fontFamily: "Inter, sans-serif",
-                              letterSpacing: "0.5px",
-                              transition: "color 0.25s ease",
-                            }}
+                            className="text-[11px] font-semibold font-['Inter',sans-serif] tracking-[0.5px] transition-colors duration-[250ms] ease-in-out" style={{ color: isExpanded ? "#1B4D3E" : "rgba(27,77,62,0.3)" }}
                           >
                             {isExpanded ? "Collapse" : "How it works"}
                           </span>
@@ -3862,54 +2655,23 @@ export default function ServicesSectorsPageV2() {
 
                         {/* Expanded Detail */}
                         <div
-                          style={{
-                            maxHeight: isExpanded ? "400px" : "0",
-                            opacity: isExpanded ? 1 : 0,
-                            overflow: "hidden",
-                            transition: "max-height 0.35s ease, opacity 0.25s ease, margin 0.3s ease",
-                            marginTop: isExpanded ? "20px" : "0",
-                          }}
+                          className="overflow-hidden transition-[max-height,opacity,margin] duration-[350ms,250ms,300ms] ease-in-out" style={{ maxHeight: isExpanded ? "400px" : "0", opacity: isExpanded ? 1 : 0, marginTop: isExpanded ? "20px" : "0" }}
                         >
                           <div
-                            style={{
-                              borderTop: `1px solid ${colors.line}`,
-                              paddingTop: "20px",
-                              display: "grid",
-                              gridTemplateColumns: isMobile ? "1fr" : "repeat(3, minmax(0, 1fr))",
-                              gap: "14px",
-                            }}
+                            className="pt-5 grid gap-3.5 border-t border-[#DEDEDE]" style={{ gridTemplateColumns: isMobile ? "1fr" : "repeat(3, minmax(0, 1fr))" }}
                           >
                             {svc.detail.lines.map((line, li) => (
                               <div
                                 key={li}
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  gap: "8px",
-                                  padding: isMobile ? "16px" : "20px",
-                                  backgroundColor: colors.white,
-                                  borderRadius: "10px",
-                                  border: `1px solid ${colors.line}`,
-                                }}
+                                className="flex flex-col gap-2 rounded-[10px] bg-white border border-[#DEDEDE]" style={{ padding: isMobile ? "16px" : "20px" }}
                               >
                                 <span
-                                  style={{
-                                    fontSize: isMobile ? "18px" : "22px",
-                                    fontWeight: "800",
-                                    color: colors.primary,
-                                    fontFamily: "Inter, sans-serif",
-                                    lineHeight: "1.2",
-                                  }}
+                                  className="font-extrabold font-['Inter',sans-serif] leading-[1.2] text-[#1B4D3E]" style={{ fontSize: isMobile ? "18px" : "22px" }}
                                 >
                                   {line.stat}
                                 </span>
                                 <span
-                                  style={{
-                                    fontSize: "13px",
-                                    color: "#6B7B76",
-                                    fontFamily: "Inter, sans-serif",
-                                    lineHeight: "1.55",
-                                  }}
+                                  className="text-[13px] text-[#6B7B76] font-['Inter',sans-serif] leading-[1.55]"
                                 >
                                   {line.text}
                                 </span>
@@ -3926,20 +2688,7 @@ export default function ServicesSectorsPageV2() {
                 {isMobile && audSvcExpanded === null && (
                   <button
                     onClick={() => setShowAllAudSvc(!showAllAudSvc)}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "6px",
-                      width: "100%",
-                      padding: "14px",
-                      marginTop: "12px",
-                      border: `1px solid ${colors.line}`,
-                      borderRadius: "10px",
-                      backgroundColor: "transparent",
-                      cursor: "pointer",
-                      transition: "all 0.25s ease",
-                    }}
+                    className="flex items-center justify-center gap-1.5 w-full rounded-[10px] bg-transparent cursor-pointer transition-all duration-[250ms] ease-in-out p-3.5 mt-3 border border-[#DEDEDE]"
                   >
                     <svg
                       width="14"
@@ -3958,12 +2707,7 @@ export default function ServicesSectorsPageV2() {
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
                     <span
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                        fontFamily: "Inter, sans-serif",
-                      }}
+                      className="text-[13px] font-semibold font-['Inter',sans-serif] text-[#1B4D3E]"
                     >
                       {showAllAudSvc ? "Show less" : `View all ${currentAudSvc.services.length} services`}
                     </span>
@@ -3977,99 +2721,38 @@ export default function ServicesSectorsPageV2() {
 
       {/* CTA Section */}
       <section
-        style={{
-          backgroundColor: colors.primary,
-          padding: isMobile ? "60px 20px" : "100px 80px",
-          position: "relative",
-          overflow: "hidden",
-        }}
+        className="relative overflow-hidden bg-[#1B4D3E]" style={{ padding: isMobile ? "60px 20px" : "100px 80px" }}
       >
         {/* Background Pattern */}
         <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            opacity: 0.05,
-            backgroundImage: `radial-gradient(${colors.accent} 1px, transparent 1px)`,
-            backgroundSize: "30px 30px",
-          }}
+          className="absolute top-0 left-0 right-0 bottom-0 opacity-5 bg-[length:30px_30px] bg-[radial-gradient(#B8D935_1px,transparent_1px)]"
         />
-        <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+        <div className="max-w-[1200px] mx-auto">
 
-        <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center", position: "relative" }}>
+        <div className="max-w-[900px] text-center relative mx-auto">
           <h2
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "28px" : "48px",
-              fontWeight: "300",
-              color: colors.white,
-              margin: "0 0 24px 0",
-              letterSpacing: "-0.5px",
-              lineHeight: "1.2",
-            }}
+            className="font-['Inter',sans-serif] font-light tracking-[-0.5px] leading-[1.2] text-white mb-6 mt-0 mx-0" style={{ fontSize: isMobile ? "28px" : "48px" }}
           >
-            Let's <span style={{ fontWeight: "700" }}>Build</span> Something{" "}
-            <span style={{ fontWeight: "700", color: colors.accent }}>Together</span>
+            Let's <span className="font-bold">Build</span> Something{" "}
+            <span className="font-bold text-[#B8D935]">Together</span>
           </h2>
           <p
-            style={{
-              fontSize: "16px",
-              lineHeight: "1.7",
-              color: "rgba(255,255,255,0.6)",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: "400",
-              margin: "0 0 36px 0",
-              maxWidth: "620px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
+            className="text-base leading-[1.7] font-['Inter',sans-serif] font-normal max-w-[620px] text-white/60 mb-9 mt-0 mx-0 ml-auto mr-auto"
           >
             Whether you're deploying capital, entering markets, advancing policy, or building a venture—we're ready to
             connect.
           </p>
 
           <div
-            style={{
-              display: "flex",
-              gap: isMobile ? "12px" : "16px",
-              justifyContent: "center",
-              flexDirection: isMobile ? "column" : "row",
-              alignItems: "center",
-            }}
+            className="flex justify-center items-center" style={{ gap: isMobile ? "12px" : "16px", flexDirection: isMobile ? "column" : "row" }}
           >
-            <a href="/contact" style={{ textDecoration: "none", display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
+            <a href="/contact" className="no-underline" style={{ display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
               <button
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  border: "none",
-                  padding: "16px 28px",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "10px",
-                  width: isMobile ? "100%" : "auto",
-                }}
+                className="border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full flex items-center justify-center gap-2.5 bg-[#B8D935] text-[#1B4D3E] px-7 py-4" style={{ width: isMobile ? "100%" : "auto" }}
               >
                 Start a Conversation
                 <span
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    backgroundColor: "rgba(27,77,62,0.15)",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
+                  className="w-7 h-7 bg-[rgba(27,77,62,0.15)] rounded-full flex items-center justify-center"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth="2.5">
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
@@ -4077,21 +2760,9 @@ export default function ServicesSectorsPageV2() {
                 </span>
               </button>
             </a>
-            <a href="/services" style={{ textDecoration: "none", display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
+            <a href="/services" className="no-underline" style={{ display: isMobile ? "block" : "inline-block", width: isMobile ? "100%" : "auto" }}>
               <button
-                style={{
-                  backgroundColor: "transparent",
-                  color: colors.white,
-                  border: `1.5px solid rgba(255,255,255,0.3)`,
-                  padding: "16px 28px",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "50px",
-                  width: isMobile ? "100%" : "auto",
-                  textAlign: "center",
-                }}
+                className="bg-transparent text-sm font-semibold font-['Inter',sans-serif] cursor-pointer rounded-full text-center text-white px-7 py-4 border-[1.5px] border-white/30" style={{ width: isMobile ? "100%" : "auto" }}
               >
                 Explore Sectors
               </button>
@@ -4102,25 +2773,25 @@ export default function ServicesSectorsPageV2() {
       </section>
 
       {/* Divider */}
-      <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+      <div className="bg-[#1B4D3E]" style={{ padding: isMobile ? "0 20px" : "0 80px" }}>
+        <div className="h-px bg-white/[0.08]" />
       </div>
 
       {/* Footer — Exact match to BRIDGE_Footer_Exact_Build_Handoff.md */}
-      <footer style={{ backgroundColor: colors.primary, padding: "0" }}>
+      <footer className="p-0 bg-[#1B4D3E]">
         {/* Section separator */}
-        <div style={{ padding: "0 80px" }}>
-          <div style={{ height: "0.5px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+        <div className="px-20">
+          <div className="h-[0.5px] bg-white/[0.08]" />
         </div>
 
         {isMobile ? (
           /* ═══ MOBILE FOOTER ═══ */
-          <div style={{ padding: "32px 20px 16px", display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div className="flex flex-col gap-6 pt-8 px-5 pb-4">
             {/* Row 1: Logo + Nav labels */}
-            <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-              <div style={{ flexShrink: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", height: "40px" }}>
-                  <svg viewBox="0 0 4113.9 932.3" height="36" style={{ display: "block" }}>
+            <div className="flex items-center gap-6">
+              <div className="shrink-0">
+                <div className="flex items-center h-10">
+                  <svg viewBox="0 0 4113.9 932.3" height="36" className="block">
                     <path
                       fill={colors.white}
                       d="M3355.1,655.6h31.2v5.7h-31.2v-5.7ZM3355.1,667h31.2v11.1h-31.2v-11.1ZM3355.1,683.9h31.2v11.1h-31.2v-11.1ZM3355.1,700.8h31.2v11.1h-31.2v-11.1ZM3355.1,717.7h31.2v11.1h-31.2v-11.1ZM3355.1,734.5h31.2v11.1h-31.2v-11.1ZM3355.1,751.4h31.2v10.8h-31.2v-10.8ZM3355.1,767.9h31.2v11.1h-31.2v-11.1ZM3355.1,784.9h31.2v11.1h-31.2v-11.1ZM3355.1,801.8h31.2v11.1h-31.2v-11.1ZM3355.1,818.6h31.2v11.1h-31.2v-11.1ZM3355.1,835.5h31.2v11.1h-31.2v-11.1ZM3355.1,852.4h31.2v11.1h-31.2v-11.1ZM3355.1,869.2h31.2v11.1h-31.2v-11.1ZM3355.1,886.1h31.2v11.1h-31.2v-11.1ZM3355.1,903h31.2v5.7h-31.2v-5.7ZM3397.5,655.6h61.7c12.5,0,24.3,1.7,35.1,5.7h-96.8v-5.7h0ZM3397.5,667h109.7c5.9,3,11.4,6.7,16.7,11.1h-126.3v-11.1h-.1ZM3397.5,801.8h126.3c-5.2,4.4-10.8,8.1-16.7,11.1h-109.7v-11.1h.1ZM3397.5,818.6h96.8c-10.8,4-22.5,6.1-35.1,6.1h-30.5v84h-31.2v-90.2.1ZM3479.6,739.9c0-17.2-13.5-24.7-28.1-24.7h-23.6v49.3h23.6c14.5,0,28.1-7.5,28.1-24.7h0v.1ZM3485.6,683.9h44.4c3.4,3,6.6,6.7,9.3,11.1h-37.1c-4.9-4.4-10.8-8.4-16.7-11.1h.1ZM3502.2,784.9h37.1c-2.8,4-5.9,7.8-9.3,11.1h-44.4c5.9-2.7,11.8-6.7,16.7-11.1h-.1ZM3507.4,700.8h35.7c2.4,3.4,4.2,7.1,5.6,11.1h-33.6c-2.1-4-4.5-7.8-7.7-11.1ZM3515,767.9h33.6l-5.6,11.1h-35.7c3.1-3.4,5.6-7.1,7.7-11.1ZM3517.8,717.7h32.6c1.3,3.7,2.4,7.5,2.8,11.1h-32.3c-.7-3.7-1.8-7.5-3.1-11.1h0ZM3520.9,751.4h32.3c-.3,3.7-1.3,7.5-2.8,10.8h-32.6c1.3-3.4,2.4-7.1,3.1-10.8h0ZM3521.7,734.5h32.3c.3,3.7.3,7.5-.3,11.1h-32c.7-3.7.7-7.5,0-11.1h0ZM3397.5,689.2h61.7c28.4,0,51.7,23.3,51.7,50.9s-23.2,50.9-51.7,50.9h-61.7v-102h0v.2Z"
@@ -4203,26 +2874,13 @@ export default function ServicesSectorsPageV2() {
                 </div>
               </div>
               <div
-                style={{
-                  display: "flex",
-                  gap: "16px",
-                  flexWrap: "wrap",
-                  marginLeft: "auto",
-                  justifyContent: "flex-end",
-                }}
+                className="flex gap-4 flex-wrap justify-end ml-auto"
               >
                 {["Company", "Services", "Resources", "Insights"].map((label) => (
                   <a
                     key={label}
                     href={label === "Company" ? "/about" : label === "Services" ? "/services" : label === "Resources" ? "/resources" : "/insights"}
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "12px",
-                      fontWeight: "600",
-                      color: "rgba(255,255,255,0.5)",
-                      letterSpacing: "0.5px",
-                      textDecoration: "none",
-                    }}
+                    className="font-['DM_Sans',sans-serif] text-xs font-semibold tracking-[0.5px] no-underline text-white/50"
                   >
                     {label}
                   </a>
@@ -4230,76 +2888,40 @@ export default function ServicesSectorsPageV2() {
               </div>
             </div>
             {/* Row 2: Subscribe inline */}
-            <div style={{ display: "flex", gap: "8px" }}>
+            <div className="flex gap-2">
               <input
                 placeholder="Subscribe to insights"
-                style={{
-                  flex: 1,
-                  padding: "11px 14px",
-                  borderRadius: "8px",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  color: colors.white,
-                  fontSize: "12px",
-                  fontFamily: "'DM Sans', sans-serif",
-                  outline: "none",
-                }}
+                className="rounded-lg bg-white/5 text-xs font-['DM_Sans',sans-serif] outline-none text-white px-3.5 py-[11px] border border-white/[0.12] flex-1"
               />
               <button
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  border: "none",
-                  padding: "11px 18px",
-                  fontSize: "12px",
-                  fontWeight: "700",
-                  fontFamily: "'DM Sans', sans-serif",
-                  cursor: "pointer",
-                  borderRadius: "8px",
-                }}
+                className="border-none text-xs font-bold font-['DM_Sans',sans-serif] cursor-pointer rounded-lg bg-[#B8D935] text-[#1B4D3E] px-[18px] py-[11px]"
               >
                 {"\u2192"}
               </button>
             </div>
             {/* Row 3: Contact + Social */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", fontFamily: "'DM Sans', sans-serif" }}>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-['DM_Sans',sans-serif] text-white/40">
                   Accra, Ghana
                 </span>
-                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.15)" }}>{"\u00B7"}</span>
+                <span className="text-xs text-white/[0.15]">{"\u00B7"}</span>
                 <span
-                  style={{
-                    fontSize: "12px",
-                    color: colors.accent,
-                    fontWeight: "600",
-                    fontFamily: "'DM Sans', sans-serif",
-                  }}
+                  className="text-xs font-semibold font-['DM_Sans',sans-serif] text-[#B8D935]"
                 >
                   info@bridgepbc.com
                 </span>
               </div>
-              <div style={{ display: "flex", gap: "6px" }}>
+              <div className="flex gap-1.5">
                 {SOCIAL_ICONS.map((icon, i) => (
                     <a
                       key={i}
                       href={SOCIAL_HREFS[i]}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "6px",
-                        backgroundColor: "rgba(255,255,255,0.06)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: "pointer",
-                        color: "rgba(255,255,255,0.4)",
-                        textDecoration: "none",
-                      }}
+                      className="w-7 h-7 rounded-md bg-white/[0.06] flex items-center justify-center cursor-pointer no-underline text-white/40"
                     >
-                    <span style={{ transform: "scale(0.8125)", display: "flex" }}>{icon}</span>
+                    <span className="scale-[0.8125] flex">{icon}</span>
                   </a>
                 ))}
               </div>
@@ -4308,12 +2930,12 @@ export default function ServicesSectorsPageV2() {
         ) : (
           /* ═══ DESKTOP FOOTER ═══ */
           <>
-            <div style={{ padding: "64px 80px 32px", display: "grid", gridTemplateColumns: "325px 1fr", gap: "220px" }}>
+            <div className="grid pt-16 px-20 pb-8 grid-cols-[325px_1fr] gap-[220px]">
               {/* LEFT — Brand */}
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div className="flex flex-col justify-between">
                 <div>
-                  <div style={{ marginBottom: "24px", display: "flex", alignItems: "center", height: "40px" }}>
-                    <svg viewBox="0 0 4113.9 932.3" height="36" style={{ display: "block" }}>
+                  <div className="mb-6 flex items-center h-10">
+                    <svg viewBox="0 0 4113.9 932.3" height="36" className="block">
                       <path
                         fill={colors.white}
                         d="M3355.1,655.6h31.2v5.7h-31.2v-5.7ZM3355.1,667h31.2v11.1h-31.2v-11.1ZM3355.1,683.9h31.2v11.1h-31.2v-11.1ZM3355.1,700.8h31.2v11.1h-31.2v-11.1ZM3355.1,717.7h31.2v11.1h-31.2v-11.1ZM3355.1,734.5h31.2v11.1h-31.2v-11.1ZM3355.1,751.4h31.2v10.8h-31.2v-10.8ZM3355.1,767.9h31.2v11.1h-31.2v-11.1ZM3355.1,784.9h31.2v11.1h-31.2v-11.1ZM3355.1,801.8h31.2v11.1h-31.2v-11.1ZM3355.1,818.6h31.2v11.1h-31.2v-11.1ZM3355.1,835.5h31.2v11.1h-31.2v-11.1ZM3355.1,852.4h31.2v11.1h-31.2v-11.1ZM3355.1,869.2h31.2v11.1h-31.2v-11.1ZM3355.1,886.1h31.2v11.1h-31.2v-11.1ZM3355.1,903h31.2v5.7h-31.2v-5.7ZM3397.5,655.6h61.7c12.5,0,24.3,1.7,35.1,5.7h-96.8v-5.7h0ZM3397.5,667h109.7c5.9,3,11.4,6.7,16.7,11.1h-126.3v-11.1h-.1ZM3397.5,801.8h126.3c-5.2,4.4-10.8,8.1-16.7,11.1h-109.7v-11.1h.1ZM3397.5,818.6h96.8c-10.8,4-22.5,6.1-35.1,6.1h-30.5v84h-31.2v-90.2.1ZM3479.6,739.9c0-17.2-13.5-24.7-28.1-24.7h-23.6v49.3h23.6c14.5,0,28.1-7.5,28.1-24.7h0v.1ZM3485.6,683.9h44.4c3.4,3,6.6,6.7,9.3,11.1h-37.1c-4.9-4.4-10.8-8.4-16.7-11.1h.1ZM3502.2,784.9h37.1c-2.8,4-5.9,7.8-9.3,11.1h-44.4c5.9-2.7,11.8-6.7,16.7-11.1h-.1ZM3507.4,700.8h35.7c2.4,3.4,4.2,7.1,5.6,11.1h-33.6c-2.1-4-4.5-7.8-7.7-11.1ZM3515,767.9h33.6l-5.6,11.1h-35.7c3.1-3.4,5.6-7.1,7.7-11.1ZM3517.8,717.7h32.6c1.3,3.7,2.4,7.5,2.8,11.1h-32.3c-.7-3.7-1.8-7.5-3.1-11.1h0ZM3520.9,751.4h32.3c-.3,3.7-1.3,7.5-2.8,10.8h-32.6c1.3-3.4,2.4-7.1,3.1-10.8h0ZM3521.7,734.5h32.3c.3,3.7.3,7.5-.3,11.1h-32c.7-3.7.7-7.5,0-11.1h0ZM3397.5,689.2h61.7c28.4,0,51.7,23.3,51.7,50.9s-23.2,50.9-51.7,50.9h-61.7v-102h0v.2Z"
@@ -4396,38 +3018,19 @@ export default function ServicesSectorsPageV2() {
                   </div>
 
                   <p
-                    style={{
-                      fontSize: "14px",
-                      color: "rgba(255,255,255,0.5)",
-                      fontFamily: "'DM Sans', sans-serif",
-                      lineHeight: "1.8",
-                      margin: "0 0 28px",
-                      maxWidth: "325px",
-                    }}
+                    className="text-sm font-['DM_Sans',sans-serif] leading-[1.8] max-w-[325px] text-white/50 mb-7 mt-0 mx-0"
                   >
                     Blending resources and innovation across the integrated sectors for development, growth, and
                     empowerment.
                   </p>
 
                   <p
-                    style={{
-                      fontSize: "14px",
-                      color: "rgba(255,255,255,0.55)",
-                      fontFamily: "'DM Sans', sans-serif",
-                      margin: "0 0 4px",
-                      lineHeight: "1.7",
-                    }}
+                    className="text-sm font-['DM_Sans',sans-serif] leading-[1.7] text-white/[0.55] mb-1 mt-0 mx-0"
                   >
                     Accra, Ghana
                   </p>
                   <p
-                    style={{
-                      fontSize: "14px",
-                      color: colors.accent,
-                      fontFamily: "'DM Sans', sans-serif",
-                      margin: "0",
-                      fontWeight: "600",
-                    }}
+                    className="text-sm font-['DM_Sans',sans-serif] m-0 font-semibold text-[#B8D935]"
                   >
                     info@bridgepbc.com
                   </p>
@@ -4435,76 +3038,32 @@ export default function ServicesSectorsPageV2() {
 
                 {/* Bottom content — subscribe + social */}
                 <div>
-                  <div style={{ marginBottom: "16px", maxWidth: "325px" }}>
+                  <div className="mb-4 max-w-[325px]">
                     <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "rgba(255,255,255,0.4)",
-                        fontFamily: "'DM Sans', sans-serif",
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        display: "block",
-                        marginBottom: "12px",
-                      }}
+                      className="text-xs font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] block mb-3 text-white/40"
                     >
                       Subscribe to Insights
                     </span>
-                    <div style={{ display: "flex", gap: "8px" }}>
+                    <div className="flex gap-2">
                       <input
                         placeholder="Your email address"
-                        style={{
-                          flex: 1,
-                          padding: "12px 16px",
-                          borderRadius: "8px",
-                          border: "1px solid rgba(255,255,255,0.12)",
-                          backgroundColor: "rgba(255,255,255,0.05)",
-                          color: colors.white,
-                          fontSize: "13px",
-                          fontFamily: "'DM Sans', sans-serif",
-                          outline: "none",
-                          height: "44px",
-                          boxSizing: "border-box",
-                        }}
+                        className="rounded-lg bg-white/5 text-[13px] font-['DM_Sans',sans-serif] outline-none h-11 box-border text-white px-4 py-3 border border-white/[0.12] flex-1"
                       />
                       <button
-                        style={{
-                          backgroundColor: colors.accent,
-                          color: colors.primary,
-                          border: "none",
-                          padding: "12px 20px",
-                          fontSize: "13px",
-                          fontWeight: "700",
-                          fontFamily: "'DM Sans', sans-serif",
-                          cursor: "pointer",
-                          borderRadius: "8px",
-                          height: "44px",
-                          boxSizing: "border-box",
-                        }}
+                        className="border-none text-[13px] font-bold font-['DM_Sans',sans-serif] cursor-pointer rounded-lg h-11 box-border bg-[#B8D935] text-[#1B4D3E] px-5 py-3"
                       >
                         {"\u2192"}
                       </button>
                     </div>
                   </div>
-                  <div style={{ display: "flex", gap: "10px", marginTop: "16px" }}>
+                  <div className="flex gap-2.5 mt-4">
                     {SOCIAL_ICONS.map((icon, i) => (
                       <a
                         key={i}
                         href={SOCIAL_HREFS[i]}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{
-                          width: "34px",
-                          height: "34px",
-                          borderRadius: "8px",
-                          backgroundColor: "rgba(255,255,255,0.06)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          color: "rgba(255,255,255,0.45)",
-                          textDecoration: "none",
-                        }}
+                        className="w-[34px] h-[34px] rounded-lg bg-white/[0.06] flex items-center justify-center cursor-pointer no-underline text-white/[0.45]"
                       >
                         {icon}
                       </a>
@@ -4515,21 +3074,13 @@ export default function ServicesSectorsPageV2() {
 
               {/* RIGHT — Links top, sector grid bottom */}
               <div
-                style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", maxWidth: "680px" }}
+                className="flex flex-col justify-between max-w-[680px]"
               >
                 {/* 4 Link columns */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
+                <div className="grid grid-cols-4">
                   <div>
                     <h4
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                        fontFamily: "'DM Sans', sans-serif",
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        marginBottom: "24px",
-                      }}
+                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6 text-[#B8D935]"
                     >
                       Company
                     </h4>
@@ -4537,14 +3088,7 @@ export default function ServicesSectorsPageV2() {
                       <a
                         key={link}
                         href={footerLinkHref(link)}
-                        style={{
-                          display: "block",
-                          fontSize: "14px",
-                          color: "rgba(255,255,255,0.6)",
-                          fontFamily: "'DM Sans', sans-serif",
-                          textDecoration: "none",
-                          marginBottom: "14px",
-                        }}
+                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5 text-white/60"
                       >
                         {link}
                       </a>
@@ -4552,15 +3096,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
                   <div>
                     <h4
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                        fontFamily: "'DM Sans', sans-serif",
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        marginBottom: "24px",
-                      }}
+                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6 text-[#B8D935]"
                     >
                       Services
                     </h4>
@@ -4569,14 +3105,7 @@ export default function ServicesSectorsPageV2() {
                         <a
                           key={link}
                           href={footerLinkHref(link)}
-                          style={{
-                            display: "block",
-                            fontSize: "14px",
-                            color: "rgba(255,255,255,0.6)",
-                            fontFamily: "'DM Sans', sans-serif",
-                            textDecoration: "none",
-                            marginBottom: "14px",
-                          }}
+                          className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5 text-white/60"
                         >
                           {link}
                         </a>
@@ -4585,15 +3114,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
                   <div>
                     <h4
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                        fontFamily: "'DM Sans', sans-serif",
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        marginBottom: "24px",
-                      }}
+                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6 text-[#B8D935]"
                     >
                       Resources
                     </h4>
@@ -4601,14 +3122,7 @@ export default function ServicesSectorsPageV2() {
                       <a
                         key={link}
                         href={footerLinkHref(link)}
-                        style={{
-                          display: "block",
-                          fontSize: "14px",
-                          color: "rgba(255,255,255,0.6)",
-                          fontFamily: "'DM Sans', sans-serif",
-                          textDecoration: "none",
-                          marginBottom: "14px",
-                        }}
+                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5 text-white/60"
                       >
                         {link}
                       </a>
@@ -4616,15 +3130,7 @@ export default function ServicesSectorsPageV2() {
                   </div>
                   <div>
                     <h4
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                        fontFamily: "'DM Sans', sans-serif",
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        marginBottom: "24px",
-                      }}
+                      className="text-xs font-bold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-6 text-[#B8D935]"
                     >
                       Insights
                     </h4>
@@ -4632,14 +3138,7 @@ export default function ServicesSectorsPageV2() {
                       <a
                         key={link}
                         href={footerLinkHref(link)}
-                        style={{
-                          display: "block",
-                          fontSize: "14px",
-                          color: "rgba(255,255,255,0.6)",
-                          fontFamily: "'DM Sans', sans-serif",
-                          textDecoration: "none",
-                          marginBottom: "14px",
-                        }}
+                        className="block text-sm font-['DM_Sans',sans-serif] no-underline mb-3.5 text-white/60"
                       >
                         {link}
                       </a>
@@ -4648,24 +3147,13 @@ export default function ServicesSectorsPageV2() {
                 </div>
 
                 {/* Sector Grid Widget — desktop only */}
-                <div style={{ marginBottom: "50px" }}>
+                <div className="mb-[50px]">
                   <div
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: "600",
-                      color: footerSectorHovered !== null ? colors.accent : "rgba(255,255,255,0.4)",
-                      fontFamily: "'DM Sans', sans-serif",
-                      textTransform: "uppercase",
-                      letterSpacing: "1.5px",
-                      marginBottom: "12px",
-                      transition: "color 0.25s ease",
-                      lineHeight: "1",
-                      minHeight: "12px",
-                    }}
+                    className="text-xs font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-3 transition-colors duration-[250ms] ease-in-out leading-none min-h-[12px]" style={{ color: footerSectorHovered !== null ? "#B8D935" : "rgba(255,255,255,0.4)" }}
                   >
                     {footerSectorHovered !== null ? FOOTER_SECTOR_ICONS[footerSectorHovered].label : "Explore 12 Sectors"}
                   </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div className="flex justify-between items-center">
                     {FOOTER_SECTOR_ICONS.map((sector, i) => {
                       const isH = footerSectorHovered === i;
                       return (
@@ -4688,31 +3176,10 @@ export default function ServicesSectorsPageV2() {
                           title={sector.label}
                           onMouseEnter={() => setFooterSectorHovered(i)}
                           onMouseLeave={() => setFooterSectorHovered(null)}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            width: "44px",
-                            height: "44px",
-                            borderRadius: "10px",
-                            backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)",
-                            border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`,
-                            cursor: "pointer",
-                            textDecoration: "none",
-                            transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                            transform: isH ? "translateY(-2px)" : "none",
-                            boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
-                            boxSizing: "border-box",
-                          }}
+                          className="flex items-center justify-center w-11 h-11 rounded-[10px] cursor-pointer no-underline box-border transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]" style={{ backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)", border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`, transform: isH ? "translateY(-2px)" : "none", boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none" }}
                         >
                           <div
-                            style={{
-                              opacity: isH ? 1 : 0.5,
-                              transition: "opacity 0.25s ease",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
+                            className="transition-opacity duration-[250ms] ease-in-out flex items-center justify-center" style={{ opacity: isH ? 1 : 0.5 }}
                           >
                             {sector.icon(isH ? colors.accent : "rgba(255,255,255,0.85)")}
                           </div>
@@ -4728,28 +3195,17 @@ export default function ServicesSectorsPageV2() {
 
         {/* Bottom bar */}
         <div
-          style={{
-            padding: isMobile ? "16px 20px" : "20px 80px",
-            borderTop: "1px solid rgba(255,255,255,0.06)",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
+          className="flex justify-between items-center border-t border-t-white/[0.06]" style={{ padding: isMobile ? "16px 20px" : "20px 80px" }}
         >
-          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontFamily: "'DM Sans', sans-serif" }}>
+          <span className="text-[11px] font-['DM_Sans',sans-serif] text-white/25">
             {"\u00A9"} 2026 BRIDGE PBC
           </span>
-          <div style={{ display: "flex", gap: isMobile ? "12px" : "20px" }}>
+          <div className="flex" style={{ gap: isMobile ? "12px" : "20px" }}>
             {["Terms", "Privacy", "Accessibility"].map((link) => (
               <a
                 key={link}
                 href="#"
-                style={{
-                  fontSize: "11px",
-                  color: "rgba(255,255,255,0.25)",
-                  fontFamily: "'DM Sans', sans-serif",
-                  textDecoration: "none",
-                }}
+                className="text-[11px] font-['DM_Sans',sans-serif] no-underline text-white/25"
               >
                 {link}
               </a>
@@ -4758,5 +3214,6 @@ export default function ServicesSectorsPageV2() {
         </div>
       </footer>
     </div>
+    </Layout>
   );
 }

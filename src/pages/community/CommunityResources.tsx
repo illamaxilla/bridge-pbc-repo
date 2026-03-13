@@ -23,50 +23,29 @@ export default function CommunityResourcesPage({ C, font }: CommunityResourcesPa
 
   return (
     <div
-      style={{
-        background: C.white,
-        borderRadius: 20,
-        padding: 48,
-        boxShadow: C.cardShadow,
-        textAlign: "center",
-      }}
+      className="rounded-[20px] p-12 text-center"
+      style={{ background: C.white, boxShadow: C.cardShadow }}
     >
-      <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
+      <div className="text-[48px] mb-4">📚</div>
       <h2
-        style={{
-          fontFamily: font.display,
-          fontSize: 26,
-          fontWeight: 700,
-          color: C.primary,
-          margin: "0 0 12px",
-        }}
+        className="text-[26px] font-bold m-0 mb-3"
+        style={{ fontFamily: font.display, color: C.primary }}
       >
         Community Resources
       </h2>
       <p
-        style={{
-          fontSize: 15,
-          color: C.muted,
-          maxWidth: 420,
-          margin: "0 auto 28px",
-          lineHeight: 1.6,
-        }}
+        className="text-[15px] max-w-[420px] mx-auto mb-7 mt-0 leading-[1.6]"
+        style={{ color: C.muted }}
       >
         Guides, sector briefs, toolkits, and knowledge assets curated for
         BRIDGE community members. Coming soon.
       </p>
       <div
+        className="inline-flex items-center gap-2 py-2.5 px-6 rounded-[20px] font-bold text-[13px]"
         style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 8,
-          padding: "10px 24px",
-          borderRadius: 20,
           background: C.accent + "22",
           border: `1.5px solid ${C.accent}`,
           color: C.primary,
-          fontWeight: 700,
-          fontSize: 13,
           fontFamily: font.body,
         }}
       >

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/context/AuthContext";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -466,37 +465,29 @@ export default function SectorReportPage() {
 
   if (!report) {
     return (
-      <>
-        <SiteHeader />
-        <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "16px" }}>
-          <h1 style={{ fontSize: "24px", fontWeight: "700", color: colors.dark, fontFamily: "DM Sans, sans-serif" }}>Report Not Found</h1>
-          <p style={{ color: "#666", fontFamily: "Inter, sans-serif" }}>The sector report you're looking for doesn't exist.</p>
-          <button onClick={() => navigate("/resources")} style={{ padding: "12px 28px", borderRadius: "50px", border: "none", backgroundColor: colors.primary, color: colors.white, fontSize: "14px", fontWeight: "600", fontFamily: "Inter, sans-serif", cursor: "pointer" }}>
+      <Layout>
+        <div className="min-h-[60vh] flex items-center justify-center flex-col gap-4">
+          <h1 className="text-2xl font-bold font-['DM_Sans',sans-serif]" style={{ color: colors.dark }}>Report Not Found</h1>
+          <p className="text-[#666] font-['Inter',sans-serif]">The sector report you're looking for doesn't exist.</p>
+          <button onClick={() => navigate("/resources")} className="py-3 px-7 rounded-[50px] border-none text-sm font-semibold font-['Inter',sans-serif] cursor-pointer" style={{ backgroundColor: colors.primary, color: colors.white }}>
             Back to Resources
           </button>
         </div>
-        <SiteFooter />
-      </>
+      </Layout>
     );
   }
 
   const isLocked = !report.free && !user;
 
   return (
-    <>
-      <SiteHeader />
-
-      <div style={{ backgroundColor: colors.background, minHeight: "100vh" }}>
+    <Layout>
+      <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
         {/* ── Breadcrumb ── */}
-        <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: mobile ? "20px 20px 0" : "28px 40px 0" }}>
+        <div className="mx-auto" style={{ maxWidth: layout.maxWidth, padding: mobile ? "20px 20px 0" : "28px 40px 0" }}>
           <button
             onClick={() => navigate("/resources")}
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "6px",
-              background: "none", border: "none", cursor: "pointer",
-              color: colors.primary, fontSize: "13px", fontWeight: "600",
-              fontFamily: "Inter, sans-serif", padding: 0,
-            }}
+            className="inline-flex items-center gap-1.5 bg-transparent border-none cursor-pointer text-[13px] font-semibold font-['Inter',sans-serif] p-0"
+            style={{ color: colors.primary }}
           >
             <ArrowLeft size={14} />
             Back to Resources
@@ -504,78 +495,71 @@ export default function SectorReportPage() {
         </div>
 
         {/* ── Hero Section ── */}
-        <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: mobile ? "24px 20px 0" : "32px 40px 0" }}>
-          <div style={{
-            background: colors.white,
-            borderRadius: "16px",
-            border: `1px solid ${colors.line}`,
-            padding: mobile ? "28px 20px" : "40px 48px",
-            marginBottom: "24px",
-          }}>
+        <div className="mx-auto" style={{ maxWidth: layout.maxWidth, padding: mobile ? "24px 20px 0" : "32px 40px 0" }}>
+          <div
+            className="rounded-2xl mb-6"
+            style={{
+              background: colors.white,
+              border: `1px solid ${colors.line}`,
+              padding: mobile ? "28px 20px" : "40px 48px",
+            }}
+          >
             {/* Tag + Score */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <span style={{
-                display: "inline-block", padding: "4px 12px", borderRadius: "50px",
-                backgroundColor: `${colors.primary}10`, color: colors.primary,
-                fontSize: "11px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                textTransform: "uppercase", letterSpacing: "0.5px",
-              }}>
+            <div className="flex items-center gap-2.5 mb-4 flex-wrap">
+              <span
+                className="inline-block py-1 px-3 rounded-[50px] text-[11px] font-bold font-['Inter',sans-serif] uppercase tracking-[0.5px]"
+                style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
+              >
                 {report.tag}
               </span>
-              <span style={{
-                display: "inline-flex", alignItems: "center", gap: "6px",
-                padding: "4px 12px", borderRadius: "50px",
-                backgroundColor: report.score >= 88 ? "#E8F5E0" : report.score >= 82 ? `${colors.primary}10` : colors.background,
-                fontSize: "11px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                color: report.score >= 88 ? "#2d6a1e" : colors.primary,
-              }}>
+              <span
+                className="inline-flex items-center gap-1.5 py-1 px-3 rounded-[50px] text-[11px] font-bold font-['Inter',sans-serif]"
+                style={{
+                  backgroundColor: report.score >= 88 ? "#E8F5E0" : report.score >= 82 ? `${colors.primary}10` : colors.background,
+                  color: report.score >= 88 ? "#2d6a1e" : colors.primary,
+                }}
+              >
                 <BarChart3 size={11} />
                 Impact Score: {report.score}/100
               </span>
               {report.free && (
-                <span style={{
-                  padding: "4px 12px", borderRadius: "50px",
-                  backgroundColor: "#E8F5E0", color: "#2d6a1e",
-                  fontSize: "11px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                }}>
+                <span className="py-1 px-3 rounded-[50px] bg-[#E8F5E0] text-[#2d6a1e] text-[11px] font-bold font-['Inter',sans-serif]">
                   FREE ACCESS
                 </span>
               )}
             </div>
 
             {/* Title */}
-            <h1 style={{
-              fontSize: mobile ? "26px" : "34px", fontWeight: "800",
-              color: colors.dark, fontFamily: "DM Sans, sans-serif",
-              lineHeight: 1.2, margin: "0 0 12px",
-            }}>
+            <h1
+              className="font-extrabold font-['DM_Sans',sans-serif] leading-[1.2] m-0 mb-3"
+              style={{ fontSize: mobile ? "26px" : "34px", color: colors.dark }}
+            >
               {report.name}
             </h1>
 
             {/* Headline */}
-            <p style={{
-              fontSize: mobile ? "16px" : "18px", fontWeight: "600",
-              color: colors.primary, fontFamily: "DM Sans, sans-serif",
-              lineHeight: 1.5, margin: "0 0 8px", maxWidth: "720px",
-            }}>
+            <p
+              className="font-semibold font-['DM_Sans',sans-serif] leading-[1.5] m-0 mb-2 max-w-[720px]"
+              style={{ fontSize: mobile ? "16px" : "18px", color: colors.primary }}
+            >
               {report.headline}
             </p>
 
             {/* Quick stats */}
-            <div style={{
-              display: "flex", gap: mobile ? "16px" : "32px", marginTop: "20px",
-              flexWrap: "wrap",
-            }}>
+            <div className="flex flex-wrap mt-5" style={{ gap: mobile ? "16px" : "32px" }}>
               {[
                 { label: "Ventures Identified", value: report.ventures },
                 { label: "Capital Range", value: report.cap },
                 { label: "Impact Score", value: `${report.score}/100` },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div style={{ fontSize: mobile ? "20px" : "24px", fontWeight: "800", color: colors.primary, fontFamily: "DM Sans, sans-serif" }}>
+                  <div
+                    className="font-extrabold font-['DM_Sans',sans-serif]"
+                    style={{ fontSize: mobile ? "20px" : "24px", color: colors.primary }}
+                  >
                     {stat.value}
                   </div>
-                  <div style={{ fontSize: "12px", color: "#888", fontFamily: "Inter, sans-serif", fontWeight: "500" }}>
+                  <div className="text-xs text-[#888] font-['Inter',sans-serif] font-medium">
                     {stat.label}
                   </div>
                 </div>
@@ -585,58 +569,61 @@ export default function SectorReportPage() {
         </div>
 
         {/* ── Main Content Grid ── */}
-        <div style={{
-          maxWidth: layout.maxWidth, margin: "0 auto",
-          padding: mobile ? "0 20px 40px" : "0 40px 60px",
-          display: "grid",
-          gridTemplateColumns: mobile ? "1fr" : "1fr 380px",
-          gap: "24px",
-          alignItems: "start",
-        }}>
+        <div
+          className="mx-auto grid items-start gap-6"
+          style={{
+            maxWidth: layout.maxWidth,
+            padding: mobile ? "0 20px 40px" : "0 40px 60px",
+            gridTemplateColumns: mobile ? "1fr" : "1fr 380px",
+          }}
+        >
           {/* Left Column: Summary + Key Findings */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div className="flex flex-col gap-6">
 
             {/* Summary */}
-            <div style={{
-              background: colors.white, borderRadius: "16px",
-              border: `1px solid ${colors.line}`, padding: mobile ? "24px 20px" : "36px 40px",
-            }}>
-              <h2 style={{
-                fontSize: "20px", fontWeight: "700", color: colors.dark,
-                fontFamily: "DM Sans, sans-serif", margin: "0 0 20px",
-                display: "flex", alignItems: "center", gap: "10px",
-              }}>
+            <div
+              className="rounded-2xl"
+              style={{
+                background: colors.white,
+                border: `1px solid ${colors.line}`,
+                padding: mobile ? "24px 20px" : "36px 40px",
+              }}
+            >
+              <h2
+                className="text-xl font-bold font-['DM_Sans',sans-serif] m-0 mb-5 flex items-center gap-2.5"
+                style={{ color: colors.dark }}
+              >
                 <FileText size={18} color={colors.primary} />
                 Sector Overview
               </h2>
               {report.summary.map((p, i) => (
-                <p key={i} style={{
-                  fontSize: "14.5px", lineHeight: 1.75, color: "#444",
-                  fontFamily: "Inter, sans-serif", margin: i < report.summary.length - 1 ? "0 0 16px" : 0,
-                }}>
+                <p key={i} className="text-[14.5px] leading-[1.75] text-[#444] font-['Inter',sans-serif]" style={{ margin: i < report.summary.length - 1 ? "0 0 16px" : 0 }}>
                   {p}
                 </p>
               ))}
             </div>
 
             {/* Key Findings */}
-            <div style={{
-              background: colors.white, borderRadius: "16px",
-              border: `1px solid ${colors.line}`, padding: mobile ? "24px 20px" : "36px 40px",
-            }}>
-              <h2 style={{
-                fontSize: "20px", fontWeight: "700", color: colors.dark,
-                fontFamily: "DM Sans, sans-serif", margin: "0 0 20px",
-                display: "flex", alignItems: "center", gap: "10px",
-              }}>
+            <div
+              className="rounded-2xl"
+              style={{
+                background: colors.white,
+                border: `1px solid ${colors.line}`,
+                padding: mobile ? "24px 20px" : "36px 40px",
+              }}
+            >
+              <h2
+                className="text-xl font-bold font-['DM_Sans',sans-serif] m-0 mb-5 flex items-center gap-2.5"
+                style={{ color: colors.dark }}
+              >
                 <TrendingUp size={18} color={colors.primary} />
                 Key Findings
               </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div className="flex flex-col gap-3.5">
                 {report.keyFindings.map((finding, i) => (
-                  <div key={i} style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
-                    <CheckCircle2 size={16} color={colors.accent} style={{ flexShrink: 0, marginTop: "2px" }} />
-                    <span style={{ fontSize: "14px", lineHeight: 1.6, color: "#444", fontFamily: "Inter, sans-serif" }}>
+                  <div key={i} className="flex gap-3 items-start">
+                    <CheckCircle2 size={16} color={colors.accent} className="shrink-0 mt-0.5" />
+                    <span className="text-sm leading-[1.6] text-[#444] font-['Inter',sans-serif]">
                       {finding}
                     </span>
                   </div>
@@ -645,48 +632,38 @@ export default function SectorReportPage() {
             </div>
 
             {/* GIPC Report Download */}
-            <div style={{
-              background: colors.white, borderRadius: "16px",
-              border: `1px solid ${colors.line}`, padding: mobile ? "24px 20px" : "36px 40px",
-            }}>
-              <div style={{
-                display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px",
-              }}>
-                <span style={{
-                  padding: "3px 10px", borderRadius: "50px",
-                  backgroundColor: "#E8F5E0", color: "#2d6a1e",
-                  fontSize: "10px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                  textTransform: "uppercase", letterSpacing: "0.5px",
-                }}>
+            <div
+              className="rounded-2xl"
+              style={{
+                background: colors.white,
+                border: `1px solid ${colors.line}`,
+                padding: mobile ? "24px 20px" : "36px 40px",
+              }}
+            >
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="py-[3px] px-2.5 rounded-[50px] bg-[#E8F5E0] text-[#2d6a1e] text-[10px] font-bold font-['Inter',sans-serif] uppercase tracking-[0.5px]">
                   Free Resource
                 </span>
-                <span style={{
-                  padding: "3px 10px", borderRadius: "50px",
-                  backgroundColor: colors.background, color: "#888",
-                  fontSize: "10px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                }}>
+                <span
+                  className="py-[3px] px-2.5 rounded-[50px] text-[#888] text-[10px] font-bold font-['Inter',sans-serif]"
+                  style={{ backgroundColor: colors.background }}
+                >
                   Source: GIPC
                 </span>
               </div>
 
-              <h2 style={{
-                fontSize: "18px", fontWeight: "700", color: colors.dark,
-                fontFamily: "DM Sans, sans-serif", margin: "12px 0 8px",
-              }}>
+              <h2
+                className="text-lg font-bold font-['DM_Sans',sans-serif] mt-3 mb-2"
+                style={{ color: colors.dark }}
+              >
                 {report.gipcTitle}
               </h2>
 
-              <p style={{
-                fontSize: "13.5px", lineHeight: 1.6, color: "#666",
-                fontFamily: "Inter, sans-serif", margin: "0 0 8px",
-              }}>
+              <p className="text-[13.5px] leading-[1.6] text-[#666] font-['Inter',sans-serif] m-0 mb-2">
                 Official GIPC investment climate profile covering the regulatory environment, FDI statistics, sector macro-indicators, investment incentives, and government priorities.
               </p>
 
-              <div style={{
-                display: "flex", alignItems: "center", gap: "16px", marginBottom: "20px",
-                fontSize: "12px", color: "#888", fontFamily: "Inter, sans-serif", fontWeight: "600",
-              }}>
+              <div className="flex items-center gap-4 mb-5 text-xs text-[#888] font-['Inter',sans-serif] font-semibold">
                 <span>{report.gipcPages} pages</span>
                 <span>·</span>
                 <span>2025</span>
@@ -699,14 +676,8 @@ export default function SectorReportPage() {
                   href={report.gipcUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "8px",
-                    padding: "13px 28px", borderRadius: "50px", border: "none",
-                    backgroundColor: colors.accent, color: colors.primary,
-                    fontSize: "14px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                    cursor: "pointer", textDecoration: "none",
-                    transition: "all 0.2s",
-                  }}
+                  className="inline-flex items-center gap-2 py-[13px] px-7 rounded-[50px] border-none text-sm font-bold font-['Inter',sans-serif] cursor-pointer no-underline transition-all duration-200"
+                  style={{ backgroundColor: colors.accent, color: colors.primary }}
                 >
                   <Download size={15} />
                   Download Full Report
@@ -717,13 +688,8 @@ export default function SectorReportPage() {
                   href="https://gipc.gov.gh"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "8px",
-                    padding: "13px 28px", borderRadius: "50px", border: "none",
-                    backgroundColor: colors.accent, color: colors.primary,
-                    fontSize: "14px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                    cursor: "pointer", textDecoration: "none",
-                  }}
+                  className="inline-flex items-center gap-2 py-[13px] px-7 rounded-[50px] border-none text-sm font-bold font-['Inter',sans-serif] cursor-pointer no-underline"
+                  style={{ backgroundColor: colors.accent, color: colors.primary }}
                 >
                   <Download size={15} />
                   View on GIPC Website
@@ -731,10 +697,7 @@ export default function SectorReportPage() {
                 </a>
               )}
 
-              <p style={{
-                fontSize: "11px", color: "#aaa", fontFamily: "Inter, sans-serif",
-                margin: "14px 0 0", lineHeight: 1.5,
-              }}>
+              <p className="text-[11px] text-[#aaa] font-['Inter',sans-serif] mt-3.5 mb-0 leading-[1.5]">
                 Published by the Ghana Investment Promotion Centre (GIPC). Shared here as a public resource — BRIDGE makes no claim to authorship.
               </p>
             </div>
@@ -743,50 +706,41 @@ export default function SectorReportPage() {
           {/* Right Column: Upsell Card (sticky) */}
           <div style={{ position: mobile ? "relative" : "sticky", top: mobile ? "auto" : "100px" }}>
             {/* BRIDGE Intelligence Upsell */}
-            <div style={{
-              background: `linear-gradient(135deg, ${colors.primary} 0%, #163f32 100%)`,
-              borderRadius: "16px",
-              padding: mobile ? "28px 20px" : "36px 32px",
-              color: colors.white,
-            }}>
-              <div style={{
-                display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px",
-              }}>
+            <div
+              className="rounded-2xl"
+              style={{
+                background: `linear-gradient(135deg, ${colors.primary} 0%, #163f32 100%)`,
+                padding: mobile ? "28px 20px" : "36px 32px",
+                color: colors.white,
+              }}
+            >
+              <div className="flex items-center gap-2 mb-4">
                 <Shield size={16} color={colors.accent} />
-                <span style={{
-                  fontSize: "10px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                  textTransform: "uppercase", letterSpacing: "1px", color: colors.accent,
-                }}>
+                <span
+                  className="text-[10px] font-bold font-['Inter',sans-serif] uppercase tracking-[1px]"
+                  style={{ color: colors.accent }}
+                >
                   Premium Intelligence
                 </span>
               </div>
 
-              <h3 style={{
-                fontSize: mobile ? "18px" : "20px", fontWeight: "800",
-                fontFamily: "DM Sans, sans-serif", lineHeight: 1.3,
-                margin: "0 0 8px", color: colors.white,
-              }}>
+              <h3
+                className="font-extrabold font-['DM_Sans',sans-serif] leading-[1.3] m-0 mb-2"
+                style={{ fontSize: mobile ? "18px" : "20px", color: colors.white }}
+              >
                 BRIDGE Intelligence Analysis
               </h3>
 
-              <p style={{
-                fontSize: "14px", lineHeight: 1.6,
-                fontFamily: "Inter, sans-serif", margin: "0 0 24px",
-                color: "rgba(255,255,255,0.75)",
-              }}>
+              <p className="text-sm leading-[1.6] font-['Inter',sans-serif] m-0 mb-6 text-white/75">
                 Go beyond the overview. Get the detailed, venture-level analysis that serious investors and operators need to deploy capital with confidence.
               </p>
 
               {/* Feature list */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "28px" }}>
+              <div className="flex flex-col gap-3 mb-7">
                 {report.bridgeAnalysisFeatures.map((feature, i) => (
-                  <div key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
-                    <CheckCircle2 size={14} color={colors.accent} style={{ flexShrink: 0, marginTop: "2px" }} />
-                    <span style={{
-                      fontSize: "13px", lineHeight: 1.5,
-                      fontFamily: "Inter, sans-serif",
-                      color: "rgba(255,255,255,0.85)",
-                    }}>
+                  <div key={i} className="flex gap-2.5 items-start">
+                    <CheckCircle2 size={14} color={colors.accent} className="shrink-0 mt-0.5" />
+                    <span className="text-[13px] leading-[1.5] font-['Inter',sans-serif] text-white/85">
                       {feature}
                     </span>
                   </div>
@@ -797,13 +751,8 @@ export default function SectorReportPage() {
               {user ? (
                 <button
                   onClick={() => navigate("/intelligence/reports")}
-                  style={{
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-                    width: "100%", padding: "15px 24px", borderRadius: "50px",
-                    border: "none", backgroundColor: colors.accent, color: colors.primary,
-                    fontSize: "14px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                    cursor: "pointer", transition: "all 0.2s",
-                  }}
+                  className="flex items-center justify-center gap-2 w-full py-[15px] px-6 rounded-[50px] border-none text-sm font-bold font-['Inter',sans-serif] cursor-pointer transition-all duration-200"
+                  style={{ backgroundColor: colors.accent, color: colors.primary }}
                 >
                   <Zap size={15} />
                   Upgrade to Full Intelligence
@@ -812,13 +761,8 @@ export default function SectorReportPage() {
               ) : (
                 <button
                   onClick={() => setShowAuth(true)}
-                  style={{
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-                    width: "100%", padding: "15px 24px", borderRadius: "50px",
-                    border: "none", backgroundColor: colors.accent, color: colors.primary,
-                    fontSize: "14px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                    cursor: "pointer", transition: "all 0.2s",
-                  }}
+                  className="flex items-center justify-center gap-2 w-full py-[15px] px-6 rounded-[50px] border-none text-sm font-bold font-['Inter',sans-serif] cursor-pointer transition-all duration-200"
+                  style={{ backgroundColor: colors.accent, color: colors.primary }}
                 >
                   <Lock size={15} />
                   Sign In to Unlock
@@ -826,29 +770,20 @@ export default function SectorReportPage() {
                 </button>
               )}
 
-              <p style={{
-                fontSize: "11px", color: "rgba(255,255,255,0.5)",
-                fontFamily: "Inter, sans-serif", textAlign: "center" as const,
-                margin: "14px 0 0", lineHeight: 1.5,
-              }}>
+              <p className="text-[11px] text-white/50 font-['Inter',sans-serif] text-center mt-3.5 mb-0 leading-[1.5]">
                 Paid members get full access to all 12 sector analyses, venture-level data, and direct introductions.
               </p>
             </div>
 
             {/* Quick nav to other sectors */}
-            <div style={{
-              background: colors.white, borderRadius: "16px",
-              border: `1px solid ${colors.line}`,
-              padding: "24px", marginTop: "16px",
-            }}>
-              <h4 style={{
-                fontSize: "13px", fontWeight: "700", color: "#888",
-                fontFamily: "Inter, sans-serif", textTransform: "uppercase",
-                letterSpacing: "0.5px", margin: "0 0 14px",
-              }}>
+            <div
+              className="rounded-2xl p-6 mt-4"
+              style={{ background: colors.white, border: `1px solid ${colors.line}` }}
+            >
+              <h4 className="text-[13px] font-bold text-[#888] font-['Inter',sans-serif] uppercase tracking-[0.5px] m-0 mb-3.5">
                 Explore Other Sectors
               </h4>
-              <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              <div className="flex flex-col gap-1">
                 {sectorReports
                   .filter((r) => r.slug !== report.slug)
                   .slice(0, 5)
@@ -856,24 +791,19 @@ export default function SectorReportPage() {
                     <Link
                       key={r.slug}
                       to={`/reports/${r.slug}`}
-                      style={{
-                        display: "flex", alignItems: "center", justifyContent: "space-between",
-                        padding: "10px 12px", borderRadius: "8px",
-                        textDecoration: "none", color: colors.dark,
-                        fontSize: "13px", fontWeight: "500", fontFamily: "Inter, sans-serif",
-                        transition: "background 0.15s",
-                      }}
+                      className="flex items-center justify-between py-2.5 px-3 rounded-lg no-underline text-[13px] font-medium font-['Inter',sans-serif] transition-colors duration-150"
+                      style={{ color: colors.dark }}
                       onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.background; }}
                       onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
                     >
-                      <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <span className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
                         {r.name}
                       </span>
-                      <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0 }}>
-                        <span style={{
-                          fontSize: "11px", fontWeight: "700",
-                          color: r.score >= 88 ? "#2d6a1e" : colors.primary,
-                        }}>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span
+                          className="text-[11px] font-bold"
+                          style={{ color: r.score >= 88 ? "#2d6a1e" : colors.primary }}
+                        >
                           {r.score}
                         </span>
                         <ChevronRight size={12} color="#ccc" />
@@ -883,11 +813,8 @@ export default function SectorReportPage() {
               </div>
               <Link
                 to="/resources"
-                style={{
-                  display: "block", textAlign: "center" as const, marginTop: "12px",
-                  fontSize: "12px", fontWeight: "600", color: colors.primary,
-                  fontFamily: "Inter, sans-serif", textDecoration: "underline",
-                }}
+                className="block text-center mt-3 text-xs font-semibold font-['Inter',sans-serif] underline"
+                style={{ color: colors.primary }}
               >
                 View All 12 Sectors →
               </Link>
@@ -896,14 +823,12 @@ export default function SectorReportPage() {
         </div>
       </div>
 
-      <SiteFooter />
-
       <BRIDGEAuthModal
         isOpen={showAuth}
         onClose={() => setShowAuth(false)}
         defaultTab="request"
         onSignInSuccess={() => setShowAuth(false)}
       />
-    </>
+    </Layout>
   );
 }

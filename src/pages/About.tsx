@@ -1,8 +1,7 @@
 import { FOOTER_SECTOR_ICONS, SECTOR_ROUTES } from "@/data/sectorIcons";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import { Layout } from "@/components/Layout";
 
 // ============================================================================
 // BRIDGE ABOUT US PAGE v3
@@ -10,9 +9,8 @@ import SiteFooter from "@/components/SiteFooter";
 // investors, and government agencies. Every stat is about the ecosystem.
 // ============================================================================
 
-import { colors, layout } from "@/lib/theme";
+import { colors } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
-const CONTENT_MAX_WIDTH = layout.maxWidth;
 
 // ── Header is now shared (SiteHeader)
 
@@ -22,74 +20,38 @@ const CONTENT_MAX_WIDTH = layout.maxWidth;
 function HeroSection({ isMobile }) {
   return (
     <section
-      style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "48px 20px 60px" : "80px 80px 120px",
-      }}
+      className={`bg-white ${isMobile ? "px-5 pt-12 pb-[60px]" : "px-20 pt-20 pb-[120px]"}`}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="max-w-[1200px] mx-auto">
         <div
-          style={{
-            display: isMobile ? "block" : "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "60px",
-          }}
+          className={`${isMobile ? "block" : "flex justify-between items-center"} gap-[60px]`}
         >
           {/* Left — text content */}
-          <div style={{ flex: "1 1 55%", maxWidth: isMobile ? "100%" : "580px" }}>
+          <div className={`flex-[1_1_55%] ${isMobile ? "max-w-full" : "max-w-[580px]"}`}>
             {/* Pill */}
             <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
-                padding: "8px 20px",
-                marginBottom: isMobile ? "24px" : "32px",
-              }}
+              className={`inline-flex items-center gap-2 border border-[#DEDEDE] rounded-[50px] px-5 py-2 ${isMobile ? "mb-6" : "mb-8"}`}
             >
               <div
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                }}
+                className="w-2 h-2 rounded-full bg-[#B8D935]"
               />
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  letterSpacing: "2px",
-                  textTransform: "uppercase",
-                  color: colors.primary,
-                }}
+                className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-[#1B4D3E]"
               >
                 BRIDGE
               </span>
             </div>
 
             <h1
-              style={{
-                fontFamily: "DM Sans, sans-serif",
-                fontSize: isMobile ? "34px" : "52px",
-                fontWeight: "300",
-                lineHeight: "1.1",
-                color: colors.primary,
-                margin: isMobile ? "0 0 20px 0" : "0 0 32px 0",
-                letterSpacing: "-1px",
-              }}
+              className={`font-['DM_Sans',sans-serif] ${isMobile ? "text-[34px]" : "text-[52px]"} font-light leading-[1.1] text-[#1B4D3E] ${isMobile ? "mb-5" : "mb-8"} tracking-[-1px]`}
             >
-              The gap between <span style={{ fontWeight: "700" }}>opportunity</span>
+              The gap between <span className="font-bold">opportunity</span>
               <br />
               and{" "}
-              <span style={{ fontWeight: "700", color: colors.accent, position: "relative" }}>
+              <span className="font-bold text-[#B8D935] relative">
                 impact
                 <svg
-                  style={{ position: "absolute", bottom: "-6px", left: 0, width: "100%" }}
+                  className="absolute bottom-[-6px] left-0 w-full"
                   height="8"
                   viewBox="0 0 200 8"
                   preserveAspectRatio="none"
@@ -106,15 +68,7 @@ function HeroSection({ isMobile }) {
             </h1>
 
             <p
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "15px" : "17px",
-                fontWeight: "400",
-                lineHeight: "1.7",
-                color: "#666",
-                margin: 0,
-                maxWidth: "480px",
-              }}
+              className={`font-['Inter',sans-serif] ${isMobile ? "text-[15px]" : "text-[17px]"} font-normal leading-[1.7] text-[#666] m-0 max-w-[480px]`}
             >
               BRIDGE is a tool, resource, and solution for entrepreneurs building ventures, businesses scaling
               operations, investors seeking impact, and government agencies delivering results — we are a bridge to that
@@ -125,26 +79,10 @@ function HeroSection({ isMobile }) {
           {/* Right — image placeholder */}
           {!isMobile && (
             <div
-              style={{
-                flex: "0 0 420px",
-                height: "380px",
-                borderRadius: "20px",
-                backgroundColor: colors.background,
-                border: `1px solid ${colors.line}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                overflow: "hidden",
-              }}
+              className="flex-[0_0_420px] h-[380px] rounded-[20px] bg-[#F3F5F2] border border-[#DEDEDE] flex items-center justify-center overflow-hidden"
             >
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "12px",
-                  color: "#ccc",
-                }}
+                className="flex flex-col items-center gap-3 text-[#ccc]"
               >
                 <svg
                   width="48"
@@ -160,7 +98,7 @@ function HeroSection({ isMobile }) {
                   <circle cx="8.5" cy="8.5" r="1.5" />
                   <path d="M21 15l-5-5L5 21" />
                 </svg>
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", fontWeight: "500", color: "#bbb" }}>
+                <span className="font-['Inter',sans-serif] text-xs font-medium text-[#bbb]">
                   Hero Image
                 </span>
               </div>
@@ -170,24 +108,10 @@ function HeroSection({ isMobile }) {
           {/* Mobile image placeholder */}
           {isMobile && (
             <div
-              style={{
-                marginTop: "32px",
-                height: "200px",
-                borderRadius: "16px",
-                backgroundColor: colors.background,
-                border: `1px solid ${colors.line}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              className="mt-8 h-[200px] rounded-2xl bg-[#F3F5F2] border border-[#DEDEDE] flex items-center justify-center"
             >
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
+                className="flex flex-col items-center gap-2"
               >
                 <svg
                   width="36"
@@ -203,7 +127,7 @@ function HeroSection({ isMobile }) {
                   <circle cx="8.5" cy="8.5" r="1.5" />
                   <path d="M21 15l-5-5L5 21" />
                 </svg>
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", fontWeight: "500", color: "#bbb" }}>
+                <span className="font-['Inter',sans-serif] text-[11px] font-medium text-[#bbb]">
                   Hero Image
                 </span>
               </div>
@@ -221,47 +145,20 @@ function HeroSection({ isMobile }) {
 function VisionSection({ isMobile }) {
   return (
     <section
-      style={{
-        backgroundColor: colors.background,
-        padding: isMobile ? "60px 20px" : "120px 80px",
-      }}
+      className={`bg-[#F3F5F2] ${isMobile ? "px-5 py-[60px]" : "px-20 py-[120px]"}`}
     >
       <div
-        style={{
-          maxWidth: "860px",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
+        className="max-w-[860px] mx-auto text-center"
       >
         {/* Section pill */}
         <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            border: `1px solid ${colors.line}`,
-            borderRadius: "50px",
-            padding: "8px 20px",
-            marginBottom: isMobile ? "32px" : "48px",
-          }}
+          className={`inline-flex items-center gap-2 border border-[#DEDEDE] rounded-[50px] px-5 py-2 ${isMobile ? "mb-8" : "mb-12"}`}
         >
           <div
-            style={{
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              backgroundColor: colors.accent,
-            }}
+            className="w-2 h-2 rounded-full bg-[#B8D935]"
           />
           <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "11px",
-              fontWeight: "700",
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              color: colors.primary,
-            }}
+            className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-[#1B4D3E]"
           >
             OUR VISION
           </span>
@@ -269,67 +166,32 @@ function VisionSection({ isMobile }) {
 
         {/* Quote */}
         <h2
-          style={{
-            fontFamily: "DM Sans, sans-serif",
-            fontSize: isMobile ? "24px" : "38px",
-            fontWeight: "400",
-            lineHeight: "1.4",
-            color: colors.primary,
-            margin: isMobile ? "0 0 32px 0" : "0 0 40px 0",
-            letterSpacing: "-0.3px",
-          }}
+          className={`font-['DM_Sans',sans-serif] ${isMobile ? "text-[24px]" : "text-[38px]"} font-normal leading-[1.4] text-[#1B4D3E] ${isMobile ? "mb-8" : "mb-10"} tracking-[-0.3px]`}
         >
-          A Ghana where every citizen has the <em style={{ fontWeight: "700", fontStyle: "italic" }}>tools</em> to
-          thrive, the <em style={{ fontWeight: "700", fontStyle: "italic" }}>security</em> to plan, and the{" "}
-          <em style={{ fontWeight: "700", fontStyle: "italic" }}>agency</em> to{" "}
-          <em style={{ fontWeight: "700", fontStyle: "italic", color: colors.accent }}>bridge the gap</em>
+          A Ghana where every citizen has the <em className="font-bold italic">tools</em> to
+          thrive, the <em className="font-bold italic">security</em> to plan, and the{" "}
+          <em className="font-bold italic">agency</em> to{" "}
+          <em className="font-bold italic text-[#B8D935]">bridge the gap</em>
         </h2>
 
         {/* Decorative separator */}
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "12px",
-            marginBottom: isMobile ? "32px" : "40px",
-          }}
+          className={`flex items-center justify-center gap-3 ${isMobile ? "mb-8" : "mb-10"}`}
         >
           <div
-            style={{
-              width: "48px",
-              height: "2px",
-              backgroundColor: colors.line,
-            }}
+            className="w-12 h-[2px] bg-[#DEDEDE]"
           />
           <div
-            style={{
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              backgroundColor: colors.accent,
-            }}
+            className="w-2 h-2 rounded-full bg-[#B8D935]"
           />
           <div
-            style={{
-              width: "48px",
-              height: "2px",
-              backgroundColor: colors.line,
-            }}
+            className="w-12 h-[2px] bg-[#DEDEDE]"
           />
         </div>
 
         {/* Supporting text */}
         <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "14px" : "15px",
-            fontWeight: "400",
-            lineHeight: "1.7",
-            color: "#999",
-            maxWidth: "620px",
-            margin: "0 auto",
-          }}
+          className={`font-['Inter',sans-serif] ${isMobile ? "text-sm" : "text-[15px]"} font-normal leading-[1.7] text-[#999] max-w-[620px] mx-auto`}
         >
           We see a future where no venture fails for lack of intelligence, no business stalls for lack of the right
           connections, and no policy falls short for lack of execution — where the distance between ambition and outcome
@@ -399,91 +261,45 @@ function WhatWeDoSection({ isMobile }) {
 
   return (
     <section
-      style={{
-        backgroundColor: colors.primary,
-        padding: isMobile ? "60px 20px" : "100px 80px",
-      }}
+      className={`bg-[#1B4D3E] ${isMobile ? "px-5 py-[60px]" : "px-20 py-[100px]"}`}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Mobile: tabs + capabilities FIRST, then description */}
         {isMobile ? (
           <>
             {/* Section pill */}
             <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                border: "1px solid rgba(255,255,255,0.2)",
-                borderRadius: "50px",
-                padding: "8px 20px",
-                marginBottom: "24px",
-              }}
+              className="inline-flex items-center gap-2 border border-white/20 rounded-[50px] px-5 py-2 mb-6"
             >
               <div
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                }}
+                className="w-2 h-2 rounded-full bg-[#B8D935]"
               />
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  letterSpacing: "2px",
-                  textTransform: "uppercase",
-                  color: colors.white,
-                }}
+                className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-white"
               >
                 OUR MISSION
               </span>
             </div>
 
             <p
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "15px",
-                fontWeight: "400",
-                lineHeight: "1.6",
-                color: "rgba(255,255,255,0.6)",
-                margin: "0 0 20px 0",
-              }}
+              className="font-['Inter',sans-serif] text-[15px] font-normal leading-[1.6] text-white/60 mb-5"
             >
               To deliver the intelligence, resources, and strategies that{" "}
-              <span style={{ fontWeight: "600", color: colors.accent }}>bridge the gap</span> between opportunity and
+              <span className="font-semibold text-[#B8D935]">bridge the gap</span> between opportunity and
               outcome.
             </p>
 
             <h2
-              style={{
-                fontFamily: "DM Sans, sans-serif",
-                fontSize: "32px",
-                fontWeight: "300",
-                lineHeight: "1.15",
-                color: colors.white,
-                margin: "0 0 24px 0",
-                letterSpacing: "-0.5px",
-              }}
+              className="font-['DM_Sans',sans-serif] text-[32px] font-light leading-[1.15] text-white mb-6 tracking-[-0.5px]"
             >
-              <span style={{ fontWeight: "700" }}>BRIDGE</span> is a <span style={{ fontWeight: "700" }}>tool</span>, a{" "}
-              <span style={{ fontWeight: "700" }}>resource</span>, and a{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>solution</span>
+              <span className="font-bold">BRIDGE</span> is a <span className="font-bold">tool</span>, a{" "}
+              <span className="font-bold">resource</span>, and a{" "}
+              <span className="font-bold text-[#B8D935]">solution</span>
             </h2>
 
             {/* Tab bar — mobile first */}
             <div
-              style={{
-                display: "flex",
-                gap: "4px",
-                marginBottom: "16px",
-                background: colors.white,
-                borderRadius: "14px",
-                padding: "4px",
-                border: `1px solid ${colors.line}`,
-              }}
+              className="flex gap-1 mb-4 bg-white rounded-[14px] p-1 border border-[#DEDEDE]"
             >
               {tabs.map((tab, i) => (
                 <button
@@ -492,19 +308,11 @@ function WhatWeDoSection({ isMobile }) {
                     setActiveTab(i);
                     setShowCapabilities(false);
                   }}
-                  style={{
-                    flex: 1,
-                    padding: "10px 0",
-                    borderRadius: "10px",
-                    border: "none",
-                    cursor: "pointer",
-                    fontFamily: "DM Sans, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: i === activeTab ? "700" : "500",
-                    backgroundColor: i === activeTab ? colors.primary : "transparent",
-                    color: i === activeTab ? colors.white : "#666",
-                    transition: "all 0.3s ease",
-                  }}
+                  className={`flex-1 py-2.5 rounded-[10px] border-none cursor-pointer font-['DM_Sans',sans-serif] text-sm transition-all duration-300 ${
+                    i === activeTab
+                      ? "font-bold bg-[#1B4D3E] text-white"
+                      : "font-medium bg-transparent text-[#666]"
+                  }`}
                 >
                   {tab.label}
                 </button>
@@ -514,75 +322,38 @@ function WhatWeDoSection({ isMobile }) {
             {/* Capabilities toggle — mobile */}
             <button
               onClick={() => setShowCapabilities(!showCapabilities)}
-              style={{
-                width: "100%",
-                background: colors.white,
-                borderRadius: showCapabilities ? "16px 16px 0 0" : "16px",
-                padding: "16px 20px",
-                border: `1px solid ${colors.line}`,
-                borderBottom: showCapabilities ? "none" : `1px solid ${colors.line}`,
-                boxShadow: "0 4px 24px rgba(0,0,0,0.04)",
-                marginBottom: showCapabilities ? "0" : "28px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                transition: "all 0.2s ease",
-              }}
+              className={`w-full bg-white px-5 py-4 border border-[#DEDEDE] shadow-[0_4px_24px_rgba(0,0,0,0.04)] cursor-pointer flex items-center justify-between transition-all duration-200 ${
+                showCapabilities
+                  ? "rounded-t-2xl border-b-0 mb-0"
+                  : "rounded-2xl mb-7"
+              }`}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div className="flex items-center gap-2.5">
                 <div
-                  style={{
-                    width: "8px",
-                    height: "8px",
-                    borderRadius: "50%",
-                    backgroundColor: colors.accent,
-                  }}
+                  className="w-2 h-2 rounded-full bg-[#B8D935]"
                 />
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    letterSpacing: "2px",
-                    textTransform: "uppercase",
-                    color: colors.accentText,
-                  }}
+                  className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-[#5C7A1F]"
                 >
                   CAPABILITIES
                 </span>
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
-                    fontWeight: "600",
-                    color: "#999",
-                  }}
+                  className="font-['Inter',sans-serif] text-[11px] font-semibold text-[#999]"
                 >
                   ({active.items.length})
                 </span>
               </div>
               <div
-                style={{
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "50%",
-                  backgroundColor: showCapabilities ? colors.primary : colors.background,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "all 0.2s ease",
-                }}
+                className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 ${
+                  showCapabilities ? "bg-[#1B4D3E]" : "bg-[#F3F5F2]"
+                }`}
               >
                 <svg
                   width="12"
                   height="12"
                   viewBox="0 0 12 12"
                   fill="none"
-                  style={{
-                    transform: showCapabilities ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: "transform 0.2s ease",
-                  }}
+                  className={`transition-transform duration-200 ${showCapabilities ? "rotate-180" : "rotate-0"}`}
                 >
                   <path
                     d="M2 4l4 4 4-4"
@@ -597,44 +368,18 @@ function WhatWeDoSection({ isMobile }) {
 
             {showCapabilities && (
               <div
-                style={{
-                  background: colors.white,
-                  borderRadius: "0 0 16px 16px",
-                  padding: "0 20px 20px",
-                  border: `1px solid ${colors.line}`,
-                  borderTop: "none",
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.04)",
-                  marginBottom: "28px",
-                }}
+                className="bg-white rounded-b-2xl px-5 pb-5 border border-[#DEDEDE] border-t-0 shadow-[0_4px_24px_rgba(0,0,0,0.04)] mb-7"
               >
                 {active.items.map((item, i) => (
                   <div
                     key={i}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "14px",
-                      padding: "10px 0",
-                      borderBottom: i < active.items.length - 1 ? `1px solid ${colors.line}` : "none",
-                    }}
+                    className={`flex items-center gap-3.5 py-2.5 ${i < active.items.length - 1 ? "border-b border-[#DEDEDE]" : ""}`}
                   >
                     <div
-                      style={{
-                        width: "8px",
-                        height: "8px",
-                        borderRadius: "50%",
-                        backgroundColor: colors.accent,
-                        flexShrink: 0,
-                      }}
+                      className="w-2 h-2 rounded-full bg-[#B8D935] shrink-0"
                     />
                     <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        lineHeight: "1.4",
-                        color: "#555",
-                      }}
+                      className="font-['Inter',sans-serif] text-sm font-normal leading-[1.4] text-[#555]"
                     >
                       {item}
                     </span>
@@ -643,38 +388,20 @@ function WhatWeDoSection({ isMobile }) {
               </div>
             )}
 
-            {!showCapabilities && <div style={{ height: "0" }} />}
+            {!showCapabilities && <div className="h-0" />}
 
             {/* Description + Callout — below on mobile */}
             <p
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "15px",
-                fontWeight: "400",
-                lineHeight: "1.7",
-                color: "rgba(255,255,255,0.6)",
-                margin: "0 0 24px 0",
-              }}
+              className="font-['Inter',sans-serif] text-[15px] font-normal leading-[1.7] text-white/60 mb-6"
             >
               {active.description}
             </p>
 
             <div
-              style={{
-                borderLeft: `3px solid ${colors.accent}`,
-                paddingLeft: "20px",
-              }}
+              className="border-l-[3px] border-[#B8D935] pl-5"
             >
               <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  fontStyle: "italic",
-                  color: "rgba(255,255,255,0.75)",
-                  margin: 0,
-                  lineHeight: "1.6",
-                }}
+                className="font-['Inter',sans-serif] text-sm font-medium italic text-white/75 m-0 leading-[1.6]"
               >
                 {active.accent}
               </p>
@@ -683,108 +410,50 @@ function WhatWeDoSection({ isMobile }) {
         ) : (
           /* Desktop: side-by-side layout */
           <div
-            style={{
-              display: "flex",
-              gap: "60px",
-              alignItems: "flex-start",
-            }}
+            className="flex gap-[60px] items-start"
           >
             {/* Left column — pill + headline + description + callout */}
-            <div style={{ flex: "1 1 55%" }}>
+            <div className="flex-[1_1_55%]">
               <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  borderRadius: "50px",
-                  padding: "8px 20px",
-                  marginBottom: "32px",
-                }}
+                className="inline-flex items-center gap-2 border border-white/20 rounded-[50px] px-5 py-2 mb-8"
               >
                 <div
-                  style={{
-                    width: "8px",
-                    height: "8px",
-                    borderRadius: "50%",
-                    backgroundColor: colors.accent,
-                  }}
+                  className="w-2 h-2 rounded-full bg-[#B8D935]"
                 />
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    letterSpacing: "2px",
-                    textTransform: "uppercase",
-                    color: colors.white,
-                  }}
+                  className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-white"
                 >
                   OUR MISSION
                 </span>
               </div>
 
               <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "17px",
-                  fontWeight: "400",
-                  lineHeight: "1.6",
-                  color: "rgba(255,255,255,0.6)",
-                  margin: "0 0 20px 0",
-                  maxWidth: "500px",
-                }}
+                className="font-['Inter',sans-serif] text-[17px] font-normal leading-[1.6] text-white/60 mb-5 max-w-[500px]"
               >
                 To deliver the intelligence, resources, and strategies that{" "}
-                <span style={{ fontWeight: "600", color: colors.accent }}>bridge the gap</span> between opportunity and
+                <span className="font-semibold text-[#B8D935]">bridge the gap</span> between opportunity and
                 outcome.
               </p>
 
               <h2
-                style={{
-                  fontFamily: "DM Sans, sans-serif",
-                  fontSize: "42px",
-                  fontWeight: "300",
-                  lineHeight: "1.15",
-                  color: colors.white,
-                  margin: "0 0 24px 0",
-                  letterSpacing: "-0.5px",
-                  maxWidth: "500px",
-                }}
+                className="font-['DM_Sans',sans-serif] text-[42px] font-light leading-[1.15] text-white mb-6 tracking-[-0.5px] max-w-[500px]"
               >
-                <span style={{ fontWeight: "700" }}>BRIDGE</span> is a <span style={{ fontWeight: "700" }}>tool</span>,
-                a <span style={{ fontWeight: "700" }}>resource</span>, and a{" "}
-                <span style={{ fontWeight: "700", color: colors.accent }}>solution</span>
+                <span className="font-bold">BRIDGE</span> is a <span className="font-bold">tool</span>,
+                a <span className="font-bold">resource</span>, and a{" "}
+                <span className="font-bold text-[#B8D935]">solution</span>
               </h2>
 
               <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "400",
-                  lineHeight: "1.7",
-                  color: "rgba(255,255,255,0.6)",
-                  margin: "0 0 32px 0",
-                }}
+                className="font-['Inter',sans-serif] text-base font-normal leading-[1.7] text-white/60 mb-8"
               >
                 {active.description}
               </p>
 
               <div
-                style={{
-                  borderLeft: `3px solid ${colors.accent}`,
-                  paddingLeft: "20px",
-                }}
+                className="border-l-[3px] border-[#B8D935] pl-5"
               >
                 <p
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    fontStyle: "italic",
-                    color: "rgba(255,255,255,0.75)",
-                    margin: 0,
-                  }}
+                  className="font-['Inter',sans-serif] text-sm font-medium italic text-white/75 m-0"
                 >
                   {active.accent}
                 </p>
@@ -793,42 +462,20 @@ function WhatWeDoSection({ isMobile }) {
 
             {/* Right column — tab bar + capabilities card */}
             <div
-              style={{
-                flex: "0 0 auto",
-                width: "420px",
-                position: "sticky",
-                top: "40px",
-              }}
+              className="flex-[0_0_auto] w-[420px] sticky top-10"
             >
               <div
-                style={{
-                  display: "flex",
-                  gap: "4px",
-                  marginBottom: "16px",
-                  background: colors.white,
-                  borderRadius: "14px",
-                  padding: "4px",
-                  border: `1px solid ${colors.line}`,
-                  width: "100%",
-                }}
+                className="flex gap-1 mb-4 bg-white rounded-[14px] p-1 border border-[#DEDEDE] w-full"
               >
                 {tabs.map((tab, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveTab(i)}
-                    style={{
-                      flex: 1,
-                      padding: "12px 0",
-                      borderRadius: "10px",
-                      border: "none",
-                      cursor: "pointer",
-                      fontFamily: "DM Sans, sans-serif",
-                      fontSize: "15px",
-                      fontWeight: i === activeTab ? "700" : "500",
-                      backgroundColor: i === activeTab ? colors.primary : "transparent",
-                      color: i === activeTab ? colors.white : "#666",
-                      transition: "all 0.3s ease",
-                    }}
+                    className={`flex-1 py-3 rounded-[10px] border-none cursor-pointer font-['DM_Sans',sans-serif] text-[15px] transition-all duration-300 ${
+                      i === activeTab
+                        ? "font-bold bg-[#1B4D3E] text-white"
+                        : "font-medium bg-transparent text-[#666]"
+                    }`}
                   >
                     {tab.label}
                   </button>
@@ -836,25 +483,10 @@ function WhatWeDoSection({ isMobile }) {
               </div>
 
               <div
-                style={{
-                  background: colors.white,
-                  borderRadius: "20px",
-                  padding: "36px",
-                  border: `1px solid ${colors.line}`,
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.04)",
-                  minHeight: "340px",
-                }}
+                className="bg-white rounded-[20px] p-9 border border-[#DEDEDE] shadow-[0_4px_24px_rgba(0,0,0,0.04)] min-h-[340px]"
               >
                 <div
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    letterSpacing: "2px",
-                    textTransform: "uppercase",
-                    color: colors.accentText,
-                    marginBottom: "24px",
-                  }}
+                  className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-[#5C7A1F] mb-6"
                 >
                   CAPABILITIES
                 </div>
@@ -862,31 +494,13 @@ function WhatWeDoSection({ isMobile }) {
                 {active.items.map((item, i) => (
                   <div
                     key={i}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "14px",
-                      padding: "12px 0",
-                      borderBottom: i < active.items.length - 1 ? `1px solid ${colors.line}` : "none",
-                    }}
+                    className={`flex items-center gap-3.5 py-3 ${i < active.items.length - 1 ? "border-b border-[#DEDEDE]" : ""}`}
                   >
                     <div
-                      style={{
-                        width: "8px",
-                        height: "8px",
-                        borderRadius: "50%",
-                        backgroundColor: colors.accent,
-                        flexShrink: 0,
-                      }}
+                      className="w-2 h-2 rounded-full bg-[#B8D935] shrink-0"
                     />
                     <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        lineHeight: "1.4",
-                        color: "#555",
-                      }}
+                      className="font-['Inter',sans-serif] text-sm font-normal leading-[1.4] text-[#555]"
                     >
                       {item}
                     </span>
@@ -1269,41 +883,19 @@ function ThreeGapsSection({ isMobile }) {
 
   return (
     <section
-      style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "60px 0" : "100px 0",
-      }}
+      className={`bg-white ${isMobile ? "py-[60px]" : "py-[100px]"}`}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto", padding: isMobile ? "0 20px" : "0 80px" }}>
+      <div className={`max-w-[1200px] mx-auto ${isMobile ? "px-5" : "px-20"}`}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: isMobile ? "24px" : "32px" }}>
+        <div className={`text-center ${isMobile ? "mb-6" : "mb-8"}`}>
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
-              padding: "8px 20px",
-            }}
+            className="inline-flex items-center gap-2 border border-[#DEDEDE] rounded-[50px] px-5 py-2"
           >
             <div
-              style={{
-                width: "8px",
-                height: "8px",
-                borderRadius: "50%",
-                backgroundColor: colors.accent,
-              }}
+              className="w-2 h-2 rounded-full bg-[#B8D935]"
             />
             <span
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "11px",
-                fontWeight: "700",
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                color: colors.primary,
-              }}
+              className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-[#1B4D3E]"
             >
               THE OPPORTUNITY
             </span>
@@ -1311,32 +903,14 @@ function ThreeGapsSection({ isMobile }) {
         </div>
 
         <h2
-          style={{
-            fontFamily: "DM Sans, sans-serif",
-            fontSize: isMobile ? "30px" : "48px",
-            fontWeight: "300",
-            lineHeight: "1.15",
-            color: colors.primary,
-            margin: "0 0 20px 0",
-            letterSpacing: "-0.5px",
-            textAlign: "center",
-          }}
+          className={`font-['DM_Sans',sans-serif] ${isMobile ? "text-[30px]" : "text-[48px]"} font-light leading-[1.15] text-[#1B4D3E] mb-5 tracking-[-0.5px] text-center`}
         >
-          <span style={{ fontWeight: "700" }}>Intelligence</span> / <span style={{ fontWeight: "700" }}>Resources</span>{" "}
-          / <span style={{ fontWeight: "700", color: colors.accent }}>Execution</span>
+          <span className="font-bold">Intelligence</span> / <span className="font-bold">Resources</span>{" "}
+          / <span className="font-bold text-[#B8D935]">Execution</span>
         </h2>
 
         <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "14px" : "16px",
-            fontWeight: "400",
-            lineHeight: "1.7",
-            color: "#666",
-            textAlign: "center",
-            maxWidth: "600px",
-            margin: isMobile ? "0 auto 32px" : "0 auto 48px",
-          }}
+          className={`font-['Inter',sans-serif] ${isMobile ? "text-sm" : "text-base"} font-normal leading-[1.7] text-[#666] text-center max-w-[600px] ${isMobile ? "mx-auto mb-8" : "mx-auto mb-12"}`}
         >
           The intelligence to see the opportunity. The resources to fund it. The execution to deliver it. Sector by
           sector.
@@ -1344,39 +918,20 @@ function ThreeGapsSection({ isMobile }) {
 
         {/* Filter bar */}
         <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: isMobile ? "28px" : "40px",
-          }}
+          className={`flex justify-center ${isMobile ? "mb-7" : "mb-10"}`}
         >
           <div
-            style={{
-              display: "inline-flex",
-              gap: "4px",
-              background: colors.background,
-              borderRadius: "50px",
-              padding: "4px",
-              border: `1px solid ${colors.line}`,
-            }}
+            className="inline-flex gap-1 bg-[#F3F5F2] rounded-[50px] p-1 border border-[#DEDEDE]"
           >
             {filters.map((f) => (
               <button
                 key={f}
                 onClick={() => handleFilterChange(f)}
-                style={{
-                  padding: isMobile ? "8px 16px" : "10px 24px",
-                  borderRadius: "50px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: isMobile ? "12px" : "13px",
-                  fontWeight: f === activeFilter ? "700" : "500",
-                  backgroundColor: f === activeFilter ? colors.primary : "transparent",
-                  color: f === activeFilter ? colors.white : "#666",
-                  transition: "all 0.3s ease",
-                  whiteSpace: "nowrap",
-                }}
+                className={`${isMobile ? "px-4 py-2" : "px-6 py-2.5"} rounded-[50px] border-none cursor-pointer font-['Inter',sans-serif] ${isMobile ? "text-xs" : "text-[13px]"} transition-all duration-300 whitespace-nowrap ${
+                  f === activeFilter
+                    ? "font-bold bg-[#1B4D3E] text-white"
+                    : "font-medium bg-transparent text-[#666]"
+                }`}
               >
                 {f}
                 {f !== "All" ? ` (${sectors.filter((s) => s.gap === f).length})` : ""}
@@ -1397,85 +952,41 @@ function ThreeGapsSection({ isMobile }) {
             setActiveCard(idx);
           }
         }}
-        style={{
-          display: "flex",
-          overflowX: "auto",
-          scrollSnapType: "x mandatory",
-          WebkitOverflowScrolling: "touch",
-          gap: isMobile ? "12px" : "20px",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          paddingLeft: isMobile ? "20px" : "80px",
-          paddingRight: isMobile ? "20px" : "80px",
-        }}
+        className={`flex overflow-x-auto snap-x snap-mandatory [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none] ${isMobile ? "gap-3 px-5" : "gap-5 px-20"}`}
       >
         {filtered.map((s, i) => {
           const isDark = i === 0 && activeFilter !== "All";
           return (
             <div
               key={`${s.gap}-${s.sector}`}
-              style={{
-                flex: isMobile ? "0 0 82%" : "0 0 380px",
-                scrollSnapAlign: "start",
-                backgroundColor: isDark ? colors.primary : colors.background,
-                borderRadius: isMobile ? "16px" : "20px",
-                padding: isMobile ? "24px 20px" : "36px 32px",
-                border: isDark ? "none" : `1px solid ${colors.line}`,
-                display: "flex",
-                flexDirection: "column",
-                minHeight: isMobile ? "380px" : "420px",
-                boxSizing: "border-box",
-              }}
+              className={`${isMobile ? "flex-[0_0_82%] rounded-2xl px-5 py-6 min-h-[380px]" : "flex-[0_0_380px] rounded-[20px] px-8 py-9 min-h-[420px]"} snap-start flex flex-col box-border ${
+                isDark ? "bg-[#1B4D3E] border-none" : "bg-[#F3F5F2] border border-[#DEDEDE]"
+              }`}
             >
               {/* Top row: sector pill + gap tag */}
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: isMobile ? "20px" : "24px",
-                }}
+                className={`flex items-center justify-between ${isMobile ? "mb-5" : "mb-6"}`}
               >
                 <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    backgroundColor: isDark ? "rgba(255,255,255,0.1)" : colors.white,
-                    borderRadius: "50px",
-                    padding: "5px 12px",
-                  }}
+                  className={`inline-flex items-center gap-1.5 rounded-[50px] px-3 py-[5px] ${
+                    isDark ? "bg-white/10" : "bg-white"
+                  }`}
                 >
                   <div
-                    style={{
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
-                      backgroundColor: colors.accent,
-                    }}
+                    className="w-1.5 h-1.5 rounded-full bg-[#B8D935]"
                   />
                   <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "10px",
-                      fontWeight: "700",
-                      letterSpacing: "1.5px",
-                      textTransform: "uppercase",
-                      color: isDark ? "rgba(255,255,255,0.6)" : "#999",
-                    }}
+                    className={`font-['Inter',sans-serif] text-[10px] font-bold tracking-[1.5px] uppercase ${
+                      isDark ? "text-white/60" : "text-[#999]"
+                    }`}
                   >
                     {s.sector}
                   </span>
                 </div>
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "9px",
-                    fontWeight: "700",
-                    letterSpacing: "1.5px",
-                    textTransform: "uppercase",
-                    color: isDark ? "rgba(255,255,255,0.35)" : "#ccc",
-                  }}
+                  className={`font-['Inter',sans-serif] text-[9px] font-bold tracking-[1.5px] uppercase ${
+                    isDark ? "text-white/35" : "text-[#ccc]"
+                  }`}
                 >
                   {s.gap}
                 </span>
@@ -1483,62 +994,39 @@ function ThreeGapsSection({ isMobile }) {
 
               {/* Big stat */}
               <div
-                style={{
-                  fontFamily: "DM Sans, sans-serif",
-                  fontSize: isMobile ? "40px" : "44px",
-                  fontWeight: "800",
-                  color: isDark ? colors.accent : colors.primary,
-                  lineHeight: "1",
-                  marginBottom: "4px",
-                  letterSpacing: "-1.5px",
-                }}
+                className={`font-['DM_Sans',sans-serif] ${isMobile ? "text-[40px]" : "text-[44px]"} font-extrabold leading-none mb-1 tracking-[-1.5px] ${
+                  isDark ? "text-[#B8D935]" : "text-[#1B4D3E]"
+                }`}
               >
                 {s.stat}
               </div>
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "12px",
-                  fontWeight: "500",
-                  color: isDark ? "rgba(255,255,255,0.5)" : "#999",
-                  marginBottom: isMobile ? "16px" : "20px",
-                  lineHeight: "1.4",
-                }}
+                className={`font-['Inter',sans-serif] text-xs font-medium ${isMobile ? "mb-4" : "mb-5"} leading-[1.4] ${
+                  isDark ? "text-white/50" : "text-[#999]"
+                }`}
               >
                 {s.statLabel}
               </div>
 
               {/* Insight */}
               <p
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "13px",
-                  fontWeight: "400",
-                  lineHeight: "1.65",
-                  color: isDark ? "rgba(255,255,255,0.65)" : "#555",
-                  margin: "0 0 auto 0",
-                  paddingBottom: isMobile ? "16px" : "20px",
-                }}
+                className={`font-['Inter',sans-serif] text-[13px] font-normal leading-[1.65] m-0 mb-auto ${isMobile ? "pb-4" : "pb-5"} ${
+                  isDark ? "text-white/65" : "text-[#555]"
+                }`}
               >
                 {s.insight}
               </p>
 
               {/* BRIDGE line — contained inner box */}
               <div
-                style={{
-                  backgroundColor: isDark ? colors.white : colors.primary,
-                  borderRadius: "10px",
-                  padding: "10px 12px",
-                }}
+                className={`rounded-[10px] px-3 py-2.5 ${
+                  isDark ? "bg-white" : "bg-[#1B4D3E]"
+                }`}
               >
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                    color: isDark ? colors.primary : colors.white,
-                    lineHeight: "1.5",
-                  }}
+                  className={`font-['Inter',sans-serif] text-xs font-semibold leading-[1.5] ${
+                    isDark ? "text-[#1B4D3E]" : "text-white"
+                  }`}
                 >
                   {s.bridge}
                 </span>
@@ -1550,7 +1038,7 @@ function ThreeGapsSection({ isMobile }) {
 
       {/* Scroll indicators */}
       {isMobile && (
-        <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginTop: "20px", padding: "0 20px" }}>
+        <div className="flex justify-center gap-1.5 mt-5 px-5">
           {filtered.map((_, i) => (
             <div
               key={i}
@@ -1560,14 +1048,9 @@ function ThreeGapsSection({ isMobile }) {
                   scrollRef.current.scrollTo({ left: i * cardWidth, behavior: "smooth" });
                 }
               }}
-              style={{
-                width: i === activeCard ? "24px" : "8px",
-                height: "8px",
-                borderRadius: "4px",
-                backgroundColor: i === activeCard ? colors.accent : colors.line,
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-              }}
+              className={`h-2 rounded cursor-pointer transition-all duration-300 ${
+                i === activeCard ? "w-6 bg-[#B8D935]" : "w-2 bg-[#DEDEDE]"
+              }`}
             />
           ))}
         </div>
@@ -1636,9 +1119,9 @@ function BridgeToImpactSection({ isMobile }) {
     {
       label: "THE OPPORTUNITY",
       text: active.friction,
-      bg: colors.white,
-      border: colors.primary,
-      labelColor: "#C44536",
+      bg: "bg-white",
+      borderClass: "border-2 border-[#1B4D3E]",
+      labelColor: "text-[#C44536]",
       icon: (
         <svg
           width="20"
@@ -1658,9 +1141,9 @@ function BridgeToImpactSection({ isMobile }) {
     {
       label: "THE BRIDGE",
       text: active.bridge,
-      bg: colors.white,
-      border: colors.primary,
-      labelColor: colors.accentText,
+      bg: "bg-white",
+      borderClass: "border-2 border-[#1B4D3E]",
+      labelColor: "text-[#5C7A1F]",
       icon: (
         <svg
           width="20"
@@ -1679,9 +1162,9 @@ function BridgeToImpactSection({ isMobile }) {
     {
       label: "THE OUTCOME",
       text: active.outcome,
-      bg: colors.white,
-      border: colors.primary,
-      labelColor: colors.primary,
+      bg: "bg-white",
+      borderClass: "border-2 border-[#1B4D3E]",
+      labelColor: "text-[#1B4D3E]",
       icon: (
         <svg
           width="20"
@@ -1700,81 +1183,37 @@ function BridgeToImpactSection({ isMobile }) {
 
   return (
     <section
-      style={{
-        backgroundColor: colors.background,
-        padding: isMobile ? "60px 20px 40px" : "100px 80px 50px",
-      }}
+      className={`bg-[#F3F5F2] ${isMobile ? "px-5 pt-[60px] pb-10" : "px-20 pt-[100px] pb-[50px]"}`}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Header row — text left, stakeholder icons right */}
         <div
-          style={{
-            display: isMobile ? "block" : "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            marginBottom: isMobile ? "32px" : "48px",
-          }}
+          className={`${isMobile ? "block" : "flex justify-between items-end"} ${isMobile ? "mb-8" : "mb-12"}`}
         >
           {/* Left — pill, headline, description */}
-          <div style={{ maxWidth: isMobile ? "100%" : "600px" }}>
+          <div className={isMobile ? "max-w-full" : "max-w-[600px]"}>
             <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
-                padding: "8px 20px",
-                marginBottom: isMobile ? "24px" : "32px",
-              }}
+              className={`inline-flex items-center gap-2 border border-[#DEDEDE] rounded-[50px] px-5 py-2 ${isMobile ? "mb-6" : "mb-8"}`}
             >
               <div
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                }}
+                className="w-2 h-2 rounded-full bg-[#B8D935]"
               />
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  letterSpacing: "2px",
-                  textTransform: "uppercase",
-                  color: colors.primary,
-                }}
+                className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-[#1B4D3E]"
               >
                 YOUR BRIDGE TO IMPACT
               </span>
             </div>
 
             <h2
-              style={{
-                fontFamily: "DM Sans, sans-serif",
-                fontSize: isMobile ? "28px" : "42px",
-                fontWeight: "300",
-                lineHeight: "1.15",
-                color: colors.primary,
-                margin: "0 0 16px 0",
-                letterSpacing: "-0.5px",
-                whiteSpace: "nowrap",
-              }}
+              className={`font-['DM_Sans',sans-serif] ${isMobile ? "text-[28px]" : "text-[42px]"} font-light leading-[1.15] text-[#1B4D3E] mb-4 tracking-[-0.5px] whitespace-nowrap`}
             >
-              <span style={{ fontWeight: "700" }}>Targeted</span> &{" "}
-              <span style={{ fontWeight: "700", color: colors.accent }}>Customized</span> Solutions
+              <span className="font-bold">Targeted</span> &{" "}
+              <span className="font-bold text-[#B8D935]">Customized</span> Solutions
             </h2>
 
             <p
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "14px" : "16px",
-                fontWeight: "400",
-                lineHeight: "1.7",
-                color: "#666",
-                margin: 0,
-              }}
+              className={`font-['Inter',sans-serif] ${isMobile ? "text-sm" : "text-base"} font-normal leading-[1.7] text-[#666] m-0`}
             >
               A market trader measures impact as reliable income. An investor measures it as returns and reach. A
               ministry measures it as outcomes delivered.
@@ -1783,12 +1222,7 @@ function BridgeToImpactSection({ isMobile }) {
 
           {/* Right — stakeholder icon buttons, bottom-aligned */}
           <div
-            style={{
-              display: "flex",
-              gap: "8px",
-              marginTop: isMobile ? "24px" : "0",
-              justifyContent: isMobile ? "center" : "flex-end",
-            }}
+            className={`flex gap-2 ${isMobile ? "mt-6 justify-center" : "mt-0 justify-end"}`}
           >
             {journeys.map((j, i) => {
               const isActive = i === activeJourney;
@@ -1878,20 +1312,11 @@ function BridgeToImpactSection({ isMobile }) {
                     setActivePhase(0);
                   }}
                   title={j.stakeholder}
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "14px",
-                    border: isActive ? "none" : `1px solid ${colors.line}`,
-                    backgroundColor: isActive ? colors.primary : colors.white,
-                    color: isActive ? colors.white : "#999",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transition: "all 0.3s ease",
-                    flexShrink: 0,
-                  }}
+                  className={`w-12 h-12 rounded-[14px] cursor-pointer flex items-center justify-center transition-all duration-300 shrink-0 ${
+                    isActive
+                      ? "border-none bg-[#1B4D3E] text-white"
+                      : "border border-[#DEDEDE] bg-white text-[#999]"
+                  }`}
                 >
                   {icons[i]}
                 </button>
@@ -1902,43 +1327,18 @@ function BridgeToImpactSection({ isMobile }) {
 
         {/* Context line */}
         <div
-          style={{
-            background: colors.white,
-            borderRadius: "14px",
-            padding: isMobile ? "14px 16px" : "16px 24px",
-            border: `1px solid ${colors.line}`,
-            marginBottom: isMobile ? "12px" : "16px",
-            display: "flex",
-            alignItems: isMobile ? "flex-start" : "center",
-            gap: "12px",
-          }}
+          className={`bg-white rounded-[14px] border border-[#DEDEDE] flex gap-3 ${isMobile ? "p-3.5 px-4 items-start mb-3" : "p-4 px-6 items-center mb-4"}`}
         >
           <div
-            style={{
-              width: "24px",
-              height: "24px",
-              borderRadius: "50%",
-              backgroundColor: colors.accent,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-              marginTop: isMobile ? "2px" : "0",
-            }}
+            className={`w-6 h-6 rounded-full bg-[#B8D935] flex items-center justify-center shrink-0 ${isMobile ? "mt-0.5" : "mt-0"}`}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill={colors.primary}>
               <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
             </svg>
           </div>
-          {!isMobile && <div style={{ width: "1px", height: "16px", backgroundColor: colors.line }} />}
+          {!isMobile && <div className="w-px h-4 bg-[#DEDEDE]" />}
           <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "13px" : "14px",
-              fontWeight: "400",
-              color: "#555",
-              lineHeight: "1.5",
-            }}
+            className={`font-['Inter',sans-serif] ${isMobile ? "text-[13px]" : "text-sm"} font-normal text-[#555] leading-[1.5]`}
           >
             {active.context}
           </span>
@@ -1948,50 +1348,26 @@ function BridgeToImpactSection({ isMobile }) {
         {isMobile ? (
           <>
             {/* Cards cascade — reveal one at a time, all stay visible */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+            <div className="flex flex-col gap-0">
               {phases.map((phase, i) => {
                 if (i > activePhase) return null;
                 return (
                   <React.Fragment key={i}>
                     <div
-                      style={{
-                        background: phase.bg,
-                        borderRadius: "16px",
-                        padding: "24px 20px",
-                        border: `2px solid ${phase.border}`,
-                        position: "relative",
-                      }}
+                      className={`${phase.bg} rounded-2xl p-5 px-5 ${phase.borderClass} relative`}
                     >
                       <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "10px",
-                          marginBottom: "12px",
-                        }}
+                        className="flex items-center gap-2.5 mb-3"
                       >
                         {phase.icon}
                         <span
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "10px",
-                            fontWeight: "700",
-                            letterSpacing: "2px",
-                            color: phase.labelColor,
-                          }}
+                          className={`font-['Inter',sans-serif] text-[10px] font-bold tracking-[2px] ${phase.labelColor}`}
                         >
                           {phase.label}
                         </span>
                       </div>
                       <p
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: "400",
-                          lineHeight: "1.65",
-                          color: "#555",
-                          margin: 0,
-                        }}
+                        className="font-['Inter',sans-serif] text-[13px] font-normal leading-[1.65] text-[#555] m-0"
                       >
                         {phase.text}
                       </p>
@@ -2001,26 +1377,10 @@ function BridgeToImpactSection({ isMobile }) {
                     {i === activePhase && i < phases.length - 1 && (
                       <div
                         onClick={() => setActivePhase(activePhase + 1)}
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          padding: "8px 0",
-                          cursor: "pointer",
-                        }}
+                        className="flex justify-center py-2 cursor-pointer"
                       >
                         <div
-                          style={{
-                            width: "28px",
-                            height: "28px",
-                            borderRadius: "50%",
-                            backgroundColor: colors.white,
-                            border: `1px solid ${colors.line}`,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-                            transition: "all 0.2s ease",
-                          }}
+                          className="w-7 h-7 rounded-full bg-white border border-[#DEDEDE] flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-200"
                         >
                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                             <path
@@ -2039,35 +1399,17 @@ function BridgeToImpactSection({ isMobile }) {
                     {i < activePhase && i < phases.length - 1 && (
                       <div
                         onClick={() => setActivePhase(i)}
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          padding: "8px 0",
-                          cursor: "pointer",
-                        }}
+                        className="flex justify-center py-2 cursor-pointer"
                       >
                         <div
-                          style={{
-                            width: "28px",
-                            height: "28px",
-                            borderRadius: "50%",
-                            backgroundColor: colors.white,
-                            border: `1px solid ${colors.line}`,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            transition: "all 0.2s ease",
-                          }}
+                          className="w-7 h-7 rounded-full bg-white border border-[#DEDEDE] flex items-center justify-center transition-all duration-200"
                         >
                           <svg
                             width="12"
                             height="12"
                             viewBox="0 0 12 12"
                             fill="none"
-                            style={{
-                              transform: "rotate(180deg)",
-                              transition: "transform 0.2s ease",
-                            }}
+                            className="rotate-180 transition-transform duration-200"
                           >
                             <path
                               d="M2 4l4 4 4-4"
@@ -2088,42 +1430,17 @@ function BridgeToImpactSection({ isMobile }) {
             {/* Summary bar — only after all 3 revealed */}
             {activePhase === phases.length - 1 && (
               <div
-                style={{
-                  background: colors.white,
-                  borderRadius: "14px",
-                  padding: "14px 16px",
-                  marginTop: "12px",
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "12px",
-                  border: `1px solid ${colors.line}`,
-                }}
+                className="bg-white rounded-[14px] p-3.5 px-4 mt-3 flex items-start gap-3 border border-[#DEDEDE]"
               >
                 <div
-                  style={{
-                    width: "24px",
-                    height: "24px",
-                    borderRadius: "50%",
-                    backgroundColor: colors.accent,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    marginTop: "2px",
-                  }}
+                  className="w-6 h-6 rounded-full bg-[#B8D935] flex items-center justify-center shrink-0 mt-0.5"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill={colors.primary}>
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z" />
                   </svg>
                 </div>
                 <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
-                    fontWeight: "400",
-                    color: "#555",
-                    lineHeight: "1.5",
-                  }}
+                  className="font-['Inter',sans-serif] text-[13px] font-normal text-[#555] leading-[1.5]"
                 >
                   {active.bar}
                 </span>
@@ -2134,41 +1451,16 @@ function BridgeToImpactSection({ isMobile }) {
           /* Desktop: 3-column grid */
           <>
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "16px",
-              }}
+              className="grid grid-cols-3 gap-4"
             >
               {phases.map((phase, i) => (
                 <div
                   key={i}
-                  style={{
-                    background: phase.bg,
-                    borderRadius: "20px",
-                    padding: "32px 28px",
-                    border: `2px solid ${phase.border}`,
-                    position: "relative",
-                    minHeight: "200px",
-                  }}
+                  className={`${phase.bg} rounded-[20px] p-7 px-7 ${phase.borderClass} relative min-h-[200px]`}
                 >
                   {i < 2 && (
                     <div
-                      style={{
-                        position: "absolute",
-                        right: "-20px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        zIndex: 2,
-                        width: "24px",
-                        height: "24px",
-                        borderRadius: "50%",
-                        backgroundColor: colors.white,
-                        border: `1px solid ${colors.line}`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
+                      className="absolute -right-5 top-1/2 -translate-y-1/2 z-[2] w-6 h-6 rounded-full bg-white border border-[#DEDEDE] flex items-center justify-center"
                     >
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                         <path
@@ -2183,36 +1475,18 @@ function BridgeToImpactSection({ isMobile }) {
                   )}
 
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      marginBottom: "12px",
-                    }}
+                    className="flex items-center gap-2.5 mb-3"
                   >
                     {phase.icon}
                     <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "10px",
-                        fontWeight: "700",
-                        letterSpacing: "2px",
-                        color: phase.labelColor,
-                      }}
+                      className={`font-['Inter',sans-serif] text-[10px] font-bold tracking-[2px] ${phase.labelColor}`}
                     >
                       {phase.label}
                     </span>
                   </div>
 
                   <p
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "14px",
-                      fontWeight: "400",
-                      lineHeight: "1.65",
-                      color: "#555",
-                      margin: 0,
-                    }}
+                    className="font-['Inter',sans-serif] text-sm font-normal leading-[1.65] text-[#555] m-0"
                   >
                     {phase.text}
                   </p>
@@ -2222,41 +1496,18 @@ function BridgeToImpactSection({ isMobile }) {
 
             {/* BRIDGE summary bar — desktop only here */}
             <div
-              style={{
-                background: colors.white,
-                borderRadius: "14px",
-                padding: "16px 24px",
-                marginTop: "16px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                border: `1px solid ${colors.line}`,
-              }}
+              className="bg-white rounded-[14px] p-4 px-6 mt-4 flex items-center gap-3 border border-[#DEDEDE]"
             >
               <div
-                style={{
-                  width: "24px",
-                  height: "24px",
-                  borderRadius: "50%",
-                  backgroundColor: colors.accent,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
+                className="w-6 h-6 rounded-full bg-[#B8D935] flex items-center justify-center shrink-0"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill={colors.primary}>
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z" />
                 </svg>
               </div>
-              <div style={{ width: "1px", height: "16px", backgroundColor: colors.line }} />
+              <div className="w-px h-4 bg-[#DEDEDE]" />
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  color: "#555",
-                }}
+                className="font-['Inter',sans-serif] text-sm font-normal text-[#555]"
               >
                 {active.bar}
               </span>
@@ -2272,96 +1523,36 @@ function BridgeToImpactSection({ isMobile }) {
 // SECTION 7: CTA — REBUILT
 // ============================================================================
 function CTASection({ isMobile }) {
-  const [hoveredBtn, setHoveredBtn] = useState(null);
   const navigate = useNavigate();
 
   return (
     <section
-      style={{
-        backgroundColor: colors.background,
-        padding: isMobile ? "20px 20px 40px" : "30px 80px 60px",
-      }}
+      className={`bg-[#F3F5F2] ${isMobile ? "px-5 pt-5 pb-10" : "px-20 pt-[30px] pb-[60px]"}`}
     >
       <div
-        style={{
-          maxWidth: CONTENT_MAX_WIDTH,
-          margin: "0 auto",
-          backgroundColor: colors.primary,
-          borderRadius: "24px",
-          padding: isMobile ? "60px 24px" : "80px 60px",
-          position: "relative",
-          overflow: "hidden",
-          textAlign: "center",
-        }}
+        className={`max-w-[1200px] mx-auto bg-[#1B4D3E] rounded-3xl ${isMobile ? "px-6 py-[60px]" : "px-[60px] py-20"} relative overflow-hidden text-center`}
       >
         {/* Decorative shapes */}
         <div
-          style={{
-            position: "absolute",
-            top: "-40px",
-            left: "-40px",
-            width: "200px",
-            height: "200px",
-            borderRadius: "50%",
-            background: "rgba(255,255,255,0.04)",
-            pointerEvents: "none",
-          }}
+          className="absolute -top-10 -left-10 w-[200px] h-[200px] rounded-full bg-white/[0.04] pointer-events-none"
         />
         <div
-          style={{
-            position: "absolute",
-            bottom: "-60px",
-            right: "-60px",
-            width: "280px",
-            height: "280px",
-            borderRadius: "50%",
-            background: "rgba(255,255,255,0.03)",
-            pointerEvents: "none",
-          }}
+          className="absolute -bottom-[60px] -right-[60px] w-[280px] h-[280px] rounded-full bg-white/[0.03] pointer-events-none"
         />
         <div
-          style={{
-            position: "absolute",
-            top: "40%",
-            left: "8%",
-            width: "120px",
-            height: "120px",
-            borderRadius: "50%",
-            background: "rgba(255,255,255,0.02)",
-            pointerEvents: "none",
-          }}
+          className="absolute top-[40%] left-[8%] w-[120px] h-[120px] rounded-full bg-white/[0.02] pointer-events-none"
         />
 
-        <div style={{ position: "relative", zIndex: 1 }}>
+        <div className="relative z-[1]">
           {/* Pill */}
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              border: "1px solid rgba(255,255,255,0.15)",
-              borderRadius: "50px",
-              padding: "8px 20px",
-              marginBottom: "32px",
-            }}
+            className="inline-flex items-center gap-2 border border-white/15 rounded-[50px] px-5 py-2 mb-8"
           >
             <div
-              style={{
-                width: "8px",
-                height: "8px",
-                borderRadius: "50%",
-                backgroundColor: colors.accent,
-              }}
+              className="w-2 h-2 rounded-full bg-[#B8D935]"
             />
             <span
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "11px",
-                fontWeight: "700",
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.6)",
-              }}
+              className="font-['Inter',sans-serif] text-[11px] font-bold tracking-[2px] uppercase text-white/60"
             >
               GET INVOLVED
             </span>
@@ -2369,81 +1560,31 @@ function CTASection({ isMobile }) {
 
           {/* Headline */}
           <h2
-            style={{
-              fontFamily: "DM Sans, sans-serif",
-              fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "700",
-              lineHeight: "1.15",
-              color: colors.white,
-              margin: "0 0 20px 0",
-              letterSpacing: "-0.5px",
-            }}
+            className={`font-['DM_Sans',sans-serif] ${isMobile ? "text-[28px]" : "text-[42px]"} font-bold leading-[1.15] text-white mb-5 tracking-[-0.5px]`}
           >
             Join the problem-solving ecosystem
           </h2>
 
           {/* Description */}
           <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "14px" : "16px",
-              fontWeight: "400",
-              lineHeight: "1.7",
-              color: "rgba(255,255,255,0.55)",
-              maxWidth: "520px",
-              margin: isMobile ? "0 auto 32px auto" : "0 auto 40px auto",
-            }}
+            className={`font-['Inter',sans-serif] ${isMobile ? "text-sm" : "text-base"} font-normal leading-[1.7] text-white/55 max-w-[520px] ${isMobile ? "mx-auto mb-8" : "mx-auto mb-10"}`}
           >
             Ghana's challenges are solvable. The resources exist. What's needed is coordination, commitment, and action.
           </p>
 
           {/* Buttons */}
           <div
-            style={{
-              display: "flex",
-              flexDirection: isMobile ? "column" : "row",
-              gap: isMobile ? "12px" : "16px",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+            className={`flex ${isMobile ? "flex-col" : "flex-row"} ${isMobile ? "gap-3" : "gap-4"} justify-center items-center`}
           >
             <button
-              onMouseEnter={() => setHoveredBtn("partner")}
-              onMouseLeave={() => setHoveredBtn(null)}
               onClick={() => navigate("/services")}
-              style={{
-                padding: "16px 36px",
-                borderRadius: "50px",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: "DM Sans, sans-serif",
-                fontSize: "15px",
-                fontWeight: "700",
-                backgroundColor: hoveredBtn === "partner" ? "#c8e040" : colors.accent,
-                color: colors.primary,
-                transition: "all 0.3s ease",
-                width: isMobile ? "100%" : "auto",
-              }}
+              className={`px-9 py-4 rounded-[50px] border-none cursor-pointer font-['DM_Sans',sans-serif] text-[15px] font-bold bg-[#B8D935] hover:bg-[#c8e040] text-[#1B4D3E] transition-all duration-300 ${isMobile ? "w-full" : "w-auto"}`}
             >
               Partner With Us →
             </button>
             <button
-              onMouseEnter={() => setHoveredBtn("materials")}
-              onMouseLeave={() => setHoveredBtn(null)}
               onClick={() => navigate("/resources")}
-              style={{
-                padding: "16px 36px",
-                borderRadius: "50px",
-                border: "1px solid rgba(255,255,255,0.2)",
-                cursor: "pointer",
-                fontFamily: "DM Sans, sans-serif",
-                fontSize: "15px",
-                fontWeight: "700",
-                backgroundColor: hoveredBtn === "materials" ? "rgba(255,255,255,0.08)" : "transparent",
-                color: colors.white,
-                transition: "all 0.3s ease",
-                width: isMobile ? "100%" : "auto",
-              }}
+              className={`px-9 py-4 rounded-[50px] border border-white/20 cursor-pointer font-['DM_Sans',sans-serif] text-[15px] font-bold bg-transparent hover:bg-white/[0.08] text-white transition-all duration-300 ${isMobile ? "w-full" : "w-auto"}`}
             >
               Request Materials
             </button>
@@ -2460,22 +1601,13 @@ const SectorGrid = () => {
   return (
     <div>
       <div
-        style={{
-          fontSize: "12px",
-          fontWeight: "600",
-          color: hovered !== null ? colors.accent : "rgba(255,255,255,0.4)",
-          fontFamily: "'DM Sans', sans-serif",
-          textTransform: "uppercase",
-          letterSpacing: "1.5px",
-          marginBottom: "12px",
-          transition: "color 0.25s ease",
-          lineHeight: "1",
-          minHeight: "12px",
-        }}
+        className={`text-xs font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-3 transition-colors duration-[250ms] leading-none min-h-[12px] ${
+          hovered !== null ? "text-[#B8D935]" : "text-white/40"
+        }`}
       >
         {hovered !== null ? FOOTER_SECTOR_ICONS[hovered].label : "Explore 12 Sectors"}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="flex justify-between items-center">
         {FOOTER_SECTOR_ICONS.map((sector, i) => {
           const isH = hovered === i;
           return (
@@ -2486,31 +1618,14 @@ const SectorGrid = () => {
               onClick={(e) => { e.preventDefault(); navigate(SECTOR_ROUTES[sector.key] || "/sectors"); }}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "44px",
-                height: "44px",
-                borderRadius: "10px",
-                backgroundColor: isH ? "rgba(184,217,53,0.12)" : "rgba(255,255,255,0.04)",
-                border: `1px solid ${isH ? "rgba(184,217,53,0.35)" : "rgba(255,255,255,0.07)"}`,
-                cursor: "pointer",
-                textDecoration: "none",
-                transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                transform: isH ? "translateY(-2px)" : "none",
-                boxShadow: isH ? "0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(184,217,53,0.15)" : "none",
-                boxSizing: "border-box",
-              }}
+              className={`flex items-center justify-center w-[44px] h-[44px] rounded-[10px] cursor-pointer no-underline transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] box-border ${
+                isH
+                  ? "bg-[rgba(184,217,53,0.12)] border border-[rgba(184,217,53,0.35)] -translate-y-0.5 shadow-[0_6px_16px_rgba(0,0,0,0.2),0_0_0_1px_rgba(184,217,53,0.15)]"
+                  : "bg-white/[0.04] border border-white/[0.07] translate-y-0 shadow-none"
+              }`}
             >
               <div
-                style={{
-                  opacity: isH ? 1 : 0.5,
-                  transition: "opacity 0.25s ease",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className={`flex items-center justify-center transition-opacity duration-[250ms] ${isH ? "opacity-100" : "opacity-50"}`}
               >
                 {sector.icon(isH ? colors.accent : "rgba(255,255,255,0.85)")}
               </div>
@@ -2529,7 +1644,8 @@ export default function BRIDGEAboutPage() {
   const isMobile = useIsMobile();
 
   return (
-    <div style={{ fontFamily: "DM Sans, sans-serif", margin: 0, padding: 0, backgroundColor: colors.white }}>
+    <Layout>
+    <div className="font-['DM_Sans',sans-serif] m-0 p-0 bg-white">
 
 
       <style>{`
@@ -2539,14 +1655,13 @@ export default function BRIDGEAboutPage() {
         .header-icon:hover svg { stroke: #1B4D3E !important; }
       `}</style>
 
-      <SiteHeader />
       <HeroSection isMobile={isMobile} />
       <VisionSection isMobile={isMobile} />
       <WhatWeDoSection isMobile={isMobile} />
       <ThreeGapsSection isMobile={isMobile} />
       <BridgeToImpactSection isMobile={isMobile} />
       <CTASection isMobile={isMobile} />
-      <SiteFooter />
     </div>
+    </Layout>
   );
 }

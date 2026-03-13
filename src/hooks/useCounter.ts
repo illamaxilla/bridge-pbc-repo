@@ -13,14 +13,16 @@ export const useCounter = (target: number | string, duration = 1200, active = tr
       return;
     }
     let start = 0;
+    let frameId: number;
     const step = (ts: number) => {
       if (!start) start = ts;
       const progress = Math.min((ts - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.round(eased * numTarget * 10) / 10);
-      if (progress < 1) requestAnimationFrame(step);
+      if (progress < 1) frameId = requestAnimationFrame(step);
     };
-    requestAnimationFrame(step);
+    frameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frameId);
   }, [numTarget, duration, active]);
   return count;
 };

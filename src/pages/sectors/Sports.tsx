@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { IconWheat, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, IconArrowRight, IconArrowDown, IconCheck, IconStorefront, IconOfficeBuilding, IconTrendingUp, IconLandmark, IconWarning, IconUsers, IconLightbulb, IconPlane, IconMusic, IconGraduationCap, IconCpu } from "@/components/icons/SectorIcons";
+import { AlertTriangle, ArrowRight, Check, Globe, GraduationCap, Lock, Music, Palette, Search, Shield, Star, Trophy, Users } from "lucide-react";
 
 // ============================================================================
 // BRIDGE SECTOR PAGE: Sports, Entertainment & Creative Industries
@@ -12,7 +13,12 @@ import { IconWheat, IconBuilding, IconWallet, IconFactory, IconTruck, IconZap, I
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import SectorFinalCTA from "@/components/sectors/SectorFinalCTA";
+import SectorHeroSection from "@/components/sectors/SectorHeroSection";
 import { useCounter } from "@/hooks/useCounter";
+import { cn } from "@/lib/utils";
+import SectorSolutionsSection from "@/components/sectors/SectorSolutionsSection";
+import { SectorPolicySection } from "@/components/sectors/SectorPolicySection";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
@@ -27,6 +33,8 @@ const sectorData = {
   shortName: "Creative Industries",
   category: "The Creative Economy",
   categoryColor: "#1565C0",
+  heroTitleBold: "Sports",
+  heroTitleRest: "& Creative Entertainment",
 
   capitalRange: "$10-22M",
   ventures: 22,
@@ -596,87 +604,11 @@ const valueChainStages = [
 
 // Premium Value Chain Icons
 const valueChainIcons = {
-  palette: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="13.5" cy="6.5" r=".5" />
-      <circle cx="17.5" cy="10.5" r=".5" />
-      <circle cx="8.5" cy="7.5" r=".5" />
-      <circle cx="6.5" cy="12.5" r=".5" />
-      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-    </svg>
-  ),
-  studio: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M9 18V5l12-2v13" />
-      <circle cx="6" cy="18" r="3" />
-      <circle cx="18" cy="16" r="3" />
-    </svg>
-  ),
-  shield: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    </svg>
-  ),
-  globe: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="2" y1="12" x2="22" y2="12" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    </svg>
-  ),
-  users: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  ),
+  palette: <Palette size={24} strokeWidth={1.5} />,
+  studio: <Music size={24} strokeWidth={1.5} />,
+  shield: <Shield size={24} strokeWidth={1.5} />,
+  globe: <Globe size={24} strokeWidth={1.5} />,
+  users: <Users size={24} strokeWidth={1.5} />,
 };
 
 
@@ -703,466 +635,21 @@ const footerLinkHref = (link: string): string => {
 };
 
 // ============================================================================
-// SECTION 1: HERO
-// ============================================================================
-
-const HeroSection = ({ sector }) => {
-  const isMobile = useIsMobile();
-  return (
-    <section
-      style={{
-        backgroundColor: colors.white,
-        padding: isMobile ? "80px 20px 20px" : "112px 80px 20px",
-        position: "relative",
-        minHeight: isMobile ? "auto" : "calc(100vh - 100px)",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto", width: "100%" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "1fr 420px",
-            gap: isMobile ? "32px" : "60px",
-            alignItems: "start",
-            flex: 1,
-          }}
-        >
-          <div>
-            {/* Category Badge */}
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
-              <span
-                style={{
-                  backgroundColor: colors.accentLight,
-                  color: colors.primary,
-                  padding: "8px 16px",
-                  borderRadius: "50px",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
-                {sector.category}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h1
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "30px" : "52px",
-                fontWeight: "400",
-                lineHeight: "1.1",
-                color: colors.primary,
-                margin: "0 0 20px 0",
-                letterSpacing: "-1px",
-              }}
-            >
-              <span style={{ fontWeight: "700" }}>Sports</span> & Creative{!isMobile && <br />} Entertainment
-            </h1>
-
-            {/* Subheading */}
-            <h2
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "20px" : "24px",
-                fontWeight: "600",
-                lineHeight: "1.3",
-                color: colors.dark,
-                margin: "0 0 16px 0",
-              }}
-            >
-              Where talent meets opportunity on the global stage.
-            </h2>
-
-            {/* Description */}
-            <p
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: isMobile ? "15px" : "16px",
-                fontWeight: "400",
-                lineHeight: "1.7",
-                color: "#555",
-                margin: "0 0 36px 0",
-                maxWidth: "540px",
-              }}
-            >
-              {sector.problemSubheadline}
-            </p>
-
-            {/* CTA Buttons */}
-            <div style={{ display: "flex", gap: "12px", flexWrap: isMobile ? "wrap" : "nowrap" }}>
-              <button
-                style={{
-                  backgroundColor: colors.accent,
-                  color: colors.primary,
-                  border: "none",
-                  padding: isMobile ? "14px 20px" : "16px 24px",
-                  borderRadius: "50px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  flex: isMobile ? "1 1 100%" : "none",
-                  justifyContent: isMobile ? "center" : "flex-start",
-                }}
-              >
-                Request Full Analysis
-                <span
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    backgroundColor: colors.primary,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: colors.white,
-                  }}
-                >
-                  <IconArrowRight />
-                </span>
-              </button>
-              <button
-                style={{
-                  backgroundColor: "transparent",
-                  color: colors.primary,
-                  border: `2px solid ${colors.line}`,
-                  padding: isMobile ? "14px 20px" : "16px 24px",
-                  borderRadius: "50px",
-                  fontSize: isMobile ? "14px" : "15px",
-                  fontWeight: "600",
-                  fontFamily: "Inter, sans-serif",
-                  cursor: "pointer",
-                  flex: isMobile ? "1 1 100%" : "none",
-                }}
-              >
-                Download Summary
-              </button>
-            </div>
-          </div>
-
-          {/* Stats Card */}
-          <div
-            style={{
-              backgroundColor: colors.primary,
-              borderRadius: "20px",
-              padding: isMobile ? "24px" : "32px",
-              minWidth: isMobile ? "auto" : "340px",
-            }}
-          >
-            {/* Header */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  color: "rgba(255,255,255,0.5)",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
-                Sector Overview
-              </span>
-              <span
-                style={{
-                  backgroundColor: "rgba(184, 217, 53, 0.15)",
-                  color: colors.accent,
-                  padding: "6px 14px",
-                  borderRadius: "50px",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                }}
-              >
-                Active
-              </span>
-            </div>
-
-            {/* Main Stats Row */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "20px",
-                paddingBottom: "24px",
-                borderBottom: "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    fontSize: "42px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    fontFamily: "Inter, sans-serif",
-                    lineHeight: "1",
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  {sector.capitalRange}
-                </div>
-                <div
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "500",
-                    color: "rgba(255,255,255,0.5)",
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
-                  Investment Range
-                </div>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <div
-                  style={{
-                    fontSize: "42px",
-                    fontWeight: "700",
-                    color: colors.accent,
-                    fontFamily: "Inter, sans-serif",
-                    lineHeight: "1",
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  {sector.ventures}
-                </div>
-                <div
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "500",
-                    color: "rgba(255,255,255,0.5)",
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
-                  Identified Ventures
-                </div>
-              </div>
-            </div>
-
-            {/* Stat Rows — 4 items */}
-            {sector.keyStats.map((stat, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "16px 0",
-                }}
-              >
-                <div>
-                  <span
-                    style={{
-                      fontSize: "15px",
-                      fontWeight: "500",
-                      color: "rgba(255,255,255,0.8)",
-                      fontFamily: "Inter, sans-serif",
-                      display: "block",
-                    }}
-                  >
-                    {stat.label}
-                  </span>
-                  {stat.detail && (
-                    <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "400",
-                        color: "rgba(255,255,255,0.35)",
-                        fontFamily: "Inter, sans-serif",
-                        fontStyle: "italic",
-                        marginTop: "2px",
-                        display: "block",
-                      }}
-                    >
-                      {stat.detail}
-                    </span>
-                  )}
-                </div>
-                <span
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "600",
-                    color: colors.accent,
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
-                  {stat.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* Scroll to Explore — desktop only */}
-      {!isMobile && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginTop: "auto",
-            paddingTop: "10px",
-            paddingBottom: "10px",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "13px",
-              color: "#999",
-              marginBottom: "8px",
-            }}
-          >
-            Explore Analysis
-          </span>
-          <div
-            style={{
-              color: "#999",
-              animation: "bounce 2s infinite",
-            }}
-          >
-            <IconArrowDown />
-          </div>
-        </div>
-      )}
-    </section>
-  );
-};
-
-// ============================================================================
 // SECTION 2: THE PROCESS (Value Chain) (Premium Interactive)
 // ============================================================================
 
 /* ── Process Section SVG Icons ── */
-const ProcessIcon = ({ d, size = 20 }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    {typeof d === "string" ? <path d={d} /> : d}
-  </svg>
-);
-
 const processIcons = {
-  search: (
-    <ProcessIcon
-      d={
-        <React.Fragment>
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.3-4.3" />
-        </React.Fragment>
-      }
-    />
-  ),
-  academy: (
-    <ProcessIcon
-      d={
-        <React.Fragment>
-          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-          <path d="M6 12v5c3 3 9 3 12 0v-5" />
-        </React.Fragment>
-      }
-    />
-  ),
-  shield: <ProcessIcon d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />,
-  trophy: (
-    <ProcessIcon
-      d={
-        <React.Fragment>
-          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-          <path d="M4 22h16" />
-          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22" />
-          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22" />
-          <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
-        </React.Fragment>
-      }
-    />
-  ),
-  star: (
-    <ProcessIcon
-      d={
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-      }
-    />
-  ),
-  palette: (
-    <ProcessIcon
-      d={
-        <React.Fragment>
-          <circle cx="13.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
-          <circle cx="17.5" cy="10.5" r="1.5" fill="currentColor" stroke="none" />
-          <circle cx="8.5" cy="7.5" r="1.5" fill="currentColor" stroke="none" />
-          <circle cx="6.5" cy="12.5" r="1.5" fill="currentColor" stroke="none" />
-          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-        </React.Fragment>
-      }
-    />
-  ),
-  music: (
-    <ProcessIcon
-      d={
-        <React.Fragment>
-          <path d="M9 18V5l12-2v13" />
-          <circle cx="6" cy="18" r="3" />
-          <circle cx="18" cy="16" r="3" />
-        </React.Fragment>
-      }
-    />
-  ),
-  lock: (
-    <ProcessIcon
-      d={
-        <React.Fragment>
-          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </React.Fragment>
-      }
-    />
-  ),
-  globe: (
-    <ProcessIcon
-      d={
-        <React.Fragment>
-          <circle cx="12" cy="12" r="10" />
-          <path d="M2 12h20" />
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        </React.Fragment>
-      }
-    />
-  ),
-  users: (
-    <ProcessIcon
-      d={
-        <React.Fragment>
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </React.Fragment>
-      }
-    />
-  ),
+  search: <Search size={20} strokeWidth={1.75} />,
+  academy: <GraduationCap size={20} strokeWidth={1.75} />,
+  shield: <Shield size={20} strokeWidth={1.75} />,
+  trophy: <Trophy size={20} strokeWidth={1.75} />,
+  star: <Star size={20} strokeWidth={1.75} />,
+  palette: <Palette size={20} strokeWidth={1.75} />,
+  music: <Music size={20} strokeWidth={1.75} />,
+  lock: <Lock size={20} strokeWidth={1.75} />,
+  globe: <Globe size={20} strokeWidth={1.75} />,
+  users: <Users size={20} strokeWidth={1.75} />,
 };
 
 const processStageIcons = {
@@ -1377,50 +864,37 @@ const ValueChainSection = () => {
 
   return (
     <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "100px 80px" }}>
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* \u2550\u2550\u2550 HEADER \u2550\u2550\u2550 */}
-        <div style={{ marginBottom: isMobile ? "32px" : "60px", textAlign: "center" }}>
+        <div className="text-center" style={{ marginBottom: isMobile ? "32px" : "60px" }}>
           <span
+            className="inline-block px-5 py-[10px] rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Process
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light -tracking-[0.5px] leading-[1.2] mb-4"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
               color: colors.primary,
-              letterSpacing: "-0.5px",
-              margin: "0 0 16px 0",
-              lineHeight: "1.2",
+              marginTop: 0,
             }}
           >
-            From Talent <span style={{ fontWeight: "600" }}>Recognition</span> to{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Global Impact</span>
+            From Talent <span className="font-semibold">Recognition</span> to{" "}
+            <span className="font-semibold" style={{ color: colors.accent }}>Global Impact</span>
           </h2>
 
           <p
+            className="text-[#555] max-w-[620px] mx-auto leading-[1.7]"
             style={{
               fontSize: isMobile ? "15px" : "16px",
-              color: "#555",
-              maxWidth: "620px",
               margin: "0 auto 36px",
-              lineHeight: "1.7",
             }}
           >
             Two distinct pathways where Ghanaian talent meets global opportunity — each with unique value chains,
@@ -1429,11 +903,9 @@ const ValueChainSection = () => {
 
           {/* \u2550\u2550\u2550 TOGGLE \u2550\u2550\u2550 */}
           <div
+            className="inline-flex rounded-full overflow-hidden"
             style={{
-              display: "inline-flex",
               border: `1px solid ${colors.line}`,
-              borderRadius: "50px",
-              overflow: "hidden",
               backgroundColor: colors.background,
               padding: isMobile ? "3px" : "4px",
             }}
@@ -1481,18 +953,8 @@ const ValueChainSection = () => {
         >
           {/* \u2500\u2500\u2500 STAGE TABS \u2500\u2500\u2500 */}
           {isMobile ? (
-            <div
-              style={{
-                display: "flex",
-                gap: "8px",
-                overflowX: "auto",
-                WebkitOverflowScrolling: "touch",
-                margin: "0 -20px",
-                padding: "0 20px 8px",
-                marginBottom: "20px",
-                justifyContent: "center",
-              }}
-            >
+            <div className="flex gap-2 overflow-x-auto justify-center mb-5" style={{ WebkitOverflowScrolling: "touch", margin: "0 -20px", padding: "0 20px 8px", marginBottom: "20px" }}>
+
               {stages.map((stage, i) => {
                 const isAct = i === activeStage;
                 return (
@@ -1521,12 +983,9 @@ const ValueChainSection = () => {
                       {processIcons[iconKeys[i]]}
                     </div>
                     <span
+                      className="text-[10px] font-semibold whitespace-nowrap transition-colors duration-300"
                       style={{
-                        fontSize: "10px",
-                        fontWeight: "600",
-                        whiteSpace: "nowrap",
                         color: isAct ? colors.white : "#888",
-                        transition: "color 0.3s ease",
                       }}
                     >
                       {stage.stage.split(" ")[0]}
@@ -1536,7 +995,7 @@ const ValueChainSection = () => {
               })}
             </div>
           ) : (
-            <div style={{ display: "flex", gap: "12px", marginBottom: "28px", paddingTop: "24px" }}>
+            <div className="flex gap-3 mb-7 pt-6">
               {stages.map((stage, i) => {
                 const isAct = i === activeStage;
                 return (
@@ -1557,44 +1016,27 @@ const ValueChainSection = () => {
                     }}
                   >
                     <div
+                      className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
                       style={{
-                        position: "absolute",
-                        top: "-20px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
                         backgroundColor: isAct ? colors.accent : colors.background,
                         border: `2px solid ${isAct ? colors.primary : "#ccc"}`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
                         color: isAct ? colors.primary : "#bbb",
-                        transition: "all 0.3s ease",
                       }}
                     >
                       {processIcons[iconKeys[i]]}
                     </div>
                     <span
+                      className="text-[10px] font-bold uppercase tracking-[1.5px] block mb-1"
                       style={{
-                        fontSize: "10px",
-                        fontWeight: "700",
                         color: isAct ? "rgba(255,255,255,0.45)" : "#bbb",
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        display: "block",
-                        marginBottom: "4px",
                       }}
                     >
                       Stage {stage.id}
                     </span>
                     <div
+                      className="text-[14px] font-semibold transition-colors duration-300"
                       style={{
-                        fontSize: "14px",
-                        fontWeight: "600",
                         color: isAct ? colors.white : "#888",
-                        transition: "color 0.3s ease",
                       }}
                     >
                       {stage.stage}
@@ -1617,69 +1059,43 @@ const ValueChainSection = () => {
           >
             <div style={isMobile ? {} : { display: "grid", gridTemplateColumns: "1fr 1fr", height: "100%" }}>
               {/* LEFT \u2014 Context */}
-              <div style={{ padding: isMobile ? "24px" : "40px 44px", overflow: "hidden" }}>
-                <div style={{ marginBottom: "6px" }}>
+              <div className="overflow-hidden" style={{ padding: isMobile ? "24px" : "40px 44px" }}>
+                <div className="mb-[6px]">
                   <span
+                    className="font-bold uppercase tracking-[1.5px]"
                     style={{
                       fontSize: isMobile ? "14px" : "16px",
-                      fontWeight: "700",
                       color: colors.primary,
-                      textTransform: "uppercase",
-                      letterSpacing: "1.5px",
                     }}
                   >
                     {active.actor}
                   </span>
                 </div>
-                <div style={{ fontSize: "14px", color: "#777", marginBottom: "16px" }}>{active.population}</div>
-                <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.7", margin: "0 0 24px 0" }}>
+                <div className="text-[14px] text-[#777] mb-4">{active.population}</div>
+                <p className="text-[14px] text-[#555] leading-[1.7]" style={{ margin: "0 0 24px 0" }}>
                   {active.description}
                 </p>
 
                 {(!isMobile || showMore) && (
                   <>
-                    <div style={{ height: "1px", backgroundColor: colors.line, marginBottom: "20px" }} />
+                    <div className="h-px mb-5" style={{ backgroundColor: colors.line }} />
                     <div
-                      style={{
-                        fontSize: "10px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        marginBottom: "12px",
-                        opacity: 0.5,
-                      }}
+                      className="text-[10px] font-bold uppercase tracking-[1.5px] mb-3 opacity-50"
+                      style={{ color: colors.primary }}
                     >
                       Challenges & Opportunities
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                    <div className="flex flex-col gap-[6px]">
                       {active.painPoints.map((p, idx) => (
                         <div
                           key={idx}
+                          className="flex items-center gap-[10px] bg-[rgba(184,217,53,0.1)] rounded-[10px] border border-[rgba(184,217,53,0.25)]"
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
                             padding: isMobile ? "8px 12px" : "10px 14px",
-                            backgroundColor: "rgba(184,217,53,0.1)",
-                            borderRadius: "10px",
-                            border: "1px solid rgba(184,217,53,0.25)",
                           }}
                         >
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#D97706"
-                            strokeWidth="2"
-                            style={{ flexShrink: 0 }}
-                          >
-                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-                            <path d="M12 9v4" />
-                            <path d="M12 17h.01" />
-                          </svg>
-                          <span style={{ fontSize: "13px", color: colors.primary, lineHeight: "1.4" }}>{p}</span>
+                          <AlertTriangle size={14} stroke="#D97706" strokeWidth={2} className="shrink-0" />
+                          <span className="text-[13px] leading-[1.4]" style={{ color: colors.primary }}>{p}</span>
                         </div>
                       ))}
                     </div>
@@ -1699,15 +1115,8 @@ const ValueChainSection = () => {
                 {/* Value retention */}
                 <div>
                   <div
-                    style={{
-                      fontSize: "10px",
-                      fontWeight: "700",
-                      color: colors.primary,
-                      textTransform: "uppercase",
-                      letterSpacing: "1.5px",
-                      marginBottom: "14px",
-                      opacity: 0.5,
-                    }}
+                    className="text-[10px] font-bold uppercase tracking-[1.5px] mb-[14px] opacity-50"
+                    style={{ color: colors.primary }}
                   >
                     Value Retained at This Stage
                   </div>
@@ -1720,22 +1129,17 @@ const ValueChainSection = () => {
                     }}
                   >
                     <div
+                      className="h-full rounded-[19px] flex items-center transition-all duration-[800ms]"
                       style={{
                         width: `${active.valueRetained}%`,
-                        height: "100%",
                         backgroundColor: retColor(active.valueRetained),
-                        borderRadius: "19px",
-                        transition: "width 0.8s ease, background-color 0.8s ease",
-                        display: "flex",
-                        alignItems: "center",
                         paddingLeft: active.valueRetained > 20 ? "16px" : "0",
                         justifyContent: active.valueRetained <= 20 ? "center" : "flex-start",
                       }}
                     >
                       <span
+                        className="text-[14px] font-bold"
                         style={{
-                          fontSize: "14px",
-                          fontWeight: "700",
                           color: active.valueRetained > 60 ? colors.primary : colors.white,
                         }}
                       >
@@ -1744,29 +1148,19 @@ const ValueChainSection = () => {
                     </div>
                   </div>
                   {/* Mini markers */}
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", padding: "0 4px" }}
-                  >
+                  <div className="flex justify-between mt-[10px] px-1">
                     {stages.map((s, idx) => (
-                      <div
-                        key={idx}
-                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}
-                      >
+                      <div key={idx} className="flex flex-col items-center gap-1">
                         <div
+                          className="w-[6px] h-[6px] rounded-full transition-colors duration-300"
                           style={{
-                            width: "6px",
-                            height: "6px",
-                            borderRadius: "50%",
                             backgroundColor: idx === activeStage ? colors.primary : "#ccc",
-                            transition: "background-color 0.3s ease",
                           }}
                         />
                         <span
+                          className="text-[10px] font-semibold transition-colors duration-300"
                           style={{
-                            fontSize: "10px",
-                            fontWeight: "600",
                             color: idx === activeStage ? colors.primary : "#bbb",
-                            transition: "color 0.3s ease",
                           }}
                         >
                           {s.valueRetained}%
@@ -1790,19 +1184,15 @@ const ValueChainSection = () => {
                       }}
                     >
                       <div
+                        className="font-bold font-[Poppins,sans-serif] -tracking-[1px] leading-[1.1] mb-[6px]"
                         style={{
                           fontSize: isMobile ? "36px" : "42px",
-                          fontWeight: "700",
                           color: colors.primary,
-                          fontFamily: "Poppins, sans-serif",
-                          letterSpacing: "-1px",
-                          lineHeight: "1.1",
-                          marginBottom: "6px",
                         }}
                       >
                         {active.statNumber}
                       </div>
-                      <div style={{ fontSize: "13px", color: "#777", lineHeight: "1.45" }}>{active.statLabel}</div>
+                      <div className="text-[13px] text-[#777] leading-[1.45]">{active.statLabel}</div>
                     </div>
 
                     {/* BRIDGE intervention */}
@@ -1818,34 +1208,19 @@ const ValueChainSection = () => {
                       }}
                     >
                       <div
-                        style={{
-                          width: "26px",
-                          height: "26px",
-                          borderRadius: "50%",
-                          backgroundColor: colors.accent,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                          marginTop: "1px",
-                        }}
+                        className="w-[26px] h-[26px] rounded-full flex items-center justify-center shrink-0 mt-px"
+                        style={{ backgroundColor: colors.accent }}
                       >
-                        <span style={{ color: colors.primary, fontSize: "12px", fontWeight: "800" }}>B</span>
+                        <span className="text-[12px] font-[800]" style={{ color: colors.primary }}>B</span>
                       </div>
                       <div>
                         <div
-                          style={{
-                            fontSize: "10px",
-                            fontWeight: "700",
-                            color: colors.accent,
-                            textTransform: "uppercase",
-                            letterSpacing: "1.5px",
-                            marginBottom: "5px",
-                          }}
+                          className="text-[10px] font-bold uppercase tracking-[1.5px] mb-[5px]"
+                          style={{ color: colors.accent }}
                         >
                           BRIDGE Intervention
                         </div>
-                        <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.8)", lineHeight: "1.6" }}>
+                        <div className="text-[13px] text-white/80 leading-[1.6]">
                           {active.bridgeSolution}
                         </div>
                       </div>
@@ -1876,19 +1251,7 @@ const ValueChainSection = () => {
                     }}
                   >
                     {showMore ? "Show less" : "Show more details"}
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke={colors.primary}
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      style={{ transform: showMore ? "rotate(180deg)" : "none", transition: "transform 0.3s ease" }}
-                    >
-                      <path d="M6 9l6 6 6-6" />
-                    </svg>
+                    <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} style={{ transform: showMore ? "rotate(180deg)" : "none", transition: "transform 0.3s ease" }} />
                   </button>
                 )}
               </div>
@@ -1897,52 +1260,30 @@ const ValueChainSection = () => {
 
           {/* \u2500\u2500\u2500 FLOW PATHWAY \u2014 desktop only \u2500\u2500\u2500 */}
           {!isMobile && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: "18px",
-                padding: "8px 0",
-              }}
-            >
+            <div className="flex items-center justify-center mt-[18px] py-2">
               {stages.map((stage, i) => (
                 <Fragment key={stage.id}>
                   <div
                     onClick={() => setActiveStage(i)}
+                    className="flex flex-col items-center gap-2 cursor-pointer transition-opacity duration-300"
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: "8px",
-                      cursor: "pointer",
                       opacity: i === activeStage ? 1 : 0.35,
-                      transition: "opacity 0.3s ease",
                     }}
                   >
                     <div
+                      className="w-[42px] h-[42px] rounded-full flex items-center justify-center transition-all duration-300"
                       style={{
-                        width: "42px",
-                        height: "42px",
-                        borderRadius: "50%",
                         backgroundColor: i === activeStage ? colors.primary : colors.background,
                         border: `2px solid ${i === activeStage ? colors.primary : colors.line}`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
                         color: i === activeStage ? colors.accent : "#999",
-                        transition: "all 0.3s ease",
                       }}
                     >
                       {processIcons[iconKeys[i]]}
                     </div>
                     <span
+                      className="text-[11px] font-semibold whitespace-nowrap transition-colors duration-300"
                       style={{
-                        fontSize: "11px",
-                        fontWeight: "600",
-                        whiteSpace: "nowrap",
                         color: i === activeStage ? colors.primary : "#aaa",
-                        transition: "color 0.3s ease",
                       }}
                     >
                       {stage.stage}
@@ -2082,33 +1423,21 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
       }}
     >
       {/* Zone 1 — Title + Badge + Description */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
+      <div className="flex justify-between items-start mb-3">
         <h3
+          className="font-[Inter,sans-serif] font-semibold m-0 leading-[1.3] flex-1"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "16px" : "18px",
-            fontWeight: "600",
             color: colors.dark,
-            margin: 0,
-            lineHeight: "1.3",
-            flex: 1,
           }}
         >
           {problem.title}
         </h3>
         <span
+          className="px-[14px] py-[6px] rounded-[20px] text-[11px] font-bold uppercase tracking-[0.5px] whitespace-nowrap shrink-0 ml-3"
           style={{
             backgroundColor: sev.bg,
-            padding: "6px 14px",
-            borderRadius: "20px",
-            fontSize: "11px",
-            fontWeight: "700",
             color: sev.text,
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-            whiteSpace: "nowrap",
-            flexShrink: 0,
-            marginLeft: "12px",
           }}
         >
           {problem.severity}
@@ -2134,23 +1463,21 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
 
       {/* Zone 2 — Impact Bar */}
       <div
+        className="rounded-xl"
         style={{
           backgroundColor: colors.accentLight,
-          borderRadius: "12px",
           padding: isMobile ? "8px 12px" : "10px 16px",
           marginBottom: isExpanded ? "16px" : 0,
         }}
       >
         <span
+          className="font-[Inter,sans-serif] font-semibold overflow-hidden"
           style={{
-            fontFamily: "Inter, sans-serif",
             fontSize: isMobile ? "13px" : "14px",
-            fontWeight: "600",
             color: colors.primary,
             display: "-webkit-box",
             WebkitLineClamp: 1,
             WebkitBoxOrient: "vertical",
-            overflow: "hidden",
           }}
         >
           Impact: {problem.quantification}
@@ -2162,82 +1489,51 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
         <div style={{ borderTop: `1px solid ${colors.line}`, paddingTop: "16px" }}>
           {/* Zone 3 — Priority + Scale */}
           <div
+            className="grid gap-3 mb-5"
             style={{
-              display: "grid",
               gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: "12px",
-              marginBottom: "20px",
             }}
           >
-            <div style={{ backgroundColor: colors.background, borderRadius: "12px", padding: "14px" }}>
-              <div
-                style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}
-              >
-                <span
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
-                    fontWeight: "600",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                    color: "#888",
-                  }}
-                >
+            <div className="rounded-xl p-[14px]" style={{ backgroundColor: colors.background }}>
+              <div className="flex items-center justify-between mb-[10px]">
+                <span className="font-[Inter,sans-serif] text-[11px] font-semibold uppercase tracking-[0.5px] text-[#888]">
                   Priority
                 </span>
                 <span
+                  className="font-[Inter,sans-serif] text-[12px] font-bold px-[10px] py-1 rounded-[20px]"
                   style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "12px",
-                    fontWeight: "700",
                     color: sev.text,
                     backgroundColor: sev.bg,
-                    padding: "4px 10px",
-                    borderRadius: "20px",
                   }}
                 >
                   {problem.severity}
                 </span>
               </div>
-              <div style={{ height: "8px", backgroundColor: colors.line, borderRadius: "4px", overflow: "hidden" }}>
+              <div className="h-2 rounded overflow-hidden" style={{ backgroundColor: colors.line }}>
                 <div
+                  className="h-full rounded"
                   style={{
                     width: `${problem.severityScore}%`,
-                    height: "100%",
                     backgroundColor: sev.bar,
-                    borderRadius: "4px",
                   }}
                 />
               </div>
             </div>
-            <div style={{ backgroundColor: colors.background, borderRadius: "12px", padding: "14px" }}>
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "600",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  color: "#888",
-                  display: "block",
-                  marginBottom: "8px",
-                }}
-              >
+            <div className="rounded-xl p-[14px]" style={{ backgroundColor: colors.background }}>
+              <span className="font-[Inter,sans-serif] text-[11px] font-semibold uppercase tracking-[0.5px] text-[#888] block mb-2">
                 Scale
               </span>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+              <div className="flex items-baseline gap-2">
                 <span
+                  className="font-[Poppins,sans-serif] font-bold leading-none"
                   style={{
-                    fontFamily: "Poppins, sans-serif",
                     fontSize: isMobile ? "20px" : "24px",
-                    fontWeight: "700",
                     color: colors.primary,
-                    lineHeight: "1",
                   }}
                 >
                   {problem.affectedCount}
                 </span>
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#666" }}>
+                <span className="font-[Inter,sans-serif] text-[13px] text-[#666]">
                   {problem.affectedLabel}
                 </span>
               </div>
@@ -2245,78 +1541,43 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
           </div>
 
           {/* Zone 4 — Opportunity Drivers */}
-          <div style={{ marginBottom: "20px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#888"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-              <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "600",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                  color: "#888",
-                }}
-              >
+          <div className="mb-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Clock size={16} strokeWidth={1.5} color="#888" />
+              <span className="font-[Inter,sans-serif] text-[11px] font-semibold uppercase tracking-[0.5px] text-[#888]">
                 Opportunity Drivers
               </span>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "10px" }}>
+            <div className="grid gap-[10px]" style={{ gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}>
               {problem.rootCauses.map((cause, i) => (
                 <div
                   key={i}
+                  className="flex items-center gap-3 rounded-xl"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
                     padding: isMobile ? "10px 12px" : "12px 14px",
                     backgroundColor: colors.background,
-                    borderRadius: "12px",
                   }}
                 >
                   <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-semibold font-[Inter,sans-serif] shrink-0"
                     style={{
-                      width: "28px",
-                      height: "28px",
-                      borderRadius: "50%",
                       backgroundColor: colors.primary,
                       color: colors.white,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      fontFamily: "Inter, sans-serif",
-                      flexShrink: 0,
                     }}
                   >
                     {i + 1}
                   </div>
                   <div>
                     <div
+                      className="font-[Inter,sans-serif] font-semibold leading-[1.3]"
                       style={{
-                        fontFamily: "Inter, sans-serif",
                         fontSize: isMobile ? "13px" : "14px",
-                        fontWeight: "600",
                         color: colors.dark,
-                        lineHeight: "1.3",
                       }}
                     >
                       {cause.title}
                     </div>
-                    <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#888", marginTop: "2px" }}>
+                    <div className="font-[Inter,sans-serif] text-[12px] text-[#888] mt-[2px]">
                       {cause.description}
                     </div>
                   </div>
@@ -2327,55 +1588,32 @@ const ProblemCard = ({ problem, isExpanded, onToggle }) => {
 
           {/* Zone 5 — BRIDGE Solution Footer */}
           <div
+            className="flex pt-4"
             style={{
               borderTop: `1px solid ${colors.line}`,
-              paddingTop: "16px",
-              display: "flex",
               alignItems: isMobile ? "flex-start" : "center",
               gap: isMobile ? "8px" : "16px",
               flexDirection: isMobile ? "column" : "row",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", flex: 1 }}>
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.accent}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ flexShrink: 0 }}
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#888", flexShrink: 0 }}>
+            <div className="flex items-center gap-2 flex-1">
+              <Check size={18} stroke={colors.accent} strokeWidth={2.5} className="shrink-0" />
+              <span className="font-[Inter,sans-serif] text-[13px] text-[#888] shrink-0">
                 BRIDGE Solution:
               </span>
               <span
-                style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", fontWeight: "600", color: colors.primary }}
+                className="font-[Inter,sans-serif] text-[14px] font-semibold"
+                style={{ color: colors.primary }}
               >
                 {problem.bridgeSolution}
               </span>
             </div>
             <span
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "13px",
-                fontWeight: "500",
-                color: colors.primary,
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "4px",
-                flexShrink: 0,
-                cursor: "pointer",
-              }}
+              className="font-[Inter,sans-serif] text-[13px] font-medium inline-flex items-center gap-1 shrink-0 cursor-pointer"
+              style={{ color: colors.primary }}
             >
               View
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <ArrowRight size={14} strokeWidth={2} />
             </span>
           </div>
         </div>
@@ -2395,49 +1633,33 @@ const ProblemSection = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
         <div style={{ marginBottom: isMobile ? "32px" : "60px" }}>
           <span
+            className="inline-block px-5 py-[10px] rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Opportunity
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light -tracking-[0.5px] leading-[1.2] max-w-[820px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
               color: colors.primary,
-              letterSpacing: "-0.5px",
               margin: "0 0 20px 0",
-              lineHeight: "1.2",
-              maxWidth: "820px",
             }}
           >
-            Where Opportunity Meets <span style={{ color: colors.accent, fontWeight: "600" }}>Creative Energy</span>
+            Where Opportunity Meets <span className="font-semibold" style={{ color: colors.accent }}>Creative Energy</span>
           </h2>
           <p
+            className="font-[Inter,sans-serif] text-[#666] max-w-[680px] leading-[1.65] m-0"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "15px" : "16px",
-              color: "#666",
-              maxWidth: "680px",
-              lineHeight: "1.65",
-              margin: 0,
             }}
           >
             Ghana's creative landscape holds extraordinary potential. Each area below represents a pathway where
@@ -2491,14 +1713,12 @@ const ProblemSection = () => {
 
         {/* Mobile scroll indicators */}
         {isMobile && (
-          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "16px" }}>
+          <div className="flex justify-center gap-2 mt-4">
             {problemSectionData.map((_, i) => (
               <div
                 key={i}
+                className="w-2 h-2 rounded-full"
                 style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
                   backgroundColor: i === 0 ? colors.primary : colors.line,
                 }}
               />
@@ -2511,263 +1731,6 @@ const ProblemSection = () => {
 };
 
 // SECTION 4: THE PATHWAY TO IMPACT GRID
-// ============================================================================
-
-const SolutionsSection = () => {
-  const isMobile = useIsMobile();
-  const [activeCat, setActiveCat] = useState("all");
-
-  const categories = [
-    { id: "all", label: "All" },
-    { id: "flagship", label: "Flagship" },
-    { id: "scaling", label: "Scaling" },
-  ];
-
-  const allSolutions = sectorData.solutions;
-  const filtered =
-    activeCat === "all"
-      ? allSolutions.slice(0, 9)
-      : activeCat === "flagship"
-        ? allSolutions.filter((s) => s.tier === 1).slice(0, 9)
-        : allSolutions.filter((s) => s.tier === 2).slice(0, 9);
-
-  return (
-    <section
-      style={{
-        backgroundColor: colors.primary,
-        padding: isMobile ? "60px 20px" : "100px 80px",
-      }}
-    >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        {/* Section Header */}
-        <div style={{ marginBottom: isMobile ? "32px" : "60px" }}>
-          <span
-            style={{
-              display: "inline-block",
-              backgroundColor: "rgba(184, 217, 53, 0.15)",
-              color: colors.accent,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "1.5px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
-            }}
-          >
-            The Pathway to Impact
-          </span>
-          <h2
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              color: colors.white,
-              letterSpacing: "-0.5px",
-              marginBottom: "20px",
-              lineHeight: "1.2",
-              maxWidth: "900px",
-            }}
-          >
-            Ventures That Build Lasting Creative <span style={{ color: colors.accent, fontWeight: "600" }}>Value</span>
-          </h2>
-          <div
-            style={{
-              display: "flex",
-              alignItems: isMobile ? "flex-start" : "center",
-              justifyContent: "space-between",
-              flexDirection: isMobile ? "column" : "row",
-              gap: isMobile ? "20px" : "0",
-            }}
-          >
-            <p
-              style={{
-                fontSize: isMobile ? "15px" : "16px",
-                color: "rgba(255,255,255,0.6)",
-                maxWidth: "500px",
-                lineHeight: "1.65",
-                margin: "0",
-              }}
-            >
-              BRIDGE's creative economy portfolio — flagship ventures for maximum impact, scaling ventures that extend
-              reach across Ghana's creative ecosystem.
-            </p>
-
-            {/* Right-justified filters in outlined container */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: isMobile ? "4px" : "6px",
-                border: "1px solid rgba(255,255,255,0.2)",
-                borderRadius: "50px",
-                padding: isMobile ? "3px" : "4px",
-              }}
-            >
-              {categories.map((cat) => {
-                const isOn = activeCat === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveCat(cat.id)}
-                    style={{
-                      padding: isMobile ? "5px 10px" : "6px 16px",
-                      borderRadius: "50px",
-                      cursor: "pointer",
-                      fontSize: isMobile ? "10px" : "12px",
-                      fontWeight: isOn ? "700" : "500",
-                      fontFamily: "Inter, sans-serif",
-                      backgroundColor: isOn ? colors.accent : "transparent",
-                      color: isOn ? colors.primary : "rgba(255,255,255,0.45)",
-                      border: isOn ? "1.5px solid transparent" : "1.5px solid transparent",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {cat.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* Solutions Grid / Carousel — 3x3 max */}
-        <div
-          style={
-            isMobile
-              ? {
-                  display: "flex",
-                  gap: "12px",
-                  overflowX: "auto",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                  margin: "0 -20px",
-                  padding: "0 20px 8px",
-                }
-              : {
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "20px",
-                }
-          }
-        >
-          {filtered.map((solution, i) => (
-            <div
-              key={i}
-              style={{
-                backgroundColor: colors.white,
-                borderRadius: isMobile ? "16px" : "12px",
-                padding: isMobile ? "24px" : "28px",
-                border: "1px solid rgba(0,0,0,0.08)",
-                display: "flex",
-                flexDirection: "column",
-                ...(isMobile ? { minWidth: "80%", maxWidth: "80%", flexShrink: 0, scrollSnapAlign: "start" } : {}),
-              }}
-            >
-              {/* Tier + Score */}
-              <div
-                style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}
-              >
-                <span
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    color: colors.primary,
-                    textTransform: "uppercase",
-                    letterSpacing: "1.5px",
-                    backgroundColor: solution.tier === 1 ? colors.accent : `${colors.accent}30`,
-                    padding: "5px 14px",
-                    borderRadius: "50px",
-                  }}
-                >
-                  {"Tier " + solution.tier + " \u00B7 " + (solution.tier === 1 ? "Flagship" : "Scaling")}
-                </span>
-                <span
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "700",
-                    color: "rgba(0,0,0,0.5)",
-                    fontFamily: "Poppins, sans-serif",
-                  }}
-                >
-                  Score: {solution.score}
-                </span>
-              </div>
-
-              <div
-                style={{
-                  fontSize: isMobile ? "17px" : "18px",
-                  fontWeight: "600",
-                  color: colors.primary,
-                  marginBottom: "8px",
-                  lineHeight: "1.3",
-                }}
-              >
-                {solution.name}
-              </div>
-              <div style={{ fontSize: "14px", color: "#666", lineHeight: "1.6", marginBottom: "20px", flex: 1 }}>
-                {solution.description}
-              </div>
-
-              {/* Bottom row */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingTop: "16px",
-                  borderTop: "1px solid rgba(0,0,0,0.08)",
-                }}
-              >
-                <div>
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      color: "rgba(0,0,0,0.4)",
-                      textTransform: "uppercase",
-                      letterSpacing: "1px",
-                      marginBottom: "2px",
-                    }}
-                  >
-                    Capital
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: "600",
-                      color: colors.primary,
-                      fontFamily: "Poppins, sans-serif",
-                    }}
-                  >
-                    {solution.capital}
-                  </div>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      color: "rgba(0,0,0,0.4)",
-                      textTransform: "uppercase",
-                      letterSpacing: "1px",
-                      marginBottom: "2px",
-                    }}
-                  >
-                    Impact
-                  </div>
-                  <div style={{ fontSize: "12px", color: "#555", maxWidth: "160px" }}>{solution.impact}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 // ============================================================================
 // SECTION 5: THE LANDSCAPE
 // ============================================================================
@@ -2859,16 +1822,13 @@ const MarketEcosystemSection = () => {
   const active = landscapeEntities[activeEntity];
 
   const DotRating = ({ score, max = 6 }) => (
-    <div style={{ display: "flex", gap: "4px" }}>
+    <div className="flex gap-1">
       {Array.from({ length: max }).map((_, i) => (
         <div
           key={i}
+          className="w-4 h-2 rounded transition-colors duration-300"
           style={{
-            width: "16px",
-            height: "8px",
-            borderRadius: "4px",
             backgroundColor: i < score ? "#6B8E23" : "#ddd",
-            transition: "background-color 0.3s ease",
           }}
         />
       ))}
@@ -2882,48 +1842,33 @@ const MarketEcosystemSection = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
-        <div style={{ marginBottom: isMobile ? "32px" : "60px", textAlign: "center" }}>
+        <div className="text-center" style={{ marginBottom: isMobile ? "32px" : "60px" }}>
           <span
+            className="inline-block px-5 py-[10px] rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Landscape
           </span>
           <h2
+            className="font-[Inter,sans-serif] font-light -tracking-[0.5px] leading-[1.2]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
               color: colors.primary,
-              letterSpacing: "-0.5px",
               margin: "0 0 20px 0",
-              lineHeight: "1.2",
             }}
           >
-            Building With Ghana's Creative <span style={{ fontWeight: "600", color: colors.accent }}>Institutions</span>
+            Building With Ghana's Creative <span className="font-semibold" style={{ color: colors.accent }}>Institutions</span>
           </h2>
           <p
+            className="font-[Inter,sans-serif] text-[#666] max-w-[600px] leading-[1.65] mx-auto"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "15px" : "16px",
-              color: "#666",
-              maxWidth: "600px",
-              lineHeight: "1.65",
-              margin: "0 auto",
             }}
           >
             Ghana's creative ecosystem is rich with talent, institutions, and aligned resources. BRIDGE combines
@@ -2995,7 +1940,7 @@ const MarketEcosystemSection = () => {
         >
           {/* Left Sidebar — desktop only */}
           {!isMobile && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div className="flex flex-col gap-2">
               {landscapeEntities.map((entity, i) => {
                 const isActive = activeEntity === i;
                 return (
@@ -3081,7 +2026,7 @@ const MarketEcosystemSection = () => {
                   {active.description}
                 </div>
               </div>
-              <div style={{ display: "flex", gap: "8px", flexShrink: 0 }}>
+              <div className="flex gap-2 shrink-0">
                 <span
                   style={{
                     padding: "8px 16px",
@@ -3114,31 +2059,13 @@ const MarketEcosystemSection = () => {
             </div>
 
             {/* Strengths */}
-            <div style={{ marginBottom: "32px" }}>
-              <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  color: "#999",
-                  marginBottom: "20px",
-                }}
-              >
+            <div className="mb-8">
+              <div className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1.5px] text-[#999] mb-5">
                 Strengths
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <div className="flex flex-col gap-4">
                 {active.strengths.map((s, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "16px",
-                    }}
-                  >
+                  <div key={i} className="flex justify-between items-center gap-4">
                     <span
                       style={{
                         fontFamily: "Inter, sans-serif",
@@ -3157,21 +2084,11 @@ const MarketEcosystemSection = () => {
             </div>
 
             {/* Collaboration Opportunities */}
-            <div style={{ marginBottom: "32px" }}>
-              <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  color: "#999",
-                  marginBottom: "16px",
-                }}
-              >
+            <div className="mb-8">
+              <div className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1.5px] text-[#999] mb-4">
                 Collaboration Opportunities
               </div>
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+              <div className="flex gap-2 flex-wrap">
                 {active.collaboration.map((c, i) => (
                   <span
                     key={i}
@@ -3194,32 +2111,18 @@ const MarketEcosystemSection = () => {
 
             {/* BRIDGE Opportunity */}
             <div
+              className="rounded-xl"
               style={{
                 padding: "20px 24px",
                 backgroundColor: colors.primary,
-                borderRadius: "12px",
               }}
             >
-              <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  color: "rgba(255,255,255,0.5)",
-                  marginBottom: "8px",
-                }}
-              >
+              <div className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1.5px] text-white/50 mb-2">
                 BRIDGE Opportunity
               </div>
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "15px",
-                  color: colors.white,
-                  lineHeight: "1.6",
-                }}
+                className="font-[Inter,sans-serif] text-[15px] leading-[1.6]"
+                style={{ color: colors.white }}
               >
                 {active.bridgeOpportunity}
               </div>
@@ -3234,14 +2137,6 @@ const MarketEcosystemSection = () => {
 // ============================================================================
 // SECTION 6: THE GOVERNANCE & POLICY
 // ============================================================================
-
-const governanceCategories = [
-  { id: "all", label: "All", mobileLabel: "All" },
-  { id: "funding", label: "Direct Funding", mobileLabel: "Funding" },
-  { id: "tax", label: "Tax Incentives", mobileLabel: "Tax Incentive" },
-  { id: "infrastructure", label: "Infrastructure", mobileLabel: "Infrastructure" },
-  { id: "partnerships", label: "Partnerships", mobileLabel: "Partnership" },
-];
 
 const governancePolicies = [
   {
@@ -3396,465 +2291,13 @@ const govCatBadge = {
   partnerships: { bg: "rgba(27,77,62,0.05)", border: "rgba(27,77,62,0.12)" },
 };
 
-const PolicyAlignmentSection = () => {
-  const isMobile = useIsMobile();
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [expandedCard, setExpandedCard] = useState(null);
-  const [activeGovCard, setActiveGovCard] = useState(0);
-
-  const filtered =
-    activeCategory === "all" ? governancePolicies : governancePolicies.filter((p) => p.category === activeCategory);
-
-  return (
-    <section style={{ backgroundColor: colors.white, padding: isMobile ? "60px 20px" : "100px 80px" }}>
-      {!isMobile && (
-        <style>{`
-        .policy-scroll::-webkit-scrollbar { height: 6px; }
-        .policy-scroll::-webkit-scrollbar-track { background: ${colors.background}; border-radius: 3px; }
-        .policy-scroll::-webkit-scrollbar-thumb { background: ${colors.line}; border-radius: 3px; }
-        .policy-scroll::-webkit-scrollbar-thumb:hover { background: #ccc; }
-      `}</style>
-      )}
-
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
-        {/* HEADER */}
-        <div style={{ marginBottom: isMobile ? "32px" : "60px", textAlign: isMobile ? "left" : "center" }}>
-          <span
-            style={{
-              display: "inline-block",
-              backgroundColor: colors.white,
-              border: `1px solid ${colors.line}`,
-              color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
-            }}
-          >
-            The Governance & Policy
-          </span>
-
-          <h2
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              color: colors.primary,
-              letterSpacing: "-0.5px",
-              margin: isMobile ? "0 0 16px 0" : "0 auto 16px",
-              lineHeight: "1.2",
-              maxWidth: "820px",
-            }}
-          >
-            Moving in Step with Ghana's <span style={{ fontWeight: "600" }}>Creative</span>{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Vision</span>
-          </h2>
-
-          <p
-            style={{
-              fontSize: isMobile ? "15px" : "16px",
-              color: "#555",
-              maxWidth: "680px",
-              margin: isMobile ? "0 0 36px 0" : "0 auto 36px",
-              lineHeight: "1.7",
-              textAlign: isMobile ? "left" : "center",
-            }}
-          >
-            The Black Star Experience and 2026 Budget create an unprecedented policy environment. BRIDGE doesn't replace
-            government initiatives — it complements them with diaspora capital, expertise, and implementation capacity.
-          </p>
-
-          {/* CATEGORY FILTER */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: isMobile ? "flex-start" : "center",
-              ...(isMobile ? { margin: "0 -20px", padding: "0 20px 4px" } : {}),
-            }}
-          >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: isMobile ? "6px" : "8px",
-                border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
-                padding: isMobile ? "4px" : "5px",
-                backgroundColor: colors.white,
-                ...(isMobile
-                  ? { overflowX: "auto", WebkitOverflowScrolling: "touch", maxWidth: "100%" }
-                  : { flexWrap: "wrap" }),
-              }}
-            >
-              {governanceCategories.map((cat) => {
-                const isOn = activeCategory === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => {
-                      setActiveCategory(cat.id);
-                      setExpandedCard(null);
-                      setActiveGovCard(0);
-                    }}
-                    style={{
-                      padding: isMobile ? "5px 10px" : "6px 14px",
-                      borderRadius: "50px",
-                      cursor: "pointer",
-                      fontSize: isMobile ? "11px" : "12px",
-                      fontWeight: isOn ? "700" : "500",
-                      fontFamily: "Inter, sans-serif",
-                      backgroundColor: isOn ? colors.accentLight : "transparent",
-                      color: isOn ? colors.primary : "#999",
-                      border: isOn ? `1.5px solid ${colors.accent}` : "1.5px solid transparent",
-                      transition: "all 0.2s ease",
-                      whiteSpace: "nowrap",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {isMobile ? cat.mobileLabel : cat.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* CARDS — scroll row on desktop, vertical stack on mobile */}
-        <div
-          className={isMobile ? "" : "policy-scroll"}
-          style={
-            isMobile
-              ? {
-                  display: "flex",
-                  gap: "12px",
-                  overflowX: "auto",
-                  alignItems: "flex-start",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                  margin: "0 -20px",
-                  padding: "0 20px 8px",
-                }
-              : {
-                  display: "flex",
-                  gap: "16px",
-                  overflowX: "auto",
-                  alignItems: "flex-start",
-                  paddingBottom: "12px",
-                  marginBottom: "32px",
-                }
-          }
-        >
-          {filtered.map((item, i) => {
-            const isExp = expandedCard === i;
-            const badge = govCatBadge[item.category];
-            return (
-              <div
-                key={`${activeCategory}-${i}`}
-                style={{
-                  ...(isMobile
-                    ? {
-                        minWidth: "92%",
-                        maxWidth: "92%",
-                        flexShrink: 0,
-                        scrollSnapAlign: "start",
-                      }
-                    : {
-                        minWidth: isExp ? "380px" : "280px",
-                        maxWidth: isExp ? "380px" : "280px",
-                        flexShrink: 0,
-                      }),
-                  backgroundColor: colors.background,
-                  borderRadius: "16px",
-                  border: `2px solid ${colors.primary}`,
-                  cursor: "pointer",
-                  transition: "all 0.35s ease",
-                  overflow: "hidden",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-                onClick={() => setExpandedCard(isExp ? null : i)}
-              >
-                {/* Card Top */}
-                <div style={{ padding: isMobile ? "20px 20px 16px" : "24px 24px 20px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: "14px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        padding: "4px 10px",
-                        borderRadius: "50px",
-                        fontSize: "9px",
-                        fontWeight: "700",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.8px",
-                        backgroundColor: badge.bg,
-                        color: colors.primary,
-                        border: `1px solid ${badge.border}`,
-                      }}
-                    >
-                      {governanceCategories.find((c) => c.id === item.category)?.label}
-                    </span>
-                    <div style={{ display: "flex", gap: "4px" }}>
-                      {item.relevance.map((r) => (
-                        <span
-                          key={r}
-                          style={{
-                            padding: "3px 8px",
-                            borderRadius: "50px",
-                            fontSize: "9px",
-                            fontWeight: "600",
-                            textTransform: "uppercase",
-                            backgroundColor: r === "sport" ? colors.primary : "rgba(184,217,53,0.15)",
-                            color: r === "sport" ? colors.accent : colors.primary,
-                          }}
-                        >
-                          {r === "sport" ? "Sport" : "Arts"}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      fontSize: isMobile ? "15px" : "16px",
-                      fontWeight: "700",
-                      color: colors.primary,
-                      lineHeight: "1.3",
-                      marginBottom: "10px",
-                      minHeight: isMobile ? "auto" : "42px",
-                    }}
-                  >
-                    {item.policy}
-                  </div>
-                  <span style={{ fontSize: "13px", fontWeight: "700", color: colors.accent }}>{item.allocation}</span>
-                  <p
-                    style={{
-                      fontSize: "13px",
-                      color: "#666",
-                      lineHeight: "1.55",
-                      margin: "14px 0 0 0",
-                      minHeight: isMobile ? "auto" : "40px",
-                    }}
-                  >
-                    {item.alignment}
-                  </p>
-                </div>
-
-                {/* Expand indicator */}
-                <div
-                  style={{
-                    padding: isMobile ? "0 20px 14px" : "0 24px 16px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    marginTop: "auto",
-                  }}
-                >
-                  <span style={{ fontSize: "11px", fontWeight: "600", color: isExp ? colors.primary : "#bbb" }}>
-                    {isExp ? "Less" : "BRIDGE alignment"}
-                  </span>
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={isExp ? colors.primary : "#bbb"}
-                    strokeWidth="2.5"
-                    style={{ transform: isExp ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease" }}
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
-                </div>
-
-                {/* Expanded Content */}
-                <div
-                  style={{
-                    maxHeight: isExp ? "500px" : "0",
-                    opacity: isExp ? 1 : 0,
-                    transition: isExp
-                      ? "max-height 0.4s ease, opacity 0.3s ease 0.1s"
-                      : "max-height 0.15s ease, opacity 0.1s ease",
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    style={{ padding: isMobile ? "0 20px 20px" : "0 24px 24px", borderTop: `1px solid ${colors.line}` }}
-                  >
-                    <div style={{ fontSize: "11px", color: "#888", marginTop: "16px", marginBottom: "12px" }}>
-                      {item.body}
-                    </div>
-                    <p style={{ fontSize: "13px", color: "#444", lineHeight: "1.6", margin: "0 0 16px 0" }}>
-                      {item.bridgeRole}
-                    </p>
-                    {item.pillars && item.pillars.length > 0 && (
-                      <div style={{ marginBottom: "16px" }}>
-                        <div
-                          style={{
-                            fontSize: "9px",
-                            fontWeight: "700",
-                            color: colors.primary,
-                            textTransform: "uppercase",
-                            letterSpacing: "1.5px",
-                            marginBottom: "8px",
-                            opacity: 0.5,
-                          }}
-                        >
-                          BSE Pillars
-                        </div>
-                        <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
-                          {item.pillars.map((p) => (
-                            <span
-                              key={p}
-                              style={{
-                                padding: "3px 8px",
-                                borderRadius: "50px",
-                                fontSize: "9px",
-                                fontWeight: "600",
-                                backgroundColor: "rgba(184,217,53,0.12)",
-                                color: colors.primary,
-                                border: "1px solid rgba(184,217,53,0.25)",
-                              }}
-                            >
-                              {p}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    <div
-                      style={{
-                        fontSize: "9px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                        textTransform: "uppercase",
-                        letterSpacing: "1.5px",
-                        marginBottom: "8px",
-                        opacity: 0.5,
-                      }}
-                    >
-                      BRIDGE Ventures
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                      {item.bridgeVentures.map((v, vi) => (
-                        <div
-                          key={vi}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            padding: "10px 14px",
-                            backgroundColor: colors.primary,
-                            borderRadius: "10px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              backgroundColor: colors.accent,
-                              flexShrink: 0,
-                            }}
-                          />
-                          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.9)", fontWeight: "500" }}>
-                            {v}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Show more button — mobile only */}
-        {/* Mobile scroll indicators */}
-        {isMobile && filtered.length > 1 && (
-          <div
-            style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "16px", marginBottom: "16px" }}
-          >
-            {filtered.map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: i === 0 ? "24px" : "8px",
-                  height: "8px",
-                  borderRadius: "4px",
-                  backgroundColor: i === 0 ? colors.accent : colors.line,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                }}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* BOTTOM CTA */}
-        <div
-          style={{
-            padding: isMobile ? "24px 20px" : "28px 32px",
-            backgroundColor: colors.primary,
-            borderRadius: "16px",
-            ...(isMobile
-              ? { textAlign: "center" }
-              : { display: "flex", alignItems: "center", justifyContent: "space-between" }),
-          }}
-        >
-          <div style={{ marginBottom: isMobile ? "16px" : 0, textAlign: "left" }}>
-            <div
-              style={{
-                fontSize: isMobile ? "16px" : "18px",
-                fontWeight: "600",
-                color: colors.white,
-                marginBottom: "4px",
-                fontFamily: "Inter, sans-serif",
-              }}
-            >
-              BRIDGE complements — never competes with — government vision.
-            </div>
-            <div
-              style={{
-                fontSize: isMobile ? "13px" : "14px",
-                color: "rgba(255,255,255,0.6)",
-                fontFamily: "Inter, sans-serif",
-              }}
-            >
-              Every venture aligns with at least one active government policy or initiative.
-            </div>
-          </div>
-          <a
-            href="/methodology"
-            style={{
-              padding: "12px 28px",
-              borderRadius: "50px",
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              fontSize: "13px",
-              fontWeight: "700",
-              whiteSpace: "nowrap",
-              cursor: "pointer",
-              display: isMobile ? "inline-block" : "block",
-              flexShrink: 0,
-              textDecoration: "none",
-            }}
-          >
-            View Partnership Strategy
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-};
+const governanceCategories = [
+  { id: "all", label: "All", mobileLabel: "All" },
+  { id: "funding", label: "Direct Funding", mobileLabel: "Funding" },
+  { id: "tax", label: "Tax Incentives", mobileLabel: "Tax Incentive" },
+  { id: "infrastructure", label: "Infrastructure", mobileLabel: "Infrastructure" },
+  { id: "partnerships", label: "Partnerships", mobileLabel: "Partnership" },
+];
 
 // ============================================================================
 // SECTION 7: THE RIPPLE EFFECT INTEGRATION
@@ -3899,52 +2342,29 @@ const CrossSectorSection = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
-        <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "60px" }}>
+        <div className="text-center" style={{ marginBottom: isMobile ? "32px" : "60px" }}>
           <span
-            style={{
-              display: "inline-block",
-              backgroundColor: "rgba(184, 217, 53, 0.15)",
-              color: colors.accent,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "1.5px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
-            }}
+            className="inline-block bg-[rgba(184,217,53,0.15)] px-5 py-[10px] rounded-full text-[11px] font-bold uppercase tracking-[1.5px] font-[Inter,sans-serif] mb-6"
+            style={{ color: colors.accent }}
           >
             The Ripple Effect
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] -tracking-[0.5px] mx-auto mb-4 max-w-[820px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.white,
-              margin: "0 auto 16px",
-              maxWidth: "820px",
+              marginTop: 0,
             }}
           >
-            How Creative Industries <span style={{ color: colors.accent, fontWeight: "600" }}>Amplify Impact</span>
+            How Creative Industries <span className="font-semibold" style={{ color: colors.accent }}>Amplify Impact</span>
           </h2>
 
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "16px",
-              color: "rgba(255,255,255,0.6)",
-              lineHeight: "1.65",
-              margin: "0 auto",
-              maxWidth: "680px",
-            }}
-          >
+          <p className="font-[Inter,sans-serif] text-[16px] text-white/60 leading-[1.65] mx-auto max-w-[680px]" style={{ marginTop: 0 }}>
+
             The creative economy touches every other BRIDGE sector \u2014 from technology to tourism, financial systems
             to manufacturing.
           </p>
@@ -3953,41 +2373,28 @@ const CrossSectorSection = () => {
         {/* Pathway Visual */}
         {isMobile ? (
           /* MOBILE: Hub on top, 5 icons below */
-          <div style={{ marginBottom: "24px" }}>
+          <div className="mb-6">
             {/* Hub Icon */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "16px" }}>
+            <div className="flex flex-col items-center mb-4">
               <div
+                className="w-14 h-14 rounded-[14px] flex items-center justify-center mb-2 shadow-[0_0_24px_rgba(184,217,53,0.3)]"
                 style={{
-                  width: "56px",
-                  height: "56px",
-                  borderRadius: "14px",
                   backgroundColor: colors.accent,
                   color: colors.primary,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: "0 0 24px rgba(184, 217, 53, 0.3)",
-                  marginBottom: "8px",
                 }}
               >
                 <IconMusic />
               </div>
               <span
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  color: colors.accent,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
-                }}
+                className="font-[Inter,sans-serif] text-[10px] font-bold uppercase tracking-[0.5px]"
+                style={{ color: colors.accent }}
               >
                 Creative Industries
               </span>
             </div>
 
             {/* Sector Icons Row */}
-            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+            <div className="flex justify-center gap-3">
               {pathways.map((p, idx) => {
                 const isActive = activeNode === idx;
                 return (
@@ -4047,31 +2454,14 @@ const CrossSectorSection = () => {
           </div>
         ) : (
           /* DESKTOP: Horizontal Row */
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              gap: "32px",
-              marginBottom: "48px",
-            }}
-          >
+          <div className="flex items-start justify-center gap-8 mb-12">
             {/* Hub Icon */}
-            <div
-              style={{ width: "120px", display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}
-            >
+            <div className="w-[120px] flex flex-col items-center shrink-0">
               <div
+                className="w-20 h-20 rounded-[20px] flex items-center justify-center mb-[10px] shadow-[0_0_30px_rgba(184,217,53,0.3)]"
                 style={{
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "20px",
                   backgroundColor: colors.accent,
                   color: colors.primary,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: "0 0 30px rgba(184, 217, 53, 0.3)",
-                  marginBottom: "10px",
                 }}
               >
                 <IconMusic />
@@ -4175,60 +2565,34 @@ const CrossSectorSection = () => {
                   >
                     Cross-Sector Integration Opportunities
                   </span>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                  <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                     Click a sector above to explore
                   </span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "16px" }}>
+                <div className="grid grid-cols-5 gap-4">
                   {pathways.map((p, idx) => (
                     <div
                       key={idx}
                       onClick={() => setActiveNode(idx)}
-                      style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        borderRadius: "16px",
-                        padding: "24px 20px",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                      }}
+                      className="bg-white/5 rounded-2xl p-[24px_20px] cursor-pointer transition-all duration-200"
                     >
                       <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: colors.white,
-                          marginBottom: "8px",
-                        }}
+                        className="font-[Inter,sans-serif] text-[14px] font-semibold mb-2"
+                        style={{ color: colors.white }}
                       >
                         {p.name}
                       </div>
-                      <div
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.45)",
-                          height: "40px",
-                          overflow: "hidden",
-                          marginBottom: "16px",
-                        }}
-                      >
+                      <div className="font-[Inter,sans-serif] text-[13px] text-white/45 h-10 overflow-hidden mb-4">
                         {p.connection}
                       </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+                      <div className="flex items-baseline gap-1">
                         <span
-                          style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "18px",
-                            fontWeight: "700",
-                            color: colors.accent,
-                          }}
+                          className="font-[Poppins,sans-serif] text-[18px] font-bold"
+                          style={{ color: colors.accent }}
                         >
                           {p.multiplier}
                         </span>
-                        <span
-                          style={{ fontFamily: "Inter, sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.4)" }}
-                        >
+                        <span className="font-[Inter,sans-serif] text-[11px] text-white/40">
                           multiplier
                         </span>
                       </div>
@@ -4237,8 +2601,8 @@ const CrossSectorSection = () => {
                 </div>
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.5)" }}>
+              <div className="text-center py-5">
+                <p className="font-[Inter,sans-serif] text-[15px] text-white/50">
                   Tap a sector above to explore how creative industries amplify its impact
                 </p>
               </div>
@@ -4247,9 +2611,7 @@ const CrossSectorSection = () => {
             /* Active State */
             <div>
               {/* Breadcrumb */}
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "28px" }}
-              >
+              <div className="flex items-center gap-2 flex-wrap mb-7">
                 {activePathway.pathLabel.split(" \u2192 ").map((step, i, arr) => (
                   <React.Fragment key={i}>
                     <span
@@ -4304,18 +2666,14 @@ const CrossSectorSection = () => {
                   >
                     {activePathway.impact}
                   </p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <div className="flex items-baseline gap-2">
                     <span
-                      style={{
-                        fontFamily: "Poppins, sans-serif",
-                        fontSize: "32px",
-                        fontWeight: "700",
-                        color: colors.accent,
-                      }}
+                      className="font-[Poppins,sans-serif] text-[32px] font-bold"
+                      style={{ color: colors.accent }}
                     >
                       {activePathway.multiplier}
                     </span>
-                    <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+                    <span className="font-[Inter,sans-serif] text-[13px] text-white/40">
                       value multiplier
                     </span>
                   </div>
@@ -4337,21 +2695,13 @@ const CrossSectorSection = () => {
                     >
                       Synergy Pathways
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {activePathway.synergies.map((syn, i) => (
                         <div
                           key={i}
-                          style={{
-                            display: "flex",
-                            alignItems: "flex-start",
-                            gap: "12px",
-                            padding: "12px 16px",
-                            borderRadius: "10px",
-                            backgroundColor: "rgba(255,255,255,0.05)",
-                            border: "1px solid rgba(255,255,255,0.06)",
-                          }}
+                          className="flex items-start gap-3 px-4 py-3 rounded-[10px] bg-white/5 border border-white/[0.06]"
                         >
-                          <span style={{ color: colors.accent, fontSize: "8px", marginTop: "5px" }}>{"\u25CF"}</span>
+                          <span className="text-[8px] mt-[5px]" style={{ color: colors.accent }}>{"\u25CF"}</span>
                           <span
                             style={{
                               fontFamily: "Inter, sans-serif",
@@ -4383,19 +2733,11 @@ const CrossSectorSection = () => {
                     >
                       Linked Ventures
                     </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="flex flex-col gap-[10px]">
                       {activePathway.bridgeVentures.map((v, i) => (
                         <div
                           key={i}
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "14px 18px",
-                            borderRadius: "12px",
-                            backgroundColor: "rgba(184, 217, 53, 0.1)",
-                            border: "1px solid rgba(184, 217, 53, 0.15)",
-                          }}
+                          className="flex justify-between items-center px-[18px] py-[14px] rounded-xl bg-[rgba(184,217,53,0.1)] border border-[rgba(184,217,53,0.15)]"
                         >
                           <span
                             style={{
@@ -4413,17 +2755,8 @@ const CrossSectorSection = () => {
                     </div>
                     <a
                       href="/services"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        color: colors.accent,
-                        textDecoration: "none",
-                        marginTop: "20px",
-                      }}
+                      className="inline-flex items-center gap-2 font-[Inter,sans-serif] text-[14px] font-semibold no-underline mt-5"
+                      style={{ color: colors.accent }}
                     >
                       Explore {activePathway.name} Sector <span>{"\u2192"}</span>
                     </a>
@@ -4454,22 +2787,10 @@ const CrossSectorSection = () => {
                   }}
                 >
                   {showMoreRipple ? "Show less" : "Show more details"}
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{
+                  <ChevronDown size={14} strokeWidth={2.5} color="white" style={{
                       transform: showMoreRipple ? "rotate(180deg)" : "rotate(0deg)",
                       transition: "transform 0.3s ease",
-                    }}
-                  >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                    }} />
                 </button>
               )}
             </div>
@@ -4508,31 +2829,17 @@ const MetricRow = ({ item, animate, delay, index, isMobile }) => {
           transition: "opacity 0.4s ease",
         }}
       >
-        <div
-          style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}
-        >
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+        <div className="flex justify-between items-start mb-[10px]">
+          <div className="flex items-start gap-[10px]">
             <div
-              style={{
-                fontSize: "28px",
-                fontWeight: "700",
-                color: colors.primary,
-                fontFamily: "Poppins, sans-serif",
-                letterSpacing: "-1px",
-                lineHeight: "1",
-              }}
+              className="text-[28px] font-bold font-[Poppins,sans-serif] -tracking-[1px] leading-none"
+              style={{ color: colors.primary }}
             >
               {formatValue()}
             </div>
             <div
-              style={{
-                fontSize: "10px",
-                fontWeight: "700",
-                color: colors.accent,
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-                marginTop: "4px",
-              }}
+              className="text-[10px] font-bold uppercase tracking-[0.5px] mt-1"
+              style={{ color: colors.accent }}
             >
               {item.trend}
             </div>
@@ -4545,35 +2852,21 @@ const MetricRow = ({ item, animate, delay, index, isMobile }) => {
               maxWidth: "40%",
             }}
           >
-            <div
-              style={{
-                fontSize: "9px",
-                fontWeight: "700",
-                color: "#aaa",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                marginBottom: "2px",
-              }}
-            >
+            <div className="text-[9px] font-bold text-[#aaa] uppercase tracking-[1px] mb-[2px]">
               Ventures
             </div>
-            <div style={{ fontSize: "10px", fontWeight: "500", color: colors.primary, lineHeight: "1.4" }}>
+            <div className="text-[10px] font-medium leading-[1.4]" style={{ color: colors.primary }}>
               {item.ventures}
             </div>
           </div>
         </div>
         <div
-          style={{
-            fontSize: "14px",
-            fontWeight: "700",
-            color: colors.primary,
-            marginBottom: "3px",
-            fontFamily: "Inter, sans-serif",
-          }}
+          className="text-[14px] font-bold font-[Inter,sans-serif] mb-[3px]"
+          style={{ color: colors.primary }}
         >
           {item.label}
         </div>
-        <div style={{ fontSize: "13px", color: "#666", lineHeight: "1.5", fontFamily: "Inter, sans-serif" }}>
+        <div className="text-[13px] text-[#666] leading-[1.5] font-[Inter,sans-serif]">
           {item.description}
         </div>
       </div>
@@ -4582,79 +2875,51 @@ const MetricRow = ({ item, animate, delay, index, isMobile }) => {
 
   return (
     <div
+      className="grid items-center transition-opacity duration-[400ms]"
       style={{
-        display: "grid",
         gridTemplateColumns: "200px 1fr 200px",
         gap: "32px",
-        alignItems: "center",
         padding: "24px 28px",
         backgroundColor: index % 2 === 0 ? colors.white : "transparent",
         opacity: visible ? 1 : 0,
-        transition: "opacity 0.4s ease",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div className="flex justify-between items-start">
         <div
-          style={{
-            fontSize: "36px",
-            fontWeight: "700",
-            color: colors.primary,
-            fontFamily: "Poppins, sans-serif",
-            letterSpacing: "-1px",
-            lineHeight: "1",
-          }}
+          className="text-[36px] font-bold font-[Poppins,sans-serif] -tracking-[1px] leading-none"
+          style={{ color: colors.primary }}
         >
           {formatValue()}
         </div>
         <div
-          style={{
-            fontSize: "10px",
-            fontWeight: "700",
-            color: colors.accent,
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-            marginTop: "4px",
-          }}
+          className="text-[10px] font-bold uppercase tracking-[0.5px] mt-1"
+          style={{ color: colors.accent }}
         >
           {item.trend}
         </div>
       </div>
       <div>
         <div
-          style={{
-            fontSize: "15px",
-            fontWeight: "700",
-            color: colors.primary,
-            marginBottom: "4px",
-            fontFamily: "Inter, sans-serif",
-          }}
+          className="text-[15px] font-bold font-[Inter,sans-serif] mb-1"
+          style={{ color: colors.primary }}
         >
           {item.label}
         </div>
-        <div style={{ fontSize: "13px", color: "#666", lineHeight: "1.5", fontFamily: "Inter, sans-serif" }}>
+        <div className="text-[13px] text-[#666] leading-[1.5] font-[Inter,sans-serif]">
           {item.description}
         </div>
       </div>
       <div
+        className="rounded-[10px]"
         style={{
           backgroundColor: index % 2 === 0 ? colors.background : "rgba(27,77,62,0.04)",
-          borderRadius: "10px",
           padding: "10px 16px",
         }}
       >
-        <div
-          style={{
-            fontSize: "9px",
-            fontWeight: "700",
-            color: "#aaa",
-            textTransform: "uppercase",
-            letterSpacing: "1px",
-            marginBottom: "2px",
-          }}
-        >
+        <div className="text-[9px] font-bold text-[#aaa] uppercase tracking-[1px] mb-[2px]">
           Linked Ventures
         </div>
-        <div style={{ fontSize: "11px", fontWeight: "500", color: colors.primary, lineHeight: "1.4" }}>
+        <div className="text-[11px] font-medium leading-[1.4]" style={{ color: colors.primary }}>
           {item.ventures}
         </div>
       </div>
@@ -4864,54 +3129,39 @@ const ImpactSection = () => {
         padding: isMobile ? "60px 20px" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
         <div style={{ marginBottom: isMobile ? "32px" : "60px" }}>
           <span
+            className="inline-block px-5 py-[10px] rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Impact
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] -tracking-[0.5px] max-w-[900px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
               margin: "0 0 12px 0",
-              maxWidth: "900px",
             }}
           >
-            What Changes When <span style={{ fontWeight: "600" }}>Creative</span>
+            What Changes When <span className="font-semibold">Creative</span>
             <br />
-            <span style={{ fontWeight: "600" }}>Industries</span>{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Work</span>
+            <span className="font-semibold">Industries</span>{" "}
+            <span className="font-semibold" style={{ color: colors.accent }}>Work</span>
           </h2>
 
           <p
+            className="font-[Inter,sans-serif] text-[#555] leading-[1.7] max-w-[620px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "15px" : "16px",
-              color: "#555",
-              lineHeight: "1.7",
               margin: "0 0 40px 0",
-              maxWidth: "620px",
             }}
           >
             When artists earn fairly, studios produce locally, and heritage connects to global markets \u2014 the ripple
@@ -4919,19 +3169,12 @@ const ImpactSection = () => {
           </p>
 
           {/* CONTROLS — left-justified, single outlined container */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-            }}
-          >
+          <div className="flex justify-start">
             <div
+              className="inline-flex items-center rounded-full"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
                 gap: isMobile ? "6px" : "12px",
                 border: `1px solid ${colors.line}`,
-                borderRadius: "50px",
                 padding: isMobile ? "4px" : "5px",
                 backgroundColor: colors.white,
               }}
@@ -4976,7 +3219,7 @@ const ImpactSection = () => {
                 })}
               </div>
 
-              <div style={{ width: "1px", height: "20px", backgroundColor: colors.line, flexShrink: 0 }} />
+              <div className="w-px h-5 shrink-0" style={{ backgroundColor: colors.line }} />
 
               {/* Sub-filters */}
               {view === "metrics" &&
@@ -5090,7 +3333,7 @@ const ImpactSection = () => {
                 >
                   {impactStakeholders[activeStakeholder].title}
                 </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#888" }}>
+                <div className="font-[Inter,sans-serif] text-[14px] text-[#888]">
                   {impactStakeholders[activeStakeholder].subtitle}
                 </div>
               </div>
@@ -5107,45 +3350,33 @@ const ImpactSection = () => {
                 >
                   {impactStakeholders[activeStakeholder].stat}
                 </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#888", marginTop: "4px" }}>
+                <div className="font-[Inter,sans-serif] text-[12px] text-[#888] mt-1">
                   {impactStakeholders[activeStakeholder].statLabel}
                 </div>
               </div>
             </div>
 
             {/* Outcomes */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div className="flex flex-col gap-[6px]">
               {impactStakeholders[activeStakeholder].outcomes.map((o, i) => (
                 <div
                   key={i}
+                  className="flex items-center rounded-xl"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
                     gap: isMobile ? "12px" : "16px",
                     padding: isMobile ? "12px 16px" : "14px 20px",
                     backgroundColor: i % 2 === 0 ? colors.background : "transparent",
-                    borderRadius: "12px",
                   }}
                 >
                   <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
                     style={{
-                      width: "28px",
-                      height: "28px",
-                      borderRadius: "50%",
                       backgroundColor: i % 2 === 0 ? colors.white : colors.background,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
                     }}
                   >
                     <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        color: colors.primary,
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-bold"
+                      style={{ color: colors.primary }}
                     >
                       {i + 1}
                     </span>
@@ -5397,7 +3628,7 @@ const InvestmentCTASection = ({ sector }) => {
         padding: isMobile ? "60px 0" : "100px 80px",
       }}
     >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto" }}>
+      <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         {/* Section Header */}
         <div
           style={{
@@ -5407,48 +3638,32 @@ const InvestmentCTASection = ({ sector }) => {
           }}
         >
           <span
+            className="inline-block px-5 py-[10px] rounded-full text-[11px] font-bold uppercase tracking-[2px] font-[Inter,sans-serif] mb-6"
             style={{
-              display: "inline-block",
               backgroundColor: colors.white,
               border: `1px solid ${colors.line}`,
               color: colors.primary,
-              padding: "10px 20px",
-              borderRadius: "50px",
-              fontSize: "11px",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "2px",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: "24px",
             }}
           >
             The Investment Thesis
           </span>
 
           <h2
+            className="font-[Inter,sans-serif] font-light leading-[1.2] -tracking-[0.5px] max-w-[820px]"
             style={{
-              fontFamily: "Inter, sans-serif",
               fontSize: isMobile ? "28px" : "42px",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              letterSpacing: "-0.5px",
               color: colors.primary,
               margin: isMobile ? "0 auto 16px" : "0 0 16px 0",
-              maxWidth: "820px",
             }}
           >
             Every Stakeholder Has a Role in{" "}
-            <span style={{ color: colors.accent, fontWeight: "600" }}>Ghana's Creative Future</span>
+            <span className="font-semibold" style={{ color: colors.accent }}>Ghana's Creative Future</span>
           </h2>
 
           <p
+            className="font-[Inter,sans-serif] text-[16px] text-[#666] leading-[1.65] max-w-[700px]"
             style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "16px",
-              color: "#666",
-              lineHeight: "1.65",
               margin: isMobile ? "0 auto" : "0",
-              maxWidth: "700px",
             }}
           >
             Investment isn't only capital — it's expertise, partnerships, policy, and vision. See how your role
@@ -5587,7 +3802,7 @@ const InvestmentCTASection = ({ sector }) => {
           }}
         >
           {/* LEFT COLUMN */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="flex flex-col">
             {/* Headline (Desktop Only) */}
             {!isMobile && (
               <h3
@@ -5671,24 +3886,16 @@ const InvestmentCTASection = ({ sector }) => {
                   >
                     {stat.label}
                   </div>
-                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: "10px", color: "#888" }}>{stat.detail}</div>
+                  <div className="font-[Inter,sans-serif] text-[10px] text-[#888]">{stat.detail}</div>
                 </div>
               ))}
             </div>
 
             {/* Engagement Pathways */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
+            <div className="flex-1 flex flex-col gap-[10px] mb-5">
               <div
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  color: colors.primary,
-                  marginBottom: "4px",
-                  opacity: 0.5,
-                }}
+                className="font-[Inter,sans-serif] text-[11px] font-bold uppercase tracking-[1px] mb-1 opacity-50"
+                style={{ color: colors.primary }}
               >
                 Your Engagement
               </div>
@@ -5705,20 +3912,14 @@ const InvestmentCTASection = ({ sector }) => {
                     border: `1px solid ${colors.line}`,
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+                  <div className="flex flex-col gap-1 flex-1">
                     <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: colors.primary,
-                      }}
+                      className="font-[Inter,sans-serif] text-[12px] font-semibold"
+                      style={{ color: colors.primary }}
                     >
                       {path.bring}
                     </div>
-                    <div
-                      style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "#777", lineHeight: "1.5" }}
-                    >
+                    <div className="font-[Inter,sans-serif] text-[12px] text-[#777] leading-[1.5]">
                       {path.get}
                     </div>
                   </div>
@@ -5727,20 +3928,11 @@ const InvestmentCTASection = ({ sector }) => {
             </div>
 
             {/* Validation Bar */}
-            <div
-              style={{
-                padding: "14px 18px",
-                backgroundColor: "rgba(27, 77, 62, 0.06)",
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <div style={{ color: colors.primary, flexShrink: 0, display: "flex" }}>
+            <div className="p-[14px_18px] bg-[rgba(27,77,62,0.06)] rounded-xl flex items-center gap-3">
+              <div className="shrink-0 flex" style={{ color: colors.primary }}>
                 <IconCheck />
               </div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#444", lineHeight: "1.5" }}>
+              <div className="font-[Inter,sans-serif] text-[13px] text-[#444] leading-[1.5]">
                 <strong style={{ color: colors.primary }}>National Creative Arts Council</strong> aligned with BRIDGE's
                 creative industries development framework
               </div>
@@ -5793,7 +3985,7 @@ const InvestmentCTASection = ({ sector }) => {
               </div>
 
               {/* Tab Content Cards */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+              <div className="flex flex-col gap-[10px] flex-1">
                 {tabContent[activeTab].map((item, idx) => (
                   <div
                     key={idx}
@@ -5867,7 +4059,7 @@ const InvestmentCTASection = ({ sector }) => {
                   flexShrink: 0,
                 }}
               >
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)" }}>
+                <span className="font-[Inter,sans-serif] text-[13px] text-white/45">
                   Full financial model available
                 </span>
                 <a
@@ -5884,7 +4076,7 @@ const InvestmentCTASection = ({ sector }) => {
                     flexShrink: 0,
                   }}
                 >
-                  Download Prospectus <span style={{ fontSize: "16px" }}>→</span>
+                  Download Prospectus <span className="text-[16px]">→</span>
                 </a>
               </div>
             </div>
@@ -5912,160 +4104,15 @@ const InvestmentCTASection = ({ sector }) => {
               }}
             >
               {showInvestmentDetails ? "Hide details" : "View returns, timeline & impact"}
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={colors.primary}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
+              <ChevronDown size={14} strokeWidth={2.5} color={colors.primary} style={{
                   transform: showInvestmentDetails ? "rotate(180deg)" : "none",
                   transition: "transform 0.25s ease",
-                }}
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+                }} />
             </button>
           )}
         </div>
       </div>
       {/* end maxWidth wrapper */}
-    </section>
-  );
-};
-
-// ============================================================================
-// SECTION 10: FINAL CTA
-// ============================================================================
-
-const FinalCTASection = () => {
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
-
-  return (
-    <section
-      style={{
-        backgroundColor: colors.primary,
-        padding: isMobile ? "60px 20px" : "100px 80px",
-        textAlign: "center",
-      }}
-    >
-      <div style={{ maxWidth: CONTENT_MAX_WIDTH, margin: "0 auto", textAlign: "center" }}>
-        <span
-          style={{
-            display: "inline-block",
-            backgroundColor: "rgba(184, 217, 53, 0.15)",
-            color: colors.accent,
-            padding: "10px 20px",
-            borderRadius: "50px",
-            fontSize: "11px",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            letterSpacing: "1.5px",
-            fontFamily: "Inter, sans-serif",
-            marginBottom: "24px",
-          }}
-        >
-          Be Part of the Journey
-        </span>
-
-        <h2
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "32px" : "48px",
-            fontWeight: "300",
-            lineHeight: "1.2",
-            letterSpacing: "-0.5px",
-            color: colors.white,
-            margin: "0 0 24px 0",
-          }}
-        >
-          Let's Build Ghana's <span style={{ color: colors.accent, fontWeight: "600" }}>Creative Industries</span>
-        </h2>
-
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: isMobile ? "16px" : "18px",
-            lineHeight: "1.7",
-            color: "rgba(255,255,255,0.7)",
-            margin: "0 0 40px 0",
-            maxWidth: "620px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building
-          Ghana's creative future.
-        </p>
-
-        <div
-          style={{
-            display: "flex",
-            gap: "16px",
-            justifyContent: "center",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: "center",
-          }}
-        >
-          <button
-            onClick={() => navigate("/contact")}
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.primary,
-              border: "none",
-              padding: isMobile ? "16px 24px" : "16px 32px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Start a Conversation
-            <span
-              style={{
-                width: "28px",
-                height: "28px",
-                backgroundColor: colors.primary,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: colors.white,
-              }}
-            >
-              <IconArrowRight />
-            </span>
-          </button>
-
-          <button
-            onClick={() => navigate("/resources")}
-            style={{
-              backgroundColor: "transparent",
-              color: colors.white,
-              border: "1px solid rgba(255,255,255,0.3)",
-              padding: isMobile ? "16px 24px" : "16px 32px",
-              borderRadius: "50px",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Inter, sans-serif",
-              cursor: "pointer",
-              width: isMobile ? "100%" : "auto",
-            }}
-          >
-            Explore the Full Analysis
-          </button>
-        </div>
-      </div>
     </section>
   );
 };
@@ -6079,25 +4126,28 @@ export default function SportsEntertainmentSectorPage() {
   return (
     <Layout>
     <div
-      style={{
-        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-        color: colors.dark,
-        lineHeight: "1.6",
-        WebkitFontSmoothing: "antialiased",
-      }}
+      className="font-[Inter,-apple-system,BlinkMacSystemFont,'Segoe_UI',Roboto,Helvetica,Arial,sans-serif] leading-[1.6] antialiased"
+      style={{ color: colors.dark }}
     >
-      <HeroSection sector={sectorData} />
+      <SectorHeroSection sector={sectorData} />
       <ProblemSection />
       <ValueChainSection />
-      <SolutionsSection />
+      <SectorSolutionsSection sector={sectorData} maxSolutions={9} />
       <MarketEcosystemSection />
-      <PolicyAlignmentSection />
+      <SectorPolicySection
+        policies={governancePolicies}
+        title={<>Moving in Step with Ghana's <span className="font-semibold">Creative</span>{" "}<span className="font-semibold" style={{ color: colors.accent }}>Vision</span></>}
+        subtitle="The Black Star Experience and 2026 Budget create an unprecedented policy environment. BRIDGE doesn't replace government initiatives — it complements them with diaspora capital, expertise, and implementation capacity."
+      />
       <CrossSectorSection />
       <InvestmentCTASection sector={sectorData} />
       <ImpactSection />
-      <FinalCTASection />
+      <SectorFinalCTA
+          heading={<>Let's Build Ghana's <span className="font-semibold" style={{ color: colors.accent }}>Creative Industries</span></>}
+          description="Whether you're an investor, partner, or government stakeholder, there's a seat at the table in building Ghana's creative future."
+        />
       <div style={{ backgroundColor: colors.primary, padding: isMobile ? "0 20px" : "0 80px" }}>
-        <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+        <div className="h-px bg-white/[0.08]" />
       </div>
     </div>
     </Layout>

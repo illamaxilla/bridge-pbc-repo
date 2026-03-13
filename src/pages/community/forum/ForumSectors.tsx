@@ -17,12 +17,12 @@ export default function ForumSectors({ C, font }: ForumSectorsProps) {
   // ─────────────────────────────────────────────────────────────
 
   return (
-    <div style={{ padding: "32px 24px", textAlign: "center" }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>🌐</div>
-      <h3 style={{ fontFamily: font.display, fontSize: 20, fontWeight: 700, color: C.primary, margin: "0 0 8px" }}>
+    <div className="py-8 px-6 text-center">
+      <div className="text-[40px] mb-3">🌐</div>
+      <h3 className="text-xl font-bold m-0 mb-2" style={{ fontFamily: font.display, color: C.primary }}>
         Sectors
       </h3>
-      <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>
+      <p className="text-sm m-0" style={{ color: C.muted }}>
         Paste your Sectors content here.
       </p>
     </div>

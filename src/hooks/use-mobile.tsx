@@ -1,2 +1,0 @@
-// Re-export from canonical location for backwards compatibility
-export { useIsMobile } from "./useIsMobile";

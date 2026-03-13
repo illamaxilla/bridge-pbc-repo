@@ -1,12 +1,25 @@
 import React, { useState } from "react";
-import { colors } from "@/lib/theme";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, SelectField, TextareaField } from "./FormField";
 import type { SelectOption } from "./FormField";
 
-// ============================================================
-// REQUEST ACCESS FORM
-// ============================================================
+const requestAccessSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+  country: z.string().min(1, "Country is required"),
+  organization: z.string().optional(),
+  role: z.string().optional(),
+  primaryInterest: z.string().min(1, "Primary interest is required"),
+  connection: z.string().min(1, "This field is required"),
+  description: z.string().optional(),
+  consent: z.literal(true, { errorMap: () => ({ message: "You must agree to continue" }) }),
+});
+
+type RequestAccessFormData = z.infer<typeof requestAccessSchema>;
+
 export interface RequestAccessFormProps {
   onSuccess?: (mode: string) => void;
   isMobile: boolean;
@@ -66,33 +79,41 @@ export interface RequestFormState {
 }
 
 export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProps) => {
-  const [form, setForm] = useState<RequestFormState>({
-    name: "", email: "", country: "", organization: "",
-    role: "", primaryInterest: "", connection: "", description: "", consent: false,
-  });
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [btnHover, setBtnHover] = useState(false);
-
-  const set = (key: keyof RequestFormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
-    setForm(f => ({ ...f, [key]: e.target.value }));
-
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const { control, handleSubmit, formState: { errors }, trigger, watch } = useForm<RequestAccessFormData>({
+    resolver: zodResolver(requestAccessSchema),
+    defaultValues: {
+      name: "", email: "", country: "", organization: "",
+      role: "", primaryInterest: "", connection: "", description: "", consent: false as unknown as true,
+    },
+  });
+
+  const watchedValues = watch();
+
+  const step1Valid = watchedValues.name && watchedValues.email && watchedValues.country;
+  const step2Valid = watchedValues.primaryInterest && watchedValues.connection && watchedValues.consent;
+
+  const handleStep1Continue = async () => {
+    const valid = await trigger(["name", "email", "country"]);
+    if (valid) setStep(2);
+  };
+
+  const onSubmit = async (data: RequestAccessFormData) => {
     setError(null);
     setLoading(true);
     try {
       const { error } = await supabase.from("access_requests").insert({
-        name: form.name,
-        email: form.email,
-        country: form.country,
-        organization: form.organization || null,
-        role: form.role || null,
-        primary_interest: form.primaryInterest,
-        connection: form.connection,
-        description: form.description || null,
+        name: data.name,
+        email: data.email,
+        country: data.country,
+        organization: data.organization || null,
+        role: data.role || null,
+        primary_interest: data.primaryInterest,
+        connection: data.connection,
+        description: data.description || null,
       });
       if (error) throw error;
       onSuccess?.("request");
@@ -104,48 +125,45 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
     }
   };
 
-  const step1Valid = form.name && form.email && form.country;
-  const step2Valid = form.primaryInterest && form.connection && form.consent;
+  const errorMsg = (msg?: string) =>
+    msg ? <span className="block mt-1 text-xs text-red-600 font-[Inter,sans-serif]">{msg}</span> : null;
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       {error && (
-        <div style={{
-          padding: "12px 16px", borderRadius: "10px",
-          backgroundColor: "#fef2f2", border: "1px solid #fecaca",
-          color: "#991b1b", fontSize: "13px", fontFamily: "Inter, sans-serif",
-          lineHeight: "1.5",
-        }}>
+        <div className="px-4 py-3 rounded-[10px] bg-red-50 border border-red-200 text-red-800 text-[13px] font-[Inter,sans-serif] leading-relaxed">
           {error}
         </div>
       )}
 
       {/* Step Indicator */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "4px" }}>
+      <div className="flex items-center justify-center gap-2 mb-1">
         {[1, 2].map(n => (
           <React.Fragment key={n}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-              <div style={{
-                width: "28px", height: "28px", borderRadius: "50%",
-                backgroundColor: step >= n ? colors.primary : colors.line,
-                border: `2px solid ${step >= n ? colors.primary : colors.line}`,
-                color: step >= n ? colors.white : "#999",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "12px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-                transition: "all 0.3s ease",
-              }}>
+            <div className="flex flex-col items-center gap-1">
+              <div
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-[Inter,sans-serif] transition-all duration-300 border-2 ${
+                  step >= n
+                    ? "bg-[#1B4D3E] border-[#1B4D3E] text-white"
+                    : "bg-[#DEDEDE] border-[#DEDEDE] text-gray-400"
+                }`}
+              >
                 {step > n ? (
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                 ) : n}
               </div>
-              <span style={{ fontSize: "11px", color: step >= n ? colors.primary : "#999", fontFamily: "Inter, sans-serif", fontWeight: step >= n ? "600" : "400" }}>
+              <span className={`text-[11px] font-[Inter,sans-serif] ${
+                step >= n ? "text-[#1B4D3E] font-semibold" : "text-gray-400 font-normal"
+              }`}>
                 {n === 1 ? "Your Details" : "Your Interest"}
               </span>
             </div>
             {n < 2 && (
-              <div style={{ width: "48px", height: "2px", backgroundColor: step > 1 ? colors.primary : colors.line, margin: "0 4px", marginBottom: "20px", transition: "background-color 0.3s ease" }} />
+              <div className={`w-12 h-0.5 mx-1 mb-5 transition-colors duration-300 ${
+                step > 1 ? "bg-[#1B4D3E]" : "bg-[#DEDEDE]"
+              }`} />
             )}
           </React.Fragment>
         ))}
@@ -153,34 +171,60 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
 
       {step === 1 && (
         <>
-          <Field label="Full Name" placeholder="Your full name" value={form.name} onChange={set("name")} required />
-          <Field label="Email Address" type="email" placeholder="your@email.com" value={form.email} onChange={set("email")} required />
-
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px" }}>
-            <SelectField label="Country" value={form.country} onChange={set("country")} options={countryOptions} required />
-            <Field label="Organization" placeholder="Your org or company" value={form.organization} onChange={set("organization")} />
+          <div>
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <Field label="Full Name" placeholder="Your full name" value={field.value} onChange={field.onChange} required />
+              )}
+            />
+            {errorMsg(errors.name?.message)}
+          </div>
+          <div>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <Field label="Email Address" type="email" placeholder="your@email.com" value={field.value} onChange={field.onChange} required />
+              )}
+            />
+            {errorMsg(errors.email?.message)}
           </div>
 
-          <SelectField label="Your Role" value={form.role} onChange={set("role")} options={roleOptions} />
+          <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-2"}`}>
+            <div>
+              <Controller
+                name="country"
+                control={control}
+                render={({ field }) => (
+                  <SelectField label="Country" value={field.value} onChange={field.onChange} options={countryOptions} required />
+                )}
+              />
+              {errorMsg(errors.country?.message)}
+            </div>
+            <Controller
+              name="organization"
+              control={control}
+              render={({ field }) => (
+                <Field label="Organization" placeholder="Your org or company" value={field.value ?? ""} onChange={field.onChange} />
+              )}
+            />
+          </div>
+
+          <Controller
+            name="role"
+            control={control}
+            render={({ field }) => (
+              <SelectField label="Your Role" value={field.value ?? ""} onChange={field.onChange} options={roleOptions} />
+            )}
+          />
 
           <button
             type="button"
             disabled={!step1Valid}
-            onMouseEnter={() => setBtnHover(true)}
-            onMouseLeave={() => setBtnHover(false)}
-            onClick={() => setStep(2)}
-            style={{
-              marginTop: "4px",
-              padding: "14px 32px",
-              borderRadius: "50px", border: "none",
-              backgroundColor: step1Valid ? (btnHover ? "#163f32" : colors.primary) : "#ccc",
-              color: colors.white,
-              fontSize: "15px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-              cursor: step1Valid ? "pointer" : "not-allowed",
-              transition: "all 0.2s ease",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-              width: "100%",
-            }}
+            onClick={handleStep1Continue}
+            className="mt-1 px-8 py-[14px] rounded-full border-none bg-[#1B4D3E] hover:bg-[#163f32] disabled:bg-gray-300 text-white text-[15px] font-semibold font-[Inter,sans-serif] disabled:cursor-not-allowed cursor-pointer transition-all duration-200 flex items-center justify-center gap-2.5 w-full"
           >
             Continue
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -192,81 +236,84 @@ export const RequestAccessForm = ({ onSuccess, isMobile }: RequestAccessFormProp
 
       {step === 2 && (
         <>
-          <SelectField label="Primary Interest" value={form.primaryInterest} onChange={set("primaryInterest")} options={interestOptions} required />
-          <SelectField label="How did you hear about BRIDGE?" value={form.connection} onChange={set("connection")} options={connectionOptions} required />
-          <TextareaField label="Anything else you'd like to share?" placeholder="Optional context about your work or interest…" value={form.description} onChange={set("description")} />
+          <div>
+            <Controller
+              name="primaryInterest"
+              control={control}
+              render={({ field }) => (
+                <SelectField label="Primary Interest" value={field.value} onChange={field.onChange} options={interestOptions} required />
+              )}
+            />
+            {errorMsg(errors.primaryInterest?.message)}
+          </div>
+          <div>
+            <Controller
+              name="connection"
+              control={control}
+              render={({ field }) => (
+                <SelectField label="How did you hear about BRIDGE?" value={field.value} onChange={field.onChange} options={connectionOptions} required />
+              )}
+            />
+            {errorMsg(errors.connection?.message)}
+          </div>
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <TextareaField label="Anything else you'd like to share?" placeholder="Optional context about your work or interest…" value={field.value ?? ""} onChange={field.onChange} />
+            )}
+          />
 
           {/* Consent */}
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-            <div
-              role="checkbox"
-              aria-checked={form.consent}
-              tabIndex={0}
-              onClick={() => setForm(f => ({ ...f, consent: !f.consent }))}
-              onKeyDown={e => { if (e.key === " " || e.key === "Enter") setForm(f => ({ ...f, consent: !f.consent })); }}
-              style={{
-                width: "18px", height: "18px", minWidth: "18px",
-                borderRadius: "5px", marginTop: "1px",
-                border: `2px solid ${form.consent ? colors.primary : colors.line}`,
-                backgroundColor: form.consent ? colors.primary : colors.white,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                transition: "all 0.2s ease", cursor: "pointer",
-              }}
-            >
-              {form.consent && (
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
-                  <path d="M20 6L9 17l-5-5" />
-                </svg>
-              )}
-            </div>
-            <span style={{ fontSize: "13px", color: "#555", fontFamily: "Inter, sans-serif", lineHeight: "1.5" }}>
-              I agree to receive communications from BRIDGE PBC and understand that access is subject to team review and approval.
-            </span>
-          </div>
+          <Controller
+            name="consent"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <div className="flex items-start gap-2.5">
+                  <div
+                    role="checkbox"
+                    aria-checked={field.value}
+                    tabIndex={0}
+                    onClick={() => field.onChange(!field.value)}
+                    onKeyDown={e => { if (e.key === " " || e.key === "Enter") field.onChange(!field.value); }}
+                    className={`w-[18px] h-[18px] min-w-[18px] rounded-[5px] mt-px border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                      field.value
+                        ? "border-[#1B4D3E] bg-[#1B4D3E]"
+                        : "border-[#DEDEDE] bg-white"
+                    }`}
+                  >
+                    {field.value && (
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5">
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                    )}
+                  </div>
+                  <span className="text-[13px] text-gray-600 font-[Inter,sans-serif] leading-relaxed">
+                    I agree to receive communications from BRIDGE PBC and understand that access is subject to team review and approval.
+                  </span>
+                </div>
+                {errorMsg(errors.consent?.message)}
+              </div>
+            )}
+          />
 
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div className="flex gap-3">
             <button
               type="button"
               onClick={() => setStep(1)}
-              style={{
-                flex: "0 0 auto",
-                padding: "14px 20px",
-                borderRadius: "50px",
-                border: `1.5px solid ${colors.line}`,
-                backgroundColor: "transparent",
-                color: colors.primary,
-                fontSize: "14px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-                cursor: "pointer", transition: "all 0.2s ease",
-              }}
+              className="flex-none px-5 py-[14px] rounded-full border-[1.5px] border-[#DEDEDE] bg-transparent text-[#1B4D3E] text-sm font-semibold font-[Inter,sans-serif] cursor-pointer transition-all duration-200"
             >
               ← Back
             </button>
             <button
               type="submit"
               disabled={!step2Valid || loading}
-              onMouseEnter={() => setBtnHover(true)}
-              onMouseLeave={() => setBtnHover(false)}
-              style={{
-                flex: 1,
-                padding: "14px 24px",
-                borderRadius: "50px", border: "none",
-                backgroundColor: (!step2Valid || loading) ? "#ccc" : (btnHover ? "#163f32" : colors.primary),
-                color: colors.white,
-                fontSize: "15px", fontWeight: "600", fontFamily: "Inter, sans-serif",
-                cursor: (!step2Valid || loading) ? "not-allowed" : "pointer",
-                transition: "all 0.2s ease",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-              }}
+              className="flex-1 px-6 py-[14px] rounded-full border-none bg-[#1B4D3E] hover:bg-[#163f32] disabled:bg-gray-300 text-white text-[15px] font-semibold font-[Inter,sans-serif] disabled:cursor-not-allowed cursor-pointer transition-all duration-200 flex items-center justify-center gap-2.5"
             >
               {loading ? (
                 <>
-                  <span style={{
-                    width: "16px", height: "16px", borderRadius: "50%",
-                    border: "2px solid rgba(255,255,255,0.3)",
-                    borderTopColor: colors.white,
-                    animation: "bridge-spin 0.7s linear infinite",
-                    display: "inline-block",
-                  }} />
+                  <span className="inline-block w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                   Submitting…
                 </>
               ) : (

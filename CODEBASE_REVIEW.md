@@ -1,9 +1,11 @@
 # BRIDGE PBC — Comprehensive Codebase Review
 
-**Reviewed:** 2026-03-12
+**Reviewed:** 2026-03-12 (Updated)
 **Repository:** sweet-site-stitch-259985a2
 **Platform:** Lovable.dev (AI-powered app builder)
-**Reviewer perspective:** Senior software architect, pre-release code review
+**Reviewer perspective:** Senior software architect, 15+ years experience, pre-release code review
+**Codebase size:** ~130,000+ LOC across 72+ page files, 47 UI components, 3 hooks, 2 DB migrations
+**Estimated duplication ratio:** ~35%
 
 ---
 
@@ -191,6 +193,49 @@ const MOBILE_BREAKPOINT = 768;
 - Page components lack explicit prop interfaces (most take no props, which is fine)
 - No use of `any` detected — **good**
 - Inline style objects use `as const` casts where needed — **acceptable**
+- **`noImplicitAny: false`** in `tsconfig.json` — this weakens TypeScript's safety net. Should be set to `true` for production code.
+- `@typescript-eslint/no-unused-vars` is **disabled** in `eslint.config.js` — this allows dead imports and variables to accumulate undetected
+
+### Accessibility: **D**
+
+Accessibility is severely lacking across the codebase:
+
+- Only ~2 instances of `aria-label` found in the entire application
+- `AuthModal.tsx` renders a modal dialog without `role="dialog"`, `aria-modal`, or `aria-labelledby`
+- Custom SVG icons across all sector pages lack `<title>` elements or `aria-label` attributes
+- Navigation buttons in `SiteHeader.tsx` lack screen reader labels
+- Color contrast concerns: lime green `#B8D935` on light backgrounds may fail WCAG 2.1 AA standards
+- No skip-to-content link for keyboard navigation
+- Tab bars in AuthModal use `<div>` elements without `role="tablist"` / `role="tab"` semantics
+
+### Cross-Component Conflicts
+
+Multiple components independently manipulate `document.body.style.overflow` to prevent background scrolling:
+- `SiteHeader.tsx` (mobile menu toggle)
+- `AuthModal.tsx` (modal open/close)
+
+If both are open simultaneously, or if a component unmounts unexpectedly, the body can be left in an unscrollable state. **Fix:** Use a centralized scroll-lock hook or library like `body-scroll-lock`.
+
+### Memory Leak in `useCounter.ts`
+
+The `useCounter` hook uses `requestAnimationFrame` for animation but does not cancel pending frames on unmount. If the component unmounts mid-animation, the callback continues executing against stale state:
+
+```ts
+// Current (missing cleanup):
+useEffect(() => {
+  const start = performance.now();
+  function animate(now) { /* ... */ requestAnimationFrame(animate); }
+  requestAnimationFrame(animate);
+}, [target, duration]);
+
+// Fix:
+useEffect(() => {
+  let frameId: number;
+  function animate(now) { /* ... */ frameId = requestAnimationFrame(animate); }
+  frameId = requestAnimationFrame(animate);
+  return () => cancelAnimationFrame(frameId); // cleanup
+}, [target, duration]);
+```
 
 ### Dead Code
 
@@ -198,6 +243,8 @@ const MOBILE_BREAKPOINT = 768;
 - `next-themes` package is installed but no `ThemeProvider` appears in the provider tree
 - `react-hook-form` and `@hookform/resolvers` are dependencies but the auth form uses manual state management
 - Multiple shadcn/ui components are installed but never imported by any page
+- 8 community forum placeholder files (`ForumHome.tsx`, `Questions.tsx`, `Tags.tsx`, `Polls.tsx`, `Groups.tsx`, `Badges.tsx`, `ForumMembers.tsx`, `ForumSectors.tsx`, `MostAnswered.tsx`) contain only stub text — dead UI in production
+- 11 community sub-routes in `App.tsx` all render the same `CommunityHome` component — the individual route files are unused
 
 ---
 
@@ -329,9 +376,14 @@ Installed but potentially unused dependencies add to bundle:
 
 ### Findings
 
-**a) `.env` contains Supabase credentials — properly gitignored** ✅
+**a) `.env` committed to git with live credentials** 🔴
 
-The `.gitignore` includes `.env`, `.env.local`, and `.env.*.local`. The credentials are Supabase publishable (anon) keys, which are designed to be client-side. This is acceptable but worth noting that RLS policies are the actual security layer.
+Despite `.gitignore` listing `.env`, the file **is tracked in git** (`git ls-files -- .env` confirms). It was committed before the gitignore rule existed and is now in the full git history. The file contains:
+- `VITE_SUPABASE_PROJECT_ID` — Supabase project identifier
+- `VITE_SUPABASE_PUBLISHABLE_KEY` — A full JWT anon key
+- `VITE_SUPABASE_URL` — Live Supabase endpoint
+
+While these are "anon" (public) keys, they should still be rotated after removal from version history. **Fix:** Run `git rm --cached .env` and rotate the Supabase anon key from the dashboard.
 
 **b) RLS policies are permissive insert-only** ⚠️
 
@@ -358,9 +410,9 @@ While Supabase parameterizes queries (preventing SQL injection), there's no:
 - CAPTCHA or bot protection
 - Input length limits
 
-**d) No XSS concerns detected** ✅
+**d) XSS concern — ReportViewer iframe** ⚠️
 
-React's JSX auto-escapes all rendered values. No `dangerouslySetInnerHTML` usage found except in the `ReportViewer` component which uses an `<iframe>` for HTML reports — this is acceptable as long as the reports are trusted content.
+React's JSX auto-escapes all rendered values. No `dangerouslySetInnerHTML` usage found. However, `ReportViewer.tsx` renders an `<iframe>` for HTML reports from `/public/reports/` without a `sandbox` attribute. The 10+ HTML report files in `public/reports/` can execute arbitrary JavaScript. If report content is ever user-contributed or compromised, this is a direct XSS vector. **Fix:** Add `sandbox="allow-same-origin"` to the iframe.
 
 **e) Authentication implementation is sound** ✅
 
@@ -652,9 +704,13 @@ All sector metrics, venture opportunities, market data, and analytics figures ar
 
 #### 🔴 CRITICAL — Fix Immediately
 
-1. **Unrestricted database inserts** — No rate limiting or bot protection on public insert policies. An attacker could flood the `subscribers`, `contact_messages`, and `access_requests` tables with garbage data.
+1. **`.env` file committed to git with live Supabase credentials** — The `.env` file containing `VITE_SUPABASE_PUBLISHABLE_KEY` (a full JWT) and `VITE_SUPABASE_URL` is tracked in version control. While these are "anon" keys, they are live credentials that should never be in git history. Even though `.gitignore` lists `.env`, the file was committed before the gitignore rule was added. **Fix:** Remove from git tracking with `git rm --cached .env`, rotate the Supabase anon key, and ensure `.env` is only used locally.
 
-2. **No SELECT policy audit** — Verify Supabase RLS default behavior. If no explicit SELECT deny policy exists, the anon key may allow reading all submitted contact info and emails.
+2. **Unrestricted database inserts** — No rate limiting or bot protection on public insert policies. An attacker could flood the `subscribers`, `contact_messages`, and `access_requests` tables with garbage data. The `access_requests` table also lacks a unique constraint on email, allowing unlimited duplicate submissions.
+
+3. **No SELECT policy audit** — Verify Supabase RLS default behavior. If no explicit SELECT deny policy exists, the anon key may allow reading all submitted contact info and emails.
+
+4. **ReportViewer iframe missing `sandbox` attribute** — `ReportViewer.tsx` renders an `<iframe>` pointing to static HTML reports in `/public/reports/` without any `sandbox` attribute. If report content is ever user-contributed or compromised, this is a direct XSS vector. **Fix:** Add `sandbox="allow-same-origin"` to the iframe element.
 
 #### 🟠 HIGH — Fix Soon
 
@@ -672,19 +728,25 @@ All sector metrics, venture opportunities, market data, and analytics figures ar
 
 8. **Unused dependencies bloating bundle** — `next-themes`, `embla-carousel-react`, `react-resizable-panels`, `input-otp`, potentially `date-fns`
 9. **No `Layout.tsx` usage in sector/intelligence pages** — Many pages manually import header/footer instead of using the wrapper
-10. **Community routes all render same component** — 8 routes map to `CommunityHome` which reads URL internally
+10. **Community routes all render same component** — 11 routes in App.tsx map to `CommunityHome` while 8 individual forum placeholder files are dead code
 11. **Duplicate lockfiles** — Both `package-lock.json` and `bun.lock`/`bun.lockb` exist
 12. **No loading skeletons or meaningful loading states** — `PageLoading` is just an empty div
 13. **Inconsistent hook file naming** — `useCounter.ts` vs `use-mobile.tsx`
+14. **Accessibility WCAG failures** — Missing ARIA attributes, no `role="dialog"` on AuthModal, no skip-to-content link, no alt text on SVG icons, possible color contrast failures with `#B8D935` on light backgrounds
+15. **`useCounter` hook memory leak** — `requestAnimationFrame` not cancelled on component unmount, leading to stale state updates
+16. **Multiple components conflict on `document.body.style.overflow`** — SiteHeader and AuthModal both manipulate body scroll lock independently; if both are active or one unmounts unexpectedly, the page becomes unscrollable
+17. **`noImplicitAny: false` in tsconfig.json** — Weakens TypeScript's primary safety guarantee; should be `true`
+18. **`@typescript-eslint/no-unused-vars` disabled in ESLint** — Allows dead imports and unused variables to accumulate undetected
 
 #### 🟢 LOW — Nice to Have
 
-14. **Remove unused shadcn/ui components** — ~20 installed components appear unused
-15. **Add proper README with setup instructions**
-16. **Implement dark mode** (theme infrastructure exists via CSS variables but isn't wired up)
-17. **Add ESLint rules for enforcing Tailwind over inline styles**
-18. **Add favicon and proper meta tags** (basic OG tags exist)
-19. **Consolidate `App.css` into `index.css`**
+19. **Remove unused shadcn/ui components** — ~20 of 47 installed components appear unused
+20. **Add proper README with setup instructions**
+21. **Implement dark mode** (theme infrastructure exists via CSS variables but isn't wired up)
+22. **Add ESLint rules for enforcing Tailwind over inline styles**
+23. **Add favicon and proper meta tags** (basic OG tags exist)
+24. **Consolidate `App.css` into `index.css`**
+25. **BridgeLogo SVG accessibility** — Add `<title>` elements for screen readers
 
 ---
 
@@ -1057,14 +1119,19 @@ rm package-lock.json
 
 These changes are low-risk, high-impact, and can be done independently:
 
+- [ ] **Remove `.env` from git tracking** — `git rm --cached .env` and rotate Supabase anon key (15 min)
+- [ ] **Audit Supabase RLS SELECT policies** — Add deny policies for public reads (30 min)
+- [ ] **Add `sandbox` attribute to ReportViewer iframe** — Prevent potential XSS from report content (5 min)
 - [ ] **Deduplicate icons** — Replace 87+ copied icon components with Lucide imports (1–2 hours)
 - [ ] **Remove unused dependencies** — Uninstall `next-themes`, `input-otp`, verify and remove others (30 min)
 - [ ] **Delete duplicate lockfiles** — Pick npm or bun, remove the other (5 min)
 - [ ] **Merge `App.css` into `index.css`** — Remove dead CSS file (15 min)
 - [ ] **Make all pages use `Layout.tsx`** — Replace manual header/footer imports (1–2 hours)
+- [ ] **Fix `useCounter` memory leak** — Add `cancelAnimationFrame` cleanup to useEffect return (10 min)
 - [ ] **Fix inconsistent hook naming** — Rename to one convention (15 min)
 - [ ] **Add meaningful loading skeleton** — Replace empty div `PageLoading` with a proper skeleton (30 min)
-- [ ] **Audit Supabase RLS SELECT policies** — Add deny policies for public reads (30 min)
+- [ ] **Enable `noImplicitAny: true`** in tsconfig.json (15 min + fix any resulting type errors)
+- [ ] **Re-enable `@typescript-eslint/no-unused-vars`** in eslint.config.js and clean up unused imports (1 hour)
 
 #### Phase 2: Important Refactors (1–2 weeks)
 
