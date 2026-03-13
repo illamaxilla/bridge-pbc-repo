@@ -2286,8 +2286,7 @@ const HeroSection = () => {
       className={cn("bg-white relative overflow-hidden", isMobile ? "pt-16 px-5 pb-10" : "pt-[100px] px-20 pb-[120px]")}
     >
       <div
-        className="absolute -top-[60px] -right-[60px] w-[480px] h-[480px] rounded-full pointer-events-none"
-        className="bg-[radial-gradient(circle,rgba(184,217,53,0.08)_0%,transparent_70%)]"
+        className="absolute -top-[60px] -right-[60px] w-[480px] h-[480px] rounded-full pointer-events-none bg-[radial-gradient(circle,rgba(184,217,53,0.08)_0%,transparent_70%)]"
       />
       <div className="relative mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
         <div
