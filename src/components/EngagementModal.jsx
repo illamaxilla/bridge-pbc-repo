@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // ─────────────────────────────────────────────
 // TOKENS
@@ -100,19 +101,6 @@ const MONTHS = ["January","February","March","April","May","June","July","August
 const fmtDate = d => d ? d.toLocaleDateString("en-US", { weekday:"long", month:"long", day:"numeric", year:"numeric" }) : "";
 const fmtShort = d => d ? d.toLocaleDateString("en-US", { weekday:"short", month:"short", day:"numeric" }) : "";
 const fmtTime = t => t ? (TIME_SLOTS.find(s => s.value === t)?.label || t) : "";
-
-// ─────────────────────────────────────────────
-// HOOKS
-// ─────────────────────────────────────────────
-const useIsMobile = () => {
-  const [v, setV] = useState(() => typeof window !== "undefined" ? window.innerWidth <= 680 : false);
-  useEffect(() => {
-    const fn = () => setV(window.innerWidth <= 680);
-    window.addEventListener("resize", fn);
-    return () => window.removeEventListener("resize", fn);
-  }, []);
-  return v;
-};
 
 // ─────────────────────────────────────────────
 // LOGO
@@ -643,31 +631,4 @@ export const BRIDGEEngagementModal = ({ isOpen, onClose, intent = "connect" }) =
   );
 };
 
-// ─────────────────────────────────────────────
-// DEMO WRAPPER
-// ─────────────────────────────────────────────
-export default function BRIDGEEngagementDemo() {
-  const [open, setOpen] = useState(false);
-  const [intent, setIntent] = useState("briefing");
-  const btns = [
-    { intent:"briefing",    label:"Schedule a 30-Min Briefing →",        accent:true },
-    { intent:"scope",       label:"Request Full Package Scope",            accent:false },
-    { intent:"partnership", label:"Partnership Enquiry",                   accent:false },
-    { intent:"discovery",   label:"Request a Discovery Session →",         accent:true },
-    { intent:"advisory",    label:"Enquire About Deployment Advisory →",   accent:false },
-    { intent:"connect",     label:"Schedule a Partnership Conversation →", accent:false },
-  ];
-  return (
-    <div style={{ minHeight:"100vh", background:"linear-gradient(160deg,#0f2e24 0%,#1B4D3E 60%,#163829 100%)", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:"14px", padding:"40px 24px", fontFamily:"Inter, sans-serif" }}>
-      <p style={{ color:"rgba(255,255,255,0.25)", fontSize:"11px", letterSpacing:"2.5px", textTransform:"uppercase", marginBottom:"8px" }}>Engagement Modal — Intent Preview</p>
-      <div style={{ display:"flex", flexDirection:"column", gap:"10px", width:"100%", maxWidth:"420px" }}>
-        {btns.map(b => (
-          <button key={b.intent} onClick={() => { setIntent(b.intent); setOpen(true); }}
-            style={{ padding:"16px 24px", borderRadius:"12px", border:b.accent?"none":`1px solid rgba(255,255,255,0.15)`, backgroundColor:b.accent?C.accent:"rgba(255,255,255,0.05)", color:b.accent?C.primary:"rgba(255,255,255,0.7)", fontSize:"14px", fontWeight:b.accent?"700":"500", fontFamily:"Inter, sans-serif", cursor:"pointer", textAlign:"left", transition:"all 0.2s ease" }}
-          >{b.label}</button>
-        ))}
-      </div>
-      <BRIDGEEngagementModal isOpen={open} onClose={() => setOpen(false)} intent={intent} />
-    </div>
-  );
-}
+export default BRIDGEEngagementModal;

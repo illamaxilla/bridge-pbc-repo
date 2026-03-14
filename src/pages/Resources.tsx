@@ -556,6 +556,20 @@ const docs = [
     soon: false,
     path: "/resources/monthly-dashboard",
   },
+  {
+    id: 8,
+    icon: Leaf,
+    label: "Cannabis Intelligence",
+    title: "NCC Licensing for Medical Cannabis — Intelligence Series",
+    desc: "Complete analysis of Ghana's 11 NCC cannabis licence categories. Market sizing, BRIDGE Impact Scores, value chain positioning, and entry strategies.",
+    tag: "New",
+    free: false,
+    pages: "11 licences",
+    action: "Explore Series",
+    soon: false,
+    path: "/resources/cannabis-intelligence",
+    requiresSignIn: true,
+  },
 ];
 
 const updates = [

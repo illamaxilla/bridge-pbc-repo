@@ -45,6 +45,21 @@ export const PolicyBriefTeaser = lazy(() => import("./pages/resources/PolicyBrie
 export const AnnualReviewTeaser = lazy(() => import("./pages/resources/AnnualReviewTeaser"));
 export const SectorBriefViewer = lazy(() => import("./pages/resources/SectorBriefViewer"));
 
+// Cannabis Intelligence Series
+export const CannabisIntelligenceDashboard = lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_Dashboard"));
+export const CannabisIntelligenceSummary = lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_SeriesSummary"));
+export const CannabisLicence01 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence01_Cultivation"));
+export const CannabisLicence02 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence02_Processing"));
+export const CannabisLicence03 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence03_BreedingSeed"));
+export const CannabisLicence04 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence04_RD"));
+export const CannabisLicence05 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence05_TestingLab"));
+export const CannabisLicence06 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence06_Storage"));
+export const CannabisLicence07 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence07_Transportation"));
+export const CannabisLicence08 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence08_Import"));
+export const CannabisLicence09 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence09_Export"));
+export const CannabisLicence10 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence10_Wholesale"));
+export const CannabisLicence11 = lazy(() => import("./pages/BRIDGE_Cannabis_Licence11_Dispensing"));
+
 // ---------------------------------------------------------------------------
 // Sector page lazy imports (12 sectors)
 // ---------------------------------------------------------------------------
@@ -151,4 +166,35 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
     component: lazy(() => import("./pages/BRIDGE_Portfolio")),
     auth: "paid",
   },
+  {
+    path: "/resources/cannabis-intelligence",
+    title: "NCC Cannabis Licensing Intelligence",
+    component: lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_Dashboard")),
+    auth: "public",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Cannabis Licence routes (individual purchasable documents)
+// ---------------------------------------------------------------------------
+
+export interface CannabisLicenceRoute {
+  num: string;
+  slug: string;
+  title: string;
+  component: React.LazyExoticComponent<React.ComponentType>;
+}
+
+export const CANNABIS_LICENCE_ROUTES: CannabisLicenceRoute[] = [
+  { num: "01", slug: "cultivation",     title: "Cultivation",                component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence01_Cultivation")) },
+  { num: "02", slug: "processing",      title: "Processing",                 component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence02_Processing")) },
+  { num: "03", slug: "breeding-seed",   title: "Breeding & Seed Supply",     component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence03_BreedingSeed")) },
+  { num: "04", slug: "research",        title: "Research & Development",     component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence04_RD")) },
+  { num: "05", slug: "testing-lab",     title: "Testing Laboratory",         component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence05_TestingLab")) },
+  { num: "06", slug: "storage",         title: "Storage & Warehousing",      component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence06_Storage")) },
+  { num: "07", slug: "transportation",  title: "Transportation",             component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence07_Transportation")) },
+  { num: "08", slug: "import",          title: "Import",                     component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence08_Import")) },
+  { num: "09", slug: "export",          title: "Export",                     component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence09_Export")) },
+  { num: "10", slug: "wholesale",       title: "Wholesale Distribution",     component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence10_Wholesale")) },
+  { num: "11", slug: "dispensing",      title: "Dispensing",                 component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence11_Dispensing")) },
 ];
