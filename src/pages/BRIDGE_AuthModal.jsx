@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 // ─────────────────────────────────────────────
 // TOKENS
@@ -8,7 +8,6 @@ const C = {
   primaryDark: "#163f32",
   primaryDeep: "#0f2e24",
   accent:      "#B8D935",
-  accentDim:   "#a5c42e",
   accentLight: "#E8F5E0",
   bg:          "#F3F5F2",
   white:       "#FFFFFF",
@@ -41,10 +40,8 @@ const LogoWhite = () => (
       .lw1{fill:#ffffff;}
       .lw2{fill:#ffffff;stroke:#ffffff;stroke-width:.5px;stroke-miterlimit:10;}
       .lw3{fill:none;stroke:#ffffff;stroke-width:80px;stroke-miterlimit:10;}
-      .lw4{fill:none;stroke:#333;stroke-width:5px;stroke-miterlimit:10;}
       .lw5{fill:#B8D935;stroke:#ffffff;stroke-miterlimit:10;}
       .lw6{fill:#B8D935;}
-      .lw8{fill:#ffffff;}
     `}</style></defs>
     <g><g>
       <path className="lw6" d="M2070.26,927.95c-.2.2-.5.4-.7.5h-.3l1-.5Z"/>
@@ -67,7 +64,7 @@ const LogoWhite = () => (
 
 const LogoDark = () => (
   <svg height="28" viewBox="0 0 3434.33 932.3" xmlns="http://www.w3.org/2000/svg">
-    <defs><style>{`.ld1,.ld2{fill:#1b4d3e;}.ld2{stroke:#000;stroke-width:.5px;}.ld2,.ld3,.ld4,.ld5{stroke-miterlimit:10;}.ld3{stroke-width:80px;}.ld3,.ld4{fill:none;}.ld3,.ld5{stroke:#1b4d3e;}.ld6,.ld5{fill:#b8d935;}.ld4{stroke:#231f20;stroke-width:5px;}.ld8{fill:#191919;}`}</style></defs>
+    <defs><style>{`.ld1,.ld2{fill:#1b4d3e;}.ld2{stroke:#000;stroke-width:.5px;}.ld2,.ld3,.ld5{stroke-miterlimit:10;}.ld3{stroke-width:80px;}.ld3{fill:none;}.ld3,.ld5{stroke:#1b4d3e;}.ld6,.ld5{fill:#b8d935;}`}</style></defs>
     <g><g>
       <path className="ld6" d="M2070.26,927.95c-.2.2-.5.4-.7.5h-.3l1-.5Z"/>
       <path className="ld1" d="M1853.06,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9h0ZM1894.56,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1v.1Z"/>
@@ -95,7 +92,7 @@ const inputBase = (focused) => ({
   border: `1.5px solid ${focused ? C.primary : C.line}`,
   backgroundColor: focused ? C.white : C.bg,
   fontSize: "15px", fontFamily: "Inter, sans-serif", color: C.dark,
-  outline: "none", transition: "border-color 0.18s ease, background 0.18s ease",
+  outline: "none", transition: "border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease",
   boxSizing: "border-box", width: "100%",
   boxShadow: focused ? `0 0 0 3px rgba(27,77,62,0.07)` : "none",
 });
@@ -106,29 +103,31 @@ const labelStyle = {
   marginBottom: "6px", display: "block",
 };
 
-const Field = ({ label, type = "text", placeholder, value, onChange, required, rightEl }) => {
+const Field = ({ label, type = "text", placeholder, value, onChange, required }) => {
   const [focused, setFocused] = useState(false);
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <label style={labelStyle}>{label}{required && <span style={{ color: C.accent, marginLeft: "3px" }}>*</span>}</label>
-      <div style={{ position: "relative" }}>
-        <input
-          type={type} placeholder={placeholder} value={value} onChange={onChange}
-          onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} required={required}
-          style={{ ...inputBase(focused), paddingRight: rightEl ? "48px" : "16px" }}
-        />
-        {rightEl && <div style={{ position: "absolute", right: "14px", top: "50%", transform: "translateY(-50%)" }}>{rightEl}</div>}
-      </div>
+      <input
+        type={type} placeholder={placeholder} value={value} onChange={onChange}
+        onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} required={required}
+        style={inputBase(focused)}
+      />
     </div>
   );
 };
 
-const PasswordField = ({ label, value, onChange, required }) => {
+const PasswordField = ({ label, value, onChange, required, forgotLink }) => {
   const [focused, setFocused] = useState(false);
   const [show, setShow] = useState(false);
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <label style={labelStyle}>{label}{required && <span style={{ color: C.accent, marginLeft: "3px" }}>*</span>}</label>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+        <label style={{ ...labelStyle, marginBottom: 0 }}>
+          {label}{required && <span style={{ color: C.accent, marginLeft: "3px" }}>*</span>}
+        </label>
+        {forgotLink}
+      </div>
       <div style={{ position: "relative" }}>
         <input
           type={show ? "text" : "password"} placeholder="••••••••••••"
@@ -195,7 +194,7 @@ const SubmitBtn = ({ loading, disabled, label }) => {
         backgroundColor: (disabled || loading) ? "#C8C8C8" : hov ? C.primaryDark : C.primary,
         color: C.white, fontSize: "15px", fontWeight: "700", fontFamily: "Inter, sans-serif",
         cursor: (disabled || loading) ? "not-allowed" : "pointer",
-        transition: "background 0.2s ease, transform 0.1s ease",
+        transition: "background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease",
         transform: hov && !disabled && !loading ? "translateY(-1px)" : "none",
         boxShadow: hov && !disabled && !loading ? "0 6px 20px rgba(27,77,62,0.3)" : "none",
         display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
@@ -233,7 +232,6 @@ const BrandPanel = ({ tab }) => {
       background: `linear-gradient(160deg, ${C.primaryDeep} 0%, ${C.primary} 100%)`,
       padding: "44px 36px", display: "flex", flexDirection: "column",
       justifyContent: "space-between", position: "relative", overflow: "hidden",
-      minHeight: "520px",
     }}>
       {/* Subtle pattern overlay */}
       <div style={{
@@ -301,27 +299,57 @@ const BrandPanel = ({ tab }) => {
 // ─────────────────────────────────────────────
 // SIGN IN FORM
 // ─────────────────────────────────────────────
-const SignInForm = ({ onSuccess, onForgot }) => {
+const SignInForm = ({ onSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forgotSent, setForgotSent] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => { setLoading(false); onSuccess(); }, 1500);
   };
+
+  const handleForgot = () => setForgotSent(true);
+
+  if (forgotSent) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px", animation: "auth-fadeIn 0.2s ease" }}>
+        <div style={{ padding: "18px 20px", backgroundColor: C.accentLight, border: `1.5px solid ${C.primary}`, borderRadius: "12px", display: "flex", gap: "12px", alignItems: "flex-start" }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0, marginTop: "1px" }}>
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <div>
+            <p style={{ fontSize: "14px", fontWeight: "700", color: C.primary, fontFamily: "Inter, sans-serif", margin: "0 0 4px 0" }}>Check your email</p>
+            <p style={{ fontSize: "13px", color: C.mid, fontFamily: "Inter, sans-serif", margin: 0, lineHeight: 1.5 }}>
+              If your email is registered, you'll receive a reset link within a few minutes.
+            </p>
+          </div>
+        </div>
+        <button type="button" onClick={() => setForgotSent(false)}
+          style={{ background: "none", border: "none", cursor: "pointer", color: C.primary, fontWeight: "600", fontSize: "13px", fontFamily: "Inter, sans-serif", padding: 0, textAlign: "left" }}>
+          ← Back to Sign In
+        </button>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
       <Field label="Email Address" type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} required />
-      <div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-          <label style={labelStyle}>Password <span style={{ color: C.accent }}>*</span></label>
-          <button type="button" onClick={onForgot} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "12px", color: C.faint, fontFamily: "Inter, sans-serif", padding: 0 }}>
+      <PasswordField
+        label="Password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        required
+        forgotLink={
+          <button type="button" onClick={handleForgot} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "12px", color: C.faint, fontFamily: "Inter, sans-serif", padding: 0 }}>
             Forgot password?
           </button>
-        </div>
-        <PasswordField value={password} onChange={e => setPassword(e.target.value)} required />
-      </div>
+        }
+      />
       <div style={{ paddingTop: "4px" }}>
         <SubmitBtn loading={loading} disabled={!email || !password} label="Sign In" />
       </div>
@@ -396,14 +424,17 @@ const RequestAccessForm = ({ onSuccess, isMobile }) => {
             <Field label="Role / Title" placeholder="e.g. Managing Director" value={form.role} onChange={set("role")} />
           </div>
           <div style={{ paddingTop: "4px" }}>
-            <button type="button" disabled={!step1Valid} onClick={() => setStep(2)} style={{
-              width: "100%", padding: "15px 32px", borderRadius: "50px", border: "none",
-              backgroundColor: step1Valid ? C.primary : "#C8C8C8",
-              color: C.white, fontSize: "15px", fontWeight: "700", fontFamily: "Inter, sans-serif",
-              cursor: step1Valid ? "pointer" : "not-allowed",
-              transition: "all 0.2s ease",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-            }}>
+            <button type="button" disabled={!step1Valid} onClick={() => setStep(2)}
+              onMouseEnter={e => { if (step1Valid) { e.currentTarget.style.backgroundColor = C.primaryDark; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 20px rgba(27,77,62,0.3)"; }}}
+              onMouseLeave={e => { if (step1Valid) { e.currentTarget.style.backgroundColor = C.primary; e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}}
+              style={{
+                width: "100%", padding: "15px 32px", borderRadius: "50px", border: "none",
+                backgroundColor: step1Valid ? C.primary : "#C8C8C8",
+                color: C.white, fontSize: "15px", fontWeight: "700", fontFamily: "Inter, sans-serif",
+                cursor: step1Valid ? "pointer" : "not-allowed",
+                transition: "background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+              }}>
               Continue
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -438,14 +469,16 @@ const RequestAccessForm = ({ onSuccess, isMobile }) => {
           <TextareaField label="Brief Description of Interest" placeholder="Tell us what you're hoping to explore with BRIDGE…" value={form.description} onChange={set("description")} />
 
           {/* Consent */}
-          <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", padding: "14px 16px", backgroundColor: form.consent ? C.accentLight : C.bg, border: `1.5px solid ${form.consent ? C.primary : C.line}`, borderRadius: "12px", transition: "all 0.2s ease" }}>
-            <div onClick={() => setForm(f => ({ ...f, consent: !f.consent }))} style={{ width: "18px", height: "18px", minWidth: "18px", borderRadius: "5px", marginTop: "1px", border: `2px solid ${form.consent ? C.primary : C.lineStrong}`, backgroundColor: form.consent ? C.primary : C.white, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.18s ease", cursor: "pointer" }}>
+          <div
+            onClick={() => setForm(f => ({ ...f, consent: !f.consent }))}
+            style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", padding: "14px 16px", backgroundColor: form.consent ? C.accentLight : C.bg, border: `1.5px solid ${form.consent ? C.primary : C.line}`, borderRadius: "12px", transition: "all 0.2s ease", userSelect: "none" }}>
+            <div style={{ width: "18px", height: "18px", minWidth: "18px", borderRadius: "5px", marginTop: "1px", border: `2px solid ${form.consent ? C.primary : C.lineStrong}`, backgroundColor: form.consent ? C.primary : C.white, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.18s ease", flexShrink: 0 }}>
               {form.consent && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>}
             </div>
             <span style={{ fontSize: "13px", color: "#555", fontFamily: "Inter, sans-serif", lineHeight: "1.6" }}>
               I agree to receive communications from BRIDGE PBC and understand that access is subject to team review and approval.
             </span>
-          </label>
+          </div>
 
           <div style={{ display: "flex", gap: "10px" }}>
             <button type="button" onClick={() => setStep(1)} style={{ flexShrink: 0, padding: "14px 20px", borderRadius: "50px", border: `1.5px solid ${C.line}`, backgroundColor: "transparent", color: C.mid, fontSize: "14px", fontWeight: "600", fontFamily: "Inter, sans-serif", cursor: "pointer", transition: "all 0.2s ease" }}
@@ -463,30 +496,37 @@ const RequestAccessForm = ({ onSuccess, isMobile }) => {
 // ─────────────────────────────────────────────
 // SUCCESS
 // ─────────────────────────────────────────────
-const SuccessState = ({ mode, onClose }) => (
-  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "32px 0 8px", textAlign: "center", gap: "20px" }}>
-    <div style={{ width: "72px", height: "72px", borderRadius: "50%", backgroundColor: C.accentLight, border: `2px solid ${C.primary}`, display: "flex", alignItems: "center", justifyContent: "center", animation: "auth-popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) forwards" }}>
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-    </div>
-    <div style={{ maxWidth: "300px" }}>
-      <h3 style={{ fontSize: "22px", fontWeight: "700", color: C.primary, fontFamily: "Inter, sans-serif", margin: "0 0 10px 0", lineHeight: 1.2 }}>
-        {mode === "request" ? "Application Received" : "Welcome back"}
-      </h3>
-      <p style={{ fontSize: "15px", color: C.mid, fontFamily: "Inter, sans-serif", lineHeight: "1.65", margin: 0 }}>
-        {mode === "request"
-          ? "Thank you for your interest. The BRIDGE team will review your application and reach out within 3–5 business days."
-          : "You've been successfully signed in. Redirecting to your portal now…"
-        }
-      </p>
-    </div>
-    {mode === "request" && (
-      <button onClick={onClose} style={{ padding: "13px 36px", borderRadius: "50px", border: "none", backgroundColor: C.primary, color: C.white, fontSize: "14px", fontWeight: "700", fontFamily: "Inter, sans-serif", cursor: "pointer", marginTop: "4px", transition: "background 0.2s ease" }}
+const SuccessState = ({ mode, onClose }) => {
+  useEffect(() => {
+    if (mode === "signin") {
+      const t = setTimeout(onClose, 2500);
+      return () => clearTimeout(t);
+    }
+  }, [mode, onClose]);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "32px 0 8px", textAlign: "center", gap: "20px" }}>
+      <div style={{ width: "72px", height: "72px", borderRadius: "50%", backgroundColor: C.accentLight, border: `2px solid ${C.primary}`, display: "flex", alignItems: "center", justifyContent: "center", animation: "auth-popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) forwards" }}>
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <div style={{ maxWidth: "300px" }}>
+        <h3 style={{ fontSize: "22px", fontWeight: "700", color: C.primary, fontFamily: "Inter, sans-serif", margin: "0 0 10px 0", lineHeight: 1.2 }}>
+          {mode === "request" ? "Application Received" : "Welcome back"}
+        </h3>
+        <p style={{ fontSize: "15px", color: C.mid, fontFamily: "Inter, sans-serif", lineHeight: "1.65", margin: 0 }}>
+          {mode === "request"
+            ? "Thank you for your interest. The BRIDGE team will review your application and reach out within 3–5 business days."
+            : "You've been successfully signed in. Redirecting to your portal now…"
+          }
+        </p>
+      </div>
+      <button onClick={onClose} style={{ padding: "13px 36px", borderRadius: "50px", border: "none", backgroundColor: C.primary, color: C.white, fontSize: "14px", fontWeight: "700", fontFamily: "Inter, sans-serif", cursor: "pointer", transition: "background 0.2s ease" }}
         onMouseEnter={e => e.currentTarget.style.backgroundColor = C.primaryDark}
         onMouseLeave={e => e.currentTarget.style.backgroundColor = C.primary}
-      >Done</button>
-    )}
-  </div>
-);
+      >{mode === "request" ? "Done" : "Continue"}</button>
+    </div>
+  );
+};
 
 // ─────────────────────────────────────────────
 // MAIN MODAL EXPORT
@@ -495,11 +535,20 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin" }) => {
   const [tab,     setTab]     = useState(defaultTab);
   const [success, setSuccess] = useState(null);
   const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (isOpen) { setSuccess(null); setTab(defaultTab); requestAnimationFrame(() => setVisible(true)); }
-    else setVisible(false);
+    if (isOpen) {
+      setSuccess(null);
+      setTab(defaultTab);
+      setMounted(true);
+      requestAnimationFrame(() => setVisible(true));
+    } else {
+      setVisible(false);
+      const t = setTimeout(() => setMounted(false), 300);
+      return () => clearTimeout(t);
+    }
   }, [isOpen, defaultTab]);
 
   useEffect(() => {
@@ -513,7 +562,7 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin" }) => {
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  if (!isOpen && !visible) return null;
+  if (!mounted) return null;
 
   return (
     <>
@@ -532,9 +581,8 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin" }) => {
         style={{ position: "fixed", inset: 0, zIndex: 2000, backgroundColor: "rgba(8,24,18,0.78)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", display: "flex", alignItems: isMobile ? "flex-end" : "center", justifyContent: "center", padding: isMobile ? 0 : "20px", opacity: visible ? 1 : 0, transition: "opacity 0.25s ease" }}>
 
         {/* Shell */}
-        <div className="auth-scroll" style={{
+        <div style={{
           width: "100%", maxWidth: isMobile ? "100%" : "860px",
-          maxHeight: isMobile ? "94vh" : "90vh", overflowY: "auto",
           borderRadius: isMobile ? "20px 20px 0 0" : "20px",
           boxShadow: "0 40px 100px rgba(0,0,0,0.35), 0 10px 30px rgba(0,0,0,0.2)",
           display: isMobile ? "block" : "grid",
@@ -543,18 +591,18 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin" }) => {
           animation: visible ? (isMobile ? "auth-slide 0.35s cubic-bezier(0.32,0.72,0,1) forwards" : "auth-up 0.3s ease forwards") : "none",
         }}>
           {/* Left brand panel — hidden on mobile */}
-          {!isMobile && !success && <BrandPanel tab={tab} />}
+          {!isMobile && <BrandPanel tab={tab} />}
 
-          {/* Right form panel */}
-          <div className="auth-scroll" style={{ backgroundColor: C.white, overflowY: "auto", position: "relative" }}>
+          {/* Right form panel — this is the scrollable column */}
+          <div className="auth-scroll" style={{ backgroundColor: C.white, overflowY: "auto", maxHeight: isMobile ? "94vh" : "90vh", position: "relative" }}>
             {isMobile && (
-              <div style={{ display: "flex", justifyContent: "center", padding: "12px 0 4px" }}>
-                <div style={{ width: "36px", height: "4px", borderRadius: "2px", backgroundColor: C.line }}/>
+              <div style={{ display: "flex", justifyContent: "center", paddingTop: "14px", paddingBottom: "6px" }}>
+                <div style={{ width: "40px", height: "4px", borderRadius: "2px", backgroundColor: C.line }}/>
               </div>
             )}
 
             {/* Header row */}
-            <div style={{ padding: isMobile ? "20px 24px 0" : "32px 36px 0", display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+            <div style={{ padding: isMobile ? "16px 24px 0" : "32px 36px 0", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               {isMobile ? <LogoDark /> : <div/>}
               <button onClick={onClose} style={{ background: "none", border: `1.5px solid ${C.line}`, borderRadius: "50%", width: "36px", height: "36px", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: C.faint, padding: 0, flexShrink: 0, transition: "all 0.2s ease" }}
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = C.bg; e.currentTarget.style.borderColor = C.primary; e.currentTarget.style.color = C.primary; }}
@@ -595,7 +643,7 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin" }) => {
                     </h2>
                     <p style={{ fontSize: "14px", color: C.faint, fontFamily: "Inter, sans-serif", margin: 0, lineHeight: 1.5 }}>Sign in to access your BRIDGE portal and documents.</p>
                   </div>
-                  <SignInForm onSuccess={() => setSuccess("signin")} onForgot={() => {}} />
+                  <SignInForm onSuccess={() => setSuccess("signin")} />
                   <p style={{ marginTop: "22px", textAlign: "center", fontSize: "13px", color: C.faint, fontFamily: "Inter, sans-serif" }}>
                     Don't have access yet?{" "}
                     <button type="button" onClick={() => setTab("request")} style={{ background: "none", border: "none", cursor: "pointer", color: C.primary, fontWeight: "700", fontSize: "13px", fontFamily: "Inter, sans-serif", padding: 0 }}>
