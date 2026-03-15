@@ -1,11 +1,10 @@
-# BRIDGE PBC — Comprehensive Codebase Review
+# BRIDGE PBC — Comprehensive Codebase Architecture Review
 
-**Reviewed:** 2026-03-12 (Updated)
-**Repository:** sweet-site-stitch-259985a2
-**Platform:** Lovable.dev (AI-powered app builder)
-**Reviewer perspective:** Senior software architect, 15+ years experience, pre-release code review
-**Codebase size:** ~130,000+ LOC across 72+ page files, 47 UI components, 3 hooks, 2 DB migrations
-**Estimated duplication ratio:** ~35%
+**Reviewed:** 2026-03-15
+**Reviewer:** Senior Software Architect (15+ years production experience)
+**Repository:** bridge-pbc-repo
+**Platform:** Built with Lovable.dev (AI-powered app builder)
+**Codebase Size:** ~57,000 lines across 276+ files
 
 ---
 
@@ -16,563 +15,537 @@
 | Layer | Technology | Version |
 |-------|-----------|---------|
 | Framework | React | 18.3.1 |
-| Language | TypeScript | ~5.6.2 |
-| Build Tool | Vite + SWC | 5.4.19 |
-| Routing | React Router | 6.30.1 |
-| Styling | Tailwind CSS | 3.4.17 |
-| UI Components | shadcn/ui (Radix UI) | Various |
-| State (server) | TanStack React Query | 5.83.0 |
-| State (client) | React Context + useState | — |
-| Backend / Auth | Supabase | 2.99.0 |
-| Forms | React Hook Form + Zod | 7.61.1 / 3.25.76 |
+| Language | TypeScript + JavaScript (JSX) | 5.8.3 |
+| Build Tool | Vite (SWC plugin) | 5.4.19 |
+| Routing | React Router DOM | 6.30.1 |
+| State (Server) | TanStack React Query | 5.83.0 |
+| State (Client) | React Context + useState | — |
+| Styling | Tailwind CSS + Inline styles | 3.4.17 |
+| UI Primitives | Radix UI (shadcn/ui pattern) | Various |
 | Charts | Recharts | 2.15.4 |
 | Icons | Lucide React | 0.462.0 |
+| Forms | React Hook Form + Zod | 7.61.1 / 3.25.76 |
+| Backend | Supabase (Auth + Postgres) | 2.99.0 |
+| Hosting | Netlify | — |
 | Testing | Vitest + Testing Library | 3.2.4 / 16.0.0 |
-| Theming | next-themes | 0.3.0 |
 
 ### Architecture Pattern
 
-**Component-based SPA** with page-level routing and lazy loading. The architecture is a flat page-centric model — each route maps to a single large page component that owns all of its markup, styles, and data. There is no formal feature-based or domain-driven decomposition.
+**Component-based SPA** with a **two-tier architecture**:
+
+1. **Modern TypeScript Layer** (~30% of code): App shell, routing, auth, intelligence dashboard, sector page template system — well-structured, typed, uses Tailwind.
+2. **Lovable.dev-Generated JSX Layer** (~70% of code, 68,524 lines): Self-contained document-style pages with inline styles, hardcoded data, and single-letter variable names. These are essentially "digital publications" rendered as React components.
 
 ### Folder Organization
 
 ```
-src/
-├── main.tsx              # ReactDOM entry point
-├── App.tsx               # Provider stack + route definitions
-├── index.css             # Global CSS, design tokens, animations
-├── components/           # Shared components
-│   ├── ui/               # 40+ shadcn/ui primitives (auto-generated)
-│   ├── __tests__/        # 2 component tests
-│   ├── Layout.tsx         # Header + main + footer wrapper
-│   ├── SiteHeader.tsx     # Navigation bar (406 LOC)
-│   ├── SiteFooter.tsx     # Footer with subscribe form (545 LOC)
-│   ├── AuthModal.tsx      # Sign-in/sign-up modal (1,015 LOC)
-│   ├── ProtectedRoute.tsx # Auth guard (21 LOC)
-│   ├── ErrorBoundary.tsx  # Error boundary (67 LOC)
-│   ├── ReportViewer.tsx   # iframe report viewer (126 LOC)
-│   ├── BridgeLogo.tsx     # SVG logo variants
-│   └── NavLink.tsx        # Router NavLink wrapper
-├── pages/                # Route-level page components
-│   ├── Index.tsx          # Homepage (3,733 LOC)
-│   ├── About.tsx          # (2,552 LOC)
-│   ├── Services.tsx       # (4,762 LOC)
-│   ├── Contact.tsx        # (3,249 LOC)
-│   ├── sectors/           # 12 sector deep-dive pages (5,771–7,143 LOC each)
-│   ├── intelligence/      # Protected dashboard section (5,674–11,248 LOC each)
-│   ├── community/         # Forum & community hub
-│   ├── reports/           # Dynamic report viewer
-│   └── resources/         # Gated resource viewers
-├── context/              # AuthContext (76 LOC)
-├── hooks/                # useCounter, useIsMobile
-├── lib/                  # utils.ts (cn), theme.ts (design tokens)
-├── data/                 # sectorIcons.ts (icon/route mappings)
-├── integrations/         # Supabase client + auto-generated types
-└── test/                 # Test setup + example test
+bridge-pbc-repo/
+├── public/                    # Static assets
+├── src/
+│   ├── components/
+│   │   ├── ui/                # shadcn/ui primitives (50+ components)
+│   │   ├── auth/              # Auth form sub-components
+│   │   ├── sectors/           # Shared sector page sections
+│   │   ├── intelligence/      # Intelligence dashboard system
+│   │   │   ├── analytics/     # Chart/visualization components
+│   │   │   ├── dashboard/     # Desktop + Mobile dashboard
+│   │   │   ├── reports/       # Report dashboard components
+│   │   │   ├── watchlist/     # Watchlist feature
+│   │   │   ├── market/        # Market overview components
+│   │   │   ├── mobile/        # Mobile-specific intelligence
+│   │   │   └── resources/     # Intelligence resources
+│   │   ├── icons/             # Custom SVG icon components
+│   │   └── *.tsx              # App-level components (Layout, Header, Footer, etc.)
+│   ├── context/               # React Context providers (AuthContext)
+│   ├── data/
+│   │   ├── sectors/           # 12 sector data files + types
+│   │   └── sectorIcons.ts     # Sector icon/route mapping
+│   ├── hooks/                 # Custom hooks (useCounter, useIsMobile, useScrollLock)
+│   ├── integrations/
+│   │   └── supabase/          # Supabase client + auto-generated types
+│   ├── lib/                   # Utilities (cn(), theme tokens)
+│   ├── pages/
+│   │   ├── sectors/           # 12 sector page files
+│   │   ├── intelligence/      # Intelligence sub-pages
+│   │   ├── community/         # Community/forum pages
+│   │   ├── resources/         # Resource viewer pages
+│   │   ├── reports/           # Report pages
+│   │   └── BRIDGE_*.jsx       # 28 Lovable-generated document pages
+│   ├── services/              # API service layer (supabase.ts)
+│   ├── test/                  # Test setup
+│   ├── routeConfig.tsx        # Centralized route definitions
+│   ├── App.tsx                # Root component + route tree
+│   └── main.tsx               # Entry point
+├── supabase/
+│   └── migrations/            # 3 SQL migration files
+├── .lovable/                  # Lovable.dev config (plan.md)
+└── .github/                   # GitHub config
 ```
 
-### Entry Point & Data Flow
+### Entry Points & Data Flow
 
 ```
-index.html
-  └─ main.tsx
-       └─ App.tsx
-            ├─ QueryClientProvider  (React Query — server state cache)
-            ├─ AuthProvider         (Supabase auth — user/session/tier)
-            ├─ TooltipProvider      (shadcn)
-            ├─ Sonner               (Toast notifications)
-            ├─ BrowserRouter        (React Router v6)
-            ├─ ErrorBoundary        (Catches render errors)
-            └─ Suspense             (Lazy loading fallback)
-                 └─ Routes (30+ routes, all lazy-loaded)
+index.html → main.tsx → App.tsx
+                          ├── QueryClientProvider (TanStack Query)
+                          ├── AuthProvider (Supabase Auth context)
+                          ├── TooltipProvider (Radix)
+                          ├── Sonner (toast notifications)
+                          └── BrowserRouter
+                               └── Suspense (lazy loading)
+                                    └── Routes (all pages)
 ```
 
-### Routing Structure
+**Routing Structure:**
+- `routeConfig.tsx` centralizes all lazy imports and route metadata
+- `App.tsx` declares the route tree with `<ErrorBoundary>` wrappers per route
+- Config-driven patterns: `SECTOR_PAGES`, `BRIDGE_DOC_ROUTES`, `CANNABIS_LICENCE_ROUTES`
+- Three auth levels: public, protected (any authenticated user), paid (paid tier only)
 
-- **Public:** `/`, `/about`, `/services`, `/methodology`, `/insights`, `/sectors`, `/contact`, `/resources`, `/policy`, `/login`
-- **Protected (auth required):** `/intelligence/*` (6 nested routes), `/resources/sector-brief/:slug`, `/resources/annual-review`
-- **Sector pages:** 12 individual routes `/sectors/{name}`
-- **Community:** `/community`, `/community/forum/*` (8 sub-routes, all render same component)
-- **Reports:** `/reports/:slug`
-- **404:** Catch-all `*`
+### Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        BROWSER (SPA)                            │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────────────────┐  │
+│  │  main.tsx │→│  App.tsx  │→│  React Router (BrowserRouter) │  │
+│  └──────────┘  └──────────┘  └──────────┬───────────────────┘  │
+│                                         │                       │
+│              ┌──────────────────────────┼──────────────┐        │
+│              │                          │              │        │
+│     ┌────────▼────────┐    ┌───────────▼──────┐  ┌────▼─────┐  │
+│     │  Public Pages   │    │ Protected Routes │  │   Paid   │  │
+│     │  (Index, About, │    │ (Intelligence/*) │  │  Routes  │  │
+│     │  Sectors, etc.) │    │                  │  │ (Docs,   │  │
+│     └────────┬────────┘    └───────┬──────────┘  │ Cannabis)│  │
+│              │                     │             └────┬─────┘  │
+│              │                     │                  │        │
+│     ┌────────▼─────────────────────▼──────────────────▼─────┐  │
+│     │              Shared Components                         │  │
+│     │  ┌────────┐  ┌──────────┐  ┌───────────────────────┐  │  │
+│     │  │ Layout │  │ AuthModal│  │ SectorIntelligence-   │  │  │
+│     │  │ Header │  │ Search   │  │ Wrapper               │  │  │
+│     │  │ Footer │  │ Modal    │  │                       │  │  │
+│     │  └────────┘  └──────────┘  └───────────────────────┘  │  │
+│     └────────────────────────────────────────────────────────┘  │
+│                                                                 │
+│  ┌──────────────────┐  ┌─────────────┐  ┌──────────────────┐   │
+│  │  AuthContext      │  │  Theme/Utils │  │  Custom Hooks   │   │
+│  │  (user, session,  │  │  (colors,    │  │  (useIsMobile,  │   │
+│  │   tier, signIn)   │  │   cn())      │  │   useScrollLock)│   │
+│  └────────┬─────────┘  └─────────────┘  └──────────────────┘   │
+│           │                                                     │
+├───────────▼─────────────────────────────────────────────────────┤
+│                     SUPABASE BACKEND                            │
+│  ┌─────────────┐  ┌──────────────────────────────────────────┐  │
+│  │  Auth       │  │  PostgreSQL (RLS)                        │  │
+│  │  - signIn   │  │  - subscribers (insert-only)             │  │
+│  │  - signOut  │  │  - access_requests (insert-only)         │  │
+│  │  - session  │  │  - contact_messages (insert-only)        │  │
+│  │  - metadata │  │  - SELECT denied for public role         │  │
+│  └─────────────┘  └──────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
 ## 2. CODE QUALITY AUDIT
 
-### Overall Assessment: **C+** (Functional but needs significant refactoring)
+### Overall Assessment: **B-** (Good foundation, significant technical debt in JSX layer)
 
-The code works and ships, but carries heavy technical debt from AI generation. The primary issues are file size, code duplication, and styling approach.
+### Strengths
+- **Zero `any` types** across the entire TypeScript codebase
+- **Zero `console.log`** statements in production code (only `console.error` in ErrorBoundary)
+- **Zero TODO/FIXME/HACK** comments
+- **Clean TypeScript** in the app shell, hooks, context, and sector data layer
+- Proper use of `React.memo` on Header and Footer to prevent unnecessary re-renders
 
 ### Anti-Patterns & Code Smells
 
-**a) Massive monolithic page components**
-
-This is the single biggest issue. Line counts:
-
-| File | Lines |
-|------|-------|
-| `intelligence/Analytics.tsx` | 11,248 |
-| `sectors/Agriculture.tsx` | 7,143 |
-| `intelligence/MarketOverview.tsx` | 7,137 |
-| `sectors/Technology.tsx` | 6,640 |
-| `sectors/Financial.tsx` | 6,668 |
-| `intelligence/Reports.tsx` | 6,472 |
-| `sectors/Infrastructure.tsx` | 6,552 |
-| `intelligence/Dashboard.tsx` | 5,674 |
-| `community/index.tsx` | 5,066 |
-| `pages/Services.tsx` | 4,762 |
-| `pages/Index.tsx` | 3,733 |
-| **12 sector pages total** | **76,349** |
-
-A typical well-structured React component is 50–200 LOC. These files are 30–60x that.
-
-**b) 3,653+ inline `style={{}}` occurrences across the codebase**
-
-The project has Tailwind CSS installed and configured, but the vast majority of styling is done through inline React `style` objects. This defeats the purpose of having Tailwind and results in:
-- No style reuse
-- No responsive utility classes
-- No hover/focus pseudo-class support (requiring manual state tracking)
-- Bloated bundle size (styles duplicated per render)
-
-Example from `AuthModal.tsx`:
+**1. Two Completely Different Styling Systems**
+The codebase uses Tailwind CSS in `.tsx` files but 100% inline styles in `.jsx` files. This creates a split personality:
 ```tsx
-<input
-  style={{
-    padding: "12px 16px",
-    borderRadius: "10px",
-    border: `1.5px solid ${focused ? colors.primary : colors.line}`,
-    backgroundColor: focused ? colors.white : colors.background,
-    fontSize: "15px",
-    fontFamily: "Inter, sans-serif",
-    color: colors.dark,
-    outline: "none",
-    transition: "all 0.2s ease",
-    boxSizing: "border-box" as const,
-    width: "100%",
-  }}
-/>
+// SiteHeader.tsx — Tailwind (good)
+<header className="px-[clamp(20px,5vw,80px)] h-[72px] sticky top-0 z-[1000]">
+```
+```jsx
+// BRIDGE_AnnualReview_2025_Public.jsx — Inline styles (problematic)
+<div style={{position:'sticky',top:0,zIndex:100,background:C.paper,
+  borderBottom:`1px solid ${C.border}`,padding:'10px 56px'}}>
 ```
 
-This could be a single Tailwind class string: `className="px-4 py-3 rounded-[10px] border-[1.5px] border-border focus:border-primary bg-background focus:bg-white text-[15px] font-sans text-foreground outline-none transition-all w-full"`.
-
-**c) Duplicated icon components across every sector page**
-
-Each of the 12 sector pages defines its own copies of `IconArrowRight`, `IconArrowDown`, `IconCheck`, `IconTarget`, and more. There are 87+ duplicated icon definitions across sector files. These should be extracted into a shared `components/icons/` directory or use Lucide (which is already installed).
-
-**d) Duplicated SVG logo in footer**
-
-`SiteFooter.tsx` defines a full 65-line `BridgeLogoWhite` component with an enormous inline SVG, duplicating functionality already available via `BridgeLogo.tsx` (which exports a `BridgeLogoWhite` variant).
-
-**e) Magic numbers and hardcoded values**
-
-Despite having `theme.ts` with design tokens, many components use hardcoded color strings, pixel values, and breakpoints:
-```tsx
-// Should use colors.primary from theme
-style={{ color: "#1B4D3E" }}
-
-// Should use layout.maxWidth
-style={{ maxWidth: "1200px" }}
-
-// Should use layout.mobileBreakpoint
-const MOBILE_BREAKPOINT = 768;
+**2. Cryptic Single-Letter Variable Names in JSX Pages**
+Every JSX page uses this pattern:
+```jsx
+const C = { ink:'#0D1A10', paper:'#FAF8F3', forest:'#1B4D3E' };  // Colors
+const F = { display:'"Playfair Display"', body:'"Source Serif 4"' }; // Fonts
+const Gf = () => (<style>{`...`}</style>);  // Global styles
+const SH = ({eyebrow,title}) => (...);       // Section Header
+const Bp = ({children}) => (...);            // Body paragraph
 ```
+This severely hurts readability. `C`, `F`, `Gf`, `SH`, `Bp` are meaningless without context.
+
+**3. Massive File Sizes**
+| File | Lines | Issue |
+|------|-------|-------|
+| `MobileDashboard.tsx` | ~5,000+ | Single component file |
+| `DesktopDashboard.tsx` | ~4,000+ | Single component file |
+| `Services.tsx` | 3,219 | Entire page in one file |
+| `Contact.tsx` | 2,564 | Entire page in one file |
+| `Index.tsx` | 2,527 | Entire page in one file |
+| `Cannabis_Intelligence_Dashboard.jsx` | 2,680 | Self-contained document |
+| Each Cannabis Licence page | ~1,920 | Near-identical structure |
+
+**4. Duplicated Color/Font Definitions**
+The same color palette (`#1B4D3E`, `#B8D935`, `#FAF8F3`, etc.) is redefined in:
+- `src/lib/theme.ts` (canonical)
+- `src/components/intelligence/constants.ts`
+- Every single `.jsx` page (28 times)
+- `src/components/SiteFooter.tsx`
+- `src/components/SiteHeader.tsx` (as Tailwind arbitrary values)
+
+**5. Duplicated BridgeLogo Component**
+The BRIDGE logo SVG exists in at least 4 separate files:
+- `src/components/BridgeLogo.tsx`
+- `src/components/intelligence/dashboard/BridgeLogo.tsx`
+- `src/components/intelligence/reports/BridgeLogo.tsx`
+- Inline in every `.jsx` page as a `Logo` component
+
+**6. Mixed .tsx and .jsx Files**
+28 page files are `.jsx` (no TypeScript) while the rest of the app is `.tsx`. The JSX files have zero type safety, no prop validation, and no IDE auto-completion.
 
 ### Naming Conventions
-
-- **Files:** PascalCase for components/pages — **consistent, good**
-- **Hooks:** camelCase with `use` prefix — **good** (`useCounter`, `useIsMobile`)
-- **Components:** PascalCase — **good**
-- **Variables:** camelCase — **mostly consistent**
-- **Mixed hook file naming:** `useCounter.ts` vs `use-mobile.tsx` — **inconsistent** (should pick one convention)
-
-### TypeScript Usage: **Moderate**
-
-- Auth context has proper typing (`AuthContextType`, `MembershipTier`)
-- Supabase types are auto-generated — **good**
-- Page components lack explicit prop interfaces (most take no props, which is fine)
-- No use of `any` detected — **good**
-- Inline style objects use `as const` casts where needed — **acceptable**
-- **`noImplicitAny: false`** in `tsconfig.json` — this weakens TypeScript's safety net. Should be set to `true` for production code.
-- `@typescript-eslint/no-unused-vars` is **disabled** in `eslint.config.js` — this allows dead imports and variables to accumulate undetected
-
-### Accessibility: **D**
-
-Accessibility is severely lacking across the codebase:
-
-- Only ~2 instances of `aria-label` found in the entire application
-- `AuthModal.tsx` renders a modal dialog without `role="dialog"`, `aria-modal`, or `aria-labelledby`
-- Custom SVG icons across all sector pages lack `<title>` elements or `aria-label` attributes
-- Navigation buttons in `SiteHeader.tsx` lack screen reader labels
-- Color contrast concerns: lime green `#B8D935` on light backgrounds may fail WCAG 2.1 AA standards
-- No skip-to-content link for keyboard navigation
-- Tab bars in AuthModal use `<div>` elements without `role="tablist"` / `role="tab"` semantics
-
-### Cross-Component Conflicts
-
-Multiple components independently manipulate `document.body.style.overflow` to prevent background scrolling:
-- `SiteHeader.tsx` (mobile menu toggle)
-- `AuthModal.tsx` (modal open/close)
-
-If both are open simultaneously, or if a component unmounts unexpectedly, the body can be left in an unscrollable state. **Fix:** Use a centralized scroll-lock hook or library like `body-scroll-lock`.
-
-### Memory Leak in `useCounter.ts`
-
-The `useCounter` hook uses `requestAnimationFrame` for animation but does not cancel pending frames on unmount. If the component unmounts mid-animation, the callback continues executing against stale state:
-
-```ts
-// Current (missing cleanup):
-useEffect(() => {
-  const start = performance.now();
-  function animate(now) { /* ... */ requestAnimationFrame(animate); }
-  requestAnimationFrame(animate);
-}, [target, duration]);
-
-// Fix:
-useEffect(() => {
-  let frameId: number;
-  function animate(now) { /* ... */ frameId = requestAnimationFrame(animate); }
-  frameId = requestAnimationFrame(animate);
-  return () => cancelAnimationFrame(frameId); // cleanup
-}, [target, duration]);
-```
+- **Components**: PascalCase — consistent ✓
+- **Files**: PascalCase for components, camelCase for utilities — consistent ✓
+- **BRIDGE pages**: `BRIDGE_FeatureName_Detail.jsx` — unique naming scheme from Lovable.dev
+- **Hooks**: `use` prefix — consistent ✓
+- **Types**: Properly defined interfaces — consistent ✓
 
 ### Dead Code
-
-- `App.css` exists but appears unused (styles are in `index.css`)
-- `next-themes` package is installed but no `ThemeProvider` appears in the provider tree
-- `react-hook-form` and `@hookform/resolvers` are dependencies but the auth form uses manual state management
-- Multiple shadcn/ui components are installed but never imported by any page
-- 8 community forum placeholder files (`ForumHome.tsx`, `Questions.tsx`, `Tags.tsx`, `Polls.tsx`, `Groups.tsx`, `Badges.tsx`, `ForumMembers.tsx`, `ForumSectors.tsx`, `MostAnswered.tsx`) contain only stub text — dead UI in production
-- 11 community sub-routes in `App.tsx` all render the same `CommunityHome` component — the individual route files are unused
+- `src/pages/BRIDGE_Membership_v4.jsx` exists alongside `BRIDGE_MembershipPage.jsx` — unclear which is canonical
+- `navHref` function in `Index.tsx` (line ~752) is dead code per `.lovable/plan.md`
+- 50+ unused shadcn/ui components in `src/components/ui/` (calendar, carousel, menubar, etc. that aren't imported anywhere)
 
 ---
 
 ## 3. COMPONENT & MODULE ANALYSIS
 
-### Shared Components
+### Major Components by Responsibility
 
-| Component | LOC | Responsibility | Quality |
-|-----------|-----|---------------|---------|
-| `Layout.tsx` | 17 | Page wrapper (header/main/footer) | Good — clean, minimal |
-| `ProtectedRoute.tsx` | 21 | Auth guard with redirect | Good — simple, correct |
-| `ErrorBoundary.tsx` | 67 | Error catching with fallback | Good — well-implemented |
-| `NavLink.tsx` | 28 | Router link wrapper | Good — properly typed |
-| `ReportViewer.tsx` | 126 | iframe document viewer | Good — focused purpose |
-| `BridgeLogo.tsx` | 55 | SVG logo variants | Good |
-| `SiteHeader.tsx` | 406 | Navigation, search, mobile menu | Moderate — large but single responsibility |
-| `SiteFooter.tsx` | 545 | Footer with subscribe, sectors, links | Moderate — could extract sub-components |
-| `AuthModal.tsx` | 1,015 | Multi-tab auth form | Poor — far too large, should be 4+ components |
+| Component | Lines | Responsibility | SRP Violation? |
+|-----------|-------|---------------|----------------|
+| `DesktopDashboard.tsx` | ~4,000+ | Entire desktop intelligence dashboard | 🔴 Yes — data, state, UI, charts all in one file |
+| `MobileDashboard.tsx` | ~5,000+ | Entire mobile intelligence dashboard | 🔴 Yes — same issue |
+| `SiteHeader.tsx` | 194 | Navigation + search trigger + menu overlay | 🟡 Mild — overlay could be extracted |
+| `SiteFooter.tsx` | 377 | Footer + subscribe form + sector grid | 🟡 Mild — subscribe could be extracted |
+| `SectorPageTemplate.tsx` | 205 | Composable sector page layout | ✅ Good — well-designed template |
+| `AuthContext.tsx` | 75 | Auth state + tier resolution | ✅ Good |
+| `ErrorBoundary.tsx` | 79 | Error catching + recovery UI | ✅ Good |
+| `Watchlist/Tabs.tsx` | 784 | 6 different tab panels in one file | 🟠 Yes — each tab should be its own component |
+| Each BRIDGE_*.jsx page | 1,000–2,680 | Entire document with all sub-components | 🟠 By design — these are "documents" not "apps" |
 
-### Single Responsibility Violations
+### Tightly Coupled Components
+1. **Intelligence Dashboard ↔ constants.ts**: The dashboard components are tightly coupled to the hardcoded sector data in `constants.ts` and `sectorData.ts`. No API integration exists — it's all static data.
+2. **JSX Pages ↔ Inline Styles**: Each page re-implements its own design system instead of importing from `theme.ts`.
+3. **SiteFooter ↔ subscribe service**: The footer directly calls the Supabase service, mixing UI and data concerns.
 
-**AuthModal.tsx (1,015 LOC)** defines 4 internal components (`Field`, `SelectField`, `TextareaField`, plus the modal itself) and handles sign-in, sign-up, forgot-password, access-request, and form validation. This should be split into:
-- `SignInForm.tsx`
-- `SignUpForm.tsx`
-- `ForgotPasswordForm.tsx`
-- `AccessRequestForm.tsx`
-- `FormField.tsx` (shared input component)
-- `AuthModal.tsx` (shell with tab navigation)
-
-**Each sector page (5,771–7,143 LOC)** contains:
-- Hero section
-- Stats section with animated counters
-- Market opportunity section
-- Venture opportunities list
-- BRIDGE opportunity scores
-- Sector landscape analysis
-- CTA section
-- Header/footer imports
-
-Each of these sections should be a separate component. Many sections are structurally identical across all 12 sector pages with only data changes — this is a prime candidate for a data-driven template pattern.
-
-### Tight Coupling
-
-- All 12 community forum sub-routes render `CommunityHome` — the component internally reads `useLocation()` to decide what to show. This is a code smell; each route should render its own component.
-- Sector pages each import `SiteHeader`, `SiteFooter`, `BridgeLogo`, `useCounter`, `useIsMobile`, `colors`, `layout`, and `FOOTER_SECTOR_ICONS` — none use `Layout.tsx` despite it existing for exactly this purpose.
+### Component Reusability Assessment
+- **High reusability**: `SectorPageTemplate`, `ErrorBoundary`, `Layout`, `ProtectedRoute`, `PaidRoute`, custom hooks
+- **Medium reusability**: Intelligence chart components (SparkCard, ActivityHeatmap, BubbleChart) — well-built but coupled to specific data shapes
+- **Low reusability**: JSX pages (everything is self-contained and duplicated)
 
 ---
 
 ## 4. STATE MANAGEMENT REVIEW
 
-### Current Approach
+### State Architecture
 
-| State Type | Mechanism | Assessment |
-|-----------|-----------|-----------|
-| Auth state | React Context (`AuthContext`) | Good — clean, proper Supabase integration |
-| UI state | `useState` per component | Acceptable for current scale |
-| Server state | TanStack React Query (installed) | Underutilized — most data is hardcoded |
-| Form state | Manual `useState` per field | Should use React Hook Form (already installed) |
+| State Type | Mechanism | Location |
+|-----------|-----------|----------|
+| Auth (user, session, tier) | React Context | `AuthContext.tsx` |
+| Server cache | TanStack React Query | `QueryClientProvider` in `App.tsx` |
+| UI state (modals, menus) | `useState` | Per-component |
+| Form state | React Hook Form | Auth forms |
+| Route state | React Router | URL params |
 
-### Issues
+### Assessment
 
-**a) React Hook Form is installed but unused.** `AuthModal.tsx` manages 10+ form fields with individual `useState` calls instead of using React Hook Form, which is already a dependency. Same for `Contact.tsx`.
+**Positive:**
+- Clean separation: Auth in Context, server data in React Query, UI state local
+- No prop drilling detected — auth accessed via `useAuth()` hook
+- `QueryClient` created at app root with default config
 
-**b) No server state management is actually used.** React Query is installed and the `QueryClientProvider` wraps the app, but no `useQuery` or `useMutation` calls exist. All page data is hardcoded in JSX. This is appropriate if all content is truly static, but the intelligence dashboard pages suggest dynamic data should exist.
-
-**c) Supabase is only used for:**
-- Authentication (sign in/sign up/session)
-- Newsletter subscription insert (`subscribers` table)
-- Contact form insert (`contact_messages` table)
-- Access request insert (`access_requests` table)
-
-No data fetching from Supabase exists — all sector data, reports, metrics, and analytics are hardcoded in component files.
-
-### Prop Drilling
-
-Minimal prop drilling detected — the auth context handles the main cross-cutting concern. Components are mostly self-contained with their data hardcoded inline.
+**Issues:**
+- 🟡 **React Query is imported but barely used.** The `QueryClient` is set up in `App.tsx` but I found no `useQuery` or `useMutation` calls in the codebase. All Supabase calls go through raw `async/await` in `src/services/supabase.ts`. This means no automatic caching, no background refetching, no optimistic updates.
+- 🟡 **Intelligence dashboard data is entirely hardcoded.** The `sectorData.ts`, `constants.ts`, and `data.ts` files contain all data as static JavaScript objects. There's no server state to manage — but this means the dashboard shows the same data to everyone always.
+- 🟢 **No unnecessary re-renders detected.** `React.memo` is correctly applied to `SiteHeader` and `SiteFooter`. The `SparkCard` component is memoized. The `useIsMobile` hook uses `matchMedia` listener (not polling).
 
 ---
 
 ## 5. PERFORMANCE ANALYSIS
 
-### Positives
+### Positive
+- **Code splitting**: All pages are lazy-loaded via `React.lazy()` in `routeConfig.tsx` with `Suspense` fallback ✓
+- **Memoization**: Header/Footer use `React.memo`, SparkCard is memoized ✓
+- **No polling or intervals**: Data is static, no unnecessary network requests ✓
+- **Netlify SPA config**: `netlify.toml` has proper redirect rules ✓
 
-- **Code splitting:** All 30+ routes are lazy-loaded via `React.lazy()` — **excellent**
-- **SWC transpiler:** Faster than Babel for dev/build — **good choice**
-- **Vite bundler:** Fast HMR and optimized production builds — **good**
+### Issues
 
-### Concerns
+**🔴 Bundle Size — JSX Pages Are Enormous**
+The 28 `.jsx` pages total 68,524 lines. Each page contains:
+- Full inline SVG logos (hundreds of path elements per page)
+- Hardcoded data arrays
+- Inline `<style>` blocks
+- Duplicate sub-components (TopBar, Cover, Footer defined per page)
 
-**a) Enormous bundle per route**
+Even with lazy loading, each Cannabis Licence page is ~1,920 lines of self-contained JSX. The 11 licence pages alone are ~21,000 lines of near-identical code.
 
-Even with lazy loading, individual route chunks are massive:
-- `Analytics.tsx`: 11,248 lines = ~350KB+ of JSX
-- 12 sector pages: ~76,000 lines total
+**🟠 Missing Image Optimization**
+No `<img>` optimization strategy visible. No lazy loading for images, no srcset/sizes, no WebP fallback, no image CDN usage.
 
-These will produce large JavaScript chunks that take time to parse and execute, even after code splitting.
+**🟠 Intelligence Dashboard Components Are Large**
+`DesktopDashboard.tsx` and `MobileDashboard.tsx` are massive single files. Even though they're lazy-loaded, once loaded they're very heavy. They should be split into sub-route chunks.
 
-**b) No memoization anywhere**
+**🟡 Inline `<style>` Tags in Every JSX Page**
+Each page injects a `<style>` tag with CSS animations and responsive rules. With 28 pages, this means the browser processes 28 separate style injections as users navigate. These should be consolidated into `index.css`.
 
-Zero uses of `useMemo`, `useCallback`, or `React.memo` in the entire codebase. While premature optimization is bad, components with 5,000+ lines of inline styles will create new style objects on every render.
-
-**c) No image optimization**
-
-- No `<img loading="lazy">` attributes detected
-- No responsive image srcsets
-- No image compression pipeline
-- The only image reference is `placeholder.svg`
-
-**d) Missing Suspense boundaries for nested routes**
-
-The intelligence section has nested routes (`/intelligence/*`) but no inner `<Suspense>` boundary. Navigating between intelligence sub-pages will show the top-level fallback (empty full-height div) instead of preserving the sidebar layout.
-
-**e) 3,653+ inline style objects recreated on every render**
-
-Each `style={{...}}` in JSX creates a new JavaScript object on every render cycle. With thousands of these per page, this adds measurable GC pressure. Tailwind classes (strings) don't have this problem.
-
-### Bundle Size Concerns
-
-Installed but potentially unused dependencies add to bundle:
-- `recharts` (~200KB) — only used on Index page radar chart
-- `embla-carousel-react` — no carousel usage found in pages
-- `react-resizable-panels` — no panel usage found
-- `react-hook-form` + `@hookform/resolvers` — installed but unused
-- 40+ shadcn/ui components installed, fewer than half used
+**🟡 No Web Vitals / Performance Monitoring**
+No performance monitoring library (web-vitals, Sentry, etc.) is integrated.
 
 ---
 
 ## 6. SECURITY REVIEW
 
-### Findings
+### Positive Findings
 
-**a) `.env` committed to git with live credentials** 🔴
+- ✅ **No hardcoded API keys or secrets** anywhere in the codebase
+- ✅ **Environment variables** properly used for Supabase URL and anon key via `import.meta.env`
+- ✅ **`.env.example`** provided with placeholder values
+- ✅ **`.gitignore`** excludes `.env` files
+- ✅ **Row Level Security (RLS)** enabled on all Supabase tables
+- ✅ **SELECT denied** on sensitive tables (subscribers, contact_messages, access_requests) — insert-only from client
+- ✅ **No SQL injection risk** — Supabase client uses parameterized queries
+- ✅ **XSS risk is low** — React's JSX auto-escapes by default, no `dangerouslySetInnerHTML` found
+- ✅ **Security headers** set in `vite.config.ts`: `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`
 
-Despite `.gitignore` listing `.env`, the file **is tracked in git** (`git ls-files -- .env` confirms). It was committed before the gitignore rule existed and is now in the full git history. The file contains:
-- `VITE_SUPABASE_PROJECT_ID` — Supabase project identifier
-- `VITE_SUPABASE_PUBLISHABLE_KEY` — A full JWT anon key
-- `VITE_SUPABASE_URL` — Live Supabase endpoint
+### Issues
 
-While these are "anon" (public) keys, they should still be rotated after removal from version history. **Fix:** Run `git rm --cached .env` and rotate the Supabase anon key from the dashboard.
-
-**b) RLS policies are permissive insert-only** ⚠️
-
-All three tables (`subscribers`, `contact_messages`, `access_requests`) have:
-```sql
-CREATE POLICY "Anyone can submit" ON table_name FOR INSERT WITH CHECK (true);
+**🟠 Membership Tier Stored in Client-Accessible user_metadata**
+```typescript
+// AuthContext.tsx line 72
+const meta = user.user_metadata?.membership_tier;
+if (meta === "paid") return "paid";
 ```
+The "paid" tier is determined from `user_metadata`, which is readable and potentially writable by the client via `supabase.auth.updateUser()`. A user could bypass the paywall by updating their own metadata to `{ membership_tier: "paid" }`.
 
-This means:
-- Anyone can insert unlimited rows (no rate limiting)
-- No validation at the database level for email format
-- No policies for SELECT — data may be readable depending on default Supabase settings
+**Fix:** Use a server-side lookup (e.g., a `profiles` or `subscriptions` table) with RLS that prevents user modification. Or use Supabase `app_metadata` (only writable by service role).
 
-**c) No input sanitization on form submissions**
+**🟡 No CSRF Protection Visible**
+The `subscribe()` and `submitAccessRequest()` functions accept form data and insert directly to Supabase. While Supabase anon key provides some protection, there's no rate limiting or CSRF token validation.
 
-The footer subscribe form and contact form insert user input directly into Supabase:
-```tsx
-const { error } = await supabase.from("subscribers").insert([{ email }]);
-```
+**🟡 No Content Security Policy (CSP)**
+The security headers in `vite.config.ts` don't include a Content-Security-Policy header. This should be added, especially since the app injects inline `<style>` tags.
 
-While Supabase parameterizes queries (preventing SQL injection), there's no:
-- Email format validation before submission
-- Rate limiting
-- CAPTCHA or bot protection
-- Input length limits
-
-**d) XSS concern — ReportViewer iframe** ⚠️
-
-React's JSX auto-escapes all rendered values. No `dangerouslySetInnerHTML` usage found. However, `ReportViewer.tsx` renders an `<iframe>` for HTML reports from `/public/reports/` without a `sandbox` attribute. The 10+ HTML report files in `public/reports/` can execute arbitrary JavaScript. If report content is ever user-contributed or compromised, this is a direct XSS vector. **Fix:** Add `sandbox="allow-same-origin"` to the iframe.
-
-**e) Authentication implementation is sound** ✅
-
-- Supabase handles password hashing, session tokens, and JWT refresh
-- `ProtectedRoute` correctly checks auth state and redirects
-- Session persistence via `localStorage` with auto-refresh is standard practice
+**🟡 Footer Links Use `href="#"`**
+Terms, Privacy, and Accessibility links all point to `href="#"`. These are placeholder links that should lead to actual legal pages.
 
 ---
 
 ## 7. DATABASE & API LAYER
 
-### Schema Design
-
-Three simple tables, all insert-only from the client:
+### Database Schema
 
 ```
-┌─────────────────────┐    ┌──────────────────────┐    ┌──────────────────┐
-│   access_requests   │    │   contact_messages    │    │   subscribers    │
-├─────────────────────┤    ├──────────────────────┤    ├──────────────────┤
-│ id (uuid, PK)       │    │ id (uuid, PK)        │    │ id (uuid, PK)    │
-│ name (text)         │    │ name (text)           │    │ email (text, UQ) │
-│ email (text)        │    │ email (text)          │    │ created_at       │
-│ country (text)      │    │ phone (text, null)    │    └──────────────────┘
-│ organization (text) │    │ message (text)        │
-│ role (text)         │    │ organization (text)   │
-│ primary_interest    │    │ created_at            │
-│ connection (text)   │    └──────────────────────┘
-│ description (text)  │
-│ created_at          │
-└─────────────────────┘
+┌─────────────────────┐  ┌─────────────────────┐  ┌──────────────────┐
+│    subscribers       │  │   access_requests    │  │ contact_messages │
+├─────────────────────┤  ├─────────────────────┤  ├──────────────────┤
+│ id (UUID, PK)       │  │ id (UUID, PK)       │  │ id (UUID, PK)    │
+│ email (TEXT, UNIQUE) │  │ name (TEXT)          │  │ name (TEXT)      │
+│ created_at (TIMESTZ)│  │ email (TEXT)         │  │ email (TEXT)     │
+└─────────────────────┘  │ country (TEXT)       │  │ message (TEXT)   │
+                         │ organization (TEXT?)  │  │ organization?    │
+   RLS: INSERT only      │ role (TEXT?)          │  │ phone?           │
+   SELECT denied         │ primary_interest     │  │ created_at       │
+                         │ connection (TEXT)     │  └──────────────────┘
+                         │ description (TEXT?)   │
+                         │ created_at (TIMESTZ) │     RLS: INSERT only
+                         └─────────────────────┘     SELECT denied
+                            RLS: INSERT only
+                            SELECT denied
 ```
 
 ### Assessment
 
-- **No read queries exist.** The client only inserts into these tables. All displayed data is hardcoded.
-- **No admin interface** for viewing submissions
-- **Email uniqueness** is enforced on `subscribers` but not on `contact_messages` or `access_requests` (duplicate submissions possible)
-- **No indexing** beyond primary keys — fine at current scale
-- **No API layer** — Supabase is called directly from components (acceptable for this scale)
+**Positive:**
+- RLS is properly configured — tables are insert-only from the client
+- Explicit deny policies for SELECT operations
+- `subscribers.email` has a UNIQUE constraint
+- Service handles duplicate email gracefully (error code `23505`)
 
-### Error Handling on API Calls
+**Issues:**
 
-The footer subscribe form has error handling via toast notifications:
-```tsx
-if (error) {
-  // Shows error toast
-} else {
-  // Shows success toast
-}
-```
+**🟠 No `profiles` or `memberships` Table**
+There is no database-backed user profile. Membership tier is stored in Supabase Auth `user_metadata`, which is client-writable (security risk noted above).
 
-This pattern is consistent across form submissions — **adequate**.
+**🟠 No `contact_messages` Migration**
+The `contact_messages` table is referenced in the deny-select policy migration but has no CREATE TABLE migration. It was likely created via the Supabase dashboard, which means schema isn't fully tracked in version control.
+
+**🟡 No Indexes Beyond Primary Keys**
+The `subscribers` table has a unique constraint on `email` (which creates an index), but `access_requests` has no index on `email` — which would be needed for admin lookups.
+
+**🟡 API Layer is Minimal**
+Only 3 service functions exist:
+1. `subscribe(email)` — insert to subscribers
+2. `submitAccessRequest(data)` — insert to access_requests
+3. `resetPassword(email)` — Supabase auth password reset
+
+There's no read layer, no admin API, no data fetching for the intelligence dashboard.
 
 ---
 
 ## 8. DEPENDENCY AUDIT
 
-### Potentially Unused Dependencies
+### Major Dependencies Assessment
 
-| Package | Status | Action |
-|---------|--------|--------|
-| `react-hook-form` | Installed, not imported anywhere | Remove or use it |
-| `@hookform/resolvers` | Installed, not imported | Remove or use it |
-| `next-themes` | Installed, no ThemeProvider in tree | Remove or implement dark mode |
-| `embla-carousel-react` | Installed, no carousel in pages | Likely used only by shadcn carousel component — verify |
-| `react-resizable-panels` | Installed, no panel usage found | Likely shadcn — verify |
-| `input-otp` | Installed, no OTP flow exists | Remove |
+| Dependency | Version | Status | Notes |
+|-----------|---------|--------|-------|
+| react | 18.3.1 | ✅ Current | React 19 available but 18 is stable |
+| react-router-dom | 6.30.1 | ✅ Current | |
+| @supabase/supabase-js | 2.99.0 | ✅ Current | |
+| @tanstack/react-query | 5.83.0 | ⚠️ Unused | Imported but no queries/mutations use it |
+| recharts | 2.15.4 | ✅ Current | Good for the chart needs |
+| tailwindcss | 3.4.17 | 🟡 v3 | v4 released, but v3 is still supported |
+| vite | 5.4.19 | ✅ Current | |
+| typescript | 5.8.3 | ✅ Current | |
+| zod | 3.25.76 | ✅ Current | |
+| lucide-react | 0.462.0 | ✅ Current | |
+
+### Redundancy Issues
+
+**🟡 `sonner` + `@radix-ui/react-toast`**
+Both are toast notification libraries. The app uses `sonner` (via `<Sonner />` in App.tsx) but also has `@radix-ui/react-toast` installed as a Radix dependency. Not a major issue since Radix toast may be a transitive dep.
+
+**🟡 50+ Unused shadcn/ui Components**
+The `src/components/ui/` directory contains ~50 component files (calendar, carousel, menubar, navigation-menu, etc.). Many of these are never imported by any page or component. They were auto-scaffolded by Lovable.dev.
+
+**🟡 `@tanstack/react-query` — Installed but Not Used**
+The QueryClient is set up but no queries or mutations exist. Either integrate it properly or remove it to reduce bundle size.
 
 ### Potentially Heavy Dependencies
-
-| Package | Size | Used For | Alternative |
-|---------|------|----------|-------------|
-| `recharts` | ~200KB | 1 radar chart on homepage | Consider lightweight chart lib or CSS-only |
-| `date-fns` | ~75KB (tree-shakeable) | Unknown usage | Keep if used, remove if not |
-
-### Redundancy
-
-- `clsx` + `tailwind-merge` are correctly combined in `cn()` — **no redundancy**
-- Both `npm` (package-lock.json) and `bun` (bun.lock, bun.lockb) lockfiles exist — **pick one package manager**
-
-### Security
-
-No known vulnerability alerts from the dependency versions listed. All major dependencies are recent versions.
+- `recharts` (~400KB gzipped) — necessary for the intelligence dashboard, but only used on a few pages. Lazy loading mitigates this.
+- `react-day-picker` + `date-fns` — used for calendar in engagement modal only.
 
 ---
 
 ## 9. TESTING COVERAGE
 
-### Current State: **Minimal**
+### Existing Tests
 
-| Test File | What it Tests | Assertions |
-|-----------|--------------|------------|
-| `ErrorBoundary.test.tsx` | Error boundary rendering, fallback UI | 4 tests |
-| `SiteFooter.test.tsx` | Footer renders, copyright text | 2 tests |
-| `useCounter.test.ts` | Counter animation hook | Basic type tests |
-| `use-mobile.test.ts` | Mobile detection hook | Basic type tests |
-| `example.test.ts` | Placeholder | 1 pass test |
+17 test files found across:
 
-**Total: ~9 tests covering <1% of the codebase.**
+| Area | Test Files | Coverage |
+|------|-----------|----------|
+| Components | ErrorBoundary, Layout, PaidRoute, ProtectedRoute, ReportViewer, SiteFooter, SiteHeader | Core UI ✓ |
+| Context | AuthContext | Auth flow ✓ |
+| Hooks | useCounter, useIsMobile, useScrollLock | All hooks ✓ |
+| Data | energy sector, sector index, sectorData validation | Data integrity ✓ |
+| Lib | theme, utils | Utilities ✓ |
+| Example | example.test.ts | Smoke test ✓ |
 
-### Critical Untested Paths
+### Assessment
 
-1. **AuthContext** — sign-in flow, tier resolution, session management
-2. **ProtectedRoute** — redirect behavior, loading state
-3. **AuthModal** — form validation, submission, error handling
-4. **SiteHeader** — navigation, search, mobile menu
-5. **Supabase form submissions** — subscriber, contact, access request
-6. **Route configuration** — all 30+ routes resolve correctly
+**Positive:**
+- Auth guards (ProtectedRoute, PaidRoute) are well-tested with multiple scenarios
+- Custom hooks have comprehensive tests
+- Data validation tests exist for sector data
 
-### Recommended Testing Priority
+**Critical Gaps:**
+- 🔴 **No tests for any JSX page** (28 pages, 68K+ lines untested)
+- 🔴 **No tests for the intelligence dashboard** (the most complex feature)
+- 🔴 **No tests for Supabase service functions** (subscribe, submitAccessRequest, resetPassword)
+- 🟠 **No integration tests** (user flows like login → redirect → protected page)
+- 🟠 **No E2E tests** (no Playwright/Cypress)
+- 🟡 **No tests for SearchModal, AuthModal, EngagementModal** (user-facing interactive components)
 
-1. **Auth flow** (highest business risk — broken auth blocks paid features)
-2. **Form submissions** (data collection is core business value)
-3. **Route protection** (incorrect access control is a security risk)
-4. **Navigation** (broken nav = broken UX)
+### Priority Testing Recommendations
+1. **Supabase service layer** — test that subscribe handles duplicates, access request validates fields
+2. **Auth flow** — integration test: login → tier check → route access
+3. **Intelligence dashboard rendering** — smoke tests for Desktop/Mobile dashboard
+4. **Sector page template** — verify all 12 sectors render correctly from data
 
 ---
 
 ## 10. LOVABLE.DEV SPECIFIC PATTERNS
 
-### Identified AI-Generated Patterns
+### Identified Lovable.dev Patterns
 
-**a) Auto-generated Supabase integration**
+**1. Self-Contained JSX Document Pages**
+Every `BRIDGE_*.jsx` file follows the exact same Lovable-generated pattern:
+```jsx
+// Design tokens (redefined per file)
+const C = { ink:'#0D1A10', paper:'#FAF8F3', forest:'#1B4D3E', ... };
+const F = { display:'"Playfair Display"', body:'"Source Serif 4"', ... };
 
-`src/integrations/supabase/client.ts` has the comment:
-```ts
-// This file is automatically generated. Do not edit it directly.
+// Global styles injected as <style> tag
+const Gf = () => (<style>{`*{box-sizing:border-box;margin:0;...}`}</style>);
+
+// Section Header helper
+const SH = ({eyebrow, title, page}) => (...);
+
+// Body paragraph helper
+const Bp = ({children}) => (...);
+
+// Inline Logo SVG
+const Logo = ({height, variant}) => (<svg>...</svg>);
+
+// Top navigation bar
+const TopBar = () => (...);
+
+// Cover/hero section
+const Cover = () => (...);
+
+// Main export
+export default function PageName() {
+  return (
+    <div style={{background: C.paper}}>
+      <Gf />
+      <TopBar />
+      <Cover />
+      {/* Sections with hardcoded content */}
+    </div>
+  );
+}
 ```
 
-The types file is also auto-generated from Supabase CLI. Both are standard and correct.
+**2. No Layout Integration in JSX Pages**
+The JSX pages don't use the shared `<Layout>` component. They implement their own TopBar and Footer, which means:
+- No consistent header/navigation on document pages
+- No shared footer with subscribe form
+- `SectorIntelligenceWrapper` partially addresses this by wrapping JSX pages with a sticky header/footer bar
 
-**b) shadcn/ui component library over-installation**
+**3. Hardcoded Content Everywhere**
+All data in JSX pages is hardcoded:
+```jsx
+const MACRO = [
+  {v:'$21B+', l:'Global Hemp Market 2030', s:'CAGR 17.5%'},
+  {v:'$160B', l:'Medical Cannabis 2032', s:'CAGR 22–23%'},
+];
+```
+This is fine for static publications but makes updates tedious and error-prone.
 
-Lovable.dev typically installs a large set of shadcn/ui components upfront. This project has 40+ UI components in `src/components/ui/`, many of which are never imported:
-- `calendar.tsx`, `command.tsx`, `context-menu.tsx`, `hover-card.tsx`, `input-otp.tsx`, `menubar.tsx`, `resizable.tsx`, `slider.tsx` — likely unused
+**4. shadcn/ui Scaffold**
+Lovable.dev scaffolded 50+ shadcn/ui component files in `src/components/ui/`. Most are unused but not harmful — they're tree-shaken during build.
 
-**c) Monolithic page generation**
-
-The most telling Lovable.dev pattern: every page is a single massive file containing all markup, all styles, and all data inline. This is characteristic of AI code generation where each page was generated in a single prompt/session without awareness of reusable abstractions.
-
-**d) Inline styles over Tailwind**
-
-Despite Tailwind being configured, the AI generated 3,600+ inline style objects. This suggests the AI model was not consistently prompted to use Tailwind, or defaulted to inline styles for precision control.
-
-**e) Copy-paste icon definitions**
-
-Each sector page re-defines the same icon components because they were likely generated independently without a shared component library context.
-
-**f) Hardcoded data in JSX**
-
-All sector metrics, venture opportunities, market data, and analytics figures are hardcoded directly into JSX. A human developer would extract this to data files or fetch from an API. Lovable.dev generates content and code as a single artifact.
+**5. Supabase Integration is Minimal**
+Lovable typically generates more Supabase integration (CRUD operations, real-time subscriptions). This project only uses Supabase for 3 insert operations and auth. The intelligence dashboard data is entirely static.
 
 ### Areas Needing Human Refinement
-
-1. **Extract all sector data to JSON/TS data files** — separate data from presentation
-2. **Create a `SectorPageTemplate` component** — all 12 sector pages follow the same structure
-3. **Replace inline styles with Tailwind classes** — 3,600+ instances
-4. **Deduplicate icon components** — 87+ duplicate definitions
-5. **Wire up React Query for actual data fetching** — if intelligence data should be dynamic
-6. **Remove unused dependencies and shadcn components**
+1. **All 28 JSX pages** need human review for content accuracy, broken links, and mobile responsiveness
+2. **`.lovable/plan.md`** documents known issues (href="#" links, incorrect sector routing) that haven't been fully resolved
+3. **Design token duplication** was a Lovable artifact that should be consolidated
+4. **Membership tier logic** needs server-side enforcement (Lovable generated client-side only)
 
 ---
 
@@ -580,583 +553,427 @@ All sector metrics, venture opportunities, market data, and analytics figures ar
 
 ### What Will Break First
 
-1. **Developer productivity.** No developer can efficiently work in a 7,000+ line single-file component. Adding a feature to any sector page means scrolling through thousands of lines of inline styles and hardcoded data.
+**🔴 Adding New JSX Pages**
+Currently, adding a new document page means copying ~2,000 lines from an existing page and modifying content inline. This is unsustainable. At 28 pages and 68K lines, one more page adds another 2K lines of duplicated code.
 
-2. **Build times.** 76,000+ lines across 12 sector pages means any change triggers re-parsing of massive files. As more pages are added, HMR will slow down.
+**🔴 Intelligence Dashboard Data**
+All dashboard data is hardcoded in TypeScript files. To show real-time data, every chart component would need to be refactored to accept data from API calls instead of static imports.
 
-3. **Content updates.** Changing a metric in the Energy sector page requires finding and editing a specific line in a 5,853-line file. This should be a data file or CMS.
+**🟠 Team Scalability**
+Multiple developers editing the same massive files (3,000+ line sector pages, 5,000+ line dashboard files) will create constant merge conflicts.
 
-4. **Team collaboration.** Two developers cannot work on the same sector page without merge conflicts. The monolithic structure makes parallel work nearly impossible.
+**🟠 Mobile vs Desktop Duplication**
+The intelligence section has separate Desktop and Mobile component trees (`DesktopDashboard.tsx` vs `MobileDashboard.tsx`). Changes must be made twice.
+
+### Scalability Strengths
+- ✅ **Sector page template system** is well-designed for adding new sectors
+- ✅ **Route config is centralized** — adding new routes is straightforward
+- ✅ **Data-driven sectors** (12 data files conforming to `SectorData` interface) scale well
+- ✅ **Lazy loading** ensures bundle doesn't grow linearly with pages
 
 ### Hardcoded Assumptions
-
-- Exactly 12 sectors (hardcoded in routing, navigation, footer, search)
-- Three membership tiers (public/free/paid) — only public and free are implemented
-- All content is static (no CMS, no API-driven content)
-- Single locale (English, Ghana-focused)
-
-### Adding New Features
-
-- **Adding a 13th sector:** Requires creating a ~6,000-line page file, adding a route to `App.tsx`, updating `SiteHeader.tsx` search items, updating `SiteFooter.tsx` grid, updating `sectorIcons.ts`. 5+ files to touch.
-- **Adding a new intelligence sub-page:** Moderate — add route, create page, it will be protected automatically. But the page will likely need to be 5,000+ lines to match the pattern.
-- **Adding dynamic data:** Requires significant refactoring — pages currently render hardcoded data.
+- 12 sectors (hardcoded in multiple places)
+- Membership tiers limited to "public", "free", "paid" (enum, not configurable)
+- Supabase is the only backend (no abstraction layer)
+- Static intelligence data (no API or CMS integration)
 
 ---
 
 ## 12. DEVELOPER EXPERIENCE
 
-### Onboarding Assessment: **C**
+### Onboarding Assessment: **C+**
 
-- **README:** Minimal — mentions Lovable.dev, links to project URL, no setup instructions
-- **Environment setup:** `.env.example` exists with clear variable names — **good**
-- **Pattern consistency:** Inconsistent — some pages use `Layout.tsx`, others don't. Some use Tailwind, most use inline styles.
-- **Documentation:** No code documentation beyond basic comments. No ADRs, no architecture docs.
-- **Build/run:** Standard `npm run dev` / `npm run build` — **simple, good**
-- **Testing:** `npm test` works but coverage is minimal
+**README is inadequate.** It's 26 lines with only `npm install`, `npm run dev`, `npm run build`. Missing:
+- What the project does / business context
+- Architecture overview
+- How to add a new page or sector
+- Environment setup beyond `.env.example`
+- How auth/membership tiers work
+- How to deploy
 
-### What a New Developer Would Struggle With
+**Environment Setup:**
+- `.env.example` exists with 2 variables — clear ✓
+- No Docker or devcontainer config
+- No documentation on Supabase project setup
 
-1. Understanding page structure (each page is 3,000–11,000 lines)
-2. Knowing where to add new components (no clear pattern for extraction)
-3. Deciding between inline styles and Tailwind (codebase uses both inconsistently)
-4. Finding reusable components (many are buried inside page files)
-5. Understanding which shadcn/ui components are actually used
+**Adding New Features:**
+- Adding a new **sector page**: Follow the pattern in `src/pages/sectors/` + `src/data/sectors/` — well-structured ✓
+- Adding a new **BRIDGE document page**: Copy a 2,000-line JSX file and modify inline — terrible DX
+- Adding a new **intelligence feature**: Navigate a 5,000-line file — difficult
+
+**Tooling:**
+- ESLint configured with sensible rules ✓
+- Vitest configured with path aliases ✓
+- No Prettier config (inconsistent formatting risk)
+- No Husky/lint-staged (no pre-commit hooks)
+- No CI/CD pipeline visible in `.github/`
 
 ---
 
 ## DELIVERABLES
 
 ### A) Architecture Diagram
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        BROWSER                               │
-│                                                              │
-│  index.html → main.tsx → App.tsx                             │
-│                                                              │
-│  ┌─────────────────── PROVIDER STACK ──────────────────────┐ │
-│  │  QueryClientProvider (React Query)                      │ │
-│  │  └─ AuthProvider (Supabase Auth)                        │ │
-│  │     └─ TooltipProvider (shadcn)                         │ │
-│  │        └─ BrowserRouter (React Router v6)               │ │
-│  │           └─ ErrorBoundary                              │ │
-│  │              └─ Suspense (lazy loading)                 │ │
-│  │                 └─ Routes                               │ │
-│  └─────────────────────────────────────────────────────────┘ │
-│                                                              │
-│  ┌─── PUBLIC ROUTES ───┐  ┌── PROTECTED ROUTES ──┐          │
-│  │ /           Index    │  │ /intelligence/*      │          │
-│  │ /about      About    │  │   ├─ Dashboard       │          │
-│  │ /services   Services │  │   ├─ MarketOverview  │          │
-│  │ /methodology         │  │   ├─ Reports         │          │
-│  │ /insights            │  │   ├─ Watchlist       │          │
-│  │ /sectors    Sectors  │  │   ├─ Analytics       │          │
-│  │ /contact    Contact  │  │   └─ Resources       │          │
-│  │ /resources           │  │ /resources/sector-*  │          │
-│  │ /policy              │  │ /resources/annual-*  │          │
-│  │ /login               │  └─────────────────────┘          │
-│  │ /community           │                                    │
-│  └──────────────────────┘                                    │
-│                                                              │
-│  ┌── SECTOR PAGES (x12) ──┐  ┌── SHARED COMPONENTS ──────┐ │
-│  │ /sectors/energy         │  │ Layout.tsx                 │ │
-│  │ /sectors/technology     │  │ SiteHeader.tsx (nav/search)│ │
-│  │ /sectors/agriculture    │  │ SiteFooter.tsx (links/sub) │ │
-│  │ /sectors/education      │  │ AuthModal.tsx (auth forms) │ │
-│  │ /sectors/financial      │  │ ProtectedRoute.tsx (guard) │ │
-│  │ /sectors/health         │  │ ErrorBoundary.tsx          │ │
-│  │ /sectors/housing        │  │ ReportViewer.tsx (iframe)  │ │
-│  │ /sectors/infrastructure │  │ 40+ shadcn/ui primitives   │ │
-│  │ /sectors/manufacturing  │  └────────────────────────────┘ │
-│  │ /sectors/sports         │                                 │
-│  │ /sectors/tourism        │                                 │
-│  │ /sectors/transport      │                                 │
-│  └─────────────────────────┘                                 │
-│                                                              │
-│  ┌── DATA FLOW ──────────────────────────────────────────┐   │
-│  │                                                        │   │
-│  │  AuthContext ──→ user/session/tier ──→ ProtectedRoute  │   │
-│  │                                                        │   │
-│  │  Supabase client ──→ auth (sign in/out/session)        │   │
-│  │                  ──→ subscribers.insert()               │   │
-│  │                  ──→ contact_messages.insert()          │   │
-│  │                  ──→ access_requests.insert()           │   │
-│  │                                                        │   │
-│  │  All page content: HARDCODED IN JSX (no API fetching)  │   │
-│  └────────────────────────────────────────────────────────┘   │
-└──────────────────────────────────────────────────────────────┘
-
-┌──────────────────── SUPABASE BACKEND ────────────────────────┐
-│                                                               │
-│  ┌─ Auth ──────────┐  ┌─ Database (PostgreSQL) ────────────┐ │
-│  │ Email/Password  │  │ subscribers (email, created_at)    │ │
-│  │ Session/JWT     │  │ contact_messages (name, email, ...) │ │
-│  │ User Metadata   │  │ access_requests (name, email, ...) │ │
-│  │ (tier info)     │  │                                     │ │
-│  └─────────────────┘  │ RLS: public insert on all tables   │ │
-│                        └────────────────────────────────────┘ │
-└───────────────────────────────────────────────────────────────┘
-```
-
----
+(See Section 1 above)
 
 ### B) Priority Issues List
 
 #### 🔴 CRITICAL — Fix Immediately
-
-1. **`.env` file committed to git with live Supabase credentials** — The `.env` file containing `VITE_SUPABASE_PUBLISHABLE_KEY` (a full JWT) and `VITE_SUPABASE_URL` is tracked in version control. While these are "anon" keys, they are live credentials that should never be in git history. Even though `.gitignore` lists `.env`, the file was committed before the gitignore rule was added. **Fix:** Remove from git tracking with `git rm --cached .env`, rotate the Supabase anon key, and ensure `.env` is only used locally.
-
-2. **Unrestricted database inserts** — No rate limiting or bot protection on public insert policies. An attacker could flood the `subscribers`, `contact_messages`, and `access_requests` tables with garbage data. The `access_requests` table also lacks a unique constraint on email, allowing unlimited duplicate submissions.
-
-3. **No SELECT policy audit** — Verify Supabase RLS default behavior. If no explicit SELECT deny policy exists, the anon key may allow reading all submitted contact info and emails.
-
-4. **ReportViewer iframe missing `sandbox` attribute** — `ReportViewer.tsx` renders an `<iframe>` pointing to static HTML reports in `/public/reports/` without any `sandbox` attribute. If report content is ever user-contributed or compromised, this is a direct XSS vector. **Fix:** Add `sandbox="allow-same-origin"` to the iframe element.
+1. **Membership tier bypass vulnerability** — `user_metadata` is client-writable, allowing users to self-upgrade to "paid" tier
+2. **Missing `contact_messages` table migration** — schema not fully tracked in version control
 
 #### 🟠 HIGH — Fix Soon
-
-3. **Monolithic page components (76,000+ lines across 12 sector pages)** — Unmaintainable. Any change risks introducing bugs. Impossible for multiple developers to work on simultaneously.
-
-4. **3,653+ inline style objects** — Performance overhead from recreated objects each render. Defeats Tailwind's purpose. No pseudo-class support (hover, focus, media queries) without manual state.
-
-5. **87+ duplicated icon components across sector pages** — Pure waste. Each copy is identical code. Violates DRY principle.
-
-6. **No test coverage on auth flow** — The authentication system is business-critical and completely untested.
-
-7. **React Hook Form installed but unused** — Forms use 10+ individual `useState` calls instead. Either use the installed library or remove it.
+3. **68K lines of duplicated JSX code** — 28 self-contained pages with identical design tokens, logo SVGs, and helper components
+4. **React Query installed but unused** — either integrate it or remove it to avoid confusion
+5. **Intelligence dashboard data is entirely static** — no API integration means the "intelligence" product has no live data
+6. **No tests for critical business paths** — Supabase services, intelligence dashboard, auth flow untested
+7. **3 BridgeLogo duplicates** — same SVG in 4 files (plus 28 inline copies in JSX pages)
 
 #### 🟡 MEDIUM — Fix in Next Sprint
-
-8. **Unused dependencies bloating bundle** — `next-themes`, `embla-carousel-react`, `react-resizable-panels`, `input-otp`, potentially `date-fns`
-9. **No `Layout.tsx` usage in sector/intelligence pages** — Many pages manually import header/footer instead of using the wrapper
-10. **Community routes all render same component** — 11 routes in App.tsx map to `CommunityHome` while 8 individual forum placeholder files are dead code
-11. **Duplicate lockfiles** — Both `package-lock.json` and `bun.lock`/`bun.lockb` exist
-12. **No loading skeletons or meaningful loading states** — `PageLoading` is just an empty div
-13. **Inconsistent hook file naming** — `useCounter.ts` vs `use-mobile.tsx`
-14. **Accessibility WCAG failures** — Missing ARIA attributes, no `role="dialog"` on AuthModal, no skip-to-content link, no alt text on SVG icons, possible color contrast failures with `#B8D935` on light backgrounds
-15. **`useCounter` hook memory leak** — `requestAnimationFrame` not cancelled on component unmount, leading to stale state updates
-16. **Multiple components conflict on `document.body.style.overflow`** — SiteHeader and AuthModal both manipulate body scroll lock independently; if both are active or one unmounts unexpectedly, the page becomes unscrollable
-17. **`noImplicitAny: false` in tsconfig.json** — Weakens TypeScript's primary safety guarantee; should be `true`
-18. **`@typescript-eslint/no-unused-vars` disabled in ESLint** — Allows dead imports and unused variables to accumulate undetected
+8. **Placeholder links** — Terms, Privacy, Accessibility all point to `href="#"`
+9. **Single-letter variable names in JSX pages** — `C`, `F`, `Gf`, `SH`, `Bp` hurt readability
+10. **No Prettier or pre-commit hooks** — formatting inconsistency risk
+11. **50+ unused shadcn/ui components** — tree-shaken but cluttering the codebase
+12. **Desktop/Mobile dashboard duplication** — separate 4K+ line files for same feature
+13. **Missing CSP header** — security hardening gap
+14. **`.lovable/plan.md` documents known bugs** that haven't been fully resolved (href="#" issues, sector routing)
+15. **Inline `<style>` tags in every JSX page** — should be consolidated into CSS
 
 #### 🟢 LOW — Nice to Have
-
-19. **Remove unused shadcn/ui components** — ~20 of 47 installed components appear unused
-20. **Add proper README with setup instructions**
-21. **Implement dark mode** (theme infrastructure exists via CSS variables but isn't wired up)
-22. **Add ESLint rules for enforcing Tailwind over inline styles**
-23. **Add favicon and proper meta tags** (basic OG tags exist)
-24. **Consolidate `App.css` into `index.css`**
-25. **BridgeLogo SVG accessibility** — Add `<title>` elements for screen readers
+16. **No web vitals / performance monitoring**
+17. **No CI/CD pipeline**
+18. **README needs expansion**
+19. **No Storybook or component documentation**
+20. **No error tracking service (Sentry, etc.)**
 
 ---
 
-### C) Top 10 Specific Recommendations
+### C) TOP 10 SPECIFIC RECOMMENDATIONS
 
-#### 1. Extract Sector Data from JSX into Data Files
-
-**Problem:** All sector content (metrics, ventures, market data) is hardcoded in 5,000–7,000 line JSX files, making content updates dangerous and error-prone.
-
-**Why it matters:** Content changes require editing massive code files. Non-developers cannot update content. Merge conflicts are inevitable.
-
-**Fix — create data files:**
-```ts
-// src/data/sectors/energy.ts
-export const energySector = {
-  name: "Energy & Renewable Resources",
-  slug: "energy",
-  heroStats: [
-    { label: "Market Size", value: "$12.8B", suffix: "" },
-    { label: "Growth Rate", value: "18.5", suffix: "%" },
-    { label: "Ventures Identified", value: "24", suffix: "" },
-  ],
-  ventures: [
-    {
-      title: "Solar Mini-Grid Development",
-      description: "...",
-      score: 8.4,
-      capitalRange: "$2M–$10M",
-    },
-    // ...
-  ],
-  // ...
-};
-```
-
-Then create a template component:
-```tsx
-// src/components/SectorPageTemplate.tsx
-export function SectorPageTemplate({ data }: { data: SectorData }) {
-  return (
-    <Layout>
-      <HeroSection stats={data.heroStats} />
-      <VenturesList ventures={data.ventures} />
-      <OpportunityScores scores={data.scores} />
-    </Layout>
-  );
-}
-```
-
-**Effort:** Large (1–2 weeks for all 12 sectors)
-
----
-
-#### 2. Replace Inline Styles with Tailwind Classes
-
-**Problem:** 3,653+ `style={{}}` objects are recreated on every render, can't use responsive breakpoints or pseudo-classes, and defeat Tailwind's purpose.
-
-**Why it matters:** Performance overhead, no responsive design support, massive code bloat.
-
-**Fix example:**
-```tsx
-// BEFORE (AuthModal.tsx line 25-55)
-<div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-  <label style={{ fontSize: "13px", fontWeight: "600", color: colors.dark }}>
-    {label}
-  </label>
-  <input style={{
-    padding: "12px 16px",
-    borderRadius: "10px",
-    border: `1.5px solid ${focused ? colors.primary : colors.line}`,
-    // ...8 more properties
-  }} />
-</div>
-
-// AFTER
-<div className="flex flex-col gap-1.5">
-  <label className="text-[13px] font-semibold text-foreground">
-    {label}
-  </label>
-  <input className="px-4 py-3 rounded-[10px] border-[1.5px] border-border
-    focus:border-primary bg-background focus:bg-white text-[15px]
-    text-foreground outline-none transition-all w-full" />
-</div>
-```
-
-**Effort:** Large (2–3 weeks across entire codebase)
-
----
-
-#### 3. Deduplicate Icon Components
-
-**Problem:** `IconArrowRight`, `IconArrowDown`, `IconCheck`, `IconTarget` and others are copy-pasted into every sector page (87+ duplicates).
-
-**Why it matters:** Lucide React is already installed and has all these icons. Or extract to one shared file.
-
+#### 1. Fix Membership Tier Security Bypass
+**Problem:** Paid tier is determined from `user_metadata`, which clients can modify.
+**Why it matters:** Any logged-in user can access paid content by updating their own metadata.
 **Fix:**
-```tsx
-// BEFORE (in every sector page)
-const IconArrowRight = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" ...>
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
+```sql
+-- Create a server-controlled profiles table
+CREATE TABLE public.profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id),
+  membership_tier TEXT NOT NULL DEFAULT 'free'
+    CHECK (membership_tier IN ('free', 'paid')),
+  updated_at TIMESTAMPTZ DEFAULT now()
 );
 
-// AFTER (use already-installed Lucide)
-import { ArrowRight, ArrowDown, Check, Target } from "lucide-react";
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
-// Usage
-<ArrowRight size={14} strokeWidth={2.5} />
+-- Users can read their own profile
+CREATE POLICY "Users can read own profile"
+  ON public.profiles FOR SELECT
+  USING (auth.uid() = id);
+
+-- Only service_role can update tier
+CREATE POLICY "Deny public updates"
+  ON public.profiles FOR UPDATE
+  USING (false);
 ```
-
-**Effort:** Small (1–2 hours)
-
----
-
-#### 4. Use React Hook Form for All Forms
-
-**Problem:** `react-hook-form` and `@hookform/resolvers` are installed dependencies but every form uses manual `useState` per field.
-
-**Why it matters:** Manual form state doesn't handle validation, dirty tracking, or submission states. The dependency is dead weight.
-
-**Fix for AuthModal sign-up form:**
-```tsx
-// BEFORE (AuthModal.tsx)
-const [name, setName] = useState("");
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const [country, setCountry] = useState("");
-const [organization, setOrg] = useState("");
-// ... 5 more useState calls
-
-// AFTER
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
-const signUpSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  country: z.string().min(1, "Country is required"),
-  organization: z.string().optional(),
-});
-
-const { register, handleSubmit, formState: { errors } } = useForm({
-  resolver: zodResolver(signUpSchema),
-});
+```typescript
+// AuthContext.tsx — query from profiles table instead
+useEffect(() => {
+  async function loadTier(userId: string) {
+    const { data } = await supabase
+      .from('profiles')
+      .select('membership_tier')
+      .eq('id', userId)
+      .single();
+    setTier(data?.membership_tier === 'paid' ? 'paid' : 'free');
+  }
+  if (user) loadTier(user.id);
+}, [user]);
 ```
+**Effort:** Small (1-2 hours)
 
-**Effort:** Medium (1–2 days)
-
----
-
-#### 5. Add Rate Limiting / Bot Protection on Public Forms
-
-**Problem:** All three Supabase tables accept unlimited public inserts with no validation.
-
-**Why it matters:** A bot can flood the database with millions of rows, incurring Supabase costs and polluting real data.
-
-**Fix options:**
-- Add a Supabase Edge Function with rate limiting
-- Add client-side hCaptcha/Turnstile (Supabase has built-in Captcha support)
-- Add a rate-limiting RLS policy using a helper function:
-
-```sql
--- Add rate limiting function
-CREATE OR REPLACE FUNCTION check_rate_limit(table_name text, limit_count int, window_interval interval)
-RETURNS boolean AS $$
-BEGIN
-  RETURN (
-    SELECT count(*) < limit_count
-    FROM subscribers
-    WHERE created_at > now() - window_interval
-    AND email = current_setting('request.jwt.claims', true)::json->>'email'
-  );
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-```
-
-**Effort:** Medium (1–2 days)
-
----
-
-#### 6. Break AuthModal into Sub-Components
-
-**Problem:** `AuthModal.tsx` is 1,015 lines handling 4 different forms, custom form fields, state management, and API calls.
-
-**Why it matters:** Single Responsibility Principle violation. Impossible to test individual forms. Any change risks breaking other tabs.
-
-**Fix — split into focused components:**
-```
-components/auth/
-├── AuthModal.tsx          (~80 LOC — shell with tabs)
-├── SignInForm.tsx          (~100 LOC)
-├── SignUpForm.tsx          (~150 LOC)
-├── ForgotPasswordForm.tsx  (~80 LOC)
-├── AccessRequestForm.tsx   (~120 LOC)
-└── FormField.tsx           (~40 LOC — shared input/select)
-```
-
-**Effort:** Medium (1 day)
-
----
-
-#### 7. Audit and Enforce Supabase RLS SELECT Policies
-
-**Problem:** Tables have INSERT policies but no explicit SELECT policies. Depending on Supabase defaults, the anon key might be able to read all submitted emails, names, and messages.
-
-**Why it matters:** Potential privacy violation / data leak.
-
+#### 2. Extract Shared Design Tokens from JSX Pages
+**Problem:** 28 JSX pages each redefine the same colors, fonts, section headers, and logo.
+**Why it matters:** A brand color change requires editing 28+ files manually.
 **Fix:**
-```sql
--- Explicitly deny public reads on sensitive tables
-CREATE POLICY "No public reads" ON subscribers FOR SELECT USING (false);
-CREATE POLICY "No public reads" ON contact_messages FOR SELECT USING (false);
-CREATE POLICY "No public reads" ON access_requests FOR SELECT USING (false);
+```typescript
+// src/lib/document-tokens.ts (new file)
+export const DOC_COLORS = {
+  ink: '#0D1A10',
+  paper: '#FAF8F3',
+  paperDark: '#F0EDE4',
+  forest: '#1B4D3E',
+  lime: '#B8D935',
+  limeDark: '#8FA825',
+  muted: '#5C6B5E',
+  faint: '#9AAA9C',
+  border: '#D8D4C8',
+} as const;
 
--- Allow admin reads via service_role key only (used from server/dashboard)
+export const DOC_FONTS = {
+  display: '"Playfair Display","Georgia",serif',
+  body: '"Source Serif 4","Georgia",serif',
+  sans: '"DM Sans","Helvetica Neue",sans-serif',
+  mono: '"DM Mono","Courier New",monospace',
+} as const;
 ```
+```typescript
+// src/components/document/SectionHeader.tsx (new file)
+export function SectionHeader({ eyebrow, title, page, light = false }) { ... }
+```
+Then each JSX page imports from shared sources instead of redefining.
+**Effort:** Medium (2-3 days)
 
-**Effort:** Small (30 minutes)
-
----
-
-#### 8. Make Sector Pages Use Layout.tsx
-
-**Problem:** Sector pages manually import `SiteHeader` and `SiteFooter` instead of using the existing `Layout` wrapper component.
-
-**Why it matters:** If the layout changes (e.g., adding a banner, changing footer), every sector page needs individual updates.
-
-**Fix:**
+#### 3. Consolidate BridgeLogo into Single Source
+**Problem:** The BRIDGE logo SVG exists in 4 separate component files plus 28 inline copies.
+**Why it matters:** Logo updates require finding and editing 32+ copies.
+**Fix:** Delete the 3 duplicate files and have all components import from `src/components/BridgeLogo.tsx`. For JSX pages, import the shared component:
 ```tsx
-// BEFORE (every sector page)
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+// Delete these files:
+// - src/components/intelligence/dashboard/BridgeLogo.tsx
+// - src/components/intelligence/reports/BridgeLogo.tsx
+// Update imports in intelligence components to use:
+import { BridgeLogo, BridgeLogoWhite } from "@/components/BridgeLogo";
+```
+**Effort:** Small (1-2 hours)
 
-export default function Energy() {
-  return (
-    <>
-      <SiteHeader />
-      <main>...</main>
-      <SiteFooter />
-    </>
-  );
-}
+#### 4. Either Use React Query or Remove It
+**Problem:** `@tanstack/react-query` is installed and the `QueryClientProvider` wraps the app, but no actual queries or mutations exist.
+**Why it matters:** Confuses developers, adds bundle weight, suggests an architecture that isn't implemented.
+**Fix (Option A — Integrate):**
+```typescript
+// src/services/supabase.ts — convert to React Query mutations
+import { useMutation } from '@tanstack/react-query';
 
-// AFTER
-import { Layout } from "@/components/Layout";
-
-export default function Energy() {
-  return (
-    <Layout>
-      <main>...</main>
-    </Layout>
-  );
+export function useSubscribe() {
+  return useMutation({
+    mutationFn: async (email: string) => {
+      const { error } = await supabase.from("subscribers").insert({ email });
+      if (error && error.code !== "23505") throw new Error(error.message);
+    },
+  });
 }
 ```
+**Fix (Option B — Remove):**
+```bash
+npm uninstall @tanstack/react-query
+# Remove QueryClientProvider from App.tsx
+```
+**Effort:** Small (2-4 hours)
 
-**Effort:** Small (1–2 hours)
+#### 5. Split Intelligence Dashboard into Sub-Components
+**Problem:** `DesktopDashboard.tsx` (~4K lines) and `MobileDashboard.tsx` (~5K lines) are monolithic.
+**Why it matters:** Impossible for multiple developers to work on simultaneously. Difficult to debug, test, or modify.
+**Fix:** Extract each dashboard section into its own file:
+```
+src/components/intelligence/dashboard/
+├── DesktopDashboard.tsx        # ~200 lines (orchestrator only)
+├── sections/
+│   ├── KPISection.tsx
+│   ├── VenturesSection.tsx
+│   ├── SignalsSection.tsx
+│   ├── CompaniesSection.tsx
+│   └── AnalyticsSection.tsx
+├── MobileDashboard.tsx         # ~200 lines (orchestrator only)
+└── mobile-sections/
+    ├── MobileKPIs.tsx
+    ├── MobileVentures.tsx
+    └── ...
+```
+**Effort:** Large (1-2 weeks)
 
----
-
-#### 9. Add Auth Flow Tests
-
-**Problem:** The authentication system (AuthContext, ProtectedRoute, AuthModal) has zero test coverage despite being the gating mechanism for paid features.
-
-**Why it matters:** A broken auth flow blocks all premium content and loses user trust.
-
+#### 6. Add Service Layer Tests
+**Problem:** The 3 Supabase service functions have zero test coverage.
+**Why it matters:** These are the only write operations in the app — if they break, no one can subscribe, request access, or reset passwords.
 **Fix:**
-```tsx
-// src/context/__tests__/AuthContext.test.tsx
-import { renderHook, act } from "@testing-library/react";
-import { AuthProvider, useAuth } from "../AuthContext";
+```typescript
+// src/services/__tests__/supabase.test.ts
+import { describe, it, expect, vi } from 'vitest';
+import { subscribe } from '../supabase';
 
-// Mock Supabase
-vi.mock("@/integrations/supabase/client", () => ({
+vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
+    from: vi.fn(() => ({
+      insert: vi.fn().mockResolvedValue({ error: null }),
+    })),
     auth: {
-      getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
-      onAuthStateChange: vi.fn().mockReturnValue({
-        data: { subscription: { unsubscribe: vi.fn() } },
-      }),
-      signInWithPassword: vi.fn(),
-      signOut: vi.fn(),
+      resetPasswordForEmail: vi.fn().mockResolvedValue({ error: null }),
     },
   },
 }));
 
-describe("AuthContext", () => {
-  it("starts with public tier when no session", async () => {
-    const { result } = renderHook(() => useAuth(), {
-      wrapper: AuthProvider,
-    });
-    // Wait for loading to complete
-    await waitFor(() => expect(result.current.loading).toBe(false));
-    expect(result.current.tier).toBe("public");
-    expect(result.current.user).toBeNull();
+describe('subscribe', () => {
+  it('inserts email to subscribers table', async () => {
+    await expect(subscribe('test@example.com')).resolves.not.toThrow();
   });
 
-  it("throws when used outside provider", () => {
-    expect(() => renderHook(() => useAuth())).toThrow(
-      "useAuth must be used within an AuthProvider"
-    );
+  it('silently succeeds on duplicate email (23505)', async () => {
+    // Mock duplicate key error
+    vi.mocked(supabase.from).mockReturnValue({
+      insert: vi.fn().mockResolvedValue({
+        error: { code: '23505', message: 'duplicate' },
+      }),
+    } as any);
+    await expect(subscribe('test@example.com')).resolves.not.toThrow();
   });
 });
 ```
+**Effort:** Small (half day)
 
-**Effort:** Medium (1–2 days for comprehensive auth tests)
+#### 7. Convert JSX Pages to TypeScript
+**Problem:** 28 pages are `.jsx` with zero type safety.
+**Why it matters:** No compile-time error checking, no IDE autocomplete, inconsistent with the rest of the codebase.
+**Fix:** Rename `.jsx` → `.tsx` and add minimal typing:
+```bash
+# Rename files
+for f in src/pages/BRIDGE_*.jsx; do mv "$f" "${f%.jsx}.tsx"; done
+for f in src/components/EngagementModal.jsx src/components/MembershipModals.jsx; do
+  mv "$f" "${f%.jsx}.tsx"
+done
+# Update imports in routeConfig.tsx if needed (shouldn't be necessary with Vite)
+```
+Then add type annotations for component props incrementally.
+**Effort:** Medium (1-2 days for rename, ongoing for full typing)
 
----
-
-#### 10. Remove Unused Dependencies
-
-**Problem:** Multiple npm packages are installed but never imported, inflating `node_modules` and potentially the production bundle.
-
-**Why it matters:** Unused dependencies increase install time, can introduce security vulnerabilities, and confuse developers about what's actually used.
-
+#### 8. Add Pre-Commit Hooks and Prettier
+**Problem:** No automated code formatting or linting on commit.
+**Why it matters:** As team size grows, code style will diverge. Bad code gets committed.
 **Fix:**
 ```bash
-# Remove confirmed unused packages
-npm uninstall next-themes input-otp
-
-# Verify these before removing (may be shadcn transitive deps)
-npm uninstall embla-carousel-react react-resizable-panels
-
-# Either use or remove
-npm uninstall react-hook-form @hookform/resolvers  # (or implement recommendation #4)
+npm install -D prettier husky lint-staged
+npx husky init
 ```
-
-Also remove one set of lockfiles:
-```bash
-# If using npm:
-rm bun.lock bun.lockb
-
-# If using bun:
-rm package-lock.json
+```json
+// package.json
+{
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": ["prettier --write", "eslint --fix"],
+    "*.{json,md,css}": ["prettier --write"]
+  }
+}
 ```
+**Effort:** Small (1-2 hours)
 
-**Effort:** Small (30 minutes)
+#### 9. Create a Document Page Template Component
+**Problem:** Each BRIDGE document page re-implements TopBar, Cover, Footer, and section layout.
+**Why it matters:** 68K lines of duplicated code. Bug fixes need to be applied 28 times.
+**Fix:**
+```tsx
+// src/components/document/DocumentPageTemplate.tsx
+interface DocumentPageProps {
+  title: string;
+  subtitle?: string;
+  eyebrow: string;
+  badge?: string;
+  coverContent: React.ReactNode;
+  children: React.ReactNode;
+}
 
----
+export function DocumentPage({ title, subtitle, eyebrow, badge, coverContent, children }: DocumentPageProps) {
+  return (
+    <div style={{ background: DOC_COLORS.paper }}>
+      <DocumentGlobalStyles />
+      <DocumentTopBar title={eyebrow} badge={badge} />
+      <DocumentCover title={title} subtitle={subtitle}>
+        {coverContent}
+      </DocumentCover>
+      <main>{children}</main>
+      <DocumentFooter />
+    </div>
+  );
+}
+```
+This would reduce each page from ~2,000 lines to ~200-500 lines of unique content.
+**Effort:** Large (1-2 weeks for template + migration of 28 pages)
 
-### D) Strengths Report — What's Done Well
-
-1. **Lazy loading and code splitting** — Every route is lazy-loaded via `React.lazy()`. This is the correct approach for a 30+ route application and will keep initial bundle size small.
-
-2. **Clean auth architecture** — `AuthContext.tsx` (76 LOC) is well-structured with proper TypeScript typing, clean Supabase integration, effect cleanup, and a clear tier resolution system.
-
-3. **ProtectedRoute pattern** — Simple, correct, and reusable. The redirect-with-return-URL pattern is user-friendly.
-
-4. **ErrorBoundary implementation** — Proper React error boundary with fallback support and console logging. Wraps the entire route tree.
-
-5. **Design token system** — `theme.ts` provides a centralized source of truth for colors and layout constants. The CSS variables in `index.css` properly support light/dark mode.
-
-6. **Supabase integration** — Client setup is clean, auto-generated types ensure type safety, and auth persistence/refresh is correctly configured.
-
-7. **Route organization** — Routes are logically grouped (public, protected, sectors, community) with clear comments.
-
-8. **Vite + SWC configuration** — Fast build tooling properly configured with path aliases and HMR.
-
-9. **shadcn/ui component library** — Having pre-built, accessible UI primitives available is a strong foundation, even if they're currently underutilized.
-
-10. **`.env.example` pattern** — Clear template for environment setup, properly gitignored sensitive values.
-
----
-
-### E) Refactoring Roadmap
-
-#### Phase 1: Quick Wins (1–2 days)
-
-These changes are low-risk, high-impact, and can be done independently:
-
-- [ ] **Remove `.env` from git tracking** — `git rm --cached .env` and rotate Supabase anon key (15 min)
-- [ ] **Audit Supabase RLS SELECT policies** — Add deny policies for public reads (30 min)
-- [ ] **Add `sandbox` attribute to ReportViewer iframe** — Prevent potential XSS from report content (5 min)
-- [ ] **Deduplicate icons** — Replace 87+ copied icon components with Lucide imports (1–2 hours)
-- [ ] **Remove unused dependencies** — Uninstall `next-themes`, `input-otp`, verify and remove others (30 min)
-- [ ] **Delete duplicate lockfiles** — Pick npm or bun, remove the other (5 min)
-- [ ] **Merge `App.css` into `index.css`** — Remove dead CSS file (15 min)
-- [ ] **Make all pages use `Layout.tsx`** — Replace manual header/footer imports (1–2 hours)
-- [ ] **Fix `useCounter` memory leak** — Add `cancelAnimationFrame` cleanup to useEffect return (10 min)
-- [ ] **Fix inconsistent hook naming** — Rename to one convention (15 min)
-- [ ] **Add meaningful loading skeleton** — Replace empty div `PageLoading` with a proper skeleton (30 min)
-- [ ] **Enable `noImplicitAny: true`** in tsconfig.json (15 min + fix any resulting type errors)
-- [ ] **Re-enable `@typescript-eslint/no-unused-vars`** in eslint.config.js and clean up unused imports (1 hour)
-
-#### Phase 2: Important Refactors (1–2 weeks)
-
-These require more careful work but dramatically improve maintainability:
-
-- [ ] **Extract sector data to data files** — Create `src/data/sectors/*.ts` with structured data for all 12 sectors. Keep existing pages working while extracting data. (3–4 days)
-- [ ] **Create `SectorPageTemplate` component** — Build a single template that renders any sector from a data file. Replace one sector page as proof of concept, then migrate the rest. (2–3 days)
-- [ ] **Break `AuthModal` into sub-components** — Extract sign-in, sign-up, forgot-password, and access-request forms into separate files. (1 day)
-- [ ] **Implement React Hook Form** — Wire up the already-installed library for all forms with Zod validation. (1–2 days)
-- [ ] **Add auth flow test suite** — Cover AuthContext, ProtectedRoute, and form submissions. (1–2 days)
-- [ ] **Add rate limiting on form endpoints** — Implement Supabase Edge Function or Captcha. (1 day)
-
-#### Phase 3: Architectural Improvements (1+ months)
-
-These are larger structural changes that improve long-term scalability:
-
-- [ ] **Migrate all inline styles to Tailwind** — Systematic file-by-file conversion of 3,600+ inline style objects. Create a style guide and lint rule to prevent regression. (2–3 weeks)
-- [ ] **Extract intelligence page sections into components** — Break 5,000–11,000 line files into manageable component trees. (1–2 weeks)
-- [ ] **Implement dynamic data layer** — If intelligence/analytics data should be real, create Supabase tables, API queries with React Query, and loading/error states. (2–3 weeks)
-- [ ] **Community routing refactor** — Give each forum sub-page its own component instead of routing everything through `CommunityHome`. (3–5 days)
-- [ ] **Add comprehensive test suite** — Unit tests for hooks and utilities, integration tests for forms and auth, E2E tests for critical user flows. Target 60%+ coverage. (2–3 weeks)
-- [ ] **Set up CI/CD pipeline** — Automated testing, linting, and build verification on PRs. (1–2 days)
-- [ ] **Add CMS integration** — For content that changes frequently (sectors, reports, insights), integrate a headless CMS or admin panel. (2+ weeks)
-- [ ] **Implement proper dark mode** — Wire up `next-themes` (or remove it), ensure all components respect CSS variables. (1 week)
+#### 10. Add Missing Legal Pages
+**Problem:** Terms, Privacy, and Accessibility links all point to `href="#"`.
+**Why it matters:** Legal compliance requirement. Users expect functional legal links.
+**Fix:** Create actual pages and update the footer:
+```tsx
+// src/pages/Terms.tsx, Privacy.tsx, Accessibility.tsx
+// Add routes to App.tsx
+// Update SiteFooter.tsx links
+<a href="/terms">Terms</a>
+<a href="/privacy">Privacy</a>
+<a href="/accessibility">Accessibility</a>
+```
+**Effort:** Small-Medium (depends on legal content availability)
 
 ---
 
-*End of review. This codebase is functional and ships a complete product, which is an achievement. The primary debt is structural — massive file sizes and inline styles from AI generation. The refactoring roadmap above is ordered to deliver maximum value with minimum risk at each phase.*
+### D) STRENGTHS REPORT
+
+**What Is Actually Well Done (Preserve These):**
+
+1. **Sector Page Template System** — `SectorPageTemplate.tsx` + `SectorData` interface + 12 data files is excellent architecture. Data-driven, typed, composable, and easy to extend. This is the gold standard pattern in this codebase.
+
+2. **Route Configuration** — `routeConfig.tsx` centralizes all lazy imports and route metadata. The config-driven route arrays (`BRIDGE_DOC_ROUTES`, `CANNABIS_LICENCE_ROUTES`, `SECTOR_PAGES`) eliminate repetitive JSX and make route management clean.
+
+3. **Auth Architecture** — Simple, correct, and complete. `AuthContext` → `useAuth()` hook → `ProtectedRoute`/`PaidRoute` guards. Three tiers (public/free/paid) with clean tier resolution. Well-tested.
+
+4. **Security Posture** — RLS on all tables, explicit deny policies, no hardcoded secrets, security headers configured. The Supabase security setup is better than most Lovable.dev projects.
+
+5. **Error Handling** — `ErrorBoundary` on every route, global `unhandledrejection` and `error` listeners in `main.tsx`, graceful duplicate-key handling in subscribe service.
+
+6. **Custom Hooks** — `useIsMobile`, `useScrollLock`, `useCounter` are minimal, focused, well-typed, and well-tested. They follow React best practices.
+
+7. **TypeScript Discipline** — Zero `any` types is remarkable for a project of this size. The `SectorData` type system with its nested interfaces (Solution, Competitor, Policy, etc.) is thorough.
+
+8. **Code Splitting** — Every page is lazy-loaded. The app shell is tiny. Initial load is fast.
+
+9. **Component Memoization** — `SiteHeader` and `SiteFooter` correctly use `React.memo` since they receive no props and would otherwise re-render on every route change.
+
+10. **Intelligence Visualizations** — The custom SVG chart components (ActivityHeatmap, BubbleChart, DotMatrixChart, MapVisualization) are impressive. Hand-crafted, responsive, and performant.
+
+---
+
+### E) REFACTORING ROADMAP
+
+#### Phase 1: Quick Wins (1-2 Days)
+
+| Task | Impact | Effort | Files |
+|------|--------|--------|-------|
+| Fix membership tier security (use `app_metadata` or profiles table) | 🔴 Critical | 2h | AuthContext.tsx, 1 migration |
+| Consolidate BridgeLogo to single source | 🟠 Cleanup | 1h | Delete 3 files, update 5 imports |
+| Fix placeholder `href="#"` links in footer | 🟡 UX | 1h | SiteFooter.tsx |
+| Remove or integrate React Query | 🟡 Clarity | 2h | App.tsx, package.json |
+| Add Prettier + pre-commit hooks | 🟡 DX | 1h | package.json, .prettierrc |
+| Add missing `contact_messages` migration | 🟠 Schema | 30m | 1 SQL file |
+| Fix known issues from `.lovable/plan.md` | 🟡 Bugs | 2h | Tourism.tsx, Infrastructure.tsx, Education.tsx |
+
+#### Phase 2: Important Refactors (1-2 Weeks)
+
+| Task | Impact | Effort | Files |
+|------|--------|--------|-------|
+| Extract shared document tokens (colors, fonts, section headers) | 🟠 Maintainability | 2d | New shared files + update 28 JSX pages |
+| Convert all `.jsx` to `.tsx` | 🟠 Type safety | 1d | Rename 30 files |
+| Create DocumentPageTemplate component | 🟠 DRY | 3d | New template + migrate 28 pages |
+| Add service layer tests | 🟠 Reliability | 1d | 3 test files |
+| Add integration tests for auth flow | 🟠 Reliability | 1d | 2-3 test files |
+| Split intelligence dashboard into sub-components | 🟠 Maintainability | 5d | Refactor 2 large files into ~15 smaller ones |
+| Remove unused shadcn/ui components | 🟡 Cleanup | 2h | Delete ~30 files |
+| Consolidate inline `<style>` tags into CSS modules or index.css | 🟡 Performance | 1d | 28 JSX pages + index.css |
+
+#### Phase 3: Architectural Improvements (1+ Months)
+
+| Task | Impact | Effort | Files |
+|------|--------|--------|-------|
+| Build API layer for intelligence dashboard (replace static data) | 🔴 Product | 2-3w | New API service + refactor all chart components |
+| Unify Desktop/Mobile dashboard into responsive components | 🟠 Maintainability | 2w | Merge 2 × 5K-line files into responsive components |
+| Add CMS integration for document pages (Sanity, Contentful, or Supabase) | 🟠 Scalability | 2-3w | New content layer + template updates |
+| Implement proper payment/subscription system (Stripe + Supabase) | 🔴 Business | 2-3w | New Stripe integration + profiles table |
+| Add E2E tests with Playwright | 🟡 Quality | 1w | New test suite |
+| Set up CI/CD pipeline (GitHub Actions) | 🟡 DX | 1d | `.github/workflows/` |
+| Add error tracking (Sentry) and web vitals monitoring | 🟡 Ops | 1d | Sentry SDK integration |
+| Add CSP headers and security audit | 🟡 Security | 1d | netlify.toml or vite.config.ts |
+| Migrate to React Router v7 (or TanStack Router) for type-safe routing | 🟢 Future-proof | 1w | Route config refactor |
+| Explore server-side rendering (Next.js or Remix) for SEO on public pages | 🟢 SEO | 4w+ | Major architecture change |
+
+---
+
+## SUMMARY
+
+This is a **well-scaffolded but bifurcated codebase**. The TypeScript application shell (routing, auth, hooks, sector template system) is genuinely well-built — clean types, good patterns, solid security. The Lovable.dev-generated JSX document pages represent significant technical debt: 68K lines of duplicated, untyped, inline-styled code.
+
+The **highest-priority action** is fixing the membership tier security bypass. The **highest-ROI refactor** is creating a shared DocumentPageTemplate to eliminate the massive JSX duplication. The **strongest asset** is the sector data architecture — it's the pattern the rest of the codebase should aspire to.
+
+For a Lovable.dev-generated project, this is above average. The team has clearly done meaningful work improving the generated output (centralized routing, shared Layout, auth guards, test coverage). The path forward is clear: consolidate the document layer, add a real API, and the architecture becomes genuinely scalable.
