@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, memo } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Search, User, Menu, X } from "lucide-react";
-import { colors as clr } from "@/lib/theme";
 import { BridgeLogo } from "@/components/BridgeLogo";
+import { SearchModal } from "@/components/SearchModal";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { cn } from "@/lib/utils";
 
@@ -21,37 +21,13 @@ const ALL_NAV = [
   { label: "Policy Updates",     to: "/policy", badge: true },
 ];
 
-// ── Search items (nav + sectors + new pages) ─────────────────────────────────
-const SEARCH_ITEMS = [
-  ...ALL_NAV,
-  { label: "FAQ & Help Centre",           to: "/faq" },
-  { label: "Membership",                  to: "/membership" },
-  { label: "Search",                      to: "/search" },
-  { label: "Energy & Renewables",         to: "/sectors/energy" },
-  { label: "Technology & Innovation",     to: "/sectors/technology" },
-  { label: "Agriculture & Value Chains",  to: "/sectors/agriculture" },
-  { label: "Education & Skills",          to: "/sectors/education" },
-  { label: "Financial Inclusion",         to: "/sectors/financial" },
-  { label: "Health Systems",             to: "/sectors/health" },
-  { label: "Housing & Real Estate",       to: "/sectors/housing" },
-  { label: "Infrastructure",             to: "/sectors/infrastructure" },
-  { label: "Manufacturing",              to: "/sectors/manufacturing" },
-  { label: "Sports & Creative",          to: "/sectors/sports" },
-  { label: "Tourism & Hospitality",      to: "/sectors/tourism" },
-  { label: "Transportation",             to: "/sectors/transport" },
-];
-
 // ── Site-wide header ─────────────────────────────────────────────────────────
-// React.memo: SiteHeader receives no props and is rendered by Layout on every route
-// change. Memo prevents re-renders when Layout's children (page content) change.
 function SiteHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -59,47 +35,37 @@ function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when menu or search is open
-  useScrollLock(menuOpen || searchOpen);
+  // Lock body scroll when menu is open (search modal handles its own scroll lock)
+  useScrollLock(menuOpen);
 
-  // Auto-focus search input when opened
-  useEffect(() => {
-    if (searchOpen) {
-      setTimeout(() => searchInputRef.current?.focus(), 50);
-    } else {
-      setSearchQuery("");
-    }
-  }, [searchOpen]);
-
-  // ESC closes search or menu
+  // ESC closes menu (search modal handles its own ESC)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        if (searchOpen) setSearchOpen(false);
-        else if (menuOpen) setMenuOpen(false);
-      }
+      if (e.key === "Escape" && menuOpen) setMenuOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [searchOpen, menuOpen]);
+  }, [menuOpen]);
 
-  // Active-page detection (no exclusion — show all 10 items)
+  // Cmd+K / Ctrl+K opens search
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setMenuOpen(false);
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", fn);
+    return () => window.removeEventListener("keydown", fn);
+  }, []);
+
+  // Active-page detection
   const isActive = (item: typeof ALL_NAV[0]) =>
     item.to === "/" ? location.pathname === "/" : location.pathname.startsWith(item.to);
 
   const handleNavClick = (to: string) => { setMenuOpen(false); navigate(to); };
   const goLogin = () => { setMenuOpen(false); navigate("/login"); };
-
-  const handleSearchSelect = (to: string) => {
-    setSearchOpen(false);
-    navigate(to);
-  };
-
-  const filteredSearch = searchQuery.trim().length > 0
-    ? SEARCH_ITEMS.filter(item =>
-        item.label.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : SEARCH_ITEMS;
 
   return (
     <>
@@ -157,85 +123,10 @@ function SiteHeader() {
         </div>
       </header>
 
-      {/* ── Full-screen SEARCH overlay ─────────────────────────────────────────── */}
-      {searchOpen && (
-        <div
-          className="fixed inset-0 bg-[#191919] z-[1001] flex flex-col animate-[fadeInMenu_0.2s_ease]"
-        >
-          <style>{`@keyframes fadeInMenu{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}`}</style>
+      {/* ── Search Modal (replaces old full-screen search overlay) ──────────── */}
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
-          {/* Search header row */}
-          <div
-            className="px-[clamp(20px,5vw,80px)] h-[72px] flex items-center gap-4 border-b border-white/[0.08] shrink-0"
-          >
-            <Search size={22} color="rgba(255,255,255,0.4)" strokeWidth={1.75} className="shrink-0" />
-            <input
-              ref={searchInputRef}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && searchQuery.trim()) {
-                  setSearchOpen(false);
-                  navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-                }
-              }}
-              placeholder="Search pages, sectors, reports..."
-              className="flex-1 bg-transparent border-none outline-none text-white text-[clamp(18px,3vw,28px)] font-light font-[DM_Sans,sans-serif] tracking-[-0.3px]"
-            />
-            <button
-              onClick={() => setSearchOpen(false)}
-              aria-label="Close search"
-              className="bg-white/[0.08] border-none rounded-lg cursor-pointer w-9 h-9 flex items-center justify-center text-white/60 shrink-0"
-            >
-              <X size={18} strokeWidth={2} />
-            </button>
-          </div>
-
-          {/* Results */}
-          <div className="flex-1 overflow-y-auto py-2">
-            {filteredSearch.length === 0 ? (
-              <div className="py-12 px-[clamp(20px,5vw,80px)] text-white/30 text-base font-[DM_Sans,sans-serif]">
-                No results for &ldquo;{searchQuery}&rdquo;
-              </div>
-            ) : (
-              filteredSearch.map((item) => (
-                <button
-                  key={item.to}
-                  onClick={() => handleSearchSelect(item.to)}
-                  className="flex items-center justify-between w-full py-4 px-[clamp(20px,5vw,80px)] bg-transparent border-none border-b border-white/[0.04] cursor-pointer text-left transition-colors duration-150 hover:bg-white/[0.04]"
-                >
-                  <span className="text-white text-[clamp(16px,2.5vw,22px)] font-normal font-[DM_Sans,sans-serif] tracking-[-0.2px]">
-                    {item.label}
-                  </span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </button>
-              ))
-            )}
-          </div>
-
-          {/* Footer hint */}
-          <div className="py-4 px-[clamp(20px,5vw,80px)] border-t border-white/[0.06] shrink-0 flex items-center justify-between">
-            <span className="text-xs text-white/20 font-[DM_Sans,sans-serif]">
-              {searchQuery.trim() ? "Press Enter to search all content" : "Press ESC to close"}
-            </span>
-            {searchQuery.trim() && (
-              <button
-                onClick={() => {
-                  setSearchOpen(false);
-                  navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-                }}
-                className="text-xs text-[#B8D935] font-semibold font-[DM_Sans,sans-serif] bg-transparent border-none cursor-pointer hover:underline"
-              >
-                See all results →
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* ── Full-screen NAV overlay ─────────────────────────────────────────────── */}
+      {/* ── Full-screen NAV overlay ─────────────────────────────────────────── */}
       {menuOpen && (
         <div
           className="fixed top-[72px] left-0 right-0 bottom-0 bg-[#191919] z-[999] flex flex-col py-10 pb-8 px-[clamp(20px,5vw,80px)] animate-[fadeInMenu_0.25s_ease] overflow-y-auto"

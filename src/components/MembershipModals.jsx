@@ -1230,67 +1230,6 @@ export function BRIDGEPaidMemberModal({ isOpen, onClose, onApplyFreeInstead, tie
 }
 
 // ═════════════════════════════════════════════════════════════
-// DEMO WRAPPER — wires both modals to the membership page CTAs
+// DEFAULT EXPORT — convenience re-export of both modals
 // ═════════════════════════════════════════════════════════════
-export default function MembershipModalDemo() {
-  const [freeOpen, setFreeOpen]         = useState(false);
-  const [intelOpen, setIntelOpen]       = useState(false);
-  const [investorOpen, setInvestorOpen] = useState(false);
-
-  return (
-    <div style={{ minHeight: "100vh", backgroundColor: C.primary,
-      display: "flex", flexDirection: "column", alignItems: "center",
-      justifyContent: "center", gap: 20, padding: 40, fontFamily: F }}>
-
-      <BridgeLogo height={28} uid="demo" />
-      <h2 style={{ color: "#fff", fontWeight: "800", fontSize: 20, margin: 0 }}>
-        Membership Modals
-      </h2>
-      <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 13, margin: 0, textAlign: "center", maxWidth: 360 }}>
-        Three modal triggers — mirrors the membership page CTA buttons exactly.
-      </p>
-
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
-        <button onClick={() => setFreeOpen(true)} style={{
-          backgroundColor: "rgba(255,255,255,0.08)", color: "#fff",
-          border: "1.5px solid rgba(255,255,255,0.2)", borderRadius: 100,
-          padding: "12px 24px", fontSize: "13px", fontWeight: "700",
-          fontFamily: F, cursor: "pointer", minHeight: 44,
-        }}>
-          Apply Free Membership
-        </button>
-        <button onClick={() => setIntelOpen(true)} style={{
-          backgroundColor: C.accent, color: C.primary,
-          border: "none", borderRadius: 100, padding: "12px 24px",
-          fontSize: "13px", fontWeight: "800", fontFamily: F, cursor: "pointer", minHeight: 44,
-        }}>
-          Join Intelligence — $250/yr
-        </button>
-        <button onClick={() => setInvestorOpen(true)} style={{
-          backgroundColor: "rgba(255,255,255,0.12)", color: C.white,
-          border: "1.5px solid rgba(255,255,255,0.35)", borderRadius: 100, padding: "12px 24px",
-          fontSize: "13px", fontWeight: "800", fontFamily: F, cursor: "pointer", minHeight: 44,
-        }}>
-          Apply Investor — $1,000/yr
-        </button>
-      </div>
-
-      <BRIDGEFreeMemberModal
-        isOpen={freeOpen}
-        onClose={() => setFreeOpen(false)}
-      />
-      <BRIDGEPaidMemberModal
-        isOpen={intelOpen}
-        onClose={() => setIntelOpen(false)}
-        tier="Intelligence"
-        onApplyFreeInstead={() => { setIntelOpen(false); setFreeOpen(true); }}
-      />
-      <BRIDGEPaidMemberModal
-        isOpen={investorOpen}
-        onClose={() => setInvestorOpen(false)}
-        tier="Investor"
-        onApplyFreeInstead={() => { setInvestorOpen(false); setFreeOpen(true); }}
-      />
-    </div>
-  );
-}
+export default BRIDGEPaidMemberModal;

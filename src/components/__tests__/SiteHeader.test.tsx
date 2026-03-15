@@ -15,6 +15,22 @@ vi.mock("@/components/BridgeLogo", () => ({
   ),
 }));
 
+// Mock SearchModal — renders a testable placeholder when open
+vi.mock("@/components/SearchModal", () => ({
+  SearchModal: ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) =>
+    isOpen ? (
+      <div data-testid="search-modal">
+        <button aria-label="Close search" onClick={onClose} />
+      </div>
+    ) : null,
+  default: ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) =>
+    isOpen ? (
+      <div data-testid="search-modal">
+        <button aria-label="Close search" onClick={onClose} />
+      </div>
+    ) : null,
+}));
+
 describe("SiteHeader", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -73,44 +89,20 @@ describe("SiteHeader", () => {
     });
   });
 
-  it("opens search overlay when search button is clicked", () => {
+  it("opens search modal when search button is clicked", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Search"));
 
-    expect(screen.getByPlaceholderText("Search pages, sectors, reports...")).toBeInTheDocument();
-    expect(screen.getByLabelText("Close search")).toBeInTheDocument();
+    expect(screen.getByTestId("search-modal")).toBeInTheDocument();
   });
 
-  it("closes search overlay when close button is clicked", () => {
+  it("closes search modal when close button is clicked", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Search"));
-    expect(screen.getByPlaceholderText("Search pages, sectors, reports...")).toBeInTheDocument();
+    expect(screen.getByTestId("search-modal")).toBeInTheDocument();
 
     fireEvent.click(screen.getByLabelText("Close search"));
-    expect(screen.queryByPlaceholderText("Search pages, sectors, reports...")).not.toBeInTheDocument();
-  });
-
-  it("filters search results by query", () => {
-    renderHeader();
-    fireEvent.click(screen.getByLabelText("Search"));
-
-    const input = screen.getByPlaceholderText("Search pages, sectors, reports...");
-    fireEvent.change(input, { target: { value: "Energy" } });
-
-    // Should show Energy & Renewables but not e.g. "About"
-    expect(screen.getByText("Energy & Renewables")).toBeInTheDocument();
-    // "About" should not be shown when filtering for "Energy"
-    expect(screen.queryByText("About")).not.toBeInTheDocument();
-  });
-
-  it("shows 'No results' when search query has no matches", () => {
-    renderHeader();
-    fireEvent.click(screen.getByLabelText("Search"));
-
-    const input = screen.getByPlaceholderText("Search pages, sectors, reports...");
-    fireEvent.change(input, { target: { value: "xyznonexistent" } });
-
-    expect(screen.getByText(/No results for/)).toBeInTheDocument();
+    expect(screen.queryByTestId("search-modal")).not.toBeInTheDocument();
   });
 
   it("closes menu when Escape key is pressed", () => {

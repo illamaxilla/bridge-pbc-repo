@@ -1,4 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { BRIDGEAuthModal } from "@/components/AuthModal";
+import { BRIDGEEngagementModal } from "@/components/EngagementModal";
 
 // ══════════════════════════════════════════════════════════════════════════════
 // DESIGN TOKENS
@@ -2545,25 +2549,75 @@ const ClientsView = ({setTier}) => {
 
 
 export default function BridgeCannabisIntelligence() {
-  const [tier, setTier] = useState('public');
+  const { user, tier: authTier } = useAuth();
+  const navigate = useNavigate();
+
+  // Map auth context tiers to the dashboard's internal tier system
+  const tier = useMemo(() => {
+    if (!user) return 'public';
+    if (authTier === 'paid') return 'member';
+    return 'registered'; // free tier → registered
+  }, [user, authTier]);
+
   const [page, setPage] = useState('main');
   const [showLogin, setShowLogin] = useState(false);
+  const [loginTab, setLoginTab] = useState('signin');
+  const [showEngagement, setShowEngagement] = useState(false);
+  const [engagementIntent, setEngagementIntent] = useState('connect');
   const [loginTarget, setLoginTarget] = useState('registered');
   const coverLogoRef = useRef(null);
 
-  const handleTierSet = (t) => { setTier(t); setShowLogin(false); };
+  // Adapter: when internal code calls setShowLogin/setLoginTarget, open the right modal
+  const handleShowLogin = (show) => {
+    if (show) {
+      setLoginTab('signin');
+      setShowLogin(true);
+    } else {
+      setShowLogin(false);
+    }
+  };
+  const handleLoginTarget = (target) => {
+    setLoginTarget(target);
+    if (target === 'paid' || target === 'member') {
+      // For paid/member upgrade, show engagement modal
+      setEngagementIntent('scope');
+      setShowEngagement(true);
+    } else {
+      setLoginTab(target === 'registered' ? 'request' : 'signin');
+      setShowLogin(true);
+    }
+  };
+
+  // Stub setTier — the real tier comes from auth context, but internal components
+  // still call setTier to trigger login flows
+  const setTier = (t) => {
+    if (t === 'registered') {
+      setLoginTab('request');
+      setShowLogin(true);
+    } else if (t === 'member' || t === 'paid') {
+      setEngagementIntent('scope');
+      setShowEngagement(true);
+    } else if (t === 'clients') {
+      // clients view is a display mode, not an auth tier
+      setPage('clients');
+    }
+  };
 
   if (page === 'purchase') {
     return (
-      <PurchasePage
-        setPage={setPage}
-        setShowLogin={setShowLogin}
-        setLoginTarget={setLoginTarget}
-      />
+      <>
+        <PurchasePage
+          setPage={setPage}
+          setShowLogin={handleShowLogin}
+          setLoginTarget={handleLoginTarget}
+        />
+        <BRIDGEAuthModal isOpen={showLogin} onClose={() => setShowLogin(false)} defaultTab={loginTab} />
+        <BRIDGEEngagementModal isOpen={showEngagement} onClose={() => setShowEngagement(false)} intent={engagementIntent} />
+      </>
     );
   }
 
-  if (tier === 'clients') {
+  if (page === 'clients') {
     return (
       <div style={{fontFamily:F.body,background:C.ink,overflowX:'hidden'}}>
         <Gf/>
@@ -2572,11 +2626,13 @@ export default function BridgeCannabisIntelligence() {
           tier={tier}
           setTier={setTier}
           setPage={setPage}
-          setLoginTarget={setLoginTarget}
-          setShowLogin={setShowLogin}
+          setLoginTarget={handleLoginTarget}
+          setShowLogin={handleShowLogin}
         />
         <ClientsView setTier={setTier}/>
         <Footer/>
+        <BRIDGEAuthModal isOpen={showLogin} onClose={() => setShowLogin(false)} defaultTab={loginTab} />
+        <BRIDGEEngagementModal isOpen={showEngagement} onClose={() => setShowEngagement(false)} intent={engagementIntent} />
       </div>
     );
   }
@@ -2589,41 +2645,36 @@ export default function BridgeCannabisIntelligence() {
         tier={tier}
         setTier={setTier}
         setPage={setPage}
-        setLoginTarget={setLoginTarget}
-        setShowLogin={setShowLogin}
+        setLoginTarget={handleLoginTarget}
+        setShowLogin={handleShowLogin}
       />
       <Cover logoRef={coverLogoRef} setPage={setPage}/>
       <PolicyContext/>
-      <ValueChain tier={tier} setTier={setTier} setPage={setPage} setShowLogin={setShowLogin} setLoginTarget={setLoginTarget}/>
-      <TierTeaser tier={tier} setTier={setTier} setShowLogin={setShowLogin} setLoginTarget={setLoginTarget}/>
+      <ValueChain tier={tier} setTier={setTier} setPage={setPage} setShowLogin={handleShowLogin} setLoginTarget={handleLoginTarget}/>
+      <TierTeaser tier={tier} setTier={setTier} setShowLogin={handleShowLogin} setLoginTarget={handleLoginTarget}/>
       <LicenseExplorer
         tier={tier}
         setTier={setTier}
         setPage={setPage}
-        setShowLogin={setShowLogin}
-        setLoginTarget={setLoginTarget}
+        setShowLogin={handleShowLogin}
+        setLoginTarget={handleLoginTarget}
       />
       <OpportunityMatrix
         tier={tier}
         setTier={setTier}
         setPage={setPage}
-        setShowLogin={setShowLogin}
-        setLoginTarget={setLoginTarget}
+        setShowLogin={handleShowLogin}
+        setLoginTarget={handleLoginTarget}
       />
       <Gate
         setTier={setTier}
         setPage={setPage}
-        setShowLogin={setShowLogin}
-        setLoginTarget={setLoginTarget}
+        setShowLogin={handleShowLogin}
+        setLoginTarget={handleLoginTarget}
       />
       <Footer/>
-      <LoginModal
-        show={showLogin}
-        onClose={() => setShowLogin(false)}
-        loginTarget={loginTarget}
-        setTier={handleTierSet}
-        setPage={setPage}
-      />
+      <BRIDGEAuthModal isOpen={showLogin} onClose={() => setShowLogin(false)} defaultTab={loginTab} />
+      <BRIDGEEngagementModal isOpen={showEngagement} onClose={() => setShowEngagement(false)} intent={engagementIntent} />
     </div>
   );
 }

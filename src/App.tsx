@@ -17,6 +17,8 @@ import {
   Community, CommunityHome,
   SectorReport, PolicyBriefTeaser, AnnualReviewTeaser, SectorBriefViewer,
   SECTOR_PAGES, BRIDGE_DOC_ROUTES,
+  CannabisIntelligenceDashboard, CannabisIntelligenceSummary,
+  CANNABIS_LICENCE_ROUTES,
 } from "./routeConfig";
 
 const queryClient = new QueryClient();
@@ -111,6 +113,17 @@ const App = () => (
                   />
                 );
               })}
+
+              {/* Cannabis Intelligence Series */}
+              <Route path="/resources/cannabis-intelligence" element={<ErrorBoundary><CannabisIntelligenceDashboard /></ErrorBoundary>} />
+              <Route path="/resources/cannabis-intelligence/summary" element={<ErrorBoundary><CannabisIntelligenceSummary /></ErrorBoundary>} />
+              {CANNABIS_LICENCE_ROUTES.map(({ slug, component: LicenceComponent }) => (
+                <Route
+                  key={slug}
+                  path={`/resources/cannabis-intelligence/${slug}`}
+                  element={<ErrorBoundary><PaidRoute><LicenceComponent /></PaidRoute></ErrorBoundary>}
+                />
+              ))}
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
