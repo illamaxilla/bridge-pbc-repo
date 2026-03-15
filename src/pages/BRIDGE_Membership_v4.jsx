@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { colors as C, CONTENT_MAX_WIDTH as MAX } from '../theme';
 import {
   ArrowRight, Check, ChevronDown, Lock, Star,
   BarChart2, TrendingUp, Shield, FileText, Bell,
@@ -6,18 +7,6 @@ import {
   Award, Clock, AlertCircle, Eye, Layers
 } from 'lucide-react';
 
-const C = {
-  primary:    '#1B4D3E',
-  teal:       '#2E5A4D',
-  accent:     '#B8D935',
-  accentDark: '#8FA825',
-  bg:         '#F3F5F2',
-  white:      '#FFFFFF',
-  dark:       '#191919',
-  line:       '#DEDEDE',
-  muted:      '#6B7280',
-};
-const MAX  = '1200px';
 const F    = "'Inter', system-ui, sans-serif";
 const EASE = 'cubic-bezier(0.22,1,0.36,1)';
 

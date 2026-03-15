@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { colors, CONTENT_MAX_WIDTH } from '../theme';
 import { Layout } from "@/components/Layout";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -7,24 +8,6 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 // BRIDGE PBC — FAQ Page
 // Help Centre: Hero search · Topic grid · Accordion FAQ · Contact CTA
 // ============================================================================
-
-const colors = {
-  primary:     '#1B4D3E',
-  accent:      '#B8D935',
-  accentLight: '#E8F5E0',
-  accentText:  '#5C7A1F',
-  background:  '#F3F5F2',
-  paperDark:   '#ECEDE8',
-  white:       '#FFFFFF',
-  dark:        '#191919',
-  ink:         '#0D1A10',
-  line:        '#DEDEDE',
-  muted:       '#6B8078',
-  faint:       '#9AAA9C',
-  teal:        '#2E5A4D',
-};
-
-const CONTENT_MAX_WIDTH = '1200px';
 
 // ─── Scoped Styles ────────────────────────────────────────────────────────────
 const FAQStyles = () => (

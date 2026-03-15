@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 
+import { C, F } from '../theme';
 /* ═══════════════════════════════════════════════════════════════════════════
    BRIDGE SECTOR INTELLIGENCE BRIEFS  ·  ALL 12 SECTORS
    Public sample edition — teaser for paid full brief
    Single data-driven component: pass sectorId prop (1–12) or use navigator
 ═══════════════════════════════════════════════════════════════════════════ */
 
-const C={ink:'#0D1A10',paper:'#FAF8F3',paperDark:'#F0EDE4',forest:'#1B4D3E',lime:'#B8D935',limeDark:'#8FA825',muted:'#5C6B5E',faint:'#9AAA9C',border:'#D8D4C8',red:'#A8200D',amber:'#B8730A',positive:'#1A6B2F',white:'#FFFFFF'};
-const F={display:'"Playfair Display","Georgia",serif',body:'"Source Serif 4","Georgia",serif',sans:'"DM Sans","Helvetica Neue",sans-serif',mono:'"DM Mono","Courier New",monospace'};
 const tierColor=t=>t==='Core'?C.lime:t==='Emerging'?C.amber:C.muted;
 const tierText=t=>t==='Core'?C.positive:t==='Emerging'?C.amber:C.muted;
 

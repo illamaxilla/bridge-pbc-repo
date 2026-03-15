@@ -1,18 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const C = {
-  ink:'#0D1A10', paper:'#FAF8F3', paperDark:'#F0EDE4',
-  forest:'#1B4D3E', lime:'#B8D935', limeDark:'#8FA825',
-  muted:'#5C6B5E', faint:'#9AAA9C', border:'#D8D4C8',
-  teal:'#2E5A4D', red:'#A8200D', amber:'#B8730A', positive:'#1A6B2F',
-};
-const F = {
-  display:'"Playfair Display","Georgia",serif',
-  body:'"Source Serif 4","Georgia",serif',
-  sans:'"DM Sans","Helvetica Neue",sans-serif',
-  mono:'"DM Mono","Courier New",monospace',
-};
-
+import { C, F } from '../theme';
 // ─── GLOBAL STYLES ────────────────────────────────────────────────────────────
 const Gf = () => (<style>{`
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');

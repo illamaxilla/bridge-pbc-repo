@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IconBuilding, IconWallet, IconWheat, IconCpu, IconBank, IconPhone, IconHandshake, IconGlobe, IconStore, IconArrowRight, IconArrowDown, IconCheck, IconWarning, IconTrendingUp, IconShield, IconDollar, IconTarget, IconChevronDown, IconExternalLink, IconArrowUpRight, IconStorefront, IconOfficeBuilding, IconLandmark, IconCross } from "@/components/icons/SectorIcons";
 import { ArrowRight, Blocks, Check, ChevronDown, ChevronUp, Clock, Cpu, GraduationCap, Sprout, Wallet } from "lucide-react";
@@ -15,37 +15,10 @@ import { useCounter } from "@/hooks/useCounter";
 import { cn } from "@/lib/utils";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useScrollIndex } from "@/hooks/useScrollIndex";
 import SectorPageTemplate from "@/components/sectors/SectorPageTemplate";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
-
-// Scroll index tracker hook
-function useScrollIndex(count) {
-  const scrollRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const onScroll = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el || !el.children.length) return;
-    const child = el.children[0]?.children?.[0] || el.children[0];
-    if (!child) return;
-    const childWidth = child.offsetWidth + parseInt(getComputedStyle(el.children[0] || el).gap || "0", 10);
-    const idx = Math.round(el.scrollLeft / (childWidth || 1));
-    setActiveIndex(Math.min(Math.max(idx, 0), count - 1));
-  }, [count]);
-
-  const scrollTo = useCallback((idx) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const child = el.children[0]?.children?.[0] || el.children[0];
-    if (!child) return;
-    const gap = parseInt(getComputedStyle(el.children[0] || el).gap || "0", 10);
-    const childWidth = child.offsetWidth + gap;
-    el.scrollTo({ left: idx * childWidth, behavior: "smooth" });
-  }, []);
-
-  return { scrollRef, activeIndex, onScroll, scrollTo };
-}
 
 // Standard BRIDGE scroll dots (lime pill active, gray circle inactive)
 const ScrollDots = ({ count, activeIndex, onDotClick, dark = false }) => (

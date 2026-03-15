@@ -1,24 +1,10 @@
 import { useState, useEffect } from "react";
+import { colors as C } from '../theme';
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 // ─────────────────────────────────────────────
 // TOKENS
 // ─────────────────────────────────────────────
-const C = {
-  primary:     "#1B4D3E",
-  primaryDark: "#163f32",
-  primaryDeep: "#0f2e24",
-  accent:      "#B8D935",
-  accentLight: "#E8F5E0",
-  bg:          "#F3F5F2",
-  white:       "#FFFFFF",
-  dark:        "#191919",
-  mid:         "#666666",
-  faint:       "#999999",
-  line:        "#DEDEDE",
-  lineStrong:  "#C8C8C8",
-};
-
 // ─────────────────────────────────────────────
 // INTENT MAP
 // ─────────────────────────────────────────────
