@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { colors as C } from '../theme';
 import {
   X, ArrowRight, ArrowLeft, Check, Lock, Star, AlertCircle,
   User, Mail, Briefcase, Globe, MapPin, FileText, ChevronDown,
@@ -8,17 +9,6 @@ import {
 // ─────────────────────────────────────────────────────────────
 // DESIGN TOKENS — exact BRIDGE system
 // ─────────────────────────────────────────────────────────────
-const C = {
-  primary:  "#1B4D3E",
-  accent:   "#B8D935",
-  bg:       "#F3F5F2",
-  white:    "#FFFFFF",
-  line:     "#DEDEDE",
-  text:     "#1A1A1A",
-  muted:    "#6B7280",
-  error:    "#DC2626",
-  errorBg:  "#FEF2F2",
-};
 const F = "'Inter', system-ui, sans-serif";
 // ─────────────────────────────────────────────────────────────
 // BRIDGE LOGO

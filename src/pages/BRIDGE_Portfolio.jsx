@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
+import { C, F } from '../theme';
 import { useNavigate } from "react-router-dom";
 
-const C = {
-  primary: '#1B4D3E', accent: '#B8D935', bg: '#F3F5F2',
-  text: '#111111', subtle: '#5C5C5C', muted: '#8A8A8A',
-  line: '#E0E0E0', white: '#FFFFFF', cover: '#0B1510',
-};
 const FONTS = `
 
 

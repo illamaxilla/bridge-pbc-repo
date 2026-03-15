@@ -147,16 +147,8 @@ export function MRing({ score, size = 80, stroke = 7 }) {
   );
 }
 
-// ─── Responsive hook ──────────────────────────────────────────────────
-export function useWindowWidth() {
-  const [w, setW] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
-  useEffect(() => {
-    const h = () => setW(window.innerWidth);
-    window.addEventListener("resize", h);
-    return () => window.removeEventListener("resize", h);
-  }, []);
-  return w;
-}
+// useWindowWidth moved to @/hooks/useWindowWidth
+export { useWindowWidth } from "@/hooks/useWindowWidth";
 
 // ═══════════════════════════════════════════════════════════════════════
 // MOBILE HEADER

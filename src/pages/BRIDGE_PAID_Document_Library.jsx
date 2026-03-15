@@ -1,20 +1,7 @@
 import { useState, useEffect } from "react";
+import { C, F } from '../theme';
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/useIsMobile";
-
-const C = {
-  primary: '#1B4D3E',
-  accent: '#B8D935',
-  bg: '#EFEFEC',
-  text: '#111111',
-  subtle: '#555555',
-  muted: '#888888',
-  line: '#D8D8D4',
-  white: '#FFFFFF',
-  cover: '#0A1409',
-  deep: '#0F1A12',
-  card: '#F7F7F4',
-};
 
 const scopedStyles = `
 

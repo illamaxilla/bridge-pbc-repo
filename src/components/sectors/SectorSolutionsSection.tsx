@@ -3,9 +3,10 @@
 // Replaces duplicated SolutionsSection across all sector pages.
 // ============================================================================
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState } from "react";
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useScrollIndex } from "@/hooks/useScrollIndex";
 import type { SectorData, Solution } from "@/data/sectors/types";
 
 const CONTENT_MAX_WIDTH = layout.maxWidth;
@@ -150,38 +151,6 @@ const DefaultSolutionCard = ({
   );
 };
 
-// ---------------------------------------------------------------------------
-// Scroll helpers (inlined to avoid extra dependencies)
-// ---------------------------------------------------------------------------
-
-function useScrollIndex(count: number) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const onScroll = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el || !el.children.length) return;
-    const child = (el.children[0] as HTMLElement)?.children?.[0] || el.children[0];
-    if (!child) return;
-    const childWidth =
-      (child as HTMLElement).offsetWidth +
-      parseInt(getComputedStyle(el.children[0] as Element || el).gap || "0", 10);
-    const idx = Math.round(el.scrollLeft / (childWidth || 1));
-    setActiveIndex(Math.min(Math.max(idx, 0), count - 1));
-  }, [count]);
-
-  const scrollTo = useCallback((idx: number) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const child = (el.children[0] as HTMLElement)?.children?.[0] || el.children[0];
-    if (!child) return;
-    const gap = parseInt(getComputedStyle(el.children[0] as Element || el).gap || "0", 10);
-    const childWidth = (child as HTMLElement).offsetWidth + gap;
-    el.scrollTo({ left: idx * childWidth, behavior: "smooth" });
-  }, []);
-
-  return { scrollRef, activeIndex, onScroll, scrollTo };
-}
 
 // ---------------------------------------------------------------------------
 // Main Component
