@@ -1167,7 +1167,7 @@ const MembersGate = () => (
               Individual, institutional, and government partner tiers available. Applied for and approved.
             </div>
 
-            <a href="#" style={{
+            <a href="/login" style={{
               display: 'block',
               background: C.lime, color: C.ink,
               padding: '14px 24px', borderRadius: '2px',
@@ -1179,7 +1179,7 @@ const MembersGate = () => (
               Apply for Members Access
             </a>
 
-            <a href="#" style={{
+            <a href="/membership" style={{
               display: 'block',
               border: `1px solid rgba(184,217,53,0.3)`,
               color: C.lime, padding: '12px 24px', borderRadius: '2px',
@@ -1236,9 +1236,9 @@ const Colophon = () => (
         </div>
       </div>
       <div className="colophon-links" style={{ display: 'flex', gap: '20px' }}>
-        {['About', 'Members', 'Contact', 'bridgepbc.com'].map((link, i) => (
-          <a key={i} href="#" style={{ fontFamily: F.sans, fontSize: '10px', fontWeight: 600, color: 'rgba(250,248,243,0.45)', letterSpacing: '0.5px', textDecoration: 'none' }}>
-            {link}
+        {[{l:'About',h:'/about'},{l:'Members',h:'/membership'},{l:'Contact',h:'/contact'},{l:'bridgepbc.com',h:'#'}].map((item, i) => (
+          <a key={i} href={item.h} style={{ fontFamily: F.sans, fontSize: '10px', fontWeight: 600, color: 'rgba(250,248,243,0.45)', letterSpacing: '0.5px', textDecoration: 'none' }}>
+            {item.l}
           </a>
         ))}
       </div>
@@ -1291,7 +1291,7 @@ const TopBar = ({ coverLogoRef }) => {
       </div>
       <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
         <span className="mob-hide" style={{ fontFamily: F.sans, fontSize: '9px', color: C.faint }}>bridgepbc.com/intelligence</span>
-        <a href="#" style={{
+        <a href="/membership" style={{
           background: C.forest, color: C.lime,
           padding: '7px 14px',
           fontFamily: F.sans, fontSize: '10px', fontWeight: 700,

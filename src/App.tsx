@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import {
   Index, About, Services, Resources, Insights, Methodology,
   Contact, Login, Sectors, Policy, FAQPage, MembershipPage, SearchPage,
+  TermsPage, PrivacyPage, AccessibilityPage,
   Intelligence, IntelDashboard, MarketOverview, Reports, Watchlist, Analytics, IntelResources,
   Community, CommunityHome,
   SectorReport, PolicyBriefTeaser, AnnualReviewTeaser, SectorBriefViewer,
@@ -61,6 +62,9 @@ const App = () => (
               <Route path="/faq" element={<ErrorBoundary><FAQPage /></ErrorBoundary>} />
               <Route path="/membership" element={<ErrorBoundary><MembershipPage /></ErrorBoundary>} />
               <Route path="/search" element={<ErrorBoundary><SearchPage /></ErrorBoundary>} />
+              <Route path="/terms" element={<ErrorBoundary><TermsPage /></ErrorBoundary>} />
+              <Route path="/privacy" element={<ErrorBoundary><PrivacyPage /></ErrorBoundary>} />
+              <Route path="/accessibility" element={<ErrorBoundary><AccessibilityPage /></ErrorBoundary>} />
 
               {/* Intelligence (protected) */}
               <Route path="/intelligence/*" element={<ErrorBoundary><ProtectedRoute><Intelligence /></ProtectedRoute></ErrorBoundary>}>

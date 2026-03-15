@@ -286,7 +286,7 @@ const MobileNav = () => {
               style={{background:C.forest,border:'none',color:C.lime,padding:'0 16px',fontFamily:F.sans,fontSize:'13px',fontWeight:700,cursor:'pointer',flexShrink:0,minHeight:'44px',display:'flex',alignItems:'center',justifyContent:'center'}}>
               →
             </button>
-          : <a href="#" style={{background:C.lime,color:C.ink,padding:'0 16px',fontFamily:F.sans,fontSize:'9px',fontWeight:800,textDecoration:'none',letterSpacing:'1px',flexShrink:0,minHeight:'44px',display:'flex',alignItems:'center',justifyContent:'center'}}>ENGAGE →</a>
+          : <a href="/contact" style={{background:C.lime,color:C.ink,padding:'0 16px',fontFamily:F.sans,fontSize:'9px',fontWeight:800,textDecoration:'none',letterSpacing:'1px',flexShrink:0,minHeight:'44px',display:'flex',alignItems:'center',justifyContent:'center'}}>ENGAGE →</a>
         }
       </div>
     </div>
@@ -322,7 +322,7 @@ const TopBar = ({coverLogoRef}) => {
       </div>
       <div style={{display:'flex',gap:'8px',alignItems:'center'}}>
         <div className="mob-hide" style={{background:C.lime,color:C.ink,padding:'4px 10px',fontFamily:F.sans,fontSize:'8px',fontWeight:800,letterSpacing:'2px',textTransform:'uppercase'}}>MEMBERS BRIEF</div>
-        <a href="#" className="topbar-cta" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Engage BRIDGE →</a>
+        <a href="/contact" className="topbar-cta" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Engage BRIDGE →</a>
       </div>
     </div>
   );
@@ -999,7 +999,7 @@ const Gate = () => {
 
             {/* Mobile-only: CTA strip before licence list */}
             <div className="mob-show" style={{display:'none',marginBottom:'24px'}}>
-              <a href="#" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'10px',background:C.lime,color:C.ink,padding:'16px 24px',fontFamily:F.sans,fontSize:'13px',fontWeight:800,textDecoration:'none',width:'100%',letterSpacing:'0.3px',minHeight:'52px'}}>
+              <a href="/login" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'10px',background:C.lime,color:C.ink,padding:'16px 24px',fontFamily:F.sans,fontSize:'13px',fontWeight:800,textDecoration:'none',width:'100%',letterSpacing:'0.3px',minHeight:'52px'}}>
                 Apply for Members Access →
               </a>
               <a href="#" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'8px',background:'transparent',border:`1px solid ${C.border}`,color:C.muted,padding:'13px 24px',fontFamily:F.sans,fontSize:'12px',fontWeight:600,textDecoration:'none',width:'100%',marginTop:'6px',minHeight:'48px'}}>
@@ -1046,7 +1046,7 @@ const Gate = () => {
             </div>
             {/* CTAs — desktop only (mobile CTAs above) */}
             <div className="gate-cta-row mob-hide" style={{display:'flex',gap:'8px',flexWrap:'wrap',marginTop:'2px'}}>
-              <a href="#" style={{display:'flex',alignItems:'center',gap:'10px',background:C.lime,color:C.ink,padding:'16px 28px',fontFamily:F.sans,fontSize:'13px',fontWeight:800,textDecoration:'none',flex:'1',minWidth:'200px',justifyContent:'center',letterSpacing:'0.3px'}}>
+              <a href="/login" style={{display:'flex',alignItems:'center',gap:'10px',background:C.lime,color:C.ink,padding:'16px 28px',fontFamily:F.sans,fontSize:'13px',fontWeight:800,textDecoration:'none',flex:'1',minWidth:'200px',justifyContent:'center',letterSpacing:'0.3px'}}>
                 Apply for Members Access <span style={{fontSize:'16px',fontWeight:900}}>→</span>
               </a>
               <a href="#" style={{display:'flex',alignItems:'center',gap:'10px',background:'transparent',border:`2px solid ${C.ink}`,color:C.ink,padding:'14px 22px',fontFamily:F.sans,fontSize:'12px',fontWeight:700,textDecoration:'none',flex:'1',minWidth:'160px',justifyContent:'center',opacity:0.6}}>
@@ -1073,8 +1073,8 @@ const Footer = () => (
         </div>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'20px',alignItems:'center'}}>
-        {['All 11 Licences','Members','Engage BRIDGE','bridgepbc.com'].map((l,i)=>(
-          <a key={i} href="#" style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:i===2?C.lime:'rgba(250,248,243,0.45)',textDecoration:'none',letterSpacing:'0.2px'}}>{l}</a>
+        {[{l:'All 11 Licences',h:'/resources'},{l:'Members',h:'/membership'},{l:'Engage BRIDGE',h:'/contact'},{l:'bridgepbc.com',h:'#'}].map((item,i)=>(
+          <a key={i} href={item.h} style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:i===2?C.lime:'rgba(250,248,243,0.45)',textDecoration:'none',letterSpacing:'0.2px'}}>{item.l}</a>
         ))}
       </div>
     </div>

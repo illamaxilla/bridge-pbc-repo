@@ -318,7 +318,7 @@ const TopBar=({coverLogoRef})=>{
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center'}}>
         <span className="mob-hide" style={{fontFamily:F.mono,fontSize:'9px',color:C.faint}}>March 2026</span>
-        <a href="#" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Apply</a>
+        <a href="/login" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Apply</a>
       </div>
     </div>
   );
@@ -687,7 +687,7 @@ const Footer=()=>{
         <span style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(255,255,255,0.2)'}}>Policy Tracker &middot; PT-01 &middot; bridgepbc.com</span>
       </div>
       <div className="mob-hide" style={{display:'flex',gap:'14px'}}>
-        {['All Documents','Sector Briefs','Members','bridgepbc.com'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none'}}>{l}</a>))}
+        {[{l:'All Documents',h:'/resources'},{l:'Sector Briefs',h:'/resources'},{l:'Members',h:'/membership'},{l:'bridgepbc.com',h:'#'}].map((item,i)=>(<a key={i} href={item.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none'}}>{item.l}</a>))}
       </div>
     </div>
   </div>

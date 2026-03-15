@@ -496,8 +496,8 @@ const TopBar=({sector,coverLogoRef})=>{
         <span className="mob-show" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest}}>{sector.num} · {sector.shortName}</span>
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center'}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none'}}>Members →</a>
-        <a href="#" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Apply →</a>
+        <a href="/membership" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none'}}>Members →</a>
+        <a href="/login" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Apply →</a>
       </div>
     </div>
   );
@@ -764,7 +764,7 @@ const Gate=({sector})=>{
 
           {/* Primary + secondary CTAs */}
           <div className="gate-cta-row" style={{display:'flex',gap:'10px',flexWrap:'wrap',alignItems:'stretch',marginBottom:'14px'}}>
-            <a href="#" style={{display:'flex',alignItems:'center',gap:'10px',background:C.lime,color:C.ink,padding:'14px 26px',fontFamily:F.sans,fontSize:'12px',fontWeight:800,textDecoration:'none',letterSpacing:'0.5px',flex:'1',minWidth:'200px',justifyContent:'center'}}>
+            <a href="/login" style={{display:'flex',alignItems:'center',gap:'10px',background:C.lime,color:C.ink,padding:'14px 26px',fontFamily:F.sans,fontSize:'12px',fontWeight:800,textDecoration:'none',letterSpacing:'0.5px',flex:'1',minWidth:'200px',justifyContent:'center'}}>
               <span>Apply for Members Access</span>
               <span style={{fontSize:'14px',fontWeight:900}}>→</span>
             </a>
@@ -776,7 +776,7 @@ const Gate=({sector})=>{
 
           {/* Tertiary — hidden on mobile */}
           <div className="gate-tertiary" style={{display:'flex',alignItems:'center',gap:'16px',flexWrap:'wrap'}}>
-            <a href="#" style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.3)',textDecoration:'none',letterSpacing:'0.5px'}}>Browse all 12 sectors →</a>
+            <a href="/resources" style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.3)',textDecoration:'none',letterSpacing:'0.5px'}}>Browse all 12 sectors →</a>
             <span style={{width:'1px',height:'10px',background:'rgba(255,255,255,0.1)'}}/>
             <span style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(250,248,243,0.2)',letterSpacing:'1px'}}>bridgepbc.com/intelligence</span>
           </div>
@@ -797,7 +797,7 @@ const Footer=({sector})=>(
         <div style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,0.35)'}}>Sector {sector.num} of 12 · bridgepbc.com/intelligence</div>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'14px'}}>
-        {['All Sectors','Members','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.35)',textDecoration:'none'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/resources'},{l:'Members',h:'/membership'},{l:'Contact',h:'/contact'}].map((item,i)=>(<a key={i} href={item.h} style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.35)',textDecoration:'none'}}>{item.l}</a>))}
       </div>
     </div>
   </div>

@@ -990,8 +990,8 @@ const PaidReviewStep = ({ profile, intent, tier, onSubmit, submitting, success }
         </div>
         <span style={{ fontSize: "13px", fontFamily: F, color: C.muted, lineHeight: 1.6 }}>
           I confirm the information above is accurate. I agree to BRIDGE's{" "}
-          <a href="#" style={{ color: C.primary, fontWeight: "600" }}>Member Terms</a> and{" "}
-          <a href="#" style={{ color: C.primary, fontWeight: "600" }}>Privacy Policy</a>.
+          <a href="/terms" style={{ color: C.primary, fontWeight: "600" }}>Member Terms</a> and{" "}
+          <a href="/privacy" style={{ color: C.primary, fontWeight: "600" }}>Privacy Policy</a>.
         </span>
       </label>
 

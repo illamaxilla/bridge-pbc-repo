@@ -93,9 +93,11 @@ export interface BRIDGEAuthModalProps {
   onClose: () => void;
   defaultTab?: "signin" | "request";
   onSignInSuccess?: () => void;
+  /** When true, hides the close button and disables backdrop/escape dismissal */
+  preventClose?: boolean;
 }
 
-export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSignInSuccess }: BRIDGEAuthModalProps) => {
+export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSignInSuccess, preventClose = false }: BRIDGEAuthModalProps) => {
   const [tab, setTab] = useState<"signin" | "request">(defaultTab);
   const [success, setSuccess] = useState<string | null>(null);
   const [showForgot, setShowForgot] = useState(false);
@@ -115,14 +117,15 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
   }, [isOpen, defaultTab]);
 
   const handleBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) onClose();
+    if (!preventClose && e.target === e.currentTarget) onClose();
   };
 
   useEffect(() => {
+    if (preventClose) return;
     const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     if (isOpen) document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, preventClose]);
 
   useScrollLock(isOpen);
 
@@ -183,12 +186,14 @@ export const BRIDGEAuthModal = ({ isOpen, onClose, defaultTab = "signin", onSign
             <div className={cn("flex flex-col gap-4", isMobile ? "px-5 pt-5" : "px-8 pt-5")}>
               <div className="flex justify-between items-center">
                 {isMobile ? <BridgeLogo height={28} /> : <div />}
-                <button
-                  onClick={onClose}
-                  className="w-[34px] h-[34px] rounded-full border-[1.5px] border-[#DEDEDE] bg-transparent hover:bg-[#F3F5F2] hover:border-[#1B4D3E] flex items-center justify-center cursor-pointer transition-all duration-200 shrink-0"
-                >
-                  <X size={16} color="#191919" />
-                </button>
+                {!preventClose && (
+                  <button
+                    onClick={onClose}
+                    className="w-[34px] h-[34px] rounded-full border-[1.5px] border-[#DEDEDE] bg-transparent hover:bg-[#F3F5F2] hover:border-[#1B4D3E] flex items-center justify-center cursor-pointer transition-all duration-200 shrink-0"
+                  >
+                    <X size={16} color="#191919" />
+                  </button>
+                )}
               </div>
 
               {/* Tab Bar */}
