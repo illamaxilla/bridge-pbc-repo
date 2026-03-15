@@ -115,7 +115,7 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
   {
     path: "/resources/sector-briefs-full",
     title: "Sector Intelligence Briefs — Full",
-    component: lazy(() => import("./pages/BRIDGE_AllSectors_Paid_version")),
+    component: lazy(() => import("./pages/resources/BRIDGE_AllSectorBriefsFull_PAID")),
     auth: "paid",
   },
   {
