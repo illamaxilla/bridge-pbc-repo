@@ -899,7 +899,7 @@ const S01_ReadingProgressBar=({coverRef})=>{
       </div>
       {/* Right: CTAs */}
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
     </div>
@@ -2190,7 +2190,7 @@ const S01_Footer=()=>(
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -2658,7 +2658,7 @@ const S02_ReadingProgressBar = ({ coverRef }) => {
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
     </div>
@@ -4040,8 +4040,8 @@ const S02_Footer = () => (
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(
-          <a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>
+        {[{l:'All Sectors',h:'/resources'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((item,i)=>(
+          <a key={i} href={item.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{item.l}</a>
         ))}
       </div>
     </div>
@@ -4846,7 +4846,7 @@ const S03_ReadingProgressBar=({coverRef})=>{
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
     </div>
@@ -6182,7 +6182,7 @@ const S03_Footer=()=>(
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -7008,7 +7008,7 @@ const S04_ReadingProgressBar=({coverRef})=>{
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         {/* v4: cta-primary hover lift */}
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
@@ -8373,7 +8373,7 @@ const S04_Footer=()=>(
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -9210,7 +9210,7 @@ const S05_ReadingProgressBar=({coverRef})=>{
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         {/* v4: cta-primary for hover lift */}
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
@@ -10590,7 +10590,7 @@ const S05_Footer=()=>(
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -12698,8 +12698,8 @@ const S06_Footer=()=>(
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(
-          <a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>
+        {[{l:'All Sectors',h:'/resources'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((item,i)=>(
+          <a key={i} href={item.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{item.l}</a>
         ))}
       </div>
     </div>
@@ -12752,7 +12752,7 @@ const S06_ReadingProgressBar=({coverRef,activeSection=0})=>{
 
       {/* Right: CTAs */}
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
     </div>
@@ -13732,7 +13732,7 @@ const S07_ReadingProgressBar=({coverRef})=>{
       </div>
       {/* Right: CTAs */}
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
     </div>
@@ -14981,7 +14981,7 @@ const S07_Footer=()=>(
         <span style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(255,255,255,0.18)'}}>Sector 07 of 12 · Sports, Entertainment & Creative Industries · Full Edition · March 2026 · bridgepbc.com/intelligence</span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'16px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.18)',textDecoration:'none'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.18)',textDecoration:'none'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -15766,7 +15766,7 @@ const S08_ReadingProgressBar=({coverRef})=>{
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
     </div>
@@ -16955,7 +16955,7 @@ const S08_Footer=()=>(
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -17785,7 +17785,7 @@ const S09_ReadingProgressBar=({coverRef})=>{
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         {/* v4: cta-primary hover lift */}
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
@@ -19143,7 +19143,7 @@ const S09_Footer=()=>(
         <span style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(255,255,255,0.18)'}}>Sector 09 of 12 · Tourism & Hospitality · Full Edition · March 2026 · bridgepbc.com/intelligence</span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'16px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.18)',textDecoration:'none'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.18)',textDecoration:'none'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -19992,7 +19992,7 @@ const S10_ReadingProgressBar=({coverRef})=>{
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         {/* v4: cta-primary hover lift */}
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
@@ -21362,7 +21362,7 @@ const S10_Footer=()=>(
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -22333,7 +22333,7 @@ const S11_ReadingProgressBar=({coverRef})=>{
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
     </div>
@@ -23560,7 +23560,7 @@ const S11_Footer=()=>(
         </span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'18px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none',letterSpacing:'0.5px'}}>{x.l}</a>))}
       </div>
     </div>
   </div>
@@ -24411,7 +24411,7 @@ const S12_ReadingProgressBar=({coverRef})=>{
         {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>}
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
-        <a href="#" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
+        <a href="/sectors" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>All Sectors →</a>
         <a href="#upsell" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.5px'}}>Full Package →</a>
       </div>
     </div>
@@ -25716,7 +25716,7 @@ const S12_Footer=()=>(
         <span style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(255,255,255,0.18)'}}>Sector 12 of 12 · Transportation & Logistics · Full Edition · March 2026 · bridgepbc.com/intelligence</span>
       </div>
       <div className="footer-links" style={{display:'flex',gap:'16px'}}>
-        {['All Sectors','Members','Full Package','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.18)',textDecoration:'none'}}>{l}</a>))}
+        {[{l:'All Sectors',h:'/sectors'},{l:'Members',h:'/membership'},{l:'Full Package',h:'/membership'},{l:'Contact',h:'/contact'}].map((x,i)=>(<a key={i} href={x.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.18)',textDecoration:'none'}}>{x.l}</a>))}
       </div>
     </div>
   </div>

@@ -43,6 +43,9 @@ const SEARCH_INDEX: SearchEntry[] = [
   { title: "Community Forum", description: "BRIDGE community — connect with members, share insights, and collaborate.", path: "/community", category: "Pages", keywords: ["community", "forum", "members", "discussion", "networking"] },
   { title: "FAQ & Help Centre", description: "Frequently asked questions about BRIDGE membership, services, and Ghana investment.", path: "/faq", category: "Pages", keywords: ["faq", "help", "questions", "support", "how to", "guide"] },
   { title: "Membership", description: "BRIDGE membership tiers — Free and Paid access to intelligence, community, and deal flow.", path: "/membership", category: "Pages", keywords: ["membership", "pricing", "subscribe", "join", "sign up", "free", "paid", "tier"] },
+  { title: "Terms of Service", description: "BRIDGE PBC terms of service — account usage, intellectual property, and membership policies.", path: "/terms", category: "Pages", keywords: ["terms", "terms of service", "legal", "tos", "agreement"] },
+  { title: "Privacy Policy", description: "How BRIDGE PBC collects, uses, and protects your personal information.", path: "/privacy", category: "Pages", keywords: ["privacy", "privacy policy", "data", "cookies", "gdpr", "personal information"] },
+  { title: "Accessibility Statement", description: "BRIDGE PBC's commitment to digital accessibility and WCAG compliance.", path: "/accessibility", category: "Pages", keywords: ["accessibility", "wcag", "screen reader", "a11y", "inclusive"] },
 
   // Sectors
   { title: "All Sectors Overview", description: "Explore BRIDGE's 12 integrated investment sectors across Ghana's economy.", path: "/sectors", category: "Sectors", keywords: ["sectors", "overview", "12 sectors", "all sectors"] },
@@ -78,6 +81,10 @@ const SEARCH_INDEX: SearchEntry[] = [
   { title: "Intelligence Reports", description: "Full access to BRIDGE intelligence reports and sector analyses.", path: "/intelligence/reports", category: "Intelligence", keywords: ["reports", "intelligence", "analysis"], requiresAuth: true },
   { title: "Watchlist", description: "Track sectors and ventures of interest in your personal watchlist.", path: "/intelligence/watchlist", category: "Intelligence", keywords: ["watchlist", "track", "follow", "monitor"], requiresAuth: true },
   { title: "Analytics", description: "Deep analytics and data visualisation across BRIDGE sectors.", path: "/intelligence/analytics", category: "Intelligence", keywords: ["analytics", "data", "charts", "visualisation", "statistics"], requiresAuth: true },
+
+  // Cannabis Intelligence
+  { title: "Cannabis Licensing Intelligence", description: "NCC cannabis licensing series — 11 licence categories with regulatory analysis and market sizing.", path: "/resources/cannabis-intelligence", category: "Reports", keywords: ["cannabis", "marijuana", "ncc", "licence", "licensing", "narcotics", "hemp", "regulation"] },
+  { title: "Cannabis Intelligence Summary", description: "Overview of Ghana's cannabis licensing framework and market opportunity.", path: "/resources/cannabis-intelligence/summary", category: "Reports", keywords: ["cannabis", "summary", "licensing", "overview", "ncc"] },
 ];
 
 const CATEGORIES = ["All", "Pages", "Sectors", "Reports", "Intelligence"];

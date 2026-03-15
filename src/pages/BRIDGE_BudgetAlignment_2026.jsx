@@ -114,8 +114,8 @@ const TopBar = ({ logoRef }) => {
         <span className="mob-show" style={{ fontFamily:F.sans, fontSize:'11px', fontWeight:700, color:C.forest }}>Budget Brief</span>
       </div>
       <div style={{ display:'flex', gap:'10px', alignItems:'center' }}>
-        <a href="#" className="mob-hide" style={{ fontFamily:F.sans, fontSize:'11px', fontWeight:700, color:C.forest, textDecoration:'none' }}>Members →</a>
-        <a href="#" style={{ background:C.forest, color:C.lime, padding:'7px 14px', fontFamily:F.sans, fontSize:'10px', fontWeight:700, textDecoration:'none', letterSpacing:'0.3px' }}>Apply →</a>
+        <a href="/membership" className="mob-hide" style={{ fontFamily:F.sans, fontSize:'11px', fontWeight:700, color:C.forest, textDecoration:'none' }}>Members →</a>
+        <a href="/login" style={{ background:C.forest, color:C.lime, padding:'7px 14px', fontFamily:F.sans, fontSize:'10px', fontWeight:700, textDecoration:'none', letterSpacing:'0.3px' }}>Apply →</a>
       </div>
     </div>
   );
@@ -598,7 +598,7 @@ const InvestorCTA = () => (
         </div>
 
         <div className="cta-row" style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
-          <a href="#" style={{ display:'flex', alignItems:'center', gap:'10px', background:C.lime, color:C.ink, padding:'14px 28px', fontFamily:F.sans, fontSize:'12px', fontWeight:800, textDecoration:'none', letterSpacing:'0.5px', flex:'1', minWidth:'200px', justifyContent:'center' }}>
+          <a href="/login" style={{ display:'flex', alignItems:'center', gap:'10px', background:C.lime, color:C.ink, padding:'14px 28px', fontFamily:F.sans, fontSize:'12px', fontWeight:800, textDecoration:'none', letterSpacing:'0.5px', flex:'1', minWidth:'200px', justifyContent:'center' }}>
             <span>Apply for Members Access</span>
             <span style={{ fontSize:'14px', fontWeight:900 }}>→</span>
           </a>
@@ -609,7 +609,7 @@ const InvestorCTA = () => (
         </div>
 
         <div style={{ marginTop:'16px', display:'flex', alignItems:'center', gap:'16px' }}>
-          <a href="#" style={{ fontFamily:F.sans, fontSize:'10px', fontWeight:600, color:'rgba(250,248,243,0.25)', textDecoration:'none' }}>View all 12 sector briefs →</a>
+          <a href="/resources" style={{ fontFamily:F.sans, fontSize:'10px', fontWeight:600, color:'rgba(250,248,243,0.25)', textDecoration:'none' }}>View all 12 sector briefs →</a>
           <span style={{ fontFamily:F.mono, fontSize:'9px', color:'rgba(250,248,243,0.15)', letterSpacing:'1px' }}>bridgepbc.com/intelligence</span>
         </div>
       </div>
@@ -629,8 +629,8 @@ const Footer = () => (
         <div style={{ fontFamily:F.sans, fontSize:'10px', color:'rgba(250,248,243,0.35)' }}>2026 Budget Alignment Brief · BRIDGE PBC · bridgepbc.com</div>
       </div>
       <div className="footer-nav" style={{ display:'flex', gap:'14px' }}>
-        {['Intelligence','Members','Contact'].map((l, i) => (
-          <a key={i} href="#" style={{ fontFamily:F.sans, fontSize:'10px', fontWeight:600, color:'rgba(250,248,243,0.35)', textDecoration:'none' }}>{l}</a>
+        {[{l:'Intelligence',h:'/intelligence/dashboard'},{l:'Members',h:'/membership'},{l:'Contact',h:'/contact'}].map((item, i) => (
+          <a key={i} href={item.h} style={{ fontFamily:F.sans, fontSize:'10px', fontWeight:600, color:'rgba(250,248,243,0.35)', textDecoration:'none' }}>{item.l}</a>
         ))}
       </div>
     </div>

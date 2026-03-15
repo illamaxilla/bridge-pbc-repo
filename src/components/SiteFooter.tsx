@@ -226,13 +226,18 @@ function SiteFooter() {
               © 2026 BRIDGE PBC
             </span>
             <div className="flex gap-3">
-              {["Terms", "Privacy", "Accessibility"].map((link) => (
+              {[
+                { label: "Terms", path: "/terms" },
+                { label: "Privacy", path: "/privacy" },
+                { label: "Accessibility", path: "/accessibility" },
+              ].map(({ label, path }) => (
                 <a
-                  key={link}
-                  href="#"
+                  key={label}
+                  href={path}
+                  onClick={(e) => { e.preventDefault(); navigate(path); }}
                   className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif] no-underline"
                 >
-                  {link}
+                  {label}
                 </a>
               ))}
             </div>
@@ -357,13 +362,18 @@ function SiteFooter() {
               © 2026 BRIDGE PBC
             </span>
             <div className="flex gap-5">
-              {["Terms", "Privacy", "Accessibility"].map((link) => (
+              {[
+                { label: "Terms", path: "/terms" },
+                { label: "Privacy", path: "/privacy" },
+                { label: "Accessibility", path: "/accessibility" },
+              ].map(({ label, path }) => (
                 <a
-                  key={link}
-                  href="#"
+                  key={label}
+                  href={path}
+                  onClick={(e) => { e.preventDefault(); navigate(path); }}
                   className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif] no-underline"
                 >
-                  {link}
+                  {label}
                 </a>
               ))}
             </div>

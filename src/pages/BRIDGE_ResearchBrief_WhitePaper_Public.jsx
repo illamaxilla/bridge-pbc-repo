@@ -27,7 +27,7 @@ const TopBar=({coverLogoRef})=>{
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center'}}>
         <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'9px',color:C.faint}}>bridgepbc.com/research</span>
-        <a href="#" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Members</a>
+        <a href="/membership" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Members</a>
       </div>
     </div>
   );
@@ -233,8 +233,8 @@ const Gate=()=>(
         <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,32px)',fontWeight:700,color:C.paper,lineHeight:1.2,marginBottom:'20px'}}>Sections §4–§8 are available to Members. 74 additional pages of sector analysis, capital architecture, and policy frameworks.</h2>
         <p style={{fontFamily:F.body,fontSize:'14px',lineHeight:1.85,color:'rgba(250,248,243,0.55)',fontWeight:300,marginBottom:'24px'}}>This public excerpt covers the introduction, motivation, and methodology. The full 96-page working paper includes complete sector-by-sector analysis, venture pipeline data, and BRIDGE's full implementation roadmap for Ghana's development.</p>
         <div className="gate-cta" style={{display:'flex',gap:'10px',flexWrap:'wrap'}}>
-          <a href="#" style={{background:C.lime,color:C.ink,padding:'12px 24px',fontFamily:F.sans,fontSize:'12px',fontWeight:800,textDecoration:'none',borderRadius:'2px'}}>Apply for Members Access</a>
-          <a href="#" style={{border:`1px solid rgba(255,255,255,0.15)`,color:C.paper,padding:'12px 20px',fontFamily:F.sans,fontSize:'12px',fontWeight:600,textDecoration:'none',borderRadius:'2px'}}>All Research →</a>
+          <a href="/login" style={{background:C.lime,color:C.ink,padding:'12px 24px',fontFamily:F.sans,fontSize:'12px',fontWeight:800,textDecoration:'none',borderRadius:'2px'}}>Apply for Members Access</a>
+          <a href="/resources" style={{border:`1px solid rgba(255,255,255,0.15)`,color:C.paper,padding:'12px 20px',fontFamily:F.sans,fontSize:'12px',fontWeight:600,textDecoration:'none',borderRadius:'2px'}}>All Research →</a>
         </div>
       </div>
       <div>
@@ -263,7 +263,7 @@ const Footer=()=>{
         <div style={{fontFamily:F.sans,fontSize:'9px',color:'rgba(250,248,243,0.4)'}}>Research Brief &middot; BRIDGE-WP-01-2025 &middot; bridgepbc.com/research</div>
       </div>
       <div className="mob-hide" style={{display:'flex',gap:'16px'}}>
-        {['Research','Members','Contact','bridgepbc.com'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.4)',textDecoration:'none'}}>{l}</a>))}
+        {[{l:'Research',h:'/resources'},{l:'Members',h:'/membership'},{l:'Contact',h:'/contact'},{l:'bridgepbc.com',h:'#'}].map((item,i)=>(<a key={i} href={item.h} style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.4)',textDecoration:'none'}}>{item.l}</a>))}
       </div>
     </div>
   </div>

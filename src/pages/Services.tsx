@@ -3201,13 +3201,18 @@ export default function ServicesSectorsPageV2() {
             {"\u00A9"} 2026 BRIDGE PBC
           </span>
           <div className="flex" style={{ gap: isMobile ? "12px" : "20px" }}>
-            {["Terms", "Privacy", "Accessibility"].map((link) => (
+            {[
+              { label: "Terms", path: "/terms" },
+              { label: "Privacy", path: "/privacy" },
+              { label: "Accessibility", path: "/accessibility" },
+            ].map(({ label, path }) => (
               <a
-                key={link}
-                href="#"
+                key={label}
+                href={path}
+                onClick={(e) => { e.preventDefault(); navigate(path); }}
                 className="text-[11px] font-['DM_Sans',sans-serif] no-underline text-white/25"
               >
-                {link}
+                {label}
               </a>
             ))}
           </div>

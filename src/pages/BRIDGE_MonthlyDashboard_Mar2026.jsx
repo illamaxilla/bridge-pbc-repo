@@ -27,7 +27,7 @@ const TopBar=({coverLogoRef})=>{
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center'}}>
         <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'9px',color:C.faint}}>bridgepbc.com/dashboard</span>
-        <a href="#" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Members</a>
+        <a href="/membership" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Members</a>
       </div>
     </div>
   );
@@ -183,7 +183,7 @@ const WatchItems=()=>(
       <div className="members-gate" style={{background:C.forest,padding:'16px 20px',display:'flex',flexDirection:'column',justifyContent:'center'}}>
         <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.lime,marginBottom:'8px'}}>Members · Full Dashboard</div>
         <p style={{fontFamily:F.sans,fontSize:'12px',color:'rgba(250,248,243,0.6)',lineHeight:1.6,marginBottom:'14px'}}>Members receive the expanded monthly dashboard: 174+ venture status tracker, sector alert notifications, pipeline deal-flow updates, and direct analyst commentary on each Watch Item.</p>
-        <a href="#" style={{background:C.lime,color:C.ink,padding:'10px 18px',fontFamily:F.sans,fontSize:'11px',fontWeight:800,textDecoration:'none',borderRadius:'2px',letterSpacing:'0.5px',display:'inline-block',width:'fit-content'}}>Apply for Members Access</a>
+        <a href="/login" style={{background:C.lime,color:C.ink,padding:'10px 18px',fontFamily:F.sans,fontSize:'11px',fontWeight:800,textDecoration:'none',borderRadius:'2px',letterSpacing:'0.5px',display:'inline-block',width:'fit-content'}}>Apply for Members Access</a>
       </div>
     </div>
   </div>
@@ -200,7 +200,7 @@ const Footer=()=>{
         <span style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(255,255,255,0.2)'}}>Monthly Dashboard &middot; March 2026 &middot; bridgepbc.com/dashboard</span>
       </div>
       <div className="mob-hide" style={{display:'flex',gap:'14px'}}>
-        {['Archive','Members','Contact'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none'}}>{l}</a>))}
+        {[{l:'Archive',h:'/resources'},{l:'Members',h:'/membership'},{l:'Contact',h:'/contact'}].map((item,i)=>(<a key={i} href={item.h} style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,0.2)',textDecoration:'none'}}>{item.l}</a>))}
       </div>
     </div>
   </div>

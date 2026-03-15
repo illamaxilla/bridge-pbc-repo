@@ -23,6 +23,9 @@ export const Policy = lazy(() => import("./pages/Policy"));
 export const FAQPage = lazy(() => import("./pages/BRIDGE_FAQ_Page"));
 export const MembershipPage = lazy(() => import("./pages/BRIDGE_MembershipPage"));
 export const SearchPage = lazy(() => import("./pages/Search"));
+export const TermsPage = lazy(() => import("./pages/Terms"));
+export const PrivacyPage = lazy(() => import("./pages/Privacy"));
+export const AccessibilityPage = lazy(() => import("./pages/Accessibility"));
 
 // Intelligence (protected)
 export const Intelligence = lazy(() => import("./pages/intelligence/Intelligence"));

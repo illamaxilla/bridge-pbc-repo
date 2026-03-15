@@ -45,7 +45,7 @@ const TopBar=({coverLogoRef})=>{
       </div>
       <div style={{display:'flex',gap:'10px',alignItems:'center'}}>
         <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'9px',color:C.faint}}>bridgepbc.com/annual-review</span>
-        <a href="#" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Members</a>
+        <a href="/membership" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Members</a>
       </div>
     </div>
   );
@@ -186,8 +186,8 @@ const WhatsInside=()=>(
             ))}
           </div>
           <div className="cta-row" style={{marginTop:'20px',display:'flex',gap:'10px'}}>
-            <a href="#" style={{flex:1,background:C.forest,color:C.lime,padding:'13px',fontFamily:F.sans,fontSize:'12px',fontWeight:800,textAlign:'center',textDecoration:'none',borderRadius:'2px',letterSpacing:'0.5px',display:'block'}}>Apply for Members Access</a>
-            <a href="#" style={{padding:'13px 16px',border:`1px solid ${C.border}`,color:C.forest,fontFamily:F.sans,fontSize:'12px',fontWeight:700,textDecoration:'none',borderRadius:'2px',display:'flex',alignItems:'center',justifyContent:'center',whiteSpace:'nowrap'}}>View Tiers →</a>
+            <a href="/login" style={{flex:1,background:C.forest,color:C.lime,padding:'13px',fontFamily:F.sans,fontSize:'12px',fontWeight:800,textAlign:'center',textDecoration:'none',borderRadius:'2px',letterSpacing:'0.5px',display:'block'}}>Apply for Members Access</a>
+            <a href="/membership" style={{padding:'13px 16px',border:`1px solid ${C.border}`,color:C.forest,fontFamily:F.sans,fontSize:'12px',fontWeight:700,textDecoration:'none',borderRadius:'2px',display:'flex',alignItems:'center',justifyContent:'center',whiteSpace:'nowrap'}}>View Tiers →</a>
           </div>
         </div>
       </div>
@@ -206,7 +206,7 @@ const Footer=()=>{
         <div style={{fontFamily:F.sans,fontSize:'9px',color:'rgba(250,248,243,0.4)'}}>Annual Review 2025 &middot; Public Teaser &middot; bridgepbc.com/annual-review</div>
       </div>
       <div className="mob-hide" style={{display:'flex',gap:'16px'}}>
-        {['About','Members','Contact','bridgepbc.com'].map((l,i)=>(<a key={i} href="#" style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.4)',textDecoration:'none'}}>{l}</a>))}
+        {[{l:'About',h:'/about'},{l:'Members',h:'/membership'},{l:'Contact',h:'/contact'},{l:'bridgepbc.com',h:'#'}].map((item,i)=>(<a key={i} href={item.h} style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.4)',textDecoration:'none'}}>{item.l}</a>))}
       </div>
     </div>
   </div>
