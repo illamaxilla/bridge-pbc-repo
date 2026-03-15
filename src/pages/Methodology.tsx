@@ -481,10 +481,6 @@ const IconArrowRight = () => (
 );
 
 
-/* ─── COLORS ─────────────────────────────────────────────────────── */
-const colors = { primary: "#1B4D3E", accent: "#B8D935", white: "#FFFFFF", line: "#DEDEDE" };
-
-
 /* ─── HERO ──────────────────────────────────────────────────────── */
 function Hero({ activeIdx, setActive }) {
   const isMobile = useIsMobile();
