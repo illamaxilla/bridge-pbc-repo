@@ -52,7 +52,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             An unexpected error occurred. You can try again or return to the
             home page.
           </p>
-          {this.state.error && (
+          {this.state.error && import.meta.env.DEV && (
             <p className="text-sm text-[#9CA3AF] mb-6 max-w-[480px] font-mono break-all">
               {this.state.error.message}
             </p>
