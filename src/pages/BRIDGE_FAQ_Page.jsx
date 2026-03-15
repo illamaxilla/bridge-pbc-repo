@@ -3,6 +3,7 @@ import { colors, CONTENT_MAX_WIDTH } from '../theme';
 import { Layout } from "@/components/Layout";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 // ============================================================================
 // BRIDGE PBC — FAQ Page
@@ -1367,6 +1368,7 @@ function NeedHelpCTA({ onContact }) {
 
 // ─── Main Export ──────────────────────────────────────────────────────────────
 export default function FAQPage() {
+  usePageMeta({ title: "FAQ", description: "Frequently asked questions about BRIDGE PBC membership, services, and Ghana investment." });
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('about');
   const [searchQuery, setSearchQuery] = useState('');

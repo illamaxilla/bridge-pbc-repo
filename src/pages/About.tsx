@@ -11,6 +11,7 @@ import { Layout } from "@/components/Layout";
 
 import { colors } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 // ── Header is now shared (SiteHeader)
 
@@ -1640,6 +1641,7 @@ const SectorGrid = () => {
 // MAIN COMPONENT
 // ============================================================================
 export default function BRIDGEAboutPage() {
+  usePageMeta({ title: "About BRIDGE PBC", description: "Learn about BRIDGE PBC's mission, team, and approach to catalysing Ghana's economic transformation across 12 integrated sectors." });
   const isMobile = useIsMobile();
 
   return (

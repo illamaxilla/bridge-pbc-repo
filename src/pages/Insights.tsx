@@ -28,6 +28,7 @@ import {
   Minus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 import { colors, layout } from "@/lib/theme";
 const C = {
@@ -604,6 +605,7 @@ function WhyInsightSection({ mobile }) {
 
 
 export default function InsightsPage() {
+  usePageMeta({ title: "Insights & Analysis", description: "Latest analysis, sector briefs, and strategic intelligence from BRIDGE PBC on Ghana's investment landscape." });
   const [activeStep, setActiveStep] = useState(0);
   const [activeDim, setActiveDim] = useState(0);
   const [activeComp, setActiveComp] = useState("All");

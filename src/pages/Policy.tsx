@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 // ── Data ────────────────────────────────────────────────────────────
 
@@ -415,6 +416,7 @@ function CalendarEventCard({ ev, isMobile }: { ev: CalendarEvent; isMobile: bool
 // ── Page ─────────────────────────────────────────────────────────────
 
 export default function PolicyPage() {
+  usePageMeta({ title: "Policy Updates", description: "Ghana policy developments and their implications for BRIDGE's 12 investment sectors." });
   const isMobile = useIsMobile();
   const [activeSector, setActiveSector] = useState("all");
   const [activeCategory, setActiveCategory] = useState("All Types");

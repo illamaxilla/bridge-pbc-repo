@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useAuth } from "@/context/AuthContext";
 import { colors } from "@/lib/theme";
 import {
@@ -147,6 +148,7 @@ function searchEntries(query: string, category: string): SearchEntry[] {
 
 // ─── Search Page ──────────────────────────────────────────────────
 export default function SearchPage() {
+  usePageMeta({ title: "Search", description: "Search BRIDGE PBC \u2014 find pages, sectors, reports, and intelligence across the site." });
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { user, tier } = useAuth();

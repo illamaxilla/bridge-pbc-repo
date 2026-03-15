@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
 // ============================================================================
@@ -2514,6 +2515,7 @@ const WidgetSection = () => {
 // ============================================================================
 
 export default function ContactPage() {
+  usePageMeta({ title: "Contact Us", description: "Get in touch with BRIDGE PBC \u2014 submit a question, book a call, or explore partnership opportunities." });
   return (
     <Layout>
     <div className="font-[Inter,sans-serif] m-0 p-0">

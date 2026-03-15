@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/context/AuthContext";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   Box,
   CreditCard,
@@ -1763,6 +1764,7 @@ function ResourceHubTab({ mobile, isPaid, onUnlock, onNavigate }: { mobile: bool
 }
 
 export default function ResourcesPage() {
+  usePageMeta({ title: "Resources & Research Library", description: "Sector intelligence briefs, policy trackers, white papers, and the complete BRIDGE research archive." });
   const navigate = useNavigate();
   const { user, tier } = useAuth();
   const [tab, setTab] = useState("intelligence");
