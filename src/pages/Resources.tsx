@@ -47,6 +47,8 @@ import {
   X,
   LayoutDashboard,
   Crown,
+  Award,
+  Sparkles,
 } from "lucide-react";
 
 // ─── Design System ────────────────────────────────────────
@@ -496,12 +498,14 @@ const docs = [
     label: "Data & Reports",
     title: "BRIDGE Portfolio Data — 174+ Ventures",
     desc: "Full venture pipeline data across all sectors including scoring matrices, capital ranges by tier, and priority rankings.",
-    tag: "Coming Soon",
+    tag: "New",
     free: false,
     pages: "174 ventures",
-    action: "Notify Me",
+    action: "Unlock Access",
     soon: false,
-    notifyMe: true,
+    path: "/resources/portfolio-data",
+    paidPath: "/resources/portfolio",
+    requiresSignIn: true,
   },
   {
     id: 4,
@@ -570,6 +574,36 @@ const docs = [
     path: "/resources/cannabis-intelligence",
     requiresSignIn: true,
   },
+  {
+    id: 9,
+    icon: Sparkles,
+    label: "Philosophy",
+    title: "Peace & Prosperity",
+    desc: "The philosophical and empirical foundation behind everything BRIDGE does — why peace-driven development unlocks sustainable prosperity.",
+    tag: "New",
+    free: false,
+    pages: "Framework",
+    action: "Unlock Access",
+    soon: false,
+    path: "/resources/peace-prosperity-public",
+    paidPath: "/resources/peace-prosperity",
+    requiresSignIn: true,
+  },
+  {
+    id: 10,
+    icon: Award,
+    label: "Methodology",
+    title: "BRIDGE Impact Score™",
+    desc: "The proprietary evaluation methodology BRIDGE applies to every venture it considers — scoring, weighting, and sector alignment explained.",
+    tag: "New",
+    free: false,
+    pages: "Methodology",
+    action: "Unlock Access",
+    soon: false,
+    path: "/resources/impact-score-public",
+    paidPath: "/resources/impact-score",
+    requiresSignIn: true,
+  },
 ];
 
 const updates = [
@@ -580,10 +614,19 @@ const updates = [
     date: "March 2026",
     read: "8 min",
     free: true,
-    path: "/resources/budget-alignment",
+    path: "/resources/budget-alignment-public",
   },
   {
     id: 2,
+    type: "Annual Review",
+    title: "BRIDGE 2025 Sector Intelligence Review",
+    date: "Jan 2026",
+    read: "20 min",
+    free: false,
+    path: "/resources/annual-review-2025-public",
+  },
+  {
+    id: 3,
     type: "Sector Brief",
     title: "Agriculture Crisis & Strategic Positioning",
     date: "Feb 2026",
@@ -592,13 +635,40 @@ const updates = [
     path: "/resources/sector-briefs?sector=6",
   },
   {
-    id: 3,
-    type: "Annual Review",
-    title: "BRIDGE 2025 Sector Intelligence Review",
-    date: "Jan 2026",
-    read: "20 min",
+    id: 4,
+    type: "New Release",
+    title: "BRIDGE Portfolio Data — 174+ Ventures Now Live",
+    date: "March 2026",
+    read: "5 min",
     free: false,
-    path: "/resources/ghana-intelligence",
+    path: "/resources/portfolio-data",
+  },
+  {
+    id: 5,
+    type: "New Release",
+    title: "Peace & Prosperity — The BRIDGE Philosophy",
+    date: "March 2026",
+    read: "10 min",
+    free: false,
+    path: "/resources/peace-prosperity",
+  },
+  {
+    id: 6,
+    type: "Methodology",
+    title: "BRIDGE Impact Score™ — How We Evaluate Ventures",
+    date: "March 2026",
+    read: "7 min",
+    free: false,
+    path: "/resources/impact-score",
+  },
+  {
+    id: 7,
+    type: "Dashboard",
+    title: "Monthly Dashboard — March 2026 Intelligence Snapshot",
+    date: "March 2026",
+    read: "4 min",
+    free: true,
+    path: "/resources/monthly-dashboard",
   },
 ];
 
@@ -615,12 +685,18 @@ function updateTagStyle(type) {
   if (type === "Policy Update") return { bg: `${C.teal}15`, color: C.teal };
   if (type === "Sector Brief") return { bg: `${C.primary}12`, color: C.primary };
   if (type === "Annual Review") return { bg: C.accentBg, color: C.primary };
+  if (type === "New Release") return { bg: `${C.teal}12`, color: C.teal };
+  if (type === "Methodology") return { bg: `${C.primary}10`, color: C.primary };
+  if (type === "Dashboard") return { bg: C.accentBg, color: C.primary };
   return { bg: C.accentBg, color: C.primary };
 }
 
 function updateAccent(type) {
   if (type === "Policy Update") return C.teal;
   if (type === "Sector Brief") return C.primary;
+  if (type === "New Release") return C.teal;
+  if (type === "Methodology") return C.primary;
+  if (type === "Dashboard") return C.accent;
   return C.accent;
 }
 
@@ -1408,9 +1484,38 @@ function LibraryTab({ mobile, onNavigate, onNotifyMe }) {
   );
 }
 
-// ─── What's New Strip ─────────────────────────────────────
+// ─── What's New Strip (auto-scrolling carousel) ──────────
 function WhatsNew({ mobile, onCardClick, isLoggedIn }) {
   const [hov, setHov] = React.useState(null);
+  const [paused, setPaused] = React.useState(false);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  // Auto-scroll effect — smoothly scrolls cards across, resets to start
+  React.useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || paused) return;
+    const interval = setInterval(() => {
+      if (!el) return;
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 0) return;
+      if (el.scrollLeft >= maxScroll - 2) {
+        el.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        el.scrollBy({ left: 320, behavior: "smooth" });
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [paused]);
+
+  const tagColors: Record<string, { bg: string; color: string }> = {
+    "Policy Update": { bg: C.teal, color: "#fff" },
+    "Sector Brief": { bg: C.primary, color: "#fff" },
+    "Annual Review": { bg: C.accent, color: C.primary },
+    "New Release": { bg: C.teal, color: "#fff" },
+    "Methodology": { bg: C.primary, color: "#fff" },
+    "Dashboard": { bg: C.accent, color: C.primary },
+  };
+
   return (
     <div
       style={{
@@ -1436,23 +1541,22 @@ function WhatsNew({ mobile, onCardClick, isLoggedIn }) {
           </button>
         </div>
         <div
-          className="gap-2.5 scrollbar-none"
+          ref={scrollRef}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => { setPaused(false); setHov(null); }}
+          className="scrollbar-none"
           style={{
-            display: mobile ? "flex" : "grid",
-            gridTemplateColumns: mobile ? undefined : "repeat(3,1fr)",
-            overflowX: mobile ? "auto" : "visible",
-            scrollSnapType: mobile ? "x mandatory" : undefined,
-            paddingBottom: mobile ? "4px" : 0,
+            display: "flex",
+            gap: "10px",
+            overflowX: "auto",
+            scrollSnapType: "x mandatory",
+            paddingBottom: "4px",
+            scrollBehavior: "smooth",
           }}
         >
           {updates.map((u, i) => {
             const ac = updateAccent(u.type);
             const isHov = hov === i;
-            const tagColors = {
-              "Policy Update": { bg: C.teal, color: "#fff" },
-              "Sector Brief": { bg: C.primary, color: "#fff" },
-              "Annual Review": { bg: C.accent, color: C.primary },
-            };
             const tc = tagColors[u.type] || { bg: C.primary, color: "#fff" };
             return (
               <div
@@ -1467,10 +1571,10 @@ function WhatsNew({ mobile, onCardClick, isLoggedIn }) {
                   background: u.free && isHov ? "#FAFCF7" : isHov ? "#FAFAFA" : C.white,
                   boxShadow: isHov ? "0 4px 16px rgba(0,0,0,0.06)" : "none",
                   opacity: !u.free ? 0.8 : 1,
-                  flexShrink: mobile ? 0 : undefined,
-                  width: mobile ? "80vw" : "auto",
-                  maxWidth: mobile ? "300px" : "none",
-                  scrollSnapAlign: mobile ? "start" : undefined,
+                  flexShrink: 0,
+                  width: mobile ? "80vw" : "320px",
+                  maxWidth: mobile ? "300px" : "340px",
+                  scrollSnapAlign: "start",
                 }}
               >
                 <div className="flex items-center gap-[5px]">
@@ -1533,17 +1637,16 @@ function WhatsNew({ mobile, onCardClick, isLoggedIn }) {
             );
           })}
         </div>
-        {mobile && (
-          <div className="flex justify-center gap-[5px] mt-2.5">
-            {updates.map((_, i) => (
-              <div
-                key={i}
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: i === 0 ? C.primary : C.line }}
-              />
-            ))}
-          </div>
-        )}
+        {/* Scroll indicator dots */}
+        <div className="flex justify-center gap-[5px] mt-2.5">
+          {updates.map((_, i) => (
+            <div
+              key={i}
+              className="w-1.5 h-1.5 rounded-full transition-colors duration-200"
+              style={{ background: i === 0 ? C.primary : C.line }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

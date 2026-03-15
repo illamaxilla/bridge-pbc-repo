@@ -124,7 +124,7 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
   {
     path: "/resources/white-paper",
     title: "BRIDGE Foundational White Paper",
-    component: lazy(() => import("./pages/BRIDGE_ResearchBrief_WhitePaper_Public")),
+    component: lazy(() => import("./pages/resources/BRIDGE_WhitePaper_Public")),
     auth: "public",
   },
   {
@@ -173,6 +173,48 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
     path: "/resources/cannabis-intelligence",
     title: "NCC Cannabis Licensing Intelligence",
     component: lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_Dashboard")),
+    auth: "public",
+  },
+  {
+    path: "/resources/portfolio-data",
+    title: "BRIDGE Portfolio Data — 174+ Ventures",
+    component: lazy(() => import("./pages/resources/BRIDGE_OpportunityDB_Public")),
+    auth: "protected",
+  },
+  {
+    path: "/resources/budget-alignment-public",
+    title: "2026 Budget Alignment — What It Means for Investors",
+    component: lazy(() => import("./pages/resources/BRIDGE_2026 BudgetAlignment_public")),
+    auth: "public",
+  },
+  {
+    path: "/resources/annual-review-2025-public",
+    title: "BRIDGE 2025 Sector Intelligence Review",
+    component: lazy(() => import("./pages/resources/BRIDGE_AnnualReview_2025_Public")),
+    auth: "protected",
+  },
+  {
+    path: "/resources/peace-prosperity-public",
+    title: "Peace & Prosperity — Public Preview",
+    component: lazy(() => import("./pages/resources/PeaceProsperity_public")),
+    auth: "protected",
+  },
+  {
+    path: "/resources/impact-score-public",
+    title: "BRIDGE Impact Score™ — Public Preview",
+    component: lazy(() => import("./pages/resources/BRIDGE_ImpactScoreDoc_Public")),
+    auth: "protected",
+  },
+  {
+    path: "/resources/policy-tracker-public",
+    title: "Ghana Policy Tracker — Public Preview",
+    component: lazy(() => import("./pages/resources/BRIDGE_PolicyTracker_public")),
+    auth: "protected",
+  },
+  {
+    path: "/resources/monthly-dashboard-public",
+    title: "Monthly Dashboard — March 2026",
+    component: lazy(() => import("./pages/resources/MonthlyDashboard_public")),
     auth: "public",
   },
 ];

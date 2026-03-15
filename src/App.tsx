@@ -105,15 +105,15 @@ const App = () => (
                     <DocComponent />
                   </SectorIntelligenceWrapper>
                 );
+                const wrapped =
+                  auth === "paid" ? <PaidRoute>{content}</PaidRoute> :
+                  auth === "protected" ? <ProtectedRoute>{content}</ProtectedRoute> :
+                  content;
                 return (
                   <Route
                     key={path}
                     path={path}
-                    element={
-                      <ErrorBoundary>
-                        {auth === "paid" ? <PaidRoute>{content}</PaidRoute> : content}
-                      </ErrorBoundary>
-                    }
+                    element={<ErrorBoundary>{wrapped}</ErrorBoundary>}
                   />
                 );
               })}
