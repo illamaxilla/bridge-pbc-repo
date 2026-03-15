@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useId } from "react";
 import { cn } from "@/lib/utils";
 
 // ============================================================
@@ -12,16 +12,23 @@ export interface FieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   hint?: string;
+  error?: string;
 }
 
-export const Field = ({ label, type = "text", placeholder, value, onChange, required, hint }: FieldProps) => {
+export const Field = ({ label, type = "text", placeholder, value, onChange, required, hint, error }: FieldProps) => {
   const [focused, setFocused] = useState(false);
+  const id = useId();
+  const hintId = hint ? `${id}-hint` : undefined;
+  const errorId = error ? `${id}-error` : undefined;
+  const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
+
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
+      <label htmlFor={id} className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
         {label}{required && <span className="text-[#1B4D3E] ml-0.5">*</span>}
       </label>
       <input
+        id={id}
         type={type}
         placeholder={placeholder}
         value={value}
@@ -29,15 +36,24 @@ export const Field = ({ label, type = "text", placeholder, value, onChange, requ
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         required={required}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={describedBy}
         className={cn(
           "px-4 py-3 rounded-[10px] border-[1.5px] text-[15px] font-[Inter,sans-serif] text-[#191919] outline-none transition-all duration-200 w-full box-border",
           focused
             ? "border-[#1B4D3E] bg-white"
-            : "border-[#DEDEDE] bg-[#F3F5F2]"
+            : error
+              ? "border-red-400 bg-red-50"
+              : "border-[#DEDEDE] bg-[#F3F5F2]"
         )}
       />
-      {hint && (
-        <span className="text-xs text-gray-400 font-[Inter,sans-serif]">{hint}</span>
+      {error && (
+        <span id={errorId} className="text-xs text-red-600 font-[Inter,sans-serif]" role="alert">
+          {error}
+        </span>
+      )}
+      {hint && !error && (
+        <span id={hintId} className="text-xs text-gray-400 font-[Inter,sans-serif]">{hint}</span>
       )}
     </div>
   );
@@ -57,12 +73,14 @@ export interface SelectFieldProps {
 
 export const SelectField = ({ label, value, onChange, options, required }: SelectFieldProps) => {
   const [focused, setFocused] = useState(false);
+  const id = useId();
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
+      <label htmlFor={id} className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
         {label}{required && <span className="text-[#1B4D3E] ml-0.5">*</span>}
       </label>
       <select
+        id={id}
         value={value}
         onChange={onChange}
         onFocus={() => setFocused(true)}
@@ -100,12 +118,14 @@ export interface TextareaFieldProps {
 
 export const TextareaField = ({ label, placeholder, value, onChange, required }: TextareaFieldProps) => {
   const [focused, setFocused] = useState(false);
+  const id = useId();
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
+      <label htmlFor={id} className="text-[13px] font-semibold text-[#191919] font-[Inter,sans-serif]">
         {label}{required && <span className="text-[#1B4D3E] ml-0.5">*</span>}
       </label>
       <textarea
+        id={id}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
