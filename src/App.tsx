@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -9,6 +9,13 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PaidRoute } from "./components/PaidRoute";
 import SectorIntelligenceWrapper from "./components/SectorIntelligenceWrapper";
 import NotFound from "./pages/NotFound";
+
+// RentGuard Ghana
+const RentGuardLayout = lazy(() => import("./rentguard/RentGuardLayout"));
+const NationalAdminDashboard = lazy(() => import("./rentguard/NationalAdminDashboard"));
+const RentCardVerifyPage = lazy(() => import("./rentguard/RentCardVerifyPage"));
+const LandlordCompliancePage = lazy(() => import("./rentguard/LandlordCompliancePage"));
+const TenantPortalPage = lazy(() => import("./rentguard/TenantPortalPage"));
 
 import {
   Index, About, Services, Resources, Insights, Methodology,
@@ -128,6 +135,15 @@ const App = () => (
                   element={<ErrorBoundary><PaidRoute><LicenceComponent /></PaidRoute></ErrorBoundary>}
                 />
               ))}
+
+              {/* RentGuard Ghana */}
+              <Route path="/rentguard" element={<ErrorBoundary><RentGuardLayout /></ErrorBoundary>}>
+                <Route index element={<NationalAdminDashboard />} />
+                <Route path="verify" element={<RentCardVerifyPage />} />
+                <Route path="verify/:cardNumber" element={<RentCardVerifyPage />} />
+                <Route path="landlord" element={<LandlordCompliancePage />} />
+                <Route path="tenant" element={<TenantPortalPage />} />
+              </Route>
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
