@@ -14,6 +14,7 @@ const sectorRoute = (slug: string): string => {
 
 import { colors } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const icons = {
   infra: (c, s = 20) => (
@@ -1448,6 +1449,7 @@ const CTA = () => {
 // ── MAIN ──
 
 export default function BRIDGESectorsLanding() {
+  usePageMeta({ title: "Sectors", description: "Explore BRIDGE's 12 integrated investment sectors across Ghana's economy \u2014 from energy to technology to agriculture." });
   return (
     <Layout>
     <div className="font-['Inter',sans-serif] bg-white min-h-screen">

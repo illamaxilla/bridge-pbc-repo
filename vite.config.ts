@@ -16,10 +16,41 @@ export default defineConfig({
       "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    // Dev-server middleware: proxy /api/chat to the streaming handler
+    {
+      name: "bridge-chat-api",
+      configureServer(server) {
+        server.middlewares.use("/api/chat", async (req, res) => {
+          const { handleChat } = await import("./server/chat.js");
+          await handleChat(req, res);
+        });
+      },
+    },
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  build: {
+    // Target modern browsers for smaller bundles
+    target: "es2020",
+    // Enable source maps for debugging but keep build lean
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        // Split vendor chunks for better caching
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "ui-vendor": ["@radix-ui/react-tooltip", "@radix-ui/react-dialog", "@radix-ui/react-tabs"],
+          "supabase": ["@supabase/supabase-js"],
+          "charts": ["recharts"],
+        },
+      },
+    },
+    // Increase chunk size warning limit (sector pages are large by design)
+    chunkSizeWarningLimit: 600,
   },
 });

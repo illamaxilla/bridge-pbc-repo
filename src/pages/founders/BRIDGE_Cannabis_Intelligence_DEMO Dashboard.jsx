@@ -1,13 +1,22 @@
-import { useState, useEffect, useRef, useMemo } from "react";
-import { C, F } from '../theme';
-import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
-import { BRIDGEAuthModal } from "@/components/AuthModal";
-import { BRIDGEEngagementModal } from "@/components/EngagementModal";
+import { useState, useEffect, useRef } from "react";
 
 // ══════════════════════════════════════════════════════════════════════════════
 // DESIGN TOKENS
 // ══════════════════════════════════════════════════════════════════════════════
+const C = {
+  ink:'#0D1A10', paper:'#FAF8F3', paperDark:'#F0EDE4',
+  forest:'#1B4D3E', lime:'#B8D935', limeDark:'#8FA825',
+  muted:'#5C6B5E', faint:'#9AAA9C', border:'#D8D4C8',
+  teal:'#2E5A4D', red:'#A8200D', amber:'#B8730A',
+  positive:'#1A6B2F',
+};
+const F = {
+  display:'"Playfair Display","Georgia",serif',
+  body:'"Source Serif 4","Georgia",serif',
+  sans:'"DM Sans","Helvetica Neue",sans-serif',
+  mono:'"DM Mono","Courier New",monospace',
+};
+
 // ══════════════════════════════════════════════════════════════════════════════
 // INTELLIGENCE DATA
 // ══════════════════════════════════════════════════════════════════════════════
@@ -2536,80 +2545,25 @@ const ClientsView = ({setTier}) => {
 
 
 export default function BridgeCannabisIntelligence() {
-  const { user, tier: authTier } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Founders portal bypass — treat as full member when accessed via /founders/*
-  const isFoundersAccess = location.pathname.startsWith('/founders/');
-
-  // Map auth context tiers to the dashboard's internal tier system
-  const tier = useMemo(() => {
-    if (isFoundersAccess) return 'member'; // full access for founders
-    if (!user) return 'public';
-    if (authTier === 'paid') return 'member';
-    return 'registered'; // free tier → registered
-  }, [user, authTier, isFoundersAccess]);
-
+  const [tier, setTier] = useState('public');
   const [page, setPage] = useState('main');
   const [showLogin, setShowLogin] = useState(false);
-  const [loginTab, setLoginTab] = useState('signin');
-  const [showEngagement, setShowEngagement] = useState(false);
-  const [engagementIntent, setEngagementIntent] = useState('connect');
   const [loginTarget, setLoginTarget] = useState('registered');
   const coverLogoRef = useRef(null);
 
-  // Adapter: when internal code calls setShowLogin/setLoginTarget, open the right modal
-  const handleShowLogin = (show) => {
-    if (show) {
-      setLoginTab('signin');
-      setShowLogin(true);
-    } else {
-      setShowLogin(false);
-    }
-  };
-  const handleLoginTarget = (target) => {
-    setLoginTarget(target);
-    if (target === 'paid' || target === 'member') {
-      // For paid/member upgrade, show engagement modal
-      setEngagementIntent('scope');
-      setShowEngagement(true);
-    } else {
-      setLoginTab(target === 'registered' ? 'request' : 'signin');
-      setShowLogin(true);
-    }
-  };
-
-  // Stub setTier — the real tier comes from auth context, but internal components
-  // still call setTier to trigger login flows
-  const setTier = (t) => {
-    if (t === 'registered') {
-      setLoginTab('request');
-      setShowLogin(true);
-    } else if (t === 'member' || t === 'paid') {
-      setEngagementIntent('scope');
-      setShowEngagement(true);
-    } else if (t === 'clients') {
-      // clients view is a display mode, not an auth tier
-      setPage('clients');
-    }
-  };
+  const handleTierSet = (t) => { setTier(t); setShowLogin(false); };
 
   if (page === 'purchase') {
     return (
-      <>
-        <PurchasePage
-          setPage={setPage}
-          setShowLogin={handleShowLogin}
-          setLoginTarget={handleLoginTarget}
-        />
-        <BRIDGEAuthModal isOpen={showLogin} onClose={() => setShowLogin(false)} defaultTab={loginTab} />
-        <BRIDGEEngagementModal isOpen={showEngagement} onClose={() => setShowEngagement(false)} intent={engagementIntent} />
-      </>
+      <PurchasePage
+        setPage={setPage}
+        setShowLogin={setShowLogin}
+        setLoginTarget={setLoginTarget}
+      />
     );
   }
 
-  if (page === 'clients') {
+  if (tier === 'clients') {
     return (
       <div style={{fontFamily:F.body,background:C.ink,overflowX:'hidden'}}>
         <Gf/>
@@ -2618,13 +2572,11 @@ export default function BridgeCannabisIntelligence() {
           tier={tier}
           setTier={setTier}
           setPage={setPage}
-          setLoginTarget={handleLoginTarget}
-          setShowLogin={handleShowLogin}
+          setLoginTarget={setLoginTarget}
+          setShowLogin={setShowLogin}
         />
         <ClientsView setTier={setTier}/>
         <Footer/>
-        <BRIDGEAuthModal isOpen={showLogin} onClose={() => setShowLogin(false)} defaultTab={loginTab} />
-        <BRIDGEEngagementModal isOpen={showEngagement} onClose={() => setShowEngagement(false)} intent={engagementIntent} />
       </div>
     );
   }
@@ -2637,36 +2589,41 @@ export default function BridgeCannabisIntelligence() {
         tier={tier}
         setTier={setTier}
         setPage={setPage}
-        setLoginTarget={handleLoginTarget}
-        setShowLogin={handleShowLogin}
+        setLoginTarget={setLoginTarget}
+        setShowLogin={setShowLogin}
       />
       <Cover logoRef={coverLogoRef} setPage={setPage}/>
       <PolicyContext/>
-      <ValueChain tier={tier} setTier={setTier} setPage={setPage} setShowLogin={handleShowLogin} setLoginTarget={handleLoginTarget}/>
-      <TierTeaser tier={tier} setTier={setTier} setShowLogin={handleShowLogin} setLoginTarget={handleLoginTarget}/>
+      <ValueChain tier={tier} setTier={setTier} setPage={setPage} setShowLogin={setShowLogin} setLoginTarget={setLoginTarget}/>
+      <TierTeaser tier={tier} setTier={setTier} setShowLogin={setShowLogin} setLoginTarget={setLoginTarget}/>
       <LicenseExplorer
         tier={tier}
         setTier={setTier}
         setPage={setPage}
-        setShowLogin={handleShowLogin}
-        setLoginTarget={handleLoginTarget}
+        setShowLogin={setShowLogin}
+        setLoginTarget={setLoginTarget}
       />
       <OpportunityMatrix
         tier={tier}
         setTier={setTier}
         setPage={setPage}
-        setShowLogin={handleShowLogin}
-        setLoginTarget={handleLoginTarget}
+        setShowLogin={setShowLogin}
+        setLoginTarget={setLoginTarget}
       />
       <Gate
         setTier={setTier}
         setPage={setPage}
-        setShowLogin={handleShowLogin}
-        setLoginTarget={handleLoginTarget}
+        setShowLogin={setShowLogin}
+        setLoginTarget={setLoginTarget}
       />
       <Footer/>
-      <BRIDGEAuthModal isOpen={showLogin} onClose={() => setShowLogin(false)} defaultTab={loginTab} />
-      <BRIDGEEngagementModal isOpen={showEngagement} onClose={() => setShowEngagement(false)} intent={engagementIntent} />
+      <LoginModal
+        show={showLogin}
+        onClose={() => setShowLogin(false)}
+        loginTarget={loginTarget}
+        setTier={handleTierSet}
+        setPage={setPage}
+      />
     </div>
   );
 }

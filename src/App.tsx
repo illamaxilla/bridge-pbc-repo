@@ -141,6 +141,7 @@ const App = () => (
               {/* Founders Portal — hidden, password-gated, not linked from nav */}
               <Route path="/founders" element={<ErrorBoundary><FoundersPortal /></ErrorBoundary>} />
               <Route path="/founders/apps-whitepaper" element={<ErrorBoundary><FoundersAppsWhitepaper /></ErrorBoundary>} />
+
               {/* Founders document routes — no auth guards, direct access */}
               {FOUNDERS_DOC_ROUTES.map(({ path, title, component: DocComponent }) => (
                 <Route

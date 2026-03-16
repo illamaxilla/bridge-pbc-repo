@@ -10,6 +10,7 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 // ═══════════════════════════════════════════════
 import { colors, layout } from "@/lib/theme";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 const CONTENT_MAX_WIDTH = layout.maxWidth;
 
 // BRIDGE 12 Sectors data
@@ -345,6 +346,7 @@ function BridgeLogo() {
 // ═══════════════════════════════════════════════
 
 export default function BRIDGEHomePage() {
+  usePageMeta({ title: undefined, description: "Institutional-grade investment intelligence across 12 integrated sectors in Ghana. 174+ ventures, sector analysis, policy tracking, and research for investors, government partners, and development organizations." });
   const isMobile = useIsMobile();
   const [hoveredCard, setHoveredCard] = useState(null);
   const sectorCount = useCounter(12, 1200, 300);

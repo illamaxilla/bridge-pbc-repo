@@ -46,9 +46,9 @@ export const SignInForm = ({ onSuccess, onForgot }: SignInFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5" aria-busy={loading}>
       {error && (
-        <div className="px-4 py-3 rounded-[10px] bg-red-50 border border-red-200 text-red-800 text-[13px] font-[Inter,sans-serif] leading-relaxed">
+        <div role="alert" className="px-4 py-3 rounded-[10px] bg-red-50 border border-red-200 text-red-800 text-[13px] font-[Inter,sans-serif] leading-relaxed">
           {error}
         </div>
       )}

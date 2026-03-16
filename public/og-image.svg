@@ -1,0 +1,36 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f2e24"/>
+      <stop offset="100%" style="stop-color:#1B4D3E"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Subtle dot pattern -->
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+    <circle cx="11" cy="11" r="1" fill="white" opacity="0.04"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <!-- BRIDGE logo mark -->
+  <g transform="translate(80, 180) scale(0.28)">
+    <rect fill="none" stroke="#B8D935" stroke-width="80" x="40" y="40" width="844" height="852" rx="37"/>
+    <polygon fill="#B8D935" stroke="#1B4D3E" stroke-miterlimit="10" points="723 322 462 453 202 323 461 193 723 322"/>
+    <path fill="#1B4D3E" d="M198,427c4-.5,7,.8,11,1.4l253,126c84-40,168-84,252-125,33-11,50,34,19,49l-259,129c-10,4-14,3-24-1l-264-133c-17-14-8-43,14-46h0Z"/>
+    <path fill="#B8D935" d="M195,558c4-.6,7-.4,11-.2,86,40,170,85,256,127l253-126c30-7,45,29,22,47l-270,134-9,.3c-92-42-181-90-272-134-19-12-13-44,9-47h0Z"/>
+  </g>
+  <!-- Text -->
+  <text x="380" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="800" fill="white" letter-spacing="-2">BRIDGE PBC</text>
+  <text x="380" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="300" fill="rgba(255,255,255,0.55)">Ghana Investment Intelligence &amp; Sector Analysis</text>
+  <!-- Accent line -->
+  <rect x="380" y="330" width="120" height="3" rx="2" fill="#B8D935"/>
+  <!-- Stats -->
+  <text x="380" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#B8D935">12</text>
+  <text x="445" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="400" fill="rgba(255,255,255,0.45)">Sectors</text>
+  <text x="580" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#B8D935">174+</text>
+  <text x="690" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="400" fill="rgba(255,255,255,0.45)">Ventures</text>
+  <text x="830" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#B8D935">60K+</text>
+  <text x="945" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="400" fill="rgba(255,255,255,0.45)">Words of Research</text>
+  <!-- Bottom bar -->
+  <rect x="0" y="610" width="1200" height="20" fill="#B8D935"/>
+  <text x="80" y="560" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="rgba(255,255,255,0.25)">bridgepbc.com</text>
+</svg>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { BridgeLogo } from "@/components/BridgeLogo";
 import { cn } from "@/lib/utils";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   Lightbulb,
   Building2,
@@ -1941,6 +1942,7 @@ const GLOBAL_CSS = `
 
 /* ─── ROOT COMPONENT ─────────────────────────────────────────────── */
 export default function HowWeWorkPage() {
+  usePageMeta({ title: "Methodology", description: "The BRIDGE Impact Score\u2122 four-dimensional framework for evaluating ventures across Ghana's 12 investment sectors." });
   const [activeIdx, setActiveIdx] = useState(0);
   const [animKey, setAnimKey] = useState(0);
 
