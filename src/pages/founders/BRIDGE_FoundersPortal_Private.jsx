@@ -472,7 +472,7 @@ const GS = () => (
     @media(max-width:900px){.pitch-body-stat{grid-template-columns:1fr !important;}.pitch-body-stat>div:last-child{display:flex;gap:16px;align-items:baseline;padding-top:4px;}.pitch-body-stat>div:last-child>div:first-child{font-size:clamp(26px,7vw,38px) !important;}.pitch-body-stat>div:last-child>div:last-child{text-align:left !important;max-width:none !important;}
     .pitch-nav-bar{padding:12px 16px !important;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px)) !important;}
     .pitch-eyebrow-gap{margin-bottom:16px !important;}
-    .pitch-scroll-pad{padding-bottom:80px !important;}}
+    .pitch-scroll-pad{padding-bottom:calc(90px + env(safe-area-inset-bottom,20px)) !important;}}
     /* ── Bottom nav & sheet ─────────────────────────────── */
     .mob-nav{
       position:fixed;bottom:0;left:0;right:0;z-index:200;
@@ -538,8 +538,8 @@ const GS = () => (
       .hide-sm{display:none !important;}
       /* Show bottom nav */
       .mob-nav{display:flex;}
-      /* Add bottom padding to content so it clears the nav bar */
-      .mob-content{padding-bottom:70px !important;}
+      /* Add bottom padding to content — clears nav bar + iPhone home indicator safe area + breathing room */
+      .mob-content{padding-bottom:calc(90px + env(safe-area-inset-bottom,20px)) !important;}
       /* Collapsible: show header, conditionally show body */
       .mob-collapse-hdr{display:flex !important;}
       .mob-collapse-body.closed{display:none !important;}
@@ -2386,80 +2386,31 @@ const Ask = ({ initialQ='', clearQ=()=>{} }) => {
     setInp('');
     setErr(null);
     if (taRef.current) { taRef.current.style.height = 'auto'; }
-
-    const history = [...msgs, { role:'user', content:q }];
-    // Append user msg + empty assistant bubble for streaming
-    setMsgs([...history, { role:'assistant', content:'' }]);
+    const next = [...msgs, { role:'user', content:q }];
+    setMsgs(next);
     setLoad(true);
-
     try {
-      const res = await fetch('/api/chat', {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: history.map(m => ({ role: m.role, content: m.content })),
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1024,
+          system: BRIDGE_CONTEXT,
+          messages: next.map(m => ({ role: m.role, content: m.content })),
         }),
       });
-
       if (!res.ok) {
         const detail = await res.text().catch(() => `HTTP ${res.status}`);
         throw new Error(`API ${res.status}: ${detail.slice(0, 120)}`);
       }
-
-      // Stream SSE tokens into the assistant bubble
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let sseBuffer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        sseBuffer += decoder.decode(value, { stream: true });
-        const lines = sseBuffer.split('\n');
-        sseBuffer = lines.pop() ?? '';
-
-        let chunk = '';
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const payload = line.slice(6).trim();
-          if (payload === '[DONE]') break;
-          try {
-            const evt = JSON.parse(payload);
-            if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
-              chunk += evt.delta.text;
-            }
-          } catch { /* skip malformed SSE */ }
-        }
-
-        if (chunk) {
-          setMsgs(prev => {
-            const updated = [...prev];
-            const last = updated[updated.length - 1];
-            if (last?.role === 'assistant') {
-              updated[updated.length - 1] = { ...last, content: last.content + chunk };
-            }
-            return updated;
-          });
-        }
-      }
-
-      // If no content was streamed at all, show fallback
-      setMsgs(prev => {
-        const last = prev[prev.length - 1];
-        if (last?.role === 'assistant' && !last.content) {
-          const updated = [...prev];
-          updated[updated.length - 1] = { ...last, content: 'No response received.' };
-          return updated;
-        }
-        return prev;
-      });
+      const data = await res.json();
+      const reply = data.content?.find(b => b.type === 'text')?.text || 'No response received.';
+      setMsgs(p => [...p, { role: 'assistant', content: reply }]);
     } catch (e) {
-      if (e.name !== 'AbortError') {
-        setErr(e.message);
-        setMsgs(prev => prev.slice(0, -2)); // remove user + empty assistant
-        setInp(q);
-      }
+      setErr(e.message);
+      setMsgs(p => p.slice(0, -1));
+      setInp(q);
     } finally {
       setLoad(false);
     }
@@ -2629,9 +2580,25 @@ const Ask = ({ initialQ='', clearQ=()=>{} }) => {
 
 // ─── SectionFooter — "Continue to →" navigation strip ────────────────────────
 const SectionFooter = ({ label, to, go, note='' }) => (
-  <div style={{borderTop:`1px solid ${LINE}`,background:`${FOREST}18`,paddingTop:'clamp(20px,3vw,28px)',paddingBottom:'clamp(20px,3vw,28px)'}}>
+  <div style={{
+    borderTop:`1px solid ${LINE}`,
+    background:'transparent',
+    paddingTop:'clamp(20px,3vw,28px)',
+    // Desktop: normal padding. Mobile: cleared past nav bar + iPhone home indicator.
+    // env(safe-area-inset-bottom) = ~34px on Face ID iPhones, 0px on older.
+    // 90px covers the 54px nav bar + breathing room. The calc() adds the env on top.
+    paddingBottom:'clamp(20px,3vw,28px)',
+  }}>
+    {/* Mobile spacer so the footer button is never hidden behind the bottom nav */}
+    <style>{`
+      @media(max-width:900px){
+        .section-footer-inner{
+          padding-bottom:calc(84px + env(safe-area-inset-bottom,20px)) !important;
+        }
+      }
+    `}</style>
     <W>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,flexWrap:'wrap'}}>
+      <div className="section-footer-inner" style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,flexWrap:'wrap'}}>
         {note && <div style={{fontFamily:Fb,fontSize:12,color:FAINT,fontStyle:'italic',maxWidth:460,flex:'1 1 200px',lineHeight:1.6}}>{note}</div>}
         <button onClick={() => go(to)} style={{
           display:'flex',alignItems:'center',gap:10,
@@ -4200,32 +4167,32 @@ const Validation = ({ go }) => {
 const Documents = ({ go }) => {
   const DOCS = [
     { cat:'Strategic Foundation', items:[
-      { title:'BRIDGE PBC Foundational White Paper',         pages:'80+ pages',              status:'available', icon:BookOpen,  href:'/founders/white-paper', desc:'Complete intellectual foundation — methodology, sector framework, Peace & Prosperity measurement, and the full strategic rationale for a 12-sector Ghana-first investment architecture.' },
-      { title:'BRIDGE 2025 Sector Intelligence Review',      pages:'Annual edition',          status:'available', icon:FileText,  href:'/founders/annual-review', desc:'Full-year retrospective across all 12 sectors — what moved, what stalled, and what the data says about 2026. Includes revised Impact Score™ rankings and the BRIDGE team forward outlook.' },
-      { title:'Closing the Intelligence Gap',                pages:'Public Benefit Whitepaper', status:'available', icon:Globe,   href:'/founders/intelligence-whitepaper', desc:"The evidence-based case for why structured venture assessment is a public good — and how the BRIDGE Impact Score™ Assessor addresses Ghana's compounding intelligence crisis. $5B+ SME financing gap context." },
-      { title:'Applications Suite Whitepaper',               pages:'24 pages',                status:'available', icon:FileText,  founderOnly:true, href:'/founders/apps-whitepaper', desc:"Intelligence as a Revenue Engine — how 6 digital applications convert BRIDGE's proprietary data into leads, revenue, and a compounding data moat. Full revenue projections included." },
+      { title:'BRIDGE PBC Foundational White Paper',         pages:'80+ pages',              status:'available', icon:BookOpen,  desc:'Complete intellectual foundation — methodology, sector framework, Peace & Prosperity measurement, and the full strategic rationale for a 12-sector Ghana-first investment architecture.' },
+      { title:'BRIDGE 2025 Sector Intelligence Review',      pages:'Annual edition',          status:'available', icon:FileText,  desc:'Full-year retrospective across all 12 sectors — what moved, what stalled, and what the data says about 2026. Includes revised Impact Score™ rankings and the BRIDGE team forward outlook.' },
+      { title:'Closing the Intelligence Gap',                pages:'Public Benefit Whitepaper', status:'available', icon:Globe,   desc:"The evidence-based case for why structured venture assessment is a public good — and how the BRIDGE Impact Score™ Assessor addresses Ghana's compounding intelligence crisis. $5B+ SME financing gap context." },
+      { title:'Applications Suite Whitepaper',               pages:'24 pages',                status:'available', icon:FileText,  founderOnly:true, desc:"Intelligence as a Revenue Engine — how 6 digital applications convert BRIDGE's proprietary data into leads, revenue, and a compounding data moat. Full revenue projections included." },
     ]},
     { cat:'Portfolio & Methodology', items:[
-      { title:'BRIDGE Venture Portfolio Overview',           pages:'174+ ventures · 12 sectors', status:'available', icon:Database, href:'/founders/portfolio', desc:'The most comprehensive Ghana opportunity assessment produced. Capital ranges, venture counts, Impact Score benchmarks, and the 36+ cross-sector integration points that produce compounding returns.' },
-      { title:'BRIDGE Sector Intelligence Briefs — All 12', pages:'12 briefs · 60K+ words',  status:'available', icon:BookOpen,  href:'/founders/sector-briefs-full', desc:'One authoritative brief per sector across Infrastructure, Financial Inclusion, Health, Technology, Education, Agriculture, Creative Industries, Housing, Tourism, Energy, Manufacturing, and Transportation.' },
-      { title:'BRIDGE Impact Score™ Methodology',           pages:'12 pages',                status:'available', icon:Award,     href:'/founders/impact-score', desc:"A complete account of the four-dimensional framework behind BRIDGE's venture evaluation — scoring weights, sub-components, qualifying thresholds, the five-stage pipeline, and why the Score is independently defensible." },
-      { title:'Peace & Prosperity Framework',               pages:'Framework document',       status:'available', icon:Globe,     href:'/founders/peace-prosperity', desc:"The philosophical and analytical foundation of every investment BRIDGE makes — what BRIDGE means by dignity, security, and thriving, and the direct connection between all 12 sectors and human flourishing outcomes." },
+      { title:'BRIDGE Venture Portfolio Overview',           pages:'174+ ventures · 12 sectors', status:'available', icon:Database, desc:'The most comprehensive Ghana opportunity assessment produced. Capital ranges, venture counts, Impact Score benchmarks, and the 36+ cross-sector integration points that produce compounding returns.' },
+      { title:'BRIDGE Sector Intelligence Briefs — All 12', pages:'12 briefs · 60K+ words',  status:'available', icon:BookOpen,  desc:'One authoritative brief per sector across Infrastructure, Financial Inclusion, Health, Technology, Education, Agriculture, Creative Industries, Housing, Tourism, Energy, Manufacturing, and Transportation.' },
+      { title:'BRIDGE Impact Score™ Methodology',           pages:'12 pages',                status:'available', icon:Award,     desc:"A complete account of the four-dimensional framework behind BRIDGE's venture evaluation — scoring weights, sub-components, qualifying thresholds, the five-stage pipeline, and why the Score is independently defensible." },
+      { title:'Peace & Prosperity Framework',               pages:'Framework document',       status:'available', icon:Globe,     desc:"The philosophical and analytical foundation of every investment BRIDGE makes — what BRIDGE means by dignity, security, and thriving, and the direct connection between all 12 sectors and human flourishing outcomes." },
     ]},
     { cat:'Reports & Intelligence', items:[
-      { title:'BRIDGE Monthly Dashboard — March 2026',      pages:'March 2026 edition',      status:'available', icon:BarChart2, href:'/founders/analytics-dashboard', desc:"Monthly intelligence snapshot covering Ghana's Q1 economic performance, sector-level portfolio developments, key policy signals from 2026 Budget implementation, and new venture opportunities entering the pipeline." },
-      { title:'Ghana Policy Tracker — 2025–2026',           pages:'Living document · monthly', status:'available', icon:FileText, href:'/founders/policy-tracker', desc:'Continuously updated tracking of every policy development with implications for BRIDGE ventures — 2026 Budget, Sankofa Initiative, 24-Hour Economy, and ministry-level signals across 12 sectors.' },
-      { title:'2026 Budget Alignment — What It Means for Investors', pages:'Investment report', status:'available', icon:BarChart2, href:'/founders/budget-alignment', desc:"Every allocation in Ghana's 2026 National Budget mapped to the BRIDGE 12-sector framework. Sector-by-sector capital flow analysis, tailwinds, headwinds, and priority opportunities from the 24-Hour Economy and Sankofa Initiative." },
+      { title:'BRIDGE Monthly Dashboard — March 2026',      pages:'March 2026 edition',      status:'available', icon:BarChart2, desc:"Monthly intelligence snapshot covering Ghana's Q1 economic performance, sector-level portfolio developments, key policy signals from 2026 Budget implementation, and new venture opportunities entering the pipeline." },
+      { title:'Ghana Policy Tracker — 2025–2026',           pages:'Living document · monthly', status:'available', icon:FileText, desc:'Continuously updated tracking of every policy development with implications for BRIDGE ventures — 2026 Budget, Sankofa Initiative, 24-Hour Economy, and ministry-level signals across 12 sectors.' },
+      { title:'2026 Budget Alignment — What It Means for Investors', pages:'Investment report', status:'available', icon:BarChart2, desc:"Every allocation in Ghana's 2026 National Budget mapped to the BRIDGE 12-sector framework. Sector-by-sector capital flow analysis, tailwinds, headwinds, and priority opportunities from the 24-Hour Economy and Sankofa Initiative." },
       { title:'GIPC Profile Documents',                     pages:'Regulatory guide',        status:'available', icon:Lock,      desc:'Ghana Investment Promotion Centre regulatory framework and investment facilitation guide — registration requirements, minimum capital thresholds, investment guarantees, profit repatriation rights, and diaspora provisions.' },
     ]},
     { cat:'Platform Whitepapers', items:[
-      { title:"Ghana's Talent Is Not the Problem. The Missing Bridge Is.", pages:'BRIDGE Connect Whitepaper', status:'available', icon:Users2, href:'/founders/connect-whitepaper', desc:"The case for a verified, free platform connecting Ghana's skilled workforce to remote work, ethical international employment, and structured advancement. 21% youth unemployment · $37.7B Africa freelance market by 2034." },
-      { title:'Ghana Cannabis & Industrial Hemp Intelligence Brief', pages:'11 licence categories', status:'available', icon:FileText, href:'/founders/cannabis-intelligence', desc:"Complete BRIDGE analysis of Ghana's newly opened cannabis and hemp licensing regime — all 11 NCC licence categories, full value chain mapping, and venture-by-venture scoring. Global hemp market: $21B+ by 2030." },
+      { title:"Ghana's Talent Is Not the Problem. The Missing Bridge Is.", pages:'BRIDGE Connect Whitepaper', status:'available', icon:Users2, desc:"The case for a verified, free platform connecting Ghana's skilled workforce to remote work, ethical international employment, and structured advancement. 21% youth unemployment · $37.7B Africa freelance market by 2034." },
+      { title:'Ghana Cannabis & Industrial Hemp Intelligence Brief', pages:'11 licence categories', status:'available', icon:FileText, desc:"Complete BRIDGE analysis of Ghana's newly opened cannabis and hemp licensing regime — all 11 NCC licence categories, full value chain mapping, and venture-by-venture scoring. Global hemp market: $21B+ by 2030." },
     ]},
     { cat:'Sector Intelligence', items:[
-      { title:'Cannabis Intelligence Series',                pages:'11 segments',            status:'available', icon:FileText, href:'/founders/cannabis-intelligence', desc:'Complete analysis of Ghana NCC licensing regime across 11 business segments.' },
-      { title:'Infrastructure Sector Brief',                 pages:'24 pages',               status:'available', icon:FileText, href:'/founders/sector-briefs-full', desc:'Deep-dive sector analysis with opportunities, risks, and market sizing.' },
-      { title:'Financial Inclusion Brief',                   pages:'22 pages',               status:'available', icon:FileText, href:'/founders/sector-briefs-full', desc:"Mobile money, microfinance, and SME lending — Ghana's fastest-growing sector." },
-      { title:'Agriculture Value Chains',                    pages:'26 pages',               status:'available', icon:FileText, href:'/founders/sector-briefs-full', desc:'Staple crops, export value chains, Kejetia integration, and Ejura Hub analysis.' },
+      { title:'Cannabis Intelligence Series',                pages:'11 segments',            status:'available', icon:FileText, desc:'Complete analysis of Ghana NCC licensing regime across 11 business segments.' },
+      { title:'Infrastructure Sector Brief',                 pages:'24 pages',               status:'available', icon:FileText, desc:'Deep-dive sector analysis with opportunities, risks, and market sizing.' },
+      { title:'Financial Inclusion Brief',                   pages:'22 pages',               status:'available', icon:FileText, desc:"Mobile money, microfinance, and SME lending — Ghana's fastest-growing sector." },
+      { title:'Agriculture Value Chains',                    pages:'26 pages',               status:'available', icon:FileText, desc:'Staple crops, export value chains, Kejetia integration, and Ejura Hub analysis.' },
     ]},
     { cat:'Investor Materials', items:[
       { title:'Executive Summary',       pages:'4 pages',  status:'coming', icon:FileText,  desc:'High-level overview of BRIDGE thesis, traction, and opportunity for new investors.' },
@@ -4302,17 +4269,12 @@ const Documents = ({ go }) => {
                         </div>
                         <div style={{fontFamily:Fs,fontSize:10,color:MUTED,fontWeight:500,marginBottom:7}}>{doc.pages}</div>
                         <div style={{fontFamily:Fs,fontSize:11.5,color:MUTED,lineHeight:1.6}}>{doc.desc}</div>
-                        {isAvail && doc.href && (
-                          <a href={doc.href} target="_blank" rel="noopener noreferrer"
-                            style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:12,fontFamily:Fs,fontSize:10,fontWeight:700,color:LIME,cursor:'pointer',transition:'all 0.15s',border:`1px solid ${LIME}40`,padding:'4px 10px',textDecoration:'none'}}
+                        {isAvail && (
+                          <div onClick={() => {/* Route to document URL in production */}}
+                            style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:12,fontFamily:Fs,fontSize:10,fontWeight:700,color:LIME,cursor:'pointer',transition:'all 0.15s',border:`1px solid ${LIME}40`,padding:'4px 10px'}}
                             onMouseOver={e=>{e.currentTarget.style.borderColor=LIME;e.currentTarget.style.background=`${LIME}12`;}}
                             onMouseOut={e=>{e.currentTarget.style.borderColor=`${LIME}40`;e.currentTarget.style.background='transparent';}}>
                             <ExternalLink size={10}/> Read Document
-                          </a>
-                        )}
-                        {isAvail && !doc.href && (
-                          <div style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:12,fontFamily:Fs,fontSize:10,fontWeight:700,color:FAINT,border:`1px solid ${LINE}`,padding:'4px 10px'}}>
-                            <Eye size={10}/> Available on site
                           </div>
                         )}
                         {doc.status==='nda' && (

@@ -20,9 +20,6 @@ const Gf=()=>(<style>{`
   body{background:${C.paper};-webkit-font-smoothing:antialiased;overflow-x:hidden;}
   @media print{.np{display:none!important;} body{background:white;}}
 
-  /* ── READING PROGRESS ── */
-  #read-bar{position:fixed;top:0;left:0;height:2px;background:${C.lime};z-index:400;transition:width .1s linear;}
-
   /* ── DESKTOP TOC SIDEBAR ── */
   .toc{position:fixed;left:0;top:0;bottom:0;width:220px;background:${C.ink};padding:80px 0 32px;overflow-y:auto;z-index:90;}
   .toc-item{display:block;padding:7px 24px;font-family:${F.sans};font-size:10px;font-weight:600;color:rgba(250,248,243,.35);text-decoration:none;letter-spacing:.4px;transition:all .15s;border-left:2px solid transparent;cursor:pointer;}
@@ -32,32 +29,56 @@ const Gf=()=>(<style>{`
   .toc-logo{padding:0 24px 28px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px;}
   .main{margin-left:220px;}
 
-  /* ── MOBILE STICKY HEADER ── */
-  .mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:300;background:${C.ink};height:52px;padding:0 16px;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07);}
-  .mob-header-section{font-family:${F.sans};font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(250,248,243,.35);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .mob-hamburger{background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:4px;}
-  .mob-hamburger span{display:block;width:20px;height:2px;background:rgba(250,248,243,.6);border-radius:1px;transition:all .2s;}
+  /* ── SKILL v4: Section IDs — scroll-margin so sticky bar doesn't obscure ── */
+  [id]{scroll-margin-top:52px;}
 
-  /* ── MOBILE DRAWER NAV ── */
-  .mob-drawer{position:fixed;inset:0;z-index:350;pointer-events:none;}
-  .mob-drawer-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .25s;}
-  .mob-drawer-panel{position:absolute;top:0;right:0;bottom:0;width:min(300px,85vw);background:${C.ink};transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:0 0 calc(32px + env(safe-area-inset-bottom));}
-  .mob-drawer.open .mob-drawer-overlay{opacity:1;pointer-events:all;}
-  .mob-drawer.open .mob-drawer-panel{transform:translateX(0);}
-  .mob-drawer-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:${C.ink};z-index:1;}
-  .mob-drawer-close{background:rgba(255,255,255,.07);border:none;color:rgba(250,248,243,.6);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;}
-  .mob-drawer-group{padding:12px 20px 4px;font-family:${F.sans};font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(250,248,243,.2);}
-  .mob-drawer-item{display:block;width:100%;text-align:left;padding:10px 20px;font-family:${F.sans};font-size:13px;font-weight:500;color:rgba(250,248,243,.5);background:none;border:none;border-left:2px solid transparent;cursor:pointer;transition:all .15s;letter-spacing:.2px;}
-  .mob-drawer-item:active{color:${C.lime};}
-  .mob-drawer-item.active{color:${C.lime};border-left-color:${C.lime};background:rgba(184,217,53,.05);}
+  /* ── SKILL v4: Animations ── */
+  @keyframes barGrow{from{width:0}to{width:var(--w,100%)}}
+  .score-bar{animation:barGrow 1s cubic-bezier(0.16,1,0.3,1) 0.4s both;}
 
-  /* ── CHAPTER NAV STRIP (mobile horizontal scroll) ── */
-  .chapter-nav{display:none;position:sticky;top:52px;z-index:200;background:${C.paper};border-bottom:1px solid ${C.border};overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-  .chapter-nav::-webkit-scrollbar{display:none;}
-  .chapter-nav-inner{display:inline-flex;padding:8px 16px;gap:6px;}
-  .chapter-pill{font-family:${F.sans};font-size:10px;font-weight:700;letter-spacing:.4px;padding:5px 13px;border-radius:20px;border:1px solid ${C.border};background:transparent;color:${C.muted};cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;}
-  .chapter-pill.active{background:${C.forest};color:${C.white};border-color:${C.forest};}
-  .chapter-pill:active{transform:scale(.97);}
+  /* ── SKILL v4: CTA hover lift ── */
+  .cta-primary{transition:transform 0.15s ease,box-shadow 0.15s ease!important;}
+  .cta-primary:hover{transform:translateY(-1px)!important;box-shadow:0 6px 20px rgba(184,217,53,0.25)!important;}
+
+  /* ── SKILL v4: Global transitions ── */
+  a{transition:opacity .15s ease;}
+  a:hover{opacity:.76;}
+  button{transition:background .15s ease,border-color .15s ease,color .15s ease;}
+
+  /* ── SKILL v4: Visibility defaults ── */
+  .mob-show{display:none;}
+  .mob-hide{display:inline;}
+  .mob-only{display:none!important;}
+  .desk-only{display:block;}
+
+  /* ── SKILL v4: Drop cap ── */
+  .dc::first-letter{font-family:${F.display};font-size:4.4em;font-weight:900;float:left;line-height:0.8;margin:0.05em 0.12em 0 0;color:${C.forest};}
+
+  /* ── SKILL v4: Animated score bars ── */
+  .score-bar-dim{animation:barGrow 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s both;}
+
+  /* ── SKILL v4: Row hover ── */
+  .row-hover{transition:background 0.12s ease;}
+  .row-hover:hover{background:rgba(184,217,53,0.04)!important;}
+  .row-hover-dark:hover{background:rgba(255,255,255,0.035)!important;}
+
+  /* ── SKILL v4: Section rule (desktop divider) ── */
+  .sec-rule{border-top:5px solid ${C.ink};border-bottom:2.5px solid ${C.lime};padding-bottom:4px;margin-bottom:22px;}
+
+  /* ── SKILL v4: Layout helpers ── */
+  .mob-stack{display:flex;}
+  .mob-full{}
+
+  /* ── SKILL v4: Carousel ── */
+  .mob-car{display:none!important;}
+  .mob-scroller{display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px;-webkit-overflow-scrolling:touch;padding-bottom:4px;}
+  .mob-scroller::-webkit-scrollbar{display:none;}
+  .mob-snap-card{flex:0 0 82vw;scroll-snap-align:start;min-width:0;}
+  .mob-snap-wide{flex:0 0 92vw;scroll-snap-align:start;min-width:0;}
+  .car-wrap{position:relative;}
+  .car-wrap::after{content:'';position:absolute;top:14px;right:0;width:44px;height:calc(100% - 32px);background:linear-gradient(to right,transparent,${C.paper} 90%);pointer-events:none;z-index:2;}
+  .car-wrap-dark::after{background:linear-gradient(to right,transparent,${C.paperDark} 90%);}
+  .car-wrap-ink::after{background:linear-gradient(to right,transparent,${C.ink} 90%);}
 
   /* ── PROGRESSIVE DISCLOSURE — app card body ── */
   .app-body-mob{transition:max-height .35s cubic-bezier(.4,0,.2,1),opacity .3s ease;}
@@ -65,9 +86,17 @@ const Gf=()=>(<style>{`
   .mob-toggle-btn svg{transition:transform .25s;}
   .mob-toggle-btn.open svg{transform:rotate(180deg);}
 
-  /* ── MOB SHOW / HIDE ── */
-  .mob-show{display:none!important;}
-  .mob-hide{display:block;}
+  /* ── SKILL v4: Upsell ── */
+  .upsell-grid{display:grid;}
+  .upsell-cta-row{display:flex;}
+
+  /* ── SKILL v4: Footer ── */
+  .footer-links{display:flex;gap:18px;}
+  .footer-inner{display:flex;}
+
+  /* ── SKILL v4: Section body accordion ── */
+  .sec-body-hidden{display:none!important;}
+  .mob-item-hidden{display:none!important;}
 
   /* ── TIER TABLE → MOBILE CARD STACK ── */
   .tier-mob-card{border:1px solid ${C.border};margin-bottom:10px;overflow:hidden;}
@@ -120,7 +149,7 @@ const Gf=()=>(<style>{`
   .section-sub{font-family:${F.body};font-size:16px;color:rgba(250,248,243,.55);max-width:640px;line-height:1.7;font-weight:300;}
 
   /* ── BODY PADDING ── */
-  .body-pad{padding:56px 64px;max-width:860px;}
+  .body-pad{padding:56px 64px;max-width:860px;margin:0 auto;width:100%;}
   .eyebrow{font-family:${F.sans};font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:${C.muted};margin-bottom:8px;}
   .h2{font-family:${F.display};font-size:clamp(20px,3vw,32px);font-weight:700;color:${C.ink};line-height:1.25;margin-bottom:16px;}
   .h3{font-family:${F.sans};font-size:15px;font-weight:700;color:${C.forest};margin-bottom:8px;margin-top:24px;}
@@ -136,9 +165,7 @@ const Gf=()=>(<style>{`
   /* ── TABLET ≤900px ── */
   @media(max-width:900px){
     .toc{display:none;}
-    .main{margin-left:0;padding-top:52px;}
-    .mob-header{display:flex;}
-    .chapter-nav{display:block;}
+    .main{margin-left:0;}
     .body-pad{padding:40px 32px;}
     .section-cover{padding:40px 32px;}
     .cta-section{padding:40px 32px;}
@@ -147,25 +174,45 @@ const Gf=()=>(<style>{`
     .stat-n{font-size:26px;}
     .pq{font-size:17px;padding-left:16px;}
     .mob-toggle-btn{display:flex;}
+    .pad-topbar{padding:10px 24px!important;}
+    .pad-section{padding:40px 32px!important;}
+    .pad-cover{padding:28px 32px 0!important;}
+    .pad-footer{padding:14px 32px!important;}
   }
 
   /* ── MOBILE ≤600px ── */
   @media(max-width:600px){
-    .main{padding-top:52px;}
+    .mob-show{display:block!important;}
+    .mob-hide{display:none!important;}
+    .mob-only{display:block!important;}
+    .mob-car{display:block!important;}
+    .desk-only{display:none!important;}
+    .mob-stack{flex-direction:column!important;align-items:flex-start!important;gap:10px!important;}
+    .mob-full{width:100%!important;}
+    .pad-topbar{padding:9px 16px!important;}
+    .pad-section{padding:22px 16px!important;}
+    .pad-cover{padding:18px 16px 0!important;}
+    .pad-footer{padding:14px 16px!important;}
+    .cover-pad{padding:24px 16px 32px!important;}
     .body-pad{padding:24px 16px;}
     .section-cover{padding:28px 16px;}
     .cta-section{padding:28px 16px;}
     .doc-footer{padding:16px 16px;flex-direction:column;align-items:flex-start;gap:8px;}
+    .footer-links{display:none!important;}
+    .footer-inner{justify-content:center!important;}
+    .upsell-grid{grid-template-columns:1fr!important;}
+    .upsell-cta-row{flex-direction:column!important;}
+    .upsell-cta-row a{justify-content:center!important;width:100%!important;}
+    .cta-btn,.cta-btn-sec{display:block;text-align:center;margin-right:0;margin-top:10px;width:100%;}
     .stat-strip{grid-template-columns:1fr 1fr;}
     .stat-n{font-size:22px;}
     .stat-cell{padding:14px 10px;}
     .pq{font-size:16px;margin:20px 0;}
     .tier-tbl{display:none;}
-    .mob-show{display:block!important;}
-    .mob-hide{display:none!important;}
     p{font-size:15px;line-height:1.8;}
     .dc::first-letter{font-size:3.4em;}
-    .cta-btn,.cta-btn-sec{display:block;text-align:center;margin-right:0;margin-top:10px;}
+    .row-hover:hover{background:inherit!important;}
+    .car-wrap::after{width:28px;}
     @supports(padding-bottom:env(safe-area-inset-bottom)){
       .doc-footer{padding-bottom:calc(16px + env(safe-area-inset-bottom));}
     }
@@ -175,6 +222,7 @@ const Gf=()=>(<style>{`
   @media(max-width:400px){
     .body-pad{padding:20px 14px;}
     .section-cover{padding:24px 14px;}
+    .cover-pad{padding:18px 14px 24px!important;}
     .stat-strip{grid-template-columns:1fr 1fr;}
   }
 `}</style>);
@@ -244,79 +292,96 @@ const H2=({children})=><h2 className="h2">{children}</h2>;
 const H3=({children})=><h3 className="h3">{children}</h3>;
 const PQ=({children})=><blockquote className="pq">{children}</blockquote>;
 
-// ─── CHAPTER GROUPS for nav strip ─────────────────────────────────────────────
-const CHAPTERS=[
-  {label:'Overview', ids:['cover','executive']},
-  {label:'Context',  ids:['context','why-digital']},
-  {label:'Organisation', ids:['bridge-org','intelligence']},
-  {label:'The Suite', ids:['apps-overview','app-01','app-02','app-03','app-04','app-05','app-06']},
-  {label:'Business Model', ids:['funnel','revenue','data-moat']},
-  {label:'Strategic', ids:['investor','founder','roadmap','close']},
-];
-
-// ─── MOBILE HEADER ─────────────────────────────────────────────────────────────
-const MobHeader=({sectionLabel,onMenu})=>(
-  <header className="mob-header np">
-    <Logo height={16} variant="white"/>
-    <span className="mob-header-section">{sectionLabel}</span>
-    <button className="mob-hamburger" onClick={onMenu} aria-label="Open navigation">
-      <span/><span/><span/>
-    </button>
-  </header>
-);
-
-// ─── MOBILE DRAWER ─────────────────────────────────────────────────────────────
-const MobDrawer=({open,active,onClose})=>{
-  const go=id=>{
-    document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});
-    onClose();
-  };
+// ─── SKILL v4: ReadingProgressBar ─────────────────────────────────────────────
+const ReadingProgressBar=({coverRef})=>{
+  const[pct,setPct]=useState(0);
+  const[logoVisible,setLogoVisible]=useState(false);
+  useEffect(()=>{
+    const fn=()=>{
+      const doc=document.documentElement;
+      const scrolled=doc.scrollTop||document.body.scrollTop;
+      const total=doc.scrollHeight-doc.clientHeight;
+      setPct(total>0?Math.min(100,(scrolled/total)*100):0);
+      if(coverRef?.current)setLogoVisible(coverRef.current.getBoundingClientRect().bottom<0);
+    };
+    window.addEventListener('scroll',fn,{passive:true});fn();
+    return()=>window.removeEventListener('scroll',fn);
+  },[coverRef]);
+  const pctR=Math.round(pct);
   return(
-    <div className={`mob-drawer np${open?' open':''}`}>
-      <div className="mob-drawer-overlay" onClick={onClose}/>
-      <div className="mob-drawer-panel">
-        <div className="mob-drawer-header">
-          <Logo height={16} variant="white"/>
-          <button className="mob-drawer-close" onClick={onClose}>✕</button>
+    <div className="np pad-topbar" style={{position:'sticky',top:0,zIndex:100,background:C.paper,borderBottom:`1px solid ${C.border}`,padding:'10px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',boxShadow:'0 1px 8px rgba(13,26,16,0.05)',overflow:'hidden'}}>
+      <div style={{position:'absolute',bottom:0,left:0,height:'3px',width:`${pct}%`,background:C.lime,transition:'width .1s linear',pointerEvents:'none'}}/>
+      <div style={{display:'flex',alignItems:'center',gap:'10px',minWidth:0,overflow:'hidden'}}>
+        <div style={{overflow:'hidden',maxWidth:logoVisible?'180px':'0',opacity:logoVisible?1:0,transition:'max-width .38s cubic-bezier(0.16,1,0.3,1),opacity .3s ease',display:'flex',alignItems:'center',flexShrink:0}}>
+          <Logo height={19} variant="dark"/>
+          <div style={{width:'1px',height:'15px',background:C.border,margin:'0 12px',flexShrink:0}}/>
         </div>
-        {SECTIONS.map((s,i)=>(
-          <span key={i}>
-            {s.group&&<div className="mob-drawer-group">{s.group}</div>}
-            <button className={`mob-drawer-item${active===s.id?' active':''}`} onClick={()=>go(s.id)}>
-              {s.label}
-            </button>
-          </span>
-        ))}
+        <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',color:C.muted,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>
+          Digital Applications Suite Whitepaper · BRIDGE PBC · March 2026
+        </span>
+        <span className="mob-show" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest}}>
+          Apps Suite
+        </span>
+        {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctR}%</span>}
+      </div>
+      <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
+        <a href="https://bridgepbc.com" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'.2px'}}>bridgepbc.com →</a>
+        <a href="#close" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'.5px'}}>Invest →</a>
       </div>
     </div>
   );
 };
 
-// ─── CHAPTER NAV STRIP ─────────────────────────────────────────────────────────
-const ChapterNav=({active})=>{
-  const stripRef=React.useRef(null);
-  const activeChapter=CHAPTERS.findIndex(ch=>ch.ids.includes(active));
-
-  // Auto-scroll active pill into view
+// ─── SKILL v4: SectionFooterNav ────────────────────────────────────────────────
+const SectionFooterNav=()=>{
+  const[active,setActive]=useState(0);
   useEffect(()=>{
-    if(!stripRef.current)return;
-    const pill=stripRef.current.querySelector('.chapter-pill.active');
-    if(pill)pill.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
-  },[active]);
-
-  const go=ids=>{
-    document.getElementById(ids[0])?.scrollIntoView({behavior:'smooth',block:'start'});
+    const obs=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const idx=SECTIONS.findIndex(s=>s.id===e.target.id);
+          if(idx>=0)setActive(idx);
+        }
+      });
+    },{rootMargin:'-40% 0px -55% 0px'});
+    SECTIONS.forEach(s=>{const el=document.getElementById(s.id);if(el)obs.observe(el);});
+    return()=>obs.disconnect();
+  },[]);
+  const goTo=idx=>{
+    const cl=Math.max(0,Math.min(SECTIONS.length-1,idx));
+    document.getElementById(SECTIONS[cl].id)?.scrollIntoView({behavior:'smooth',block:'start'});
+    setActive(cl);
   };
+  const BtnStyle=(disabled,isNext)=>({
+    width:'38px',height:'38px',
+    background:disabled?'rgba(255,255,255,.03)':isNext?C.forest:'rgba(255,255,255,.07)',
+    border:`1px solid ${disabled?'rgba(255,255,255,.08)':isNext?'rgba(184,217,53,.25)':'rgba(255,255,255,.14)'}`,
+    cursor:disabled?'default':'pointer',
+    display:'flex',alignItems:'center',justifyContent:'center',
+    flexShrink:0,opacity:disabled?.28:1,
+    transition:'background .15s,transform .12s',
+  });
   return(
-    <nav className="chapter-nav np" ref={stripRef}>
-      <div className="chapter-nav-inner">
-        {CHAPTERS.map((ch,i)=>(
-          <button key={i} className={`chapter-pill${i===activeChapter?' active':''}`} onClick={()=>go(ch.ids)}>
-            {ch.label}
-          </button>
-        ))}
+    <div className="np" style={{position:'fixed',bottom:0,left:0,right:0,zIndex:200,background:'rgba(10,20,12,0.97)',borderTop:`1px solid rgba(184,217,53,.12)`,backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'9px 18px',gap:'10px'}}>
+      <button onClick={()=>goTo(active-1)} disabled={active===0} style={BtnStyle(active===0,false)}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={active===0?'rgba(255,255,255,.2)':C.lime} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:'6px',minWidth:0,overflow:'hidden'}}>
+        <div style={{display:'flex',alignItems:'center',gap:'7px',maxWidth:'100%',overflow:'hidden'}}>
+          <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px',flexShrink:0}}>§{String(active+1).padStart(2,'0')}</span>
+          <span style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',color:'rgba(255,255,255,.45)',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{SECTIONS[active]?.label}</span>
+          <span className="mob-hide" style={{fontFamily:F.mono,fontSize:'8px',color:'rgba(255,255,255,.18)',flexShrink:0}}>/ {SECTIONS.length}</span>
+        </div>
+        <div style={{display:'flex',gap:'4px',alignItems:'center'}}>
+          {SECTIONS.map((_,i)=>(
+            <div key={i} onClick={()=>goTo(i)} style={{width:i===active?'24px':'6px',height:'6px',borderRadius:'3px',background:i===active?C.lime:i<active?'rgba(184,217,53,.3)':'rgba(255,255,255,.15)',cursor:'pointer',transition:'width .3s cubic-bezier(0.16,1,0.3,1),background .2s',flexShrink:0}}/>
+          ))}
+        </div>
       </div>
-    </nav>
+      <button onClick={()=>goTo(active+1)} disabled={active===SECTIONS.length-1} style={BtnStyle(active===SECTIONS.length-1,true)}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={active===SECTIONS.length-1?'rgba(255,255,255,.2)':C.lime} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
   );
 };
 
@@ -373,38 +438,13 @@ const TierMobStack=({rows,cols})=>(
 );
 
 export default function BRIDGEAppsWhitepaper(){
-  const[activeSection,setActiveSection]=useState('cover');
-  const[readPct,setReadPct]=useState(0);
-  const[drawerOpen,setDrawerOpen]=useState(false);
+  const coverRef=React.useRef(null);
 
-  // Lock body scroll when drawer open
-  useEffect(()=>{
-    document.body.style.overflow=drawerOpen?'hidden':'';
-    return()=>{document.body.style.overflow='';}
-  },[drawerOpen]);
-
-  // Viewport meta
   useEffect(()=>{
     let vm=document.querySelector('meta[name="viewport"]');
     if(!vm){vm=document.createElement('meta');vm.name='viewport';document.head.appendChild(vm);}
     vm.content='width=device-width,initial-scale=1,viewport-fit=cover';
   },[]);
-
-  useEffect(()=>{
-    const onScroll=()=>{
-      const el=document.documentElement;
-      const pct=Math.round((el.scrollTop/(el.scrollHeight-el.clientHeight))*100);
-      setReadPct(Math.min(100,pct||0));
-      for(let i=SECTIONS.length-1;i>=0;i--){
-        const sec=document.getElementById(SECTIONS[i].id);
-        if(sec&&sec.getBoundingClientRect().top<=120){setActiveSection(SECTIONS[i].id);break;}
-      }
-    };
-    window.addEventListener('scroll',onScroll,{passive:true});
-    return()=>window.removeEventListener('scroll',onScroll);
-  },[]);
-
-  const activeLabel=SECTIONS.find(s=>s.id===activeSection)?.label||'';
 
   // ── App 01 tier data ──
   const app01TierRows=[
@@ -438,31 +478,29 @@ export default function BRIDGEAppsWhitepaper(){
   const revenueCols=['Metric','Conservative','Moderate','Optimistic'];
 
   return(
-    <div style={{fontFamily:F.body,background:C.paper,minHeight:'100vh'}}>
+    <div style={{fontFamily:F.body,background:C.paper,minHeight:'100vh',paddingBottom:'60px'}}>
       <Gf/>
-      <div id="read-bar" style={{width:`${readPct}%`}}/>
-      <TOC active={activeSection}/>
-      <MobHeader sectionLabel={activeLabel} onMenu={()=>setDrawerOpen(true)}/>
-      <MobDrawer open={drawerOpen} active={activeSection} onClose={()=>setDrawerOpen(false)}/>
-      <ChapterNav active={activeSection}/>
+      <ReadingProgressBar coverRef={coverRef}/>
+      <SectionFooterNav/>
+      <TOC active=""/>
 
       <div className="main">
 
         {/* ── COVER ── */}
-        <div id="cover" style={{background:C.ink,padding:'80px 64px 64px',minHeight:'92vh',display:'flex',flexDirection:'column',justifyContent:'space-between',position:'relative',overflow:'hidden'}}>
+        <div id="cover" className="cover-pad" style={{background:C.ink,padding:'48px 64px 56px',minHeight:'auto',display:'flex',flexDirection:'column',justifyContent:'flex-start',position:'relative',overflow:'hidden'}}>
           <div style={{position:'absolute',right:0,bottom:0,fontFamily:F.display,fontSize:'clamp(160px,28vw,400px)',fontWeight:900,color:'rgba(255,255,255,.025)',lineHeight:1,pointerEvents:'none',userSelect:'none',letterSpacing:'-12px'}}>B</div>
-          <div>
-            <Logo height={28} variant="white"/>
-            <div style={{borderTop:'1px solid rgba(255,255,255,.1)',marginTop:'28px',marginBottom:'48px'}}/>
+          <div ref={coverRef} style={{marginBottom:'36px'}}>
+            <Logo height={26} variant="white"/>
+            <div style={{borderTop:'1px solid rgba(255,255,255,.08)',marginTop:'20px'}}/>
           </div>
           <div style={{maxWidth:'760px',position:'relative',zIndex:1}}>
             <div style={{display:'inline-block',background:'rgba(184,217,53,.1)',border:'1px solid rgba(184,217,53,.2)',padding:'5px 14px',marginBottom:'24px',fontFamily:F.sans,fontSize:'9px',fontWeight:800,letterSpacing:'3px',textTransform:'uppercase',color:C.lime}}>Whitepaper · Digital Applications Suite · March 2026</div>
-            <h1 style={{fontFamily:F.display,fontSize:'clamp(36px,5.5vw,72px)',fontWeight:900,color:C.white,lineHeight:1.05,marginBottom:'24px',letterSpacing:'-1px'}}>
+            <h1 style={{fontFamily:F.display,fontSize:'clamp(28px,6vw,72px)',fontWeight:900,color:C.white,lineHeight:1.05,marginBottom:'24px',letterSpacing:'-1px'}}>
               Intelligence as a<br/><em style={{color:C.lime,fontStyle:'italic'}}>Revenue Engine</em>
             </h1>
-            <p style={{fontFamily:F.body,fontSize:'clamp(14px,1.6vw,18px)',color:'rgba(250,248,243,.6)',lineHeight:1.75,maxWidth:'580px',fontWeight:300,marginBottom:'0'}}>How BRIDGE PBC converts its proprietary Ghana development intelligence into a suite of digital applications that simultaneously generate revenue, capture market data, identify investment opportunities, and advance the Peace &amp; Prosperity mission — at scale.</p>
+            <p style={{fontFamily:F.body,fontSize:'clamp(14px,2vw,17px)',color:'rgba(250,248,243,.6)',lineHeight:1.75,maxWidth:'580px',fontWeight:300,marginBottom:'0'}}>How BRIDGE PBC converts its proprietary Ghana development intelligence into a suite of digital applications that simultaneously generate revenue, capture market data, identify investment opportunities, and advance the Peace &amp; Prosperity mission — at scale.</p>
           </div>
-          <div style={{borderTop:'1px solid rgba(255,255,255,.1)',marginTop:'48px',paddingTop:'28px',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(80px,1fr))',gap:'24px'}}>
+          <div style={{borderTop:'1px solid rgba(255,255,255,.08)',marginTop:'36px',paddingTop:'24px',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(80px,1fr))',gap:'24px'}}>
             {[['6','Web applications'],['174+','Ventures analyzed'],['12','Sectors covered'],['$135–259M','Portfolio scope'],['$0','Entry point for users']].map(([n,l])=>(
               <div key={l}>
                 <div style={{fontFamily:F.mono,fontSize:'clamp(18px,2.5vw,24px)',fontWeight:500,color:C.lime,lineHeight:1}}>{n}</div>
@@ -830,9 +868,20 @@ export default function BRIDGEAppsWhitepaper(){
 
         {/* ── FOOTER ── */}
         <div className="doc-footer np">
-          <Logo height={16} variant="white"/>
-          <span style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,.3)'}}>Digital Applications Suite Whitepaper · Confidential · March 2026</span>
-          <span style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,.3)'}}>bridgepbc.com</span>
+          <div className="footer-inner" style={{maxWidth:'860px',margin:'0 auto',width:'100%',display:'flex',justifyContent:'space-between',alignItems:'center',gap:'10px'}}>
+            <div style={{display:'flex',alignItems:'center',gap:'14px'}}>
+              <Logo height={16} variant="white"/>
+              <div style={{width:'1px',height:'14px',background:'rgba(255,255,255,.08)'}}/>
+              <span style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(250,248,243,.16)',letterSpacing:'.5px',lineHeight:1.5}}>
+                Digital Applications Suite Whitepaper · March 2026 · bridgepbc.com
+              </span>
+            </div>
+            <div className="footer-links" style={{display:'flex',gap:'18px'}}>
+              {['Overview','Apps Suite','Invest','Contact'].map((l,i)=>(
+                <a key={i} href="#" style={{fontFamily:F.sans,fontSize:'9px',fontWeight:600,color:'rgba(255,255,255,.2)',textDecoration:'none',letterSpacing:'.5px'}}>{l}</a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
