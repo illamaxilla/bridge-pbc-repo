@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function useIsMobile() {
   const [mob, setMob] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768);
@@ -150,6 +151,7 @@ const published = [
     body: "A complete account of the four-dimensional framework behind BRIDGE's venture evaluation process. Covers scoring weights, sub-components, qualifying thresholds, the five-stage pipeline, and the structural features that make the Score independently auditable.",
     stat1: { num: "100", label: "Point Scale" },
     stat2: { num: "174+", label: "Ventures Scored" },
+    route: "/resources/members/impact-score",
     audience: "Investors, Analysts & DFI Partners",
     engagementKey: "analyst",
     urgency: "The Impact Score™ is the gateway to every BRIDGE venture profile. Methodology review is the prerequisite to co-investment access.",
@@ -169,6 +171,7 @@ const published = [
     body: "Defines what BRIDGE means by dignity, security, and thriving — and why GDP growth alone is insufficient. Covers all five dimensions of Peace, the three domains of Prosperity, and the direct connection between all 12 sectors and human flourishing outcomes.",
     stat1: { num: "5", label: "Dimensions of Peace" },
     stat2: { num: "12", label: "Sector Mappings" },
+    route: "/resources/members/peace-prosperity",
     audience: "Government Officials, DFIs & Development Partners",
     engagementKey: "government",
     urgency: "The Peace & Prosperity Framework is the analytical lens behind every BRIDGE sector allocation. Alignment with this framework is the basis for all government and DFI partnerships.",
@@ -188,6 +191,7 @@ const published = [
     body: "A curated overview of every sector in the BRIDGE portfolio — capital ranges, venture counts, Impact Score benchmarks, and the 36+ cross-sector integration points that produce compounding returns. Full sector analyses and individual venture profiles available to qualified partners.",
     stat1: { num: "$135–259M", label: "Indicative Capital" },
     stat2: { num: "36+", label: "Integration Points" },
+    route: "/resources/members/portfolio",
     audience: "Investors, Family Offices & Diaspora Capital",
     engagementKey: "investor",
     urgency: "$135–259M in identified, scored, and sequenced ventures. The question is not whether the opportunities exist — it is which ones you move on first.",
@@ -207,6 +211,7 @@ const published = [
     body: "Original research across Infrastructure, Financial Inclusion, Health Systems, Technology & Innovation, Education & Skills, Agriculture & Value Chains, Creative Industries, Housing, Tourism, Energy, Manufacturing, and Transportation. Each brief includes the BRIDGE Impact Score™ ranking, capital range, and cross-sector integration points.",
     stat1: { num: "12", label: "Sector Briefs" },
     stat2: { num: "60K+", label: "Words of Research" },
+    route: "/resources/sector-briefs-full",
     audience: "Sector Specialists, Entrepreneurs & Institutional Partners",
     engagementKey: "specialist",
     urgency: "60,000+ words of original Ghana sector research. If your expertise or capital sits in one of these 12 sectors, your entry point is the brief for that sector.",
@@ -226,6 +231,7 @@ const published = [
     body: "The comprehensive white paper laying out BRIDGE's full theory of change, the Peace & Prosperity measurement framework, the Impact Score™ methodology, and the strategic rationale for a 12-sector Ghana-first investment architecture. Essential reading for government and institutional partners.",
     stat1: { num: "80+", label: "Pages" },
     stat2: { num: "12", label: "Sectors Covered" },
+    route: "/resources/members/white-paper",
     audience: "Government Ministers, Institutional Partners & DFIs",
     engagementKey: "government",
     urgency: "This is the document that precedes every formal BRIDGE partnership discussion. Government ministries and institutional partners typically read this before requesting a policy alignment briefing.",
@@ -245,6 +251,7 @@ const published = [
     body: "A sector-by-sector analysis of Ghana's 2025 investment landscape. Includes revised Impact Score™ rankings, emerging venture opportunities identified in the second half of the year, policy shifts and their downstream effects, and the BRIDGE team's forward outlook for each sector heading into 2026.",
     stat1: { num: "12", label: "Sectors Reviewed" },
     stat2: { num: "2025", label: "Annual Edition" },
+    route: "/resources/members/annual-review",
     audience: "Active Members & Engaged Investors",
     engagementKey: "active_member",
     urgency: "The 2025 review sets the baseline for 2026 positioning. The sectors that underperformed in 2025 are often where the 2026 first-mover opportunities are sharpest.",
@@ -264,6 +271,7 @@ const published = [
     body: "Identifies every allocation in Ghana's 2026 National Budget with direct implications for BRIDGE ventures — sector-by-sector capital flow analysis, policy tailwinds and headwinds, and priority opportunities created by the 24-Hour Economy, Sankofa Initiative, and infrastructure commitments. Includes a ranked table of budget-accelerated ventures.",
     stat1: { num: "GH₵", label: "2026 National Budget" },
     stat2: { num: "12", label: "Sectors Mapped" },
+    route: "/resources/members/budget-alignment",
     audience: "Investors, Government Officials & DFI Partners",
     engagementKey: "government",
     urgency: "Ghana's 2026 supplementary budget is under active review. The window for policy-aligned venture positioning is Q1–Q2 2026.",
@@ -283,6 +291,7 @@ const published = [
     body: "Essential reference for international investors and diaspora partners entering the Ghanaian market. Covers GIPC registration requirements, minimum capital thresholds by sector, investment guarantees, profit repatriation rights, and the specific provisions applicable to BRIDGE-facilitated ventures.",
     stat1: { num: "GIPC", label: "Certified" },
     stat2: { num: "12", label: "Sectors Covered" },
+    route: "/resources?tab=gipc",
     audience: "International Investors & Diaspora Partners",
     engagementKey: "new_entrant",
     urgency: "GIPC registration is step one for any international investor entering Ghana. Understanding the minimum capital thresholds and profit repatriation rights before committing capital is non-negotiable.",
@@ -302,6 +311,7 @@ const published = [
     body: "The March 2026 edition covers Ghana's Q1 economic performance, sector-level developments across the BRIDGE portfolio, key policy signals from the 2026 Budget implementation, and new venture opportunities entering the evaluation pipeline. Published on the first Monday of each month.",
     stat1: { num: "March", label: "2026 Edition" },
     stat2: { num: "12", label: "Sectors Tracked" },
+    route: "/resources/monthly-dashboard",
     audience: "Active Members & Portfolio Partners",
     engagementKey: "active_member",
     urgency: "The April 2026 edition publishes April 7. Members who act on March signals before the next edition are ahead of the pipeline.",
@@ -321,6 +331,7 @@ const published = [
     body: "A continuously updated tracking document covering every policy development with implications for BRIDGE ventures — 2026 National Budget breakdown, Sankofa Initiative implementation status, 24-Hour Economy progress, and ministry-level policy signals. Updated when significant policy events occur.",
     stat1: { num: "Live", label: "Updated Monthly" },
     stat2: { num: "12", label: "Sectors Tracked" },
+    route: "/resources/members/policy-tracker",
     audience: "Government Officials, Policy Analysts & Development Partners",
     engagementKey: "government",
     urgency: "The Sankofa Initiative implementation calendar has active milestones in Q2 2026. This tracker is updated when significant policy events occur — check the last-updated date at the top of the document.",
@@ -340,6 +351,7 @@ const published = [
     body: "Ghana's Narcotics Control Commission has opened 11 distinct licence categories spanning the full hemp and cannabis value chain — from cultivation and processing to testing, storage, export, and pharmaceutical dispensing. This brief maps every business opportunity across the value chain, scores each against the BRIDGE Impact Score™, identifies first-mover windows, and provides capital requirements, revenue models, and regulatory requirements for each venture type.",
     stat1: { num: "11", label: "Licence Categories" },
     stat2: { num: "$21B+", label: "Global Hemp by 2030" },
+    route: "/resources/cannabis-intelligence",
     audience: "Entrepreneurs, Investors & Sector Specialists",
     engagementKey: "entrepreneur",
     urgency: "NCC licences are being issued now. Cultivation, processing, and export licence categories are filling. The first-mover window in most categories is 12–24 months — after which supply architecture is locked in.",
@@ -351,7 +363,7 @@ const published = [
       "Revenue models, capex ranges, and breakeven timelines",
       "Regulatory compliance requirements and application process",
     ],
-  },  ,
+  },
   {
     cat: "Reports", tag: "Public Benefit Whitepaper",
     title: "Closing the Intelligence Gap: A Scientific & Ecological Case for Democratic Access to Development Intelligence",
@@ -359,6 +371,7 @@ const published = [
     body: "An empirically grounded examination of the four structural gaps that define Ghana’s development intelligence crisis: the $5B+ SME financing gap, the information asymmetry between entrepreneurs and capital, the ecological systems dimension of interconnected market failures, and the brain drain paradox. Draws on peer-reviewed research, IFC data, and field evidence to make the scientific and ecological case for the BRIDGE Impact Score™ Assessor as a democratising public benefit intervention.",
     stat1: { num: "$5B+", label: "Annual SME Financing Gap" },
     stat2: { num: "90%+", label: "SMEs of Ghana’s businesses" },
+    route: "/resources/members/intelligence-whitepaper",
     audience: "Government Officials, DFIs & Academic Partners",
     engagementKey: "government",
     urgency: "This whitepaper is the formal public benefit justification for the BRIDGE Impact Score™ Assessor. Government and DFI partners conducting due diligence on BRIDGE’s methodology should read this alongside the Impact Score™ Methodology document.",
@@ -378,6 +391,7 @@ const published = [
     body: "Ghana produces engineers, nurses, developers, creatives, and tradespeople at a rate the world actively demands. In the absence of safe, verified pathways to global opportunity, a predator economy has filled the vacuum — extracting hundreds of millions from citizens through fraudulent recruitment while the legitimate demand for Ghanaian talent goes unmet. This whitepaper makes the case for BRIDGE Connect: a free-to-use, verification-first platform matching skilled Ghanaians to three categories of real, vetted opportunity. Documents the scale of the crisis (273 trafficking cases investigated in 2024, 8,700+ migrant deaths globally), the revenue architecture, the competitive landscape, and the projected impact.",
     stat1: { num: "21%", label: "Youth Unemployment" },
     stat2: { num: "$37.7B", label: "Africa Freelance Market by 2034" },
+    route: "/resources/members/connect-whitepaper",
     audience: "Investors, Development Partners & Government Officials",
     engagementKey: "investor",
     urgency: "BRIDGE Connect is in active development. Investors and development partners reviewing this whitepaper may request a platform demo and discussion of partnership and co-investment structures.",
@@ -967,6 +981,7 @@ const docEngagement = {
 
 function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const related = allDocs.filter(d => d.cat === doc.cat && d.title !== doc.title).slice(0, 3);
   const F = "'Inter', sans-serif";
   const S = "'DM Serif Display', serif";
@@ -1016,12 +1031,12 @@ function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
 
           {/* Mobile CTAs */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 28 }}>
-            <a href="#" style={{
+            <button onClick={() => doc.route && navigate(doc.route)} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
               padding: '15px 24px', background: C.accent, color: C.cover,
               fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
-              textDecoration: 'none', fontFamily: F, borderRadius: 32,
-            }}>Open Document →</a>
+              border: 'none', cursor: 'pointer', fontFamily: F, borderRadius: 32, width: '100%',
+            }}>Open Document →</button>
             <a href={`mailto:intelligence@bridge-pbc.com?subject=Briefing Request — ${doc.title}`} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
               padding: '13px 24px', background: 'transparent',
@@ -1137,12 +1152,12 @@ function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
 
         {/* Fixed bottom bar */}
         <div className="mob-bar">
-          <a href="#" style={{
+          <button onClick={() => doc.route && navigate(doc.route)} style={{
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             padding: '14px', background: C.accent, color: C.cover,
             fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
-            textDecoration: 'none', borderRadius: 32, fontFamily: F,
-          }}>Open Document →</a>
+            border: 'none', cursor: 'pointer', borderRadius: 32, fontFamily: F,
+          }}>Open Document →</button>
           <a href={`mailto:intelligence@bridge-pbc.com?subject=Briefing Request — ${doc.title}`} style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             width: 48, height: 48, borderRadius: '50%',
@@ -1188,12 +1203,12 @@ function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
               <p style={{ fontFamily: S, fontSize: 17, fontStyle: 'italic', color: 'rgba(255,255,255,0.46)', lineHeight: 1.65, maxWidth: 580, margin: 0 }}>{doc.subtitle}</p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 240, flexShrink: 0 }}>
-              <a href="#" style={{
+              <button onClick={() => doc.route && navigate(doc.route)} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
                 padding: '14px 28px', background: C.accent, color: C.cover,
                 fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
-                textDecoration: 'none', fontFamily: F, borderRadius: 32, whiteSpace: 'nowrap',
-              }}>Open Document →</a>
+                border: 'none', cursor: 'pointer', fontFamily: F, borderRadius: 32, whiteSpace: 'nowrap',
+              }}>Open Document →</button>
               <a href={`mailto:intelligence@bridge-pbc.com?subject=Briefing Request — ${doc.title}`} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                 padding: '13px 28px', background: 'transparent',
@@ -1250,12 +1265,12 @@ function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
               </div>
               <div style={{ padding: '22px 24px 26px' }}>
                 <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.40)', lineHeight: 1.7, fontFamily: F, marginBottom: 22 }}>Open it now or save a copy for offline reference.</div>
-                <a href="#" style={{
+                <button onClick={() => doc.route && navigate(doc.route)} style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                  padding: '14px', background: C.accent, color: C.cover,
+                  padding: '14px', background: C.accent, color: C.cover, width: '100%',
                   fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
-                  textDecoration: 'none', fontFamily: F, borderRadius: 32, marginBottom: 10,
-                }}>Open Document →</a>
+                  border: 'none', cursor: 'pointer', fontFamily: F, borderRadius: 32, marginBottom: 10,
+                }}>Open Document →</button>
                 <a href="#" style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   padding: '12px', background: 'transparent',

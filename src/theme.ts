@@ -18,6 +18,16 @@ export const C = {
   amber: '#B8730A',
   positive: '#1A6B2F',
   white: '#FFFFFF',
+  // Aliases used by paid document pages
+  deep: '#0D1A10',
+  cover: '#0D1A10',
+  primary: '#1B4D3E',
+  accent: '#B8D935',
+  bg: '#FAF8F3',
+  card: '#F0EDE4',
+  subtle: '#5C6B5E',
+  text: '#2A2A2A',
+  line: '#D8D4C8',
 } as const;
 
 /** Font stack tokens (used by BRIDGE_*.jsx pages) */
