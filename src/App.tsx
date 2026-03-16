@@ -27,6 +27,8 @@ import {
   SECTOR_PAGES, BRIDGE_DOC_ROUTES,
   CannabisIntelligenceDashboard, CannabisIntelligenceSummary,
   CANNABIS_LICENCE_ROUTES,
+  FoundersPortal, FoundersAppsWhitepaper,
+  FOUNDERS_DOC_ROUTES,
 } from "./routeConfig";
 
 const queryClient = new QueryClient();
@@ -133,6 +135,24 @@ const App = () => (
                   key={slug}
                   path={`/resources/cannabis-intelligence/${slug}`}
                   element={<ErrorBoundary><PaidRoute><LicenceComponent /></PaidRoute></ErrorBoundary>}
+                />
+              ))}
+
+              {/* Founders Portal — hidden, password-gated, not linked from nav */}
+              <Route path="/founders" element={<ErrorBoundary><FoundersPortal /></ErrorBoundary>} />
+              <Route path="/founders/apps-whitepaper" element={<ErrorBoundary><FoundersAppsWhitepaper /></ErrorBoundary>} />
+              {/* Founders document routes — no auth guards, direct access */}
+              {FOUNDERS_DOC_ROUTES.map(({ path, title, component: DocComponent }) => (
+                <Route
+                  key={path}
+                  path={path}
+                  element={
+                    <ErrorBoundary>
+                      <SectorIntelligenceWrapper title={title}>
+                        <DocComponent />
+                      </SectorIntelligenceWrapper>
+                    </ErrorBoundary>
+                  }
                 />
               ))}
 
