@@ -1,8 +1,10 @@
 import { Layout } from "@/components/Layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { colors } from "@/lib/theme";
 
 export default function Accessibility() {
+  usePageMeta({ title: "Accessibility", description: "BRIDGE PBC's commitment to digital accessibility and WCAG compliance." });
   const mobile = useIsMobile();
 
   return (

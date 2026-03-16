@@ -41,7 +41,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     if (this.state.hasError) {
       if (this.props.fallback) return this.props.fallback;
       return (
-        <div className="flex flex-col items-center justify-center min-h-screen px-5 py-10 font-['Inter',sans-serif] text-center">
+        <div role="alert" aria-live="assertive" className="flex flex-col items-center justify-center min-h-screen px-5 py-10 font-['Inter',sans-serif] text-center">
           <div className="mb-6 text-[48px]" aria-hidden="true">
             &#x26A0;
           </div>
@@ -52,7 +52,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             An unexpected error occurred. You can try again or return to the
             home page.
           </p>
-          {this.state.error && (
+          {this.state.error && import.meta.env.DEV && (
             <p className="text-sm text-[#9CA3AF] mb-6 max-w-[480px] font-mono break-all">
               {this.state.error.message}
             </p>

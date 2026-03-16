@@ -1,8 +1,10 @@
 import { Layout } from "@/components/Layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { colors } from "@/lib/theme";
 
 export default function Privacy() {
+  usePageMeta({ title: "Privacy Policy", description: "How BRIDGE PBC collects, uses, and protects your personal information." });
   const mobile = useIsMobile();
 
   return (

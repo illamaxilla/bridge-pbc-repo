@@ -60,7 +60,7 @@ function SectorGrid() {
       <div
         className={cn(
           "text-[12px] font-semibold font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] mb-3 transition-colors duration-[250ms] leading-[1] min-h-[12px]",
-          hovered !== null ? "text-[#B8D935]" : "text-[rgba(255,255,255,0.4)]"
+          hovered !== null ? "text-[#B8D935]" : "text-[rgba(255,255,255,0.6)]"
         )}
       >
         {hovered !== null ? FOOTER_SECTOR_ICONS[hovered].label : "Explore 12 Sectors"}
@@ -198,7 +198,7 @@ function SiteFooter() {
           {/* Row 3: Contact + Social */}
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
-              <span className="text-[12px] text-[rgba(255,255,255,0.4)] font-['DM_Sans',sans-serif]">
+              <span className="text-[12px] text-[rgba(255,255,255,0.6)] font-['DM_Sans',sans-serif]">
                 Accra, Ghana
               </span>
               <span className="text-[12px] text-[rgba(255,255,255,0.15)]">·</span>
@@ -213,7 +213,7 @@ function SiteFooter() {
                   href={SOCIAL_HREFS[i]}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-7 h-7 rounded-md bg-[rgba(255,255,255,0.06)] flex items-center justify-center cursor-pointer text-[rgba(255,255,255,0.4)] no-underline"
+                  className="w-7 h-7 rounded-md bg-[rgba(255,255,255,0.06)] flex items-center justify-center cursor-pointer text-[rgba(255,255,255,0.6)] no-underline"
                 >
                   <span className="scale-[0.8125] flex">{icon}</span>
                 </a>
@@ -222,7 +222,7 @@ function SiteFooter() {
           </div>
           {/* Bottom bar */}
           <div className="pt-4 border-t border-[rgba(255,255,255,0.06)] flex justify-between items-center">
-            <span className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif]">
+            <span className="text-[11px] text-[rgba(255,255,255,0.5)] font-['DM_Sans',sans-serif]">
               © 2026 BRIDGE PBC
             </span>
             <div className="flex gap-3">
@@ -235,7 +235,7 @@ function SiteFooter() {
                   key={label}
                   href={path}
                   onClick={(e) => { e.preventDefault(); navigate(path); }}
-                  className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif] no-underline"
+                  className="text-[11px] text-[rgba(255,255,255,0.5)] font-['DM_Sans',sans-serif] no-underline"
                 >
                   {label}
                 </a>
@@ -296,7 +296,7 @@ function SiteFooter() {
           <div className="px-[80px] pb-5 grid grid-cols-[325px_1fr] gap-x-[220px] items-start">
             {/* Subscribe */}
             <div>
-              <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.4)] font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] block mb-3 leading-[1]">
+              <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.6)] font-['DM_Sans',sans-serif] uppercase tracking-[1.5px] block mb-3 leading-[1]">
                 Subscribe to Insights
               </span>
               <div className="flex flex-col gap-1.5">
@@ -358,7 +358,7 @@ function SiteFooter() {
 
           {/* Bottom bar */}
           <div className="py-5 px-[80px] border-t border-[rgba(255,255,255,0.06)] flex justify-between items-center">
-            <span className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif]">
+            <span className="text-[11px] text-[rgba(255,255,255,0.5)] font-['DM_Sans',sans-serif]">
               © 2026 BRIDGE PBC
             </span>
             <div className="flex gap-5">
@@ -371,7 +371,7 @@ function SiteFooter() {
                   key={label}
                   href={path}
                   onClick={(e) => { e.preventDefault(); navigate(path); }}
-                  className="text-[11px] text-[rgba(255,255,255,0.25)] font-['DM_Sans',sans-serif] no-underline"
+                  className="text-[11px] text-[rgba(255,255,255,0.5)] font-['DM_Sans',sans-serif] no-underline"
                 >
                   {label}
                 </a>

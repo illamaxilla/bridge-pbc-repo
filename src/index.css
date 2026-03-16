@@ -158,3 +158,30 @@ All colors MUST be HSL.
 .skip-to-content:focus {
   left: 0;
 }
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Smooth scrolling for users who haven't opted out */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Print styles */
+@media print {
+  nav, footer, .skip-to-content, button { display: none !important; }
+  body { background: white !important; color: black !important; }
+  a { text-decoration: underline; color: #1B4D3E; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 80%; }
+}

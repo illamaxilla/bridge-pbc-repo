@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Pages -->
+  <url><loc>https://bridgepbc.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://bridgepbc.com/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/services</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/methodology</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/resources</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bridgepbc.com/insights</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/policy</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/faq</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://bridgepbc.com/membership</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/community</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bridgepbc.com/search</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+
+  <!-- Sectors Hub + 12 Individual Sectors -->
+  <url><loc>https://bridgepbc.com/sectors</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/energy</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/technology</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/agriculture</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/education</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/financial</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/health</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/housing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/infrastructure</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/manufacturing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/sports</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/tourism</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bridgepbc.com/sectors/transport</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Public Resources & Reports -->
+  <url><loc>https://bridgepbc.com/resources/budget-alignment</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/resources/ghana-intelligence</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/resources/sector-briefs</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/resources/white-paper</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/resources/annual-review-2025</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bridgepbc.com/resources/policy-tracker</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/resources/monthly-dashboard</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bridgepbc.com/resources/cannabis-intelligence</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- Legal Pages -->
+  <url><loc>https://bridgepbc.com/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://bridgepbc.com/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://bridgepbc.com/accessibility</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+</urlset>

@@ -1,8 +1,10 @@
 import { Layout } from "@/components/Layout";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { colors } from "@/lib/theme";
 
 export default function Terms() {
+  usePageMeta({ title: "Terms of Service", description: "BRIDGE PBC terms of service and usage policies." });
   const mobile = useIsMobile();
 
   return (

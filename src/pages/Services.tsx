@@ -5,6 +5,7 @@ import { Layout } from "@/components/Layout";
 import { FOOTER_SECTOR_ICONS, SOCIAL_ICONS, SOCIAL_HREFS } from "@/data/sectorIcons";
 // BRIDGE Design System - Consistent with Homepage
 import { colors } from "@/lib/theme";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 // 4 Services Data - Enhanced for focused view
 const servicesData = [
@@ -902,6 +903,7 @@ const footerLinkHref = (link: string): string => {
 };
 
 export default function ServicesSectorsPageV2() {
+  usePageMeta({ title: "Services", description: "Research & Guidance, Venture Development, Direct Investment, and Strategic Partnerships for Ghana's economic growth." });
   const navigate = useNavigate();
   const [activeService, setActiveService] = useState("research");
   const [selectedSector, setSelectedSector] = useState(null);

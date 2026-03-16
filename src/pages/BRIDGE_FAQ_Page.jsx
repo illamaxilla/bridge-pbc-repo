@@ -3,6 +3,7 @@ import { colors, CONTENT_MAX_WIDTH } from '../theme';
 import { Layout } from "@/components/Layout";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 // ============================================================================
 // BRIDGE PBC — FAQ Page
@@ -969,28 +970,31 @@ APPLICATIONS: Individual memberships only. Organizations seeking institutional r
 
 Keep answers short (2-4 sentences), direct, and warm. Do not use markdown. Do not invent details not listed above.`;
 
-  const askQuestion = async () => {
+  // Local FAQ matching — answers membership questions from the BRIDGE_CONTEXT knowledge base
+  const FAQ_ANSWERS = [
+    { keywords: ['paid', 'membership', 'what is paid', 'paid member', 'what do i get'], answer: 'Paid Membership includes the full BRIDGE Intelligence Dashboard with 174+ scored ventures, all 12 sector briefs, the Impact Score methodology, priority community access, and direct access to the BRIDGE team.' },
+    { keywords: ['cost', 'price', 'how much', 'pricing', 'fee'], answer: 'Paid Membership is $10/month or $100/year (saves 17%). Payment is processed only after your application is reviewed and approved.' },
+    { keywords: ['30 day', 'thirty day', 'wait', 'waiting', 'why wait'], answer: 'BRIDGE is a community of committed stakeholders, not a subscription. The 30-day waiting period ensures the community remains high-trust and every Paid Member genuinely understands the work.' },
+    { keywords: ['free', 'free member', 'what is free'], answer: 'Free Membership gives you access to the community forum, monthly intelligence snapshots, and 2 sector brief previews. It\'s the starting point before applying for Paid access.' },
+    { keywords: ['organization', 'institutional', 'company', 'team'], answer: 'Individual memberships only. Organizations seeking institutional relationships should use the Contact page for partnership frameworks.' },
+    { keywords: ['apply', 'join', 'sign up', 'how to'], answer: 'The path is: Explore the site, apply for Free Membership, engage for 30 days, then apply for Paid access. Start by clicking Request Access on the login page.' },
+    { keywords: ['sector', 'sectors', 'which sectors', '12 sectors'], answer: 'BRIDGE covers 12 integrated sectors: Energy, Technology, Agriculture, Education, Financial Inclusion, Health, Housing, Infrastructure, Manufacturing, Sports & Creative, Tourism, and Transportation & Logistics.' },
+    { keywords: ['venture', 'ventures', '174', 'portfolio'], answer: 'BRIDGE has identified and scored 174+ ventures across all 12 sectors using the BRIDGE Impact Score methodology. Paid Members get full access to the venture database and scoring details.' },
+    { keywords: ['intelligence', 'dashboard', 'platform'], answer: 'The BRIDGE Intelligence Dashboard provides real-time sector data, market overview, analytics, a personal watchlist, and reports — all focused on Ghana\'s investment landscape.' },
+    { keywords: ['ghana', 'country', 'where', 'africa'], answer: 'BRIDGE PBC is a Ghana-focused Public Benefit Corporation providing institutional-grade investment intelligence. We are headquartered in Accra with a Ghana-first research focus.' },
+  ];
+
+  const askQuestion = () => {
     if (!question.trim() || loading) return;
     setLoading(true);
     setAnswer('');
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          system: BRIDGE_CONTEXT,
-          messages: [{ role: 'user', content: question.trim() }],
-        }),
-      });
-      const data = await res.json();
-      const text = data?.content?.[0]?.text || 'Unable to retrieve an answer. Please contact BRIDGE directly.';
-      setAnswer(text);
-    } catch {
-      setAnswer('Something went wrong. Please try again or contact us directly.');
-    }
-    setLoading(false);
+    const q = question.toLowerCase().trim();
+    const match = FAQ_ANSWERS.find(faq => faq.keywords.some(kw => q.includes(kw)));
+    // Simulate brief loading for UX
+    setTimeout(() => {
+      setAnswer(match ? match.answer : 'Great question! For detailed or specific inquiries, please reach out to us directly via the Contact page. Our team is happy to help.');
+      setLoading(false);
+    }, 400);
   };
 
   const hints = [
@@ -1367,6 +1371,7 @@ function NeedHelpCTA({ onContact }) {
 
 // ─── Main Export ──────────────────────────────────────────────────────────────
 export default function FAQPage() {
+  usePageMeta({ title: "FAQ", description: "Frequently asked questions about BRIDGE PBC membership, services, and Ghana investment." });
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('about');
   const [searchQuery, setSearchQuery] = useState('');

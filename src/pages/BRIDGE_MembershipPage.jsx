@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useAuth } from "@/context/AuthContext";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { BRIDGEFreeMemberModal, BRIDGEPaidMemberModal } from "@/components/MembershipModals";
@@ -10,6 +11,7 @@ import MembershipPageV4 from "./BRIDGE_Membership_v4";
    Wires v4 membership page with Layout, auth context, and modals.
 ───────────────────────────────────────────────────────────────── */
 export default function BRIDGEMembershipPage() {
+  usePageMeta({ title: "Membership", description: "BRIDGE membership tiers \u2014 Free and Paid access to intelligence, community, and deal flow." });
   const { user } = useAuth();
 
   // Auth modal (for unauthenticated users)
