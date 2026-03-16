@@ -48,6 +48,10 @@ export const PolicyBriefTeaser = lazy(() => import("./pages/resources/PolicyBrie
 export const AnnualReviewTeaser = lazy(() => import("./pages/resources/AnnualReviewTeaser"));
 export const SectorBriefViewer = lazy(() => import("./pages/resources/SectorBriefViewer"));
 
+// Founders Portal (hidden — password-gated, not in nav)
+export const FoundersPortal = lazy(() => import("./pages/founders/BRIDGE_FoundersPortal_Private"));
+export const FoundersAppsWhitepaper = lazy(() => import("./pages/founders/BRIDGE_Apps_Whitepaper"));
+
 // Cannabis Intelligence Series
 export const CannabisIntelligenceDashboard = lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_Dashboard"));
 export const CannabisIntelligenceSummary = lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_SeriesSummary"));

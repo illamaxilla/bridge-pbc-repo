@@ -16,7 +16,19 @@ export default defineConfig({
       "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    // Dev-server middleware: proxy /api/chat to the streaming handler
+    {
+      name: "bridge-chat-api",
+      configureServer(server) {
+        server.middlewares.use("/api/chat", async (req, res) => {
+          const { handleChat } = await import("./server/chat.js");
+          await handleChat(req, res);
+        });
+      },
+    },
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

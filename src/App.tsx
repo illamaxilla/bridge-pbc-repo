@@ -20,6 +20,7 @@ import {
   SECTOR_PAGES, BRIDGE_DOC_ROUTES,
   CannabisIntelligenceDashboard, CannabisIntelligenceSummary,
   CANNABIS_LICENCE_ROUTES,
+  FoundersPortal, FoundersAppsWhitepaper,
 } from "./routeConfig";
 
 const queryClient = new QueryClient();
@@ -128,6 +129,10 @@ const App = () => (
                   element={<ErrorBoundary><PaidRoute><LicenceComponent /></PaidRoute></ErrorBoundary>}
                 />
               ))}
+
+              {/* Founders Portal — hidden, password-gated, not linked from nav */}
+              <Route path="/founders" element={<ErrorBoundary><FoundersPortal /></ErrorBoundary>} />
+              <Route path="/founders/apps-whitepaper" element={<ErrorBoundary><FoundersAppsWhitepaper /></ErrorBoundary>} />
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
