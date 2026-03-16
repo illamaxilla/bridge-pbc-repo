@@ -1,4 +1,4 @@
-import{useState,useEffect}from"react";
+import{useState,useEffect,useRef}from"react";
 
 const C={
   ink:'#0D1A10',paper:'#FAF8F3',paperDark:'#F0EDE4',
@@ -20,40 +20,48 @@ const Gf=()=>(<style>{`
   body{background:${C.paper};-webkit-font-smoothing:antialiased;overflow-x:hidden;}
   @media print{.np{display:none!important;} body{background:white;}}
 
-  /* ── READING PROGRESS ── */
-  #read-bar{position:fixed;top:0;left:0;height:2px;background:${C.lime};z-index:300;transition:width .1s linear;}
+  /* ── READING PROGRESS BAR (sticky top) ── */
+  /* Progress line: 3px lime at bottom of bar */
+  /* Logo reveal: animated via max-width + opacity on scroll */
 
-  /* ── DESKTOP TOC SIDEBAR ── */
-  .toc{position:fixed;left:0;top:0;bottom:0;width:220px;background:${C.ink};padding:80px 0 32px;overflow-y:auto;z-index:90;}
-  .toc-item{display:block;padding:7px 24px;font-family:${F.sans};font-size:10px;font-weight:600;color:rgba(250,248,243,.35);text-decoration:none;letter-spacing:.4px;transition:all .15s;border-left:2px solid transparent;cursor:pointer;}
-  .toc-item:hover{color:rgba(250,248,243,.7);border-left-color:rgba(184,217,53,.3);}
-  .toc-item.active{color:${C.lime};border-left-color:${C.lime};}
-  .toc-section{padding:16px 24px 6px;font-family:${F.sans};font-size:8px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:rgba(250,248,243,.18);}
-  .toc-logo{padding:0 24px 28px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px;}
-  .main{margin-left:220px;}
+  /* ── SECTION FOOTER NAV (fixed bottom) ── */
+  /* Dot trail: past=30% lime, active=24px lime pill, future=15% white */
 
-  /* ── MOBILE STICKY HEADER ── */
-  .mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:200;background:${C.ink};height:52px;padding:0 20px;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08);}
-  .mob-header-section{font-family:${F.sans};font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(250,248,243,.35);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .mob-menu-btn{background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:4px;}
-  .mob-menu-btn span{display:block;width:20px;height:2px;background:rgba(250,248,243,.6);border-radius:1px;transition:all .2s;}
+  /* ── SCROLL MARGIN — section IDs don't get obscured by sticky bar ── */
+  [id]{scroll-margin-top:52px;}
 
-  /* ── MOBILE DRAWER NAV ── */
-  .mob-drawer{position:fixed;top:0;left:0;right:0;bottom:0;z-index:250;pointer-events:none;}
-  .mob-drawer-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s;}
-  .mob-drawer-panel{position:absolute;top:0;right:0;bottom:0;width:280px;background:${C.ink};transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:24px 0 calc(32px + env(safe-area-inset-bottom));}
-  .mob-drawer.open .mob-drawer-overlay{opacity:1;pointer-events:all;}
-  .mob-drawer.open .mob-drawer-panel{transform:translateX(0);}
-  .mob-drawer-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.08);border:none;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(250,248,243,.6);font-size:16px;}
-  .mob-drawer-logo{padding:16px 24px 24px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px;}
-  .mob-toc-section{padding:14px 24px 5px;font-family:${F.sans};font-size:8px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:rgba(250,248,243,.18);}
-  .mob-toc-item{display:block;width:100%;text-align:left;padding:9px 24px;font-family:${F.sans};font-size:12px;font-weight:600;color:rgba(250,248,243,.45);background:none;border:none;cursor:pointer;letter-spacing:.3px;transition:color .15s;}
-  .mob-toc-item:active{color:${C.lime};}
-  .mob-toc-item.active{color:${C.lime};}
+  /* ── GLOBAL TRANSITIONS (v4 skill) ── */
+  a{transition:opacity 0.15s ease;}
+  a:hover{opacity:0.76;}
+  button{transition:background 0.15s ease,border-color 0.15s ease,color 0.15s ease;}
 
-  /* ── LAYOUT ── */
-  @media(max-width:900px){.toc{display:none;}.main{margin-left:0;}.mob-header{display:flex;}}
-  @media(max-width:900px){.main{padding-top:52px;}}
+  /* ── PRIMARY CTA LIFT (v4 skill) ── */
+  .cta-primary{transition:transform 0.15s ease,box-shadow 0.15s ease!important;}
+  .cta-primary:hover{transform:translateY(-1px)!important;box-shadow:0 6px 20px rgba(184,217,53,0.25)!important;}
+
+  /* ── SCORE BAR ANIMATION (v4 skill) ── */
+  @keyframes barGrow{from{width:0}to{width:var(--w,100%)}}
+  .score-bar{animation:barGrow 1s cubic-bezier(0.16,1,0.3,1) 0.4s both;}
+
+  /* ── VISIBILITY ── */
+  .mob-show{display:none;}
+  .mob-hide{display:block;}
+  @media(max-width:900px){
+    .mob-show{display:block!important;}
+    .mob-hide{display:none!important;}
+  }
+  @media(max-width:600px){
+    .mob-show{display:block!important;}
+    .mob-hide{display:none!important;}
+  }
+
+  /* ── PAD CLASSES (skill standard) ── */
+  .pad-topbar{padding:10px 40px;}
+  @media(max-width:900px){.pad-topbar{padding:10px 24px!important;}}
+  @media(max-width:600px){.pad-topbar{padding:9px 16px!important;}}
+
+  /* ── LAYOUT: main content needs no left margin (no sidebar) ── */
+  .main{margin-left:0;}
 
   /* ── TYPOGRAPHY ── */
   .dc::first-letter{font-family:${F.display};font-size:4.2em;font-weight:900;float:left;line-height:.82;margin:.06em .1em 0 0;color:${C.forest};}
@@ -238,51 +246,160 @@ const SECTIONS=[
   {id:'close',label:'Closing Argument'},
 ];
 
-const TOC=({active})=>(
-  <nav className="toc np">
-    <div className="toc-logo"><Logo height={18} variant="white"/></div>
-    {SECTIONS.map((s,i)=>(
-      <span key={i}>
-        {s.group&&<div className="toc-section">{s.group}</div>}
-        <a className={`toc-item${active===s.id?' active':''}`} onClick={()=>{document.getElementById(s.id)?.scrollIntoView({behavior:'smooth',block:'start'});}}>
-          {s.label}
-        </a>
-      </span>
-    ))}
-  </nav>
-);
-
-const MobHeader=({activeLabel,onOpen})=>(
-  <div className="mob-header np">
-    <Logo height={16} variant="white"/>
-    <span className="mob-header-section">{activeLabel}</span>
-    <button className="mob-menu-btn" onClick={onOpen} aria-label="Open navigation">
-      <span/><span/><span/>
-    </button>
-  </div>
-);
-
-const MobDrawer=({active,open,onClose})=>(
-  <div className={`mob-drawer np${open?' open':''}`}>
-    <div className="mob-drawer-overlay" onClick={onClose}/>
-    <div className="mob-drawer-panel">
-      <button className="mob-drawer-close" onClick={onClose}>✕</button>
-      <div className="mob-drawer-logo"><Logo height={16} variant="white"/></div>
-      {SECTIONS.map((s,i)=>(
-        <span key={i}>
-          {s.group&&<div className="mob-toc-section">{s.group}</div>}
-          <button
-            className={`mob-toc-item${active===s.id?' active':''}`}
-            onClick={()=>{
-              document.getElementById(s.id)?.scrollIntoView({behavior:'smooth',block:'start'});
-              onClose();
-            }}
-          >{s.label}</button>
+/* ── ReadingProgressBar (skill v4) ────────────────────────────────────────
+   Sticky top bar. Progress line at bottom (3px lime). Logo slides in when
+   cover logo scrolls above the fold. Reading % shown after 5% scroll.
+   spring easing on logo reveal. cta-primary hover lift on CTA button.
+────────────────────────────────────────────────────────────────────────── */
+const ReadingProgressBar=({coverRef})=>{
+  const[pct,setPct]=useState(0);
+  const[logoVisible,setLogoVisible]=useState(false);
+  useEffect(()=>{
+    const fn=()=>{
+      const doc=document.documentElement;
+      const scrolled=doc.scrollTop||document.body.scrollTop;
+      const total=doc.scrollHeight-doc.clientHeight;
+      setPct(total>0?Math.min(100,(scrolled/total)*100):0);
+      if(coverRef?.current){setLogoVisible(coverRef.current.getBoundingClientRect().bottom<0);}
+    };
+    window.addEventListener('scroll',fn,{passive:true});
+    fn();
+    return()=>window.removeEventListener('scroll',fn);
+  },[coverRef]);
+  const pctRounded=Math.round(pct);
+  return(
+    <div className="np pad-topbar" style={{
+      position:'sticky',top:0,zIndex:100,
+      background:C.paper,borderBottom:`1px solid ${C.border}`,
+      padding:'10px 40px',display:'flex',justifyContent:'space-between',
+      alignItems:'center',boxShadow:'0 1px 8px rgba(13,26,16,0.05)',overflow:'hidden',
+    }}>
+      {/* 3px progress line at bottom */}
+      <div style={{position:'absolute',bottom:0,left:0,height:'3px',
+        width:`${pct}%`,background:C.lime,transition:'width 0.1s linear',pointerEvents:'none'}}/>
+      {/* Left: logo reveal + label */}
+      <div style={{display:'flex',alignItems:'center',gap:'10px',minWidth:0,overflow:'hidden'}}>
+        <div style={{overflow:'hidden',maxWidth:logoVisible?'180px':'0',opacity:logoVisible?1:0,
+          transition:'max-width 0.38s cubic-bezier(0.16,1,0.3,1),opacity 0.3s ease',
+          display:'flex',alignItems:'center',flexShrink:0}}>
+          <Logo height={19} variant="dark"/>
+          <div style={{width:'1px',height:'15px',background:C.border,margin:'0 12px',flexShrink:0}}/>
+        </div>
+        {/* Desktop label */}
+        <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',color:C.muted,
+          whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>
+          Whitepaper · BRIDGE Connect · March 2026
         </span>
-      ))}
+        {/* Mobile compact label */}
+        <span className="mob-show" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest}}>
+          BRIDGE Connect
+        </span>
+        {/* Reading % — desktop only, shown after 5% */}
+        {pct>5&&(
+          <span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctRounded}%</span>
+        )}
+      </div>
+      {/* Right: CTAs */}
+      <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
+        <a href="#close" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',
+          fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'0.2px'}}>
+          Skip to end →
+        </a>
+        <a href="#" className="cta-primary" style={{background:C.forest,color:C.lime,
+          padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,
+          textDecoration:'none',letterSpacing:'0.5px'}}>
+          Join BRIDGE →
+        </a>
+      </div>
     </div>
-  </div>
-);
+  );
+};
+
+/* ── SectionFooterNav (skill v4) ───────────────────────────────────────────
+   Fixed bottom. Dot trail: past=30% lime, active=24px lime pill, future=15% white.
+   Prev/Next arrows 38×38px. Section label + count. Spring easing on dots.
+────────────────────────────────────────────────────────────────────────── */
+const SectionFooterNav=()=>{
+  const[active,setActive]=useState(0);
+  useEffect(()=>{
+    const obs=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const idx=SECTIONS.findIndex(s=>s.id===e.target.id);
+          if(idx>=0)setActive(idx);
+        }
+      });
+    },{rootMargin:'-40% 0px -55% 0px'});
+    SECTIONS.forEach(s=>{const el=document.getElementById(s.id);if(el)obs.observe(el);});
+    return()=>obs.disconnect();
+  },[]);
+  const goTo=(idx)=>{
+    const clamped=Math.max(0,Math.min(SECTIONS.length-1,idx));
+    const el=document.getElementById(SECTIONS[clamped].id);
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+    setActive(clamped);
+  };
+  const BtnStyle=(disabled,isNext)=>({
+    width:'38px',height:'38px',
+    background:disabled?'rgba(255,255,255,0.03)':(isNext?C.forest:'rgba(255,255,255,0.07)'),
+    border:`1px solid ${disabled?'rgba(255,255,255,0.08)':(isNext?'rgba(184,217,53,0.25)':'rgba(255,255,255,0.14)')}`,
+    cursor:disabled?'default':'pointer',display:'flex',alignItems:'center',justifyContent:'center',
+    flexShrink:0,opacity:disabled?0.28:1,transition:'background 0.15s,transform 0.12s',
+  });
+  return(
+    <div className="np" style={{
+      position:'fixed',bottom:0,left:0,right:0,zIndex:200,
+      background:'rgba(10,20,12,0.97)',borderTop:`1px solid rgba(184,217,53,0.12)`,
+      backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',
+      display:'flex',alignItems:'center',justifyContent:'space-between',
+      padding:'9px 18px',gap:'10px',
+    }}>
+      {/* ← Prev */}
+      <button onClick={()=>goTo(active-1)} disabled={active===0} style={BtnStyle(active===0,false)}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+          stroke={active===0?'rgba(255,255,255,0.2)':C.lime}
+          strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      {/* Centre: label + dots */}
+      <div style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:'6px',minWidth:0,overflow:'hidden'}}>
+        <div style={{display:'flex',alignItems:'center',gap:'7px',maxWidth:'100%',overflow:'hidden'}}>
+          <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px',flexShrink:0}}>
+            §{String(active+1).padStart(2,'0')}
+          </span>
+          <span style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'1.5px',
+            textTransform:'uppercase',color:'rgba(255,255,255,0.45)',whiteSpace:'nowrap',
+            overflow:'hidden',textOverflow:'ellipsis'}}>
+            {SECTIONS[active]?.label}
+          </span>
+          <span className="mob-hide" style={{fontFamily:F.mono,fontSize:'8px',color:'rgba(255,255,255,0.18)',flexShrink:0}}>
+            / {SECTIONS.length}
+          </span>
+        </div>
+        {/* Dot trail */}
+        <div style={{display:'flex',gap:'4px',alignItems:'center'}}>
+          {SECTIONS.map((_,i)=>(
+            <div key={i} onClick={()=>goTo(i)} style={{
+              width:i===active?'24px':'6px',height:'6px',borderRadius:'3px',
+              background:i===active?C.lime:i<active?'rgba(184,217,53,0.3)':'rgba(255,255,255,0.15)',
+              cursor:'pointer',transition:'width 0.3s cubic-bezier(0.16,1,0.3,1),background 0.2s',
+              flexShrink:0,
+            }}/>
+          ))}
+        </div>
+      </div>
+      {/* → Next */}
+      <button onClick={()=>goTo(active+1)} disabled={active===SECTIONS.length-1} style={BtnStyle(active===SECTIONS.length-1,true)}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+          stroke={active===SECTIONS.length-1?'rgba(255,255,255,0.2)':C.lime}
+          strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+  );
+};
 
 const Rule=()=><div className="rule-strong"/>;
 const Eyebrow=({children})=><div className="eyebrow">{children}</div>;
@@ -298,45 +415,19 @@ const DataCard=({n,label,source})=>(
 );
 
 export default function BRIDGEConnectWhitepaper(){
-  const [activeSection,setActiveSection]=useState('cover');
-  const [readPct,setReadPct]=useState(0);
-  const [drawerOpen,setDrawerOpen]=useState(false);
-
-  useEffect(()=>{
-    const onScroll=()=>{
-      const el=document.documentElement;
-      const pct=Math.round((el.scrollTop/(el.scrollHeight-el.clientHeight))*100);
-      setReadPct(Math.min(100,pct||0));
-      for(let i=SECTIONS.length-1;i>=0;i--){
-        const el2=document.getElementById(SECTIONS[i].id);
-        if(el2&&el2.getBoundingClientRect().top<=120){setActiveSection(SECTIONS[i].id);break;}
-      }
-    };
-    window.addEventListener('scroll',onScroll,{passive:true});
-    return()=>window.removeEventListener('scroll',onScroll);
-  },[]);
-
-  // Lock body scroll when drawer open
-  useEffect(()=>{
-    document.body.style.overflow=drawerOpen?'hidden':'';
-    return()=>{document.body.style.overflow='';};
-  },[drawerOpen]);
-
-  const activeLabel=SECTIONS.find(s=>s.id===activeSection)?.label||'';
+  const coverRef=useRef(null);
 
   return(
-    <div style={{fontFamily:F.body,background:C.paper,minHeight:'100vh'}}>
+    <div style={{fontFamily:F.body,background:C.paper,minHeight:'100vh',paddingBottom:'60px'}}>
       <Gf/>
-      <div id="read-bar" style={{width:`${readPct}%`}}/>
-      <TOC active={activeSection}/>
-      <MobHeader activeLabel={activeLabel} onOpen={()=>setDrawerOpen(true)}/>
-      <MobDrawer active={activeSection} open={drawerOpen} onClose={()=>setDrawerOpen(false)}/>
+      <ReadingProgressBar coverRef={coverRef}/>
+      <SectionFooterNav/>
       <div className="main">
 
         {/* ── COVER ──────────────────────────────────────────────────────────── */}
         <div id="cover" className="cover-pad" style={{background:C.ink,minHeight:'92vh',display:'flex',flexDirection:'column',justifyContent:'space-between',position:'relative',overflow:'hidden'}}>
           <div style={{position:'absolute',right:0,bottom:0,fontFamily:F.display,fontSize:'clamp(160px,28vw,400px)',fontWeight:900,color:'rgba(255,255,255,.025)',lineHeight:1,pointerEvents:'none',userSelect:'none',letterSpacing:'-12px'}}>C</div>
-          <div>
+          <div ref={coverRef}>
             <Logo height={28} variant="white"/>
             <div style={{borderTop:'1px solid rgba(255,255,255,.1)',marginTop:'28px',marginBottom:'48px'}}/>
           </div>
@@ -348,7 +439,7 @@ export default function BRIDGEConnectWhitepaper(){
             <p style={{fontFamily:F.body,fontSize:'18px',color:'rgba(250,248,243,.6)',lineHeight:1.75,maxWidth:'600px',fontWeight:300,marginBottom:'0'}}>Ghana produces engineers, nurses, developers, creatives, and tradespeople at a rate the world needs. In the absence of safe, verified pathways to global opportunity, a predator economy has filled the vacuum — extracting hundreds of millions from citizens while delivering nothing but false promises. BRIDGE Connect changes that. It matches skilled Ghanaians to verified real opportunities — remote work, ethical international employment, and structured advancement — at zero cost, with every listing screened and every employer accountable.</p>
           </div>
           <div style={{borderTop:'1px solid rgba(255,255,255,.1)',marginTop:'48px',paddingTop:'28px',display:'flex',gap:'32px',flexWrap:'wrap'}}>
-            {[['21%','Youth unemployment (Ghana, 2023)'],['273','Trafficking cases investigated (2024)'],['$37.7B','Africa freelance market by 2034'],['$0','Cost to access BRIDGE Connect'],['3','Verified opportunity pathways']].map(([n,l])=>(
+            {[['21%','Youth unemployment (Ghana, 2023)'],['273','Trafficking cases investigated (2024)'],['$37.7B','Africa freelance market by 2034'],['$0','Cost to access BRIDGE Connect'],['6','Verified opportunity pathways']].map(([n,l])=>(
               <div key={l} style={{minWidth:'80px'}}>
                 <div style={{fontFamily:F.mono,fontSize:'24px',fontWeight:500,color:C.lime,lineHeight:1}}>{n}</div>
                 <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',color:'rgba(250,248,243,.28)',marginTop:'4px'}}>{l}</div>

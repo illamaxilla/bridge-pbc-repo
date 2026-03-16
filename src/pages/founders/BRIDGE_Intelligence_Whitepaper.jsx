@@ -1,4 +1,4 @@
-import{useState,useEffect}from"react";
+import React,{useState,useEffect,useRef}from"react";
 
 const C={
   ink:'#0D1A10',paper:'#FAF8F3',paperDark:'#F0EDE4',
@@ -20,8 +20,10 @@ const Gf=()=>(<style>{`
   body{background:${C.paper};-webkit-font-smoothing:antialiased;overflow-x:hidden;}
   @media print{.np{display:none!important;}}
 
-  #read-bar{position:fixed;top:0;left:0;height:2px;background:${C.lime};z-index:200;transition:width .1s linear;}
+  /* ── READING PROGRESS ── */
+  #read-bar{position:fixed;top:0;left:0;height:2px;background:${C.lime};z-index:400;transition:width .1s linear;}
 
+  /* ── DESKTOP TOC ── */
   .toc{position:fixed;left:0;top:0;bottom:0;width:220px;background:${C.ink};padding:72px 0 32px;overflow-y:auto;z-index:90;}
   .toc-logo{padding:0 24px 24px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px;}
   .toc-section{padding:14px 24px 5px;font-family:${F.sans};font-size:8px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:rgba(250,248,243,.18);}
@@ -29,78 +31,132 @@ const Gf=()=>(<style>{`
   .toc-item:hover{color:rgba(250,248,243,.7);border-left-color:rgba(184,217,53,.3);}
   .toc-item.active{color:${C.lime};border-left-color:${C.lime};}
 
+  /* ── LAYOUT ── */
   .main{margin-left:220px;}
-  @media(max-width:960px){.toc{display:none;}.main{margin-left:0;}}
+  .cover-logo-wrap{display:none;} /* hidden on desktop — sidebar has the logo */
 
+  /* ── PROGRESS BAR + SECTION NAV (skill v4) ── */
+  [id]{scroll-margin-top:52px;}
+  @keyframes barGrow{from{width:0}to{width:var(--w,100%)}}
+  .score-bar{animation:barGrow 1s cubic-bezier(0.16,1,0.3,1) 0.4s both;}
+  .cta-primary{transition:transform 0.15s ease,box-shadow 0.15s ease!important;}
+  .cta-primary:hover{transform:translateY(-1px)!important;box-shadow:0 6px 20px rgba(184,217,53,0.25)!important;}
+  /* Skill v4 visibility defaults */
+  .mob-show{display:none;}
+  .mob-hide{display:inline;}
+  .desk-only{display:block;}
+  /* Skill v4 topbar padding class */
+  .pad-topbar{padding:10px 40px;}
+  a{transition:opacity .15s ease;}
+  a:hover{opacity:.76;}
+  button{transition:background .15s ease,border-color .15s ease,color .15s ease;}
+
+  /* ── TYPOGRAPHY ── */
   p{font-family:${F.body};font-size:16px;line-height:1.88;color:${C.ink};font-weight:300;margin-bottom:18px;}
   p+p{text-indent:1.5em;}
   strong{font-weight:600;}
   em{font-style:italic;}
-
   .rule-strong{border-top:6px solid ${C.ink};border-bottom:2px solid ${C.lime};padding-bottom:3px;margin-bottom:20px;}
   .rule-light{border-top:1px solid ${C.border};margin:32px 0;}
-
   .dc::first-letter{font-family:${F.display};font-size:4.2em;font-weight:900;float:left;line-height:.82;margin:.06em .1em 0 0;color:${C.forest};}
-
   .pq{border-left:3px solid ${C.lime};padding:2px 0 2px 24px;margin:32px 0;font-family:${F.display};font-size:19px;font-style:italic;color:${C.forest};line-height:1.55;}
 
+  /* ── STAT STRIPS ── */
   .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:${C.border};border:1px solid ${C.border};margin:32px 0;}
   .stat-cell{background:${C.paper};padding:20px 16px;text-align:center;}
   .stat-n{font-family:${F.mono};font-size:30px;font-weight:500;color:${C.forest};display:block;line-height:1;}
   .stat-l{font-family:${F.sans};font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${C.muted};margin-top:5px;display:block;}
-  @media(max-width:600px){.stat-strip{grid-template-columns:1fr 1fr;}}
-
   .stat-strip-dark{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);margin:32px 0;}
   .stat-cell-dark{background:rgba(255,255,255,.03);padding:20px 16px;text-align:center;}
-  @media(max-width:600px){.stat-strip-dark{grid-template-columns:1fr 1fr;}}
 
+  /* ── COMPONENTS ── */
   .cite{font-family:${F.sans};font-size:10px;color:${C.faint};font-style:normal;vertical-align:super;line-height:0;}
   .ref-block{background:${C.paperDark};border-left:3px solid ${C.border};padding:16px 20px;margin:24px 0;font-family:${F.sans};font-size:11px;color:${C.muted};line-height:1.7;}
   .ref-block strong{color:${C.ink};font-size:10px;letter-spacing:.5px;text-transform:uppercase;}
-
   .evidence-card{border-left:4px solid ${C.lime};padding:16px 20px;background:rgba(27,77,62,.04);margin:20px 0;}
   .evidence-tag{font-family:${F.sans};font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:${C.teal};margin-bottom:6px;}
   .evidence-text{font-family:${F.body};font-size:14px;color:${C.ink};line-height:1.7;}
   .evidence-source{font-family:${F.sans};font-size:10px;color:${C.faint};margin-top:6px;font-style:italic;}
-
   .gap-diagram{border:1px solid ${C.border};padding:28px;margin:28px 0;background:${C.paperDark};}
   .gap-row{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;align-items:center;margin-bottom:16px;}
   .gap-left{background:${C.ink};color:${C.paper};padding:14px 16px;font-family:${F.sans};font-size:12px;font-weight:700;line-height:1.4;}
   .gap-arrow{background:${C.lime};display:flex;align-items:center;justify-content:center;color:${C.ink};font-size:16px;font-weight:900;height:100%;}
   .gap-right{border:1.5px solid ${C.lime};padding:14px 16px;font-family:${F.sans};font-size:12px;font-weight:700;color:${C.forest};line-height:1.4;}
-  @media(max-width:600px){.gap-row{grid-template-columns:1fr;}.gap-arrow{height:32px;}}
 
+  /* ── SECTION COVERS ── */
   .section-cover{background:${C.ink};padding:56px 64px;position:relative;overflow:hidden;}
+  .section-cover-inner{max-width:960px;margin:0 auto;position:relative;}
   .section-cover-num{position:absolute;right:-10px;bottom:-20px;font-family:${F.display};font-size:clamp(100px,18vw,200px);font-weight:900;color:rgba(255,255,255,.035);line-height:1;pointer-events:none;user-select:none;}
   .section-eyebrow{font-family:${F.sans};font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(184,217,53,.6);margin-bottom:12px;}
   .section-h{font-family:${F.display};font-size:clamp(22px,4vw,40px);font-weight:900;color:${C.white};line-height:1.15;margin-bottom:12px;}
   .section-sub{font-family:${F.body};font-size:16px;color:rgba(250,248,243,.55);max-width:640px;line-height:1.72;font-weight:300;}
 
-  .body-pad{padding:52px 64px;max-width:860px;}
+  /* ── BODY PADDING ── */
+  .body-pad{padding:52px 64px;max-width:960px;margin:0 auto;width:100%;}
   .eyebrow{font-family:${F.sans};font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:${C.muted};margin-bottom:8px;}
   .h2{font-family:${F.display};font-size:clamp(20px,3vw,30px);font-weight:700;color:${C.ink};line-height:1.25;margin-bottom:16px;}
   .h3{font-family:${F.sans};font-size:15px;font-weight:700;color:${C.forest};margin-bottom:10px;margin-top:28px;}
 
-  .footnotes{padding:36px 64px;background:${C.paperDark};border-top:1px solid ${C.border};}
+  /* ── FOOTER ── */
+  .footnotes{padding:36px 64px;background:${C.paperDark};border-top:1px solid ${C.border};max-width:960px;margin:0 auto;width:100%;}
   .fn-title{font-family:${F.sans};font-size:9px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:${C.muted};margin-bottom:16px;}
   .fn-item{font-family:${F.sans};font-size:10px;color:${C.muted};line-height:1.65;margin-bottom:8px;padding-left:20px;position:relative;}
   .fn-item::before{content:attr(data-n);position:absolute;left:0;font-weight:700;color:${C.teal};}
-
   .doc-footer{background:${C.ink};padding:22px 64px;border-top:3px solid ${C.lime};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
 
+  /* ── TABLET ≤960px ── */
+  @media(max-width:960px){
+    .toc{display:none;}
+    .main{margin-left:0;}
+    .cover-logo-wrap{display:block;}
+  }
+
+  /* ── TABLET ≤900px ── */
   @media(max-width:900px){
     .body-pad{padding:40px 32px;}
     .section-cover{padding:40px 32px;}
     .footnotes{padding:28px 32px;}
     .doc-footer{padding:18px 32px;}
+    .stat-strip{grid-template-columns:1fr 1fr;}
+    .stat-strip-dark{grid-template-columns:1fr 1fr;}
+    .pq{font-size:17px;padding-left:16px;}
   }
+
+  /* ── MOBILE ≤600px ── */
   @media(max-width:600px){
-    .body-pad{padding:28px 20px;}
-    .section-cover{padding:28px 20px;}
+    .mob-show{display:block!important;}
+    .mob-hide{display:none!important;}
+    .pad-topbar{padding:9px 16px!important;}
+    .cover-pad{padding:32px 20px 32px!important;}
+    .cover-stats-row{gap:20px!important;flex-wrap:wrap!important;}
+    .gap-row-mob{display:flex!important;flex-direction:column!important;}
+    .gap-row-mob .gap-arr-mob{width:100%!important;height:24px!important;justify-content:center!important;}
+    .gap-diagram{padding:18px!important;}
+    .cover-hero-pad{padding:20px 16px 28px!important;}
+    .desk-only{display:none!important;}
+    .body-pad{padding:24px 16px;}
+    .section-cover{padding:28px 16px;}
     .gap-row{grid-template-columns:1fr;}
     .gap-arrow{height:28px;}
-    .footnotes{padding:24px 18px;}
-    .doc-footer{padding:16px 18px;}
+    .gap-row-mob{display:flex!important;flex-direction:column!important;margin-bottom:12px!important;}
+    .gap-row-mob>div{width:100%!important;}
+    .gap-arr-mob{height:28px!important;width:100%!important;justify-content:center!important;}
+    .footnotes{padding:20px 16px;}
+    .doc-footer{padding:14px 16px;flex-direction:column;align-items:flex-start;gap:8px;}
+    p{font-size:15px;line-height:1.8;}
+    .dc::first-letter{font-size:3.4em;}
+    .pq{font-size:16px;margin:20px 0;}
+    .stat-n{font-size:22px;}
+    @supports(padding-bottom:env(safe-area-inset-bottom)){
+      .doc-footer{padding-bottom:calc(14px + env(safe-area-inset-bottom));}
+    }
+  }
+
+  /* ── SMALL MOBILE ≤400px ── */
+  @media(max-width:400px){
+    .body-pad{padding:20px 14px;}
+    .section-cover{padding:22px 14px;}
+    .cover-hero-pad{padding:16px 14px 20px!important;}
   }
 `}</style>);
 
@@ -170,45 +226,133 @@ const EvidenceCard=({tag,text,source})=>(
   </div>
 );
 
-export default function BRIDGEPublicBenefitWhitepaper(){
-  const [active,setActive]=useState('cover');
-  const [pct,setPct]=useState(0);
 
+const ReadingProgressBar=({coverRef})=>{
+  const[pct,setPct]=useState(0);
+  const[logoVisible,setLogoVisible]=useState(false);
   useEffect(()=>{
     const fn=()=>{
-      const el=document.documentElement;
-      setPct(Math.min(100,Math.round((el.scrollTop/(el.scrollHeight-el.clientHeight))*100)||0));
-      for(let i=SECTIONS.length-1;i>=0;i--){
-        const s=document.getElementById(SECTIONS[i].id);
-        if(s&&s.getBoundingClientRect().top<=120){setActive(SECTIONS[i].id);break;}
-      }
+      const doc=document.documentElement;
+      const scrolled=doc.scrollTop||document.body.scrollTop;
+      const total=doc.scrollHeight-doc.clientHeight;
+      setPct(total>0?Math.min(100,(scrolled/total)*100):0);
+      if(coverRef?.current)setLogoVisible(coverRef.current.getBoundingClientRect().bottom<0);
     };
-    window.addEventListener('scroll',fn,{passive:true});
+    window.addEventListener('scroll',fn,{passive:true});fn();
     return()=>window.removeEventListener('scroll',fn);
+  },[coverRef]);
+  const pctR=Math.round(pct);
+  return(
+    <div className="np pad-topbar" style={{position:'sticky',top:0,zIndex:100,background:C.paper,borderBottom:`1px solid ${C.border}`,padding:'10px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',boxShadow:'0 1px 8px rgba(13,26,16,0.05)',overflow:'hidden'}}>
+      {/* v4: 3px progress line */}
+      <div style={{position:'absolute',bottom:0,left:0,height:'3px',width:`${pct}%`,background:C.lime,transition:'width .1s linear',pointerEvents:'none'}}/>
+      {/* Left: logo reveal + label */}
+      <div style={{display:'flex',alignItems:'center',gap:'10px',minWidth:0,overflow:'hidden'}}>
+        <div style={{overflow:'hidden',maxWidth:logoVisible?'180px':'0',opacity:logoVisible?1:0,transition:'max-width .38s cubic-bezier(0.16,1,0.3,1),opacity .3s ease',display:'flex',alignItems:'center',flexShrink:0}}>
+          <Logo height={19} variant="dark"/>
+          <div style={{width:'1px',height:'15px',background:C.border,margin:'0 12px',flexShrink:0}}/>
+        </div>
+        <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',color:C.muted,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>
+          Public Benefit Whitepaper · BRIDGE PBC · March 2026
+        </span>
+        <span className="mob-show" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest}}>
+          Public Benefit
+        </span>
+        {pct>5&&<span className="mob-hide" style={{fontFamily:F.mono,fontSize:'10px',color:C.faint,marginLeft:'4px',flexShrink:0}}>{pctR}%</span>}
+      </div>
+      {/* Right: CTAs */}
+      <div style={{display:'flex',gap:'10px',alignItems:'center',flexShrink:0}}>
+        <a href="https://bridgepbc.com" className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,textDecoration:'none',letterSpacing:'.2px'}}>bridgepbc.com →</a>
+        <a href="#references" className="cta-primary" style={{background:C.forest,color:C.lime,padding:'7px 16px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'.5px'}}>References →</a>
+      </div>
+    </div>
+  );
+};
+
+const SectionFooterNav=()=>{
+  const[active,setActive]=useState(0);
+  useEffect(()=>{
+    const obs=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const idx=SECTIONS.findIndex(s=>s.id===e.target.id);
+          if(idx>=0)setActive(idx);
+        }
+      });
+    },{rootMargin:'-40% 0px -55% 0px'});
+    SECTIONS.forEach(s=>{const el=document.getElementById(s.id);if(el)obs.observe(el);});
+    return()=>obs.disconnect();
+  },[]);
+  const goTo=idx=>{
+    const cl=Math.max(0,Math.min(SECTIONS.length-1,idx));
+    document.getElementById(SECTIONS[cl].id)?.scrollIntoView({behavior:'smooth',block:'start'});
+    setActive(cl);
+  };
+  const BtnStyle=(disabled,isNext)=>({
+    width:'38px',height:'38px',
+    background:disabled?'rgba(255,255,255,.03)':isNext?C.forest:'rgba(255,255,255,.07)',
+    border:`1px solid ${disabled?'rgba(255,255,255,.08)':isNext?'rgba(184,217,53,.25)':'rgba(255,255,255,.14)'}`,
+    cursor:disabled?'default':'pointer',
+    display:'flex',alignItems:'center',justifyContent:'center',
+    flexShrink:0,opacity:disabled?.28:1,
+    transition:'background .15s,transform .12s',
+  });
+  return(
+    <div className="np" style={{position:'fixed',bottom:0,left:0,right:0,zIndex:200,background:'rgba(10,20,12,0.97)',borderTop:`1px solid rgba(184,217,53,.12)`,backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'9px 18px',gap:'10px'}}>
+      <button onClick={()=>goTo(active-1)} disabled={active===0} style={BtnStyle(active===0,false)}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={active===0?'rgba(255,255,255,.2)':C.lime} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:'6px',minWidth:0,overflow:'hidden'}}>
+        <div style={{display:'flex',alignItems:'center',gap:'7px',maxWidth:'100%',overflow:'hidden'}}>
+          <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px',flexShrink:0}}>§{String(active+1).padStart(2,'0')}</span>
+          <span style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',color:'rgba(255,255,255,.45)',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{SECTIONS[active]?.label}</span>
+          <span className="mob-hide" style={{fontFamily:F.mono,fontSize:'8px',color:'rgba(255,255,255,.18)',flexShrink:0}}>/ {SECTIONS.length}</span>
+        </div>
+        <div style={{display:'flex',gap:'4px',alignItems:'center'}}>
+          {SECTIONS.map((_,i)=>(
+            <div key={i} onClick={()=>goTo(i)} style={{width:i===active?'24px':'6px',height:'6px',borderRadius:'3px',background:i===active?C.lime:i<active?'rgba(184,217,53,.3)':'rgba(255,255,255,.15)',cursor:'pointer',transition:'width .3s cubic-bezier(0.16,1,0.3,1),background .2s',flexShrink:0}}/>
+          ))}
+        </div>
+      </div>
+      <button onClick={()=>goTo(active+1)} disabled={active===SECTIONS.length-1} style={BtnStyle(active===SECTIONS.length-1,true)}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={active===SECTIONS.length-1?'rgba(255,255,255,.2)':C.lime} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  );
+};
+
+export default function BRIDGEPublicBenefitWhitepaper(){
+  const coverRef=useRef(null);
+
+  useEffect(()=>{
+    let vm=document.querySelector('meta[name="viewport"]');
+    if(!vm){vm=document.createElement('meta');vm.name='viewport';document.head.appendChild(vm);}
+    vm.content='width=device-width,initial-scale=1,viewport-fit=cover';
   },[]);
 
   return(
-    <div style={{fontFamily:F.body,background:C.paper,minHeight:'100vh'}}>
+    <div style={{fontFamily:F.body,background:C.paper,minHeight:'100vh',paddingBottom:'60px'}}>
       <Gf/>
-      <div id="read-bar" style={{width:`${pct}%`}}/>
-      <TOC active={active}/>
+      <ReadingProgressBar coverRef={coverRef}/>
+      <SectionFooterNav/>
+      <TOC active=""/>
       <div className="main">
 
         {/* ── COVER ─────────────────────────────────────────────────────── */}
-        <div id="cover" style={{background:C.ink,padding:'80px 64px 64px',minHeight:'94vh',display:'flex',flexDirection:'column',justifyContent:'space-between',position:'relative',overflow:'hidden'}}>
+        <div id="cover" className="cover-hero-pad" style={{background:C.ink,padding:'48px 64px 48px',minHeight:'auto',display:'flex',flexDirection:'column',justifyContent:'flex-start',position:'relative',overflow:'hidden'}}>
           <div style={{position:'absolute',right:0,bottom:-20,fontFamily:F.display,fontSize:'clamp(140px,26vw,360px)',fontWeight:900,color:'rgba(255,255,255,.022)',lineHeight:1,pointerEvents:'none',userSelect:'none',letterSpacing:'-12px'}}>B</div>
-          <div><Logo height={26} variant="white"/><div style={{borderTop:'1px solid rgba(255,255,255,.1)',marginTop:'28px',marginBottom:'48px'}}/></div>
-          <div style={{maxWidth:'780px',position:'relative',zIndex:1}}>
+          <div ref={coverRef} className="cover-logo-wrap"><Logo height={26} variant="white"/><div style={{borderTop:"1px solid rgba(255,255,255,.08)",marginTop:"20px",marginBottom:"28px"}}/></div>
+          <div style={{maxWidth:'960px',position:'relative',zIndex:1}}>
             <div style={{display:'inline-block',background:'rgba(184,217,53,.1)',border:'1px solid rgba(184,217,53,.2)',padding:'5px 14px',marginBottom:'24px',fontFamily:F.sans,fontSize:'9px',fontWeight:800,letterSpacing:'3px',textTransform:'uppercase',color:C.lime}}>Public Benefit Whitepaper · BRIDGE PBC · March 2026</div>
-            <h1 style={{fontFamily:F.display,fontSize:'clamp(34px,5.5vw,68px)',fontWeight:900,color:C.white,lineHeight:1.05,marginBottom:'22px',letterSpacing:'-1px'}}>
+            <h1 style={{fontFamily:F.display,fontSize:'clamp(26px,5.5vw,68px)',fontWeight:900,color:C.white,lineHeight:1.0,marginBottom:'16px',letterSpacing:'-1px'}}>
               Closing the Intelligence Gap:<br/><em style={{color:C.lime,fontStyle:'italic'}}>A Scientific &amp; Ecological Case for<br/>Democratic Access to Development Intelligence</em>
             </h1>
-            <p style={{fontFamily:F.body,fontSize:'17px',color:'rgba(250,248,243,.58)',lineHeight:1.78,maxWidth:'600px',fontWeight:300,marginBottom:0}}>An evidence-based examination of the structural gaps between Ghanaian entrepreneurs and the information, intelligence, and capital they need to build ventures that create dignified livelihoods — and the public benefit rationale for the BRIDGE Impact Score™ Assessor as a democratising intervention.</p>
+            <p style={{fontFamily:F.body,fontSize:'clamp(14px,2vw,17px)',color:'rgba(250,248,243,.58)',lineHeight:1.65,maxWidth:'700px',fontWeight:300,marginBottom:0}}>An evidence-based examination of the structural gaps between Ghanaian entrepreneurs and the information, intelligence, and capital they need to build ventures that create dignified livelihoods — and the public benefit rationale for the BRIDGE Impact Score™ Assessor as a democratising intervention.</p>
           </div>
-          <div style={{borderTop:'1px solid rgba(255,255,255,.08)',marginTop:'48px',paddingTop:'28px',display:'flex',gap:'48px',flexWrap:'wrap'}}>
+          <div style={{borderTop:'1px solid rgba(255,255,255,.08)',marginTop:'36px',paddingTop:'24px',display:'flex',gap:'32px',flexWrap:'wrap'}}>
             {[['90%+','SMEs of Ghana\'s businesses'],['$5B+','Annual SME financing gap'],['500/mo','Nurses leaving Ghana'],['$1.9B','Annual post-harvest losses'],['40%','SMEs cite finance as #1 barrier']].map(([n,l])=>(
               <div key={l}>
-                <div style={{fontFamily:F.mono,fontSize:'22px',fontWeight:500,color:C.lime,lineHeight:1}}>{n}</div>
+                <div style={{fontFamily:F.mono,fontSize:'clamp(16px,4vw,22px)',fontWeight:500,color:C.lime,lineHeight:1}}>{n}</div>
                 <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',color:'rgba(250,248,243,.28)',marginTop:'4px'}}>{l}</div>
               </div>
             ))}
@@ -316,13 +460,13 @@ export default function BRIDGEPublicBenefitWhitepaper(){
                 ['No market intelligence','Farmers grow without demand data','Surplus in good years, scarcity in bad'],
                 ['No investment readiness','SMEs cannot access formal credit','70% failure rate, 67% cite credit denial'],
                 ['No diaspora matching','Skills and capital remain abroad','Brain drain compounds underdevelopment'],
-              ].map(([a,b,c],i)=>(
-                <div key={i} style={{display:'grid',gridTemplateColumns:'1fr 28px 1fr 28px 1fr',gap:0,alignItems:'stretch',marginBottom:'8px'}}>
+              ].map(([a,b,cv],i)=>(
+                <div key={i} className="gap-row-mob" style={{display:'grid',gridTemplateColumns:'1fr 28px 1fr 28px 1fr',gap:0,alignItems:'stretch',marginBottom:'8px'}}>
                   <div style={{background:C.ink,color:C.paper,padding:'11px 14px',fontFamily:F.sans,fontSize:'11px',fontWeight:700,lineHeight:1.35}}>{a}</div>
-                  <div style={{background:C.teal,display:'flex',alignItems:'center',justifyContent:'center',color:C.lime,fontSize:'12px',fontWeight:900}}>→</div>
+                  <div className="gap-arr-mob" style={{background:C.teal,display:'flex',alignItems:'center',justifyContent:'center',color:C.lime,fontSize:'12px',fontWeight:900}}>→</div>
                   <div style={{background:C.paperDark,border:`1px solid ${C.border}`,padding:'11px 14px',fontFamily:F.sans,fontSize:'11px',color:C.muted,lineHeight:1.35}}>{b}</div>
-                  <div style={{background:C.teal,display:'flex',alignItems:'center',justifyContent:'center',color:C.lime,fontSize:'12px',fontWeight:900}}>→</div>
-                  <div style={{border:`1.5px solid ${C.lime}`,padding:'11px 14px',fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,lineHeight:1.35}}>{c}</div>
+                  <div className="gap-arr-mob" style={{background:C.teal,display:'flex',alignItems:'center',justifyContent:'center',color:C.lime,fontSize:'12px',fontWeight:900}}>→</div>
+                  <div style={{border:`1.5px solid ${C.lime}`,padding:'11px 14px',fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest,lineHeight:1.35}}>{cv}</div>
                 </div>
               ))}
             </div>
@@ -381,14 +525,14 @@ export default function BRIDGEPublicBenefitWhitepaper(){
             <div className="gap-diagram">
               <div style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'16px'}}>Gap-to-intervention mapping</div>
               {[
-                ['Capital Gap','→','Impact Score Assessor produces a credible quality signal that reduces information asymmetry between entrepreneurs and capital providers, enabling merit-based allocation'],
-                ['Intelligence Gap','→','Free, structured assessment democratises access to evaluation infrastructure previously gatekept by cost and network access'],
-                ['Ecological/Systems Gap','→','Sector intelligence and P&P Community Survey create distributed market information that improves system-wide coordination across value chains'],
-                ['Brain Drain Paradox','→','Diaspora Skills Matcher creates structured pathways that convert latent diaspora willingness into active, productive contribution'],
-              ].map(([g,a,s],i)=>(
-                <div key={i} style={{display:'grid',gridTemplateColumns:'180px 28px 1fr',gap:0,alignItems:'stretch',marginBottom:'8px'}}>
+                ['Capital Gap','Impact Score Assessor produces a credible quality signal that reduces information asymmetry between entrepreneurs and capital providers, enabling merit-based allocation'],
+                ['Intelligence Gap','Free, structured assessment democratises access to evaluation infrastructure previously gatekept by cost and network access'],
+                ['Ecological/Systems Gap','Sector intelligence and P&P Community Survey create distributed market information that improves system-wide coordination across value chains'],
+                ['Brain Drain Paradox','Diaspora Skills Matcher creates structured pathways that convert latent diaspora willingness into active, productive contribution'],
+              ].map(([g,s],i)=>(
+                <div key={i} className="gap-row-mob" style={{display:'grid',gridTemplateColumns:'180px 28px 1fr',gap:0,alignItems:'stretch',marginBottom:'8px'}}>
                   <div style={{background:C.forest,color:C.lime,padding:'12px 14px',fontFamily:F.sans,fontSize:'11px',fontWeight:700,lineHeight:1.35}}>{g}</div>
-                  <div style={{background:C.lime,display:'flex',alignItems:'center',justifyContent:'center',color:C.ink,fontSize:'12px',fontWeight:900}}>→</div>
+                  <div className="gap-arr-mob" style={{background:C.lime,display:'flex',alignItems:'center',justifyContent:'center',color:C.ink,fontSize:'12px',fontWeight:900}}>→</div>
                   <div style={{background:C.paperDark,border:`1px solid ${C.border}`,padding:'12px 14px',fontFamily:F.body,fontSize:'13px',color:C.ink,lineHeight:1.55}}>{s}</div>
                 </div>
               ))}
