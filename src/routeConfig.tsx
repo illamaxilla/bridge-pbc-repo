@@ -147,8 +147,8 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
   },
   {
     path: "/resources/document-library",
-    title: "Member Document Dashboard",
-    component: lazy(() => import("./pages/BRIDGE_PAID_Document_Library")),
+    title: "Resource Hub — Members Only",
+    component: lazy(() => import("./pages/resources/BRIDGE_Bridge_ResourceHub_MembersOnly ")),
     auth: "paid",
   },
   {
@@ -216,6 +216,67 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
     title: "Monthly Dashboard — March 2026",
     component: lazy(() => import("./pages/resources/MonthlyDashboard_public")),
     auth: "public",
+  },
+  // ── Members-Only Document Pages ──────────────────────────────────────────
+  {
+    path: "/resources/members/impact-score",
+    title: "BRIDGE Impact Score™ — Full Document",
+    component: lazy(() => import("./pages/resources/BRIDGE_ImpactScoreDoc_Members")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/peace-prosperity",
+    title: "Peace & Prosperity — Full Document",
+    component: lazy(() => import("./pages/resources/BRIDGE_PeaceProsperity_Members")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/portfolio",
+    title: "BRIDGE Portfolio Data — Full Document",
+    component: lazy(() => import("./pages/resources/BRIDGE_OpportunityDB_Members")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/white-paper",
+    title: "BRIDGE White Paper — Full Members Edition",
+    component: lazy(() => import("./pages/resources/BRIDGE_WhitePaper_Full_Members")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/annual-review",
+    title: "BRIDGE 2025 Annual Review — Full Document",
+    component: lazy(() => import("./pages/resources/BRIDGE_AnnualReview_2025_Members")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/budget-alignment",
+    title: "2026 Budget Alignment — Full Document",
+    component: lazy(() => import("./pages/resources/BRIDGE_2026 BudgetAlignment_Members")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/policy-tracker",
+    title: "Ghana Policy Tracker — Full Document",
+    component: lazy(() => import("./pages/resources/BRIDGE_PolicyTracker_Members")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/analytics-dashboard",
+    title: "Monthly Analytics Report — Members",
+    component: lazy(() => import("./pages/resources/BRIDGE_Monthly Analytics Report_Members")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/intelligence-whitepaper",
+    title: "Closing the Intelligence Gap — Whitepaper",
+    component: lazy(() => import("./pages/resources/BRIDGE_Intelligence_Whitepaper")),
+    auth: "paid",
+  },
+  {
+    path: "/resources/members/connect-whitepaper",
+    title: "BRIDGE Connect — Whitepaper",
+    component: lazy(() => import("./pages/resources/BRIDGE_Connect_Whitepaper")),
+    auth: "paid",
   },
 ];
 

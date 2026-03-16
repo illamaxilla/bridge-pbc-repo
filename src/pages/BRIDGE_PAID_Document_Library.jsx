@@ -86,7 +86,7 @@ const scopedStyles = `
 
 // ─── DATA ───────────────────────────────────────────────────────────────────
 
-const pubCats = ['All', 'Methodology', 'Portfolio', 'Sector Briefs', 'Reports', 'Policy'];
+const pubCats = ['All', 'Methodology', 'Portfolio', 'Sector Briefs', 'Reports', 'Policy', 'Cannabis'];
 
 const published = [
   // ── Methodology
@@ -97,7 +97,7 @@ const published = [
     body: 'A complete account of the four-dimensional framework behind BRIDGE\'s venture evaluation process. Covers scoring weights, sub-components, qualifying thresholds, the five-stage pipeline, and the structural features that make the Score independently auditable.',
     stat1: { num: '100', label: 'Point Scale' },
     stat2: { num: '174+', label: 'Ventures Scored' },
-    route: '/resources/impact-score',
+    route: '/resources/members/impact-score',
   },
   {
     cat: 'Methodology', tag: 'Framework',
@@ -106,7 +106,7 @@ const published = [
     body: 'Defines what BRIDGE means by dignity, security, and thriving — and why GDP growth alone is insufficient. Covers all five dimensions of Peace, the three domains of Prosperity, and the direct connection between all 12 sectors and human flourishing outcomes.',
     stat1: { num: '5', label: 'Dimensions of Peace' },
     stat2: { num: '12', label: 'Sector Mappings' },
-    route: '/resources/peace-prosperity',
+    route: '/resources/members/peace-prosperity',
   },
   // ── Portfolio
   {
@@ -116,7 +116,16 @@ const published = [
     body: 'A curated overview of every sector in the BRIDGE portfolio — capital ranges, venture counts, Impact Score benchmarks, and the 36+ cross-sector integration points that produce compounding returns. Full sector analyses and individual venture profiles available to qualified partners.',
     stat1: { num: '$135–259M', label: 'Indicative Capital' },
     stat2: { num: '36+', label: 'Integration Points' },
-    route: '/resources/portfolio',
+    route: '/resources/members/portfolio',
+  },
+  {
+    cat: 'Portfolio', tag: 'Data & Reports',
+    title: 'BRIDGE Portfolio Data — 174+ Ventures',
+    subtitle: 'Full venture pipeline data across all sectors including scoring matrices, capital ranges by tier, and priority rankings.',
+    body: 'The complete BRIDGE venture pipeline — every identified opportunity across all 12 sectors with Impact Score™ rankings, capital requirements, implementation timelines, and strategic fit assessments. The most comprehensive Ghana investment opportunity database in existence.',
+    stat1: { num: '174+', label: 'Ventures Mapped' },
+    stat2: { num: '12', label: 'Sectors Covered' },
+    route: '/resources/portfolio-data',
   },
   // ── Sector Briefs
   {
@@ -136,7 +145,7 @@ const published = [
     body: 'The comprehensive white paper laying out BRIDGE\'s full theory of change, the Peace & Prosperity measurement framework, the Impact Score™ methodology, and the strategic rationale for a 12-sector Ghana-first investment architecture. Essential reading for government and institutional partners.',
     stat1: { num: '80+', label: 'Pages' },
     stat2: { num: '12', label: 'Sectors Covered' },
-    route: '/resources/white-paper',
+    route: '/resources/members/white-paper',
   },
   {
     cat: 'Reports', tag: 'Annual Review',
@@ -145,7 +154,7 @@ const published = [
     body: 'A sector-by-sector analysis of Ghana\'s 2025 investment landscape. Includes revised Impact Score™ rankings, emerging venture opportunities identified in the second half of the year, policy shifts and their downstream effects, and the BRIDGE team\'s forward outlook for each sector heading into 2026.',
     stat1: { num: '12', label: 'Sectors Reviewed' },
     stat2: { num: '2025', label: 'Annual Edition' },
-    route: '/resources/annual-review-2025',
+    route: '/resources/members/annual-review',
   },
   {
     cat: 'Reports', tag: 'Investment Report',
@@ -154,7 +163,7 @@ const published = [
     body: 'Identifies every allocation in Ghana\'s 2026 National Budget with direct implications for BRIDGE ventures — sector-by-sector capital flow analysis, policy tailwinds and headwinds, and priority opportunities created by the 24-Hour Economy, Sankofa Initiative, and infrastructure commitments. Includes a ranked table of budget-accelerated ventures.',
     stat1: { num: 'GH₵', label: '2026 National Budget' },
     stat2: { num: '12', label: 'Sectors Mapped' },
-    route: '/resources/budget-alignment',
+    route: '/resources/members/budget-alignment',
   },
   {
     cat: 'Reports', tag: 'Regulatory Guide',
@@ -182,7 +191,17 @@ const published = [
     body: 'A continuously updated tracking document covering every policy development with implications for BRIDGE ventures — 2026 National Budget breakdown, Sankofa Initiative implementation status, 24-Hour Economy progress, and ministry-level policy signals. Updated when significant policy events occur.',
     stat1: { num: 'Live', label: 'Updated Monthly' },
     stat2: { num: '12', label: 'Sectors Tracked' },
-    route: '/resources/policy-tracker',
+    route: '/resources/members/policy-tracker',
+  },
+  // ── Cannabis
+  {
+    cat: 'Cannabis', tag: 'Intelligence Series · 11 Licences',
+    title: 'Ghana Cannabis & Industrial Hemp Intelligence Brief',
+    subtitle: 'Complete analysis of Ghana\'s NCC cannabis licensing framework — 11 licence categories, market sizing, and strategic entry points.',
+    body: 'The definitive intelligence brief on Ghana\'s emerging cannabis and industrial hemp sector. Covers all 11 NCC licence categories with BRIDGE Impact Score™ evaluations, capital requirements, regulatory requirements, value chain positioning, and the cross-sector integration points that make cannabis a strategic component of the BRIDGE portfolio architecture.',
+    stat1: { num: '11', label: 'Licence Categories' },
+    stat2: { num: 'NCC', label: 'Regulatory Framework' },
+    route: '/resources/cannabis-intelligence',
   },
 ];
 
@@ -220,6 +239,7 @@ const catColors = {
   'Investments': '#2C5F8A',
   'Entrepreneurship': '#7A5A2A',
   'Business Entities': '#5A3A6A',
+  'Cannabis': '#2E7D32',
 };
 
 // ─── COMPONENTS ─────────────────────────────────────────────────────────────
@@ -312,7 +332,7 @@ function FeatureCard({ doc, index, onReadDocument }) {
               fontSize: 11, fontWeight: 700, letterSpacing: '0.06em',
               textTransform: 'uppercase', border: 'none', cursor: 'pointer',
             }}>
-              Read Document <span style={{ fontSize: 14, fontWeight: 400 }}>→</span>
+              Open Document <span style={{ fontSize: 14, fontWeight: 400 }}>→</span>
             </button>
           </div>
         )}
@@ -375,7 +395,7 @@ function FeatureCard({ doc, index, onReadDocument }) {
               fontSize: 12, fontWeight: 700, letterSpacing: '0.05em',
               textTransform: 'uppercase', border: 'none', cursor: 'pointer',
             }}>
-              Read Document <span style={{ fontSize: 15, fontWeight: 400 }}>→</span>
+              Open Document <span style={{ fontSize: 15, fontWeight: 400 }}>→</span>
             </button>
           </div>
         </div>
@@ -538,7 +558,7 @@ export default function DocumentLibrary() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 40 }}>
             <div style={{ width: 40, height: 2, background: C.accent }} />
             <span className="hero-eyebrow" style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.accent }}>
-              BRIDGE PBC — Member Document Dashboard
+              BRIDGE PBC — Resource Hub · Members Only
             </span>
           </div>
 
@@ -557,10 +577,10 @@ export default function DocumentLibrary() {
           {/* Stat strip */}
           <div className="stat-row" style={{ display: 'flex', gap: 56, paddingTop: 40, borderTop: '1px solid rgba(255,255,255,0.09)' }}>
             {[
-              { num: '30', label: 'Documents in Library' },
-              { num: '10', label: 'Available Now' },
+              { num: '32', label: 'Documents in Library' },
+              { num: '12', label: 'Available Now' },
               { num: '20', label: 'In Development' },
-              { num: '5', label: 'Document Categories' },
+              { num: '7', label: 'Document Categories' },
               { num: '12', label: 'Sectors Covered' },
             ].map(s => (
               <div key={s.label}>
