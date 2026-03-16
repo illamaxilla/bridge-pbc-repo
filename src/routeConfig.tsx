@@ -52,6 +52,36 @@ export const SectorBriefViewer = lazy(() => import("./pages/resources/SectorBrie
 export const FoundersPortal = lazy(() => import("./pages/founders/BRIDGE_FoundersPortal_Private"));
 export const FoundersAppsWhitepaper = lazy(() => import("./pages/founders/BRIDGE_Apps_Whitepaper"));
 
+// Founders-accessible document routes (same components, no auth guards)
+export const FOUNDERS_DOC_ROUTES: { path: string; title: string; component: React.LazyExoticComponent<React.ComponentType> }[] = [
+  { path: "/founders/white-paper",             title: "BRIDGE White Paper — Full",                component: lazy(() => import("./pages/resources/BRIDGE_WhitePaper_Full_Members")) },
+  { path: "/founders/annual-review",           title: "BRIDGE 2025 Annual Review — Full",         component: lazy(() => import("./pages/resources/BRIDGE_AnnualReview_2025_Members")) },
+  { path: "/founders/intelligence-whitepaper", title: "Closing the Intelligence Gap",             component: lazy(() => import("./pages/resources/BRIDGE_Intelligence_Whitepaper")) },
+  { path: "/founders/portfolio",               title: "BRIDGE Portfolio Data — Full",              component: lazy(() => import("./pages/resources/BRIDGE_OpportunityDB_Members")) },
+  { path: "/founders/impact-score",            title: "BRIDGE Impact Score™ — Full",              component: lazy(() => import("./pages/resources/BRIDGE_ImpactScoreDoc_Members")) },
+  { path: "/founders/peace-prosperity",        title: "Peace & Prosperity — Full",                component: lazy(() => import("./pages/resources/BRIDGE_PeaceProsperity_Members")) },
+  { path: "/founders/budget-alignment",        title: "2026 Budget Alignment — Full",             component: lazy(() => import("./pages/resources/BRIDGE_2026 BudgetAlignment_Members")) },
+  { path: "/founders/policy-tracker",          title: "Ghana Policy Tracker — Full",              component: lazy(() => import("./pages/resources/BRIDGE_PolicyTracker_Members")) },
+  { path: "/founders/analytics-dashboard",     title: "Monthly Analytics Report",                 component: lazy(() => import("./pages/resources/BRIDGE_Monthly Analytics Report_Members")) },
+  { path: "/founders/sector-briefs-full",      title: "Sector Intelligence Briefs — All 12",      component: lazy(() => import("./pages/resources/BRIDGE_AllSectorBriefsFull_PAID")) },
+  { path: "/founders/connect-whitepaper",      title: "BRIDGE Connect — Whitepaper",              component: lazy(() => import("./pages/resources/BRIDGE_Connect_Whitepaper")) },
+  { path: "/founders/document-library",        title: "Resource Hub — Members Only",              component: lazy(() => import("./pages/resources/BRIDGE_Bridge_ResourceHub_MembersOnly ")) },
+  // Cannabis — dashboard + all 11 individual licence briefs (no auth)
+  { path: "/founders/cannabis-intelligence",            title: "Cannabis Intelligence Dashboard",       component: lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_Dashboard")) },
+  { path: "/founders/cannabis-intelligence/summary",    title: "Cannabis Intelligence Summary",         component: lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_SeriesSummary")) },
+  { path: "/founders/cannabis/cultivation",             title: "Cannabis — Cultivation",                component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence01_Cultivation")) },
+  { path: "/founders/cannabis/processing",              title: "Cannabis — Processing",                 component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence02_Processing")) },
+  { path: "/founders/cannabis/breeding-seed",           title: "Cannabis — Breeding & Seed",            component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence03_BreedingSeed")) },
+  { path: "/founders/cannabis/research",                title: "Cannabis — R&D",                        component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence04_RD")) },
+  { path: "/founders/cannabis/testing-lab",             title: "Cannabis — Testing Laboratory",         component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence05_TestingLab")) },
+  { path: "/founders/cannabis/storage",                 title: "Cannabis — Storage & Warehousing",      component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence06_Storage")) },
+  { path: "/founders/cannabis/transportation",          title: "Cannabis — Transportation",             component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence07_Transportation")) },
+  { path: "/founders/cannabis/import",                  title: "Cannabis — Import",                     component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence08_Import")) },
+  { path: "/founders/cannabis/export",                  title: "Cannabis — Export",                     component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence09_Export")) },
+  { path: "/founders/cannabis/wholesale",               title: "Cannabis — Wholesale Distribution",     component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence10_Wholesale")) },
+  { path: "/founders/cannabis/dispensing",              title: "Cannabis — Dispensing",                 component: lazy(() => import("./pages/BRIDGE_Cannabis_Licence11_Dispensing")) },
+];
+
 // Cannabis Intelligence Series
 export const CannabisIntelligenceDashboard = lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_Dashboard"));
 export const CannabisIntelligenceSummary = lazy(() => import("./pages/BRIDGE_Cannabis_Intelligence_SeriesSummary"));

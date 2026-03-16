@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { C, F } from '../theme';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { BRIDGEAuthModal } from "@/components/AuthModal";
 import { BRIDGEEngagementModal } from "@/components/EngagementModal";
@@ -2538,13 +2538,18 @@ const ClientsView = ({setTier}) => {
 export default function BridgeCannabisIntelligence() {
   const { user, tier: authTier } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Founders portal bypass — treat as full member when accessed via /founders/*
+  const isFoundersAccess = location.pathname.startsWith('/founders/');
 
   // Map auth context tiers to the dashboard's internal tier system
   const tier = useMemo(() => {
+    if (isFoundersAccess) return 'member'; // full access for founders
     if (!user) return 'public';
     if (authTier === 'paid') return 'member';
     return 'registered'; // free tier → registered
-  }, [user, authTier]);
+  }, [user, authTier, isFoundersAccess]);
 
   const [page, setPage] = useState('main');
   const [showLogin, setShowLogin] = useState(false);
