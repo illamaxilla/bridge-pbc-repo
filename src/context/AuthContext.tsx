@@ -63,13 +63,20 @@ export function useAuth() {
 }
 
 /**
- * Resolve membership tier from user metadata.
- * Default: authenticated users start at "free" tier.
- * Paid tier will be set via user_metadata.membership_tier = "paid" (future).
+ * Resolve membership tier from Supabase app_metadata (server-only writable).
+ *
+ * app_metadata is set exclusively via the Supabase Admin API / service-role
+ * and cannot be modified by the client, unlike user_metadata.
+ * Falls back to user_metadata for backwards-compat during migration, but
+ * app_metadata takes precedence when present.
  */
 function resolveTier(user: User | null): MembershipTier {
   if (!user) return "public";
-  const meta = user.user_metadata?.membership_tier;
-  if (meta === "paid") return "paid";
+  // Prefer app_metadata (secure, not client-writable)
+  const appMeta = user.app_metadata?.membership_tier;
+  if (appMeta === "paid") return "paid";
+  // Fallback to user_metadata during migration period
+  const userMeta = user.user_metadata?.membership_tier;
+  if (userMeta === "paid") return "paid";
   return "free";
 }

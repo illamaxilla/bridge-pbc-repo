@@ -15,7 +15,7 @@ import {
 import { C } from "./constants";
 import type { Sector } from "./constants";
 import { SECTORS } from "./data";
-import BridgeLogo from "./BridgeLogo";
+import { BridgeLogoSmallWhite as BridgeLogo } from "@/components/BridgeLogo";
 
 export interface SidebarProps {
   collapsed: boolean;
