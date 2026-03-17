@@ -1,6 +1,6 @@
 // ============================================================================
 // BRIDGE PBC — Shared Document Page Tokens
-// Single source of truth for the Lovable-generated BRIDGE_*.jsx pages.
+// Single source of truth for the Lovable-generated BRIDGE_*.tsx pages.
 // Import these instead of redefining C/F/etc. in every page.
 // ============================================================================
 
