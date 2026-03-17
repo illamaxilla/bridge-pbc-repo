@@ -388,14 +388,14 @@ export default function BRIDGEHomePage() {
   }, []);
 
   const insights = [
-    { category: "White Paper", title: "BRIDGE Foundational Framework: A Systematic Approach to Ghana's Development", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=400&fit=crop" },
-    { category: "Infrastructure", title: "Infrastructure & Basic Services: Building the Foundation for Growth", image: "https://images.unsplash.com/photo-1590486803822-1af84ae84801?w=600&h=400&fit=crop" },
+    { category: "White Paper", title: "BRIDGE Foundational Framework: A Systematic Approach to Ghana's Development", image: "https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=600&h=400&fit=crop" },
+    { category: "Infrastructure", title: "Infrastructure & Basic Services: Building the Foundation for Growth", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=400&fit=crop" },
     { category: "Financial Inclusion", title: "Expanding Access: Financial Systems That Serve Every Ghanaian", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" },
-    { category: "Agriculture", title: "Agriculture & Value Chains: From Farm to Market Excellence", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop" },
-    { category: "Technology", title: "Technology & Innovation: Powering Ghana's Digital Future", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" },
+    { category: "Agriculture", title: "Agriculture & Value Chains: From Farm to Market Excellence", image: "https://images.unsplash.com/photo-1592838064575-70ed626d3a0e?w=600&h=400&fit=crop" },
+    { category: "Technology", title: "Technology & Innovation: Powering Ghana's Digital Future", image: "https://images.unsplash.com/photo-1573495612890-430e48b164d6?w=600&h=400&fit=crop" },
     { category: "Energy", title: "Energy & Renewables: Sustainable Power for a Growing Nation", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop" },
-    { category: "Health Systems", title: "Health Systems: Quality Care Within Reach", image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&h=400&fit=crop" },
-    { category: "Education", title: "Education & Skills: Preparing Ghana's Workforce", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=400&fit=crop" },
+    { category: "Health Systems", title: "Health Systems: Quality Care Within Reach", image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop" },
+    { category: "Education", title: "Education & Skills: Preparing Ghana's Workforce", image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&h=400&fit=crop" },
   ];
 
   const desktopInsightScrollRef = useRef<HTMLDivElement>(null);
@@ -645,7 +645,8 @@ export default function BRIDGEHomePage() {
         </div>
         {!isMobile && (
           <div
-            className="absolute -bottom-[90px] left-0 right-0 grid grid-cols-[1.3fr_1fr_1fr] gap-5"
+            className="absolute -bottom-[90px] left-0 right-0 mx-auto grid grid-cols-[1.3fr_1fr_1fr] gap-5"
+            style={{ maxWidth: CONTENT_MAX_WIDTH }}
           >
             {/* Card 1: Sectors */}
             <div
