@@ -388,15 +388,30 @@ export default function BRIDGEHomePage() {
   }, []);
 
   const insights = [
-    { category: "White Paper", title: "BRIDGE Foundational Framework: A Systematic Approach to Ghana's Development" },
-    { category: "Infrastructure", title: "Infrastructure & Basic Services: Building the Foundation for Growth" },
-    { category: "Financial Inclusion", title: "Expanding Access: Financial Systems That Serve Every Ghanaian" },
-    { category: "Agriculture", title: "Agriculture & Value Chains: From Farm to Market Excellence" },
-    { category: "Technology", title: "Technology & Innovation: Powering Ghana's Digital Future" },
-    { category: "Energy", title: "Energy & Renewables: Sustainable Power for a Growing Nation" },
-    { category: "Health Systems", title: "Health Systems: Quality Care Within Reach" },
-    { category: "Education", title: "Education & Skills: Preparing Ghana's Workforce" },
+    { category: "White Paper", title: "BRIDGE Foundational Framework: A Systematic Approach to Ghana's Development", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=400&fit=crop" },
+    { category: "Infrastructure", title: "Infrastructure & Basic Services: Building the Foundation for Growth", image: "https://images.unsplash.com/photo-1590486803822-1af84ae84801?w=600&h=400&fit=crop" },
+    { category: "Financial Inclusion", title: "Expanding Access: Financial Systems That Serve Every Ghanaian", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" },
+    { category: "Agriculture", title: "Agriculture & Value Chains: From Farm to Market Excellence", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop" },
+    { category: "Technology", title: "Technology & Innovation: Powering Ghana's Digital Future", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" },
+    { category: "Energy", title: "Energy & Renewables: Sustainable Power for a Growing Nation", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop" },
+    { category: "Health Systems", title: "Health Systems: Quality Care Within Reach", image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&h=400&fit=crop" },
+    { category: "Education", title: "Education & Skills: Preparing Ghana's Workforce", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=400&fit=crop" },
   ];
+
+  const desktopInsightScrollRef = useRef<HTMLDivElement>(null);
+
+  const handleDesktopInsightScroll = () => {
+    if (!desktopInsightScrollRef.current) return;
+    const { scrollLeft, clientWidth } = desktopInsightScrollRef.current;
+    const cardWidth = clientWidth * 0.5;
+    setInsightIndex(Math.round(scrollLeft / cardWidth));
+  };
+
+  const scrollToDesktopInsight = (i: number) => {
+    if (!desktopInsightScrollRef.current) return;
+    const cardWidth = desktopInsightScrollRef.current.clientWidth * 0.5;
+    desktopInsightScrollRef.current.scrollTo({ left: i * cardWidth, behavior: "smooth" });
+  };
 
   const handleTabChange = (tab) => {
     if (tab === activeTab) return;
@@ -542,7 +557,7 @@ export default function BRIDGEHomePage() {
       `}</style>
 
       {/* HERO */}
-      <section style={{ backgroundColor: colors.white, padding: isMobile ? "36px 20px 24px" : "60px 48px 40px 48px" }}>
+      <section style={{ backgroundColor: colors.white, padding: isMobile ? "36px 20px 24px" : "60px 80px 40px 80px" }}>
         <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
           <div
             className="flex justify-between flex-wrap"
@@ -617,20 +632,20 @@ export default function BRIDGEHomePage() {
       </section>
 
       {/* HERO IMAGE */}
-      <section className="relative" style={{ margin: isMobile ? "0 20px" : "0 48px" }}>
+      <section className="relative" style={{ margin: isMobile ? "0 20px" : "0 80px" }}>
         <div
-          className="flex items-center justify-center text-[#bbb] text-sm font-[Inter,sans-serif] overflow-hidden"
+          className="overflow-hidden relative"
           style={{
             backgroundColor: colors.background,
             height: isMobile ? "240px" : "560px",
             borderRadius: isMobile ? "16px" : "24px",
           }}
         >
-          [ Hero Image Area ]
+          <img src="https://images.unsplash.com/photo-1611348586804-61bf6c080437?w=1400&h=600&fit=crop" alt="Ghana cityscape" className="absolute inset-0 w-full h-full object-cover" />
         </div>
         {!isMobile && (
           <div
-            className="absolute -bottom-[90px] left-8 right-8 grid grid-cols-[1.3fr_1fr_1fr] gap-5"
+            className="absolute -bottom-[90px] left-0 right-0 grid grid-cols-[1.3fr_1fr_1fr] gap-5"
           >
             {/* Card 1: Sectors */}
             <div
@@ -1139,7 +1154,7 @@ export default function BRIDGEHomePage() {
             className="mx-auto box-border"
             style={{
               maxWidth: CONTENT_MAX_WIDTH,
-              padding: isMobile ? "0 24px" : "0 48px",
+              padding: isMobile ? "0 24px" : "0 80px",
             }}
           >
             <div
@@ -1208,19 +1223,23 @@ export default function BRIDGEHomePage() {
                 {
                   name: "Research",
                   description: "Deep market analysis and evidence-based diagnostics across all 12 sectors.",
+                  image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=300&fit=crop",
                 },
                 {
                   name: "Ventures",
                   description: "174+ designed initiatives spanning infrastructure to creative industries.",
+                  image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=300&h=300&fit=crop",
                 },
                 {
                   name: "Investment",
                   description: "$135M–$259M in indicative capital across diversified deployment strategies.",
+                  image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=300&h=300&fit=crop",
                 },
                 {
                   name: "Partnerships",
                   description:
                     "Strategic alliances with government, traditional authorities, and development partners.",
+                  image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=300&h=300&fit=crop",
                 },
               ].map((service, index) => (
                 <div
@@ -1241,8 +1260,10 @@ export default function BRIDGEHomePage() {
                             height: isMobile ? "140px" : "180px",
                           }}
                         />
-                        <div
-                          className="absolute top-[30px] left-1/2 -translate-x-1/2 bg-[#D1D5D0] rounded-full border-4 border-white/50"
+                        <img
+                          src={service.image}
+                          alt={service.name}
+                          className="absolute top-[30px] left-1/2 -translate-x-1/2 rounded-full border-4 border-white/50 object-cover"
                           style={{
                             width: isMobile ? "110px" : "140px",
                             height: isMobile ? "110px" : "140px",
@@ -1660,9 +1681,8 @@ export default function BRIDGEHomePage() {
             height: isMobile ? "300px" : "450px",
           }}
         >
-          <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white/30 text-sm font-[Inter,sans-serif]">
-            [ Background Image ]
-          </div>
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1400&h=500&fit=crop" alt="Team collaboration" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/40" />
           <div
             className="absolute rounded-full flex items-center justify-center"
             style={{
@@ -1976,9 +1996,8 @@ export default function BRIDGEHomePage() {
         >
           {isMobile ? (
             <div className="relative rounded-3xl overflow-hidden bg-[#3D4F4F] bg-gradient-to-br from-[#2D3D3D] to-[#3D4F4F] min-h-[360px] flex flex-col justify-start">
-              <div className="absolute inset-0 bg-black/25 flex items-center justify-center text-white/20 text-xs font-[Inter,sans-serif]">
-                [ Background Image ]
-              </div>
+              <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop" alt="Corporate responsibility" className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-black/40" />
               <div className="relative z-[1] p-6 flex flex-col h-full flex-1 min-h-[360px]">
                 <div className="flex-1">
                   <div
@@ -2018,9 +2037,8 @@ export default function BRIDGEHomePage() {
           ) : (
             <>
               <div className="relative rounded-3xl overflow-hidden bg-[#3D4F4F] min-h-[500px]">
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center text-white/30 text-sm font-[Inter,sans-serif]">
-                  [ Background Image ]
-                </div>
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop" alt="Corporate responsibility" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/20" />
                 <div
                   className="absolute bottom-6 right-6 rounded-2xl p-[20px_28px] flex items-center gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.1)]"
                   style={{ backgroundColor: colors.white }}
@@ -2144,17 +2162,18 @@ export default function BRIDGEHomePage() {
                 style={{ scrollbarWidth: "none" }}
               >
                 {insights.map((insight, index) => (
-                  <div
+                  <Link
                     key={index}
-                    className="flex-[0_0_100%] min-w-full snap-start rounded-[20px] grid grid-cols-1 overflow-hidden cursor-pointer transition-colors duration-300 ease-in-out"
+                    to="/resources/sector-briefs"
+                    className="no-underline flex-[0_0_100%] min-w-full snap-start rounded-[20px] grid grid-cols-1 overflow-hidden cursor-pointer transition-colors duration-300 ease-in-out"
                     style={{
                       backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
                     }}
                     onMouseEnter={() => setHoveredInsight(index)}
                     onMouseLeave={() => setHoveredInsight(null)}
                   >
-                    <div className="bg-[#3D4F4F] min-h-[180px] rounded-2xl m-[12px_12px_0] flex items-center justify-center text-white/30 text-xs font-[Inter,sans-serif]">
-                      [ Image ]
+                    <div className="bg-[#3D4F4F] min-h-[180px] rounded-2xl m-[12px_12px_0] overflow-hidden">
+                      <img src={insight.image} alt={insight.category} className="w-full h-full object-cover" />
                     </div>
                     <div className="p-5 flex flex-col justify-between relative">
                       <div className="absolute top-0 right-0 w-[60px] h-[60px]">
@@ -2200,7 +2219,7 @@ export default function BRIDGEHomePage() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
               {/* Mobile dots */}
@@ -2220,24 +2239,27 @@ export default function BRIDGEHomePage() {
             </>
           ) : (
             <>
-              {/* Desktop: transform carousel */}
-              <div className="overflow-hidden">
-                <div
-                  className="flex gap-6 transition-transform duration-[0.4s] ease-[cubic-bezier(0.4,0,0.2,1)]"
-                  style={{ transform: `translateX(-${insightIndex * (50 + 12)}%)` }}
-                >
+              {/* Desktop: swipe scroll-snap carousel */}
+              <style>{`.insight-desktop-snap::-webkit-scrollbar{display:none}`}</style>
+              <div
+                ref={desktopInsightScrollRef}
+                onScroll={handleDesktopInsightScroll}
+                className="insight-desktop-snap flex gap-6 overflow-x-auto snap-x snap-mandatory"
+                style={{ scrollbarWidth: "none" }}
+              >
                   {insights.map((insight, index) => (
-                    <div
+                    <Link
                       key={index}
-                      className="flex-[0_0_calc(50%-12px)] rounded-3xl grid grid-cols-2 overflow-hidden cursor-pointer transition-colors duration-300 ease-in-out"
+                      to="/resources/sector-briefs"
+                      className="no-underline flex-[0_0_calc(50%-12px)] snap-start rounded-3xl grid grid-cols-2 overflow-hidden cursor-pointer transition-colors duration-300 ease-in-out"
                       style={{
                         backgroundColor: hoveredInsight === index ? colors.accent : "#ECEEE9",
                       }}
                       onMouseEnter={() => setHoveredInsight(index)}
                       onMouseLeave={() => setHoveredInsight(null)}
                     >
-                      <div className="bg-[#3D4F4F] min-h-[320px] rounded-[20px] m-[16px_0_16px_16px] flex items-center justify-center text-white/30 text-xs font-[Inter,sans-serif]">
-                        [ Image ]
+                      <div className="bg-[#3D4F4F] min-h-[320px] rounded-[20px] m-[16px_0_16px_16px] overflow-hidden">
+                        <img src={insight.image} alt={insight.category} className="w-full h-full object-cover" />
                       </div>
                       <div className="p-8 flex flex-col justify-between relative">
                         <div className="absolute top-0 right-0 w-[60px] h-[60px]">
@@ -2283,16 +2305,15 @@ export default function BRIDGEHomePage() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
-                </div>
               </div>
               {/* Desktop dots */}
               <div className="flex justify-center items-center gap-2 mt-9">
                 {Array.from({ length: insights.length - 1 }).map((_, i) => (
                   <div
                     key={i}
-                    onClick={() => setInsightIndex(i)}
+                    onClick={() => scrollToDesktopInsight(i)}
                     className="h-2 rounded cursor-pointer transition-all duration-300 ease-in-out"
                     style={{
                       width: insightIndex === i ? "24px" : "8px",
@@ -2488,9 +2509,9 @@ export default function BRIDGEHomePage() {
                   </button>
                 </div>
                 <div
-                  className="bg-[#3D4F4F] relative flex items-center justify-center text-white/30 text-sm font-[Inter,sans-serif]"
+                  className="bg-[#3D4F4F] relative overflow-hidden"
                 >
-                  [ Image ]
+                  <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=900&fit=crop" alt="Business meeting" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute bottom-6 left-6 right-6 bg-white/95 rounded-2xl p-[20px_24px] flex items-center gap-4">
                     <div
                       className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
