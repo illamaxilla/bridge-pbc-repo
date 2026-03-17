@@ -388,14 +388,14 @@ export default function BRIDGEHomePage() {
   }, []);
 
   const insights = [
-    { category: "White Paper", title: "BRIDGE Foundational Framework: A Systematic Approach to Ghana's Development", image: "/images/team-collaboration.jpeg" },
-    { category: "Infrastructure", title: "Infrastructure & Basic Services: Building the Foundation for Growth", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=400&fit=crop" },
+    { category: "White Paper", title: "BRIDGE Foundational Framework: A Systematic Approach to Ghana's Development", image: "/images/professionals-discussing-charts.jpg" },
+    { category: "Infrastructure", title: "Infrastructure & Basic Services: Building the Foundation for Growth", image: "/images/infrastructure-surveyor.webp" },
     { category: "Financial Inclusion", title: "Expanding Access: Financial Systems That Serve Every Ghanaian", image: "/images/professional-research.jpg" },
-    { category: "Agriculture", title: "Agriculture & Value Chains: From Farm to Market Excellence", image: "https://images.unsplash.com/photo-1592838064575-70ed626d3a0e?w=600&h=400&fit=crop" },
-    { category: "Technology", title: "Technology & Innovation: Powering Ghana's Digital Future", image: "/images/professional-ventures.jpg" },
-    { category: "Energy", title: "Energy & Renewables: Sustainable Power for a Growing Nation", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop" },
-    { category: "Health Systems", title: "Health Systems: Quality Care Within Reach", image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop" },
-    { category: "Education", title: "Education & Skills: Preparing Ghana's Workforce", image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&h=400&fit=crop" },
+    { category: "Agriculture", title: "Agriculture & Value Chains: From Farm to Market Excellence", image: "/images/market-woman-produce.png" },
+    { category: "Technology", title: "Technology & Innovation: Powering Ghana's Digital Future", image: "/images/professionals-tablet-office.jpg" },
+    { category: "Energy", title: "Energy & Renewables: Sustainable Power for a Growing Nation", image: "/images/engineers-automation.jpg" },
+    { category: "Health Systems", title: "Health Systems: Quality Care Within Reach", image: "/images/healthcare-pharmacy.jpg" },
+    { category: "Education", title: "Education & Skills: Preparing Ghana's Workforce", image: "/images/education-computer-lab.webp" },
   ];
 
   const desktopInsightScrollRef = useRef<HTMLDivElement>(null);
@@ -1234,13 +1234,13 @@ export default function BRIDGEHomePage() {
                 {
                   name: "Investment",
                   description: "$135M–$259M in indicative capital across diversified deployment strategies.",
-                  image: "/images/professional-research.jpg",
+                  image: "/images/professionals-tablet-office.jpg",
                 },
                 {
                   name: "Partnerships",
                   description:
                     "Strategic alliances with government, traditional authorities, and development partners.",
-                  image: "/images/professional-partnerships.jpg",
+                  image: "/images/strategy-meeting-african.jpg",
                 },
               ].map((service, index) => (
                 <div
