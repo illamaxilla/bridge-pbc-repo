@@ -557,7 +557,7 @@ export default function BRIDGEHomePage() {
       `}</style>
 
       {/* HERO */}
-      <section style={{ backgroundColor: colors.white, padding: isMobile ? "36px 20px 24px" : "60px 48px 40px 48px" }}>
+      <section style={{ backgroundColor: colors.white, padding: isMobile ? "36px 20px 24px" : "60px 80px 40px 80px" }}>
         <div className="mx-auto" style={{ maxWidth: CONTENT_MAX_WIDTH }}>
           <div
             className="flex justify-between flex-wrap"
@@ -632,20 +632,20 @@ export default function BRIDGEHomePage() {
       </section>
 
       {/* HERO IMAGE */}
-      <section className="relative" style={{ margin: isMobile ? "0 20px" : "0 48px" }}>
+      <section className="relative" style={{ margin: isMobile ? "0 20px" : "0 80px" }}>
         <div
-          className="flex items-center justify-center text-[#bbb] text-sm font-[Inter,sans-serif] overflow-hidden"
+          className="overflow-hidden relative"
           style={{
             backgroundColor: colors.background,
             height: isMobile ? "240px" : "560px",
             borderRadius: isMobile ? "16px" : "24px",
           }}
         >
-          [ Hero Image Area ]
+          <img src="https://images.unsplash.com/photo-1611348586804-61bf6c080437?w=1400&h=600&fit=crop" alt="Ghana cityscape" className="absolute inset-0 w-full h-full object-cover" />
         </div>
         {!isMobile && (
           <div
-            className="absolute -bottom-[90px] left-8 right-8 grid grid-cols-[1.3fr_1fr_1fr] gap-5"
+            className="absolute -bottom-[90px] left-0 right-0 grid grid-cols-[1.3fr_1fr_1fr] gap-5"
           >
             {/* Card 1: Sectors */}
             <div
@@ -1154,7 +1154,7 @@ export default function BRIDGEHomePage() {
             className="mx-auto box-border"
             style={{
               maxWidth: CONTENT_MAX_WIDTH,
-              padding: isMobile ? "0 24px" : "0 48px",
+              padding: isMobile ? "0 24px" : "0 80px",
             }}
           >
             <div
@@ -1223,19 +1223,23 @@ export default function BRIDGEHomePage() {
                 {
                   name: "Research",
                   description: "Deep market analysis and evidence-based diagnostics across all 12 sectors.",
+                  image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=300&fit=crop",
                 },
                 {
                   name: "Ventures",
                   description: "174+ designed initiatives spanning infrastructure to creative industries.",
+                  image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=300&h=300&fit=crop",
                 },
                 {
                   name: "Investment",
                   description: "$135M–$259M in indicative capital across diversified deployment strategies.",
+                  image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=300&h=300&fit=crop",
                 },
                 {
                   name: "Partnerships",
                   description:
                     "Strategic alliances with government, traditional authorities, and development partners.",
+                  image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=300&h=300&fit=crop",
                 },
               ].map((service, index) => (
                 <div
@@ -1256,8 +1260,10 @@ export default function BRIDGEHomePage() {
                             height: isMobile ? "140px" : "180px",
                           }}
                         />
-                        <div
-                          className="absolute top-[30px] left-1/2 -translate-x-1/2 bg-[#D1D5D0] rounded-full border-4 border-white/50"
+                        <img
+                          src={service.image}
+                          alt={service.name}
+                          className="absolute top-[30px] left-1/2 -translate-x-1/2 rounded-full border-4 border-white/50 object-cover"
                           style={{
                             width: isMobile ? "110px" : "140px",
                             height: isMobile ? "110px" : "140px",
@@ -1675,9 +1681,8 @@ export default function BRIDGEHomePage() {
             height: isMobile ? "300px" : "450px",
           }}
         >
-          <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white/30 text-sm font-[Inter,sans-serif]">
-            [ Background Image ]
-          </div>
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1400&h=500&fit=crop" alt="Team collaboration" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/40" />
           <div
             className="absolute rounded-full flex items-center justify-center"
             style={{
