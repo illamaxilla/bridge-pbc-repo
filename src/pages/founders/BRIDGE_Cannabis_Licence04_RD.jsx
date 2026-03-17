@@ -1,379 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { DOC_COLORS as C, DOC_FONTS as F } from "@/lib/document-tokens";
+import DocumentGlobalStyles from "@/components/documents/DocumentGlobalStyles";
+import DocumentLogo from "@/components/documents/DocumentLogo";
+import DocumentTopBar from "@/components/documents/DocumentTopBar";
+import LicenceMobileNav from "@/components/documents/LicenceMobileNav";
+import { SectionRule, Eyebrow, ScoreBar, PullQuote, Tag, MobCarousel, MobPhaseAccordion, MobCountryCards, MobileCollapse } from "@/components/documents/DocumentHelpers";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DESIGN TOKENS
-// ─────────────────────────────────────────────────────────────────────────────
-const C = {
-  ink:'#0D1A10', paper:'#FAF8F3', paperDark:'#F0EDE4',
-  forest:'#1B4D3E', lime:'#B8D935', limeDark:'#8FA825',
-  muted:'#5C6B5E', faint:'#9AAA9C', border:'#D8D4C8',
-  teal:'#2E5A4D', red:'#A8200D', amber:'#B8730A',
-  positive:'#1A6B2F', white:'#FFFFFF',
-};
-const F = {
-  display:'"Playfair Display","Georgia",serif',
-  body:'"Source Serif 4","Georgia",serif',
-  sans:'"DM Sans","Helvetica Neue",sans-serif',
-  mono:'"DM Mono","Courier New",monospace',
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// GLOBAL STYLES
-// ─────────────────────────────────────────────────────────────────────────────
-const Gf = () => (<style>{`
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:${C.paper};-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  .dc::first-letter{font-family:${F.display};font-size:4em;font-weight:900;float:left;line-height:0.82;margin:0.08em 0.14em 0 0;color:${C.forest};}
-  .mob-show{display:none;}
-  .mob-risk-body{display:block;}
-  .chain-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
-  .chain-scroll > *{scroll-snap-align:start;}
-  .chain-scroll::-webkit-scrollbar{height:3px;}
-  .chain-scroll::-webkit-scrollbar-track{background:${C.border};}
-  .chain-scroll::-webkit-scrollbar-thumb{background:${C.limeDark};}
-  .progress-bar{position:absolute;bottom:0;left:0;height:2px;background:${C.lime};transition:width 0.1s linear;pointer-events:none;}
-  @media print{
-    .np{display:none!important;}
-    body{background:#fff;}
-    .pad-section{padding:32px 48px!important;}
-    .pad-gate{background:${C.ink}!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-    .pad-cover{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-    a{text-decoration:none!important;}
-  }
-  @media(max-width:900px){
-    .tc{grid-template-columns:1fr!important;}
-    .tc2{grid-template-columns:1fr 1fr!important;}
-    .tc3{grid-template-columns:1fr 1fr!important;}
-    .hm{display:none!important;}
-    .pad-section{padding:40px 32px!important;}
-    .pad-cover{padding:28px 32px 0!important;}
-    .pad-gate{padding:40px 32px!important;}
-    .pad-footer{padding:14px 32px!important;}
-    .pad-topbar{padding:10px 24px!important;}
-  }
-  @media(max-width:600px){
-    .tc{grid-template-columns:1fr!important;}
-    .tc2{grid-template-columns:1fr!important;}
-    .tc3{grid-template-columns:1fr!important;}
-    .pad-section{padding:24px 18px!important;}
-    .pad-cover{padding:20px 18px 0!important;}
-    .pad-gate{padding:24px 18px!important;}
-    .pad-footer{padding:16px 18px!important;}
-    .pad-topbar{padding:10px 18px!important;}
-    .mob-hide{display:none!important;}
-    .mob-show{display:block!important;}
-    .mob-stack{flex-direction:column!important;align-items:flex-start!important;gap:8px!important;}
-    .mob-full{width:100%!important;}
-    .mob-item-hidden{display:none!important;}
-    .mob-toggle{display:flex!important;align-items:center;justify-content:space-between;width:100%;
-      padding:10px 0;border:none;border-bottom:1px solid ${C.border};background:transparent;
-      cursor:pointer;font-family:${F.sans};font-size:10px;font-weight:700;
-      letter-spacing:1.5px;text-transform:uppercase;color:${C.muted};}
-    .mob-toggle-dark{border-color:rgba(255,255,255,0.12)!important;color:rgba(250,248,243,0.35)!important;}
-    .mob-toggle-hdr{border-color:rgba(255,255,255,0.1)!important;color:rgba(250,248,243,0.5)!important;background:rgba(255,255,255,0.04)!important;padding:10px 14px!important;}
-    .gate-value-line{display:none!important;}
-    .gate-cta-row{flex-direction:column!important;}
-    .footer-links{display:none!important;}
-    .footer-inner{justify-content:center!important;}
-    .toc-grid{grid-template-columns:1fr!important;}
-    .mob-sec-toggle{display:flex!important;width:100%;align-items:center;justify-content:space-between;
-      padding:16px 0;border:none;border-bottom:1px solid rgba(255,255,255,0.08);background:transparent;
-      cursor:pointer;text-align:left;}
-    .mob-sec-toggle-light{border-bottom-color:${C.border}!important;}
-    .mob-sec-collapsed{display:none!important;}
-    .stats-row>div{flex:0 0 50%!important;border-right:none!important;border-bottom:1px solid rgba(255,255,255,0.07)!important;}
-    .stats-row>div:nth-child(odd){border-right:1px solid rgba(255,255,255,0.07)!important;}
-    .mob-nav-clearance{padding-bottom:72px!important;}
-    .mob-risk-body{display:none!important;}
-    .mob-risk-open .mob-risk-body{display:block!important;}
-    /* Carousel */
-    .mob-carousel{display:flex!important;gap:12px;overflow-x:auto;padding-bottom:4px;
-      -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;}
-    .mob-carousel::-webkit-scrollbar{display:none;}
-    .mob-carousel>.mob-card{scroll-snap-align:start;flex:0 0 85%;min-width:0;}
-    .mob-carousel>.mob-card-wide{scroll-snap-align:start;flex:0 0 92%;min-width:0;}
-    /* Phase accordions */
-    .mob-phase-body{display:none!important;}
-    .mob-phase-open .mob-phase-body{display:block!important;}
-    .mob-phase-hdr{display:flex!important;width:100%;align-items:center;justify-content:space-between;
-      padding:12px 0;border:none;border-bottom:1px solid ${C.border};background:transparent;
-      cursor:pointer;text-align:left;}
-    /* Country cards */
-    .mob-country-list{display:flex!important;flex-direction:column;gap:0;}
-    /* 5-stat strip: 2×2 + full-width 5th */
-    .stats-row>div:last-child{flex:0 0 100%!important;border-right:none!important;}
-    /* TOC: hide subtitles on mobile to compress height */
-    .toc-sub{display:none!important;}
-    .toc-item{cursor:pointer;}
-    .toc-item:active{background:rgba(184,217,53,0.06);}
-    /* Score dimension accordion */
-    .mob-dim-body{display:none!important;}
-    .mob-dim-open .mob-dim-body{display:block!important;}
-    .mob-dim-hdr{display:flex!important;width:100%;align-items:center;justify-content:space-between;
-      padding:12px 0;border:none;border-bottom:1px solid rgba(255,255,255,0.08);background:transparent;
-      cursor:pointer;text-align:left;}
-    /* Deploy capital reveal */
-    .mob-cap-hidden{display:none!important;}
-    /* Cost row stacking */
-    .mob-cost-row{display:grid!important;grid-template-columns:1fr!important;gap:0px!important;padding:10px 0!important;}
-    .mob-cost-meta{display:flex!important;gap:12px;margin-top:3px;}
-  }
-`}</style>);
-
-// ─────────────────────────────────────────────────────────────────────────────
-// LOGO
-// ─────────────────────────────────────────────────────────────────────────────
-const Logo = ({height=28, variant='white'}) => {
-  // variant='white' → on dark bg (Cover, Footer, TopBar-scrolled)
-  // variant='dark'  → on light bg (TopBar default)
-  const W = variant==='white' ? '#ffffff' : C.ink;
-  const L = C.lime; // #b8d935 always
-  const MG = '#74914a'; // mid-green accent (cls-6) — works on both
-  const FS = C.forest; // #1b4d3e
-  const bStroke = variant==='white' ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.2)';
-  return (
-    <svg height={height} viewBox="0 0 3258.5 932.3" xmlns="http://www.w3.org/2000/svg" style={{display:'block',flexShrink:0}}>
-      {/* ── ICON MARK ── */}
-      {/* Box outline */}
-      <rect x="40" y="40" width="843.9" height="852.3" rx="36.6" ry="36.6"
-        style={{fill:'none',stroke:W,strokeWidth:80,strokeMiterlimit:10}}/>
-      {/* Diamond — lime fill, forest stroke */}
-      <polygon points="722.6 322.1 462.3 452.8 202 322.8 461.3 192.5 722.6 322.1"
-        style={{fill:L,stroke:FS,strokeMiterlimit:10}}/>
-      {/* Mid-green chevron */}
-      <path d="M197.9,426.8c3.9-.5,7,.8,10.7,1.4l252.5,125.7c84.5-40,167.7-83.8,251.9-124.8,33.1-11.5,50.1,34.2,18.5,49.1l-259.2,129.1c-10.2,3.7-14.1,2.6-23.9-1.3l-264.2-133c-17-14.4-8-43.2,13.6-46.1h.1v-.1Z"
-        style={{fill:MG}}/>
-      {/* Lime chevron */}
-      <path d="M195.3,558c3.7-.6,7.4-.4,11.1-.2,86.1,40.5,170.4,85.1,255.9,126.8l252.9-126c29.5-7.2,45.4,28.7,22.3,46.5l-270.4,134.4-8.6.3c-91.6-42.2-181.1-89.9-271.7-134.4-18.7-12.1-13.3-43.6,8.5-47.4h0Z"
-        style={{fill:L}}/>
-      {/* ── D ── */}
-      <path d="M1853.1,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.6,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1h0v.1Z"
-        style={{fill:W}}/>
-      {/* ── B upper ── */}
-      <path d="M1431.7,224.5h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5h.1v.1Z"
-        style={{fill:W,stroke:bStroke,strokeWidth:0.5,strokeMiterlimit:10}}/>
-      {/* ── B lower ── */}
-      <path d="M1488.1,578.7v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"
-        style={{fill:W,stroke:bStroke,strokeWidth:0.5,strokeMiterlimit:10}}/>
-      {/* B lime top bar */}
-      <rect x="1427.4" y="17.4" width="205.2" height="145" style={{fill:L}}/>
-      {/* B white body rect */}
-      <rect x="1427.5" y="221.8" width="205.2" height="693.2" rx="9.6" ry="9.6" style={{fill:W}}/>
-      {/* ── G ── */}
-      <path d="M2757.3,19.1h491.3c5.4,0,9.8,4.4,9.8,9.8v218.7c0,5.4-4.4,9.8-9.8,9.8h-507.4c-57,0-108.5,23-145.9,60.4-37.3,37.2-60.5,88.8-60.5,145.7,0,113.7,92.4,206,206.3,206h12.9c2.9,0,5.1,2.3,5.1,5.1v236.7c0,1.1-.9,1.9-1.9,1.9h0c-242.2,0-438.5-196-438.5-437.8v-18.5c0-241.8,196.3-437.8,438.5-437.8h.1Z"
-        style={{fill:W}}/>
-      <rect x="2812.8" y="339.5" width="216.8" height="572.6" rx="9.6" ry="9.6" style={{fill:W}}/>
-      {/* ── E ── */}
-      <rect x="3083.4" y="339.5" width="175.1" height="257.7" style={{fill:L}}/>
-      <rect x="3083.4" y="654.4" width="175.1" height="257.7" style={{fill:L}}/>
-    </svg>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SHARED COMPONENTS
-// ─────────────────────────────────────────────────────────────────────────────
-const SectionRule = () => (
-  <div style={{borderTop:`6px solid ${C.ink}`,borderBottom:`2px solid ${C.lime}`,paddingBottom:'3px',marginBottom:'20px'}}/>
-);
-
-const Eyebrow = ({children, light=false}) => (
-  <div style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:light?'rgba(250,248,243,0.4)':C.muted,marginBottom:'8px'}}>{children}</div>
-);
-
-const ScoreBar = ({label, value, onDark}) => (
-  <div style={{marginBottom:'11px'}}>
-    <div style={{display:'flex',justifyContent:'space-between',marginBottom:'4px'}}>
-      <span style={{fontFamily:F.sans,fontSize:'10px',color:onDark?'rgba(250,248,243,0.4)':C.muted}}>{label}</span>
-      <span style={{fontFamily:F.mono,fontSize:'10px',fontWeight:700,color:onDark?C.lime:C.forest}}>{value}</span>
-    </div>
-    <div style={{height:'3px',background:onDark?'rgba(255,255,255,0.08)':C.border,borderRadius:'2px',overflow:'hidden'}}>
-      <div style={{height:'100%',width:`${value}%`,background:C.lime,borderRadius:'2px'}}/>
-    </div>
-  </div>
-);
-
-const PullQuote = ({children, author, onDark=false}) => (
-  <div style={{borderLeft:`3px solid ${C.lime}`,paddingLeft:'18px',margin:'24px 0'}}>
-    <p style={{fontFamily:F.display,fontSize:'17px',fontStyle:'italic',fontWeight:600,color:onDark?'rgba(250,248,243,0.7)':C.forest,lineHeight:1.65,marginBottom:author?'10px':'0'}}>{children}</p>
-    {author && <div style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',color:onDark?'rgba(250,248,243,0.3)':C.faint}}>{author}</div>}
-  </div>
-);
-
-const Tag = ({children, color, bg}) => (
-  <div style={{display:'inline-block',background:bg||'transparent',border:`1px solid ${color}`,color:color,padding:'2px 8px',fontFamily:F.sans,fontSize:'8px',fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase'}}>{children}</div>
-);
-
-// ─────────────────────────────────────────────────────────────────────────────
-// MOBILE CAROUSEL (reusable, CSS-driven, with dot indicators)
-// ─────────────────────────────────────────────────────────────────────────────
-const MobCarousel = ({items, renderCard, onDark=false}) => {
-  const [active, setActive] = useState(0);
-  const scrollRef = useRef(null);
-  const handleScroll = () => {
-    if (!scrollRef.current) return;
-    const cardW = scrollRef.current.offsetWidth * 0.85 + 12;
-    const idx = Math.round(scrollRef.current.scrollLeft / cardW);
-    setActive(Math.max(0, Math.min(idx, items.length - 1)));
-  };
-  const goTo = (i) => {
-    if (!scrollRef.current) return;
-    const cardW = scrollRef.current.offsetWidth * 0.85 + 12;
-    scrollRef.current.scrollTo({left: i * cardW, behavior:'smooth'});
-    setActive(i);
-  };
-  return (
-    <div className="mob-show" style={{display:'none',marginTop:'16px'}}>
-      <div className="mob-carousel" ref={scrollRef} onScroll={handleScroll}>
-        {items.map((item, i) => (
-          <div key={i} className="mob-card">
-            {renderCard(item, i)}
-          </div>
-        ))}
-      </div>
-      <div style={{display:'flex',gap:'6px',justifyContent:'center',marginTop:'14px'}}>
-        {items.map((_,i) => (
-          <div key={i} onClick={()=>goTo(i)} style={{
-            width:i===active?'24px':'8px', height:'8px', borderRadius:'4px',
-            background:i===active?C.lime:(onDark?'rgba(255,255,255,0.2)':C.border),
-            cursor:'pointer', transition:'all 0.3s ease',
-          }}/>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// MOBILE PHASE ACCORDION (for Regulatory section)
-// ─────────────────────────────────────────────────────────────────────────────
-const MobPhaseAccordion = ({phases}) => {
-  const [openIdx, setOpenIdx] = useState(null);
-  return (
-    <div className="mob-show" style={{display:'none',marginTop:'8px'}}>
-      {phases.map((p, i) => {
-        const isOpen = openIdx === i;
-        return (
-          <div key={i} className={isOpen ? 'mob-phase-open' : ''} style={{borderBottom:`1px solid ${C.border}`}}>
-            <button className="mob-phase-hdr" onClick={()=>setOpenIdx(isOpen?null:i)}>
-              <div style={{display:'flex',gap:'10px',alignItems:'center'}}>
-                <div style={{width:'8px',height:'8px',background:p.color,flexShrink:0}}/>
-                <div>
-                  <div style={{fontFamily:F.mono,fontSize:'8px',fontWeight:700,color:p.color,letterSpacing:'1px',textAlign:'left'}}>{p.phase}</div>
-                  <div style={{fontFamily:F.sans,fontSize:'12px',fontWeight:700,color:C.ink,lineHeight:1.2,textAlign:'left'}}>{p.label}</div>
-                </div>
-              </div>
-              <span style={{fontFamily:F.mono,fontSize:'13px',color:C.faint,transition:'transform 0.2s',transform:isOpen?'rotate(180deg)':'none',flexShrink:0,marginLeft:'8px'}}>↓</span>
-            </button>
-            <div className="mob-phase-body" style={{paddingBottom:'14px',paddingTop:'8px'}}>
-              {p.steps.map((s,j) => (
-                <div key={j} style={{display:'flex',gap:'8px',padding:'5px 0',borderBottom:j<p.steps.length-1?`1px solid rgba(0,0,0,0.04)`:'none'}}>
-                  <span style={{color:p.color,fontFamily:F.mono,fontSize:'10px',flexShrink:0,marginTop:'2px'}}>→</span>
-                  <span style={{fontFamily:F.body,fontSize:'12px',color:C.muted,lineHeight:1.55}}>{s}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// MOBILE COUNTRY CARDS (for Competitive Landscape)
-// ─────────────────────────────────────────────────────────────────────────────
-const MobCountryCards = ({countries}) => {
-  const [openIdx, setOpenIdx] = useState(0);
-  return (
-    <div className="mob-show" style={{display:'none',marginTop:'8px'}}>
-      {countries.map((r, i) => {
-        const isOpen = openIdx === i;
-        const isGhana = !!r.hl;
-        return (
-          <div key={i} style={{borderBottom:`1px solid ${C.border}`,background:isGhana?`rgba(184,217,53,0.06)`:'transparent'}}>
-            <button onClick={()=>setOpenIdx(isOpen?null:i)}
-              style={{width:'100%',display:'flex',justifyContent:'space-between',alignItems:'center',
-                padding:'12px 0',border:'none',background:'transparent',cursor:'pointer',textAlign:'left'}}>
-              <div style={{display:'flex',gap:'10px',alignItems:'center'}}>
-                <span style={{fontFamily:F.sans,fontSize:'14px',fontWeight:700,color:C.ink}}>{r.country}</span>
-                {isGhana && <span style={{background:C.lime,color:C.ink,padding:'2px 7px',fontFamily:F.sans,fontSize:'7px',fontWeight:800,letterSpacing:'1.5px',textTransform:'uppercase'}}>TOP PICK</span>}
-              </div>
-              <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
-                <span style={{fontFamily:F.mono,fontSize:'11px',color:C.faint}}>{r.status}</span>
-                <span style={{fontFamily:F.mono,fontSize:'13px',color:C.faint,transition:'transform 0.2s',transform:isOpen?'rotate(180deg)':'none'}}>↓</span>
-              </div>
-            </button>
-            {isOpen && (
-              <div style={{paddingBottom:'14px'}}>
-                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'8px',marginBottom:'8px'}}>
-                  {[
-                    {l:'Agro Fit', v:r.aFit},
-                    {l:'Port Access', v:r.port},
-                    {l:'Labour Cost', v:r.labour},
-                    {l:'Framework', v:r.fw},
-                    {l:'Smallholder', v:r.sm},
-                  ].map((f,j) => (
-                    <div key={j} style={{padding:'8px',background:C.paperDark}}>
-                      <div style={{fontFamily:F.sans,fontSize:'8px',fontWeight:700,letterSpacing:'1px',textTransform:'uppercase',color:C.faint,marginBottom:'3px'}}>{f.l}</div>
-                      <div style={{fontFamily:F.sans,fontSize:'13px',color:C.ink}}>{f.v}</div>
-                    </div>
-                  ))}
-                </div>
-                <div style={{background:isGhana?C.forest:'transparent',border:isGhana?'none':`1px solid ${C.border}`,padding:'10px 12px'}}>
-                  <span style={{fontFamily:F.body,fontSize:'12px',fontStyle:'italic',color:isGhana?C.paper:C.muted}}>{r.view}</span>
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// MOBILE COLLAPSE WRAPPER
-// ─────────────────────────────────────────────────────────────────────────────
-const MobileCollapse = ({num, title, stat, label, defaultOpen=false, onDark=false, children}) => {
-  const [open, setOpen] = useState(defaultOpen);
-  const bdr = onDark ? 'rgba(255,255,255,0.08)' : C.border;
-  const numCol = C.lime;
-  const titleCol = onDark ? C.paper : C.ink;
-  const statCol = onDark ? C.lime : C.forest;
-  const labelCol = onDark ? 'rgba(250,248,243,0.35)' : C.faint;
-  const chevCol = onDark ? 'rgba(250,248,243,0.3)' : C.muted;
-  return (
-    <>
-      <button
-        className={`mob-show mob-sec-toggle${onDark ? '' : ' mob-sec-toggle-light'}`}
-        style={{display:'none'}}
-        onClick={() => setOpen(o => !o)}
-      >
-        <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
-          <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:numCol,letterSpacing:'1px',flexShrink:0}}>{num}</span>
-          <span style={{fontFamily:F.sans,fontSize:'12px',fontWeight:700,color:titleCol,lineHeight:1.2}}>{title}</span>
-        </div>
-        <div style={{display:'flex',alignItems:'center',gap:'10px',flexShrink:0}}>
-          <div style={{textAlign:'right'}}>
-            <div style={{fontFamily:F.mono,fontSize:'13px',fontWeight:700,color:statCol,lineHeight:1}}>{stat}</div>
-            <div style={{fontFamily:F.sans,fontSize:'8px',color:labelCol,letterSpacing:'0.8px',marginTop:'2px'}}>{label}</div>
-          </div>
-          <span style={{fontFamily:F.mono,fontSize:'14px',color:chevCol,transition:'transform 0.25s ease',transform:open?'rotate(180deg)':'rotate(0deg)',display:'inline-block'}}>↓</span>
-        </div>
-      </button>
-      <div className={open ? '' : 'mob-sec-collapsed'}>
-        {children}
-      </div>
-    </>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// MOBILE BOTTOM NAV
-// ─────────────────────────────────────────────────────────────────────────────
 const NAV_SECTIONS = [
   {id:'s01',num:'§ 01',title:'Why Now'},
   {id:'s02',num:'§ 02',title:'Thesis'},
@@ -388,96 +20,6 @@ const NAV_SECTIONS = [
   {id:'s11',num:'§ 11',title:'Deployment'},
 ];
 
-const MobileNav = () => {
-  const [active, setActive] = useState(0);
-  useEffect(() => {
-    const observers = NAV_SECTIONS.map((s, i) => {
-      const el = document.getElementById(s.id);
-      if (!el) return null;
-      const obs = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) setActive(i);
-      }, {rootMargin:'-30% 0px -60% 0px', threshold:0});
-      obs.observe(el);
-      return obs;
-    });
-    return () => observers.forEach(o => o?.disconnect());
-  }, []);
-  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
-  const cur = NAV_SECTIONS[active];
-  return (
-    <div className="mob-show np" style={{display:'none',position:'fixed',bottom:0,left:0,right:0,zIndex:200,background:C.ink,borderTop:`2px solid ${C.lime}`,padding:'8px 14px 10px',boxShadow:'0 -4px 24px rgba(0,0,0,0.4)'}}>
-      {/* Section name */}
-      <div style={{textAlign:'center',marginBottom:'7px'}}>
-        <span style={{fontFamily:F.sans,fontSize:'8px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.lime}}>{cur.num}</span>
-        <span style={{fontFamily:F.sans,fontSize:'8px',fontWeight:700,color:'rgba(250,248,243,0.4)',letterSpacing:'1.5px',textTransform:'uppercase',marginLeft:'8px'}}>{cur.title}</span>
-      </div>
-      {/* Controls row */}
-      <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
-        {/* Prev */}
-        <button onClick={()=>active>0&&scrollTo(NAV_SECTIONS[active-1].id)}
-          style={{background:'transparent',border:`1px solid rgba(255,255,255,${active>0?'0.18':'0.06'})`,color:`rgba(250,248,243,${active>0?'0.7':'0.2'})`,padding:'7px 12px',fontFamily:F.sans,fontSize:'11px',fontWeight:700,cursor:active>0?'pointer':'default',flexShrink:0}}>
-          ←
-        </button>
-        {/* Dots */}
-        <div style={{flex:1,display:'flex',gap:'4px',justifyContent:'center',alignItems:'center'}}>
-          {NAV_SECTIONS.map((_,i) => (
-            <div key={i} onClick={()=>scrollTo(NAV_SECTIONS[i].id)} style={{
-              width:i===active?'20px':'5px',height:'5px',borderRadius:'3px',
-              background:i===active?C.lime:'rgba(255,255,255,0.18)',
-              cursor:'pointer',transition:'all 0.3s ease',flexShrink:0
-            }}/>
-          ))}
-        </div>
-        {/* Next or CTA */}
-        {active < NAV_SECTIONS.length-1
-          ? <button onClick={()=>scrollTo(NAV_SECTIONS[active+1].id)}
-              style={{background:C.forest,border:'none',color:C.lime,padding:'7px 12px',fontFamily:F.sans,fontSize:'11px',fontWeight:700,cursor:'pointer',flexShrink:0}}>
-              →
-            </button>
-          : <a href="#" style={{background:C.lime,color:C.ink,padding:'7px 12px',fontFamily:F.sans,fontSize:'9px',fontWeight:800,textDecoration:'none',letterSpacing:'1px',flexShrink:0}}>ENGAGE →</a>
-        }
-      </div>
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// TOPBAR
-// ─────────────────────────────────────────────────────────────────────────────
-const TopBar = ({coverLogoRef}) => {
-  const [past, setPast] = useState(false);
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const fn = () => {
-      if (!coverLogoRef?.current) return;
-      setPast(coverLogoRef.current.getBoundingClientRect().bottom < 0);
-      const el = document.documentElement;
-      const scrolled = el.scrollTop;
-      const total = el.scrollHeight - el.clientHeight;
-      setProgress(total > 0 ? Math.min(100, (scrolled / total) * 100) : 0);
-    };
-    window.addEventListener('scroll', fn, {passive:true});
-    return () => window.removeEventListener('scroll', fn);
-  }, []);
-  return (
-    <div className="np pad-topbar" style={{position:'sticky',top:0,zIndex:100,background:C.paper,borderBottom:`1px solid ${C.border}`,padding:'10px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',boxShadow:'0 1px 8px rgba(0,0,0,0.06)',overflow:'hidden'}}>
-      <div className="progress-bar" style={{width:`${progress}%`}}/>
-      <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
-        <div style={{overflow:'hidden',maxWidth:past?'200px':'0px',opacity:past?1:0,transition:'max-width 0.35s ease,opacity 0.3s ease',display:'flex',alignItems:'center'}}>
-          <Logo height={20} variant="dark"/>
-          <div style={{width:'1px',height:'16px',background:C.border,margin:'0 10px',flexShrink:0}}/>
-        </div>
-        <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',color:C.muted}}>Ghana Cannabis Intelligence · Licence 04 · R&amp;D · Members Brief</span>
-        <span className="mob-show" style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,color:C.forest}}>04 · R&amp;D</span>
-      </div>
-      <div style={{display:'flex',gap:'8px',alignItems:'center'}}>
-        <div className="mob-hide" style={{background:C.lime,color:C.ink,padding:'4px 10px',fontFamily:F.sans,fontSize:'8px',fontWeight:800,letterSpacing:'2px',textTransform:'uppercase'}}>MEMBERS BRIEF</div>
-        <a href="#" style={{background:C.forest,color:C.lime,padding:'7px 14px',fontFamily:F.sans,fontSize:'10px',fontWeight:700,textDecoration:'none',letterSpacing:'0.3px'}}>Engage BRIDGE →</a>
-      </div>
-    </div>
-  );
-};
-
 // ─────────────────────────────────────────────────────────────────────────────
 // COVER
 // ─────────────────────────────────────────────────────────────────────────────
@@ -486,7 +28,7 @@ const Cover = ({logoRef}) => (
     <div style={{position:'absolute',right:'-20px',top:'-30px',fontFamily:F.display,fontSize:'clamp(180px,35vw,480px)',fontWeight:900,color:'rgba(255,255,255,0.022)',pointerEvents:'none',userSelect:'none',letterSpacing:'-12px',lineHeight:1}}>04</div>
     <div style={{maxWidth:'900px',margin:'0 auto',position:'relative'}}>
       <div ref={logoRef} style={{marginBottom:'36px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-        <Logo height={30} variant="white"/>
+        <DocumentLogo height={30} variant="white"/>
         <div className="mob-hide" style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(250,248,243,0.22)',letterSpacing:'0.8px'}}>MARCH 2026 · NCC L.I. 2475</div>
       </div>
       <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'20px',flexWrap:'wrap'}}>
@@ -495,7 +37,7 @@ const Cover = ({logoRef}) => (
         <div className="mob-hide" style={{border:`1px solid rgba(255,255,255,0.15)`,padding:'4px 12px',fontFamily:F.sans,fontSize:'8px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:'rgba(250,248,243,0.4)'}}>MEMBERS INTELLIGENCE</div>
       </div>
       <h1 style={{fontFamily:F.display,fontSize:'clamp(30px,5.5vw,68px)',fontWeight:900,color:C.paper,lineHeight:1.08,marginBottom:'20px',maxWidth:'800px'}}>
-        R&amp;D<br/>
+        R&D<br/>
         <span style={{fontWeight:400,fontStyle:'italic',color:'rgba(250,248,243,0.55)',fontSize:'0.72em'}}>The Knowledge Infrastructure That Defines Ghana's Long-Term Competitive Position</span>
       </h1>
       <PullQuote onDark>
@@ -573,22 +115,22 @@ const WhyNow = () => (
         <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px'}}>§ 01</span>
         <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginLeft:'6px'}}>Why Now</span>
       </div>
-      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'32px',maxWidth:'700px'}}>26 February 2026: Ghana Opens the Full Cannabis R&amp;D Licensing Regime — Including Licence 04</h2>
+      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'32px',maxWidth:'700px'}}>26 February 2026: Ghana Opens the Full Cannabis R&D Licensing Regime — Including Licence 04</h2>
       <div style={{display:'grid',gridTemplateColumns:'1.1fr 0.9fr',gap:'48px'}} className="tc">
         <div>
           <p className="dc" style={{fontFamily:F.body,fontSize:'16px',fontWeight:300,lineHeight:1.85,color:C.ink,marginBottom:'18px'}}>
-            On 26 February 2026, Ghana launched its national licensing regime for industrial and medicinal cannabis — all 11 licence categories simultaneously, including Licence 04: R&amp;D. For Ghana's research institutions — Noguchi Memorial Institute, the Centre for Plant Medicine Research, CSIR, KNUST, the University of Ghana, and the University of Cape Coast — this is the moment that transforms decades of cannabis and medicinal-plant research into a commercially licensable activity.
+            On 26 February 2026, Ghana launched its national licensing regime for industrial and medicinal cannabis — all 11 licence categories simultaneously, including Licence 04: R&D. For Ghana's research institutions — Noguchi Memorial Institute, the Centre for Plant Medicine Research, CSIR, KNUST, the University of Ghana, and the University of Cape Coast — this is the moment that transforms decades of cannabis and medicinal-plant research into a commercially licensable activity.
           </p>
           <p style={{fontFamily:F.body,fontSize:'16px',fontWeight:300,lineHeight:1.85,color:C.ink,marginBottom:'18px'}}>
-            The legal architecture is built for R&amp;D. Act 1019 (2020), Act 1100 (2023), and L.I. 2475 create a 11-licence framework covering the full value chain. Licence 04 specifically enables research and development activities on cannabis and industrial hemp — variety trials, pharmaceutical preclinical research, clinical investigation, materials science, food science, and agronomic R&amp;D — within a regulated, NCC-supervised framework.
+            The legal architecture is built for R&D. Act 1019 (2020), Act 1100 (2023), and L.I. 2475 create a 11-licence framework covering the full value chain. Licence 04 specifically enables research and development activities on cannabis and industrial hemp — variety trials, pharmaceutical preclinical research, clinical investigation, materials science, food science, and agronomic R&D — within a regulated, NCC-supervised framework.
           </p>
           <p style={{fontFamily:F.body,fontSize:'16px',fontWeight:300,lineHeight:1.85,color:C.ink}}>
-            Ghana already has published, internationally recognised science on medicinal plants and cannabis. The SATREPS-funded research programme at University of Ghana produced internationally co-authored studies on Ghanaian anti-viral and anti-parasitic botanicals. Studies on Ghana's preparedness for industrial hemp have explicitly concluded the country has the institutional readiness for cannabis R&amp;D. Licence 04 is the bridge from academic capacity to licensed commercial science.
+            Ghana already has published, internationally recognised science on medicinal plants and cannabis. The SATREPS-funded research programme at University of Ghana produced internationally co-authored studies on Ghanaian anti-viral and anti-parasitic botanicals. Studies on Ghana's preparedness for industrial hemp have explicitly concluded the country has the institutional readiness for cannabis R&D. Licence 04 is the bridge from academic capacity to licensed commercial science.
           </p>
         </div>
         <div>
           <div style={{background:C.ink,padding:'24px',marginBottom:'16px'}}>
-            <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.lime,marginBottom:'14px'}}>R&amp;D Licence Framework at a Glance</div>
+            <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.lime,marginBottom:'14px'}}>R&D Licence Framework at a Glance</div>
             {[
               {l:'NCC Licence',v:'Licence 04 · R&D'},
               {l:'Scope',v:'Pharma · Agronomy · Materials · Food Science'},
@@ -614,7 +156,7 @@ const WhyNow = () => (
       </div>
       {/* Timeline visual */}
       <div style={{marginTop:'40px',borderTop:`1px solid ${C.border}`,paddingTop:'28px'}}>
-        <Eyebrow>R&amp;D Activation Timeline · 2026–2032</Eyebrow>
+        <Eyebrow>R&D Activation Timeline · 2026–2032</Eyebrow>
         <div style={{display:'flex',gap:'0',marginTop:'14px',overflowX:'auto'}} className="chain-scroll">
           {[
             {yr:'2020',ev:'Act 1019 enacted',sub:'Section 43 introduces cannabis licensing framework',col:C.muted},
@@ -647,19 +189,19 @@ const Thesis = () => (
       <SectionRule/>
       <div style={{display:'flex',gap:'4px',alignItems:'center',marginBottom:'8px'}}>
         <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px'}}>§ 02</span>
-        <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginLeft:'6px'}}>The R&amp;D Thesis</span>
+        <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginLeft:'6px'}}>The R&D Thesis</span>
       </div>
       <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'32px',maxWidth:'680px'}}>Every Downstream Opportunity Runs Through This Licence</h2>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'48px'}} className="tc">
         <div>
           <p style={{fontFamily:F.body,fontSize:'16px',fontWeight:300,lineHeight:1.85,color:C.ink,marginBottom:'18px'}}>
-            R&amp;D (Licence 04) is the knowledge layer of Ghana's cannabis value chain. It is the licence that generates the evidence base, develops the IP, tests the formulations, validates the agronomy, and proves the materials applications that every other licence holder needs. It is also the licence most aligned with what Ghana's publicly funded research institutions have been doing for decades — and the least developed in commercial terms.
+            R&D (Licence 04) is the knowledge layer of Ghana's cannabis value chain. It is the licence that generates the evidence base, develops the IP, tests the formulations, validates the agronomy, and proves the materials applications that every other licence holder needs. It is also the licence most aligned with what Ghana's publicly funded research institutions have been doing for decades — and the least developed in commercial terms.
           </p>
           <p style={{fontFamily:F.body,fontSize:'16px',fontWeight:300,lineHeight:1.85,color:C.ink,marginBottom:'18px'}}>
             The global cannabinoid clinical pipeline is substantial: more than 50 companies are advancing over 55 pipeline drugs across Phase 1–3 trials, covering neurological, psychiatric, pain, inflammatory, and oncologic indications. The cannabis pharmaceuticals market was approximately $1.1 billion in the early 2020s and is projected to grow significantly through 2030 as drugs are approved. Big pharma — including Pfizer's entry into cannabinoid therapeutics — signals the mainstreaming of cannabis-derived medicines.
           </p>
           <p style={{fontFamily:F.body,fontSize:'16px',fontWeight:300,lineHeight:1.85,color:C.ink}}>
-            Ghana's strategic position for R&amp;D is unique in Africa. The country has a clinical trials infrastructure (FDA Ghana authorisation, university ethics committees), a plant-medicine research tradition (SATREPS-funded anti-viral/anti-parasitic studies), and the four agro-ecological zones needed for multi-location agronomic trials. What it lacks is a commercially structured, NCC-licensed R&amp;D operation to activate this capacity.
+            Ghana's strategic position for R&D is unique in Africa. The country has a clinical trials infrastructure (FDA Ghana authorisation, university ethics committees), a plant-medicine research tradition (SATREPS-funded anti-viral/anti-parasitic studies), and the four agro-ecological zones needed for multi-location agronomic trials. What it lacks is a commercially structured, NCC-licensed R&D operation to activate this capacity.
           </p>
         </div>
         <div>
@@ -699,7 +241,7 @@ const Thesis = () => (
       </div>
       {/* 4 demand drivers */}
       <div style={{marginTop:'40px',borderTop:`1px solid ${C.border}`,paddingTop:'28px'}}>
-        <Eyebrow>Four Structural Drivers for Cannabis R&amp;D Investment</Eyebrow>
+        <Eyebrow>Four Structural Drivers for Cannabis R&D Investment</Eyebrow>
         {/* Desktop grid */}
         <div className="mob-hide" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'0',marginTop:'14px'}}>
           {[
@@ -833,7 +375,7 @@ const GhanaFit = () => (
       )}/>
       {/* R&D infrastructure requirements strip */}
       <div style={{background:C.paperDark,padding:'24px',borderTop:`3px solid ${C.ink}`}}>
-        <Eyebrow>Core R&amp;D Infrastructure Requirements vs. Ghana's Provision</Eyebrow>
+        <Eyebrow>Core R&D Infrastructure Requirements vs. Ghana's Provision</Eyebrow>
         <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:'0',marginTop:'14px'}} className="tc">
           {[
             {param:'GLP/GMP Labs',req:'Analytical, preclinical',ghana:'Noguchi, CPMR, KNUST — all equipped',fit:'★★★★☆'},
@@ -929,7 +471,7 @@ const BusinessModels = () => {
           <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px'}}>§ 04</span>
           <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginLeft:'6px'}}>Business Models</span>
         </div>
-        <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'28px',maxWidth:'680px'}}>Four Routes into Ghana's R&amp;D Sector — from University Lab to Proprietary IP</h2>
+        <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'28px',maxWidth:'680px'}}>Four Routes into Ghana's R&D Sector — from University Lab to Proprietary IP</h2>
         {/* Model tabs */}
         {/* Desktop tab row */}
         <div className="mob-hide" style={{display:'flex',gap:'4px',marginBottom:'24px',overflowX:'auto'}}>
@@ -1032,12 +574,12 @@ const UnitEconomics = () => (
         <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px'}}>§ 05</span>
         <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginLeft:'6px'}}>Unit Economics</span>
       </div>
-      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'12px',maxWidth:'680px'}}>What Cannabis R&amp;D Revenue Looks Like — Grant, Contract, and IP Streams</h2>
+      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'12px',maxWidth:'680px'}}>What Cannabis R&D Revenue Looks Like — Grant, Contract, and IP Streams</h2>
       <p style={{fontFamily:F.body,fontSize:'15px',fontWeight:300,lineHeight:1.85,color:C.ink,marginBottom:'36px',maxWidth:'700px'}}>
         R&D economics are fundamentally different from cultivation or processing: revenue comes from sponsored research contracts, grants, and — eventually — IP licensing rather than commodity sales. The financial profile is bimodal: early-stage capital-intensive with uncertain returns, mature-stage capital-light with potentially very high royalty income.
       </p>
       <div style={{background:C.paperDark,padding:'28px',marginBottom:'32px'}}>
-        <Eyebrow>Revenue Scenarios · 4 R&amp;D Model Types (Annual USD at Maturity)</Eyebrow>
+        <Eyebrow>Revenue Scenarios · 4 R&D Model Types (Annual USD at Maturity)</Eyebrow>
         <div style={{marginTop:'18px'}}>
           {[
             {label:'University Partnership Lab (grant-funded)',v:1800,max:5500,note:'SATREPS, Wellcome, EU Horizon grants — $100K–500K/yr at maturity'},
@@ -1086,9 +628,9 @@ const UnitEconomics = () => (
           ))}
         </div>
         <div>
-          <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'12px'}}>R&amp;D Operating Cost Profile</div>
+          <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'12px'}}>R&D Operating Cost Profile</div>
           <div style={{background:C.ink,padding:'20px',marginBottom:'16px'}}>
-            <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.lime,marginBottom:'14px'}}>Annual Operating Cost (Small-Medium R&amp;D Unit)</div>
+            <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.lime,marginBottom:'14px'}}>Annual Operating Cost (Small-Medium R&D Unit)</div>
             {[
               {scale:'Scientific staff (2–5 researchers)', capex:'$60K–200K/yr', note:'PhD + MSc level; Ghana salary scale significantly below EU/US'},
               {scale:'Lab consumables + reagents', capex:'$20K–80K/yr', note:'Cannabis analytical standards, solvents, assay kits'},
@@ -1158,7 +700,7 @@ const ValueChainPosition = () => {
         <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px'}}>§ 06</span>
         <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginLeft:'6px'}}>Value Chain Position</span>
       </div>
-      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'28px',maxWidth:'680px'}}>The Knowledge Node — Every Other Licence Performs Better With R&amp;D Support</h2>
+      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'28px',maxWidth:'680px'}}>The Knowledge Node — Every Other Licence Performs Better With R&D Support</h2>
       {/* Chain visual */}
       <div className="chain-scroll" ref={chainRef} onScroll={handleChainScroll} style={{display:'flex',gap:'8px',marginBottom:'0',paddingTop:'24px'}}>
         {chainItems.map((c,i) => (
@@ -1185,7 +727,7 @@ const ValueChainPosition = () => {
       <div style={{height:'8px',marginBottom:'20px'}} className="mob-hide"/>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'24px'}} className="tc">
         <div>
-          <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'12px'}}>What R&amp;D Draws From Other Licences</div>
+          <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'12px'}}>What R&D Draws From Other Licences</div>
           {[
             {lic:'Licence 01 — Cultivation',role:'Field trial sites and biomass samples. Cultivation plots are the laboratory for agronomy R&D and the feedstock source for processing experiments.'},
             {lic:'Licence 02 — Processing',role:'Provides extracted and processed material for pharmaceutical and food-science R&D. GMP-grade extract is required for clinical research.'},
@@ -1199,7 +741,7 @@ const ValueChainPosition = () => {
           ))}
         </div>
         <div>
-          <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'12px'}}>What R&amp;D Supplies to Every Licence</div>
+          <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'12px'}}>What R&D Supplies to Every Licence</div>
           {[
             {lic:'Licence 01 — Cultivation',role:'Tropical agronomy data: variety performance, THC stability, yield optimisation, pest and disease management. R&D reduces crop destruction risk.'},
             {lic:'Licence 02 — Processing',role:'Process efficiency data, extraction optimisation, quality parameters. R&D tells processors what inputs produce the best outputs.'},
@@ -1231,7 +773,7 @@ const CompetitiveLandscape = () => (
         <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px'}}>§ 07</span>
         <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginLeft:'6px'}}>Competitive Landscape</span>
       </div>
-      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'28px',maxWidth:'680px'}}>Ghana vs. Seven African Peers — Cannabis R&amp;D Infrastructure</h2>
+      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'28px',maxWidth:'680px'}}>Ghana vs. Seven African Peers — Cannabis R&D Infrastructure</h2>
       {/* Desktop table */}
       <div className="mob-hide" style={{overflowX:'auto'}}>
         <table style={{width:'100%',borderCollapse:'collapse',minWidth:'680px'}}>
@@ -1281,7 +823,7 @@ const CompetitiveLandscape = () => (
         Noguchi Memorial Institute has been publishing internationally co-authored medicinal plant research for decades. KNUST has the GC/HPLC labs. The University of Ghana has the clinical trials ethics committee. What Ghana has been missing is not the institutions — it is the NCC licence that connects them to cannabis. Now it has that too.
       </PullQuote>
       <div style={{background:C.paperDark,padding:'20px',marginTop:'8px'}}>
-        <Eyebrow>Ghana's R&amp;D Structural Advantages</Eyebrow>
+        <Eyebrow>Ghana's R&D Structural Advantages</Eyebrow>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'0',marginTop:'14px'}} className="tc3">
           {[
             {title:'Published Research Track Record',body:'Ghana has internationally co-authored, peer-reviewed publications on medicinal plant pharmacology, ethnobotany, and anti-parasitic compounds. This track record is the credibility base for attracting international R&D sponsors.'},
@@ -1501,7 +1043,7 @@ const BridgeScore = () => {
         <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px'}}>§ 10</span>
         <Eyebrow light>BRIDGE Impact Score™</Eyebrow>
       </div>
-      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.paper,lineHeight:1.2,marginBottom:'32px',maxWidth:'680px'}}>R&amp;D Scores 60/100 — High Strategic Value, Long Timeline, Specialist Capital Required</h2>
+      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.paper,lineHeight:1.2,marginBottom:'32px',maxWidth:'680px'}}>R&D Scores 60/100 — High Strategic Value, Long Timeline, Specialist Capital Required</h2>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:'40px'}} className="tc">
         <div>
           <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.lime,marginBottom:'16px'}}>Composite Score</div>
@@ -1605,7 +1147,7 @@ const Deployment = () => {
         <span style={{fontFamily:F.mono,fontSize:'9px',fontWeight:700,color:C.lime,letterSpacing:'1px'}}>§ 11</span>
         <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginLeft:'6px'}}>Deployment Parameters</span>
       </div>
-      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'28px',maxWidth:'680px'}}>What It Takes to Enter Ghana's R&amp;D Sector</h2>
+      <h2 style={{fontFamily:F.display,fontSize:'clamp(22px,3vw,38px)',fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:'28px',maxWidth:'680px'}}>What It Takes to Enter Ghana's R&D Sector</h2>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'28px',marginBottom:'32px'}} className="tc">
         {/* Capital deployment */}
         <div style={{background:C.forest,padding:'24px'}}>
@@ -1874,7 +1416,7 @@ const Footer = () => (
   <div className="pad-footer" style={{background:C.forest,padding:'16px 64px',borderTop:`3px solid ${C.lime}`}}>
     <div className="footer-inner" style={{maxWidth:'900px',margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'12px'}}>
       <div style={{display:'flex',alignItems:'center',gap:'14px'}}>
-        <Logo height={22} variant="white"/>
+        <DocumentLogo height={22} variant="white"/>
         <div style={{width:'1px',height:'14px',background:'rgba(255,255,255,0.15)'}}/>
         <div>
           <div style={{fontFamily:F.sans,fontSize:'10px',fontWeight:600,color:'rgba(250,248,243,0.45)',letterSpacing:'0.3px'}}>Licence 04 of 11 · Ghana Cannabis Intelligence</div>
@@ -1897,9 +1439,9 @@ export default function RDBrief() {
   const coverLogoRef = useRef(null);
   return (
     <div style={{fontFamily:F.body,background:C.paper}}>
-      <Gf/>
-      <MobileNav/>
-      <TopBar coverLogoRef={coverLogoRef}/>
+      <DocumentGlobalStyles/>
+      <LicenceMobileNav sections={NAV_SECTIONS}/>
+      <DocumentTopBar coverLogoRef={coverLogoRef} breadcrumb="Ghana Cannabis Intelligence · Licence 04 · R&D · Members Brief" mobileBreadcrumb="04 · R&D"/>
       <Cover logoRef={coverLogoRef}/>
       <TOC/>
       <WhyNow/>
