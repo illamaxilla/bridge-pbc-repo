@@ -33,7 +33,7 @@ export interface MobileResourcesPageProps {
   view?: string;
 }
 
-function MobileResourcesPage({ s, setS, view = "sector-performance" }: { s: any; setS?: any; view?: string }) {
+function MobileResourcesPage({ s, setS, view = "sector-performance" }: MobileResourcesPageProps) {
   const D = {
     bg: "#090F0B",
     card: "#0F1A12",
@@ -114,7 +114,7 @@ function MobileResourcesPage({ s, setS, view = "sector-performance" }: { s: any;
   const capitalTotal = monthlyData.reduce((a, d) => a + d.growth, 0);
 
   /* ── Dark section header ── */
-  const DHead = ({ id, label, badge = undefined, children }: { id: any; label: any; badge?: any; children?: any }) => {
+  const DHead = ({ id, label, badge = undefined, children }: { id: string; label: string; badge?: React.ReactNode; children?: React.ReactNode }) => {
     const isOpen = open[id] ?? true;
     return (
       <button

@@ -131,16 +131,18 @@ const App = () => (
               <Route path="/founders" element={<ErrorBoundary><FoundersPortal /></ErrorBoundary>} />
               <Route path="/founders/apps-whitepaper" element={<ErrorBoundary><FoundersAppsWhitepaper /></ErrorBoundary>} />
 
-              {/* Founders document routes — no auth guards, direct access */}
+              {/* Founders document routes — require paid membership */}
               {FOUNDERS_DOC_ROUTES.map(({ path, title, component: DocComponent }) => (
                 <Route
                   key={path}
                   path={path}
                   element={
                     <ErrorBoundary>
-                      <SectorIntelligenceWrapper title={title}>
-                        <DocComponent />
-                      </SectorIntelligenceWrapper>
+                      <PaidRoute>
+                        <SectorIntelligenceWrapper title={title}>
+                          <DocComponent />
+                        </SectorIntelligenceWrapper>
+                      </PaidRoute>
                     </ErrorBoundary>
                   }
                 />

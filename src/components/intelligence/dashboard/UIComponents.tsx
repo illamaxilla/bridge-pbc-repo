@@ -199,7 +199,7 @@ export function ScoreRing({ score, size = 64, stroke = 5 }: ScoreRingProps) {
 /* ─── Tooltip (Recharts) ─── */
 export interface TipProps {
   active?: boolean;
-  payload?: any[];
+  payload?: Array<{ name: string; value: number; fill: string }>;
   label?: string;
 }
 
@@ -217,7 +217,7 @@ export const Tip = ({ active, payload, label }: TipProps) => {
       }}
     >
       <div style={{ color: "rgba(255,255,255,0.5)", marginBottom: 4 }}>{label}</div>
-      {payload.map((p: any, i: number) => (
+      {payload.map((p, i) => (
         <div key={i} style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 2 }}>
           <div style={{ width: 7, height: 7, borderRadius: 2, background: p.fill }} />
           <span>
@@ -232,7 +232,7 @@ export const Tip = ({ active, payload, label }: TipProps) => {
 /* ─── SectorHeader (dark bg) ─── */
 export interface SectorHeaderProps {
   s: {
-    icon: any;
+    icon: React.ComponentType<{ size: number; color: string }>;
     short: string;
     tag: string;
     score: number;
@@ -284,7 +284,7 @@ export function SectorHeader({ s }: SectorHeaderProps) {
 export interface MSectionProps {
   title: string;
   subtitle?: string;
-  icon?: any;
+  icon?: React.ComponentType<{ size: number; color: string }>;
   accent?: boolean;
   defaultOpen?: boolean;
   children?: ReactNode;
@@ -395,7 +395,7 @@ export function MSection({ title, subtitle, icon: Icon, accent = false, defaultO
 
 /* ─── MCard (mobile section card) ─── */
 export interface MCardProps {
-  icon?: any;
+  icon?: React.ComponentType<{ size: number; color: string }>;
   title?: string;
   badge?: string;
   badgeLime?: boolean;

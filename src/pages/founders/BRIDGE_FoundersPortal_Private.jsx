@@ -6,6 +6,7 @@ import {
   CheckCircle, AlertTriangle, Zap, Lock, Layers, Globe, Users, BarChart2, BookOpen, ChevronLeft, ChevronRight, Mail,
   Shield, Award, FolderOpen, Briefcase, Target, Users2, ExternalLink, Download, Eye
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 // ─── Design tokens ──────────────────────────────────────────────────────────
 const BG     = '#0D1A10';           // near-black — sole background
@@ -3638,18 +3639,8 @@ const Contact = ({ go, guestName='' }) => {
 
 
 // ─── Login Gate ───────────────────────────────────────────────────────────────
-// Edit GUESTS to add each invited partner: passcode → display name
-const GUESTS = {
-  'BRIDGE-2026':  'Valued Guest',      // Generic / demo
-  'BRIDGE-KA':    'Kofi Acheampong',   // Founder
-  'BRIDGE-OS26':  'Osei',              // Osei
-  'BRIDGE-KY26':  'Kyei',              // Kyei
-  'BRIDGE-AK26':  'Akwasi',            // Akwasi
-  'BRIDGE-AF26':  'Afua',              // Afua
-  'BRIDGE-JS26':  'Jesse',             // Jesse
-  'BRIDGE-JO26':  'Josh',              // Josh
-  'BRIDGE-DM26':  'Damien',            // Damien
-};
+// Access codes are validated server-side via Supabase RPC (founder_access_codes table).
+// No codes are stored in client-side code.
 
 const LoginGate = ({ onAuth }) => {
   const [code, setCode]   = useState('');
@@ -3658,21 +3649,26 @@ const LoginGate = ({ onAuth }) => {
   const [step, setStep]   = useState(1); // 1 = code entry, 2 = disclaimer
   const [name, setName]   = useState('');
 
-  const attempt = () => {
+  const attempt = async () => {
     const trimmed = code.trim().toUpperCase();
     if (!trimmed) { setErr('Please enter your access code.'); return; }
     setBusy(true);
-    setTimeout(() => {
-      const resolved = GUESTS[trimmed] || GUESTS[code.trim()];
-      if (resolved) {
-        setName(resolved);
-        setStep(2); // code verified — show disclaimer
-        setBusy(false);
+    try {
+      const { data, error } = await supabase.rpc('validate_founder_code', {
+        input_code: trimmed,
+      });
+      if (error) throw error;
+      if (data) {
+        setName(data);
+        setStep(2);
       } else {
         setErr('Access code not recognised. Please check the code provided to you.');
-        setBusy(false);
       }
-    }, 600);
+    } catch {
+      setErr('Unable to verify code. Please try again.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const firstName = name.split(' ')[0] || 'there';

@@ -2,7 +2,7 @@ import React from "react";
 
 export interface ChartTipProps {
   active?: boolean;
-  payload?: any[];
+  payload?: Array<{ name: string; value: number; stroke?: string; fill?: string }>;
   label?: string;
 }
 

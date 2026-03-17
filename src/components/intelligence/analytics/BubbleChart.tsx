@@ -55,7 +55,7 @@ export function BubbleChart({ s }) {
       </g>
     );
   };
-  const CustomTip = ({ active, payload }: { active?: any; payload?: any }) => {
+  const CustomTip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { name: string; x: number; y: number; z: number } }> }) => {
     if (!active || !payload?.length) return null;
     const d = payload[0]?.payload;
     return (
