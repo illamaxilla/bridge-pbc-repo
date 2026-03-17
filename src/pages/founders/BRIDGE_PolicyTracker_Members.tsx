@@ -978,7 +978,7 @@ const PartnershipModes = () => {
         <div className="tc" style={{display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'2px'}}>
           {modes.map((m,i) => (
             <div key={i} style={{border:`1px solid ${C.border}`, padding:'20px'}}>
-              <div style={{fontFamily:F.mono, fontSize:'18px', fontWeight:500, color:C.lime, background:C.forest, width:'40px', height:'40px', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'12px', fontSize:'11px', fontWeight:700, letterSpacing:'1px'}}>{m.code}</div>
+              <div style={{fontFamily:F.mono, color:C.lime, background:C.forest, width:'40px', height:'40px', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'12px', fontSize:'11px', fontWeight:700, letterSpacing:'1px'}}>{m.code}</div>
               <div style={{fontFamily:F.sans, fontSize:'12px', fontWeight:700, color:C.forest, marginBottom:'8px'}}>{m.label}</div>
               <p style={{fontFamily:F.body, fontSize:'12px', lineHeight:1.7, color:C.muted, fontWeight:300, marginBottom:'12px'}}>{m.desc}</p>
               <div style={{borderTop:`1px solid ${C.border}`, paddingTop:'10px'}}>

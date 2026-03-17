@@ -996,7 +996,7 @@ const CompareTable = ({ onFree, onIntel, onInvestor, mobile }) => {
             <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:6, marginBottom:20 }}>
               {tiers.map(t => (
                 <button key={t} onClick={() => setActiveTier(t)} style={{
-                  padding:'10px 4px', borderRadius:10, border:'none', cursor:'pointer', background:'transparent',
+                  padding:'10px 4px', borderRadius:10, cursor:'pointer',
                   background: activeTier===t ? C.primary : C.bg,
                   border: `1.5px solid ${activeTier===t ? C.primary : C.line}`,
                   transition:`all 0.2s ${EASE}`,

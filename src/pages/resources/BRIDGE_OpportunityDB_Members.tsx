@@ -117,7 +117,7 @@ const Gf = () => (
       .dash-grid-3{grid-template-columns:1fr 1fr!important;}
       .dash-grid-2{grid-template-columns:1fr!important;}
       .dash-modules{grid-template-columns:1fr!important;}
-    }`}
+    }
   `}</style>
 );
 

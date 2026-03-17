@@ -470,7 +470,7 @@ const BusinessModels = () => {
           ))}
         </div>
         {/* Mobile tab row – larger touch targets */}
-        <div className="mob-show" style={{display:'none',marginBottom:'20px',overflowX:'auto',gap:'0',display:'flex'}}>
+        <div className="mob-show" style={{display:'flex',marginBottom:'20px',overflowX:'auto',gap:'0'}}>
           {models.map((mod,i) => (
             <button key={i} onClick={() => setActive(i)} style={{
               fontFamily:F.sans,fontSize:'9px',fontWeight:800,letterSpacing:'1px',textTransform:'uppercase',
