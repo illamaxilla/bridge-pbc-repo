@@ -642,6 +642,7 @@ export default function BRIDGEHomePage() {
           }}
         >
           <img src="/images/hero-accra-skyline.jpg" alt="Accra, Ghana skyline at night" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         {!isMobile && (
           <div
@@ -2512,7 +2513,7 @@ export default function BRIDGEHomePage() {
                 <div
                   className="bg-[#3D4F4F] relative overflow-hidden"
                 >
-                  <img src="/images/boardroom-presentation.jpg" alt="African professional presenting in boardroom" className="absolute inset-0 w-full h-full object-cover" />
+                  <img src="/images/consulting-partnership.jpg" alt="African professional presenting in boardroom" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute bottom-6 left-6 right-6 bg-white/95 rounded-2xl p-[20px_24px] flex items-center gap-4">
                     <div
                       className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
