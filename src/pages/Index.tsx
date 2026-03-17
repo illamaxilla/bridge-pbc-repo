@@ -642,7 +642,7 @@ export default function BRIDGEHomePage() {
           }}
         >
           <img src="/images/hero-accra-skyline.jpg" alt="Accra, Ghana skyline at night" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/75" />
         </div>
         {!isMobile && (
           <div
