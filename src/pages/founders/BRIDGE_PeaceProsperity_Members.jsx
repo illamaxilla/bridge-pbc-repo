@@ -1,109 +1,21 @@
 import { useEffect, useRef, useState } from "react";
+import { DOC_COLORS as C, DOC_FONTS as F } from "@/lib/document-tokens";
+import DocumentGlobalStyles from "@/components/documents/DocumentGlobalStyles";
+import DocumentLogo from "@/components/documents/DocumentLogo";
 
-// ── DESIGN SYSTEM ─────────────────────────────────────────────────────────────
-const C = {
-  ink:       '#0D1A10',
-  paper:     '#FAF8F3',
-  paperDark: '#F0EDE4',
-  forest:    '#1B4D3E',
-  lime:      '#B8D935',
-  limeDark:  '#8FA825',
-  muted:     '#5C6B5E',
-  faint:     '#9AAA9C',
-  border:    '#D8D4C8',
-  teal:      '#2E5A4D',
-  red:       '#A8200D',
-  amber:     '#B8730A',
-  positive:  '#1A6B2F',
-  white:     '#FFFFFF',
-};
-
-const F = {
-  display: '"Playfair Display","Georgia",serif',
-  body:    '"Source Serif 4","Georgia",serif',
-  sans:    '"DM Sans","Helvetica Neue",sans-serif',
-  mono:    '"DM Mono","Courier New",monospace',
-};
-
-// ── GLOBAL STYLES ─────────────────────────────────────────────────────────────
-const Gf = () => (<style>{`
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:${C.paper};-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  .dc::first-letter{font-family:${F.display};font-size:4.2em;font-weight:900;float:left;line-height:0.82;margin:0.08em 0.12em 0 0;color:${C.forest};}
-  @media print{.np{display:none!important;}}
-  .mob-show{display:none;}
+// ── EXTRA PAGE-SPECIFIC STYLES ────────────────────────────────────────────────
+const EXTRA_CSS = `
+  .dc::first-letter{font-size:4.2em;margin:0.08em 0.12em 0 0;}
   a{color:inherit;text-decoration:none;}
-  @media(max-width:900px){
-    .tc{grid-template-columns:1fr!important;}
-    .hm{display:none!important;}
-    .pad-section{padding:40px 32px!important;}
-    .pad-cover{padding:28px 32px 0!important;}
-    .pad-gate{padding:40px 32px!important;}
-    .pad-footer{padding:14px 32px!important;}
-    .pad-topbar{padding:10px 24px!important;}
-  }
   @media(max-width:600px){
-    .tc{grid-template-columns:1fr!important;}
-    .pad-section{padding:24px 18px!important;}
-    .pad-cover{padding:20px 18px 0!important;}
-    .pad-gate{padding:24px 18px!important;}
-    .pad-footer{padding:16px 18px!important;}
-    .pad-topbar{padding:10px 18px!important;}
-    .mob-hide{display:none!important;}
-    .mob-show{display:block!important;}
-    .mob-stack{flex-direction:column!important;align-items:flex-start!important;gap:12px!important;}
-    .mob-full{width:100%!important;}
-    .mob-item-hidden{display:none!important;}
-    .mob-toggle{display:flex!important;align-items:center;justify-content:space-between;width:100%;
-      padding:10px 0;border:none;border-bottom:1px solid ${C.border};background:transparent;
-      cursor:pointer;font-family:${F.sans};font-size:10px;font-weight:700;
-      letter-spacing:1.5px;text-transform:uppercase;color:${C.muted};}
-    .mob-toggle-dark{border-color:rgba(255,255,255,0.12)!important;color:rgba(250,248,243,0.35)!important;}
-    .mob-toggle-hdr{border-bottom:1px solid rgba(255,255,255,0.08)!important;color:rgba(250,248,243,0.4)!important;}
-    .gate-cta-row{flex-direction:column!important;}
+    .mob-stack{gap:12px!important;}
     .gate-cta-row a{justify-content:center!important;}
     .gate-value-line{display:none!important;}
-    .footer-links{display:none!important;}
-    .footer-inner{justify-content:center!important;}
     .exec-grid{grid-template-columns:1fr!important;}
-    /* Sector table — hide 4-col desktop layout, show mobile rows */
     .sector-desktop{display:none!important;}
-    /* Stats strip — wrap to 2×2 */
     .stats-row>div{flex:0 0 calc(50% - 1px)!important;}
   }
-`}</style>);
-
-// ── LOGO ──────────────────────────────────────────────────────────────────────
-const Logo = ({height=28, variant='white'}) => {
-  const tf = variant === 'white' ? '#ffffff' : C.forest;
-  const stroke = variant === 'white' ? '#ffffff' : C.forest;
-  return (
-    <svg height={height} viewBox="0 0 3258.5 932.3" xmlns="http://www.w3.org/2000/svg" style={{display:'block',flexShrink:0}}>
-      {/* D letterform */}
-      <path fill={tf} d="M1853.1,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.6,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1h0v.1Z"/>
-      {/* B letterform top */}
-      <path fill={tf} stroke={variant==='white'?'#000':'#000'} strokeWidth="0.5" strokeMiterlimit="10" d="M1431.7,224.5h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5h.1v.1Z"/>
-      {/* B letterform bottom */}
-      <path fill={tf} stroke={variant==='white'?'#000':'#000'} strokeWidth="0.5" strokeMiterlimit="10" d="M1488.1,578.7v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"/>
-      {/* B lime top bar */}
-      <rect fill="#b8d935" x="1427.4" y="17.4" width="205.2" height="145"/>
-      {/* B white stem */}
-      <rect fill={tf} x="1427.5" y="221.8" width="205.2" height="693.2" rx="9.6" ry="9.6"/>
-      {/* E letterform */}
-      <path fill={tf} d="M2757.3,19.1h491.3c5.4,0,9.8,4.4,9.8,9.8v218.7c0,5.4-4.4,9.8-9.8,9.8h-507.4c-57,0-108.5,23-145.9,60.4-37.3,37.2-60.5,88.8-60.5,145.7,0,113.7,92.4,206,206.3,206h12.9c2.9,0,5.1,2.3,5.1,5.1v236.7c0,1.1-.9,1.9-1.9,1.9h0c-242.2,0-438.5-196-438.5-437.8v-18.5c0-241.8,196.3-437.8,438.5-437.8h.1Z"/>
-      <rect fill={tf} x="2812.8" y="339.5" width="216.8" height="572.6" rx="9.6" ry="9.6"/>
-      <rect fill="#b8d935" x="3083.4" y="339.5" width="175.1" height="257.7"/>
-      <rect fill="#b8d935" x="3083.4" y="654.4" width="175.1" height="257.7"/>
-      {/* Bridge icon mark */}
-      <rect fill="none" stroke={stroke} strokeWidth="80" strokeMiterlimit="10" x="40" y="40" width="843.9" height="852.3" rx="36.6" ry="36.6"/>
-      <polygon fill="#b8d935" stroke="#1b4d3e" strokeMiterlimit="10" points="722.6 322.1 462.3 452.8 202 322.8 461.3 192.5 722.6 322.1"/>
-      <path fill="#74914a" d="M197.9,426.8c3.9-.5,7,.8,10.7,1.4l252.5,125.7c84.5-40,167.7-83.8,251.9-124.8,33.1-11.5,50.1,34.2,18.5,49.1l-259.2,129.1c-10.2,3.7-14.1,2.6-23.9-1.3l-264.2-133c-17-14.4-8-43.2,13.6-46.1h.1v-.1Z"/>
-      <path fill="#b8d935" d="M195.3,558c3.7-.6,7.4-.4,11.1-.2,86.1,40.5,170.4,85.1,255.9,126.8l252.9-126c29.5-7.2,45.4,28.7,22.3,46.5l-270.4,134.4-8.6.3c-91.6-42.2-181.1-89.9-271.7-134.4-18.7-12.1-13.3-43.6,8.5-47.4h0Z"/>
-    </svg>
-  );
-};
+`;
 
 // ── RULE ──────────────────────────────────────────────────────────────────────
 const Rule = () => (
@@ -126,7 +38,7 @@ const TopBar = ({coverLogoRef}) => {
     <div className="np pad-topbar" style={{position:'sticky',top:0,zIndex:100,background:C.paper,borderBottom:`1px solid ${C.border}`,padding:'10px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',boxShadow:'0 1px 8px rgba(0,0,0,0.06)'}}>
       <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
         <div style={{overflow:'hidden',maxWidth:past?'200px':'0px',opacity:past?1:0,transition:'max-width 0.35s ease,opacity 0.3s ease',display:'flex',alignItems:'center'}}>
-          <Logo height={20} variant="dark"/>
+          <DocumentLogo height={20} variant="dark"/>
           <div style={{width:'1px',height:'16px',background:C.border,margin:'0 10px',flexShrink:0}}/>
         </div>
         <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',color:C.muted,letterSpacing:'0.3px'}}>General Series · Doc 02/23 · Peace &amp; Prosperity Framework</span>
@@ -238,7 +150,7 @@ const Cover = ({logoRef}) => (
       <div style={{maxWidth:'900px',margin:'0 auto'}}>
       {/* Eyebrow */}
       <div ref={logoRef} style={{display:'flex',alignItems:'center',gap:'14px',marginBottom:'56px'}}>
-        <Logo height={22} variant="white"/>
+        <DocumentLogo height={22} variant="white"/>
         <div style={{width:'1px',height:'18px',background:'rgba(255,255,255,0.15)',flexShrink:0}}/>
         <span style={{fontFamily:F.sans,fontSize:'11px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:'rgba(250,248,243,0.35)'}}>General Series</span>
         <div className="mob-hide" style={{width:'1px',height:'14px',background:'rgba(255,255,255,0.1)',flexShrink:0}}/>
@@ -843,7 +755,7 @@ const Footer = () => (
   <div className="pad-footer" style={{background:C.forest,padding:'16px 64px',borderTop:`3px solid ${C.lime}`}}>
     <div className="footer-inner" style={{maxWidth:'900px',margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'10px'}}>
       <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
-        <Logo height={18} variant="white"/>
+        <DocumentLogo height={18} variant="white"/>
         <div style={{width:'1px',height:'14px',background:'rgba(255,255,255,0.15)'}}/>
         <div style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,0.35)'}}>General Series · Doc 02/23 · bridgepbc.com</div>
       </div>
@@ -867,7 +779,7 @@ const MOB_CHAPTERS_PAID = [
     render: () => (
       <div style={{minHeight:'100%',display:'flex',flexDirection:'column',padding:'28px 20px 32px'}}>
         <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'32px'}}>
-          <Logo height={16} variant="white"/>
+          <DocumentLogo height={16} variant="white"/>
           <div style={{width:'1px',height:'14px',background:'rgba(255,255,255,0.2)',flexShrink:0}}/>
           <span style={{fontFamily:F.mono,fontSize:'8px',fontWeight:700,letterSpacing:'1.5px',color:C.lime,background:'rgba(184,217,53,0.15)',border:'1px solid rgba(184,217,53,0.4)',padding:'2px 7px'}}>MEMBERS</span>
         </div>
@@ -1257,7 +1169,7 @@ const MOB_CHAPTERS_PAID = [
           </p>
         </div>
         <div style={{paddingTop:'20px',borderTop:'1px solid rgba(255,255,255,0.06)',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <Logo height={16} variant="white"/>
+          <DocumentLogo height={16} variant="white"/>
           <span style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,0.25)'}}>bridgepbc.com</span>
         </div>
       </div>
@@ -1282,7 +1194,7 @@ const MobileReader = ({chapters}) => {
     <div style={{position:'fixed',inset:0,background:ch.bg,display:'flex',flexDirection:'column',transition:'background 0.3s ease',fontFamily:F.body,overflow:'hidden'}}>
       {/* Top bar */}
       <div style={{flexShrink:0,background:'rgba(0,0,0,0.2)',backdropFilter:'blur(8px)',WebkitBackdropFilter:'blur(8px)',padding:'10px 16px',display:'flex',alignItems:'center',justifyContent:'space-between',zIndex:10}}>
-        <Logo height={14} variant="white"/>
+        <DocumentLogo height={14} variant="white"/>
         <button onClick={() => setNavOpen(o => !o)} style={{background:'none',border:'none',cursor:'pointer',display:'flex',alignItems:'center',gap:'5px',padding:'4px 0'}}>
           <span style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,color:'rgba(250,248,243,0.7)',maxWidth:'160px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{ch.title}</span>
           <span style={{fontSize:'10px',color:'rgba(250,248,243,0.4)',transform:navOpen?'rotate(180deg)':'none',transition:'transform 0.2s',display:'inline-block'}}>▾</span>
@@ -1345,14 +1257,14 @@ export default function PeaceProsperityDoc() {
 
   if (isMobile) return (
     <>
-      <Gf/>
+      <DocumentGlobalStyles extraCss={EXTRA_CSS}/>
       <MobileReader chapters={MOB_CHAPTERS_PAID}/>
     </>
   );
 
   return (
     <div style={{fontFamily:F.body,background:C.paper}}>
-      <Gf/>
+      <DocumentGlobalStyles extraCss={EXTRA_CSS}/>
       <TopBar coverLogoRef={coverLogoRef}/>
       <Cover logoRef={coverLogoRef}/>
       <Executive/>

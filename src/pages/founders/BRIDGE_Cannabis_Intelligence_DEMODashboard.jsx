@@ -1,21 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-
-// ══════════════════════════════════════════════════════════════════════════════
-// DESIGN TOKENS
-// ══════════════════════════════════════════════════════════════════════════════
-const C = {
-  ink:'#0D1A10', paper:'#FAF8F3', paperDark:'#F0EDE4',
-  forest:'#1B4D3E', lime:'#B8D935', limeDark:'#8FA825',
-  muted:'#5C6B5E', faint:'#9AAA9C', border:'#D8D4C8',
-  teal:'#2E5A4D', red:'#A8200D', amber:'#B8730A',
-  positive:'#1A6B2F',
-};
-const F = {
-  display:'"Playfair Display","Georgia",serif',
-  body:'"Source Serif 4","Georgia",serif',
-  sans:'"DM Sans","Helvetica Neue",sans-serif',
-  mono:'"DM Mono","Courier New",monospace',
-};
+import { DOC_COLORS as C, DOC_FONTS as F } from "@/lib/document-tokens";
+import DocumentGlobalStyles from "@/components/documents/DocumentGlobalStyles";
+import DocumentLogo from "@/components/documents/DocumentLogo";
 
 // ══════════════════════════════════════════════════════════════════════════════
 // INTELLIGENCE DATA
@@ -252,121 +238,43 @@ const L = [
 ];
 
 // ══════════════════════════════════════════════════════════════════════════════
-// GLOBAL STYLES
+// EXTRA PAGE-SPECIFIC STYLES (beyond shared DocumentGlobalStyles)
 // ══════════════════════════════════════════════════════════════════════════════
-const Gf = () => (<style>{`
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:${C.paper};-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  @media print{.np{display:none!important;}}
-  .mob-show{display:none;}
-  .chain-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;}
-  .chain-scroll::-webkit-scrollbar{height:3px;}
-  .chain-scroll::-webkit-scrollbar-track{background:${C.border};}
+const EXTRA_CSS = `
   .chain-scroll::-webkit-scrollbar-thumb{background:${C.forest};}
   .tab-strip{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
   .tab-strip::-webkit-scrollbar{height:3px;}
   .tab-strip::-webkit-scrollbar-track{background:${C.border};}
   .tab-strip::-webkit-scrollbar-thumb{background:${C.forest};}
-  @media(max-width:900px){
-    .tc{grid-template-columns:1fr!important;}
-    .hm{display:none!important;}
-    .pad-section{padding:40px 32px!important;}
-    .pad-cover{padding:28px 32px 0!important;}
-    .pad-gate{padding:40px 32px!important;}
-    .pad-footer{padding:14px 32px!important;}
-    .pad-topbar{padding:10px 24px!important;}
-  }
   @media(max-width:600px){
-    /* Visibility */
-    .mob-hide{display:none!important;}
-    .mob-show{display:block!important;}
-    .mob-stack{flex-direction:column!important;align-items:flex-start!important;gap:10px!important;}
-    .mob-full{width:100%!important;}
-    /* Padding */
-    .pad-section{padding:24px 18px!important;}
-    .pad-cover{padding:20px 18px 0!important;}
-    .pad-gate{padding:24px 18px!important;}
-    .pad-footer{padding:16px 18px!important;}
-    .pad-topbar{padding:10px 18px!important;}
-    /* TopBar */
     .topbar-demo{display:none!important;}
     .topbar-tiers{display:none!important;}
     .topbar-purchase{font-size:10px!important;padding:6px 10px!important;}
-    /* Footer */
-    .footer-links{display:none!important;}
-    .footer-inner{justify-content:center!important;}
-    .gate-cta-row{flex-direction:column!important;}
     .gate-cta-row a{justify-content:center!important;}
-    /* Cover stats — 2-col, last item full-width */
     .stats-grid{grid-template-columns:1fr 1fr!important;}
     .stats-grid > div{border-right:none!important;border-bottom:1px solid rgba(255,255,255,0.06)!important;}
     .stats-grid > div:last-child{grid-column:1 / -1!important;}
     .stat-cell{padding:12px 14px 16px!important;}
-    /* Licence explorer */
     .lic-metrics{display:none!important;}
     .lic-header{flex-direction:column!important;align-items:flex-start!important;}
     .lic-inner{padding:18px!important;}
-    /* Opportunity matrix */
     .matrix-table{display:none!important;}
     .matrix-cards{display:block!important;}
-    /* Gate */
     .gate-grid{grid-template-columns:1fr!important;}
     .gate-price-card{position:static!important;margin-top:24px!important;}
     .gate-deliverables{grid-template-columns:1fr!important;}
-    /* Purchase page */
     .purchase-strip{grid-template-columns:1fr!important;}
     .mob-card-grid{grid-template-columns:1fr!important;}
-    /* Tier teaser */
     .tier-cards{grid-template-columns:1fr!important;}
     .tier-cards > div{margin-left:0!important;margin-top:-1px!important;}
     .tier-header-row{flex-wrap:wrap!important;}
-    /* Cover alert */
     .cover-alert{flex-wrap:wrap!important;}
   }
   @keyframes pulse {
     0%,100%{opacity:1;transform:scale(1);}
     50%{opacity:0.5;transform:scale(1.3);}
   }
-`}</style>);
-
-// ══════════════════════════════════════════════════════════════════════════════
-// LOGO
-// ══════════════════════════════════════════════════════════════════════════════
-const Logo = ({height=28, variant='white'}) => {
-  const tf = variant === 'white' ? '#ffffff' : C.forest;
-  const lime = C.lime;
-  const forest = C.forest;
-  return (
-    <svg height={height} viewBox="0 0 3258.5 932.3" xmlns="http://www.w3.org/2000/svg" style={{display:'block',flexShrink:0}}>
-      {/* D letterform */}
-      <path fill={tf} d="M1853.1,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.6,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1h0v.1Z"/>
-      {/* B upper half */}
-      <path fill={tf} stroke={variant==='white'?'#000':'none'} strokeWidth="0.5" strokeMiterlimit="10" d="M1431.7,224.5h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5h.1v.1Z"/>
-      {/* B lower half */}
-      <path fill={tf} stroke={variant==='white'?'#000':'none'} strokeWidth="0.5" strokeMiterlimit="10" d="M1488.1,578.7v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"/>
-      {/* B top lime rect */}
-      <rect fill={lime} x="1427.4" y="17.4" width="205.2" height="145"/>
-      {/* B lower white rect */}
-      <rect fill={tf} x="1427.5" y="221.8" width="205.2" height="693.2" rx="9.6" ry="9.6"/>
-      {/* G letterform */}
-      <path fill={tf} d="M2757.3,19.1h491.3c5.4,0,9.8,4.4,9.8,9.8v218.7c0,5.4-4.4,9.8-9.8,9.8h-507.4c-57,0-108.5,23-145.9,60.4-37.3,37.2-60.5,88.8-60.5,145.7,0,113.7,92.4,206,206.3,206h12.9c2.9,0,5.1,2.3,5.1,5.1v236.7c0,1.1-.9,1.9-1.9,1.9h0c-242.2,0-438.5-196-438.5-437.8v-18.5c0-241.8,196.3-437.8,438.5-437.8h.1Z"/>
-      {/* G inner rects */}
-      <rect fill={tf} x="2812.8" y="339.5" width="216.8" height="572.6" rx="9.6" ry="9.6"/>
-      <rect fill={lime} x="3083.4" y="339.5" width="175.1" height="257.7"/>
-      <rect fill={lime} x="3083.4" y="654.4" width="175.1" height="257.7"/>
-      {/* Icon box outline */}
-      <rect fill="none" stroke={tf} strokeWidth="80" strokeMiterlimit="10" x="40" y="40" width="843.9" height="852.3" rx="36.6" ry="36.6"/>
-      {/* Icon diamond/chevron — lime with forest stroke */}
-      <polygon fill={lime} stroke={forest} strokeMiterlimit="10" points="722.6 322.1 462.3 452.8 202 322.8 461.3 192.5 722.6 322.1"/>
-      {/* Icon middle band — olive green */}
-      <path fill="#74914a" d="M197.9,426.8c3.9-.5,7,.8,10.7,1.4l252.5,125.7c84.5-40,167.7-83.8,251.9-124.8,33.1-11.5,50.1,34.2,18.5,49.1l-259.2,129.1c-10.2,3.7-14.1,2.6-23.9-1.3l-264.2-133c-17-14.4-8-43.2,13.6-46.1h.1v-.1Z"/>
-      {/* Icon bottom chevron — lime */}
-      <path fill={lime} d="M195.3,558c3.7-.6,7.4-.4,11.1-.2,86.1,40.5,170.4,85.1,255.9,126.8l252.9-126c29.5-7.2,45.4,28.7,22.3,46.5l-270.4,134.4-8.6.3c-91.6-42.2-181.1-89.9-271.7-134.4-18.7-12.1-13.3-43.6,8.5-47.4h0Z"/>
-    </svg>
-  );
-};
+`;
 
 // ══════════════════════════════════════════════════════════════════════════════
 // TOPBAR
@@ -395,7 +303,7 @@ const TopBar = ({coverLogoRef, tier, setTier, setPage, setLoginTarget, setShowLo
     <div className="np pad-topbar" style={{position:'sticky',top:0,zIndex:100,background:C.paper,borderBottom:`1px solid ${C.border}`,padding:'10px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',boxShadow:'0 1px 8px rgba(0,0,0,0.06)'}}>
       <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
         <div style={{overflow:'hidden',maxWidth:past?'200px':'0px',opacity:past?1:0,transition:'max-width 0.35s ease,opacity 0.3s ease',display:'flex',alignItems:'center'}}>
-          <Logo height={20} variant="dark"/>
+          <DocumentLogo height={20} variant="dark"/>
           <div style={{width:'1px',height:'16px',background:C.border,margin:'0 10px',flexShrink:0}}/>
         </div>
         <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',color:C.muted,letterSpacing:'0.3px'}}>Ghana Cannabis · NCC Licence Intelligence · March 2026</span>
@@ -1313,7 +1221,7 @@ const LoginModal = ({show, onClose, loginTarget, setTier, setPage}) => {
 
         {/* BRIDGE mark */}
         <div style={{marginBottom:'24px'}}>
-          <Logo height={20} variant="dark"/>
+          <DocumentLogo height={20} variant="dark"/>
         </div>
 
         {isUpgrade ? (
@@ -1415,11 +1323,11 @@ const PurchasePage = ({setPage, setShowLogin, setLoginTarget}) => {
 
   return (
     <div style={{minHeight:'100vh',background:C.paper,fontFamily:F.body}}>
-      <Gf/>
+      <DocumentGlobalStyles extraCss={EXTRA_CSS}/>
       {/* Purchase TopBar */}
       <div className="pad-topbar" style={{background:C.paper,borderBottom:`1px solid ${C.border}`,padding:'10px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',boxShadow:'0 1px 8px rgba(0,0,0,0.06)',position:'sticky',top:0,zIndex:100}}>
         <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
-          <Logo height={20} variant="dark"/>
+          <DocumentLogo height={20} variant="dark"/>
           <div style={{width:'1px',height:'16px',background:C.border}}/>
           <span style={{fontFamily:F.sans,fontSize:'11px',color:C.muted}}>Ghana Cannabis · Purchase Intelligence</span>
         </div>
@@ -1665,7 +1573,7 @@ const Footer = () => (
   <div className="pad-footer" style={{background:C.forest,padding:'16px 64px',borderTop:`3px solid ${C.lime}`}}>
     <div className="footer-inner" style={{maxWidth:'900px',margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'10px'}}>
       <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
-        <Logo height={18} variant="white"/>
+        <DocumentLogo height={18} variant="white"/>
         <div style={{width:'1px',height:'14px',background:'rgba(255,255,255,0.15)'}}/>
         <div>
           <div style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,0.35)',marginBottom:'2px'}}>Ghana Cannabis Intelligence · NCC L.I. 2475 · March 2026</div>
@@ -2566,7 +2474,7 @@ export default function BridgeCannabisIntelligence() {
   if (tier === 'clients') {
     return (
       <div style={{fontFamily:F.body,background:C.ink,overflowX:'hidden'}}>
-        <Gf/>
+        <DocumentGlobalStyles extraCss={EXTRA_CSS}/>
         <TopBar
           coverLogoRef={coverLogoRef}
           tier={tier}
@@ -2583,7 +2491,7 @@ export default function BridgeCannabisIntelligence() {
 
   return (
     <div style={{fontFamily:F.body,background:C.paper,overflowX:'hidden'}}>
-      <Gf/>
+      <DocumentGlobalStyles extraCss={EXTRA_CSS}/>
       <TopBar
         coverLogoRef={coverLogoRef}
         tier={tier}

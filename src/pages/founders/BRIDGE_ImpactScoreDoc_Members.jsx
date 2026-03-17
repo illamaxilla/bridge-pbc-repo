@@ -1,63 +1,19 @@
 import { useState, useRef, useEffect } from "react";
+import { DOC_COLORS as C, DOC_FONTS as F } from "@/lib/document-tokens";
+import DocumentGlobalStyles from "@/components/documents/DocumentGlobalStyles";
+import DocumentLogo from "@/components/documents/DocumentLogo";
 
-const C = {
-  ink:'#0D1A10', paper:'#FAF8F3', paperDark:'#F0EDE4',
-  forest:'#1B4D3E', lime:'#B8D935',
-  muted:'#5C6B5E', faint:'#9AAA9C', border:'#D8D4C8',
-  teal:'#2E5A4D', red:'#A8200D', amber:'#B8730A', positive:'#1A6B2F',
-};
-const F = {
-  display:'"Playfair Display","Georgia",serif',
-  body:'"Source Serif 4","Georgia",serif',
-  sans:'"DM Sans","Helvetica Neue",sans-serif',
-  mono:'"DM Mono","Courier New",monospace',
-};
-
-const Gf = () => (<style>{`
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:#FAF8F3;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  ::selection{background:rgba(184,217,53,0.22);color:#0D1A10;}
+const EXTRA_CSS = `
+  ::selection{background:rgba(184,217,53,0.22);color:${C.ink};}
   ::-webkit-scrollbar{display:none;}*{-ms-overflow-style:none;scrollbar-width:none;}
-  .dc::first-letter{font-family:"Playfair Display","Georgia",serif;font-size:4.5em;font-weight:900;float:left;line-height:0.8;margin:0.1em 0.12em 0 0;color:#1B4D3E;}
-  @media print{.np{display:none!important;}}
-  .mob-show{display:none;}
-  @media(max-width:900px){
-    .tc{grid-template-columns:1fr!important;}
-    .hm{display:none!important;}
-    .pad-section{padding:40px 32px!important;}
-    .pad-cover{padding:28px 32px 0!important;}
-    .pad-gate{padding:40px 32px!important;}
-    .pad-footer{padding:14px 32px!important;}
-    .pad-topbar{padding:10px 24px!important;}
-  }
+  .dc::first-letter{font-size:4.5em;line-height:0.8;margin:0.1em 0.12em 0 0;}
   @media(max-width:600px){
-    .tc{grid-template-columns:1fr!important;}
-    .pad-section{padding:24px 18px!important;}
-    .pad-cover{padding:20px 18px 0!important;}
-    .pad-gate{padding:24px 18px!important;}
-    .pad-footer{padding:16px 18px!important;}
-    .pad-topbar{padding:10px 18px!important;}
-    .mob-hide{display:none!important;}
-    .mob-show{display:block!important;}
-    .mob-full{width:100%!important;}
-    .mob-stack{flex-direction:column!important;align-items:flex-start!important;gap:10px!important;}
-    .mob-item-hidden{display:none!important;}
-    .mob-toggle{display:flex!important;align-items:center;justify-content:space-between;width:100%;padding:10px 0;border:none;border-bottom:1px solid #D8D4C8;background:transparent;cursor:pointer;font-family:"DM Sans","Helvetica Neue",sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#5C6B5E;}
-    .mob-toggle-dark{border-color:rgba(255,255,255,0.12)!important;color:rgba(250,248,243,0.35)!important;}
-    .mob-toggle-hdr{border-bottom:1px solid rgba(255,255,255,0.08)!important;color:rgba(250,248,243,0.4)!important;}
     .gate-value-line{display:none!important;}
-    .gate-cta-row{flex-direction:column!important;}
-    .footer-links{display:none!important;}
-    .footer-inner{justify-content:center!important;}
     .dim-tiles{grid-template-columns:1fr 1fr!important;}
     .score-table tr td:nth-child(3){display:none!important;}
     .score-table tr th:nth-child(3){display:none!important;}
     .tier-strip{grid-template-columns:1fr 1fr!important;}
   }
-
-  /* ── Mobile app styles ── */
   .fade-in{animation:fadeIn 0.22s ease;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
   .slide-up{animation:slideUp 0.26s cubic-bezier(0.16,1,0.3,1);}
@@ -65,29 +21,7 @@ const Gf = () => (<style>{`
   .tap-scale{transition:transform 0.12s,opacity 0.12s;}
   .tap-scale:active{transform:scale(0.97);opacity:0.85;}
   .scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-`}</style>);
-
-const Logo = ({height=28, variant='white'}) => {
-  const tf = variant==='white' ? '#ffffff' : '#1B4D3E';
-  return (
-    <svg height={height} viewBox="0 0 3258.5 932.3" xmlns="http://www.w3.org/2000/svg" style={{display:'block',flexShrink:0}}>
-      <defs><style>{`.qa{fill:none;stroke:${tf};stroke-width:80px;stroke-miterlimit:10;}.qb{fill:${tf};stroke:#000;stroke-width:.5px;stroke-miterlimit:10;}.qc{fill:#b8d935;stroke:#1b4d3e;stroke-miterlimit:10;}.qd{fill:#b8d935;}.qe{fill:${tf};}.qf{fill:#74914a;}`}</style></defs>
-      <path className="qe" d="M1853.1,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.6,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1h0v.1Z"/>
-      <path className="qb" d="M1431.7,224.5h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5h.1v.1Z"/>
-      <path className="qb" d="M1488.1,578.7v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"/>
-      <rect className="qd" x="1427.4" y="17.4" width="205.2" height="145"/>
-      <rect className="qe" x="1427.5" y="221.8" width="205.2" height="693.2" rx="9.6" ry="9.6"/>
-      <path className="qe" d="M2757.3,19.1h491.3c5.4,0,9.8,4.4,9.8,9.8v218.7c0,5.4-4.4,9.8-9.8,9.8h-507.4c-57,0-108.5,23-145.9,60.4-37.3,37.2-60.5,88.8-60.5,145.7,0,113.7,92.4,206,206.3,206h12.9c2.9,0,5.1,2.3,5.1,5.1v236.7c0,1.1-.9,1.9-1.9,1.9h0c-242.2,0-438.5-196-438.5-437.8v-18.5c0-241.8,196.3-437.8,438.5-437.8h.1Z"/>
-      <rect className="qe" x="2812.8" y="339.5" width="216.8" height="572.6" rx="9.6" ry="9.6"/>
-      <rect className="qd" x="3083.4" y="339.5" width="175.1" height="257.7"/>
-      <rect className="qd" x="3083.4" y="654.4" width="175.1" height="257.7"/>
-      <rect className="qa" x="40" y="40" width="843.9" height="852.3" rx="36.6" ry="36.6"/>
-      <polygon className="qc" points="722.6 322.1 462.3 452.8 202 322.8 461.3 192.5 722.6 322.1"/>
-      <path className="qf" d="M197.9,426.8c3.9-.5,7,.8,10.7,1.4l252.5,125.7c84.5-40,167.7-83.8,251.9-124.8,33.1-11.5,50.1,34.2,18.5,49.1l-259.2,129.1c-10.2,3.7-14.1,2.6-23.9-1.3l-264.2-133c-17-14.4-8-43.2,13.6-46.1h.1v-.1Z"/>
-      <path className="qd" d="M195.3,558c3.7-.6,7.4-.4,11.1-.2,86.1,40.5,170.4,85.1,255.9,126.8l252.9-126c29.5-7.2,45.4,28.7,22.3,46.5l-270.4,134.4-8.6.3c-91.6-42.2-181.1-89.9-271.7-134.4-18.7-12.1-13.3-43.6,8.5-47.4h0Z"/>
-    </svg>
-  );
-};
+`;
 
 // ── DATA ──────────────────────────────────────────────────────────────────────
 const DIMS = [
@@ -200,7 +134,7 @@ const TopBar = ({logoRef}) => {
     <div className="np pad-topbar" style={{position:'sticky',top:0,zIndex:100,background:'#FAF8F3',borderBottom:'1px solid #D8D4C8',padding:'10px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',boxShadow:'0 1px 8px rgba(0,0,0,0.06)'}}>
       <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
         <div style={{overflow:'hidden',maxWidth:past?'220px':'0px',opacity:past?1:0,transition:'max-width 0.35s ease,opacity 0.3s ease',display:'flex',alignItems:'center'}}>
-          <Logo height={20} variant="dark"/>
+          <DocumentLogo height={20} variant="dark"/>
           <div style={{width:'1px',height:'16px',background:'#D8D4C8',margin:'0 10px',flexShrink:0}}/>
         </div>
         <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'11px',color:'#5C6B5E'}}>General Series &middot; BRIDGE Impact Score&#8482; &middot; <span style={{color:'#1B4D3E',fontWeight:700}}>Member Edition</span></span>
@@ -222,7 +156,7 @@ const Cover = ({logoRef}) => (
       <div style={{maxWidth:'900px',margin:'0 auto'}}>
         <div ref={logoRef} style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'32px'}}>
           <div style={{display:'flex',alignItems:'center',gap:'16px'}}>
-            <Logo height={26} variant="white"/>
+            <DocumentLogo height={26} variant="white"/>
             <div style={{width:'1px',height:'20px',background:'rgba(255,255,255,0.15)'}}/>
             <span className="mob-hide" style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2px',color:'rgba(255,255,255,0.35)',textTransform:'uppercase'}}>Methodology Publication &middot; Member Edition</span>
           </div>
@@ -683,7 +617,7 @@ const Footer = () => (
   <div className="pad-footer" style={{background:'#1B4D3E',padding:'16px 64px',borderTop:'3px solid #B8D935'}}>
     <div className="footer-inner" style={{maxWidth:'900px',margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'10px'}}>
       <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
-        <Logo height={18} variant="white"/>
+        <DocumentLogo height={18} variant="white"/>
         <div style={{width:'1px',height:'14px',background:'rgba(255,255,255,0.15)'}}/>
         <div style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,0.35)'}}>General Series &middot; Doc 01 / 23 &middot; Member Edition &middot; bridge-pbc.com</div>
       </div>
@@ -709,7 +643,7 @@ export default function ImpactScorePaid() {
   if (isMobile) return <MobileImpactScorePaid/>;
   return (
     <div style={{fontFamily:F.body,background:'#FAF8F3'}}>
-      <Gf/>
+      <DocumentGlobalStyles extraCss={EXTRA_CSS}/>
       <TopBar logoRef={logoRef}/>
       <Cover logoRef={logoRef}/>
       <Executive/>
@@ -1276,7 +1210,7 @@ const MobileImpactScorePaid = () => {
         backdropFilter:'blur(8px)',WebkitBackdropFilter:'blur(8px)',
         borderBottom:'1px solid rgba(255,255,255,0.06)',
         padding:'9px 16px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-        <Logo height={18} variant="white"/>
+        <DocumentLogo height={18} variant="white"/>
         <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
           <span style={{fontFamily:'"DM Sans","Helvetica Neue",sans-serif',fontSize:'8px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:'rgba(255,255,255,0.28)'}}>
             Impact Score&#8482; &middot; Member

@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
+import { DOC_COLORS as C, DOC_FONTS as F } from "@/lib/document-tokens";
+import DocumentGlobalStyles from "@/components/documents/DocumentGlobalStyles";
+import DocumentLogo from "@/components/documents/DocumentLogo";
 
 /* ─────────────────────────────────────────────────────────────────────────
    BRIDGE RESEARCH BRIEF  ·  WHITE PAPER — FULL MEMBERS EDITION
    "The Architecture of Opportunity: A Framework for Ghana's Development"
    Working Paper No. 01  ·  BRIDGE-WP-01-2025  ·  96 pages
 ───────────────────────────────────────────────────────────────────────── */
-
-const C={ink:'#0D1A10',paper:'#FAF8F3',paperDark:'#F0EDE4',forest:'#1B4D3E',lime:'#B8D935',limeDark:'#8FA825',muted:'#5C6B5E',faint:'#9AAA9C',border:'#D8D4C8',red:'#A8200D',amber:'#B8730A',positive:'#1A6B2F',white:'#FFFFFF'};
-const F={display:'"Playfair Display","Georgia",serif',body:'"Source Serif 4","Georgia",serif',sans:'"DM Sans","Helvetica Neue",sans-serif',mono:'"DM Mono","Courier New",monospace'};
 
 /* ── isMobile hook ─────────────────────────────────────────────────── */
 const useIsMobile=()=>{

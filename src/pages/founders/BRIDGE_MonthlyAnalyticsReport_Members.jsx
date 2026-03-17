@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LineChart, Line, Tooltip, Cell } from "recharts";
-
-const C={ink:'#0D1A10',paper:'#FAF8F3',paperDark:'#F0EDE4',forest:'#1B4D3E',lime:'#B8D935',limeDark:'#8FA825',muted:'#5C6B5E',faint:'#9AAA9C',border:'#D8D4C8',red:'#A8200D',amber:'#B8730A',positive:'#1A6B2F'};
-const F={body:'"Source Serif 4","Georgia",serif',sans:'"DM Sans","Helvetica Neue",sans-serif',mono:'"DM Mono","Courier New",monospace'};
+import { DOC_COLORS as C, DOC_FONTS as F } from "@/lib/document-tokens";
+import DocumentGlobalStyles from "@/components/documents/DocumentGlobalStyles";
+import DocumentLogo from "@/components/documents/DocumentLogo";
 
 /* ── DATA ─────────────────────────────────────────────────────────────── */
 const SECTORS=[{n:'Infra',s:87,t:'▲'},{n:'FinInc',s:84,t:'▲'},{n:'Health',s:79,t:'→'},{n:'Tech',s:76,t:'▲'},{n:'Edu',s:72,t:'→'},{n:'Agri',s:83,t:'▼'},{n:'Sport',s:61,t:'→'},{n:'Hous',s:70,t:'▲'},{n:'Tour',s:68,t:'→'},{n:'Energy',s:74,t:'▲'},{n:'Mfg',s:65,t:'→'},{n:'Trans',s:71,t:'▲'}];
@@ -16,90 +16,48 @@ const INFLATION_TREND=[{m:'Oct',v:35.2},{m:'Nov',v:32.4},{m:'Dec',v:29.8},{m:'Ja
 const CEDI_TREND=[{m:'Oct',v:13.1},{m:'Nov',v:13.4},{m:'Dec',v:13.8},{m:'Jan',v:13.9},{m:'Feb',v:14.2}];
 const PIPELINE_DATA=[{name:'Infrastructure',val:42,fill:C.forest},{name:'Financial Inclusion',val:31,fill:C.forest},{name:'Agriculture',val:28,fill:C.forest},{name:'Technology',val:22,fill:C.limeDark},{name:'Energy',val:19,fill:C.limeDark},{name:'Health',val:17,fill:C.limeDark},{name:'Other',val:15,fill:C.amber}];
 
-/* ── LOGO ─────────────────────────────────────────────────────────────── */
-const Logo=({height=28,variant='white'})=>{
-  const wf=variant==='white'?'#ffffff':'#1B4D3E';
-  const bs=variant==='white'?'#ffffff':'#1B4D3E';
-  const ws=variant==='white'?'#000000':'#1B4D3E';
-  return(
-    <svg height={height} viewBox="0 0 3258.5 932.3" xmlns="http://www.w3.org/2000/svg" style={{display:'block',flexShrink:0}}>
-      <path fill={wf} d="M1853.1,17.4h-144.5c-5.3,0-9.6,4.3-9.6,9.6v878.3c0,5.3,4.3,9.6,9.6,9.6h144.5c226.7,0,410.5-195.6,410.5-436.9v-23.7c0-241.3-183.8-436.9-410.5-436.9ZM1894.6,684.3V248c87.5,0,158.5,97.7,158.5,218.1s-71,218.1-158.5,218.1h0v.1Z"/>
-      <path fill={wf} stroke={ws} strokeWidth="0.5" strokeMiterlimit="10" d="M1431.7,224.5h56.4v128.1c-12.6,9.2-26.1,17.1-40.4,23.5-27.9,12.5-58.7,19.5-91.2,19.5s-62.8-6.9-90.5-19.2c-14.8-6.6-28.8-14.8-41.8-24.4-.2-.2-.4-.3-.7-.5-35.3,56.8-97.1,94.4-167.3,94.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6V27.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3h.1c31.6,18.3,57,47.9,72.9,84.6,8,18.5,12.8,38.7,21.7,56.6,29.9,60.2,91.8,84.9,149.2,51.8,9.7-5.5,17.6-11.8,24.2-18.5h.1v.1Z"/>
-      <path fill={wf} stroke={ws} strokeWidth="0.5" strokeMiterlimit="10" d="M1488.1,578.7v127.9h-55.9c-32.9-33.7-80.3-42.9-124.9-17.1-58.5,33.6-52.7,91.8-87.8,141.5-16.8,23.7-35,39.8-54.4,50.6-31.3,21.1-68.7,33.4-108.8,33.4h-84.6c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h102.2c35.4,0,64-30.9,64-68.9s-28.6-68.9-64-68.9h-102.2c-5.3,0-9.6-4.3-9.6-9.6v-126.1c0-5.3,4.3-9.6,9.6-9.6h84.6c13.6,0,26.9,1.4,39.7,4.1,12.2,2.6,24.1,6.3,35.4,11,11.3,4.8,22.1,10.6,32.2,17.3,2.8,1.9,5.6,3.8,8.3,5.8,20.7,15.4,38.5,34.7,52.2,57,13.3-10,27.7-18.6,43-25.4,27.9-12.5,58.7-19.5,91.2-19.5s62.8,6.9,90.5,19.2c13.9,6.2,27.1,13.8,39.3,22.6h0Z"/>
-      <rect fill="#b8d935" x="1427.4" y="17.4" width="205.2" height="145"/>
-      <rect fill={wf} x="1427.5" y="221.8" width="205.2" height="693.2" rx="9.6" ry="9.6"/>
-      <path fill={wf} d="M2757.3,19.1h491.3c5.4,0,9.8,4.4,9.8,9.8v218.7c0,5.4-4.4,9.8-9.8,9.8h-507.4c-57,0-108.5,23-145.9,60.4-37.3,37.2-60.5,88.8-60.5,145.7c0,113.7,92.4,206,206.3,206h12.9c2.9,0,5.1,2.3,5.1,5.1v236.7c0,1.1-.9,1.9-1.9,1.9h0c-242.2,0-438.5-196-438.5-437.8v-18.5c0-241.8,196.3-437.8,438.5-437.8h.1Z"/>
-      <rect fill={wf} x="2812.8" y="339.5" width="216.8" height="572.6" rx="9.6" ry="9.6"/>
-      <rect fill="#b8d935" x="3083.4" y="339.5" width="175.1" height="257.7"/>
-      <rect fill="#b8d935" x="3083.4" y="654.4" width="175.1" height="257.7"/>
-      <rect fill="none" stroke={bs} strokeWidth="80" strokeMiterlimit="10" x="40" y="40" width="843.9" height="852.3" rx="36.6" ry="36.6"/>
-      <polygon fill="#b8d935" stroke="#1b4d3e" strokeMiterlimit="10" points="722.6 322.1 462.3 452.8 202 322.8 461.3 192.5 722.6 322.1"/>
-      <path fill="#74914a" d="M197.9,426.8c3.9-.5,7,.8,10.7,1.4l252.5,125.7c84.5-40,167.7-83.8,251.9-124.8,33.1-11.5,50.1,34.2,18.5,49.1l-259.2,129.1c-10.2,3.7-14.1,2.6-23.9-1.3l-264.2-133c-17-14.4-8-43.2,13.6-46.1h.1v-.1Z"/>
-      <path fill="#b8d935" d="M195.3,558c3.7-.6,7.4-.4,11.1-.2,86.1,40.5,170.4,85.1,255.9,126.8l252.9-126c29.5-7.2,45.4,28.7,22.3,46.5l-270.4,134.4-8.6.3c-91.6-42.2-181.1-89.9-271.7-134.4-18.7-12.1-13.3-43.6,8.5-47.4h0Z"/>
-    </svg>
-  );
-};
-
-/* ── GLOBAL STYLES ────────────────────────────────────────────────────── */
-const Gf=()=>(<style>{`
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:#FAF8F3;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-button{outline:none;-webkit-tap-highlight-color:transparent;}
-@media print{.np{display:none!important;}.db{break-inside:avoid;}}
-.recharts-tooltip-wrapper{outline:none;}
-.mob-show{display:none;}
-@media(max-width:900px){
-  .tc{grid-template-columns:1fr!important;}
-  .tc3{grid-template-columns:1fr 1fr!important;}
-  .tc4{grid-template-columns:1fr 1fr!important;}
-  .pad-section{padding:32px 24px!important;}
-  .pad-topbar{padding:10px 24px!important;}
-  .pad-footer{padding:14px 24px!important;}
-  .hm{display:none!important;}
-}
-@media(max-width:600px){
-  .tc{grid-template-columns:1fr!important;}
-  .tc3{grid-template-columns:1fr!important;}
-  .tc4{grid-template-columns:1fr 1fr!important;}
-  .tc2w{grid-template-columns:1fr!important;}
-  .pad-section{padding:20px 16px!important;}
-  .pad-topbar{padding:10px 16px!important;}
-  .pad-footer{padding:16px 16px!important;}
-  .mob-hide{display:none!important;}
-  .mob-show{display:block!important;}
-  .mob-show-flex{display:flex!important;}
-  .mob-stack{flex-direction:column!important;align-items:flex-start!important;gap:10px!important;}
-  .mob-full{width:100%!important;}
-  .mob-item-hidden{display:none!important;}
-  .mob-toggle{display:flex!important;align-items:center;justify-content:space-between;width:100%;
-    padding:10px 0;border:none;border-bottom:1px solid #D8D4C8;background:transparent;
-    cursor:pointer;font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:10px;font-weight:700;
-    letter-spacing:1.5px;text-transform:uppercase;color:#5C6B5E;}
-  .mob-toggle-dark{border-color:rgba(255,255,255,0.12)!important;color:rgba(250,248,243,0.35)!important;}
-  .pulse-scroll{display:flex!important;overflow-x:auto!important;scrollbar-width:none!important;
-    -webkit-overflow-scrolling:touch;}
-  .pulse-scroll::-webkit-scrollbar{display:none;}
-  .pulse-grid{display:none!important;}
-  .mob-scores-list{display:block!important;}
-  .mob-scores-grid{display:none!important;}
-  .mob-nav{display:flex!important;}
-  .mob-nav-spacer{display:block!important;}
-  .mob-chart-hide{display:none!important;}
-  .mob-preview-2col{grid-template-columns:1fr 1fr!important;}
-  .mob-preview-hide{display:none!important;}
-  .mob-cta-stack{flex-direction:column!important;align-items:stretch!important;}
-  .mob-cta-stack a{text-align:center!important;}
-}
-`}</style>);
+/* ── EXTRA PAGE-SPECIFIC STYLES ────────────────────────────────────────── */
+const EXTRA_CSS = `
+  button{outline:none;-webkit-tap-highlight-color:transparent;}
+  @media print{.db{break-inside:avoid;}}
+  .recharts-tooltip-wrapper{outline:none;}
+  @media(max-width:900px){
+    .tc3{grid-template-columns:1fr 1fr!important;}
+    .tc4{grid-template-columns:1fr 1fr!important;}
+    .pad-section{padding:32px 24px!important;}
+    .pad-topbar{padding:10px 24px!important;}
+    .pad-footer{padding:14px 24px!important;}
+  }
+  @media(max-width:600px){
+    .tc3{grid-template-columns:1fr!important;}
+    .tc4{grid-template-columns:1fr 1fr!important;}
+    .tc2w{grid-template-columns:1fr!important;}
+    .pad-section{padding:20px 16px!important;}
+    .pad-topbar{padding:10px 16px!important;}
+    .pad-footer{padding:16px 16px!important;}
+    .mob-show-flex{display:flex!important;}
+    .pulse-scroll{display:flex!important;overflow-x:auto!important;scrollbar-width:none!important;
+      -webkit-overflow-scrolling:touch;}
+    .pulse-scroll::-webkit-scrollbar{display:none;}
+    .pulse-grid{display:none!important;}
+    .mob-scores-list{display:block!important;}
+    .mob-scores-grid{display:none!important;}
+    .mob-nav{display:flex!important;}
+    .mob-nav-spacer{display:block!important;}
+    .mob-chart-hide{display:none!important;}
+    .mob-preview-2col{grid-template-columns:1fr 1fr!important;}
+    .mob-preview-hide{display:none!important;}
+    .mob-cta-stack{flex-direction:column!important;align-items:stretch!important;}
+    .mob-cta-stack a{text-align:center!important;}
+  }
+`;
 
 /* ── TOPBAR ───────────────────────────────────────────────────────────── */
 const TopBar=()=>(
   <div className="np pad-topbar" style={{position:'sticky',top:0,zIndex:100,background:C.paper,borderBottom:`1px solid ${C.border}`,padding:'10px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',boxShadow:'0 1px 8px rgba(0,0,0,0.05)'}}>
     <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
       {/* Desktop: full logo */}
-      <div className="mob-hide"><Logo height={20} variant="dark"/></div>
+      <div className="mob-hide"><DocumentLogo height={20} variant="dark"/></div>
       {/* Mobile: icon mark only — extract just the icon portion via cropped viewBox */}
       <div className="mob-show" style={{display:'none'}}>
         <svg height="28" viewBox="0 0 932 932" xmlns="http://www.w3.org/2000/svg" style={{display:'block'}}>
@@ -553,7 +511,7 @@ const Footer=()=>(
   <div className="pad-footer" style={{background:'#060e08',padding:'14px 40px',borderTop:'2px solid rgba(184,217,53,0.25)'}}>
     <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'8px'}}>
       <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
-        <Logo height={16} variant="white"/>
+        <DocumentLogo height={16} variant="white"/>
         <div style={{width:'1px',height:'14px',background:'rgba(255,255,255,0.1)'}}/>
         <span style={{fontFamily:F.mono,fontSize:'9px',color:'rgba(255,255,255,0.2)'}}>Member Dashboard · March 2026 · bridgepbc.com/members</span>
       </div>
@@ -579,7 +537,7 @@ export default function MemberDashboard(){
   };
   return(
     <div style={{fontFamily:F.body,background:C.paper}}>
-      <Gf/>
+      <DocumentGlobalStyles extraCss={EXTRA_CSS}/>
       <TopBar/>
       <Header/>
       <MacroSection/>
