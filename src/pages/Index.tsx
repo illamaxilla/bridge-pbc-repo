@@ -574,7 +574,7 @@ export default function BRIDGEHomePage() {
                 color: colors.primary,
               }}
             >
-              <span className="font-bold">Insight.</span> Investment.
+              <span className="font-bold">Insight.</span> Innovation.
               <br />
               <span className="font-bold relative inline-block" style={{ color: colors.accent }}>
                 Impact.
