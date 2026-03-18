@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // RENTGUARD GHANA — PRODUCT LANDING PAGE
@@ -2006,7 +2008,7 @@ const Footer = () => {
 
 
 // ── LOGIN MODAL ─────────────────────────────────────────────────────────────
-const LoginModal = ({ onClose }) => {
+const LoginModal = ({ onClose, navigate }) => {
   const [name, setName]         = useState('');
   const [passcode, setPasscode] = useState('');
   const [error, setError]       = useState('');
@@ -2024,11 +2026,26 @@ const LoginModal = ({ onClose }) => {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  const submit = () => {
-    if (!name.trim() || !passcode.trim()) { setError('Please enter your name and passcode.'); return; }
+  const submit = async () => {
+    if (!passcode.trim()) { setError('Please enter your access code.'); return; }
     setError(''); setLoading(true);
-    // Production: replace with real auth
-    setTimeout(() => { setLoading(false); setError('Invalid passcode. Contact your BRIDGE representative for access.'); }, 1000);
+    try {
+      const { data, error: rpcError } = await supabase.rpc('validate_founder_code', {
+        input_code: passcode.trim().toUpperCase(),
+      });
+      if (rpcError) throw rpcError;
+      if (data) {
+        onClose();
+        navigate('/apps/rentguard/demo');
+      } else {
+        setError('Access code not recognised. Please check the code provided to you.');
+      }
+    } catch (e) {
+      console.error('[RentGuard] Code verification failed:', e);
+      setError('Unable to verify code. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const F = {
@@ -2347,6 +2364,7 @@ const DemoModal = ({ onClose }) => {
 
 // ── ROOT ───────────────────────────────────────────────────────────────────
 export default function RentGuardLanding() {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const openModal = () => setShowModal(true);
@@ -2358,9 +2376,9 @@ export default function RentGuardLanding() {
     <div>
       <GlobalStyles />
       {showModal && <DemoModal onClose={closeModal} />}
-      {showLogin && <LoginModal onClose={closeLogin} />}
-      <Navbar onDemo={openModal} onLogin={openLogin} />
-      <Hero onDemo={openModal} />
+      {showLogin && <LoginModal onClose={closeLogin} navigate={navigate} />}
+      <Navbar onDemo={openLogin} onLogin={openLogin} />
+      <Hero onDemo={openLogin} />
       <ProblemSection />
       <FeaturesSection />
       <WhoSection />
@@ -2370,7 +2388,7 @@ export default function RentGuardLanding() {
       <SecuritySection />
       <ImpactSection />
       <IntegrationStrip />
-      <CTASection onDemo={openModal} />
+      <CTASection onDemo={openLogin} />
       <Footer />
     </div>
   );

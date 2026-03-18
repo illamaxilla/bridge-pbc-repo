@@ -319,7 +319,7 @@ function MobileGrid({ onSelect, menuOpen, onMenuToggle, navigate }) {
           return (
             <div
               key={a.id}
-              onClick={() => a.route === 'countdown' ? onSelect(a) : null}
+              onClick={() => a.route === 'external' ? navigate('/apps/rentguard') : a.route === 'countdown' ? onSelect(a) : null}
               style={{
                 flex: '0 0 100%', scrollSnapAlign: 'center',
                 backgroundColor: C.white, border: `1px solid ${C.line}`, borderRadius: 16,
@@ -587,7 +587,7 @@ const DesktopGrid = ({ hovered, setHovered, onSelect, menuOpen, onMenuToggle, na
             key={app.id}
             onMouseEnter={() => setHovered(app.id)}
             onMouseLeave={() => setHovered(null)}
-            onClick={() => app.route === 'countdown' ? onSelect(app) : null}
+            onClick={() => app.route === 'external' ? navigate('/apps/rentguard') : app.route === 'countdown' ? onSelect(app) : null}
             style={{
               backgroundColor: C.white,
               border: `1px solid ${isH ? hC : C.line}`,
