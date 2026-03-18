@@ -434,7 +434,7 @@ const Navbar = ({ onDemo, onLogin }) => {
 
   return (
     <nav style={{ position: 'relative', top: 0, left: 0, right: 0, zIndex: 999, transition: 'all 0.3s', background: C.ink, borderBottom: `1px solid ${C.border}` }}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', height: 68, justifyContent: 'space-between', maxWidth: 1400 }}>
+      <div className="container" style={{ display: 'flex', alignItems: 'center', height: 68, justifyContent: 'space-between', maxWidth: 1400, padding: '0 28px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 32, height: 32, borderRadius: 8, background: `linear-gradient(135deg, ${C.lime}, ${C.green})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: 16, height: 16, border: `2.5px solid ${C.ink}`, borderRadius: 3 }} />
@@ -564,7 +564,7 @@ const Hero = ({ onDemo }) => {
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', opacity: 0.03 }}>
         <div style={{ position: 'absolute', width: '100%', height: 2, background: C.lime, animation: 'scanline 6s linear infinite' }} />
       </div>
-      <div className="container" style={{ position: 'relative', zIndex: 1, maxWidth: 1400, padding: '0 40px' }}>
+      <div className="container" style={{ position: 'relative', zIndex: 1, maxWidth: 1400, padding: '0 28px' }}>
         <div className="rg-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
           <div>
             <div className="fade-up" style={{ marginBottom: 28 }}>
