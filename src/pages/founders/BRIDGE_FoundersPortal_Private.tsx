@@ -4269,7 +4269,7 @@ const Documents = ({ go }) => {
                         <div style={{fontFamily:Fs,fontSize:10,color:MUTED,fontWeight:500,marginBottom:7}}>{doc.pages}</div>
                         <div style={{fontFamily:Fs,fontSize:11.5,color:MUTED,lineHeight:1.6}}>{doc.desc}</div>
                         {isAvail && (
-                          <div onClick={() => doc.route && navigate(doc.route)}
+                          <div onClick={() => doc.route && navigate(doc.route, { state: { founderAccess: true } })}
                             style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:12,fontFamily:Fs,fontSize:10,fontWeight:700,color:LIME,cursor:'pointer',transition:'all 0.15s',border:`1px solid ${LIME}40`,padding:'4px 10px'}}
                             onMouseOver={e=>{e.currentTarget.style.borderColor=LIME;e.currentTarget.style.background=`${LIME}12`;}}
                             onMouseOut={e=>{e.currentTarget.style.borderColor=`${LIME}40`;e.currentTarget.style.background='transparent';}}>

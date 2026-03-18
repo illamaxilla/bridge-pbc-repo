@@ -1031,7 +1031,7 @@ function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
 
           {/* Mobile CTAs */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 28 }}>
-            <button onClick={() => doc.route && navigate(doc.route)} style={{
+            <button onClick={() => doc.route && navigate(doc.route, { state: { founderAccess: true } })} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
               padding: '15px 24px', background: C.accent, color: C.cover,
               fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
@@ -1152,7 +1152,7 @@ function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
 
         {/* Fixed bottom bar */}
         <div className="mob-bar">
-          <button onClick={() => doc.route && navigate(doc.route)} style={{
+          <button onClick={() => doc.route && navigate(doc.route, { state: { founderAccess: true } })} style={{
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             padding: '14px', background: C.accent, color: C.cover,
             fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
@@ -1203,7 +1203,7 @@ function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
               <p style={{ fontFamily: S, fontSize: 17, fontStyle: 'italic', color: 'rgba(255,255,255,0.46)', lineHeight: 1.65, maxWidth: 580, margin: 0 }}>{doc.subtitle}</p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 240, flexShrink: 0 }}>
-              <button onClick={() => doc.route && navigate(doc.route)} style={{
+              <button onClick={() => doc.route && navigate(doc.route, { state: { founderAccess: true } })} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
                 padding: '14px 28px', background: C.accent, color: C.cover,
                 fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
@@ -1265,7 +1265,7 @@ function DocumentDetail({ doc, onBack, allDocs, onSelect }) {
               </div>
               <div style={{ padding: '22px 24px 26px' }}>
                 <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.40)', lineHeight: 1.7, fontFamily: F, marginBottom: 22 }}>Open it now or save a copy for offline reference.</div>
-                <button onClick={() => doc.route && navigate(doc.route)} style={{
+                <button onClick={() => doc.route && navigate(doc.route, { state: { founderAccess: true } })} style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   padding: '14px', background: C.accent, color: C.cover, width: '100%',
                   fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
