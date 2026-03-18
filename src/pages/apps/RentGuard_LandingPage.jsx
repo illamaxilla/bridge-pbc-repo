@@ -564,7 +564,7 @@ const Hero = ({ onDemo }) => {
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', opacity: 0.03 }}>
         <div style={{ position: 'absolute', width: '100%', height: 2, background: C.lime, animation: 'scanline 6s linear infinite' }} />
       </div>
-      <div className="container-wide" style={{ position: 'relative', zIndex: 1, maxWidth: 'none', padding: '0 48px' }}>
+      <div style={{ position: 'relative', zIndex: 1, width: '100%', padding: '0 48px', boxSizing: 'border-box' }}>
         <div className="rg-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
           <div>
             <div className="fade-up" style={{ marginBottom: 28 }}>
