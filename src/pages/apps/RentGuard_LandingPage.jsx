@@ -128,7 +128,7 @@ const GlobalStyles = () => (
     .section { padding: 120px 0; }
     .section-sm { padding: 80px 0; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-    .container-wide { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+    .container-wide { max-width: 100%; margin: 0 auto; padding: 0 48px; }
 
     /* Grid noise texture overlay */
     .noise-overlay {
@@ -251,6 +251,7 @@ const GlobalStyles = () => (
 
     @media (max-width: 900px) {
       .container { padding: 0 24px; }
+      .container-wide { padding: 0 24px; }
       .section { padding: 80px 0; }
       .hide-mobile { display: none !important; }
     }
