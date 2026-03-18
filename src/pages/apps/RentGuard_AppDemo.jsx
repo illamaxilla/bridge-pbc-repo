@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // RENTGUARD GHANA
@@ -742,7 +741,7 @@ const AdminCases = ({ onSelectCase }) => {
   return (
   <div className="fade-in">
     <SectionHeader title="Enforcement Cases" sub="All cases across all regions · Live feed" />
-    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom:20 }}>
+    <div className="rg-2col-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom:20 }}>
       <div className="rg-card" style={{ padding:20 }}>
         <div style={{ fontFamily:'"Syne",sans-serif', fontSize:14, fontWeight:700, marginBottom:16 }}>Case Trends — 12 Months</div>
         <TrendChart data={TREND_DATA} months={TREND_DATA.months} lines={[
@@ -890,7 +889,7 @@ const CaseDetail = ({ caseData, onBack }) => {
         </div>
       </div>
 
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom:16 }}>
+      <div className="rg-2col-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom:16 }}>
         {/* Case details */}
         <div className="rg-card" style={{ padding:20 }}>
           <div style={{ fontFamily:'"Syne",sans-serif', fontSize:12, fontWeight:700, color:'#536358', letterSpacing:1.5, textTransform:'uppercase', marginBottom:14 }}>Case Details</div>
@@ -958,7 +957,7 @@ const AssignOfficers = () => {
   return (
     <div className="fade-in">
       <SectionHeader title="Assign Officers" sub={`${unassigned.length} unassigned cases · ${OFFICERS.filter(o=>o.active).length} officers on duty`} />
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+      <div className="rg-2col-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
         <div>
           <div style={{ fontSize:10, fontWeight:700, color:'#536358', letterSpacing:1.5, textTransform:'uppercase', marginBottom:10 }}>Unassigned Cases</div>
           {unassigned.length === 0 && <EmptyState icon="OK" text="All cases assigned" />}
@@ -1165,7 +1164,7 @@ const LandlordPayments = () => {
               <button className="rg-btn rg-btn-ghost" style={{ marginTop:12 }} onClick={() => { setRecorded(false); setShowForm(false); setAmount(''); }}>Done</button>
             </div>
           ) : (
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+            <div className="rg-form-2col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
               <div className="rg-field">
                 <label>Amount (GH₵)</label>
                 <input type="number" className="rg-input" value={amount} onChange={e=>setAmount(e.target.value)} placeholder="e.g. 1800" />
@@ -1242,7 +1241,7 @@ const TenantDashboard = () => {
         <button className="rg-btn rg-btn-danger" style={{ marginLeft:16, flexShrink:0, fontSize:11 }} onClick={()=>toast&&toast("Go to File Complaint tab to report this","info")}>File Complaint</button>
       </div>
 
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginBottom:16 }}>
+      <div className="rg-form-2col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginBottom:16 }}>
         {/* Rent card status */}
         <div className="rg-card" style={{ padding:20 }}>
           <div style={{ fontSize:10, fontWeight:700, color:'#536358', letterSpacing:1.5, textTransform:'uppercase', marginBottom:12 }}>Your Rent Card</div>
@@ -1354,7 +1353,7 @@ GH-TIN-0882-7734,GHA-001-0882-XXXX,1,4,57600,4800,0,0,Okaikwei North,Greater Acc
       </div>
 
       {/* Summary stats */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12, marginBottom:20 }}>
+      <div className="rg-stat-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12, marginBottom:20 }}>
         {[
           ['847', 'Landlords with TIN on file', T.green ],
           ['GH₵ 4.2B', 'Est. annual rental income tracked', T.lime ],
@@ -1508,7 +1507,7 @@ const PropertyDrilldown = ({ onBack }) => {
       </div>
 
       {tab === 'overview' && (
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+        <div className="rg-form-2col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
           <div className="rg-card" style={{ padding:20 }}>
             <div style={{ fontFamily:F.head, fontSize:13, fontWeight:700, marginBottom:14, color:T.t3, letterSpacing:1, textTransform:'uppercase' }}>Property Details</div>
             <InfoRow label="Property ID" value={prop.id} mono />
@@ -1565,7 +1564,7 @@ const PropertyDrilldown = ({ onBack }) => {
       {tab === 'risk' && (
         <div>
           <div className="rg-card" style={{ padding:20, marginBottom:14 }}>
-            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:20 }}>
+            <div className="rg-section-hdr" style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:20 }}>
               <div>
                 <div style={{ fontFamily:F.head, fontSize:16, fontWeight:700, marginBottom:4 }}>Risk Score Formula</div>
                 <div style={{ fontSize:13, color:T.t2 }}>Weighted composite · 0–100 · Higher = greater enforcement priority</div>
@@ -2009,7 +2008,7 @@ const AdminDashboard = ({ onSelectCase }) => {
         <div className="rg-card" style={{ flex:2, padding:20 }}>
           <div className="rg-flex rg-mb-2" style={{ justifyContent:'space-between', alignItems:'center' }}>
             <div style={{ fontFamily:F.head, fontSize:14, fontWeight:700, color:T.t1 }}>Compliance Map</div>
-            <div className="rg-tabs" style={{ borderBottom:'none' }}>
+            <div className="rg-tabs rg-settings-tabs" style={{ borderBottom:'none' }}>
               {['table','map'].map(t => (
                 <button key={t} className={`rg-tab${regionTab===t?' active':''}`} onClick={() => setRegionTab(t)} style={{ padding:'4px 12px', fontSize:11 }}>{t.charAt(0).toUpperCase()+t.slice(1)}</button>
               ))}
@@ -2980,6 +2979,19 @@ let _toastFn = null;
 const setGlobalToast = (fn) => { _toastFn = fn; };
 const useToast = () => _toastFn || (() => {});
 
+// ── useMobile — JS-based, reliable in all environments ──────────────────────
+const useMobile = () => {
+  const [mob, setMob] = useState(
+    typeof window !== 'undefined' && window.innerWidth <= 768
+  );
+  useEffect(() => {
+    const fn = () => setMob(window.innerWidth <= 768);
+    window.addEventListener('resize', fn, { passive: true });
+    return () => window.removeEventListener('resize', fn);
+  }, []);
+  return mob;
+};
+
 const ToastDisplay = ({ toasts, onDismiss }) => {
   if (!toasts.length) return null;
   const colors = {
@@ -3291,7 +3303,7 @@ const SettingsPage = () => {
       </div>
 
       {tab === 'system' && (
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+        <div className="rg-2col-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
           <div className="rg-card" style={{ padding:20 }}>
             <div style={{ fontFamily:F.head, fontSize:14, fontWeight:700, marginBottom:16 }}>Portal Sync</div>
             {[
@@ -3331,7 +3343,7 @@ const SettingsPage = () => {
       )}
 
       {tab === 'enforcement' && (
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+        <div className="rg-2col-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
           <div className="rg-card" style={{ padding:20 }}>
             <div style={{ fontFamily:F.head, fontSize:14, fontWeight:700, marginBottom:16 }}>Risk Score Thresholds</div>
             <div style={{ padding:'12px 14px', background:'rgba(59,130,246,0.07)', border:'1px solid rgba(59,130,246,0.15)', borderRadius:6, marginBottom:14, fontSize:12, color:T.t2, lineHeight:1.7 }}>
@@ -3398,7 +3410,7 @@ const SettingsPage = () => {
       )}
 
       {tab === 'integrations' && (
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+        <div className="rg-2col-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
           {[
             { name:'Rent Control Portal', url:'rentcontrol.mwh.gov.gh', status:'connected', last:'2 min ago', env:'Production' },
             { name:'NIA Ghana Card API', url:'api.nia.gov.gh/verify', status:'connected', last:'On-demand', env:'Production' },
@@ -3473,7 +3485,7 @@ const UserManagement = () => {
       {showInvite && (
         <div className="rg-card slide-up" style={{ padding:20, marginBottom:16 }}>
           <div style={{ fontFamily:F.head, fontSize:15, fontWeight:700, marginBottom:14 }}>Invite New User</div>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+          <div className="rg-form-2col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
             <div className="rg-field"><label>Full Name</label><input className="rg-input" value={inviteForm.name} onChange={e=>setInviteForm(p=>({...p,name:e.target.value}))} /></div>
             <div className="rg-field"><label>Email Address</label><input type="email" className="rg-input" value={inviteForm.email} onChange={e=>setInviteForm(p=>({...p,email:e.target.value}))} /></div>
             <div className="rg-field">
@@ -3562,7 +3574,7 @@ const SLATracker = ({ cases }) => {
     <div className="fade-in">
       <SectionHeader title="SLA Tracker" sub="Case response deadlines · Based on severity thresholds" />
 
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12, marginBottom:20 }}>
+      <div className="rg-stat-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12, marginBottom:20 }}>
         {[
           [overdue.length,  'Overdue',       T.red,    'Exceeded SLA'],
           [critical.length, 'Critical',      T.red,    '< 12hrs left'],
@@ -3859,7 +3871,7 @@ const PrintReport = () => {
   return (
     <div className="fade-in">
       <SectionHeader title="Print Reports" sub="Generate formatted reports for ministry, GRA, and court use" />
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, maxWidth:700 }}>
+      <div className="rg-2col-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, maxWidth:700 }}>
         {[
           { id:'compliance',   title:'National Compliance Report',       sub:'Registration rates, rent card adoption, violation summary by region',    pages:'4–6' },
           { id:'violations',   title:'Violation Enforcement Summary',     sub:'All active cases, SLA status, officer assignments, outcomes',           pages:'3–5' },
@@ -4268,7 +4280,7 @@ const TenancyRenewal = () => {
       <div className="rg-card" style={{ padding:20 }}>
         {step === 0 && (
           <>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+            <div className="rg-form-2col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
               <div className="rg-field">
                 <label>New Monthly Rent (GH₵)</label>
                 <input type="number" className="rg-input" value={form.newRent} onChange={e=>upd('newRent',e.target.value)} placeholder="e.g. 2000" />
@@ -5133,7 +5145,7 @@ const ComplianceTrend = ({ onSelectCase }) => {
       </div>
 
       {/* 6-month trend + recent cases side by side */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+      <div className="rg-2col-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
         <div className="rg-card" style={{ padding:20 }}>
           <div style={{ fontFamily:F.head, fontSize:14, fontWeight:700, marginBottom:4 }}>6-Month Compliance Trend</div>
           <div style={{ fontSize:12, color:T.t2, marginBottom:16 }}>Rent card adoption vs. violations detected</div>
@@ -5733,24 +5745,11 @@ const NAV = {
     { id:'notifications', label:'Notifications',      dot:'#3B82F6' },
     { id:'complaint',     label:'File Complaint',     dot:'#E5483A' },
     { id:'calc',          label:'Advance Calc',       dot:'#E8900A' },
+    { id:'account',      label:'My Account',         dot:'#536358' },
   ],
 };
 
 export default function RentGuard() {
-  const demoNav = useNavigate();
-
-  // Session gate — redirect to landing page if not passcode-verified
-  useEffect(() => {
-    try {
-      const stored = sessionStorage.getItem('rentguard_demo_access');
-      if (!stored || !JSON.parse(stored).name) {
-        demoNav('/apps/rentguard', { replace: true });
-      }
-    } catch {
-      demoNav('/apps/rentguard', { replace: true });
-    }
-  }, [demoNav]);
-
   const [appState, setAppState] = useState({
     currentUser: null,
     role: 'admin',
@@ -5787,6 +5786,9 @@ export default function RentGuard() {
   const handleLogout = () => {
     setAppState({ currentUser: null, role: 'admin', navPage: 'dashboard', selectedCase: null, showSearch: false });
   };
+
+  // Mobile detection
+  const mob = useMobile();
 
   // Show login if not authenticated
   useEffect(() => {
@@ -5884,6 +5886,39 @@ export default function RentGuard() {
     if (role==='tenant')   return <TenantContent />;
   };
 
+  // ── MOBILE SHELL ─────────────────────────────────────────────────────────
+  if (mob) return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: T.bg, overflow: 'hidden', fontFamily: F.body }}>
+      <GlobalCSS />
+      <MobileCSS />
+      <ToastDisplay toasts={toasts} onDismiss={dismissToast} />
+      {showOnboarding && <OnboardingModal role={role} onDismiss={() => setAppState(s => ({ ...s, showOnboarding: false }))} />}
+      {showSearch && <GlobalSearchEnhanced onClose={() => setAppState(s => ({ ...s, showSearch: false }))} onNavigate={handleGlobalNav} />}
+      {/* Top bar */}
+      <MobileTopBar
+        currentUser={currentUser}
+        navPage={navPage}
+        role={role}
+        onSearch={() => setAppState(s => ({ ...s, showSearch: true }))}
+        onAccount={() => handleNav('account')}
+      />
+      {/* Scrollable content */}
+      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', WebkitOverflowScrolling: 'touch', position: 'relative' }}>
+        <MobileContent
+          role={role}
+          navPage={navPage}
+          currentUser={currentUser}
+          handleNav={handleNav}
+          handleSelectCase={handleSelectCase}
+          handleLogout={handleLogout}
+        />
+      </div>
+      {/* Bottom tab bar */}
+      <MobileBottomTabs role={role} navPage={navPage} onNav={handleNav} />
+    </div>
+  );
+
+  // ── DESKTOP SHELL ─────────────────────────────────────────────────────────
   return (
     <div>
       <MobileCSS />
@@ -6184,62 +6219,105 @@ const NetworkError = ({ onRetry }) => (
 // Adds responsive behavior to the shell CSS
 const MobileCSS = () => (
   <style>{`
+    /* ── TABLET (≤ 768px) ── */
     @media (max-width: 768px) {
-      .rg-app { flex-direction: column; }
+      /* App shell — sidebar becomes top tab bar */
+      .rg-app { flex-direction: column; height: 100vh; overflow: hidden; }
       .rg-sidebar {
         width: 100% !important;
         height: auto !important;
         flex-direction: row !important;
-        overflow-x: auto;
-        overflow-y: hidden;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
         padding: 0 !important;
         border-right: none !important;
-        border-bottom: 1px solid ${T.border};
-        flex-shrink: 0;
+        border-bottom: 1px solid ${T.border} !important;
+        flex-shrink: 0 !important;
       }
-      .rg-sidebar > div:first-child { display: none; }
-      .rg-sidebar > div:nth-child(2) {
-        display: flex !important;
-        flex-direction: row !important;
-        padding: 0 8px !important;
-        gap: 0 !important;
-        overflow-x: auto;
-        white-space: nowrap;
-      }
+      /* Hide sidebar header and user row on mobile */
+      .rg-sidebar > div:first-child { display: none !important; }
       .rg-sidebar > div:last-child { display: none !important; }
+      /* Nav items become horizontal pills */
       .rg-nav-item {
         flex-direction: column !important;
-        padding: 8px 12px !important;
-        font-size: 9px !important;
-        min-width: 64px;
-        border-radius: 0 !important;
-        border-bottom: 2px solid transparent;
+        gap: 3px !important;
+        padding: 10px 14px !important;
+        white-space: nowrap !important;
+        border-left: none !important;
+        border-bottom: 2px solid transparent !important;
+        font-size: 10px !important;
+        min-width: 72px !important;
         justify-content: center !important;
         align-items: center !important;
-        gap: 4px !important;
       }
-      .rg-nav-item.active { border-bottom-color: #0FA86A; background: transparent !important; }
-      .rg-nav-dot { display: none !important; }
-      .rg-topbar { padding: 8px 16px !important; }
-      .rg-content { padding: 16px !important; }
-      .rg-main { min-width: 0; }
+      .rg-nav-item.active { border-bottom: 2px solid ${T.green} !important; }
+      .rg-nav-item .nav-label { font-size: 9px !important; }
+      .rg-nav-badge { top: 6px !important; right: 4px !important; }
+      /* Content area — full height, scrollable */
+      .rg-content {
+        flex: 1 !important;
+        overflow-y: auto !important;
+        padding: 16px !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      /* Topbar */
+      .rg-topbar { padding: 0 12px !important; }
+      .rg-topbar-title { font-size: 13px !important; }
+      /* Cards full width */
+      .rg-card { border-radius: 10px !important; }
+      /* Tables — horizontal scroll */
+      .rg-table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+      .rg-table { min-width: 600px; }
+      /* Grids collapse */
+      .rg-stat-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+      .rg-3col-grid { grid-template-columns: 1fr !important; }
+      .rg-2col-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+      /* Modal full screen */
+      .rg-modal-inner { max-width: 100% !important; max-height: 90vh !important; border-radius: 16px 16px 0 0 !important; position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important; overflow-y: auto !important; }
+      /* Bulk action bar */
+      .rg-bulk-bar { flex-wrap: wrap !important; gap: 8px !important; padding: 10px 12px !important; }
+      /* Settings tabs scroll */
+      .rg-settings-tabs { overflow-x: auto !important; }
+      /* Form grids collapse */
+      .rg-form-2col { grid-template-columns: 1fr !important; }
     }
+
+    /* ── MOBILE (≤ 480px) ── */
     @media (max-width: 480px) {
       .rg-content { padding: 12px !important; }
       .rg-card { padding: 14px !important; }
-      .rg-table { font-size: 11px !important; }
-      .rg-table th, .rg-table td { padding: 8px 10px !important; }
+      /* KPI stats — 2 per row */
+      .rg-stat-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+      .rg-stat-val { font-size: 22px !important; }
+      /* Section header stacks */
+      .rg-section-hdr { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+      .rg-section-hdr .rg-btn { width: 100% !important; justify-content: center !important; }
+      /* Case/property rows — hide less important columns */
+      .rg-col-hide-sm { display: none !important; }
+      /* Officer mobile — full bleed */
+      .rg-officer-phone { transform: none !important; width: 100% !important; border-radius: 0 !important; }
+      /* Tabs */
+      .rg-tabs { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+      .rg-tab { white-space: nowrap !important; padding: 8px 12px !important; font-size: 12px !important; }
+      /* Topbar search hidden on very small */
+      .rg-topbar-search { display: none !important; }
+      /* Chart areas */
+      .rg-chart-area { height: 160px !important; }
+      /* Compliance ring smaller */
+      .rg-compliance-ring { width: 100px !important; height: 100px !important; }
     }
-    /* Focus styles for accessibility */
-    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-      outline: 2px solid ${T.green};
-      outline-offset: 2px;
+
+    /* Touch targets — minimum 44px */
+    @media (max-width: 768px) {
+      button, .rg-btn, .rg-tab, .rg-nav-item {
+        min-height: 44px;
+      }
+      input, select, textarea {
+        font-size: 16px !important; /* Prevent iOS zoom */
+      }
     }
-    /* Smooth scrollbar across app */
-    .rg-sidebar, .rg-content { scrollbar-width: thin; scrollbar-color: ${T.border} transparent; }
   `}</style>
 );
-
 
 // ═══════════════════════════════════════════════════════════════════════════
 // FINAL ADDITIONS — Onboarding · Skeletons · Enhanced Empty States
@@ -6504,7 +6582,7 @@ const AccountSettings = ({ currentUser, onLogout }) => {
 
       {tab === 'profile' && (
         <div className="rg-card" style={{ padding:22 }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+          <div className="rg-form-2col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
             <div className="rg-field">
               <label>Full Name</label>
               <input className="rg-input" value={form.name} onChange={e=>upd('name',e.target.value)} />
@@ -6763,3 +6841,512 @@ const CaseNoteInput = ({ caseId, onAdd }) => {
     </div>
   );
 };
+// ═══════════════════════════════════════════════════════════════════════════
+// MOBILE SHELL — Bottom tab nav + touch-optimized layout
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── MOBILE TOP BAR ──────────────────────────────────────────────────────────
+const MobileTopBar = ({ currentUser, navPage, role, onSearch, onAccount }) => {
+  const roleColors = { admin: T.green, manager: T.blue, officer: T.amber, landlord: '#C8E830', tenant: T.red };
+  const accent = roleColors[role] || T.green;
+
+  const pageTitle = () => {
+    const titles = {
+      dashboard:'Dashboard', activity:'Live Activity', regions:'Regions',
+      cases:'All Cases', sla:'SLA Tracker', flow:'Enforcement Flow',
+      properties:'Properties', officers:'Officers', performance:'Performance',
+      photos:'Evidence Gallery', gra:'GRA Export', integrations:'Integrations',
+      policy:'Policy Log', reports:'Reports', audit:'Audit Log',
+      settings:'Settings', account:'My Account',
+      queue:'Case Queue', casedetail:'Case Detail', assign:'Assign Officers',
+      risk:'Risk Register', home:"Today's Shift", scan:'QR Scanner',
+      map:'Map View', sync:'Sync Status', handover:'Shift Handover',
+      overview:'Overview', register:'Register Property', tenants:'Tenants',
+      payments:'Payments', renewal:'Renewal', documents:'Documents',
+      tax:'Tax Summary', mytenancy:'My Tenancy', tracker:'Complaint',
+      receipts:'Receipts', eviction:'Legal Aid', notifications:'Notifications',
+      ussd:'USSD', verify:'Verify Card', rights:'My Rights',
+      complaint:'Complaint', calc:'Calculator',
+    };
+    return titles[navPage] || navPage;
+  };
+
+  return (
+    <div style={{ height: 52, background: T.card, borderBottom: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', flexShrink: 0, position: 'sticky', top: 0, zIndex: 100 }}>
+      {/* Left — avatar + role */}
+      <button onClick={onAccount} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+        <div style={{ width: 30, height: 30, borderRadius: '50%', background: `${accent}20`, border: `1.5px solid ${accent}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: F.mono, fontSize: 10, fontWeight: 700, color: accent, flexShrink: 0 }}>
+          {(currentUser?.name || 'U').split(' ').map(n => n[0]).join('').slice(0, 2)}
+        </div>
+      </button>
+
+      {/* Center — page title */}
+      <div style={{ fontFamily: F.head, fontSize: 15, fontWeight: 700, color: T.t1, letterSpacing: '-0.3px' }}>{pageTitle()}</div>
+
+      {/* Right — search */}
+      <button onClick={onSearch} style={{ width: 30, height: 30, borderRadius: 8, background: T.surface, border: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+        <span style={{ fontSize: 14, color: T.t3 }}>⌕</span>
+      </button>
+    </div>
+  );
+};
+
+// ── MOBILE BOTTOM TAB BAR ───────────────────────────────────────────────────
+const MobileBottomTabs = ({ role, navPage, onNav }) => {
+  const roleColors = { admin: T.green, manager: T.blue, officer: T.amber, landlord: '#C8E830', tenant: T.red };
+  const accent = roleColors[role] || T.green;
+
+  const tabs = {
+    admin: [
+      { id: 'dashboard',    icon: '⬡', label: 'Home'      },
+      { id: 'cases',        icon: '▤', label: 'Cases'     },
+      { id: 'regions',      icon: '◎', label: 'Regions'   },
+      { id: 'officers',     icon: '◈', label: 'Officers'  },
+      { id: 'settings',     icon: '◼', label: 'Settings'  },
+    ],
+    manager: [
+      { id: 'queue',        icon: '▤', label: 'Queue'      },
+      { id: 'sla',          icon: '◎', label: 'SLA'        },
+      { id: 'properties',   icon: '⬡', label: 'Properties' },
+      { id: 'performance',  icon: '◈', label: 'Performance'},
+      { id: 'account',      icon: '◼', label: 'Profile'    },
+    ],
+    officer: [
+      { id: 'home',         icon: '⬡', label: 'Shift'     },
+      { id: 'qr',           icon: '◈', label: 'Scan'      },
+      { id: 'map',          icon: '◎', label: 'Map'       },
+      { id: 'sync',         icon: '▤', label: 'Sync'      },
+      { id: 'account',      icon: '◼', label: 'Profile'   },
+    ],
+    landlord: [
+      { id: 'overview',     icon: '⬡', label: 'Overview'  },
+      { id: 'tenants',      icon: '◈', label: 'Tenants'   },
+      { id: 'cards',        icon: '◎', label: 'Cards'     },
+      { id: 'payments',     icon: '▤', label: 'Payments'  },
+      { id: 'account',      icon: '◼', label: 'Profile'   },
+    ],
+    tenant: [
+      { id: 'mytenancy',    icon: '⬡', label: 'Tenancy'   },
+      { id: 'tracker',      icon: '◎', label: 'Complaints'},
+      { id: 'receipts',     icon: '▤', label: 'Receipts'  },
+      { id: 'ussd',         icon: '◈', label: 'USSD'      },
+      { id: 'account',      icon: '◼', label: 'Profile'   },
+    ],
+  };
+
+  const items = tabs[role] || tabs.admin;
+  const isActive = (id) => navPage === id || (id === 'queue' && navPage === 'casedetail');
+
+  return (
+    <div style={{ height: 60, background: T.card, borderTop: `1px solid ${T.border}`, display: 'flex', alignItems: 'stretch', flexShrink: 0, paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+      {items.map((tab) => {
+        const active = isActive(tab.id);
+        return (
+          <button key={tab.id} onClick={() => onNav(tab.id)}
+            style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3, background: 'transparent', border: 'none', cursor: 'pointer', padding: '6px 0', borderTop: active ? `2px solid ${accent}` : '2px solid transparent', transition: 'all 0.15s' }}>
+            <span style={{ fontSize: 16, color: active ? accent : T.t3, transition: 'color 0.15s' }}>{tab.icon}</span>
+            <span style={{ fontFamily: F.mono, fontSize: 9, letterSpacing: 0.5, color: active ? accent : T.t3, textTransform: 'uppercase', transition: 'color 0.15s' }}>{tab.label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+};
+
+// ── MOBILE CARD ──────────────────────────────────────────────────────────────
+const MobCard = ({ children, style = {} }) => (
+  <div style={{ background: T.card, border: `1px solid ${T.border}`, borderRadius: 12, padding: 16, ...style }}>
+    {children}
+  </div>
+);
+
+// ── MOBILE STAT ROW ──────────────────────────────────────────────────────────
+const MobStatRow = ({ stats }) => (
+  <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(stats.length, 2)}, 1fr)`, gap: 10, marginBottom: 16 }}>
+    {stats.map((s, i) => (
+      <div key={i} style={{ background: T.card, border: `1px solid ${T.border}`, borderRadius: 10, padding: '14px 14px' }}>
+        <div style={{ fontFamily: F.mono, fontSize: 22, fontWeight: 700, color: s.color || T.t1, lineHeight: 1, marginBottom: 4 }}>{s.val}</div>
+        <div style={{ fontSize: 11, fontWeight: 600, color: T.t1, marginBottom: 2 }}>{s.label}</div>
+        {s.sub && <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3 }}>{s.sub}</div>}
+      </div>
+    ))}
+  </div>
+);
+
+// ── MOBILE SECTION HEADER ────────────────────────────────────────────────────
+const MobSectionHeader = ({ title, action, onAction }) => (
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+    <div style={{ fontFamily: F.mono, fontSize: 10, fontWeight: 700, color: T.t3, letterSpacing: 1.5, textTransform: 'uppercase' }}>{title}</div>
+    {action && <button onClick={onAction} style={{ fontFamily: F.mono, fontSize: 9, color: T.green, background: 'transparent', border: 'none', cursor: 'pointer', letterSpacing: 0.5 }}>{action}</button>}
+  </div>
+);
+
+// ── MOBILE CASE ROW ──────────────────────────────────────────────────────────
+const MobCaseRow = ({ c, onClick }) => {
+  const sevColor = { critical: T.red, high: T.red, medium: T.amber, low: T.green };
+  const statColor = { open: T.amber, in_progress: T.blue, inspection_scheduled: T.blue, notice_issued: '#9B59B6', resolved: T.green };
+  return (
+    <div onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '13px 14px', background: T.card, border: `1px solid ${T.border}`, borderRadius: 10, marginBottom: 8, cursor: 'pointer', active: true }}
+      onTouchStart={e => e.currentTarget.style.background = T.surface}
+      onTouchEnd={e => e.currentTarget.style.background = T.card}>
+      <div style={{ width: 8, height: 8, borderRadius: '50%', background: sevColor[c.sev] || T.amber, flexShrink: 0, marginTop: 2 }} />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontFamily: F.mono, fontSize: 11, color: T.green, marginBottom: 2 }}>{c.id}</div>
+        <div style={{ fontSize: 13, fontWeight: 600, color: T.t1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{caseTypeLabel(c.type)}</div>
+        <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3, marginTop: 2 }}>{c.district} · {c.opened}</div>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
+        <span style={{ fontFamily: F.mono, fontSize: 9, fontWeight: 700, color: sevColor[c.sev] || T.amber, textTransform: 'uppercase' }}>{c.sev}</span>
+        <span style={{ fontFamily: F.mono, fontSize: 9, color: statColor[c.status] || T.t3 }}>{statusLabel(c.status)}</span>
+      </div>
+    </div>
+  );
+};
+
+// ── MOBILE ADMIN DASHBOARD ───────────────────────────────────────────────────
+const MobAdminDashboard = ({ onSelectCase }) => {
+  const toast = useToast();
+  return (
+    <div style={{ padding: '16px 16px 80px' }}>
+      <MobStatRow stats={[
+        { val: '38%', label: 'Tenancies Registered', sub: 'of total', color: T.amber },
+        { val: '312', label: 'Active Violations',    sub: 'Accra',   color: T.red   },
+        { val: '29%', label: 'Rent Cards Issued',    sub: 'national',color: T.amber },
+        { val: '68',  label: 'Compliance Score',     sub: '/100',    color: T.amber },
+      ]} />
+
+      {/* Compliance trend bar */}
+      <MobCard style={{ marginBottom: 16 }}>
+        <MobSectionHeader title="6-Month Trend" />
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 60 }}>
+          {[32, 35, 40, 45, 52, 68].map((h, i) => (
+            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+              <div style={{ width: '100%', height: h * 0.7, background: i === 5 ? T.green : `${T.green}40`, borderRadius: '3px 3px 0 0', transition: 'height 0.3s' }} />
+              <div style={{ fontFamily: F.mono, fontSize: 8, color: T.t3 }}>{['O','N','D','J','F','M'][i]}</div>
+            </div>
+          ))}
+        </div>
+      </MobCard>
+
+      {/* Recent cases */}
+      <MobSectionHeader title="Recent Cases" action="View All →" />
+      {CASES.slice(0, 5).map(c => (
+        <MobCaseRow key={c.id} c={c} onClick={() => onSelectCase(c)} />
+      ))}
+
+      {/* Region highlights */}
+      <MobSectionHeader title="Top Risk Regions" />
+      <MobCard>
+        {REGIONS.filter(r => r.risk === 'high').slice(0, 4).map((r, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: i < 2 ? `1px solid ${T.border}` : 'none' }}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: T.t1 }}>{r.name}</div>
+              <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3 }}>{r.violations} violations</div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ fontFamily: F.mono, fontSize: 16, fontWeight: 700, color: T.red }}>{r.score}</div>
+              <span style={{ fontFamily: F.mono, fontSize: 8, color: T.red, background: 'rgba(229,72,58,0.12)', borderRadius: 4, padding: '2px 6px' }}>HIGH</span>
+            </div>
+          </div>
+        ))}
+      </MobCard>
+    </div>
+  );
+};
+
+// ── MOBILE CASE QUEUE ────────────────────────────────────────────────────────
+const MobCaseQueue = ({ onSelectCase }) => {
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
+  const filters = ['all','open','in_progress','critical'];
+
+  const filtered = CASES.filter(c => {
+    if (filter === 'critical') return c.sev === 'critical';
+    if (filter !== 'all') return c.status === filter;
+    return true;
+  }).filter(c =>
+    !search || c.id.toLowerCase().includes(search.toLowerCase()) ||
+    caseTypeLabel(c.type).toLowerCase().includes(search.toLowerCase()) ||
+    c.district.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      {/* Search + filter bar */}
+      <div style={{ padding: '12px 16px', borderBottom: `1px solid ${T.border}`, background: T.card, flexShrink: 0 }}>
+        <input value={search} onChange={e => setSearch(e.target.value)}
+          placeholder="Search cases…" style={{ width: '100%', padding: '9px 12px', background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, color: T.t1, fontFamily: F.body, fontSize: 14, outline: 'none', boxSizing: 'border-box', marginBottom: 10 }} />
+        <div style={{ display: 'flex', gap: 6, overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: 2 }}>
+          {filters.map(f => (
+            <button key={f} onClick={() => setFilter(f)}
+              style={{ flexShrink: 0, padding: '5px 12px', borderRadius: 14, background: filter === f ? T.green : 'transparent', border: `1px solid ${filter === f ? T.green : T.border}`, color: filter === f ? T.bg : T.t3, fontFamily: F.mono, fontSize: 10, cursor: 'pointer', textTransform: 'uppercase', letterSpacing: 0.5, transition: 'all 0.15s' }}>
+              {f === 'all' ? `All (${CASES.length})` : f === 'critical' ? `Critical (${CASES.filter(c=>c.sev==='critical').length})` : f.replace('_',' ')}
+            </button>
+          ))}
+        </div>
+      </div>
+      {/* Cases list */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px 80px', WebkitOverflowScrolling: 'touch' }}>
+        {filtered.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px 20px', color: T.t3, fontFamily: F.mono, fontSize: 12 }}>No cases match filter</div>
+        ) : filtered.map(c => (
+          <MobCaseRow key={c.id} c={c} onClick={() => onSelectCase(c)} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ── MOBILE OFFICER SHIFT ─────────────────────────────────────────────────────
+const MobOfficerShift = ({ onNav }) => {
+  return (
+    <div style={{ padding: '16px 16px 80px' }}>
+      {/* Shift status */}
+      <div style={{ background: `${T.green}12`, border: `1px solid ${T.green}30`, borderRadius: 12, padding: '14px 16px', marginBottom: 16 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <div style={{ fontFamily: F.mono, fontSize: 9, color: T.green, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 3 }}>Active Shift · Ayawaso East</div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: T.t1 }}>08:30 – 16:00</div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontFamily: F.mono, fontSize: 22, fontWeight: 700, color: T.green }}>3/8</div>
+            <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3 }}>Inspected</div>
+          </div>
+        </div>
+        {/* Progress bar */}
+        <div style={{ height: 4, background: T.border, borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
+          <div style={{ height: '100%', width: '37.5%', background: T.green, borderRadius: 2, transition: 'width 0.5s' }} />
+        </div>
+      </div>
+
+      <MobStatRow stats={[
+        { val: '3', label: 'Inspected',  color: T.green },
+        { val: '2', label: 'Violations', color: T.red   },
+        { val: '5', label: 'Remaining',  color: T.amber },
+        { val: '4G', label: 'Signal',    color: T.green },
+      ]} />
+
+      {/* Quick actions */}
+      <MobSectionHeader title="Quick Actions" />
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
+        {[
+          { icon: '◈', label: 'Scan Rent Card', id: 'qr',    color: T.lime  },
+          { icon: '◎', label: 'View Map',        id: 'map',   color: T.blue  },
+          { icon: '▤', label: 'Sync Queue',      id: 'sync',  color: T.amber },
+          { icon: '⬡', label: 'Shift Handover',  id: 'handover', color: T.green },
+        ].map((a, i) => (
+          <button key={i} onClick={() => onNav(a.id)}
+            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 14px', background: T.card, border: `1px solid ${T.border}`, borderRadius: 10, cursor: 'pointer', transition: 'all 0.15s' }}
+            onTouchStart={e => e.currentTarget.style.background = T.surface}
+            onTouchEnd={e => e.currentTarget.style.background = T.card}>
+            <span style={{ fontSize: 18, color: a.color }}>{a.icon}</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: T.t1 }}>{a.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Next priority */}
+      <MobSectionHeader title="Next Priority Stop" />
+      <div style={{ background: `rgba(229,72,58,0.08)`, border: `1px solid rgba(229,72,58,0.25)`, borderRadius: 12, padding: '16px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: T.t1, marginBottom: 2 }}>22 Dzorwulu Crescent</div>
+            <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3 }}>Ayawaso East · 12 units · 0 rent cards</div>
+          </div>
+          <div style={{ fontFamily: F.mono, fontSize: 20, fontWeight: 700, color: T.red }}>96</div>
+        </div>
+        <button style={{ width: '100%', padding: '11px', background: T.red, color: '#fff', border: 'none', borderRadius: 8, fontFamily: F.body, fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>
+          Start Inspection →
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// ── MOBILE LANDLORD OVERVIEW ─────────────────────────────────────────────────
+const MobLandlordOverview = ({ onNav }) => {
+  return (
+    <div style={{ padding: '16px 16px 80px' }}>
+      {/* Compliance score */}
+      <div style={{ background: T.card, border: `1px solid ${T.border}`, borderRadius: 14, padding: '20px', marginBottom: 16, textAlign: 'center' }}>
+        <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>Your Compliance Score</div>
+        <div style={{ fontFamily: F.head, fontSize: 64, fontWeight: 700, color: T.amber, lineHeight: 1, marginBottom: 4 }}>34</div>
+        <div style={{ fontFamily: F.mono, fontSize: 10, color: T.amber }}>NON-COMPLIANT</div>
+        <div style={{ height: 4, background: T.border, borderRadius: 2, margin: '14px 0 6px', overflow: 'hidden' }}>
+          <div style={{ height: '100%', width: '34%', background: T.amber, borderRadius: 2 }} />
+        </div>
+        <div style={{ fontSize: 12, color: T.t2 }}>3 actions required to improve</div>
+      </div>
+
+      {/* Action plan pills */}
+      <MobSectionHeader title="Action Plan" />
+      {[
+        { label: 'Issue Rent Cards', desc: '0 of 8 units have cards', urgency: 'critical', icon: '◈' },
+        { label: 'Register Property', desc: '22 Labone Link not registered', urgency: 'high', icon: '⬡' },
+        { label: 'Reduce Advance', desc: 'Currently 9.5 months — cap is 6', urgency: 'critical', icon: '▤' },
+      ].map((a, i) => (
+        <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '13px 14px', background: T.card, border: `1px solid ${a.urgency === 'critical' ? 'rgba(229,72,58,0.3)' : T.border}`, borderRadius: 10, marginBottom: 8, cursor: 'pointer' }}>
+          <span style={{ fontSize: 18, color: a.urgency === 'critical' ? T.red : T.amber, flexShrink: 0 }}>{a.icon}</span>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: T.t1, marginBottom: 2 }}>{a.label}</div>
+            <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3 }}>{a.desc}</div>
+          </div>
+          <span style={{ fontFamily: F.mono, fontSize: 9, color: a.urgency === 'critical' ? T.red : T.amber, fontWeight: 700, textTransform: 'uppercase' }}>{a.urgency}</span>
+        </div>
+      ))}
+
+      <MobStatRow stats={[
+        { val: '2', label: 'Properties',  color: T.t1    },
+        { val: '8', label: 'Units',       color: T.t1    },
+        { val: '0', label: 'Rent Cards',  color: T.red   },
+        { val: '1', label: 'Open Cases',  color: T.amber },
+      ]} />
+    </div>
+  );
+};
+
+// ── MOBILE TENANT DASHBOARD ──────────────────────────────────────────────────
+const MobTenantDashboard = ({ onNav }) => {
+  return (
+    <div style={{ padding: '16px 16px 80px' }}>
+      {/* Tenancy card */}
+      <div style={{ background: T.card, border: `1px solid ${T.border}`, borderRadius: 14, padding: '18px 18px', marginBottom: 16 }}>
+        <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>My Tenancy</div>
+        <div style={{ fontSize: 15, fontWeight: 700, color: T.t1, marginBottom: 2 }}>3A Labone Link, East Legon</div>
+        <div style={{ fontFamily: F.mono, fontSize: 11, color: T.t3, marginBottom: 12 }}>Unit 2A · GH₵2,800/month</div>
+        {/* Advance violation alert */}
+        <div style={{ background: 'rgba(229,72,58,0.08)', border: '1px solid rgba(229,72,58,0.25)', borderRadius: 8, padding: '10px 12px' }}>
+          <div style={{ fontFamily: F.mono, fontSize: 9, color: T.red, fontWeight: 700, letterSpacing: 1, marginBottom: 3 }}>⚠ ADVANCE VIOLATION</div>
+          <div style={{ fontSize: 12, color: T.t2 }}>Your landlord collected 9.5 months advance. Legal cap is 6. You may have a claim.</div>
+        </div>
+      </div>
+
+      {/* Quick actions */}
+      <MobSectionHeader title="Actions" />
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
+        {[
+          { icon: '◈', label: 'Verify Card',   id: 'verify',   color: T.lime  },
+          { icon: '◎', label: 'File Complaint', id: 'complaint',color: T.red   },
+          { icon: '▤', label: 'Track Case',     id: 'tracker',  color: T.blue  },
+          { icon: '⬡', label: 'Legal Aid',      id: 'eviction', color: T.amber },
+        ].map((a, i) => (
+          <button key={i} onClick={() => onNav(a.id)}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '18px 12px', background: T.card, border: `1px solid ${T.border}`, borderRadius: 12, cursor: 'pointer' }}
+            onTouchStart={e => e.currentTarget.style.background = T.surface}
+            onTouchEnd={e => e.currentTarget.style.background = T.card}>
+            <span style={{ fontSize: 22, color: a.color }}>{a.icon}</span>
+            <span style={{ fontSize: 11, fontWeight: 600, color: T.t1, textAlign: 'center' }}>{a.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Rights */}
+      <MobSectionHeader title="Know Your Rights" />
+      <MobCard>
+        {[
+          { right: 'Max 6 months advance rent', cite: 'Act 220 s.16(5)', ok: false },
+          { right: 'Written tenancy agreement required', cite: 'PNDCL 138 s.4', ok: false },
+          { right: 'Rent card must be issued', cite: 'PNDCL 138 s.5', ok: false },
+        ].map((r, i) => (
+          <div key={i} style={{ display: 'flex', gap: 10, padding: '10px 0', borderBottom: i < 2 ? `1px solid ${T.border}` : 'none' }}>
+            <span style={{ color: T.red, fontSize: 12, marginTop: 2, flexShrink: 0 }}>✗</span>
+            <div>
+              <div style={{ fontSize: 13, color: T.t1, fontWeight: 500, marginBottom: 2 }}>{r.right}</div>
+              <div style={{ fontFamily: F.mono, fontSize: 9, color: T.t3 }}>{r.cite}</div>
+            </div>
+          </div>
+        ))}
+        <button onClick={() => onNav('rights')} style={{ width: '100%', marginTop: 12, padding: '10px', background: 'transparent', border: `1px solid ${T.border}`, borderRadius: 8, fontFamily: F.mono, fontSize: 10, color: T.t2, cursor: 'pointer', letterSpacing: 1 }}>
+          VIEW ALL RIGHTS →
+        </button>
+      </MobCard>
+    </div>
+  );
+};
+
+// ── MOBILE CONTENT ROUTER ────────────────────────────────────────────────────
+const MobileContent = ({ role, navPage, currentUser, handleNav, handleSelectCase, handleLogout }) => {
+  // Route to purpose-built mobile views for the most common pages
+  // Fall back to desktop component for pages not yet mobile-optimized
+
+  if (role === 'admin') {
+    if (navPage === 'dashboard') return <MobAdminDashboard onSelectCase={handleSelectCase} />;
+    if (navPage === 'cases')    return <MobCaseQueue onSelectCase={handleSelectCase} />;
+  }
+  if (role === 'manager') {
+    if (navPage === 'queue' || navPage === 'casedetail') return <MobCaseQueue onSelectCase={handleSelectCase} />;
+  }
+  if (role === 'officer') {
+    if (navPage === 'home') return <MobOfficerShift onNav={handleNav} />;
+    // QR, map, sync — render OfficerMobile which is already phone-native
+    if (['qr','map','sync','handover'].includes(navPage)) {
+      const OfficerContentFn = () => {
+        if (navPage==='qr') return <div style={{padding:'16px 16px 80px'}}><SectionHeader title="QR Scanner" sub="Scan a rent card QR code" /><div style={{maxWidth:380}}><QRScanner /></div></div>;
+        if (navPage==='map') return <div style={{padding:'16px 16px 80px'}}><SectionHeader title="Map View" sub="Risk-ranked properties" /><div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:12,overflow:'hidden',height:400}}><OfficerMap /></div></div>;
+        if (navPage==='sync') return <div style={{padding:'16px 16px 80px'}}><OfficerSync /></div>;
+        if (navPage==='handover') return <div style={{padding:'16px 16px 80px'}}><ShiftHandover /></div>;
+        return null;
+      };
+      return <OfficerContentFn />;
+    }
+  }
+  if (role === 'landlord') {
+    if (navPage === 'overview') return <MobLandlordOverview onNav={handleNav} />;
+  }
+  if (role === 'tenant') {
+    if (navPage === 'mytenancy') return <MobTenantDashboard onNav={handleNav} />;
+  }
+  // Account page
+  if (navPage === 'account') return <div style={{padding:'16px 16px 80px'}}><AccountSettings currentUser={currentUser} onLogout={handleLogout} /></div>;
+
+  // Fallback: desktop component wrapped with mobile padding
+  const desktopContent = {
+    admin: () => {
+      if (navPage==='regions')      return <AdminRegions />;
+      if (navPage==='sla')          return <SLATracker cases={CASES} />;
+      if (navPage==='flow')         return <EnforcementFlow />;
+      if (navPage==='properties')   return <PropertyDrilldown />;
+      if (navPage==='officers')     return <AdminOfficers />;
+      if (navPage==='performance')  return <OfficerPerformance />;
+      if (navPage==='gra')          return <GRAExport />;
+      if (navPage==='policy')       return <PolicyLog />;
+      if (navPage==='audit')        return <AdminAudit />;
+      if (navPage==='settings')     return <SettingsPage />;
+      if (navPage==='activity')     return <ActivityFeed />;
+      return <MobAdminDashboard onSelectCase={handleSelectCase} />;
+    },
+    manager: () => {
+      if (navPage==='casedetail')   return null; // handled above
+      if (navPage==='sla')          return <SLATracker cases={CASES} />;
+      if (navPage==='properties')   return <PropertyDrilldown />;
+      if (navPage==='assign')       return <AssignOfficers />;
+      if (navPage==='performance')  return <OfficerPerformance />;
+      return <MobCaseQueue onSelectCase={handleSelectCase} />;
+    },
+    landlord: () => {
+      if (navPage==='register')  return <LandlordRegistration />;
+      if (navPage==='tenants')   return <LandlordTenants />;
+      if (navPage==='payments')  return <LandlordPayments />;
+      if (navPage==='renewal')   return <TenancyRenewal />;
+      if (navPage==='documents') return <DocumentUpload />;
+      if (navPage==='tax')       return <LandlordTaxSummary />;
+      return <MobLandlordOverview onNav={handleNav} />;
+    },
+    tenant: () => {
+      if (navPage==='tracker')       return <ComplaintTracker />;
+      if (navPage==='receipts')      return <PaymentReceipt />;
+      if (navPage==='eviction')      return <EvictionAndLegalAid />;
+      if (navPage==='notifications') return <NotificationCentre />;
+      if (navPage==='ussd')          return <div style={{maxWidth:360,margin:'0 auto'}}><USSDSimulator /></div>;
+      return <MobTenantDashboard onNav={handleNav} />;
+    },
+  };
+
+  const content = desktopContent[role]?.();
+  return (
+    <div style={{ padding: '16px 16px 80px', overflowY: 'auto', flex: 1, WebkitOverflowScrolling: 'touch' }}>
+      {content}
+    </div>
+  );
+};
+
