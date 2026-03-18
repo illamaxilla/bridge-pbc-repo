@@ -60,14 +60,14 @@ export const FOUNDERS_DOC_ROUTES: { path: string; title: string; component: Reac
   { path: "/founders/portfolio",               title: "BRIDGE Portfolio Data — Full",              component: lazy(() => import("./pages/founders/BRIDGE_OpportunityDB_Members")) },
   { path: "/founders/impact-score",            title: "BRIDGE Impact Score™ — Full",              component: lazy(() => import("./pages/founders/BRIDGE_ImpactScoreDoc_Members")) },
   { path: "/founders/peace-prosperity",        title: "Peace & Prosperity — Full",                component: lazy(() => import("./pages/founders/BRIDGE_PeaceProsperity_Members")) },
-  { path: "/founders/budget-alignment",        title: "2026 Budget Alignment — Full",             component: lazy(() => import("./pages/founders/BRIDGE_2026 BudgetAlignment_Members")) },
+  { path: "/founders/budget-alignment",        title: "2026 Budget Alignment — Full",             component: lazy(() => import("./pages/founders/BRIDGE_2026_BudgetAlignment_Members")) },
   { path: "/founders/policy-tracker",          title: "Ghana Policy Tracker — Full",              component: lazy(() => import("./pages/founders/BRIDGE_PolicyTracker_Members")) },
-  { path: "/founders/analytics-dashboard",     title: "Monthly Analytics Report",                 component: lazy(() => import("./pages/founders/BRIDGE_Monthly Analytics Report_Members")) },
-  { path: "/founders/sector-briefs-full",      title: "Sector Intelligence Briefs — All 12",      component: lazy(() => import("./pages/founders/BRIDGE_All SectorBriefsFull_PAID")) },
+  { path: "/founders/analytics-dashboard",     title: "Monthly Analytics Report",                 component: lazy(() => import("./pages/founders/BRIDGE_MonthlyAnalyticsReport_Members")) },
+  { path: "/founders/sector-briefs-full",      title: "Sector Intelligence Briefs — All 12",      component: lazy(() => import("./pages/founders/BRIDGE_AllSectorBriefsFull_PAID")) },
   { path: "/founders/connect-whitepaper",      title: "BRIDGE Connect — Whitepaper",              component: lazy(() => import("./pages/founders/BRIDGE_Connect_Whitepaper")) },
-  { path: "/founders/document-library",        title: "Resource Hub — Members Only",              component: lazy(() => import("./pages/founders/BRIDGE_Bridge_ResourceHub_MembersOnly ")) },
+  { path: "/founders/document-library",        title: "Resource Hub — Members Only",              component: lazy(() => import("./pages/founders/BRIDGE_Bridge_ResourceHub_MembersOnly")) },
   // Cannabis — dashboard + all 11 individual licence briefs (founders copies)
-  { path: "/founders/cannabis-intelligence",            title: "Cannabis Intelligence Dashboard",       component: lazy(() => import("./pages/founders/BRIDGE_Cannabis_Intelligence_DEMO Dashboard")) },
+  { path: "/founders/cannabis-intelligence",            title: "Cannabis Intelligence Dashboard",       component: lazy(() => import("./pages/founders/BRIDGE_Cannabis_Intelligence_DEMODashboard")) },
   { path: "/founders/cannabis-intelligence/summary",    title: "Cannabis Intelligence Summary",         component: lazy(() => import("./pages/founders/BRIDGE_Cannabis_Intelligence_SeriesSummary")) },
   { path: "/founders/cannabis/cultivation",             title: "Cannabis — Cultivation",                component: lazy(() => import("./pages/founders/BRIDGE_Cannabis_Licence01_Cultivation")) },
   { path: "/founders/cannabis/processing",              title: "Cannabis — Processing",                 component: lazy(() => import("./pages/founders/BRIDGE_Cannabis_Licence02_Processing")) },
@@ -182,7 +182,7 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
   {
     path: "/resources/document-library",
     title: "Resource Hub — Members Only",
-    component: lazy(() => import("./pages/resources/BRIDGE_Bridge_ResourceHub_MembersOnly ")),
+    component: lazy(() => import("./pages/resources/BRIDGE_Bridge_ResourceHub_MembersOnly")),
     auth: "paid",
   },
   {
@@ -218,7 +218,7 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
   {
     path: "/resources/budget-alignment-public",
     title: "2026 Budget Alignment — What It Means for Investors",
-    component: lazy(() => import("./pages/resources/BRIDGE_2026 BudgetAlignment_public")),
+    component: lazy(() => import("./pages/resources/BRIDGE_2026_BudgetAlignment_public")),
     auth: "public",
   },
   {
@@ -285,7 +285,7 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
   {
     path: "/resources/members/budget-alignment",
     title: "2026 Budget Alignment — Full Document",
-    component: lazy(() => import("./pages/resources/BRIDGE_2026 BudgetAlignment_Members")),
+    component: lazy(() => import("./pages/resources/BRIDGE_2026_BudgetAlignment_Members")),
     auth: "paid",
   },
   {
@@ -297,7 +297,7 @@ export const BRIDGE_DOC_ROUTES: BridgeDocRoute[] = [
   {
     path: "/resources/members/analytics-dashboard",
     title: "Monthly Analytics Report — Members",
-    component: lazy(() => import("./pages/resources/BRIDGE_Monthly Analytics Report_Members")),
+    component: lazy(() => import("./pages/resources/BRIDGE_MonthlyAnalyticsReport_Members")),
     auth: "paid",
   },
   {

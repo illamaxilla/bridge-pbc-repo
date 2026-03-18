@@ -230,7 +230,7 @@ export const sectorSvgIcons = [
 
 export interface SectorData {
   id: string;
-  icon: any;
+  icon: React.ReactNode;
   svgIcon: (c: string, s?: number) => React.ReactNode;
   short: string;
   full: string;

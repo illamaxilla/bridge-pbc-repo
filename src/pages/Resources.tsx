@@ -2070,10 +2070,10 @@ export default function ResourcesPage() {
                         <span
                           className="py-[2px] px-[7px] rounded-[20px] text-[10px] font-bold font-[Inter,sans-serif] transition-all duration-[180ms]"
                           style={{
-                            background: (t as any).isPaid
+                            background: ("isPaid" in t && t.isPaid)
                               ? (isActive ? "rgba(184,217,53,0.3)" : "rgba(184,217,53,0.15)")
                               : (isActive ? "rgba(255,255,255,0.18)" : C.bg),
-                            color: (t as any).isPaid
+                            color: ("isPaid" in t && t.isPaid)
                               ? (isActive ? C.accent : C.primary)
                               : (isActive ? C.white : C.muted),
                           }}

@@ -24,7 +24,7 @@ export interface ActivityItem {
 
 export interface WatchlistSector {
   id: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ size: number; color: string }>;
   short: string;
   full: string;
   score: number;

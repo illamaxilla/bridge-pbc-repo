@@ -64,9 +64,9 @@ export function Card({ children, style: ex = {} }: CardProps) {
 }
 
 export interface TipProps {
-  active?: any;
-  payload?: any;
-  label?: any;
+  active?: boolean;
+  payload?: Array<{ name: string; value: number; stroke?: string; fill?: string }>;
+  label?: string;
 }
 
 export const Tip = ({ active, payload, label }: TipProps) => {
@@ -74,7 +74,7 @@ export const Tip = ({ active, payload, label }: TipProps) => {
   return (
     <div style={{ background: "#111827", color: "#fff", borderRadius: 8, padding: "8px 12px", fontSize: 11 }}>
       <div style={{ color: "rgba(255,255,255,0.5)", marginBottom: 4 }}>{label}</div>
-      {payload.map((p: any, i: number) => (
+      {payload.map((p, i) => (
         <div key={i} style={{ display: "flex", alignItems: "center", gap: 5 }}>
           <div style={{ width: 7, height: 7, borderRadius: 2, background: p.stroke || p.fill }} />
           <span>

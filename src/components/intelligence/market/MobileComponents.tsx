@@ -14,7 +14,7 @@ import { ChartTip } from "./DesktopComponents";
 import { MOV_TABS } from "./data";
 
 /* ── Shared mobile primitives ── */
-export function MCard({ children, style = {}, onClick }: { children?: any; style?: any; onClick?: () => void }) {
+export function MCard({ children, style = {}, onClick }: { children?: React.ReactNode; style?: React.CSSProperties; onClick?: () => void }) {
   return (
     <div
       style={{ borderRadius: 16, background: M.card, border: `1px solid ${M.borderG}`, overflow: "hidden", ...style }}
@@ -90,7 +90,7 @@ export function MCardHeader({ icon: Icon, iconColor = M.accent, title, badge, ba
   );
 }
 
-export function MSection({ icon, iconColor = M.accent, title, badge = undefined, badgeStyle = {}, defaultOpen = false, children }: { icon?: any; iconColor?: any; title?: any; badge?: any; badgeStyle?: any; defaultOpen?: boolean; children?: any }) {
+export function MSection({ icon, iconColor = M.accent, title, badge = undefined, badgeStyle = {}, defaultOpen = false, children }: { icon?: React.ComponentType<{ size: number; color: string }>; iconColor?: string; title?: React.ReactNode; badge?: React.ReactNode; badgeStyle?: React.CSSProperties; defaultOpen?: boolean; children?: React.ReactNode }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <MCard style={{ marginBottom: 10 }}>

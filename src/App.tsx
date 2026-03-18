@@ -1,7 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -24,8 +23,6 @@ import {
   FOUNDERS_DOC_ROUTES,
 } from "./routeConfig";
 
-const queryClient = new QueryClient();
-
 const PageLoading = () => (
   <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
     <div
@@ -43,13 +40,12 @@ const PageLoading = () => (
 );
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Sonner />
-        <BrowserRouter>
-          <Suspense fallback={<PageLoading />}>
-            <Routes>
+  <AuthProvider>
+    <TooltipProvider>
+      <Sonner />
+      <BrowserRouter>
+        <Suspense fallback={<PageLoading />}>
+          <Routes>
               {/* Public pages */}
               <Route path="/" element={<ErrorBoundary><Index /></ErrorBoundary>} />
               <Route path="/about" element={<ErrorBoundary><About /></ErrorBoundary>} />
@@ -135,16 +131,18 @@ const App = () => (
               <Route path="/founders" element={<ErrorBoundary><FoundersPortal /></ErrorBoundary>} />
               <Route path="/founders/apps-whitepaper" element={<ErrorBoundary><FoundersAppsWhitepaper /></ErrorBoundary>} />
 
-              {/* Founders document routes — no auth guards, direct access */}
+              {/* Founders document routes — require paid membership */}
               {FOUNDERS_DOC_ROUTES.map(({ path, title, component: DocComponent }) => (
                 <Route
                   key={path}
                   path={path}
                   element={
                     <ErrorBoundary>
-                      <SectorIntelligenceWrapper title={title}>
-                        <DocComponent />
-                      </SectorIntelligenceWrapper>
+                      <PaidRoute>
+                        <SectorIntelligenceWrapper title={title}>
+                          <DocComponent />
+                        </SectorIntelligenceWrapper>
+                      </PaidRoute>
                     </ErrorBoundary>
                   }
                 />
@@ -157,7 +155,6 @@ const App = () => (
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
-  </QueryClientProvider>
 );
 
 export default App;

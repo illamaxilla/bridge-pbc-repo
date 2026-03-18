@@ -75,7 +75,7 @@ export function Card({ children, style: ex = {} }) {
     </div>
   );
 }
-export function Pill({ children, active, onClick, col = undefined }: { children?: any; active?: any; onClick?: any; col?: any }) {
+export function Pill({ children, active, onClick, col = undefined }: { children?: React.ReactNode; active?: boolean; onClick?: () => void; col?: string }) {
   return (
     <button
       onClick={onClick}
@@ -97,7 +97,7 @@ export function Pill({ children, active, onClick, col = undefined }: { children?
     </button>
   );
 }
-export const ChartTip = ({ active, payload, label }: { active?: any; payload?: any; label?: any }) => {
+export const ChartTip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ name: string; value: number; color: string }>; label?: string }) => {
   if (!active || !payload?.length) return null;
   return (
     <div

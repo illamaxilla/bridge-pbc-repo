@@ -93,7 +93,7 @@ export interface ActivityItem {
 
 export interface Sector {
   id: string;
-  icon: any;
+  icon: React.ComponentType<{ size: number; color: string }>;
   short: string;
   full: string;
   tag: string;

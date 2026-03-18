@@ -388,13 +388,13 @@ export default function BRIDGEHomePage() {
   }, []);
 
   const insights = [
-    { category: "White Paper", title: "BRIDGE Foundational Framework: A Systematic Approach to Ghana's Development", image: "/images/professionals-discussing-charts.jpg" },
+    { category: "White Paper", title: "BRIDGE Foundational Framework: A Systematic Approach to Ghana's Development", image: "/images/professionals-discussing-charts.webp" },
     { category: "Infrastructure", title: "Infrastructure & Basic Services: Building the Foundation for Growth", image: "/images/infrastructure-surveyor.webp" },
-    { category: "Financial Inclusion", title: "Expanding Access: Financial Systems That Serve Every Ghanaian", image: "/images/professional-research.jpg" },
-    { category: "Agriculture", title: "Agriculture & Value Chains: From Farm to Market Excellence", image: "/images/market-woman-produce.png" },
-    { category: "Technology", title: "Technology & Innovation: Powering Ghana's Digital Future", image: "/images/professionals-tablet-office.jpg" },
-    { category: "Energy", title: "Energy & Renewables: Sustainable Power for a Growing Nation", image: "/images/engineers-automation.jpg" },
-    { category: "Health Systems", title: "Health Systems: Quality Care Within Reach", image: "/images/healthcare-pharmacy.jpg" },
+    { category: "Financial Inclusion", title: "Expanding Access: Financial Systems That Serve Every Ghanaian", image: "/images/professional-research.webp" },
+    { category: "Agriculture", title: "Agriculture & Value Chains: From Farm to Market Excellence", image: "/images/market-woman-produce.webp" },
+    { category: "Technology", title: "Technology & Innovation: Powering Ghana's Digital Future", image: "/images/professionals-tablet-office.webp" },
+    { category: "Energy", title: "Energy & Renewables: Sustainable Power for a Growing Nation", image: "/images/engineers-automation.webp" },
+    { category: "Health Systems", title: "Health Systems: Quality Care Within Reach", image: "/images/healthcare-pharmacy.webp" },
     { category: "Education", title: "Education & Skills: Preparing Ghana's Workforce", image: "/images/education-computer-lab.webp" },
   ];
 
@@ -641,7 +641,7 @@ export default function BRIDGEHomePage() {
             borderRadius: isMobile ? "16px" : "24px",
           }}
         >
-          <img src="/images/hero-accra-skyline.jpg" alt="Accra, Ghana skyline at night" className="absolute inset-0 w-full h-full object-cover" />
+          <img src="/images/hero-accra-skyline.webp" alt="Accra, Ghana skyline at night" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/75" />
         </div>
         {!isMobile && (
@@ -1225,23 +1225,23 @@ export default function BRIDGEHomePage() {
                 {
                   name: "Research",
                   description: "Deep market analysis and evidence-based diagnostics across all 12 sectors.",
-                  image: "/images/professional-research.jpg",
+                  image: "/images/professional-research.webp",
                 },
                 {
                   name: "Ventures",
                   description: "174+ designed initiatives spanning infrastructure to creative industries.",
-                  image: "/images/professional-ventures.jpg",
+                  image: "/images/professional-ventures.webp",
                 },
                 {
                   name: "Investment",
                   description: "$135M–$259M in indicative capital across diversified deployment strategies.",
-                  image: "/images/professionals-tablet-office.jpg",
+                  image: "/images/professionals-tablet-office.webp",
                 },
                 {
                   name: "Partnerships",
                   description:
                     "Strategic alliances with government, traditional authorities, and development partners.",
-                  image: "/images/strategy-meeting-african.jpg",
+                  image: "/images/strategy-meeting-african.webp",
                 },
               ].map((service, index) => (
                 <div
@@ -1683,7 +1683,7 @@ export default function BRIDGEHomePage() {
             height: isMobile ? "300px" : "450px",
           }}
         >
-          <img src="/images/team-collaboration.jpeg" alt="African professionals collaborating" className="absolute inset-0 w-full h-full object-cover" />
+          <img src="/images/team-collaboration.webp" alt="African professionals collaborating" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/40" />
           <div
             className="absolute rounded-full flex items-center justify-center"
@@ -1998,7 +1998,7 @@ export default function BRIDGEHomePage() {
         >
           {isMobile ? (
             <div className="relative rounded-3xl overflow-hidden bg-[#3D4F4F] bg-gradient-to-br from-[#2D3D3D] to-[#3D4F4F] min-h-[360px] flex flex-col justify-start">
-              <img src="/images/business-meeting.jpg" alt="African business professionals" className="absolute inset-0 w-full h-full object-cover" />
+              <img src="/images/business-meeting.webp" alt="African business professionals" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/40" />
               <div className="relative z-[1] p-6 flex flex-col h-full flex-1 min-h-[360px]">
                 <div className="flex-1">
@@ -2513,7 +2513,7 @@ export default function BRIDGEHomePage() {
                 <div
                   className="bg-[#3D4F4F] relative overflow-hidden"
                 >
-                  <img src="/images/consulting-partnership.jpg" alt="African professional presenting in boardroom" className="absolute inset-0 w-full h-full object-cover" />
+                  <img src="/images/consulting-partnership.webp" alt="African professional presenting in boardroom" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute bottom-6 left-6 right-6 bg-white/95 rounded-2xl p-[20px_24px] flex items-center gap-4">
                     <div
                       className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"

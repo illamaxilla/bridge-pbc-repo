@@ -12,7 +12,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { C, SECTORS, type Sector } from "./constants";
-import { BridgeLogo } from "./BridgeLogo";
+import { BridgeLogoSmallWhite as BridgeLogo } from "@/components/BridgeLogo";
 
 export interface SidebarProps {
   collapsed: boolean;

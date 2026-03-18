@@ -1,10 +1,10 @@
 # BRIDGE PBC — Comprehensive Codebase Architecture Review
 
-**Reviewed:** 2026-03-15
+**Reviewed:** 2026-03-17 (Updated)
 **Reviewer:** Senior Software Architect (15+ years production experience)
 **Repository:** bridge-pbc-repo
 **Platform:** Built with Lovable.dev (AI-powered app builder)
-**Codebase Size:** ~57,000 lines across 276+ files
+**Codebase Size:** ~281,744 lines across 330 source files (17MB src/)
 
 ---
 
@@ -155,9 +155,9 @@ index.html → main.tsx → App.tsx
 ### Overall Assessment: **B-** (Good foundation, significant technical debt in JSX layer)
 
 ### Strengths
-- **Zero `any` types** across the entire TypeScript codebase
+- **Minimal `any` types** — only 46 occurrences across the codebase (13 `as any`, 33 `: any`), concentrated in intelligence dashboard components. Zero `@ts-ignore` or `@ts-nocheck` directives.
 - **Zero `console.log`** statements in production code (only `console.error` in ErrorBoundary)
-- **Zero TODO/FIXME/HACK** comments
+- **Only 5 TODO/FIXME** comments across 4 files — very clean
 - **Clean TypeScript** in the app shell, hooks, context, and sector data layer
 - Proper use of `React.memo` on Header and Footer to prevent unnecessary re-renders
 
@@ -189,13 +189,19 @@ This severely hurts readability. `C`, `F`, `Gf`, `SH`, `Bp` are meaningless with
 **3. Massive File Sizes**
 | File | Lines | Issue |
 |------|-------|-------|
+| `BRIDGE_FoundersPortal_Private.jsx` | ~8,000+ | 342KB — largest single file |
 | `MobileDashboard.tsx` | ~5,000+ | Single component file |
 | `DesktopDashboard.tsx` | ~4,000+ | Single component file |
-| `Services.tsx` | 3,219 | Entire page in one file |
-| `Contact.tsx` | 2,564 | Entire page in one file |
-| `Index.tsx` | 2,527 | Entire page in one file |
-| `Cannabis_Intelligence_Dashboard.jsx` | 2,680 | Self-contained document |
+| `Manufacturing.tsx` (sector) | 4,251 | 162KB — large inline data |
+| `Technology.tsx` (sector) | 4,148 | 152KB — large inline data |
+| `Agriculture.tsx` (sector) | 3,998 | 152KB — large inline data |
+| `Services.tsx` | 3,226 | Entire page in one file |
+| `Contact.tsx` | 2,566 | Entire page in one file |
+| `Index.tsx` | 2,552 | Entire page in one file |
+| `community/index.tsx` | ~4,000+ | 166KB — full forum implementation |
 | Each Cannabis Licence page | ~1,920 | Near-identical structure |
+
+**12 Sector pages total: 42,909 lines** — each between 2,843 and 4,251 lines, all monolithic single-file components with inline data.
 
 **4. Duplicated Color/Font Definitions**
 The same color palette (`#1B4D3E`, `#B8D935`, `#FAF8F3`, etc.) is redefined in:
@@ -205,15 +211,29 @@ The same color palette (`#1B4D3E`, `#B8D935`, `#FAF8F3`, etc.) is redefined in:
 - `src/components/SiteFooter.tsx`
 - `src/components/SiteHeader.tsx` (as Tailwind arbitrary values)
 
-**5. Duplicated BridgeLogo Component**
+**5. Extreme Sector Page Duplication (~65% reducible)**
+All 12 sector pages duplicate identical patterns: `ScrollDots` component (23 lines, verbatim in each), `sectorData` object structure (24+ fields), identical imports, and identical section rendering. Data externalization exists in `src/data/sectors/` with 12 data files — but only Energy.tsx actually imports from its data file. The other 11 sectors define sectorData inline AND have duplicate data files, creating double maintenance burden. The `SectorPageTemplate.tsx` (205 lines) exists but underutilized — each sector still maintains 3,000-4,000 lines despite the template.
+
+**6. Duplicated BridgeLogo Component**
 The BRIDGE logo SVG exists in at least 4 separate files:
 - `src/components/BridgeLogo.tsx`
 - `src/components/intelligence/dashboard/BridgeLogo.tsx`
 - `src/components/intelligence/reports/BridgeLogo.tsx`
 - Inline in every `.jsx` page as a `Logo` component
 
-**6. Mixed .tsx and .jsx Files**
-28 page files are `.jsx` (no TypeScript) while the rest of the app is `.tsx`. The JSX files have zero type safety, no prop validation, and no IDE auto-completion.
+**7. Mixed .tsx and .jsx Files — 77 JSX Files**
+77 page files are `.jsx` (no TypeScript) while the rest of the app is `.tsx`. The JSX files have zero type safety, no prop validation, and no IDE auto-completion.
+
+**8. Filenames with Spaces — Build Risk**
+Several JSX files contain spaces in filenames, which can cause issues with build tools, imports, and version control:
+```
+BRIDGE_2026 BudgetAlignment_Members.jsx          ← space
+BRIDGE_All SectorBriefsFull_PAID.jsx             ← space
+BRIDGE_Monthly Analytics Report_Members.jsx       ← multiple spaces
+BRIDGE_Cannabis_Intelligence_DEMO Dashboard.jsx   ← space
+BRIDGE_Bridge_ResourceHub_MembersOnly .jsx        ← trailing space before extension
+```
+These are referenced in `routeConfig.tsx` lazy imports and will cause problems on case-sensitive filesystems or CI environments.
 
 ### Naming Conventions
 - **Components**: PascalCase — consistent ✓
@@ -302,14 +322,36 @@ The 28 `.jsx` pages total 68,524 lines. Each page contains:
 
 Even with lazy loading, each Cannabis Licence page is ~1,920 lines of self-contained JSX. The 11 licence pages alone are ~21,000 lines of near-identical code.
 
-**🟠 Missing Image Optimization**
-No `<img>` optimization strategy visible. No lazy loading for images, no srcset/sizes, no WebP fallback, no image CDN usage.
+**🟠 Missing Image Optimization — 4.3MB in public/images/**
+| Image | Size | Format | Issue |
+|-------|------|--------|-------|
+| `market-woman-produce.png` | 1.6MB | PNG | Should be WebP (~640KB) |
+| `ghana-buildings-aerial.webp` | 789KB | WebP | Acceptable |
+| `healthcare-pharmacy.jpg` | 590KB | JPG | Should be compressed |
+| `hero-accra-skyline.jpg` | 315KB | JPG | Should be compressed |
+| `professional-research.jpg` | 315KB | JPG | Should be compressed |
+
+No `<img>` optimization strategy: no lazy loading attributes, no srcset/sizes, no WebP fallback, no image CDN. The single 1.6MB PNG accounts for ~15% of total page payload.
 
 **🟠 Intelligence Dashboard Components Are Large**
 `DesktopDashboard.tsx` and `MobileDashboard.tsx` are massive single files. Even though they're lazy-loaded, once loaded they're very heavy. They should be split into sub-route chunks.
 
 **🟡 Inline `<style>` Tags in Every JSX Page**
 Each page injects a `<style>` tag with CSS animations and responsive rules. With 28 pages, this means the browser processes 28 separate style injections as users navigate. These should be consolidated into `index.css`.
+
+**🟠 Large Static Data Bundles in Intelligence Components**
+| File | Size | Content |
+|------|------|---------|
+| `intelligence/analytics/worldMapData.ts` | 127KB | 5,000+ coordinate tuples |
+| `intelligence/market/data.tsx` | 53KB | Market overview data |
+| `intelligence/dashboard/data.ts` | 37KB | Dashboard constants |
+| `intelligence/watchlist/data.ts` | 17KB | Watchlist data |
+| `intelligence/resources/data.ts` | 20KB | Resources data |
+
+Total: ~254KB of static data in intelligence modules. Only worldMapData is properly lazy-loaded.
+
+**🟡 Minimal Memoization — Only 31 Occurrences**
+`useMemo`, `useCallback`, and `React.memo` are used only 31 times across 16 files. Critically, **zero** memoization exists in the 12 sector pages (3,000-4,000 lines each with large data objects). The intelligence dashboard barrel exports (`export * from "./data"`) risk pulling in entire data modules even when only specific components are needed.
 
 **🟡 No Web Vitals / Performance Monitoring**
 No performance monitoring library (web-vitals, Sentry, etc.) is integrated.
@@ -328,9 +370,34 @@ No performance monitoring library (web-vitals, Sentry, etc.) is integrated.
 - ✅ **SELECT denied** on sensitive tables (subscribers, contact_messages, access_requests) — insert-only from client
 - ✅ **No SQL injection risk** — Supabase client uses parameterized queries
 - ✅ **XSS risk is low** — React's JSX auto-escapes by default, no `dangerouslySetInnerHTML` found
-- ✅ **Security headers** set in `vite.config.ts`: `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`
+- ✅ **Security headers** configured in both `vite.config.ts` and `netlify.toml`: X-Content-Type-Options, X-Frame-Options (SAMEORIGIN), X-XSS-Protection, Strict-Transport-Security (max-age=31536000 + preload), Referrer-Policy, Permissions-Policy (camera/microphone/geolocation disabled)
+- ✅ **CSP header** in `index.html`: frame-ancestors 'self', object-src 'none', base-uri 'self', connect-src restricted to self + Supabase domain
+- ✅ **Open redirect prevention** in Login.tsx: validates redirect param starts with "/" and not "//"
+- ✅ **No `dangerouslySetInnerHTML`** or `eval()` anywhere in codebase
+- ✅ **Chat API** (`server/chat.js`): Method validation (POST only), message format validation, conversation capped at 10 messages
 
 ### Issues
+
+**🔴 Founders Portal — Hardcoded Access Codes in Frontend**
+
+The Founders Portal (`src/pages/founders/BRIDGE_FoundersPortal_Private.jsx`) uses client-side-only password validation with hardcoded access codes:
+```javascript
+// Line ~3642 — access codes in plaintext, shipped to every browser
+const GUESTS = {
+  'BRIDGE-2026':  'Valued Guest',      // Generic / demo
+  'BRIDGE-KA':    'Kofi Acheampong',   // Founder
+  'BRIDGE-OS26':  'Osei',
+  'BRIDGE-KY26':  'Kyei',
+  'BRIDGE-AK26':  'Akwasi',
+  'BRIDGE-AF26':  'Afua',
+  'BRIDGE-JS26':  'Jesse',
+  'BRIDGE-JO26':  'Josh',
+  'BRIDGE-DM26':  'Damien',
+};
+```
+**Why this is dangerous:** Anyone inspecting the JS bundle or opening DevTools can see all access codes. Validation is a simple local object lookup with a fake 600ms delay — no server round-trip. A user can bypass by setting `guestName` in React state. The 30+ founder documents (including proprietary opportunity databases, cannabis intelligence, and internal strategy docs) are accessible to anyone who knows the URL structure, since founder document routes have **no auth guards at all** (see `App.tsx` lines 138-151).
+
+**Fix:** Move founder portal behind Supabase Auth with a `founders` role, or at minimum validate access codes server-side via a Supabase Edge Function. Remove hardcoded codes from client bundle.
 
 **🟠 Membership Tier Stored in Client-Accessible user_metadata**
 ```typescript
@@ -345,8 +412,11 @@ The "paid" tier is determined from `user_metadata`, which is readable and potent
 **🟡 No CSRF Protection Visible**
 The `subscribe()` and `submitAccessRequest()` functions accept form data and insert directly to Supabase. While Supabase anon key provides some protection, there's no rate limiting or CSRF token validation.
 
-**🟡 No Content Security Policy (CSP)**
-The security headers in `vite.config.ts` don't include a Content-Security-Policy header. This should be added, especially since the app injects inline `<style>` tags.
+**🟡 CSP Allows `unsafe-inline`**
+A Content-Security-Policy exists in `index.html` (line 6), which is good. However, it allows `script-src 'unsafe-inline'` and `style-src 'unsafe-inline'`, which weakens XSS protection. This is necessary given the 28 JSX pages that inject inline `<style>` tags, but should be addressed when those pages are consolidated.
+
+**🟡 No Rate Limiting on API Endpoints**
+The `/api/chat` endpoint (`server/chat.js`) has no rate limiting. An attacker could make unlimited Anthropic API calls, running up costs. The endpoint validates input format (POST only, array messages, max 10 messages) but has no request throttling.
 
 **🟡 Footer Links Use `href="#"`**
 Terms, Privacy, and Accessibility links all point to `href="#"`. These are placeholder links that should lead to actual legal pages.
@@ -422,20 +492,31 @@ There's no read layer, no admin API, no data fetching for the intelligence dashb
 | zod | 3.25.76 | ✅ Current | |
 | lucide-react | 0.462.0 | ✅ Current | |
 
+### Dependency Counts
+- **Production dependencies:** 49 packages
+- **Dev dependencies:** 33 packages
+- **28 Radix UI packages** (all wrapped by 45 shadcn/ui components)
+- **Zero redundancy detected** — no duplicate date libs, state managers, form libs, or HTTP clients
+
 ### Redundancy Issues
 
 **🟡 `sonner` + `@radix-ui/react-toast`**
 Both are toast notification libraries. The app uses `sonner` (via `<Sonner />` in App.tsx) but also has `@radix-ui/react-toast` installed as a Radix dependency. Not a major issue since Radix toast may be a transitive dep.
 
-**🟡 50+ Unused shadcn/ui Components**
-The `src/components/ui/` directory contains ~50 component files (calendar, carousel, menubar, navigation-menu, etc.). Many of these are never imported by any page or component. They were auto-scaffolded by Lovable.dev.
+**🟡 45 shadcn/ui Components — Many Unused**
+The `src/components/ui/` directory contains 45 component files (calendar, carousel, menubar, navigation-menu, etc.). Many of these are never imported by any page or component. They were auto-scaffolded by Lovable.dev. Tree-shaking should eliminate them from the production bundle.
 
 **🟡 `@tanstack/react-query` — Installed but Not Used**
-The QueryClient is set up but no queries or mutations exist. Either integrate it properly or remove it to reduce bundle size.
+The QueryClient is set up but no `useQuery` or `useMutation` calls exist anywhere. Either integrate it properly or remove it.
 
 ### Potentially Heavy Dependencies
-- `recharts` (~400KB gzipped) — necessary for the intelligence dashboard, but only used on a few pages. Lazy loading mitigates this.
-- `react-day-picker` + `date-fns` — used for calendar in engagement modal only.
+| Package | Est. Size | Usage | Risk |
+|---------|-----------|-------|------|
+| `recharts` | ~2.4MB | 12 imports across analytics | MEDIUM — chunked separately but large |
+| `@supabase/supabase-js` | ~800KB | Auth + DB core | LOW — chunked separately |
+| `lucide-react` | ~1.2MB | 95 icon imports throughout | LOW — tree-shakes well |
+| `@radix-ui/*` (28 packages) | ~2.5MB total | UI primitives | LOW — only 3 manually chunked, rest tree-shaken |
+| `date-fns` | ~40KB | Date manipulation | LOW — well-optimized |
 
 ---
 
@@ -606,7 +687,7 @@ The intelligence section has separate Desktop and Mobile component trees (`Deskt
 - Vitest configured with path aliases ✓
 - No Prettier config (inconsistent formatting risk)
 - No Husky/lint-staged (no pre-commit hooks)
-- No CI/CD pipeline visible in `.github/`
+- CI/CD pipeline exists in `.github/workflows/ci.yml` (lint → type check → test → build, on push/PR to main)
 
 ---
 
@@ -618,32 +699,39 @@ The intelligence section has separate Desktop and Mobile component trees (`Deskt
 ### B) Priority Issues List
 
 #### 🔴 CRITICAL — Fix Immediately
-1. **Membership tier bypass vulnerability** — `user_metadata` is client-writable, allowing users to self-upgrade to "paid" tier
-2. **Missing `contact_messages` table migration** — schema not fully tracked in version control
+1. **Founders portal access codes hardcoded in client JS** — 9 access codes in plaintext visible in browser DevTools, plus 30+ founder document routes have zero auth guards (direct URL access possible)
+2. **Membership tier bypass vulnerability** — `user_metadata` is client-writable, allowing users to self-upgrade to "paid" tier
+3. **Missing `contact_messages` table migration** — schema not fully tracked in version control
 
 #### 🟠 HIGH — Fix Soon
-3. **68K lines of duplicated JSX code** — 28 self-contained pages with identical design tokens, logo SVGs, and helper components
-4. **React Query installed but unused** — either integrate it or remove it to avoid confusion
-5. **Intelligence dashboard data is entirely static** — no API integration means the "intelligence" product has no live data
-6. **No tests for critical business paths** — Supabase services, intelligence dashboard, auth flow untested
-7. **3 BridgeLogo duplicates** — same SVG in 4 files (plus 28 inline copies in JSX pages)
+4. **68K+ lines of duplicated JSX code** — 77 JSX pages with identical design tokens, logo SVGs, and helper components; 42,909 lines in sector pages alone with ~65% duplication
+5. **Filenames with spaces** — at least 5 files have spaces in names, causing build/CI fragility
+6. **React Query installed but unused** — either integrate it or remove it to avoid confusion
+7. **Intelligence dashboard data is entirely static** — no API integration; 254KB of hardcoded data in intelligence modules
+8. **No tests for critical business paths** — Supabase services, intelligence dashboard, auth flow untested (6.7% test file ratio: 17 test files / 330 source files)
+9. **1.6MB PNG image** — `market-woman-produce.png` should be WebP (saves ~960KB); 4.3MB total in public/images/ with no lazy loading
+10. **3 BridgeLogo duplicates** — same SVG in 4 files (plus 28+ inline copies in JSX pages)
+11. **No rate limiting on /api/chat endpoint** — Anthropic API costs could spike from abuse
 
 #### 🟡 MEDIUM — Fix in Next Sprint
-8. **Placeholder links** — Terms, Privacy, Accessibility all point to `href="#"`
-9. **Single-letter variable names in JSX pages** — `C`, `F`, `Gf`, `SH`, `Bp` hurt readability
-10. **No Prettier or pre-commit hooks** — formatting inconsistency risk
-11. **50+ unused shadcn/ui components** — tree-shaken but cluttering the codebase
-12. **Desktop/Mobile dashboard duplication** — separate 4K+ line files for same feature
-13. **Missing CSP header** — security hardening gap
-14. **`.lovable/plan.md` documents known bugs** that haven't been fully resolved (href="#" issues, sector routing)
-15. **Inline `<style>` tags in every JSX page** — should be consolidated into CSS
+12. **Placeholder links** — Terms, Privacy, Accessibility may point to `href="#"` in some components
+13. **Single-letter variable names in JSX pages** — `C`, `F`, `Gf`, `SH`, `Bp` hurt readability
+14. **No Prettier or pre-commit hooks** — formatting inconsistency risk
+15. **45 shadcn/ui components, many unused** — tree-shaken but cluttering the codebase
+16. **Desktop/Mobile dashboard duplication** — separate 4K+ and 5K+ line files for same feature
+17. **CSP allows `unsafe-inline`** — weakens XSS protection (required by inline `<style>` tags)
+18. **`.lovable/plan.md` documents known bugs** that haven't been fully resolved
+19. **Inline `<style>` tags in every JSX page** — should be consolidated into CSS
+20. **Barrel exports in intelligence modules** — `export *` from data files risks pulling in entire modules
+21. **Only 31 useMemo/useCallback/React.memo usages** — zero in 12 sector pages (3K-4K lines each)
 
 #### 🟢 LOW — Nice to Have
-16. **No web vitals / performance monitoring**
-17. **No CI/CD pipeline**
-18. **README needs expansion**
-19. **No Storybook or component documentation**
-20. **No error tracking service (Sentry, etc.)**
+22. **No web vitals / performance monitoring**
+23. **CI pipeline exists** (`.github/workflows/ci.yml` — lint, type check, test, build) but could be expanded with E2E tests
+24. **README is only 26 lines** — needs architecture overview, onboarding guide, deployment docs
+25. **No Storybook or component documentation**
+26. **No error tracking service (Sentry, etc.)**
+27. **Only 12 try/catch blocks** across entire codebase — component-level error handling is minimal
 
 ---
 
@@ -916,7 +1004,7 @@ This would reduce each page from ~2,000 lines to ~200-500 lines of unique conten
 
 6. **Custom Hooks** — `useIsMobile`, `useScrollLock`, `useCounter` are minimal, focused, well-typed, and well-tested. They follow React best practices.
 
-7. **TypeScript Discipline** — Zero `any` types is remarkable for a project of this size. The `SectorData` type system with its nested interfaces (Solution, Competitor, Policy, etc.) is thorough.
+7. **TypeScript Discipline** — Only 46 `any` occurrences (mostly in intelligence dashboard dynamic rendering) and zero `@ts-ignore` is excellent for a project of this size. The `SectorData` type system with its nested interfaces (Solution, Competitor, Policy, etc.) is thorough.
 
 8. **Code Splitting** — Every page is lazy-loaded. The app shell is tiny. Initial load is fast.
 
@@ -932,7 +1020,10 @@ This would reduce each page from ~2,000 lines to ~200-500 lines of unique conten
 
 | Task | Impact | Effort | Files |
 |------|--------|--------|-------|
+| Fix founders portal security (move codes server-side, add auth guards) | 🔴 Critical | 4h | FoundersPortal_Private.jsx, App.tsx |
 | Fix membership tier security (use `app_metadata` or profiles table) | 🔴 Critical | 2h | AuthContext.tsx, 1 migration |
+| Rename files with spaces to use hyphens/underscores | 🟠 Build fix | 1h | 5+ files + routeConfig.tsx imports |
+| Convert 1.6MB PNG to WebP, compress other images | 🟠 Performance | 1h | public/images/ |
 | Consolidate BridgeLogo to single source | 🟠 Cleanup | 1h | Delete 3 files, update 5 imports |
 | Fix placeholder `href="#"` links in footer | 🟡 UX | 1h | SiteFooter.tsx |
 | Remove or integrate React Query | 🟡 Clarity | 2h | App.tsx, package.json |
@@ -962,7 +1053,8 @@ This would reduce each page from ~2,000 lines to ~200-500 lines of unique conten
 | Add CMS integration for document pages (Sanity, Contentful, or Supabase) | 🟠 Scalability | 2-3w | New content layer + template updates |
 | Implement proper payment/subscription system (Stripe + Supabase) | 🔴 Business | 2-3w | New Stripe integration + profiles table |
 | Add E2E tests with Playwright | 🟡 Quality | 1w | New test suite |
-| Set up CI/CD pipeline (GitHub Actions) | 🟡 DX | 1d | `.github/workflows/` |
+| Expand CI/CD pipeline (add E2E, staging deploy) | 🟡 DX | 1d | `.github/workflows/ci.yml` |
+| Add rate limiting to /api/chat endpoint | 🟡 Security | 2h | `server/chat.js` |
 | Add error tracking (Sentry) and web vitals monitoring | 🟡 Ops | 1d | Sentry SDK integration |
 | Add CSP headers and security audit | 🟡 Security | 1d | netlify.toml or vite.config.ts |
 | Migrate to React Router v7 (or TanStack Router) for type-safe routing | 🟢 Future-proof | 1w | Route config refactor |
@@ -972,8 +1064,25 @@ This would reduce each page from ~2,000 lines to ~200-500 lines of unique conten
 
 ## SUMMARY
 
-This is a **well-scaffolded but bifurcated codebase**. The TypeScript application shell (routing, auth, hooks, sector template system) is genuinely well-built — clean types, good patterns, solid security. The Lovable.dev-generated JSX document pages represent significant technical debt: 68K lines of duplicated, untyped, inline-styled code.
+This is a **well-scaffolded but bifurcated codebase** at 281,744 lines across 330 files. The TypeScript application shell (routing, auth, hooks, sector template system) is genuinely well-built — clean types, good patterns, solid security foundations. The Lovable.dev-generated JSX document pages represent significant technical debt: 77 JSX files with duplicated, untyped, inline-styled code.
 
-The **highest-priority action** is fixing the membership tier security bypass. The **highest-ROI refactor** is creating a shared DocumentPageTemplate to eliminate the massive JSX duplication. The **strongest asset** is the sector data architecture — it's the pattern the rest of the codebase should aspire to.
+**The highest-priority actions** are:
+1. Fixing the founders portal security (hardcoded access codes in client JS, unguarded document routes)
+2. Fixing the membership tier bypass (`user_metadata` is client-writable)
 
-For a Lovable.dev-generated project, this is above average. The team has clearly done meaningful work improving the generated output (centralized routing, shared Layout, auth guards, test coverage). The path forward is clear: consolidate the document layer, add a real API, and the architecture becomes genuinely scalable.
+**The highest-ROI refactor** is completing the sector data externalization (only 1 of 12 sectors migrated) and creating a shared DocumentPageTemplate to eliminate ~65% of the JSX duplication. **The strongest asset** is the sector data architecture — it's the pattern the rest of the codebase should aspire to.
+
+For a Lovable.dev-generated project, this is above average. The team has clearly done meaningful work improving the generated output (centralized routing, shared Layout, auth guards, test coverage, CI pipeline, comprehensive security headers, RLS policies). The path forward is clear: fix the two security issues, consolidate the document layer, add a real API, and the architecture becomes genuinely scalable.
+
+### Overall Grades
+
+| Area | Grade | Notes |
+|------|-------|-------|
+| Architecture | B+ | Clean SPA structure, good routing, proper auth flow |
+| Code Quality | C+ | Excellent TS layer, massive JSX debt |
+| Security | B- | Good foundations, 2 critical issues |
+| Performance | C | Lazy loading good, images/data bundles bad |
+| Testing | D+ | 6.7% coverage, core tested, features not |
+| Dependencies | A- | Zero redundancy, modern stack, well-chosen |
+| Scalability | C+ | Template system good, data layer not ready |
+| Developer Experience | C | Good tooling, poor documentation |
