@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // RENTGUARD GHANA — PRODUCT LANDING PAGE
@@ -1647,7 +1649,7 @@ const Footer = () => (
 
 
 // ── LOGIN MODAL ─────────────────────────────────────────────────────────────
-const LoginModal = ({ onClose }) => {
+const LoginModal = ({ onClose, onSuccess, onRequestAccess }) => {
   const [name, setName]         = useState('');
   const [passcode, setPasscode] = useState('');
   const [error, setError]       = useState('');
@@ -1665,11 +1667,26 @@ const LoginModal = ({ onClose }) => {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  const submit = () => {
+  const submit = async () => {
     if (!name.trim() || !passcode.trim()) { setError('Please enter your name and passcode.'); return; }
     setError(''); setLoading(true);
-    // Production: replace with real auth
-    setTimeout(() => { setLoading(false); setError('Invalid passcode. Contact your BRIDGE representative for access.'); }, 1000);
+    try {
+      const { data, error: rpcError } = await supabase.rpc('validate_founder_code', {
+        input_code: passcode.trim().toUpperCase(),
+      });
+      if (rpcError) throw rpcError;
+      if (data) {
+        sessionStorage.setItem('rentguard_demo_access', JSON.stringify({ name: name.trim(), ts: Date.now() }));
+        onSuccess?.();
+      } else {
+        setError('Invalid passcode. Contact your BRIDGE representative for access.');
+      }
+    } catch (e) {
+      console.error('[RentGuard] Passcode verification failed:', e);
+      setError('Unable to verify passcode. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const F = {
@@ -1760,7 +1777,7 @@ const LoginModal = ({ onClose }) => {
           <div style={{ textAlign: 'center', fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#2A4030', lineHeight: 1.6 }}>
             Don't have a passcode?{' '}
             <span style={{ color: '#0FA86A', cursor: 'pointer', textDecoration: 'underline', textDecorationStyle: 'dotted' }}
-              onClick={onClose}>
+              onClick={() => { onClose(); onRequestAccess?.(); }}>
               Request access →
             </span>
           </div>
@@ -1988,6 +2005,7 @@ const DemoModal = ({ onClose }) => {
 
 // ── ROOT ───────────────────────────────────────────────────────────────────
 export default function RentGuardLanding() {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const openModal = () => setShowModal(true);
@@ -1999,7 +2017,13 @@ export default function RentGuardLanding() {
     <div>
       <GlobalStyles />
       {showModal && <DemoModal onClose={closeModal} />}
-      {showLogin && <LoginModal onClose={closeLogin} />}
+      {showLogin && (
+        <LoginModal
+          onClose={closeLogin}
+          onSuccess={() => { closeLogin(); navigate('/apps/rentguard/demo'); }}
+          onRequestAccess={() => navigate('/contact')}
+        />
+      )}
       <Navbar onDemo={openModal} onLogin={openLogin} />
       <Hero onDemo={openModal} />
       <ProblemSection />

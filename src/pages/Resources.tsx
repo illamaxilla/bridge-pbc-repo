@@ -47,6 +47,7 @@ import {
   ArrowLeft,
   X,
   LayoutDashboard,
+  LayoutGrid,
   Crown,
   Award,
   Sparkles,
@@ -1953,6 +1954,7 @@ export default function ResourcesPage() {
     { id: "gipc", label: "GIPC Profiles", mobileLabel: "GIPC Profile", icon: BookCopy, count: "13 profiles" },
     { id: "library", label: "Document Library", mobileLabel: "Library", icon: Folder, count: `${docs.length} resources` },
     { id: "resourcehub", label: "Resource Hub", mobileLabel: "Resource Hub", icon: Crown, count: "Paid", isPaid: true },
+    { id: "bridgeapps", label: "BRIDGE Apps", mobileLabel: "Apps", icon: LayoutGrid, count: "Demo" },
   ];
 
   return (
@@ -2054,7 +2056,13 @@ export default function ResourcesPage() {
                   return (
                     <button
                       key={t.id}
-                      onClick={() => setTab(t.id)}
+                      onClick={() => {
+                        if (t.id === "bridgeapps") {
+                          navigate("/apps");
+                        } else {
+                          setTab(t.id);
+                        }
+                      }}
                       className="flex items-center gap-[7px] border-none rounded-[7px] cursor-pointer font-[Inter,sans-serif] transition-all duration-[180ms] whitespace-nowrap"
                       style={{
                         padding: mobile ? "8px 14px" : "8px 18px",
