@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ═══════════════════════════════════════════════════════════════
 // BRIDGE Apps — Landing Page
@@ -17,6 +18,80 @@ const C = {
 };
 
 const LAUNCH = new Date('2026-05-17T00:00:00');
+
+const NAV_ITEMS = [
+  { label: "Home",               to: "/" },
+  { label: "About",              to: "/about" },
+  { label: "Methodology",        to: "/methodology" },
+  { label: "Services",           to: "/services" },
+  { label: "Sectors",            to: "/sectors" },
+  { label: "Insight",            to: "/insights" },
+  { label: "BRIDGE Intelligence", to: "/intelligence/dashboard" },
+  { label: "Community",          to: "/community" },
+  { label: "Resources",          to: "/resources" },
+  { label: "Contact",            to: "/contact" },
+  { label: "Policy Updates",     to: "/policy" },
+];
+
+// ── Menu Overlay ──────────────────────────────────────────────
+const MenuOverlay = ({ open, onClose, navigate }) => {
+  if (!open) return null;
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 9999,
+      background: C.dark, color: C.white,
+      display: 'flex', flexDirection: 'column',
+      fontFamily: 'Inter, sans-serif',
+      animation: 'menuFadeIn 0.2s ease',
+    }}>
+      <style>{`
+        @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
+      `}</style>
+      {/* Top bar */}
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '18px 24px', borderBottom: `1px solid #333`,
+      }}>
+        <span style={{ fontSize: 14, fontWeight: 700, color: C.white, letterSpacing: '-0.3px' }}>
+          <span>BRIDGE</span>{' '}<span style={{ color: C.accent }}>Apps</span>
+        </span>
+        <div
+          onClick={onClose}
+          style={{
+            width: 32, height: 32, borderRadius: '50%', border: '1px solid #444',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">
+            <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+          </svg>
+        </div>
+      </div>
+      {/* Nav items */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 0' }}>
+        {NAV_ITEMS.map((item) => (
+          <div
+            key={item.to}
+            onClick={() => { navigate(item.to); onClose(); }}
+            style={{
+              padding: '16px 28px', cursor: 'pointer',
+              fontSize: 18, fontWeight: 400, color: 'rgba(255,255,255,0.85)',
+              borderBottom: '1px solid #222', transition: 'background 0.15s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = '#252525'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+          >
+            {item.label}
+          </div>
+        ))}
+      </div>
+      {/* Footer */}
+      <div style={{ padding: '16px 28px', borderTop: '1px solid #333', fontSize: 11, color: '#666' }}>
+        {'\u00A9'} 2026 BRIDGE PBC
+      </div>
+    </div>
+  );
+};
 
 // ── App Data ──────────────────────────────────────────────────
 const apps = [
@@ -174,7 +249,7 @@ const MobileCountdown = ({ app, onBack, timeLeft }) => (
 // ═══════════════════════════════════════════════════════════════
 // MOBILE — Swipeable Card Carousel
 // ═══════════════════════════════════════════════════════════════
-function MobileGrid({ onSelect }) {
+function MobileGrid({ onSelect, menuOpen, setMenuOpen, navigate }) {
   const [active, setActive] = useState(0);
 
   const handleScroll = (e) => {
@@ -210,15 +285,20 @@ function MobileGrid({ onSelect }) {
         padding: '14px 20px', flexShrink: 0,
       }}>
         <Logo height={20} />
-        <div style={{
-          width: 30, height: 30, borderRadius: '50%', border: `1px solid ${C.line}`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>
+        <div
+          onClick={() => setMenuOpen(true)}
+          style={{
+            width: 30, height: 30, borderRadius: '50%', border: `1px solid ${C.line}`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+          }}
+        >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="2" strokeLinecap="round">
             <path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/>
           </svg>
         </div>
       </div>
+
+      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} navigate={navigate} />
 
       {/* Header — more breathing room, editorial font */}
       <div style={{ textAlign: 'center', padding: '102px 20px 24px', flexShrink: 0 }}>
@@ -456,7 +536,7 @@ const DesktopCountdown = ({ app, onBack, timeLeft }) => (
 // ═══════════════════════════════════════════════════════════════
 // DESKTOP — Grid
 // ═══════════════════════════════════════════════════════════════
-const DesktopGrid = ({ hovered, setHovered, onSelect }) => (
+const DesktopGrid = ({ hovered, setHovered, onSelect, menuOpen, setMenuOpen, navigate }) => (
   <div style={{
     width: '100vw', height: '100vh', overflow: 'hidden',
     backgroundColor: C.bg, fontFamily: 'Inter, sans-serif',
@@ -473,16 +553,21 @@ const DesktopGrid = ({ hovered, setHovered, onSelect }) => (
         <span style={{ fontSize: '9px', fontWeight: 600, color: C.label, letterSpacing: '1.5px', textTransform: 'uppercase' }}>
           BRIDGE Applications{'\u2122'}
         </span>
-        <div style={{
-          width: 32, height: 32, borderRadius: '50%', border: `1px solid ${C.line}`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-        }}>
+        <div
+          onClick={() => setMenuOpen(true)}
+          style={{
+            width: 32, height: 32, borderRadius: '50%', border: `1px solid ${C.line}`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+          }}
+        >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="2" strokeLinecap="round">
             <path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/>
           </svg>
         </div>
       </div>
     </div>
+
+    <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} navigate={navigate} />
 
     {/* Header — 80px padding */}
     <div style={{ textAlign: 'center', padding: '0 80px', marginBottom: 18, flexShrink: 0 }}>
@@ -595,6 +680,8 @@ export default function BRIDGEAppsLanding() {
   const [isMobile, setIsMobile] = useState(false);
   const [hovered, setHovered] = useState(null);
   const [selectedApp, setSelectedApp] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const timeLeft = useCountdown();
 
   useEffect(() => {
@@ -606,14 +693,15 @@ export default function BRIDGEAppsLanding() {
 
   const onSelect = (app) => setSelectedApp(app);
   const onBack = () => setSelectedApp(null);
+  const menuProps = { menuOpen, setMenuOpen, navigate };
 
   if (isMobile) {
     return selectedApp
       ? <MobileCountdown app={selectedApp} onBack={onBack} timeLeft={timeLeft} />
-      : <MobileGrid onSelect={onSelect} />;
+      : <MobileGrid onSelect={onSelect} {...menuProps} />;
   }
 
   return selectedApp
     ? <DesktopCountdown app={selectedApp} onBack={onBack} timeLeft={timeLeft} />
-    : <DesktopGrid hovered={hovered} setHovered={setHovered} onSelect={onSelect} />;
+    : <DesktopGrid hovered={hovered} setHovered={setHovered} onSelect={onSelect} {...menuProps} />;
 }
