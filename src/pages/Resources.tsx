@@ -47,10 +47,12 @@ import {
   ArrowLeft,
   X,
   LayoutDashboard,
+  LayoutGrid,
   Crown,
   Award,
   Sparkles,
 } from "lucide-react";
+import { BridgeAppsGate, BridgeAppsLanding } from "@/components/resources/BridgeAppsTab";
 
 // ─── Design System ────────────────────────────────────────
 import { colors, layout } from "@/lib/theme";
@@ -1875,6 +1877,14 @@ export default function ResourcesPage() {
   const [filter, setFilter] = useState("All");
   const [showAuth, setShowAuth] = useState(false);
   const [notifyModal, setNotifyModal] = useState<{ open: boolean; title: string }>({ open: false, title: "" });
+  const [appsUnlocked, setAppsUnlocked] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem("bridge_apps_unlocked");
+      if (stored) return !!JSON.parse(stored).name;
+    } catch {}
+    return false;
+  });
+  const [showAppsGate, setShowAppsGate] = useState(false);
 
   const handleCardClick = (update: typeof updates[number]) => {
     if (update.free) {
@@ -1953,6 +1963,7 @@ export default function ResourcesPage() {
     { id: "gipc", label: "GIPC Profiles", mobileLabel: "GIPC Profile", icon: BookCopy, count: "13 profiles" },
     { id: "library", label: "Document Library", mobileLabel: "Library", icon: Folder, count: `${docs.length} resources` },
     { id: "resourcehub", label: "Resource Hub", mobileLabel: "Resource Hub", icon: Crown, count: "Paid", isPaid: true },
+    { id: "bridgeapps", label: "BRIDGE Apps", mobileLabel: "Apps", icon: LayoutGrid, count: "Demo" },
   ];
 
   return (
@@ -2054,7 +2065,13 @@ export default function ResourcesPage() {
                   return (
                     <button
                       key={t.id}
-                      onClick={() => setTab(t.id)}
+                      onClick={() => {
+                        if (t.id === "bridgeapps" && !appsUnlocked) {
+                          setShowAppsGate(true);
+                        } else {
+                          setTab(t.id);
+                        }
+                      }}
                       className="flex items-center gap-[7px] border-none rounded-[7px] cursor-pointer font-[Inter,sans-serif] transition-all duration-[180ms] whitespace-nowrap"
                       style={{
                         padding: mobile ? "8px 14px" : "8px 18px",
@@ -2124,6 +2141,7 @@ export default function ResourcesPage() {
                   navigate("/membership");
                 }
               }} onNavigate={() => navigate("/resources/document-library")} />}
+              {tab === "bridgeapps" && <BridgeAppsLanding mobile={mobile} />}
             </div>
           </div>
         </div>
@@ -2190,6 +2208,17 @@ export default function ResourcesPage() {
         docTitle={notifyModal.title}
         isLoggedIn={!!user}
       />
+      {showAppsGate && (
+        <BridgeAppsGate
+          onAuth={(name) => {
+            sessionStorage.setItem("bridge_apps_unlocked", JSON.stringify({ name, ts: Date.now() }));
+            setAppsUnlocked(true);
+            setShowAppsGate(false);
+            setTab("bridgeapps");
+          }}
+          onClose={() => setShowAppsGate(false)}
+        />
+      )}
     </div>
     </Layout>
   );
