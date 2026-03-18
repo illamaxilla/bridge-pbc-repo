@@ -83,6 +83,30 @@ export type Database = {
         }
         Relationships: []
       }
+      founder_access_codes: {
+        Row: {
+          id: string
+          code: string
+          guest_name: string
+          active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          code: string
+          guest_name: string
+          active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          code?: string
+          guest_name?: string
+          active?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
       subscribers: {
         Row: {
           created_at: string
@@ -106,7 +130,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      validate_founder_code: {
+        Args: {
+          input_code: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

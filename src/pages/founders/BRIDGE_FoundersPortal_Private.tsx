@@ -3664,7 +3664,8 @@ const LoginGate = ({ onAuth }) => {
       } else {
         setErr('Access code not recognised. Please check the code provided to you.');
       }
-    } catch {
+    } catch (e) {
+      console.error('[BRIDGE] Founder code verification failed:', e);
       setErr('Unable to verify code. Please try again.');
     } finally {
       setBusy(false);
