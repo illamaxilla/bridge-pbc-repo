@@ -454,7 +454,7 @@ const MOB_CHAPTERS_PUB = [
     title: 'Peace & Prosperity',
     label: 'Overview',
     bg: C.ink,
-    render: () => (
+    Render: () => (
       <div style={{minHeight:'100%',display:'flex',flexDirection:'column',padding:'28px 20px 32px'}}>
         {/* Eyebrow */}
         <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'32px'}}>
@@ -502,7 +502,7 @@ const MOB_CHAPTERS_PUB = [
     title: 'Executive Summary',
     label: 'Summary',
     bg: C.paper,
-    render: () => (
+    Render: () => (
       <div style={{padding:'28px 20px 32px'}}>
         <div style={{width:'32px',height:'3px',background:C.lime,marginBottom:'8px'}}/>
         <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'20px'}}>Executive Summary</div>
@@ -525,7 +525,7 @@ const MOB_CHAPTERS_PUB = [
     title: 'A Different Starting Point',
     label: 'Starting Point',
     bg: C.paperDark,
-    render: () => (
+    Render: () => (
       <div style={{padding:'28px 20px 32px'}}>
         <div style={{width:'32px',height:'3px',background:C.lime,marginBottom:'8px'}}/>
         <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'16px'}}>I — A Different Starting Point</div>
@@ -549,7 +549,7 @@ const MOB_CHAPTERS_PUB = [
     title: 'What BRIDGE Means by Peace',
     label: 'Peace',
     bg: C.paper,
-    render: () => {
+    Render: () => {
       const [active, setActive] = useState(0);
       return (
         <div style={{padding:'28px 20px 32px'}}>
@@ -595,7 +595,7 @@ const MOB_CHAPTERS_PUB = [
     title: 'What BRIDGE Means by Prosperity',
     label: 'Prosperity',
     bg: C.paperDark,
-    render: () => (
+    Render: () => (
       <div style={{padding:'28px 20px 32px'}}>
         <div style={{width:'32px',height:'3px',background:C.lime,marginBottom:'8px'}}/>
         <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'16px'}}>III — What BRIDGE Means by Prosperity</div>
@@ -632,7 +632,7 @@ const MOB_CHAPTERS_PUB = [
     title: 'Members Access',
     label: 'Members',
     bg: C.forest,
-    render: () => {
+    Render: () => {
       const [expanded, setExpanded] = useState(false);
       const PREVIEW = 4;
       const visible = expanded ? GATE_ITEMS : GATE_ITEMS.slice(0, PREVIEW);
@@ -673,7 +673,7 @@ const MOB_CHAPTERS_PUB = [
     title: 'Ghana First',
     label: 'Ghana First',
     bg: C.ink,
-    render: () => (
+    Render: () => (
       <div style={{padding:'28px 20px 32px',minHeight:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}>
         <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.lime,marginBottom:'16px'}}>A Note on Whose Flourishing</div>
         <p style={{fontFamily:F.display,fontSize:'22px',fontWeight:700,fontStyle:'italic',color:C.paper,lineHeight:1.45,marginBottom:'24px'}}>
@@ -748,7 +748,7 @@ const MobileReader = ({chapters}) => {
 
       {/* ── Content area ── */}
       <div key={ch.id} style={{flex:1,overflowY:'auto',WebkitOverflowScrolling:'touch',paddingBottom:'env(safe-area-inset-bottom,16px)'}}>
-        <ch.render/>
+        <ch.Render/>
       </div>
 
       {/* ── Bottom navigation ── */}

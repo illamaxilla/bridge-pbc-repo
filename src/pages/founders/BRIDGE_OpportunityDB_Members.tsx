@@ -212,7 +212,7 @@ const OPPORTUNITIES = [
     crossSectors:[1,6,8,9], crossNotes:'Channels diaspora capital into all 12 sectors. Real estate product overlap (S8). Tourism investment pipeline (S9).',
   },
   { id:'F-04', sector:2, title:'Digital Susu Integration Platform',
-    desc:"Formalizing Ghana's \$2B+ informal rotating savings system with digital ledgers, credit scoring, and insurance wrapping.",
+    desc:"Formalizing Ghana's $2B+ informal rotating savings system with digital ledgers, credit scoring, and insurance wrapping.",
     fullDesc:"Susu — Ghana's indigenous rotating savings and credit system — mobilizes an estimated $2B+ annually through 200,000+ collectors nationwide. The system works, but collapses are common: collector defaults, cash theft, illness. BRIDGE formalizes the susu model with digital ledgers, mobile notifications, collector accountability records, and group savings insurance. The platform also extracts credit data, enabling members with 12+ months of participation history to access formal credit products.",
     score:88, dims:[27,22,22,17], subDims:{pp:[10,9,8],sf:[9,8,5],fe:[8,8,6],fs:[6,6,5]},
     tier:'Core', capMin:0.5, capMax:2, stage:'Seed', region:'National', tags:['FinTech','Savings','Informal'],

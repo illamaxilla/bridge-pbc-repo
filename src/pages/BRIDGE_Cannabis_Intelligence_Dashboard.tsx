@@ -425,7 +425,7 @@ const Cover = ({logoRef, setPage}) => (
       {/* Alert tag */}
       <div className="cover-alert" style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'18px',flexWrap:'wrap'}}>
         <div style={{background:C.lime,padding:'4px 10px',fontFamily:F.sans,fontSize:'9px',fontWeight:800,letterSpacing:'2.5px',textTransform:'uppercase',color:C.ink}}>INTELLIGENCE ALERT</div>
-        <div style={{fontFamily:F.mono,fontSize:'10px',color:'rgba(255,255,255,0.28)',letterSpacing:'0.5px'}}>NCC/PAIRD/600/20/02//VOL1/05 · Issued 26 Feb 2026 · BRIDGE Analysis March 2026</div>
+        <div style={{fontFamily:F.mono,fontSize:'10px',color:'rgba(255,255,255,0.28)',letterSpacing:'0.5px'}}>NCC/PAIRD/600/20/02//VOL1/05 · Issued 26 Feb 2026 · BRIDGE Analysis March 2026</div>
       </div>
       {/* Headline */}
       <h1 style={{fontFamily:F.display,fontSize:'clamp(28px,5vw,60px)',fontWeight:900,color:C.paper,lineHeight:1.05,marginBottom:'16px',maxWidth:'780px'}}>
@@ -490,7 +490,7 @@ const PolicyContext = () => (
           <div style={{fontFamily:F.sans,fontSize:'10px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.muted,marginBottom:'14px'}}>What Happened</div>
           <h2 style={{fontFamily:F.display,fontSize:'clamp(18px,2.5vw,28px)',fontWeight:700,color:C.ink,lineHeight:1.25,marginBottom:'16px'}}>The Positions Are Open.<br/>The Architecture Is Unwritten.</h2>
           <p style={{fontFamily:F.body,fontSize:'15px',fontWeight:300,lineHeight:1.85,color:C.ink,marginBottom:'14px'}}>
-            On 26 February 2026, Ghana’s Minister for the Interior launched the national licensing regime — operationalising Section 43 of NCC Act 1019 (2020), as amended by Act 1100 (2023) and implemented through L.I. 2475. Five years of legal delays ended in one announcement. Applications are now open across all 11 categories. What is not yet decided is who holds them.</p>
+            On 26 February 2026, Ghana’s Minister for the Interior launched the national licensing regime — operationalising Section 43 of NCC Act 1019 (2020), as amended by Act 1100 (2023) and implemented through L.I. 2475. Five years of legal delays ended in one announcement. Applications are now open across all 11 categories. What is not yet decided is who holds them.</p>
           <p style={{fontFamily:F.body,fontSize:'15px',fontWeight:300,lineHeight:1.85,color:C.ink,marginBottom:'14px'}}>
             The regime is strictly limited to THC ≤0.3% on a dry weight basis — industrial fibre, seed, and pharmaceutical applications. Eleven licence categories. Three-year renewable terms. Single point of contact: the NCC Cannabis Regulations Department.
           </p>
@@ -1237,10 +1237,10 @@ const Gate = ({setTier, setPage, setShowLogin, setLoginTarget}) => {
               </div>
             </div>
             {[
-              '✔  All 11 Ghana cannabis briefs',
-              '✔  All 12 BRIDGE sector analyses',
-              '✔  Quarterly intelligence updates',
-              '✔  Partner + investor network access',
+              '✔  All 11 Ghana cannabis briefs',
+              '✔  All 12 BRIDGE sector analyses',
+              '✔  Quarterly intelligence updates',
+              '✔  Partner + investor network access',
             ].map((item, i) => (
               <div key={i} style={{fontFamily:F.sans,fontSize:'11px',color:'rgba(250,248,243,0.55)',lineHeight:1.4,padding:'5px 0',borderBottom:'1px solid rgba(255,255,255,0.04)'}}>{item}</div>
             ))}
@@ -1659,7 +1659,7 @@ const Footer = () => (
         <Logo height={18} variant="white"/>
         <div style={{width:'1px',height:'14px',background:'rgba(255,255,255,0.15)'}}/>
         <div>
-          <div style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,0.35)',marginBottom:'2px'}}>Ghana Cannabis Intelligence · NCC L.I. 2475 · March 2026</div>
+          <div style={{fontFamily:F.sans,fontSize:'10px',color:'rgba(250,248,243,0.35)',marginBottom:'2px'}}>Ghana Cannabis Intelligence · NCC L.I. 2475 · March 2026</div>
           <div style={{fontFamily:F.body,fontSize:'9px',fontStyle:'italic',color:'rgba(250,248,243,0.2)'}}>Blending Resources and Innovation to Drive Ghana’s Empowerment · bridgepbc.com</div>
         </div>
       </div>
@@ -2250,7 +2250,7 @@ const CBriefSelector = ({seg}) => {
   const [sel, setSel] = useState(new Set());
   const [email, setEmail] = useState('');
   const [done, setDone] = useState(false);
-  const toggle = n => { const next = new Set(sel); next.has(n)?next.delete(n):next.add(n); setSel(next); };
+  const toggle = n => { const next = new Set(sel); if(next.has(n)){next.delete(n)}else{next.add(n)}; setSel(next); };
   const total = [...sel].reduce((a,n)=>a+C_PRICES[n],0);
   const all = sel.size===C_LICENCES.length;
   const recLics = C_LICENCES.filter(l=>l.segs.includes(seg));

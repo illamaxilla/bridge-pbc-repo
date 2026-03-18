@@ -351,7 +351,7 @@ const published = [
       "Revenue models, capex ranges, and breakeven timelines",
       "Regulatory compliance requirements and application process",
     ],
-  },  ,
+  },
   {
     cat: "Reports", tag: "Public Benefit Whitepaper",
     title: "Closing the Intelligence Gap: A Scientific & Ecological Case for Democratic Access to Development Intelligence",

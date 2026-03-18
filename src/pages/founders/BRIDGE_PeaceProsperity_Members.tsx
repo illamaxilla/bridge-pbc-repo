@@ -776,7 +776,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'Peace & Prosperity',
     label: 'Overview',
     bg: C.ink,
-    render: () => (
+    Render: () => (
       <div style={{minHeight:'100%',display:'flex',flexDirection:'column',padding:'28px 20px 32px'}}>
         <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'32px'}}>
           <DocumentLogo height={16} variant="white"/>
@@ -815,7 +815,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'A Different Starting Point',
     label: 'Starting Point',
     bg: C.paperDark,
-    render: () => (
+    Render: () => (
       <div style={{padding:'28px 20px 32px'}}>
         <div style={{width:'32px',height:'3px',background:C.lime,marginBottom:'8px'}}/>
         <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',color:C.muted,marginBottom:'16px'}}>I — A Different Starting Point</div>
@@ -839,7 +839,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'What BRIDGE Means by Peace',
     label: 'Peace',
     bg: C.paper,
-    render: () => {
+    Render: () => {
       const [active, setActive] = useState(0);
       return (
         <div style={{padding:'28px 20px 32px'}}>
@@ -875,7 +875,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'What BRIDGE Means by Prosperity',
     label: 'Prosperity',
     bg: C.paperDark,
-    render: () => {
+    Render: () => {
       const [tab, setTab] = useState(0);
       const matSuff = [{n:'01',l:'Income & Housing'},{n:'02',l:'Nutrition & Health'},{n:'03',l:'Energy & Connectivity'},{n:'04',l:'Transportation Access'}];
       return (
@@ -932,7 +932,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'Three Domains of Flourishing',
     label: 'Domains',
     bg: C.paper,
-    render: () => {
+    Render: () => {
       const [active, setActive] = useState(0);
       return (
         <div style={{padding:'28px 20px 32px'}}>
@@ -971,7 +971,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'Three-Tier Measurement',
     label: 'Measurement',
     bg: C.paperDark,
-    render: () => {
+    Render: () => {
       const [active, setActive] = useState(0);
       return (
         <div style={{padding:'28px 20px 32px'}}>
@@ -1019,7 +1019,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'Framework Across 12 Sectors',
     label: '12 Sectors',
     bg: C.paper,
-    render: () => {
+    Render: () => {
       const [open, setOpen] = useState(false);
       const preview = 6;
       return (
@@ -1057,7 +1057,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'Ghana Policy Alignment',
     label: 'Policy',
     bg: C.paperDark,
-    render: () => {
+    Render: () => {
       const [active, setActive] = useState(0);
       return (
         <div style={{padding:'28px 20px 32px'}}>
@@ -1090,7 +1090,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'Scoring in Practice',
     label: 'Scoring',
     bg: C.paper,
-    render: () => {
+    Render: () => {
       const [active, setActive] = useState(0);
       return (
         <div style={{padding:'28px 20px 32px'}}>
@@ -1154,7 +1154,7 @@ const MOB_CHAPTERS_PAID = [
     title: 'Ghana First',
     label: 'Ghana First',
     bg: C.ink,
-    render: () => (
+    Render: () => (
       <div style={{padding:'28px 20px 32px',minHeight:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}>
         <div style={{fontFamily:F.sans,fontSize:'9px',fontWeight:700,letterSpacing:'2.5px',textTransform:'uppercase',color:C.lime,marginBottom:'16px'}}>A Note on Whose Flourishing</div>
         <p style={{fontFamily:F.display,fontSize:'22px',fontWeight:700,fontStyle:'italic',color:C.paper,lineHeight:1.45,marginBottom:'24px'}}>
@@ -1222,7 +1222,7 @@ const MobileReader = ({chapters}) => {
 
       {/* Content */}
       <div key={ch.id} style={{flex:1,overflowY:'auto',WebkitOverflowScrolling:'touch',paddingBottom:'env(safe-area-inset-bottom,16px)'}}>
-        <ch.render/>
+        <ch.Render/>
       </div>
 
       {/* Bottom nav */}
