@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ═══════════════════════════════════════════════════════════════
 // BRIDGE Apps — Landing Page v3
@@ -174,6 +175,7 @@ const Logo = () => (
 // Main Component
 // ═══════════════════════════════════════════════════════════════
 export default function BRIDGEAppsLanding() {
+  const navigate = useNavigate();
   const [hovered, setHovered] = useState(null);
   const [selectedApp, setSelectedApp] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -497,7 +499,10 @@ export default function BRIDGEAppsLanding() {
               key={app.id}
               onMouseEnter={() => setHovered(app.id)}
               onMouseLeave={() => setHovered(null)}
-              onClick={() => app.route === 'countdown' ? setSelectedApp(app) : null}
+              onClick={() => {
+                if (app.route === 'external') navigate('/apps/rentguard');
+                else if (app.route === 'countdown') setSelectedApp(app);
+              }}
               style={{
                 backgroundColor: C.white,
                 border: `1px solid ${isHovered ? hoverC : C.line}`,

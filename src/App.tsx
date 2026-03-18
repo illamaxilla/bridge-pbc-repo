@@ -19,6 +19,7 @@ import {
   SECTOR_PAGES, BRIDGE_DOC_ROUTES,
   CannabisIntelligenceDashboard, CannabisIntelligenceSummary,
   CANNABIS_LICENCE_ROUTES,
+  BridgeAppsLanding, RentGuardLanding, RentGuardDemo,
   FoundersPortal, FoundersAppsWhitepaper,
   FOUNDERS_DOC_ROUTES,
 } from "./routeConfig";
@@ -126,6 +127,11 @@ const App = () => (
                   element={<ErrorBoundary><PaidRoute><LicenceComponent /></PaidRoute></ErrorBoundary>}
                 />
               ))}
+
+              {/* BRIDGE Apps */}
+              <Route path="/apps" element={<ErrorBoundary><BridgeAppsLanding /></ErrorBoundary>} />
+              <Route path="/apps/rentguard" element={<ErrorBoundary><RentGuardLanding /></ErrorBoundary>} />
+              <Route path="/apps/rentguard/demo" element={<ErrorBoundary><RentGuardDemo /></ErrorBoundary>} />
 
               {/* Founders Portal — hidden, password-gated, not linked from nav */}
               <Route path="/founders" element={<ErrorBoundary><FoundersPortal /></ErrorBoundary>} />

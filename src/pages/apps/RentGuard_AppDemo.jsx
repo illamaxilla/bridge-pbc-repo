@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // RENTGUARD GHANA
@@ -5736,6 +5737,20 @@ const NAV = {
 };
 
 export default function RentGuard() {
+  const demoNav = useNavigate();
+
+  // Session gate — redirect to landing page if not passcode-verified
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem('rentguard_demo_access');
+      if (!stored || !JSON.parse(stored).name) {
+        demoNav('/apps/rentguard', { replace: true });
+      }
+    } catch {
+      demoNav('/apps/rentguard', { replace: true });
+    }
+  }, [demoNav]);
+
   const [appState, setAppState] = useState({
     currentUser: null,
     role: 'admin',

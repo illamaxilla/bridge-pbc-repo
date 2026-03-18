@@ -52,7 +52,6 @@ import {
   Award,
   Sparkles,
 } from "lucide-react";
-import { BridgeAppsGate, BridgeAppsLanding } from "@/components/resources/BridgeAppsTab";
 
 // ─── Design System ────────────────────────────────────────
 import { colors, layout } from "@/lib/theme";
@@ -1877,14 +1876,6 @@ export default function ResourcesPage() {
   const [filter, setFilter] = useState("All");
   const [showAuth, setShowAuth] = useState(false);
   const [notifyModal, setNotifyModal] = useState<{ open: boolean; title: string }>({ open: false, title: "" });
-  const [appsUnlocked, setAppsUnlocked] = useState(() => {
-    try {
-      const stored = sessionStorage.getItem("bridge_apps_unlocked");
-      if (stored) return !!JSON.parse(stored).name;
-    } catch {}
-    return false;
-  });
-  const [showAppsGate, setShowAppsGate] = useState(false);
 
   const handleCardClick = (update: typeof updates[number]) => {
     if (update.free) {
@@ -2066,8 +2057,8 @@ export default function ResourcesPage() {
                     <button
                       key={t.id}
                       onClick={() => {
-                        if (t.id === "bridgeapps" && !appsUnlocked) {
-                          setShowAppsGate(true);
+                        if (t.id === "bridgeapps") {
+                          navigate("/apps");
                         } else {
                           setTab(t.id);
                         }
@@ -2141,7 +2132,6 @@ export default function ResourcesPage() {
                   navigate("/membership");
                 }
               }} onNavigate={() => navigate("/resources/document-library")} />}
-              {tab === "bridgeapps" && <BridgeAppsLanding mobile={mobile} />}
             </div>
           </div>
         </div>
@@ -2208,17 +2198,6 @@ export default function ResourcesPage() {
         docTitle={notifyModal.title}
         isLoggedIn={!!user}
       />
-      {showAppsGate && (
-        <BridgeAppsGate
-          onAuth={(name) => {
-            sessionStorage.setItem("bridge_apps_unlocked", JSON.stringify({ name, ts: Date.now() }));
-            setAppsUnlocked(true);
-            setShowAppsGate(false);
-            setTab("bridgeapps");
-          }}
-          onClose={() => setShowAppsGate(false)}
-        />
-      )}
     </div>
     </Layout>
   );
