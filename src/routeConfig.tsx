@@ -52,6 +52,7 @@ export const SectorBriefViewer = lazy(() => import("./pages/resources/SectorBrie
 export const BridgeAppsLanding = lazy(() => import("./pages/apps/BRIDGE_Apps_LandingPage"));
 export const RentGuardLanding = lazy(() => import("./pages/apps/RentGuard_LandingPage"));
 export const RentGuardDemo = lazy(() => import("./pages/apps/RentGuard_AppDemo"));
+export const RentGuardPitchDeck = lazy(() => import("./pages/apps/RentGuard_PitchDeck"));
 
 // Founders Portal (hidden — password-gated, not in nav)
 export const FoundersPortal = lazy(() => import("./pages/founders/BRIDGE_FoundersPortal_Private"));
