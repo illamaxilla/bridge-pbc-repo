@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { BRIDGEEngagementModal } from "@/components/EngagementModal";
 
 // ── BRIDGE RentGuard Ghana ─────────────────────────────────────────────────
 // Digital Rent Enforcement & Intelligence Platform
@@ -1274,7 +1275,7 @@ const Security = () => {
 // ══════════════════════════════════════════════════════════════════════════
 // REQUEST ACCESS CTA
 // ══════════════════════════════════════════════════════════════════════════
-const RequestAccess = () => {
+const RequestAccess = ({ onRequestDemo, onDownloadBrief }) => {
   const m = useIsMobile();
   return (
   <div style={{background:C.forest,padding:m?'48px 20px':'52px 80px'}}>
@@ -1288,10 +1289,10 @@ const RequestAccess = () => {
 
       {/* CTA Buttons */}
       <div style={{display:'flex',flexDirection:m?'column':'row',justifyContent:'center',gap:m?12:16,marginTop:m?24:32}}>
-        <div style={{background:C.lime,padding:'14px 32px',cursor:'pointer'}}>
+        <div onClick={onRequestDemo} style={{background:C.lime,padding:'14px 32px',cursor:'pointer'}}>
           <div style={{fontFamily:F.sans,fontSize:13,fontWeight:700,color:C.ink,letterSpacing:1}}>Request Demo Access</div>
         </div>
-        <div style={{border:`2px solid rgba(255,255,255,0.2)`,padding:'14px 32px',cursor:'pointer'}}>
+        <div onClick={onDownloadBrief} style={{border:`2px solid rgba(255,255,255,0.2)`,padding:'14px 32px',cursor:'pointer'}}>
           <div style={{fontFamily:F.sans,fontSize:13,fontWeight:700,color:C.white,letterSpacing:1}}>Download Brief (PDF)</div>
         </div>
       </div>
@@ -1327,7 +1328,7 @@ const RequestAccess = () => {
 // MOBILE PITCH — Dedicated mobile experience (≤768px)
 // Purpose-built for phone, not a shrunken desktop.
 // ══════════════════════════════════════════════════════════════════════════
-const MobilePitch = () => {
+const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
   const [openPillar, setOpenPillar] = useState(-1);
   const [activeModule, setActiveModule] = useState(0);
   const [activeRole, setActiveRole] = useState(0);
@@ -1666,10 +1667,10 @@ const MobilePitch = () => {
           The platform is built. The team is ready.
         </div>
         <div style={{display:'flex',flexDirection:'column',gap:10,marginBottom:32}}>
-          <div style={{background:C.lime,padding:'14px 24px'}}>
+          <div onClick={onRequestDemo} style={{background:C.lime,padding:'14px 24px',cursor:'pointer'}}>
             <div style={{fontFamily:F.sans,fontSize:14,fontWeight:700,color:C.ink}}>Request Demo Access</div>
           </div>
-          <div style={{border:'2px solid rgba(255,255,255,0.2)',padding:'14px 24px'}}>
+          <div onClick={onDownloadBrief} style={{border:'2px solid rgba(255,255,255,0.2)',padding:'14px 24px',cursor:'pointer'}}>
             <div style={{fontFamily:F.sans,fontSize:14,fontWeight:700,color:C.white}}>Download Brief (PDF)</div>
           </div>
         </div>
@@ -1691,11 +1692,23 @@ const MobilePitch = () => {
 // ══════════════════════════════════════════════════════════════════════════
 // APP ROOT
 // ══════════════════════════════════════════════════════════════════════════
-export default function App() {
+export default function RentGuardPitchDeck() {
   const m = useIsMobile();
-  if (m) return <MobilePitch/>;
+  const [showEngagement, setShowEngagement] = useState(false);
+
+  const openEngagement = () => setShowEngagement(true);
+  const closeEngagement = () => setShowEngagement(false);
+  const handleDownloadBrief = () => window.print();
+
+  if (m) return (
+    <>
+      <BRIDGEEngagementModal isOpen={showEngagement} onClose={closeEngagement} intent="connect" />
+      <MobilePitch onRequestDemo={openEngagement} onDownloadBrief={handleDownloadBrief} />
+    </>
+  );
   return (
     <div>
+      <BRIDGEEngagementModal isOpen={showEngagement} onClose={closeEngagement} intent="connect" />
       <Gf/>
       <TopBar/>
       <Cover/>
@@ -1716,7 +1729,7 @@ export default function App() {
       <PitchFrame/>
       <Risks/>
       <AboutBridge/>
-      <RequestAccess/>
+      <RequestAccess onRequestDemo={openEngagement} onDownloadBrief={handleDownloadBrief} />
     </div>
   );
 }
