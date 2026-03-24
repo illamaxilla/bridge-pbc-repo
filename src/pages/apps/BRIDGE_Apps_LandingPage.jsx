@@ -573,10 +573,10 @@ const DesktopGrid = ({ hovered, setHovered, onSelect, menuOpen, onMenuToggle, na
       </p>
     </div>
 
-    {/* Grid — 80px padding */}
+    {/* Grid — site-standard 1200px max-width */}
     <div style={{
       flex: 1, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(3, 1fr)',
-      gap: 12, padding: '0 80px', minHeight: 0,
+      gap: 12, maxWidth: 1200, margin: '0 auto', padding: '0 24px', width: '100%', boxSizing: 'border-box', minHeight: 0,
     }}>
       {apps.map((app) => {
         const isH = hovered === app.id;
