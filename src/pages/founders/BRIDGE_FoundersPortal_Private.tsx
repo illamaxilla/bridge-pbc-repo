@@ -3665,9 +3665,15 @@ const LoginGate = ({ onAuth }) => {
       } else {
         setErr('Access code not recognised. Please check the code provided to you.');
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error('[BRIDGE] Founder code verification failed:', e);
-      setErr('Unable to verify code. Please try again.');
+      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+        setErr('Service configuration error. Please contact the BRIDGE team.');
+      } else if (e?.message?.includes('Could not find the function') || e?.code === 'PGRST202') {
+        setErr('Access system is being set up. Please try again shortly or contact the BRIDGE team.');
+      } else {
+        setErr('Unable to verify code — please check your connection and try again.');
+      }
     } finally {
       setBusy(false);
     }

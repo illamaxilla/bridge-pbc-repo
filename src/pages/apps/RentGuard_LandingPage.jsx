@@ -1505,7 +1505,13 @@ const LoginModal = ({ onClose, navigate, onRequestAccess }) => {
       }
     } catch (e) {
       console.error('[RentGuard] Code verification failed:', e);
-      setError('Unable to verify code. Please try again.');
+      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+        setError('Service configuration error. Please contact the BRIDGE team.');
+      } else if (e?.message?.includes('Could not find the function') || e?.code === 'PGRST202') {
+        setError('Access system is being set up. Please try again shortly or contact the BRIDGE team.');
+      } else {
+        setError('Unable to verify code — please check your connection and try again.');
+      }
     } finally {
       setLoading(false);
     }
