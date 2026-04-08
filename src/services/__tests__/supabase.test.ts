@@ -59,21 +59,43 @@ describe("submitAccessRequest", () => {
     name: "John Doe",
     email: "john@example.com",
     country: "Ghana",
-    primary_interest: "Technology",
-    connection: "LinkedIn",
+    primary_interest: "data",
+    connection: "referral",
   };
 
-  it("inserts access request data into access_requests table", async () => {
-    mockInsert.mockResolvedValue({ error: null });
+  const okResponse = () =>
+    ({
+      ok: true,
+      status: 200,
+      json: async () => ({ ok: true, id: "abc" }),
+    }) as unknown as Response;
+
+  const errResponse = (status: number, payload: object) =>
+    ({
+      ok: false,
+      status,
+      json: async () => payload,
+    }) as unknown as Response;
+
+  beforeEach(() => {
+    vi.spyOn(globalThis, "fetch").mockReset();
+  });
+
+  it("POSTs the payload to /api/request-access", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(okResponse());
 
     await submitAccessRequest(validRequest);
 
-    expect(mockFrom).toHaveBeenCalledWith("access_requests");
-    expect(mockInsert).toHaveBeenCalledWith(validRequest);
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchSpy.mock.calls[0];
+    expect(url).toBe("/api/request-access");
+    expect(init?.method).toBe("POST");
+    expect(init?.headers).toMatchObject({ "Content-Type": "application/json" });
+    expect(JSON.parse(init?.body as string)).toEqual(validRequest);
   });
 
   it("includes optional fields when provided", async () => {
-    mockInsert.mockResolvedValue({ error: null });
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(okResponse());
 
     const requestWithOptionals = {
       ...validRequest,
@@ -83,16 +105,25 @@ describe("submitAccessRequest", () => {
     };
 
     await submitAccessRequest(requestWithOptionals);
-    expect(mockInsert).toHaveBeenCalledWith(requestWithOptionals);
+    const init = fetchSpy.mock.calls[0][1];
+    expect(JSON.parse(init?.body as string)).toEqual(requestWithOptionals);
   });
 
-  it("throws on database error", async () => {
-    mockInsert.mockResolvedValue({
-      error: { code: "23502", message: "not-null constraint violation" },
-    });
+  it("throws with the server error message on non-2xx responses", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      errResponse(400, { error: "Primary interest is required." }),
+    );
 
     await expect(submitAccessRequest(validRequest)).rejects.toThrow(
-      "not-null constraint violation",
+      "Primary interest is required.",
+    );
+  });
+
+  it("throws a friendly network error when fetch itself fails", async () => {
+    vi.spyOn(globalThis, "fetch").mockRejectedValue(new TypeError("Failed to fetch"));
+
+    await expect(submitAccessRequest(validRequest)).rejects.toThrow(
+      /couldn't reach the BRIDGE servers/i,
     );
   });
 });

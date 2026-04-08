@@ -28,6 +28,16 @@ export default defineConfig({
         });
       },
     },
+    // Dev-server middleware: proxy /api/request-access to the intake handler
+    {
+      name: "bridge-request-access-api",
+      configureServer(server) {
+        server.middlewares.use("/api/request-access", async (req, res) => {
+          const { handleRequestAccessMiddleware } = await import("./server/request-access.js");
+          await handleRequestAccessMiddleware(req, res);
+        });
+      },
+    },
   ],
   resolve: {
     alias: {
