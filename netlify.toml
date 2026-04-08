@@ -1,6 +1,14 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
+
+# Serverless API: request-access intake (DB insert + email relay)
+[[redirects]]
+  from = "/api/request-access"
+  to = "/.netlify/functions/request-access"
+  status = 200
+  force = true
 
 # SPA fallback — all routes serve index.html
 [[redirects]]
