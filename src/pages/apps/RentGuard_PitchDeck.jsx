@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { BRIDGEEngagementModal } from "@/components/EngagementModal";
 
 // ── BRIDGE RentGuard Ghana ─────────────────────────────────────────────────
 // Digital Rent Enforcement & Intelligence Platform
 // A BRIDGE PBC Application — Housing Sector (Sector 08)
-// Interactive Pitch & Product Brief · March 2026
+// Interactive Pitch & Product Brief · April 2026
 // ────────────────────────────────────────────────────────────────────────────
 
 const C = {
@@ -131,7 +130,7 @@ const Cover = () => {
     {val:'19M',label:'Ghanaians Who Rent'},
     {val:'60%',label:'No Tenancy Agreement'},
     {val:'6 mo.',label:'Legal Advance Cap'},
-    {val:'Apr 1',label:'Rent Card Deadline'},
+    {val:'Sep 2026',label:'Full Enforcement'},
     {val:'Act 220',label:'Legal Foundation'},
   ];
   return (
@@ -143,7 +142,7 @@ const Cover = () => {
             A BRIDGE PBC Application
           </div>
           {!m && <div style={{flex:1,height:1,background:'rgba(184,217,53,0.3)'}}/>}
-          {!m && <div style={{fontFamily:F.sans,fontSize:9,fontWeight:700,color:C.muted,letterSpacing:2}}>Ghana · March 2026</div>}
+          {!m && <div style={{fontFamily:F.sans,fontSize:9,fontWeight:700,color:C.muted,letterSpacing:2}}>Ghana · April 2026</div>}
         </div>
 
         <div style={{fontFamily:F.display,fontSize:m?36:72,fontWeight:900,color:C.paper,lineHeight:1.0,marginBottom:8}}>
@@ -182,7 +181,7 @@ const Cover = () => {
           <div style={{fontFamily:F.sans,fontSize:9,color:'rgba(255,255,255,0.25)',letterSpacing:1.5,textTransform:'uppercase',marginBottom:6}}>Prepared for</div>
           <div style={{fontFamily:F.sans,fontSize:m?12:13,fontWeight:600,color:'rgba(255,255,255,0.45)'}}>Hon. Frederick Opoku, Acting Rent Commissioner</div>
           <div style={{fontFamily:F.sans,fontSize:m?10:11,color:'rgba(255,255,255,0.3)',marginTop:2}}>Rent Control Department · Ministry of Works, Housing and Water Resources</div>
-          {!m && <div style={{fontFamily:F.mono,fontSize:9,color:'rgba(255,255,255,0.15)',marginTop:8}}>Confidential · March 2026</div>}
+          {!m && <div style={{fontFamily:F.mono,fontSize:9,color:'rgba(255,255,255,0.15)',marginTop:8}}>Confidential · April 2026</div>}
         </div>
       </div>
     </div>
@@ -237,14 +236,25 @@ const ReformMoment = () => {
           <div style={{fontFamily:F.display,fontSize:'clamp(18px,2.5vw,30px)',fontWeight:700,color:C.paper,lineHeight:1.3,marginBottom:20}}>
             For the first time, the political will and the technology exist simultaneously.
           </div>
-          {/* Quote */}
+          {/* Paired quotes — the problem (Mar 19) + the commitment (Apr 11) */}
           <div style={{borderLeft:`3px solid ${C.lime}`,paddingLeft:18,margin:'24px 0'}}>
             <div style={{fontFamily:F.display,fontSize:17,fontStyle:'italic',fontWeight:600,color:'rgba(250,248,243,0.85)',lineHeight:1.6}}>
               "Rent control over the years is losing the fight… Whether there is enough housing or not, the law is the law, and it must be obeyed."
             </div>
-            <div style={{fontFamily:F.sans,fontSize:10,color:C.lime,marginTop:10}}>
-              Frederick Opoku, Acting Rent Commissioner — Asaase Radio, March 19, 2026
+            <div style={{fontFamily:F.sans,fontSize:10,color:C.lime,marginTop:10,letterSpacing:'.3px'}}>
+              ASAASE RADIO — 19 MAR 2026
             </div>
+          </div>
+          <div style={{borderLeft:`3px solid ${C.lime}`,paddingLeft:18,margin:'24px 0'}}>
+            <div style={{fontFamily:F.display,fontSize:17,fontStyle:'italic',fontWeight:600,color:'rgba(250,248,243,0.85)',lineHeight:1.6}}>
+              "We are selling it digitally. Very soon, you'll see a digitised rent control where our activities will be fully digitised."
+            </div>
+            <div style={{fontFamily:F.sans,fontSize:10,color:C.lime,marginTop:10,letterSpacing:'.3px'}}>
+              GHANAWEB TV — 11 APR 2026
+            </div>
+          </div>
+          <div style={{fontFamily:F.sans,fontSize:9,color:'rgba(184,217,53,0.5)',letterSpacing:'2px',textTransform:'uppercase',marginTop:8,marginBottom:20}}>
+            Frederick Opoku  ·  Acting Rent Commissioner
           </div>
           <div style={{fontFamily:F.body,fontSize:14,color:'rgba(250,248,243,0.6)',lineHeight:1.8}}>
             Opoku served as Secretary General of the National Tenants Union for over a decade before his appointment. He is an activist turned regulator who publicly admitted on Adom FM that the Department is in a "deplorable state" and called it a "toothless bulldog" before seeing the resource constraints firsthand. He now leads a reform agenda that directly mirrors the capabilities RentGuard was built to deliver.
@@ -257,12 +267,14 @@ const ReformMoment = () => {
             {[
               {date:'Feb 4',title:'Taskforce Deployed',desc:'Yellow-uniformed officers in MMDA partnership'},
               {date:'Feb 9',title:'4-Pillar Reform Agenda',desc:'Enforcement, data, education, partnerships'},
-              {date:'Feb 26',title:'Rent Card Mandate',desc:'Effective April 1 — all tenancies'},
+              {date:'Feb 26',title:'Rent Card Mandate',desc:'Phased rollout — all tenancies covered'},
               {date:'Mar 1',title:'Rent Card Launch',desc:'Criminal offence to operate without one'},
+              {date:'Mar 17',title:'Presidential Call',desc:'Mahama calls on tenants to report illegal advance rent'},
               {date:'Mar 19',title:'"Losing the Fight"',desc:'Commissioner calls for tools and partnerships'},
-            ].map((t,i) => (
+              {date:'Apr 11',title:'"Selling It Digitally"',desc:'Commissioner commits to digitised rent control'},
+            ].map((t,i,arr) => (
               <div key={i} style={{display:'flex',gap:12,marginBottom:14,alignItems:'flex-start'}}>
-                <div style={{fontFamily:F.mono,fontSize:14,fontWeight:500,color:i===4?C.lime:'rgba(255,255,255,0.5)',minWidth:44}}>{t.date}</div>
+                <div style={{fontFamily:F.mono,fontSize:14,fontWeight:500,color:i===arr.length-1?C.lime:'rgba(255,255,255,0.5)',minWidth:44}}>{t.date}</div>
                 <div>
                   <div style={{fontFamily:F.sans,fontSize:11,fontWeight:700,color:C.paper}}>{t.title}</div>
                   <div style={{fontFamily:F.body,fontSize:10,color:'rgba(255,255,255,0.45)',lineHeight:1.5,marginTop:2}}>{t.desc}</div>
@@ -271,12 +283,12 @@ const ReformMoment = () => {
             ))}
           </div>
 
-          {/* April 1 deadline */}
+          {/* September enforcement deadline */}
           <div style={{background:'rgba(184,217,53,0.08)',padding:20,marginTop:2,borderLeft:`3px solid ${C.lime}`}}>
-            <div style={{fontFamily:F.sans,fontSize:9,fontWeight:700,color:C.lime,letterSpacing:2,marginBottom:8}}>THE DEADLINE</div>
-            <div style={{fontFamily:F.mono,fontSize:36,fontWeight:500,color:C.lime,lineHeight:1}}>April 1</div>
+            <div style={{fontFamily:F.sans,fontSize:9,fontWeight:700,color:C.lime,letterSpacing:2,marginBottom:8}}>THE WINDOW</div>
+            <div style={{fontFamily:F.mono,fontSize:36,fontWeight:500,color:C.lime,lineHeight:1}}>Sep 2026</div>
             <div style={{fontFamily:F.body,fontSize:11,color:'rgba(255,255,255,0.5)',lineHeight:1.5,marginTop:8}}>
-              The Rent Card mandate takes effect. The Department needs digital infrastructure before that date.
+              Full enforcement begins. Five months to put the digital infrastructure that activates the mandate in front of the Department's officers.
             </div>
           </div>
         </div>
@@ -304,10 +316,10 @@ const ProductPosition = () => {
             Not a second portal. The enforcement layer that makes the first one work.
           </div>
           <div style={{fontFamily:F.body,fontSize:15,color:C.ink,lineHeight:1.85,marginBottom:16}}>
-            Ghana's Rent Control Department has already built the digital foundation: <strong>rentcontrol.mwh.gov.gh</strong>, developed with SuperTech Limited, is live in 15 offices across 11 regions. It handles property registration, complaint filing, and digital tenancy agreements. The infrastructure exists.
+            Ghana's Rent Control Department has already built the digital foundation: <strong>rentcontrol.mwh.gov.gh</strong> is live in 15 offices across 11 regions. It handles property registration, complaint filing, and digital tenancy agreements. The infrastructure exists.
           </div>
           <div style={{fontFamily:F.body,fontSize:15,color:C.ink,lineHeight:1.85,marginBottom:16}}>
-            What it currently cannot do is <em>enforce</em> at scale — in the field, in real time, with analytics that target effort where it matters most. The April 2026 Rent Card mandate and the national Rent Taskforce deployment create an urgent window. RentGuard is that enforcement and intelligence layer.
+            What it currently cannot do is <em>enforce</em> at scale — in the field, in real time, with analytics that target effort where it matters most. The phased Rent Card mandate, the national Rent Taskforce deployment, and the Department's September enforcement window create the moment. RentGuard is that enforcement and intelligence layer.
           </div>
           <div style={{borderLeft:`3px solid ${C.lime}`,paddingLeft:18,margin:'24px 0',fontFamily:F.display,fontSize:17,fontStyle:'italic',fontWeight:600,color:C.forest,lineHeight:1.6}}>
             "The goal is to close the loop: existing digital infrastructure handles service delivery — this platform makes those laws enforceable at scale."
@@ -352,7 +364,7 @@ const EnforcementGap = () => {
   const problems = [
     {stat:'19M',label:'Ghanaians who rent',detail:'Over 40% of the urban population. 2–3 years advance demanded despite a 6-month legal cap. GHS 24,000–36,000 upfront for a modest apartment.',severity:'high'},
     {stat:'60%',label:'No tenancy agreement',detail:'The vast majority of rental arrangements remain undocumented. Operating entirely outside the law. No written terms, no recourse.',severity:'high'},
-    {stat:'2',label:'Vehicles nationwide',detail:'The Rent Control Department has 2 vehicles for inspection and enforcement across the entire country. 15 offices in 11 regions — severely under-resourced.',severity:'high'},
+    {stat:'3',label:'Vehicles nationwide',detail:'The Rent Control Department has 3 vehicles for inspection and enforcement across the entire country — one of them broken down. 15 offices in 11 regions — severely under-resourced.',severity:'high'},
     {stat:'0',label:'Digital enforcement tools',detail:'No case management system, no registration database, no field app for the Taskforce. Paper-based Rent Cards with no tracking capability.',severity:'high'},
     {stat:'6–12+',label:'Months per case',detail:'Backlogged rent tribunals. Cases take months to years. Justice delayed is justice denied. Drives the demand for high advance payments.',severity:'medium'},
     {stat:'1.8M',label:'Housing unit deficit',detail:'Widening by 100K+ annually. Gives landlords enormous power. Tenants accept any terms because alternatives don\'t exist.',severity:'medium'},
@@ -465,7 +477,7 @@ const ProductModules = () => {
     {id:'M2',title:'Digital Rent Card Engine',sub:'For Landlords + Rent Control',color:C.teal,icon:'🪪',
       overview:'Every tenancy gets a machine-readable Rent Card — QR code, unique ID, printable PDF — linked to the central registry. Payment recording is built in, with automatic enforcement of the 6-month advance cap.',
       capabilities:['Issue digital rent cards with unique ID + QR code','Record each payment: amount, date, method, period covered','Auto-flag: advance payment sum exceeds 6-month cap','Immutable audit trail — every edit is logged for evidence','Printable PDF rent card for tenants without smartphones'],
-      legalHook:'Grounds the April 1, 2026 directive in Act 220 s.20 and PNDCL 138 s.5.',
+      legalHook:'Grounds the Department\'s phased rent card mandate in Act 220 s.20 and PNDCL 138 s.5.',
       metric:'Rent card issuance: from near-zero to 100% compliant tenancies within 24 months',
       outcome:'Warning letter → formal notice → court referral for advance rent violators'},
     {id:'M3',title:'Compliance Intelligence Dashboard',sub:'For Rent Control + Ministry',color:C.amber,icon:'📊',
@@ -890,8 +902,8 @@ const Stakeholders = () => {
 const Roadmap = () => {
   const m = useIsMobile();
   const phases = [
-    {num:'0',label:'Discovery & Co-Design',duration:'8 weeks',color:C.muted,
-      items:['Stakeholder interviews: Rent Control leadership, IT team, SuperTech Ltd., Taskforce coordinators','Map existing data models + APIs of rentcontrol.mwh.gov.gh','Define integration contracts — avoid duplication with SuperTech scope','Co-design field officer user journeys with actual Taskforce members','Data-sharing MOU drafting with Rent Control and GRA']},
+    {num:'0',label:'Pilot & Co-Design',duration:'8 weeks',color:C.muted,
+      items:['Stakeholder interviews: Rent Control leadership, IT team, Taskforce coordinators','Map existing data models + APIs of rentcontrol.mwh.gov.gh','Define integration contracts with the existing platform\'s technical team','Co-design field officer user journeys with actual Taskforce members','DPC registration in progress; data-sharing protocols outlined for formal phase']},
     {num:'1',label:'Field Enforcement MVP',duration:'12 weeks',color:C.amber,
       items:['Android app for field officers: rent card verification, basic case reporting','Core registry sync with rentcontrol.mwh.gov.gh (read layer)','Basic compliance dashboard: inspection coverage + violations by district','Pilot: 3 MMDAs in Accra with deployed Taskforce officers','Evidence capture workflow: photo + GPS + case categorisation']},
     {num:'2',label:'Full Rent Card & Lifecycle',duration:'16 weeks',color:C.forest,
@@ -962,11 +974,11 @@ const Partnership = () => {
         <div style={{flex:'1 1 auto',background:C.forest,padding:m?20:28}}>
           <div style={{fontFamily:F.sans,fontSize:11,fontWeight:700,color:C.lime,letterSpacing:2,textTransform:'uppercase',marginBottom:20}}>What BRIDGE Offers</div>
           {[
-            'Complete platform development, deployment, and maintenance at zero cost during 24-month pilot',
-            'Full staff training and onboarding for all officers and administrators',
-            'Quarterly impact reports with enforcement data and compliance analytics',
-            'Complete Data Protection Act (Act 843) compliance',
-            'Phased expansion roadmap from Greater Accra to all 16 regions',
+            'Complete platform development, deployment, and maintenance at zero cost during the pilot phase',
+            'Full officer training and field deployment support across all roles',
+            'Data ownership: all platform data belongs to the Department, with full export at any time',
+            'Data Protection Act (Act 843) compliance — DPC registration in progress',
+            'Phased expansion roadmap aligned to your September enforcement timeline',
             'Technical support and platform updates throughout the partnership',
           ].map((item,i) => (
             <div key={i} style={{display:'flex',gap:10,marginBottom:12,alignItems:'flex-start'}}>
@@ -978,11 +990,11 @@ const Partnership = () => {
         <div style={{flex:'1 1 auto',border:`2px solid ${C.forest}`,padding:m?20:28}}>
           <div style={{fontFamily:F.sans,fontSize:11,fontWeight:700,color:C.forest,letterSpacing:2,textTransform:'uppercase',marginBottom:20}}>What We Ask</div>
           {[
-            'Formal MOU designating RentGuard as the Department\'s digital enforcement partner',
-            'Official endorsement as an approved tool for rent regulation enforcement',
-            'Designated institutional liaison for platform coordination and feedback',
-            'Introductions to regional Rent Control offices for pilot expansion',
-            'Participation of officers in user testing and real-world validation',
+            'An 8-week informal pilot — no MOU, no procurement required to begin',
+            '2–3 taskforce officers for one week of field testing in June',
+            'Permission to mention coordination with your office in stakeholder meetings',
+            'Honest feedback from your team during pilot deployment',
+            'If the pilot proves itself, formal partnership talks ahead of September rollout',
             'Joint communication on reform milestones — shared credit for shared impact',
           ].map((item,i) => (
             <div key={i} style={{display:'flex',gap:10,marginBottom:12,alignItems:'flex-start'}}>
@@ -996,7 +1008,7 @@ const Partnership = () => {
       {/* Next steps */}
       <div style={{background:C.ink,padding:m?'14px 16px':'18px 24px',marginTop:16,display:'flex',gap:0,alignItems:'center',flexWrap:'wrap'}}>
         <div style={{fontFamily:F.sans,fontSize:10,fontWeight:700,color:C.lime,letterSpacing:1.5,marginRight:24}}>NEXT STEPS</div>
-        {['Sign MOU','DPC registration','Identify officers','Platform training','Launch pilot'].map((step,i) => (
+        {['Handshake','DPC registration','Identify officers','Field pilot','Formal partnership'].map((step,i) => (
           <div key={i} style={{flex:'1 1 120px',display:'flex',alignItems:'center',gap:8,padding:'6px 14px',borderLeft:`1px solid rgba(255,255,255,.08)`}}>
             <div style={{fontFamily:F.mono,fontSize:16,color:C.lime,fontWeight:500}}>{i+1}</div>
             <span style={{fontFamily:F.sans,fontSize:10,color:'rgba(255,255,255,.75)'}}>{step}</span>
@@ -1029,7 +1041,7 @@ const PitchFrame = () => {
           {n:'01',heading:'Close the enforcement loop',body:'Rent Control\'s digitization focused on service delivery. The enforcement side — field operations, violation detection, case intelligence — has no equivalent tool. RentGuard fills that gap.'},
           {n:'02',heading:'Deliver a national rental intelligence system',body:'The Commissioner can see compliance rates, violation hotspots, and Taskforce effectiveness in real time. The Ministry can demonstrate measurable impact.'},
           {n:'03',heading:'Support tax mobilization',body:'Ghana\'s rental income tax gap is significant. The Taskforce is mandated to work with GRA. RentGuard makes that coordination systematic — linking rental units to TIN numbers at scale.'},
-          {n:'04',heading:'Build on, not replace, existing investments',body:'RentGuard integrates via API with rentcontrol.mwh.gov.gh. SuperTech built the service layer. We are the enforcement and analytics extension.'},
+          {n:'04',heading:'Build on, not replace, existing investments',body:'RentGuard integrates via API with rentcontrol.mwh.gov.gh. The existing platform handles citizen-facing service delivery. We extend it with the field, enforcement, and analytics layers.'},
         ].map((p,i) => (
           <div key={i} style={{background:'rgba(0,0,0,0.25)',padding:22}}>
             <div style={{fontFamily:F.mono,fontSize:28,fontWeight:500,color:C.lime,marginBottom:8,lineHeight:1}}>{p.n}</div>
@@ -1050,11 +1062,11 @@ const PitchFrame = () => {
 const Risks = () => {
   const m = useIsMobile();
   const risks = [
-    {cat:'Institutional',sev:'medium',title:'SuperTech / vendor overlap perception',mit:'Position as enforcement layer, not portal. Propose co-build or API licensing model with SuperTech.'},
+    {cat:'Institutional',sev:'medium',title:'Existing-platform vendor overlap perception',mit:'Position as complementary enforcement layer, not a competing portal. Propose interoperability with the existing platform\'s technical team — co-build or API integration.'},
     {cat:'Adoption',sev:'high',title:'Landlord non-compliance going underground',mit:'Enforcement without supply-side housing investment may push informal landlords off-market. Recommend parallel advocacy.'},
     {cat:'Technical',sev:'medium',title:'Data quality in historical records',mit:'Build robust deduplication and validation on import. Phase 0 data audit is a prerequisite.'},
     {cat:'Digital Divide',sev:'high',title:'Low-literacy, no-smartphone tenants excluded',mit:'USSD + WhatsApp + agent/kiosk modes are non-negotiable. In-person support at MMDAs required.'},
-    {cat:'Governance',sev:'low',title:'Data-sharing MOU delays',mit:'Begin MOU drafting in Phase 0. Government legal counsel lead; position as alignment with statutory mandates.'},
+    {cat:'Governance',sev:'low',title:'Formal partnership timing',mit:'Lead with informal pilot. Formal MOU follows pilot validation, with government legal counsel guiding the structure and alignment to statutory mandates.'},
   ];
 
   const sevColor = {high:C.red,medium:C.amber,low:C.positive};
@@ -1275,7 +1287,7 @@ const Security = () => {
 // ══════════════════════════════════════════════════════════════════════════
 // REQUEST ACCESS CTA
 // ══════════════════════════════════════════════════════════════════════════
-const RequestAccess = ({ onRequestDemo, onDownloadBrief }) => {
+const RequestAccess = () => {
   const m = useIsMobile();
   return (
   <div style={{background:C.forest,padding:m?'48px 20px':'52px 80px'}}>
@@ -1289,17 +1301,17 @@ const RequestAccess = ({ onRequestDemo, onDownloadBrief }) => {
 
       {/* CTA Buttons */}
       <div style={{display:'flex',flexDirection:m?'column':'row',justifyContent:'center',gap:m?12:16,marginTop:m?24:32}}>
-        <div onClick={onRequestDemo} style={{background:C.lime,padding:'14px 32px',cursor:'pointer'}}>
+        <div style={{background:C.lime,padding:'14px 32px',cursor:'pointer'}}>
           <div style={{fontFamily:F.sans,fontSize:13,fontWeight:700,color:C.ink,letterSpacing:1}}>Request Demo Access</div>
         </div>
-        <div onClick={onDownloadBrief} style={{border:`2px solid rgba(255,255,255,0.2)`,padding:'14px 32px',cursor:'pointer'}}>
+        <div style={{border:`2px solid rgba(255,255,255,0.2)`,padding:'14px 32px',cursor:'pointer'}}>
           <div style={{fontFamily:F.sans,fontSize:13,fontWeight:700,color:C.white,letterSpacing:1}}>Download Brief (PDF)</div>
         </div>
       </div>
 
       {/* Contact strip */}
       <div style={{display:'flex',flexDirection:m?'column':'row',justifyContent:'center',gap:m?20:48,marginTop:m?28:36,alignItems:m?'center':'flex-start'}}>
-        {[['LIVE DEMO','bridgepbc.com/rentguard'],['WHATSAPP','[Your Number]'],['EMAIL','RentGuard@bridgepbc.com']].map(([label,val],i) => (
+        {[['LIVE DEMO','bridgepbc.com/rentguard'],['WHATSAPP','+1 415 425 7401'],['EMAIL','RentGuard@bridgepbc.com']].map(([label,val],i) => (
           <div key={i} style={{textAlign:'center'}}>
             <div style={{fontFamily:F.sans,fontSize:10,color:C.lime,letterSpacing:2,fontWeight:700,marginBottom:6}}>{label}</div>
             <div style={{fontFamily:F.sans,fontSize:14,color:C.white}}>{val}</div>
@@ -1315,7 +1327,7 @@ const RequestAccess = ({ onRequestDemo, onDownloadBrief }) => {
       </div>
 
       <div style={{fontFamily:F.sans,fontSize:9,color:'rgba(255,255,255,.15)',marginTop:32}}>
-        BRIDGE PBC · Blending Resources and Innovation to Drive Ghana's Empowerment · Confidential · March 2026
+        BRIDGE PBC · Blending Resources and Innovation to Drive Ghana's Empowerment · Confidential · April 2026
       </div>
     </div>
   </div>
@@ -1328,7 +1340,7 @@ const RequestAccess = ({ onRequestDemo, onDownloadBrief }) => {
 // MOBILE PITCH — Dedicated mobile experience (≤768px)
 // Purpose-built for phone, not a shrunken desktop.
 // ══════════════════════════════════════════════════════════════════════════
-const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
+const MobilePitch = () => {
   const [openPillar, setOpenPillar] = useState(-1);
   const [activeModule, setActiveModule] = useState(0);
   const [activeRole, setActiveRole] = useState(0);
@@ -1344,7 +1356,7 @@ const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
       legal:'PNDCL 138 — court-admissible evidence'},
     {id:'M2',title:'Digital Rent Card Engine',who:'Landlords + Rent Control',color:C.teal,
       desc:'Machine-readable rent cards with QR, payment recording, automatic 6-month advance cap enforcement.',
-      legal:'Act 220 s.20 — April 1, 2026 mandate'},
+      legal:'Act 220 s.20 — phased rent card mandate'},
     {id:'M3',title:'Intelligence Dashboard',who:'Commissioner + Ministry',color:C.amber,
       desc:'National compliance rates, violation hotspots, Taskforce effectiveness, GRA rental income cross-check.',
       legal:'Act 220 s.16(5) — risk-based prosecution'},
@@ -1399,7 +1411,7 @@ const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
         </div>
         {/* Stats 3×2 */}
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'20px 16px',borderTop:'1px solid rgba(255,255,255,0.1)',paddingTop:24,paddingBottom:28}}>
-          {[{v:'19M',l:'Ghanaians Who Rent'},{v:'60%',l:'No Tenancy Agreement'},{v:'6 mo.',l:'Legal Advance Cap'},{v:'Apr 1',l:'Rent Card Deadline'},{v:'Act 220',l:'Legal Foundation'},{v:'16',l:'Ghana Regions'}].map((s,i) => (
+          {[{v:'19M',l:'Ghanaians Who Rent'},{v:'60%',l:'No Tenancy Agreement'},{v:'6 mo.',l:'Legal Advance Cap'},{v:'Sep 2026',l:'Full Enforcement'},{v:'Act 220',l:'Legal Foundation'},{v:'16',l:'Ghana Regions'}].map((s,i) => (
             <div key={i}>
               <div style={{fontFamily:F.mono,fontSize:20,fontWeight:700,color:C.lime,lineHeight:1}}>{s.v}</div>
               <div style={{fontFamily:F.sans,fontSize:8,fontWeight:700,color:'rgba(255,255,255,0.35)',letterSpacing:1,textTransform:'uppercase',marginTop:4,lineHeight:1.3}}>{s.l}</div>
@@ -1429,17 +1441,28 @@ const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
       {/* ── Reform Moment ── */}
       <div style={sec(C.forest)}>
         <div style={{fontFamily:F.sans,fontSize:8,fontWeight:700,color:'rgba(184,217,53,0.6)',letterSpacing:2,textTransform:'uppercase',marginBottom:16}}>The Reform Moment</div>
-        {/* Quote */}
-        <div style={{borderLeft:`3px solid ${C.lime}`,paddingLeft:16,marginBottom:24}}>
-          <div style={{fontFamily:F.display,fontSize:16,fontStyle:'italic',fontWeight:600,color:'rgba(250,248,243,0.85)',lineHeight:1.6}}>
+        {/* Quote 1 — the problem (Mar 19) */}
+        <div style={{borderLeft:`3px solid ${C.lime}`,paddingLeft:16,marginBottom:18}}>
+          <div style={{fontFamily:F.display,fontSize:15,fontStyle:'italic',fontWeight:600,color:'rgba(250,248,243,0.85)',lineHeight:1.6}}>
             "Rent control over the years is losing the fight… the law is the law, and it must be obeyed."
           </div>
-          <div style={{fontFamily:F.sans,fontSize:10,color:C.lime,marginTop:8}}>Frederick Opoku — Asaase Radio, March 19, 2026</div>
+          <div style={{fontFamily:F.sans,fontSize:9,color:C.lime,marginTop:8,letterSpacing:'.3px'}}>ASAASE RADIO — 19 MAR 2026</div>
         </div>
-        {/* Deadline callout */}
+        {/* Quote 2 — the commitment (Apr 11) */}
+        <div style={{borderLeft:`3px solid ${C.lime}`,paddingLeft:16,marginBottom:8}}>
+          <div style={{fontFamily:F.display,fontSize:15,fontStyle:'italic',fontWeight:600,color:'rgba(250,248,243,0.85)',lineHeight:1.6}}>
+            "We are selling it digitally. Very soon, you'll see a digitised rent control where our activities will be fully digitised."
+          </div>
+          <div style={{fontFamily:F.sans,fontSize:9,color:C.lime,marginTop:8,letterSpacing:'.3px'}}>GHANAWEB TV — 11 APR 2026</div>
+        </div>
+        <div style={{fontFamily:F.sans,fontSize:8,color:'rgba(184,217,53,0.5)',letterSpacing:'1.5px',textTransform:'uppercase',marginBottom:24}}>
+          Frederick Opoku  ·  Acting Rent Commissioner
+        </div>
+        {/* September window callout */}
         <div style={{background:'rgba(184,217,53,0.08)',padding:16,borderLeft:`3px solid ${C.lime}`}}>
-          <div style={{fontFamily:F.mono,fontSize:32,fontWeight:500,color:C.lime,lineHeight:1}}>April 1</div>
-          <div style={{fontFamily:F.body,fontSize:12,color:'rgba(255,255,255,0.5)',lineHeight:1.5,marginTop:6}}>Rent Card mandate takes effect. The Department needs digital infrastructure before that date.</div>
+          <div style={{fontFamily:F.sans,fontSize:9,fontWeight:700,color:C.lime,letterSpacing:2,marginBottom:6}}>THE WINDOW</div>
+          <div style={{fontFamily:F.mono,fontSize:32,fontWeight:500,color:C.lime,lineHeight:1}}>Sep 2026</div>
+          <div style={{fontFamily:F.body,fontSize:12,color:'rgba(255,255,255,0.5)',lineHeight:1.5,marginTop:6}}>Full enforcement begins. Five months to put the digital infrastructure in front of the Department's officers.</div>
         </div>
       </div>
 
@@ -1448,7 +1471,7 @@ const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
         <div style={{fontFamily:F.sans,fontSize:8,fontWeight:700,color:C.muted,letterSpacing:2,textTransform:'uppercase',marginBottom:8}}>The Enforcement Gap</div>
         <div style={{fontFamily:F.display,fontSize:20,fontWeight:700,color:C.ink,marginBottom:20}}>The law exists. Enforcement infrastructure does not.</div>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
-          {[{s:'19M',l:'Ghanaians who rent',c:C.red},{s:'60%',l:'No tenancy agreement',c:C.red},{s:'0',l:'Digital enforcement tools',c:C.red},{s:'2',l:'Vehicles nationwide',c:C.red},{s:'6-12+',l:'Months per case',c:C.amber},{s:'1.8M',l:'Housing unit deficit',c:C.amber}].map((p,i) => (
+          {[{s:'19M',l:'Ghanaians who rent',c:C.red},{s:'60%',l:'No tenancy agreement',c:C.red},{s:'0',l:'Digital enforcement tools',c:C.red},{s:'3',l:'Vehicles nationwide',c:C.red},{s:'6-12+',l:'Months per case',c:C.amber},{s:'1.8M',l:'Housing unit deficit',c:C.amber}].map((p,i) => (
             <div key={i} style={{padding:14,background:C.paper,borderBottom:`3px solid ${p.c}`}}>
               <div style={{fontFamily:F.mono,fontSize:24,fontWeight:500,color:p.c,lineHeight:1}}>{p.s}</div>
               <div style={{fontFamily:F.sans,fontSize:10,fontWeight:700,color:C.ink,marginTop:6,lineHeight:1.3}}>{p.l}</div>
@@ -1606,7 +1629,7 @@ const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
         {/* Offer */}
         <div style={{background:C.forest,padding:18,marginBottom:4}}>
           <div style={{fontFamily:F.sans,fontSize:9,fontWeight:700,color:C.lime,letterSpacing:2,textTransform:'uppercase',marginBottom:12}}>What BRIDGE Offers</div>
-          {['Full platform at zero cost during 24-month pilot','Staff training and onboarding for all officers','Quarterly impact reports','Data Protection Act compliance','Phased expansion to all 16 regions'].map((item,j) => (
+          {['Full platform at zero cost during the pilot phase','Officer training and field deployment support','Data ownership: all platform data belongs to the Department','Data Protection Act (Act 843) — DPC registration in progress','Roadmap aligned to your September enforcement timeline'].map((item,j) => (
             <div key={j} style={{display:'flex',gap:8,marginBottom:8,alignItems:'flex-start'}}>
               <Chk s={14}/><span style={{fontFamily:F.sans,fontSize:12,color:'rgba(255,255,255,0.85)',lineHeight:1.4}}>{item}</span>
             </div>
@@ -1615,7 +1638,7 @@ const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
         {/* Ask */}
         <div style={{border:`2px solid ${C.forest}`,padding:18}}>
           <div style={{fontFamily:F.sans,fontSize:9,fontWeight:700,color:C.forest,letterSpacing:2,textTransform:'uppercase',marginBottom:12}}>What We Ask</div>
-          {['Formal MOU as digital enforcement partner','Official endorsement for rent regulation','Designated institutional liaison','Introductions to regional offices','Officer participation in user testing'].map((item,j) => (
+          {['An 8-week informal pilot — no MOU, no procurement','2–3 officers for one week of field testing in June','Permission to mention coordination with your office','Honest feedback during pilot deployment','Formal partnership talks ahead of September rollout'].map((item,j) => (
             <div key={j} style={{display:'flex',gap:8,marginBottom:8,alignItems:'flex-start'}}>
               <Arr s={14}/><span style={{fontFamily:F.sans,fontSize:12,color:C.ink,lineHeight:1.4}}>{item}</span>
             </div>
@@ -1667,22 +1690,22 @@ const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
           The platform is built. The team is ready.
         </div>
         <div style={{display:'flex',flexDirection:'column',gap:10,marginBottom:32}}>
-          <div onClick={onRequestDemo} style={{background:C.lime,padding:'14px 24px',cursor:'pointer'}}>
+          <div style={{background:C.lime,padding:'14px 24px'}}>
             <div style={{fontFamily:F.sans,fontSize:14,fontWeight:700,color:C.ink}}>Request Demo Access</div>
           </div>
-          <div onClick={onDownloadBrief} style={{border:'2px solid rgba(255,255,255,0.2)',padding:'14px 24px',cursor:'pointer'}}>
+          <div style={{border:'2px solid rgba(255,255,255,0.2)',padding:'14px 24px'}}>
             <div style={{fontFamily:F.sans,fontSize:14,fontWeight:700,color:C.white}}>Download Brief (PDF)</div>
           </div>
         </div>
         <div style={{display:'flex',flexDirection:'column',gap:16,alignItems:'center'}}>
-          {[['EMAIL','RentGuard@bridgepbc.com'],['DEMO','bridgepbc.com/rentguard']].map(([label,val],i) => (
+          {[['EMAIL','RentGuard@bridgepbc.com'],['WHATSAPP','+1 415 425 7401'],['DEMO','bridgepbc.com/rentguard']].map(([label,val],i) => (
             <div key={i} style={{textAlign:'center'}}>
               <div style={{fontFamily:F.sans,fontSize:9,color:C.lime,letterSpacing:2,fontWeight:700,marginBottom:4}}>{label}</div>
               <div style={{fontFamily:F.sans,fontSize:13,color:C.white}}>{val}</div>
             </div>
           ))}
         </div>
-        <div style={{fontFamily:F.sans,fontSize:8,color:'rgba(255,255,255,.12)',marginTop:32}}>BRIDGE PBC · Confidential · March 2026</div>
+        <div style={{fontFamily:F.sans,fontSize:8,color:'rgba(255,255,255,.12)',marginTop:32}}>BRIDGE PBC · Confidential · April 2026</div>
       </div>
     </div>
   );
@@ -1692,23 +1715,11 @@ const MobilePitch = ({ onRequestDemo, onDownloadBrief }) => {
 // ══════════════════════════════════════════════════════════════════════════
 // APP ROOT
 // ══════════════════════════════════════════════════════════════════════════
-export default function RentGuardPitchDeck() {
+export default function App() {
   const m = useIsMobile();
-  const [showEngagement, setShowEngagement] = useState(false);
-
-  const openEngagement = () => setShowEngagement(true);
-  const closeEngagement = () => setShowEngagement(false);
-  const handleDownloadBrief = () => window.print();
-
-  if (m) return (
-    <>
-      <BRIDGEEngagementModal isOpen={showEngagement} onClose={closeEngagement} intent="connect" />
-      <MobilePitch onRequestDemo={openEngagement} onDownloadBrief={handleDownloadBrief} />
-    </>
-  );
+  if (m) return <MobilePitch/>;
   return (
     <div>
-      <BRIDGEEngagementModal isOpen={showEngagement} onClose={closeEngagement} intent="connect" />
       <Gf/>
       <TopBar/>
       <Cover/>
@@ -1729,7 +1740,7 @@ export default function RentGuardPitchDeck() {
       <PitchFrame/>
       <Risks/>
       <AboutBridge/>
-      <RequestAccess onRequestDemo={openEngagement} onDownloadBrief={handleDownloadBrief} />
+      <RequestAccess/>
     </div>
   );
 }
